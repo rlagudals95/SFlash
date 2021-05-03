@@ -250,7 +250,7 @@ const Maps = (props) => {
         position: position,
         content: content,
         xAnchor: 0.3,
-        yAnchor: 0.91,
+        yAnchor: 0.9,
       });
 
       // 마커에 마우스를 올려 놓으면 커스텀오버레이가 보이게 한다.
