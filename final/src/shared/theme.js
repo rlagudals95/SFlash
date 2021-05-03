@@ -6,7 +6,7 @@ const size = {
 
 const theme = {
   responsiveContainer: `
-    @media (min-width: 1440px) {
+    @media (min-width: 1280px) {
       width: 1260px;
     }
     @media (max-width: 1280px) {

@@ -1,7 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Grid, Text, Button, Input } from "../../elements/index";
+import { 
+  Container,
+  Title, 
+  InputStyle, 
+  SolidBtn, 
+  BorderBtn, 
+  TextBtn, } from "../../Css/loginSignupCss"
+import { Grid } from "../../elements/index";
 import { actionCreators as userActions } from "../../redux/modules/user";
 
 import { history } from "../../redux/configStore";
@@ -66,91 +73,5 @@ const Login = () => {
   );
 };
 
-const Container = styled.div`
-  width: 30%;
-  height: 70%;
-  margin: auto;
-  padding: 80px 50px;
-  border: none;
-  text-align: center;
-  flex-direction: column;
-`;
-
-const Title = styled.div`
-  margin-bottom: 30px;
-  font-size: 1.5vw;
-  font-weight: 600;
-  text-align: center;
-  color: #343a40;
-`;
-
-const InputStyle = styled.input`
-  border: none;
-  width: 100%;
-  height: 30px;
-  border-bottom: 1px grey solid;
-  margin: 10px auto;
-  padding: 4px;
-  font-size: 1vw;
-  font-weight: 500;
-  color: grey;
-  :focus {
-    outline: none;
-  }
-  cursor: pointer;
-`;
-
-const SolidBtn = styled.button`
-  border: none;
-  width: 102%;
-  min-height: 50px;
-  max-height: 70px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  margin: 6px auto;
-  font-size: 1vw;
-  font-weight: 500;
-  ${(props) => (props.color ? `color:${props.color};` : "")}
-  ${(props) => (props.bg ? `background-color:${props.bg};` : "")}
-  :focus {
-    outline: none;
-  }
-  &:hover {
-    color: grey;
-    background-color: lightgrey;
-    cursor: pointer;
-  }
-`;
-
-const BorderBtn = styled.button`
-  width: 100%;
-  min-height: 50px;
-  max-height: 70px;
-  border: 1px solid grey;
-  box-sizing: border-box;
-  border-radius: 5px;
-  margin: 8px auto;
-  font-size: 1vw;
-  font-weight: 500;
-  color: grey;
-  background-color: #ffffff;
-  :focus {
-    outline: none;
-  }
-  &:hover {
-    color: grey;
-    background-color: lightgrey;
-    border: none;
-    cursor: pointer;
-  }
-`;
-
-const TextBtn = styled.text`
-  font-size: 0.8vw;
-  &:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-`;
 
 export default Login;
