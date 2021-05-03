@@ -1,0 +1,85 @@
+.navbarBtn {
+  height: 70px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  position: fixed;
+  margin-left: -14px;
+  z-index: 100;
+  top: 0;
+  width: 94px;
+}
+
+.menu-bars {
+  position: fixed;
+  margin-left: 1.5rem;
+  margin-right: 0px;
+  font-size: 2rem;
+  background: none;
+}
+
+/* 여기가 줄어드는 부분 */
+.nav-menu {
+  border-radius: 0 10px 10px 0;
+  background-color: #fff;
+  width: 270px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  transition: 850ms;
+}
+
+.nav-menu.active {
+  z-index: 300;
+  left: 0;
+  transition: 350ms;
+}
+
+.nav-text {
+  text-align: center;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 8px 0px;
+  list-style: none;
+  height: 60px;
+}
+
+.nav-text a {
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
+  width: 95%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  border-radius: 4px;
+}
+
+.nav-text a:hover {
+  background-color: lightgray;
+}
+
+.nav-menu-items {
+  width: 300px;
+  margin: 0px;
+}
+
+.navbar-toggle {
+  /* background-color: #060b26; */
+  margin-left: -30px;
+
+  height: 80px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+span {
+  margin-left: 16px;
+}

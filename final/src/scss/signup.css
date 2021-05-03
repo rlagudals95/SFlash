@@ -1,0 +1,14 @@
+.checkNickname,
+.checkEmail,
+.checkPwd,
+.reCheckPwd {
+  display: none;
+}
+
+.error {
+  color: #f65454;
+}
+
+.ok {
+  color: #24c57a;
+}
