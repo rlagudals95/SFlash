@@ -27,14 +27,13 @@ function App() {
   const dispatch = useDispatch();
   const token = getCookie("token"); // is_login 이라는 키값을 가진 토큰 가져와라
   const is_cookie = token ? true : false; // 그리고 is_cookie로 토큰 유무판단
-  const user_info = useSelector((state) => state.user.user);
 
-  // React.useEffect(() => {
-  //   if (is_cookie) {
-  //     console.log("로그인 체크");
-  //     dispatch(userActions.loginCheckAPI(token));
-  //   } //렌더링 마다 로그인체크
-  // }, []);
+  React.useEffect(() => {
+    if (is_cookie) {
+      console.log("로그인 체크");
+      dispatch(userActions.loginCheck(token));
+    } //렌더링 마다 로그인체크
+  }, []);
 
   return (
     <React.Fragment>

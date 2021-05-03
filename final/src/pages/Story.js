@@ -9,11 +9,13 @@ import { actionCreators as imageActions } from "../redux/modules/image";
 import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Modal from "react-modal";
 
 import Story_EditProfile from "../components/Story_EditProfile";
+import Story_EditPwd from "../components/Story_EditPwd";
 import Story_Content from "../components/Story_Content";
 
 const Story = (props) => {
@@ -23,10 +25,10 @@ const Story = (props) => {
   // const me = localStorage.getItem('nickname');
   // const is_me = user_info.nickname === me ;
   // dispatch(userActions.getUserInfoAPI(nickname));
-  
+
   React.useEffect(() => {
-    if(!user_info){
-      return false
+    if (!user_info) {
+      return false;
     }
     // dispatch(imageActions.setPreview(user_info.profileImg));
   }, []);
@@ -44,8 +46,12 @@ const Story = (props) => {
   // 설정 모달창
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
-  const openModal = () => {
+  const openModal = (e) => {
     setModalIsOpen(true);
+    // const id = e.target.id;
+    // if (id !== active) {
+    //   setActive(id);
+    // }
   };
   const closeModal = () => {
     setModalIsOpen(false);
@@ -53,12 +59,12 @@ const Story = (props) => {
 
   // // 탭 구현하기
   // // 처음에는 0번째 인덱스 활성화
-  const [active, setActive] = useState(3);
+  const [active, setActive] = useState("myPost");
   // 클릭한 인덱스 활성화
   const handleClick = (e) => {
-    const index = parseInt(e.target.id);
-    if (index !== active) {
-      setActive(index);
+    const id = e.target.id;
+    if (id !== active) {
+      setActive(id);
     }
   };
 
@@ -67,23 +73,19 @@ const Story = (props) => {
       <Wrapper>
         <ProfileContainer>
           <ProfileImg src={props.user_info.profileImg} />
+
           <Grid>
-            <Grid height="150px"/>
+            <Grid height="150px" />
             <Nickname>{props.user_info.nickname}</Nickname>
             <Introduction>{props.user_info.introduction}</Introduction>
-          </Grid>
-          <Grid width="200px" >
-            <SettingBtn>프로필 편집</SettingBtn>
           </Grid>
 
           {/* 프로필 및 비밀번호 설정(모달창) */}
           <div>
-            {/* <Button aria-controls="simple-menu" aria-haspopup="true" onClick={settingHandleClick}>
-        setting
-      </Button > */}
-            <IconButton width="50px" onClick={settingHandleClick}>
-              <MoreVertIcon />
-            </IconButton>
+            <Setting onClick={settingHandleClick}>
+              {/* <IconButton > */}
+              <BiDotsHorizontalRounded size="35" color="grey" />
+            </Setting>
             <Menu
               id="simple-menu"
               anchorEl={anchorEl}
@@ -91,16 +93,12 @@ const Story = (props) => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={() => setModalIsOpen(true)}>
-                프로필 편집
-              </MenuItem>
-              <MenuItem onClick={() => setModalIsOpen(true)}>
-                비밀번호 변경
-              </MenuItem>
+              <MenuItem onClick={openModal}>프로필 편집</MenuItem>
+              <MenuItem onClick={openModal}>비밀번호 변경</MenuItem>
             </Menu>
 
             <Modal isOpen={modalIsOpen} close={closeModal} style={modalStyle}>
-              <Story_EditProfile user_info={props.user_info}/>
+              <Story_EditProfile user_info={props.user_info} />
               <CloseButton
                 src="https://image.flaticon.com/icons/png/512/458/458595.png"
                 onClick={closeModal}
@@ -110,21 +108,23 @@ const Story = (props) => {
         </ProfileContainer>
 
         <Tabs>
-          <Tab onClick={handleClick} active={active === 3} id={3}>
-            {props.user_info.nickname}님의 게시물
-            <TabUnderBar active={active === 3} />
+          <Tab onClick={handleClick} active={active === "myPost"} id={"myPost"}>
+            <b>{props.user_info.nickname}</b> 님의 게시물
+            {/* <TabUnderBar active={active === "myPost"} /> */}
           </Tab>
-
-          <Tab onClick={handleClick} active={active === 4} id={4}>
-            {props.user_info.nickname}님의 좋아요
-            <TabUnderBar active={active === 4} />
+          <text fontSize="4rem" fontWeight="700" style={{ color: "grey" }}>
+            |
+          </text>
+          <Tab onClick={handleClick} active={active === "myLike"} id={"myLike"}>
+            <b>{props.user_info.nickname}</b> 님의 좋아요
+            {/* <TabUnderBar active={active === "myLike"} /> */}
           </Tab>
         </Tabs>
 
-        <Content active={active === 3}>
+        <Content active={active === "myPost"}>
           <Story_Content />
         </Content>
-        <Content active={active === 4}>
+        <Content active={active === "myLike"}>
           <Story_Content />
         </Content>
       </Wrapper>
@@ -136,8 +136,8 @@ Story.defaultProps = {
   user_info: {
     profileImg:
       "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg",
-    nickname: "nickname",
-    introduction: "자기소개를 입력해주세요 :)",
+    nickname: "최최준준",
+    introduction: "철이 없었죠..",
   },
 };
 
@@ -150,9 +150,26 @@ const ProfileContainer = styled.div`
   min-height: 200px;
   margin: 3% auto;
 `;
+const Setting = styled.div`
+  position: static;
+  float: right;
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  align-items: center;
+  vertical-align: center;
+  padding: 10px;
+  margin: 80px 30px 0px 0px;
+  &:hover {
+    cursor: pointer;
+    color: grey;
+    background-color: #eee;
+    transition-duration: 2s;
+  }
+`;
 
 const ProfileImg = styled.img`
-  width: 150px;
+  width: 160px;
   aspect-ratio: 1/1;
   border-radius: 150px;
   padding: 30px;
@@ -163,34 +180,17 @@ const ProfileImg = styled.img`
 `;
 
 const Nickname = styled.text`
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 600;
+  color: ${(props) => props.theme.main_color};
 `;
 const Introduction = styled.text`
   display: block;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 400;
+  color: grey;
   margin-top: 10px;
   width: 100%;
-`;
-
-const SettingBtn = styled.button`
-  padding: 12px 20px;
-  border: 1px solid grey;
-  box-sizing: border-box;
-  border-radius: 5px;
-  font-size: 0.9rem;
-  color: grey;
-  background-color: #ffffff;
-  :focus {
-    outline: none;
-  }
-  &:hover {
-    color: grey;
-    background-color: #eee;
-    border: none;
-    cursor: pointer;
-  }
 `;
 
 const modalStyle = {
@@ -205,10 +205,10 @@ const modalStyle = {
     zIndex: 500,
   },
   content: {
-    width: "50%",
-    // height: "50%",
-    minHeight: "500px",
+    width: "650px",
+    height: "630px",
     margin: "auto",
+    padding: "20px",
     border: "none",
     boxShadow: "0 2px 12px 0 rgba(0, 0, 0, 0.1)",
     zIndex: 600,
@@ -222,6 +222,7 @@ const CloseButton = styled.img`
   right: 30px;
   &:hover {
     cursor: pointer;
+    color: grey;
   }
 `;
 
@@ -237,11 +238,11 @@ const Tab = styled.button`
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
-  width: 50%;
-  padding: 20px;
-  font-size: 1.2rem;
+  width: 49%;
+  padding: 25px;
+  font-size: 1.3rem;
   color: ${(props) => (props.active ? props.theme.main_color : "grey")};
-  font-weight: ${(props) => (props.active ? 600 : 200)};
+  font-weight: ${(props) => (props.active ? 600 : 400)};
   background-color: ${(props) => (props.active ? "white" : "white")};
   transition: background-color 0.5s ease-in-out;
   :hover {

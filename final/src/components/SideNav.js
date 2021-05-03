@@ -15,14 +15,23 @@ import { history } from "../redux/configStore";
 import styled from "styled-components";
 import user from "../redux/modules/user";
 import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 function Navbar() {
+  const dispatch = useDispatch();
   //GrMap
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
 
   const is_login = useSelector((state) => state.user.is_login);
+
+  const onLogout = () => {
+    if(window.confirm("로그아웃 하시겠습니까?")){
+      dispatch(userActions.logOut());
+      history.goBack();
+    }
+  }
 
   return (
     <>
@@ -72,9 +81,7 @@ function Navbar() {
               <React.Fragment>
                 <GrIcons.GrLogout
                   size="1.5rem"
-                  onClick={() => {
-                    history.push("/login");
-                  }}
+                  onClick={onLogout}
                 />
                 <IconInfo>로그아웃</IconInfo>
               </React.Fragment>
@@ -156,8 +163,8 @@ export default Navbar;
 const LOGO = styled.div`
   margin-bottom: 7vh;
 
-  @media (max-width: 960px) {
-    // 1450밑으로 넓이가 내려가면
+  @media (max-width: 1450px) {
+    /* 1450밑으로 넓이가 내려가면 */
     display: none;
   }
 `;
@@ -174,10 +181,9 @@ const SideMini = styled.div`
   display: flex;
   flex-direction: column;
   @media (max-width: 960px) {
-    // 1450밑으로 넓이가 내려가면
     z-index: 5000;
     width: 100%;
-    height: 8vh;
+    height: 60px;
     justify-content: space-around;
     flex-direction: row;
   }
@@ -191,7 +197,6 @@ const SideIcon = styled.div`
   height: 500px;
   margin-top: 25px;
   @media (max-width: 960px) {
-    // 1450밑으로 넓이가 내려가면
     width: 100%;
     height: 7vh;
     justify-content: space-between;
@@ -221,8 +226,8 @@ const Bubble = styled.div`
 const IconInfo = styled.div`
   font-size: 9px;
   margin-top: -15px;
-  @media (max-width: 960px) {
-    // 1450밑으로 넓이가 내려가면
+  @media (max-width: 1450px) {
+    /* 1450밑으로 넓이가 내려가면 */
     display: none;
   }
 `;

@@ -26,10 +26,10 @@ const Story_Content = (props) => {
     <React.Fragment>
         <Icons>
           <Icon onClick={handleClick} active={active === 1} id={1}>
-            <FiImage size="40" onClick={handleClick} />
+            <FiImage size="30" onClick={handleClick} active={active === 1} id={1}/>
           </Icon>
           <Icon onClick={handleClick} active={active === 2} id={2}>
-            <HiOutlineMap size="40" onClick={handleClick} />
+            <HiOutlineMap size="30" onClick={handleClick} active={active === 2} id={2}/>
           </Icon>
         </Icons>
 
@@ -50,7 +50,7 @@ const Story_Content = (props) => {
 const Icons = styled.div`
   position: fixed;
 
-  @media (min-width: 1440px) {
+  @media (min-width: 1280px) {
     left: 50%;
     transform: translate(650px, 80px);
     }
@@ -68,7 +68,7 @@ const Icons = styled.div`
     }
   display: flex;
   flex-direction: column;
-  z-index: 1000;
+  z-index: 500;
 `;
 
 const Icon = styled.button`
@@ -76,17 +76,17 @@ const Icon = styled.button`
   border-radius: 100px;
   margin: 5px;
   padding: 20px;
-  border: 3pt solid #eee;
+  border: 2pt solid #eee;
   box-sizing: border-box;
 
-  color: ${(props) => (props.active ? "grey" : "grey")};
-  border: ${(props) => (props.active ? "2pt solid #eee" : "")};
+  color: ${(props) => (props.active ? props.theme.main_color : "grey")};
+  border: ${(props) => (props.active ? "2pt solid #4670fd" : "")};
   background-color: ${(props) => (props.active ? "white" : "#eee")};
   transition: background-color 0.5s ease-in-out;
   :hover {
     cursor: pointer;
-    background-color: lightgrey;
-    color: #eee;
+    background-color: ${(props) =>props.theme.main_color};
+    color: #ffffff;
     border: lightgrey;
   }
 `;
@@ -101,7 +101,7 @@ const GridList = styled.div`
   padding: 50px 0px;
   flex-wrap: wrap;
 
-  @media (min-width: 1440px) {
+  @media (min-width: 1280px) {
       grid-template-columns: 1fr 1fr 1fr;
       grid-gap: 20px;
     }
@@ -121,9 +121,11 @@ const GridList = styled.div`
 
 const Box = styled.div`
   text-align: center;
-  margin: 4% auto;
+  margin: auto;
+  position: relative;
+  top: 50px;
   width: 100%;
-  height: 50vh;
+  height: 700px;
   flex-wrap: wrap;
   background-color: #eee;
 `;

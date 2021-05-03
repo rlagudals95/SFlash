@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import { Grid, Text, Button, Input } from "../../elements/index";
+import { 
+  Container,
+  Title, 
+  InputStyle, 
+  SolidBtn, 
+  BorderBtn,
+  CheckBtn, 
+  TextBtn, } from "../../Css/loginSignupCss"
+import { Grid } from "../../elements/index";
 import { actionCreators as userActions } from "../../redux/modules/user";
 
 import { history } from "../../redux/configStore";
@@ -17,6 +25,7 @@ const FindEmailPwd = () => {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [authCode, setAuthCode] = useState("");
+  const [activeAuthInput, setActiveAuthInput] =React.useState(false);
 
   // useEffect(() => {
   //   return () => {};
@@ -68,6 +77,7 @@ const FindEmailPwd = () => {
         console.log("인증번호 전송", res.data);
         if(res.data === true){
             alert("입력하신 이메일로 인증번호가 전송되었습니다.");
+            setActiveAuthInput(true);
         }else{
             alert("회원정보가 옳바르지 않습니다. :(");
         }
@@ -156,6 +166,7 @@ const FindEmailPwd = () => {
             <text style={{ color: "grey" }}>|</text>
             <ClickedTab>비밀번호 찾기</ClickedTab>
           </Tab>
+
           <Grid is_flex>
             <InputStyle
               placeholder="이메일 입력"
@@ -165,19 +176,23 @@ const FindEmailPwd = () => {
                 setEmail(e.target.value);
               }}
             />
-            <VertificationBtn onClick={() => onEmailSubmit(email)}>
+            <CheckBtn onClick={() => onEmailSubmit(email)}>
               인증번호전송
-            </VertificationBtn>
+            </CheckBtn>
           </Grid>
 
+          <Auth active = {activeAuthInput}>
           <InputStyle
             placeholder="인증번호 입력"
             type="type"
-            width="97%"
+            width="100%"
             onChange={(e) => {
               setAuthCode(e.target.value);
             }}
           />
+        </Auth>
+
+
           <SolidBtn
             background-color="grey"
             style={{ display: "block" }}
@@ -185,7 +200,7 @@ const FindEmailPwd = () => {
           >
             비밀번호 찾기
           </SolidBtn>
-          <Grid padding="10px">
+          <Grid >
             <TextBtn onClick={() => history.push("/login")}>
               로그인으로 돌아가기
             </TextBtn>
@@ -196,23 +211,6 @@ const FindEmailPwd = () => {
   }
 };
 
-const Container = styled.div`
-  width: 25%;
-  height: 70%;
-  margin: 10% auto;
-  padding: 80px 50px;
-  border: none;
-  text-align: center;
-  flex-direction: column;
-`;
-
-const Title = styled.div`
-  margin-bottom: 30px;
-  font-size: 1.5vw;
-  font-weight: 600;
-  text-align: center;
-  color: #343a40;
-`;
 
 const Tab = styled.div`
   display: flex;
@@ -225,7 +223,7 @@ const Tab = styled.div`
 const UnclickedTab = styled.button`
   width: 50%;
   aspect-ratio: 5/1;
-  font-size: 1vw;
+  font-size: 0.9rem;
   background-color: #ffffff;
   border: none;
   :focus {
@@ -243,83 +241,18 @@ const UnclickedTab = styled.button`
 const ClickedTab = styled.button`
   width: 50%;
   aspect-ratio: 5/1;
-  font-size: 1vw;
+  font-size: 0.9rem;
   font-weight: bold;
   background-color: #ffffff;
   color: #343a40;
   border: none;
 `;
 
-const InputStyle = styled.input`
-  border: none;
-  ${(props) => (props.width ? `width:${props.width};` : "")}
-  height: 40px;
-  border-bottom: 1px grey solid;
-  margin: 15px auto;
-  padding: 4px;
-  font-size: 1vw;
-  font-weight: 500;
-  color: grey;
-  :focus {
-    outline: none;
-  }
-  cursor: pointer;
-`;
-
-const SolidBtn = styled.button`
-  border: none;
-  width: 100%;
-  min-height: 50px;
-  max-height: 70px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  margin: 8px 0px 8px 0px;
-  font-size: 0.8vw;
-  font-weight: 500;
-  ${(props) => (props.color ? `color:${props.color};` : "")}
-  ${(props) => (props.bg ? `background-color:${props.bg};` : "")}
-  :focus {
-    outline: none;
-  }
-  &:hover {
-    color: grey;
-    background-color: lightgrey;
-    cursor: pointer;
-  }
-`;
-
-const VertificationBtn = styled.button`
-  min-width: 24%;
-  border: 1px solid grey;
-  box-sizing: border-box;
-  border-radius: 5px;
-  margin-left: 10px;
-  padding: 10px;
-  font-size: 0.9vw;
-  font-weight: 500;
-  color: grey;
-  background-color: #ffffff;
-  :focus {
-    outline: none;
-  }
-  &:hover {
-    color: grey;
-    background-color: lightgrey;
-    border: none;
-    cursor: pointer;
-  }
-  position: relative;
-  top: 0px;
-  right: 0%;
-`;
-
-const TextBtn = styled.text`
-  font-size: 0.8vw;
-  margin: 20px;
-  &:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
+const Auth = styled.div`
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  ${(props) => (props.active ? "" : "display:none")}
 `;
 
 export default FindEmailPwd;

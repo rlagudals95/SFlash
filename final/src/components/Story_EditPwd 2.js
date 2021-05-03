@@ -9,25 +9,29 @@ import {
   BorderBtn,
   CheckBtn, 
   TextBtn,
-  InfoUl } from "../../Css/loginSignupCss"
-  import RegCheck from "../../Css/RegCheck.css";
-import { history } from "../../redux/configStore";
+  InfoUl } from "../Css/loginSignupCss"
+import RegCheck from "../Css/RegCheck.css";
+import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 
-import { pwdRegCheck, pwdRegContinuousCheck } from "../../shared/common";
+import { pwdRegCheck, pwdRegContinuousCheck } from "../shared/common";
 import axios from "axios";
 
-const EditPwd = () => {
+const Story_EditPwd = () => {
   // console.log(email);
-  const dispatch = useDispatch();
   const email = useSelector((state) => state.email.email);
-
-  const [pwd, setPwd] = React.useState("");
+  
+  const [originalPwd, setOriginalPwd] = React.useState("");
+  const [newPwd, setNewPwd] = React.useState("");
   const [rePwd, setRePwd] = React.useState("");
 
+  const changeOriginalPwd = (e) => {
+    setOriginalPwd(e.target.value);
+  }
+
   // 비밀번호 정규식 검사(info 컬러 바꿔주기)
-  const changePwdReg = (e) => {
-    setPwd(e.target.value);
+  const changeNewPwdReg = (e) => {
+    setNewPwd(e.target.value);
     const pwdInfo_len = document.querySelector("ul.checkPwd li:nth-child(1)");
     const pwdInfo_match = document.querySelector("ul.checkPwd li:nth-child(2)");
     const pwdInfo_continuous = document.querySelector(
@@ -65,7 +69,7 @@ const EditPwd = () => {
     setRePwd(e.target.value);
     const rePwdInfo = document.querySelector("ul.reCheckPwd li:nth-child(1)");
 
-    if (pwd === e.target.value) {
+    if (newPwd === e.target.value) {
       rePwdInfo.classList.add("ok");
       rePwdInfo.classList.remove("error");
     } else {
@@ -74,16 +78,17 @@ const EditPwd = () => {
     }
   };
 
-  const onEditPwd = (pwd, rePwd) => {
+  const onEditPwd = (originalPwd, newPwd, rePwd) => {
     //  인증번호가 일치하면 비밀번호 변경 페이지로
-    console.log(email, pwd, rePwd);
+    console.log(email, originalPwd, newPwd, rePwd);
     const API = "http://seungwook.shop/user/findpwd/editpwd";
     axios
       .post(
         API,
         {
           email: email,
-          password: pwd,
+          originalpwd: originalPwd,
+          password: newPwd,
           pwdchk: rePwd,
         },
         {
@@ -109,15 +114,25 @@ const EditPwd = () => {
     <React.Fragment>
       <Container>
         <Title>비밀번호 변경하기</Title>
+
         <InputStyle
-          placeholder="비밀번호 입력"
+          placeholder="이전 비밀번호 입력"
+          type="password"
+          width="98%"
+          onChange={(e) => {
+            changeOriginalPwd(e);
+          }}
+        />
+
+        <InputStyle
+          placeholder="새 비밀번호 입력"
           type="password"
           width="98%"
           onClick={() => {
             document.querySelector(".checkPwd").style.display = "block";
           }}
           onChange={(e) => {
-            changePwdReg(e);
+            changeNewPwdReg(e);
           }}
         />
         <InfoUl className="checkPwd">
@@ -127,7 +142,7 @@ const EditPwd = () => {
         </InfoUl>
 
         <InputStyle
-          placeholder="비밀번호 재입력"
+          placeholder="새 비밀번호 재입력"
           type="password"
           width="98%"
           onClick={() => {
@@ -145,7 +160,7 @@ const EditPwd = () => {
           background-color="grey"
           style={{ display: "block" }}
           onClick={() => {
-            onEditPwd(pwd, rePwd);
+            onEditPwd(originalPwd, newPwd, rePwd);
           }}
         >
           비밀번호 변경
@@ -156,5 +171,4 @@ const EditPwd = () => {
 };
 
 
-
-export default EditPwd;
+export default Story_EditPwd;

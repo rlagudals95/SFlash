@@ -1,11 +1,23 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import signup from "../../scss/signup.css";
+
 import axios from "axios";
 
-import { Grid, Text, Button, Input } from "../../elements/index";
+import { Grid } from "../../elements/index";
+import { 
+  Container,
+  Title, 
+  InputStyle, 
+  SolidBtn, 
+  BorderBtn,
+  CheckBtn, 
+  TextBtn,
+  InfoUl,
+  InfoLi } from "../../Css/loginSignupCss";
+import RegCheck from "../../Css/RegCheck.css";
+import { GiCheckMark } from "react-icons/gi";
+
 import { actionCreators as userActions } from "../../redux/modules/user";
-import { actionCreators as emailActions } from "../../redux/modules/email";
 
 import {
   nicknameRegCheck,
@@ -15,7 +27,7 @@ import {
 } from "../../shared/common";
 
 import { history } from "../../redux/configStore";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Signup = (props) => {
   const dispatch = useDispatch();
@@ -237,34 +249,6 @@ const Signup = (props) => {
       });
   };
 
-  // // 이메일 중복확인
-  // const emailDupCheckAPI = (email) => {
-  //   console.log(email);
-  //   const API = "http://seungwook.shop/user/signup/emailchk";
-  //   axios
-  //     .post(
-  //       API,
-  //       {
-  //         email: email,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       console.log("이메일중복확인!", res.data);
-  //       if (res.data === false) {
-  //         alert("이미 등록된 이메일 입니다!");
-  //         setEmailDup(false);
-  //       } else {
-  //         alert("사용 가능한 이메일 입니다 :)");
-  //         setEmailDup(true);
-  //       }
-  //     });
-  // };
-
   // 회원가입 버튼
   const onSignup = () => {
     if (
@@ -322,7 +306,7 @@ const Signup = (props) => {
               changeNickname(e);
             }}
           />
-          <DupCheckBtn
+          <CheckBtn
             onClick={() => {
               if (!nicknameRegCheck(nickname)) {
                 alert(
@@ -334,11 +318,11 @@ const Signup = (props) => {
             }}
           >
             중복확인
-          </DupCheckBtn>
+          </CheckBtn>
         </Grid>
         <InfoUl className="checkNickname">
-          <li>6자 이상의 영문 혹은 영문과 숫자를 조합</li>
-          <li>아이디 중복확인</li>
+          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/>6자 이상의 영문 혹은 영문과 숫자를 조합</InfoLi>
+          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/>아이디 중복확인</InfoLi>
         </InfoUl>
 
         <Grid is_flex>
@@ -353,7 +337,7 @@ const Signup = (props) => {
               changeEmail(e);
             }}
           />
-          <DupCheckBtn
+          <CheckBtn
             onClick={(e) => {
               if (!emailRegCheck(email)) {
                 alert("이메일 형식을 지켜주세요!");
@@ -362,11 +346,11 @@ const Signup = (props) => {
             }}
           >
             인증번호전송
-          </DupCheckBtn>
+          </CheckBtn>
         </Grid>
         <InfoUl className="checkEmail">
-          <li>이메일 형식을 지켜주세요.(예시: hh99@sflash.com)</li>
-          <li>이메일 인증 확인</li>
+          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/>이메일 형식을 지켜주세요.(예시: hh99@sflash.com)</InfoLi>
+          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/>이메일 인증 확인</InfoLi>
         </InfoUl>
         <Auth active = {activeAuthInput}>
           <InputStyle
@@ -377,13 +361,13 @@ const Signup = (props) => {
               setAuthCode(e.target.value);
             }}
           />
-          <DupCheckBtn
+          <CheckBtn
             onClick={() => {
               onAuthCodeSubmit(email, authCode);
             }}
           >
             인증확인
-          </DupCheckBtn>
+          </CheckBtn>
         </Auth>
         <InputStyle
           placeholder="비밀번호 입력"
@@ -397,9 +381,9 @@ const Signup = (props) => {
           }}
         />
         <InfoUl className="checkPwd">
-          <li>10글자 이상 입력</li>
-          <li>영문/숫자/특수문자(공백 제외)만 허용,2개 이상의 조합</li>
-          <li>동일한 숫자 3개 이상 연속 사용 불가</li>
+          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/> 10글자 이상 입력</InfoLi>
+          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/> 영문/숫자/특수문자(공백 제외)만 허용,2개 이상의 조합</InfoLi>
+          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/> 동일한 숫자 3개 이상 연속 사용 불가</InfoLi>
         </InfoUl>
 
         <InputStyle
@@ -414,7 +398,7 @@ const Signup = (props) => {
           }}
         />
         <InfoUl className="reCheckPwd">
-          <li>동일한 비밀번호를 입력해주세요.</li>
+          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/>동일한 비밀번호를 입력해주세요.</InfoLi>
         </InfoUl>
 
         <SolidBtn
@@ -432,124 +416,6 @@ const Signup = (props) => {
       </Container>
     </React.Fragment>
   );
-};
-
-const Container = styled.div`
-  width: 30%;
-  height: 70%;
-  margin: 10% auto;
-  padding: 80px 50px;
-  border: none;
-  text-align: center;
-  flex-direction: column;
-`;
-
-const Title = styled.div`
-  margin-bottom: 30px;
-  font-size: 1.5vw;
-  font-weight: 600;
-  text-align: center;
-  color: #343a40;
-`;
-
-const InputStyle = styled.input`
-  left: 0;
-  border: none;
-  ${(props) => (props.width ? `width:${props.width};` : "")}
-  height: 30px;
-  border-bottom: 1px grey solid;
-  margin: 15px auto;
-  padding: 4px;
-  font-size: 1vw;
-  font-weight: 500;
-  color: grey;
-  :focus {
-    outline: none;
-  }
-  cursor: pointer;
-`;
-
-const InfoUl = styled.ul`
-  font-size: 12px;
-  color: #666666;
-  font-weight: 400;
-  text-align: left;
-  margin-left: -15px;
-`;
-
-const SolidBtn = styled.button`
-  border: none;
-  width: 100%;
-  min-height: 50px;
-  max-height: 70px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  margin: 25px auto 10px auto;
-  font-size: 1vw;
-  font-weight: 500;
-  ${(props) => (props.color ? `color:${props.color};` : "")}
-  ${(props) => (props.bg ? `background-color:${props.bg};` : "")}
-  :focus {
-    outline: none;
-  }
-  &:hover {
-    color: grey;
-    background-color: lightgrey;
-    cursor: pointer;
-  }
-`;
-
-const DupCheckBtn = styled.button`
-  min-width: 24%;
-  border: 1px solid grey;
-  box-sizing: border-box;
-  border-radius: 5px;
-  margin-left: 10px;
-  padding: 10px;
-  font-size: 0.9vw;
-  font-weight: 500;
-  color: grey;
-  background-color: #ffffff;
-  :focus {
-    outline: none;
-  }
-  &:hover {
-    color: grey;
-    background-color: lightgrey;
-    border: none;
-    cursor: pointer;
-  }
-  position: relative;
-  top: 0px;
-  right: 0%;
-`;
-
-const TextBtn = styled.text`
-  font-size: 0.8vw;
-  &:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-`;
-
-const modalStyle = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(247, 247, 247, 0.8)",
-    transition: "opacity 2000ms ease-in-out",
-  },
-  content: {
-    width: "40%",
-    minHeight: "300px",
-    height: "30%",
-    margin: "auto",
-    border: "none",
-    boxShadow: "0 2px 12px 0 rgba(0, 0, 0, 0.1)",
-  },
 };
 
 const Auth = styled.div`
