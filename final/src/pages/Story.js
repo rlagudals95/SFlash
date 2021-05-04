@@ -72,7 +72,7 @@ const Story = (props) => {
     <React.Fragment>
       <Wrapper>
         <ProfileContainer>
-          <ProfileImg src={props.user_info.profileImg} />
+          <ProfileImg src={props.user_info.profileImgUrl} />
 
           <Grid>
             <Grid height="150px" />
@@ -107,6 +107,9 @@ const Story = (props) => {
           </div>
         </ProfileContainer>
 
+{/* tap 클릭에 따라서 '내 게시물'과 '좋아요한 게시물'을 나눠주는 탭 active 값을 이용해 제어해 준다. 
+    active 의 값에 따라 content 부분의 내용이 바뀐다. (content 내 Story_Content 컴퍼넌트에서는 리스트와 지도로 볼수 있도록 다시 나눠지는데
+    active 를 활용해 같은 방법으로 제어해준다.*/}
         <Tabs>
           <Tab onClick={handleClick} active={active === "myPost"} id={"myPost"}>
             <b>{props.user_info.nickname}</b> 님의 게시물
@@ -134,10 +137,10 @@ const Story = (props) => {
 
 Story.defaultProps = {
   user_info: {
-    profileImg:
+    profileImgUrl:
       "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg",
-    nickname: "최최준준",
-    introduction: "철이 없었죠..",
+    nickname: "nickname",
+    introduction: "자기소개를 입력해주세요",
   },
 };
 

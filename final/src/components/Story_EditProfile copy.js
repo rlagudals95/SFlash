@@ -20,22 +20,22 @@ const Story_EditProfile = (props) => {
   console.log(user_info);
   const nickname = user_info.nickname;
   // 닉네임 정보가 있으면 수정할 수 있구요.
-  const is_edit = nickname ? true : false;
+  const is_edit = nickname? true : false;
   const is_uploading = useSelector((state) => state.profile.is_uploading);
   const preview = useSelector((state) => state.profile.preview);
 
-  //   React.useEffect(() => {
-  //     if(!user_info){
-  //         return false;
-  //     }
-  //     if(is_edit){
-  //       // 기존 프로필 이미지를 프리뷰로 불러오기
-  //       dispatch(profileActions.setPreview(user_info.profileImgUrl));
-  //     }else{
-  //       // 없으면 기본이미지 띄워주기
-  //       dispatch(profileActions.setPreview("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"));
-  //     }
-  // },[])
+//   React.useEffect(() => {
+//     if(!user_info){
+//         return false;
+//     }
+//     if(is_edit){
+//       // 기존 프로필 이미지를 프리뷰로 불러오기
+//       dispatch(profileActions.setPreview(user_info.profileImgUrl));
+//     }else{
+//       // 없으면 기본이미지 띄워주기
+//       dispatch(profileActions.setPreview("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"));
+//     }
+// },[])
 
   // 이미지 업로드하기
   const fileInput = React.useRef();
@@ -64,17 +64,14 @@ const Story_EditProfile = (props) => {
   };
 
   const ImageError = () => {
-    window.alert("잘못된 이미지 주소 입니다. :(");
-    dispatch(
-      profileActions.setPreview(
-        "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
-      )
-    );
-  };
+    window.alert('잘못된 이미지 주소 입니다. :(')
+    dispatch(profileActions.setPreview("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"))
+  }
 
   // 닉네임 변경하기
   const [newNickname, setNewNickname] = React.useState("");
-  const [originalNickMode, setOriginalNickMode] = React.useState(true);
+  const [originalNickname, setOriginalNickname] =React.useState(true);
+  const [editNickname, setEditNickname] =React.useState(false);
   const [nicknameDup, setNicknameDup] = React.useState(false);
 
   // 닉네임 입력
@@ -138,10 +135,10 @@ const Story_EditProfile = (props) => {
   //     });
   // };
 
+  
+
   // 자기소개 입력하기(기존에 입력한 자기소개가 있으면 띄워준다 input 창에 vaule 설정해줘야 이전에 썼던 글이 남아있음. 없으면 null;)
-  const [introduction, setIntroduction] = React.useState(
-    user_info.introuduction ? user_info.introuduction : ""
-  );
+  const [introduction, setIntroduction] = React.useState(user_info.introuduction ? user_info.introuduction : "");
   const changeIntroduction = (e) => {
     setIntroduction(e.target.value);
   };
@@ -159,85 +156,71 @@ const Story_EditProfile = (props) => {
     <React.Fragment>
       <ProfileContainer>
         <ImgContainer>
-          {/* label 태그를 이용해 (input창의 id 값을 for로 받아서) 원하는 버튼으로 바꾸어줄 수 있다. */}
-          <EditImgBtn for="edit_profile_img">
-            <HiCamera size="25px" color="4670fd" />
-          </EditImgBtn>
-          <input
-            type="file"
-            id="edit_profile_img"
-            ref={fileInput}
-            onChange={selectFile}
-            disabled={is_uploading}
-            // '사진선택' 버튼 안 보이도록
-            style={{ display: "none" }}
-          />
-          {/* 프로필 이미지 : 프리뷰가 있으면 보여주고 없으면 기본 이미지 보여주기 */}
-          <ProfileImg
-            src={
-              preview
-                ? preview
-                : "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
-            }
-            onError={ImageError}
-          />
+        {/* label 태그를 이용해 (input창의 id 값을 for로 받아서) 원하는 버튼으로 바꾸어줄 수 있다. */}
+        <EditImgBtn for="edit_profile_img"><HiCamera size="25px" color="4670fd"/></EditImgBtn>
+         <input
+        type="file"
+        id="edit_profile_img"
+        ref={fileInput}
+        onChange={selectFile}
+        disabled={is_uploading}
+        // '사진선택' 버튼 안 보이도록
+        style={{display:"none"}}
+      />
+      {/* 프로필 이미지 : 프리뷰가 있으면 보여주고 없으면 기본 이미지 보여주기 */}
+        <ProfileImg
+          src={
+            preview
+              ? preview
+              : "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
+          } 
+          onError={ImageError}
+        />
         </ImgContainer>
+        
+        <NicknameContainer active={originalNickname}>
+          <Nickname>{user_info.nickname}</Nickname>
+          <EditNicknameBtn 
+          onClick={
+            setEditNickname(true)
+            // setOriginalNickname(false)
+            }
+            > 닉네임 변경</EditNicknameBtn>
+        </NicknameContainer>
 
-        {originalNickMode ? (
-          <NicknameContainer>
-            <Nickname>{user_info.nickname}</Nickname>
-            <EditNicknameBtn
-              onClick={
-                setOriginalNickMode(false)
-                // setOriginalNickname(false)
+        <NicknameContainer active={editNickname}>
+          <InputStyle
+            placeholder="새 닉네임 입력"
+            type="type"
+            width="100%"
+            onClick={() => {
+              document.querySelector(".checkNickname").style.display = "block";
+            }}
+            onChange={(e) => {
+              changeNickname(e);
+            }}
+          />
+          <EditNicknameBtn
+            onClick={() => {
+              if (!nicknameRegCheck(newNickname)) {
+                alert(
+                  "아이디는 6자 이상의 영문 혹은 영문과 숫자 조합만 가능합니다."
+                );
+                return false;
               }
-            >
-              {" "}
-              닉네임 변경
-            </EditNicknameBtn>
-          </NicknameContainer>
-        ):(
-          <NicknameContainer>
-            <InputStyle
-              placeholder="새 닉네임 입력"
-              type="type"
-              width="100%"
-              onClick={() => {
-                document.querySelector(".checkNickname").style.display =
-                  "block";
-              }}
-              onChange={(e) => {
-                changeNickname(e);
-              }}
-            />
-            <EditNicknameBtn
-              onClick={() => {
-                // if (!nicknameRegCheck(newNickname)) {
-                //   alert(
-                //     "아이디는 6자 이상의 영문 혹은 영문과 숫자 조합만 가능합니다."
-                //   );
-                //   return false;
-                // }
-                setOriginalNickMode(true)
-                // nicknameDupCheckAPI(newNickname);
-              }}
-            >
-              중복확인
-            </EditNicknameBtn>
-            <InfoUl className="checkNickname">
-              <InfoLi>
-                <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
-                6자 이상의 영문 혹은 영문과 숫자를 조합
-              </InfoLi>
-              <InfoLi>
-                <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
-                아이디 중복확인
-              </InfoLi>
-            </InfoUl>
-          </NicknameContainer>
-        )}
+              // nicknameDupCheckAPI(newNickname);
+            }}
+          >
+            중복확인
+          </EditNicknameBtn>
+          <InfoUl className="checkNickname">
+          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/>6자 이상의 영문 혹은 영문과 숫자를 조합</InfoLi>
+          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/>아이디 중복확인</InfoLi>
+        </InfoUl>
+        
+        </NicknameContainer>
 
-        <Grid flex margin="10px">
+        <Grid flex margin="10px">        
           <TextField
             value={introduction}
             placeholder="자기소개를 입력해주세요."
@@ -246,9 +229,10 @@ const Story_EditProfile = (props) => {
             disabled={is_uploading}
           />
         </Grid>
-        <Grid>
+        <Grid> 
           <SaveBtn onClick={onEditProfile}>저장하기</SaveBtn>
-        </Grid>
+          </Grid>
+       
       </ProfileContainer>
     </React.Fragment>
   );
@@ -256,7 +240,7 @@ const Story_EditProfile = (props) => {
 
 const ProfileContainer = styled.div`
   align-items: center;
-  padding: 35px;
+  padding:35px;
 `;
 const ImgContainer = styled.div`
   width: 140px;
@@ -274,12 +258,12 @@ const ProfileImg = styled.img`
 `;
 
 const EditImgBtn = styled.label`
-  position: absolute;
-  margin-left: 110px;
-  margin-top: 110px;
-  padding: 5px;
-  border-radius: 50px;
-  background-color: #ffffff;
+position:absolute;
+margin-left: 110px;
+margin-top: 110px;
+padding: 5px;
+border-radius: 50px;
+background-color: #ffffff;
   &:hover {
     background-color: #eee;
     color: #ffffff;
@@ -296,6 +280,7 @@ const Nickname = styled.text`
 const NicknameContainer = styled.div`
   display: flex;
   align-items: center;
+  ${(props) => (props.active ? "" : "display:none")}
 `;
 
 const EditNicknameBtn = styled.button`
@@ -306,15 +291,15 @@ const EditNicknameBtn = styled.button`
   font-size: 0.8rem;
   font-weight: 400;
   background-color: #ffffff;
-  color: ${(props) => props.theme.main_color};
+  color: ${(props) =>props.theme.main_color};
   outline: none;
-  border: 1.5pt solid ${(props) => props.theme.main_color};
-  &:hover {
+  border: 1.5pt solid ${(props) =>props.theme.main_color};
+  &:hover{
     color: #ffffff;
     background-color: grey;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
-    border: 1.5pt solid grey;
+    border:1.5pt solid grey;
   }
 `;
 
@@ -331,8 +316,8 @@ const TextField = styled.textarea`
 `;
 
 const SaveBtn = styled.button`
-  display: block;
-  border: none;
+display:block;
+border: none;
   margin: 20px 10px;
   width: 120px;
   height: 48px;
@@ -340,10 +325,10 @@ const SaveBtn = styled.button`
   box-sizing: border-box;
   font-size: 1rem;
   font-weight: 500;
-  background-color: ${(props) => props.theme.main_color};
+  background-color: ${(props) =>props.theme.main_color};
   color: #ffffff;
   outline: none;
-  &:hover {
+  &:hover{
     color: grey;
     background-color: lightgrey;
     cursor: pointer;
