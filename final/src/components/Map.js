@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../redux/modules/map";
 import { actionCreators as userActions } from "../redux/modules/user";
 // import { actionCreators as markerActions } from '../redux/modules/marker';
+import { history } from "../redux/configStore";
 
 import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
@@ -210,9 +211,7 @@ const Maps = (props) => {
     // 지도 렌더링시, 모든 게시물 자료들을 가져와서 마커와 함께 렌더링한다.
     // 서버와 연결되어 데이터 통신이 이뤄지면 이 코드를 사용한다
     // totalPicPostData.map((p, idx) => {
-
-    // mockdate를 이용한 테스트. 나중엔 서버에서 가져온다.
-    markerdata.forEach((p) => {
+    markerdata.forEach((p) => { // mockdate를 이용한 테스트. 나중엔 서버에서 가져온다.
 
       var imageSize = new kakao.maps.Size(40, 40);
       var markerImage = new kakao.maps.MarkerImage(normalMarkerImgUrl, imageSize);
@@ -227,29 +226,36 @@ const Maps = (props) => {
 
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content = '<div class="modalcontainer">' +
-                        '<div class="picbox">' +
-                            `<img src=${p.imgUrl}>` +  
+                        `<img class="picbox" src=${p.imgUrl} >` +
+                            // `<img src=${p.imgUrl} onclick={() => {history}}>` +
+                            // `<img src=${p.imgUrl} >` +  
                             '<div class="head">' +
                                 `<div class="spotname">${p.spotName}</div>` +
-                                '<div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+                                // '<div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
                             '</div>' +
-                            '<div class="center"></div>' +
-                            '<div class="bottomiconbox">' +
-                                '<div class="likeicon"></div>' +
-                            '</div>' +
-                        '</div>' +
+                            // '<div class="center"></div>' +
+                            // '<div class="bottomiconbox">' +
+                            //     '<div class="likeicon"></div>' +
+                            // '</div>' +
+                        '</img>' +
                     '</div>';
 
       // 모달창(커스텀오버레이) 객체를 생성
       var customOverlay = new kakao.maps.CustomOverlay({
-        position: position,
-        content: content,
-        xAnchor: 0.3,
-        yAnchor: 0.9,
+        // map: map,           // 이거 있으면 처음부터 커스텀오버레이가 보인다 
+        clickable: true,    // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
+        position: position, // 커스텀 오버레이의 좌표
+        content: content,   // 엘리먼트 또는 HTML 문자열 형태의 내용
+        xAnchor: 0.3,       // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+        yAnchor: 0.9,       // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+        zIndex: 100,        //  커스텀 오버레이의 z-index
+        altitude: 10,
       });
 
+      // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       // 마커에 마우스를 올려 놓으면 커스텀오버레이가 보이게 한다.
       kakao.maps.event.addListener(markers, 'mouseover', function() {
+      // kakao.maps.event.addListener(markers, 'click', function() {
         customOverlay.setMap(map); 
       })
 
@@ -306,12 +312,12 @@ const Maps = (props) => {
         {/* {is_modal? <ModalSmallPost imgUrl={imgUrl} spotName={spotName}/> : null} */}
       </MapBox>
       {/* {is_uploadModal ? <UpLoadModal latitude={latitude} longitude={longitude}/> : null} */}
-      {is_uploadModal ? 
+      {/* {is_uploadModal ? 
         <UpLoadModal 
           latitude={latitude}
           longitude={longitude}
           spotName={spotName}
-          close={closeUpLoadModal}/> : null}
+          close={closeUpLoadModal}/> : null} */}
     </React.Fragment>
   );
 };
