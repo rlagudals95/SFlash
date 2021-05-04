@@ -12,7 +12,7 @@ import _ from "lodash"; // throttle, debounce 사용
 // component, element 파일들 가져오기
 import { markerdata } from "./MarkerMockData";
 // import ModalSmallPost from "./ModalSmallPost";
-import "./Map.css";
+import "../Css/Map.css";
 import UpLoadModal from "./UpLoadModal";
 
 // window 객체로부터 kakao mpa api를 호출하기
@@ -266,6 +266,8 @@ const Maps = (props) => {
   const closeUpLoadModal = () => {
     setUpLoadModal(false);
   };
+
+  // _map
 
   return (
     <React.Fragment>
