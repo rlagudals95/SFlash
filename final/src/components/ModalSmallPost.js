@@ -47,7 +47,7 @@ const ModalContainer = styled.div`
   background-color: white;
 `;
 
-const PicBox = styled.div`
+const PicBox = styled.img`
   padding: 10px;
   width: 100%;
   height: 100%;
