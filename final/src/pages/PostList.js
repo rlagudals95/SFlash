@@ -26,7 +26,6 @@ import UploadModal from "../components/UpLoadModal";
 const PostList = () => {
   const dispatch = useDispatch();
 
-
   const is_category = useSelector((state) => state.category.is_category);
 
   // category 모듈의 상태값에 따른 판단여부
@@ -197,13 +196,13 @@ const PostList = () => {
       <SideNav />
       <Category />
       <Box></Box>
-      <Button
+      {/* <Button
         is_float
         text="+"
         _onClick={() => {
           history.push("/postwrite");
         }}
-      ></Button>
+      ></Button> */}
     </React.Fragment>
   );
 };
