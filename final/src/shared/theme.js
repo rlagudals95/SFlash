@@ -18,11 +18,10 @@ const theme = {
     @media (max-width: 400px) {
       width: calc(100% - 1px);
     }
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     `,
 
-  main_color: "rgb(46, 60, 126)",
+  main_color: "rgb(70, 112, 253)",
   main_white: "#ffffff",
   main_bg_color: "#f7f8f9",
   gray: "#adb5bd",
