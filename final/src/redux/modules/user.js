@@ -64,7 +64,6 @@ const loginAPI = (email, pwd) => {
           nickname: res.data.nickname,
           token: res.data.token
         }));
-        history.push("/story");
       })
       .catch((err) => {
         window.alert("로그인 실패", err);

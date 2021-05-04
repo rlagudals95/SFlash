@@ -27,10 +27,11 @@ function App() {
   const dispatch = useDispatch();
   const token = getCookie("token"); // is_login 이라는 키값을 가진 토큰 가져와라
   const is_cookie = token ? true : false; // 그리고 is_cookie로 토큰 유무판단
+  const is_login = useSelector((state) => state.user.is_login);
 
   React.useEffect(() => {
     if (is_cookie) {
-      console.log("로그인 체크");
+      console.log("로그인 체크", is_login);
       dispatch(userActions.loginCheck(token));
     } //렌더링 마다 로그인체크
   }, []);
@@ -47,9 +48,7 @@ function App() {
             <Route path="/findemailpwd" exact component={FindEmailPwd} />
             <Route path="/editpwd" exact component={EditPwd} />
             <Route path="/postlist" exact component={PostList} />
-            {/* story와 editprofile은 후에 /:id 붙여야함 */}
-            {/* 해당 페이지에서 id값은 props.match.params.id로 할당한다 */}
-            <Route path="/story" exact component={Story} />
+            <Route path="/story/:id" exact component={Story} />
             <Route path="/faq" exact component={Faq} />
             <Route component={NotFound} />
             {/* 밑에서 부턴 카테고리별 페이지 */}

@@ -25,12 +25,13 @@ function Navbar() {
   const showSidebar = () => setSidebar(!sidebar);
 
   const is_login = useSelector((state) => state.user.is_login);
+  const nickname = localStorage.getItem("nickname");
 
   console.log("확인", is_login);
   const onLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
       dispatch(userActions.logOut());
-      history.goBack();
+      history.push('/');
     }
   };
 
@@ -61,8 +62,13 @@ function Navbar() {
               <MdIcons.MdPhotoLibrary size="1.6rem" />
             </Link>
             <IconInfo>커뮤니티</IconInfo>
-            <Link to="/story">
-              <CgIcons.CgProfile size="1.6rem" />
+            <Link>
+              <CgIcons.CgProfile
+                size="1.6rem"
+                onClick={() => {
+                  history.push(`/story/${nickname}`);
+                }}
+              />
             </Link>
             <IconInfo>마이페이지</IconInfo>
             <Link>

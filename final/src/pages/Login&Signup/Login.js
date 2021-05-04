@@ -27,6 +27,7 @@ const Login = () => {
       return;
     }
     dispatch(userActions.loginAPI(email, pwd));
+    history.push("/");
   };
 
   return (
