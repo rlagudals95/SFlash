@@ -260,4 +260,6 @@ const Content = styled.div`
   ${(props) => (props.active ? "" : "display:none")}
 `;
 
+  
+
 export default Story;

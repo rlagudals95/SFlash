@@ -62,7 +62,7 @@ const Upload = (props) => {
       const reader = new FileReader();
       reader.onload = () => {
         // console.log(reader.result);
-        dispatch(imageActions.setPreview(reader.result));
+        dispatch(imageActions.getPreview(reader.result));
       };
       reader.readAsDataURL(img);
     });

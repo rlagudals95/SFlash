@@ -19,6 +19,7 @@
     "immer": "^8.0.1",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
+    "material-ui-popup-state": "^1.8.3",
     "moment": "^2.29.1",
     "node-sass": "^5.0.0",
     "react": "^17.0.1",

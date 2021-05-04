@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { history } from "../redux/configStore";
 
 import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
@@ -13,6 +14,10 @@ import { useDispatch, useSelector } from "react-redux";
 import PublishIcon from "@material-ui/icons/Publish";
 import TextField from "@material-ui/core/TextField";
 import Upload2 from "../shared/Upload2";
+import CustomizedMenus from "./CustomizedMenus.js";
+import MenuPopupState from "./CateModal";
+
+//드랍박스
 
 const UploadModal = (props) => {
   const dispatch = useDispatch();
@@ -20,6 +25,7 @@ const UploadModal = (props) => {
   const preview = useSelector((state) => state.image2.preview);
   const user_info = useSelector((state) => state.user.user);
   const [contents, setContents] = React.useState("");
+  const [title, setTitle] = React.useState("");
   // const post_id = props.match.params.id;
   const is_edit = false;
   console.log("프리뷰", preview);
@@ -44,6 +50,9 @@ const UploadModal = (props) => {
 
   //     return;
   //   }
+
+  //// 수정가능한 상태인지는 props.id(post_id) 여부에 따라
+
   //   //만약 수정가능 상태라면
   //   if (is_edit) {
   //     dispatch(imageActions.setPreview(_post.post_image_url)); // 페이지가 렌더링 되면서 기존 이미지 같이 렌더링
@@ -62,7 +71,7 @@ const UploadModal = (props) => {
   //     contents: contents,
   //   };
   //   console.log(post);
-  //   dispatch(postActions.addPostAX(post));
+  //   dispatch(postActions.addPostAPI(post));
   // };
 
   // 수정된 것을 리듀서-스토어에 디스패치해서 변경된 데이터를 본페이지에서 렌더링 되게 요청
@@ -77,11 +86,15 @@ const UploadModal = (props) => {
   //     contents: contents,
   //   };
   //   console.log(post_id);
-  //   dispatch(postActions.editPostAX(post_id, post));
+  //   dispatch(postActions.editPostAPI(post_id, post));
   // };
 
   const changeContents = (e) => {
     setContents(e.target.value);
+  };
+
+  const changeTitle = (e) => {
+    setTitle(e.target.value);
   };
   //캐러셀 모듈 코드
   var settings = {
@@ -141,6 +154,7 @@ const UploadModal = (props) => {
           <ModalLeftHeader>
             <ProCircle src={props.profile_image_url} />
             <ModalAuthor>username</ModalAuthor>
+
             <Upload2></Upload2>
             <ExitContainer>
               <ExitBtn onClick={props.close}>
@@ -181,6 +195,25 @@ const UploadModal = (props) => {
           <ModalImg />
         )} */}
         <ModalBottomContainer>
+          <MiddleBox>
+            {" "}
+            <Title>
+              <TextField
+                id="outlined-multiline-static"
+                label="📝제목 작성"
+                multiline
+                rows={1}
+                variant="outlined"
+                value={title}
+                onChange={changeTitle}
+              />
+            </Title>
+            {/* <CateBtn>
+              <MenuPopupState></MenuPopupState>
+            </CateBtn> */}
+            <CustomizedMenus></CustomizedMenus>
+          </MiddleBox>
+
           <TextField
             id="outlined-multiline-static"
             label="📝글 작성"
@@ -191,7 +224,9 @@ const UploadModal = (props) => {
             onChange={changeContents}
           />
           <WriteSubmit
-          // onClick={addPost}
+            // onClick={addPost}
+
+            onClick={props.close}
           >
             게시글 작성
           </WriteSubmit>
@@ -217,7 +252,7 @@ const Component = styled.div`
 const ModalComponent = styled.div`
   position: fixed !important;
   width: 580px;
-  height: 650px;
+  height: 730px;
   /* overflow: hidden; */
   top: 50%;
   left: 50%;
@@ -234,7 +269,7 @@ const ModalComponent = styled.div`
     /* all: unset; */
     position: fixed;
     width: 35vw;
-    height: 75vh;
+    height: 82vh;
     /* overflow: hidden; */
     top: 50%;
     left: 50%;
@@ -265,7 +300,7 @@ const ModalComponent = styled.div`
   }
   @media (max-width: 350px) {
     width: 100%;
-  } */
+  /* } */ /////////////// */
 `;
 
 const ExitContainer = styled.div`
@@ -381,6 +416,22 @@ const WriteSubmit = styled.button`
     outline: none;
     border: none;
   }
+`;
+
+const MiddleBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Title = styled.div`
+  margin-bottom: 1vh;
+`;
+const CateBtn = styled.div`
+  font-size: bold;
+  width: 6.5vw;
+  /* border: 1px solid lightgray; */
+  height: 3.5vh;
+  border-radius: 10px;
 `;
 
 export default UploadModal;

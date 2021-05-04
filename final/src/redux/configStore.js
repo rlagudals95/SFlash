@@ -12,6 +12,7 @@ import Email from "./modules/email";
 import Profile from "./modules/profile";
 // import Image from "./modules/image";
 // import Like from "./modules/like";
+import Image2 from "./modules/image2";
 
 // 스토어에 히스토리를 넣어주기
 export const history = createBrowserHistory();
@@ -23,7 +24,7 @@ const rootReducer = combineReducers({
   category: Category,
   email: Email,
   profile: Profile,
-  // image: Image,
+  image2: Image2,
   // like: Like,
   router: connectRouter(history),
 });
