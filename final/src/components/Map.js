@@ -13,6 +13,7 @@ import _ from "lodash"; // throttle, debounce 사용
 import { markerdata } from "./MarkerMockData";
 // import ModalSmallPost from "./ModalSmallPost";
 import "./Map.css";
+import UpLoadModal from "./UpLoadModal";
 
 // window 객체로부터 kakao mpa api를 호출하기
 // 이것이 되게 하기 위해서는 index.html(index.js 아님!!!)의 script 태그안의 src에다가
@@ -26,7 +27,7 @@ const Maps = (props) => {
 
   // 사진이 나오는 모달창 제어
   const [is_modal, setModal] = useState(false); // 마커 클릭하면 나오는 작은 모달
-  const [is_wideModal, setWideModal] = useState(false); // 작은 모달에서 댓글 달기를 누르면 나오는 확장된 모달
+  const [is_uploadModal, setUpLoadModal] = useState(false); // 작은 모달에서 댓글 달기를 누르면 나오는 확장된 모달
 
   // 위도, 경도, 마커, 주소
   const [latitude, setLatitude] = useState();
@@ -57,7 +58,9 @@ const Maps = (props) => {
         function(position) {
           console.log("현위치의 위도 = " + position.coords.latitude + ", 현위치의 경도 = " + position.coords.longitude);
           setLatitude(position.coords.latitude); 
-          setLongitude(position.coords.longitude)
+          setLongitude(position.coords.longitude);
+          // var nowPositionLat = position.coords.latitude
+          // var nowPositionLon = position.coords.longitude
           }, 
           function (error) {
             console.error(error);
@@ -114,6 +117,9 @@ const Maps = (props) => {
       // 위도 경도 좌표로 주소 알아내기
       var coord = new kakao.maps.LatLng(hereLat, hereLng);
       console.log(coord); // 여기까진 정상 작동, 이 아래부터 코드 수정이 필요
+      setLatitude(coord.Ma);  // latitude = coord.Ma
+      setLongitude(coord.La); // longitude = coord.La
+      console.log("클릭한 위치의 위도와 경도의 값을 다음과 같이 받아서 표시합니다: " + latitude + " " +  longitude);
 
       // var callback = function(result, status) {
       //   if (status === kakao.maps.services.status.OK) {
@@ -131,8 +137,10 @@ const Maps = (props) => {
           var spotName = result[0].address_name;
           console.log(result[0]);
           console.log(spotName);
+          // dispatch(mapActions.addSpotNameAPI(spotName)) // spotName을 서버로 보내서 저장시키기
         };
       });
+      
 
       function searchAddrFromCoords(coords, callback) {
         // 좌표로 행정동 주소 정보를 요청합니다
@@ -267,6 +275,8 @@ const Maps = (props) => {
       // } 
     });
 
+    
+
 
     // var marker = new kakao.maps.Marker({
     //     map: map,
@@ -283,7 +293,12 @@ const Maps = (props) => {
   
   // 지도 api 설정은 여기서 끝
   // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.  
-  }, [search, latitude, longitude]);
+  }, [search]);
+
+  // 작성모달 관련
+  const closeUpLoadModal = () => {
+    setUpLoadModal(false);
+  };
 
   return (
     <React.Fragment>
@@ -304,6 +319,8 @@ const Maps = (props) => {
         </div> */}
         {/* {is_modal? <ModalSmallPost imgUrl={imgUrl} spotName={spotName}/> : null} */}
       </MapBox>
+      {/* {is_uploadModal ? <UpLoadModal latitude={latitude} longitude={longitude}/> : null} */}
+      {is_uploadModal ? <UpLoadModal close={closeUpLoadModal}/> : null}
     </React.Fragment>
   );
 };
@@ -321,17 +338,17 @@ const SearchBox = styled.div`
     width: 600px;
   }
   @media (max-width: 1280px) {
-    top: 140px;
+    /* top: 140px; */
     width: 400px;
   }
-  @media (max-width: 970px) {
-    top: 140px;
-    left: 30vw;
+  @media (max-width: 960px) {
+    top: 100px;
+    /* left: 110px; */
     margin: auto;
-    width: 450px;
+    width: 400px;
   }
   @media (max-width: 400px) {
-    top: 140px;
+    top: 100px;
     width: 50%;
     margin: auto;
     left: 20vw;
@@ -347,7 +364,7 @@ const SearchInput = styled.input`
   border: none;
   &:focus {
     /* outline: blue; */
-    border-radius: 10px;
+    border-radius: 5px;
     border-color: blue;
   }
 `;

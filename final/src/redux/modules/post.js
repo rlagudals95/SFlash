@@ -6,7 +6,6 @@ import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
 import post_list from "../../components/MockData";
-import { func } from "prop-types";
 
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
@@ -28,9 +27,35 @@ const loading = createAction(LOADING, (post) => ({ post }));
 //   post_id,
 // }));
 
+const addPostAPI = () => {
+  return function (dispatch, getState) {
+    // const user_info = getState().user.user
+    axios({
+      method: "POST",
+      url: `${config.api}/board/`,
+      data: {
+        // title: "abc",
+        // content: "abc",
+        // category: "카페",
+        // file: xxxx.jpg,
+        // latitude: 37.343,
+        // longitude: 37.12321,
+        // spotName: "서산 유채꽃",
+        // spotNam: "우리집",
+      },
+      headers: {
+        "X-AUTH-TOKEN": `${config.headers.authorization}`,
+        contentType: "multipartFile",
+      },
+    }).then((res) => {
+      console.log(res);
+    });
+  };
+};
+
 const getPostAPI = (category) => {
   return function (dispatch, getState) {
-    const category = getState().category.is_category;
+    // const category = getState().category.is_category;
 
     // console.log("액시오스 카테고리 상태", category);
 
@@ -210,6 +235,7 @@ export default handleActions(
 
 const actionCreators = {
   getPostAPI,
+  addPostAPI,
 };
 
 export { actionCreators };

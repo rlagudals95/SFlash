@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import { 
+import {
   Container,
-  Title, 
-  InputStyle, 
-  SolidBtn, 
+  Title,
+  InputStyle,
+  SolidBtn,
   BorderBtn,
-  CheckBtn, 
+  CheckBtn,
   TextBtn,
-  InfoUl } from "../Css/loginSignupCss"
+  InfoUl,
+} from "../Css/loginSignupCss";
 import RegCheck from "../Css/RegCheck.css";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,14 +21,14 @@ import axios from "axios";
 const Story_EditPwd = () => {
   // console.log(email);
   const email = useSelector((state) => state.email.email);
-  
+
   const [originalPwd, setOriginalPwd] = React.useState("");
   const [newPwd, setNewPwd] = React.useState("");
   const [rePwd, setRePwd] = React.useState("");
 
   const changeOriginalPwd = (e) => {
     setOriginalPwd(e.target.value);
-  }
+  };
 
   // 비밀번호 정규식 검사(info 컬러 바꿔주기)
   const changeNewPwdReg = (e) => {
@@ -169,6 +170,5 @@ const Story_EditPwd = () => {
     </React.Fragment>
   );
 };
-
 
 export default Story_EditPwd;

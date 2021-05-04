@@ -394,7 +394,7 @@ justify-content: space-between; */
 
   @media (max-width: 1450px) {
     // 1450밑으로 넓이가 내려가면
-    z-index: 5000;
+    z-index: 901;
     width: 100%;
     position: fixed;
     left: 0;
