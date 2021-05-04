@@ -5,12 +5,14 @@ import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as categoryActions } from "../redux/modules/category";
 import * as BiIcons from "react-icons/bi";
+import SearchBar from "./SearchBar";
+import Input2 from "../elements/Input2";
 // import { actionCreators as PostActions } from "../redux/modules/post";
-const Category = () => {
+const MobileSelect = () => {
   const dispatch = useDispatch();
 
   const is_category = useSelector((state) => state.category.is_category); //이걸 가져와서 이제 눌린상탠지 안눌린 상탠지 판단
-
+  const [search, setSearch] = React.useState("");
   // console.log(is_category);
   // console.log("카테고리 배열길이", is_category.length);
 
@@ -40,6 +42,13 @@ const Category = () => {
         {/*  */}
         {/* 전체보기 버튼 */}
         <CategoryInfo>
+          <Input2
+            value={search}
+            placeholder="카테고리를 검색해주세요 (●'◡'●)"
+            _onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          ></Input2>
           <CateGoryTitle>
             <CategoryIcon>
               {" "}
@@ -374,12 +383,13 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default MobileSelect;
 
 const CategoryBox = styled.div`
   /* display: flex;
 justify-content: space-between; */
-  width: 170px;
+  width: 85vw;
+  height: 19.5vh;
   /* border-top: 1px solid #efefef;
   border-bottom: 1px solid #efefef; */
   padding: 8px 0px;
@@ -391,36 +401,10 @@ justify-content: space-between; */
   padding: 20px;
   border-radius: 7px;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
-  @media (max-width: 1450px) {
-    // 1450밑으로 넓이가 내려가면
-    z-index: 901;
-    width: 100%;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    justify-content: space-around;
-    flex-direction: row;
-    background-color: transparent;
-    box-shadow: none;
-    padding: 0px 4px;
-    padding-top: -50px;
-    padding-bottom: 10px;
-  }
-  @media (max-width: 600px) {
-    // 1450밑으로 넓이가 내려가면
-    z-index: 901;
-    width: 100%;
-    position: fixed;
-    left: 0;
-    top: 140px;
-    justify-content: space-around;
-    flex-direction: row;
-    background-color: transparent;
-    box-shadow: none;
-    padding: 0px 4px;
-    padding-top: -50px;
-    padding-bottom: 10px;
-  }
+  top: -67%;
+  background-color: white;
+  left: 50%;
+  transform: translate(-50%, -50%);
   /* height: 100px;
   overflow-y: scroll;
   ::-webkit-scrollbar {

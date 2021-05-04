@@ -59,6 +59,18 @@ const ModalDetail = (props) => {
       username: "hmk1022",
       comment: "모달창 이상해요 ㅠ....",
     },
+    {
+      profileImg:
+        "data:image/jpeg;base64,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",
+      username: "hmk1022",
+      comment: "모달창 이상해요 ㅠ....",
+    },
+    {
+      profileImg:
+        "data:image/jpeg;base64,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",
+      username: "hmk1022",
+      comment: "모달창 이상해요 ㅠ....",
+    },
   ];
 
   const is_comment = comment_list ? true : false;
@@ -276,7 +288,7 @@ const Component = styled.div`
 const ModalComponent = styled.div`
   position: fixed !important;
   width: 580px;
-  height: 790px;
+  height: 830px;
   /* overflow: hidden; */
   top: 50%;
   left: 50%;
@@ -293,7 +305,22 @@ const ModalComponent = styled.div`
     /* all: unset; */
     position: fixed;
     width: 35vw;
-    height: 70vh;
+    height: 67vh;
+    /* overflow: hidden; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* background-color: white; */
+    z-index: 1000;
+    border: none;
+    box-sizing: border-box;
+  }
+  @media (max-width: 1210px) {
+    // 1210밑으로 넓이가 내려가면
+    /* all: unset; */
+    position: fixed;
+    width: 35vw;
+    height: 67vh;
     /* overflow: hidden; */
     top: 50%;
     left: 50%;
@@ -352,6 +379,18 @@ const ModalBottomContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 12px;
+  margin: 0px auto;
+  @media (max-width: 1600px) {
+    // 1450밑으로 넓이가 내려가면
+    text-align: left;
+    width: 100%;
+    height: 340px; // 이거 올려주니까 댓글창이보인다..!
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0px auto;
+  }
+
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     text-align: left;
@@ -425,6 +464,13 @@ const InfoBox = styled.div`
     // 1450밑으로 넓이가 내려가면
     width: calc(100% - 2vw); //패딩대신... 오,....
     height: 20vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0px auto;
+  }
+  @media (max-width: 1440px) {
+    width: calc(100% - 2vw); //패딩대신... 오,....
+    height: 13vh;
     display: flex;
     flex-direction: column;
     margin: 0px auto;
@@ -576,7 +622,7 @@ const CmtDeleteBtn = styled.button`
   outline: none;
   opacity: 0.2;
   margin-right: 1.3vw;
-  margin-bottom: 3.3vh;
+  margin-bottom: 2.3vh;
   &:hover {
     opacity: 1;
   }

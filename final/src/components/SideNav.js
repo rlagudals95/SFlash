@@ -27,6 +27,7 @@ function Navbar() {
   const is_login = useSelector((state) => state.user.is_login);
   const nickname = localStorage.getItem("nickname");
 
+  console.log("확인", is_login);
   const onLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
       dispatch(userActions.logOut());
@@ -78,10 +79,6 @@ function Navbar() {
               <FaIcons.FaEnvelopeOpenText size="1.4rem" />
             </Link>
             <IconInfo>FAQ</IconInfo>
-            {/* {is_login? :    <Link to="/login">
-              <GrIcons.GrLogin size="1.5rem" />
-            </Link>
-            <IconInfo>로그인</IconInfo>} */}
 
             {is_login ? (
               <React.Fragment>
@@ -160,9 +157,6 @@ function Navbar() {
     </>
   );
 }
-
-export default Navbar;
-
 const LOGO = styled.div`
   margin-bottom: 7vh;
 
@@ -183,12 +177,32 @@ const SideMini = styled.div`
   z-index: 20;
   display: flex;
   flex-direction: column;
-  @media (max-width: 960px) {
-    z-index: 5000;
+  @media (max-width: 1400px) {
+    all: unset;
+    align-items: center;
     width: 100%;
-    height: 60px;
+    height: 8vh;
+    position: fixed;
+    background-color: white;
+    left: 0;
+    top: 0;
+    z-index: 500;
     justify-content: space-around;
+    display: flex;
     flex-direction: row;
+  }
+  @media (max-width: 600px) {
+    all: unset;
+    margin: 0px;
+    z-index: 5000;
+    position: fixed;
+    width: 100%;
+    height: 51px;
+    justify-content: space-around;
+    /* flex-direction: row; */
+    bottom: 0px;
+    left: 0;
+    background-color: white;
   }
 `;
 
@@ -199,7 +213,7 @@ const SideIcon = styled.div`
   justify-content: space-between;
   height: 500px;
   margin-top: 25px;
-  @media (max-width: 960px) {
+  @media (max-width: 1400px) {
     width: 100%;
     height: 7vh;
     justify-content: space-between;
@@ -234,3 +248,5 @@ const IconInfo = styled.div`
     display: none;
   }
 `;
+
+export default Navbar;
