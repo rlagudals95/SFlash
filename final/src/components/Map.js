@@ -22,6 +22,7 @@ const { kakao } = window;
 
 const Maps = (props) => {
   const dispatch = useDispatch();
+  // const totalPicPostData = useSelector((state) => state.map.narmal_data);
   // const is_login = useSelector((state) => state.user.is_login);
   // const is_session = sessionStorage.getItem('jwt') ? true : false;
 
@@ -30,21 +31,19 @@ const Maps = (props) => {
   const [is_uploadModal, setUpLoadModal] = useState(false); // 작은 모달에서 댓글 달기를 누르면 나오는 확장된 모달
 
   // 위도, 경도, 마커, 주소
-  const [startlat, setStartLat] = useState();
-  const [startlon, setStartLon] = useState();
-  const [latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
+  const [startlat, setStartLat] = useState();    // 현위치 위도 설정
+  const [startlon, setStartLon] = useState();    // 현위치 경도 설정
+  const [latitude, setLatitude] = useState();    // 클릭한 위치 위도 설정
+  const [longitude, setLongitude] = useState();  // 클릭한 위치 경도 설정
   const [address, setAddress] = useState();
   const [markerId, setMarkerId] = useState();
   const [imgUrl, setImgUrl] = useState("");
-  const [spotName, setSpotName] = useState("");
-  const [_map, setMap] = useState();
+  const [spotName, setSpotName] = useState("");  // 클릭한 위치 이름 설정
+  const [_map, setMap] = useState();             // useEffect 외부에서 map을 쓰기 위한 것.
 
   // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
   const [search, setSearch] = useState("");
   //조건 걸어주기 // 나를 기준으로 몇 km 이내
-
-  // const totalPicPostData = useSelector((state) => state.map.narmal_data);
 
   // 이래야 화면 렌더링이 계속안된다
   const debounce = _.debounce((e) => {
@@ -104,8 +103,19 @@ const Maps = (props) => {
 
     // 콘솔창에 클릭한 위치의 위도 경도가 표시되는 코드
     // 지도에 클릭 이벤트를 등록합니다
+    // 클릭하면 위도, 경도, 주소 정보를 받고 작성창이 뜨게 한다
     // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
     kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+      // ** 주의!!! 구현된것들이 안정적으로 돌아간다고 판단된 이후에는 
+      // ** 로그인 한 사람만 할 수 있는 클릭이벤트가 되도록
+      // ** 아래처럼 if문으로 설정한다.
+      // 클릭하면 게시물 작성창이 뜨게 하기 : 로그인 한 사람만 되게 하기
+      // if (is_session) { 
+      //   setUpLoadModal(true); // 클릭하면 게시물 작성 모달창이 뜨게 한다
+      // } else {
+      //   window.alert("로그인 해야 게시물을 작성할 수 있어요!")
+      // }
 
       // 클릭한 위도, 경도 정보를 가져옵니다 
       var latlng = mouseEvent.latLng;
@@ -137,10 +147,14 @@ const Maps = (props) => {
         // 좌표로 행정동 주소 정보를 요청합니다
         geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
       }
+      
+      // 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
+      setUpLoadModal(true);
 
       // var address = geocoder.coord2Address(hereLng, hereLat, callback);
       // console.log(address)
       // console.log(spotName)
+      // 클릭이벤트 종료
     });
 
     // -----------------------------------------------------------------------------
@@ -266,6 +280,9 @@ const Maps = (props) => {
   const closeUpLoadModal = () => {
     setUpLoadModal(false);
   };
+
+  // 작성창이 뜨게 하기 제어부분
+  // const 
 
   // _map
 
