@@ -84,7 +84,7 @@ const ModalDetail = (props) => {
     height: 42.5vh;
     max-height: 350px;
     @media (max-width: 1440px) {
-      // 1450밑으로 넓이가 내려가면
+      /* 1450밑으로 넓이가 내려가면 */
       /* all: unset; */
       background-image: url(${props.imgUrl});
       background-size: cover;
@@ -97,7 +97,7 @@ const ModalDetail = (props) => {
       height: 35vh;
     }
     @media (max-width: 600px) {
-      // 1450밑으로 넓이가 내려가면
+      /* 1450밑으로 넓이가 내려가면 */
       /* all: unset; */
       background-image: url(${props.imgUrl});
       background-size: cover;
