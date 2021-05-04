@@ -6,7 +6,7 @@ import { useMediaQuery } from "react-responsive";
 import { Grid, Text, Button, Input } from "../elements/index";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
-import SideNav from "../components/SideNav";
+import Navbar from "../components/SideNav";
 import Post from "../components/Post";
 import SearchBar from "../components/SearchBar";
 import LogBtn from "../components/LogBtn";
@@ -22,6 +22,8 @@ import post_list from "../components/MockData";
 import { actionCreators as PostActions } from "../redux/modules/post";
 import category from "../redux/modules/category";
 import UploadModal from "../components/UpLoadModal";
+import MobileCate from "../components/MobileCate";
+import MobileSelect from "../components/MobileSelect";
 
 const PostList = () => {
   const dispatch = useDispatch();
@@ -193,8 +195,14 @@ const PostList = () => {
           }
         })}
       </Container>
-      <SideNav />
-      <Category />
+      <Navbar />
+      <Web>
+        {" "}
+        <Category />
+      </Web>
+      <MobileCate></MobileCate>
+      {/* <MobileCate></MobileCate> */}
+
       <Box></Box>
       {/* <Button
         is_float
@@ -239,7 +247,8 @@ const Container = styled.div`
     margin: auto auto;
     padding: 0;
   }
-  @media (max-width: 400px) {
+  @media (max-width: 600px) {
+    margin-top: 19vh;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 2px;
   }
@@ -273,6 +282,19 @@ const TopBox = styled.div`
   height: 110px;
 `;
 
+const Mobile = styled.div`
+  display: none;
+  @media (max-width: 600px) {
+    display: flex;
+  }
+`;
+
+const Web = styled.div`
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
 const Search = styled.div`
   display: block;
   margin: auto auto;
@@ -285,6 +307,10 @@ const Search = styled.div`
   box-sizing: border-box;
   @media (max-width: 1450px) {
     // 1450밑으로 넓이가 내려가면
-    width: 80vw;
+    width: 35vw;
+  }
+  @media (max-width: 600px) {
+    // 1450밑으로 넓이가 내려가면
+    display: none;
   }
 `;
