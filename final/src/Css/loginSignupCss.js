@@ -45,7 +45,6 @@ const InputStyle = styled.input`
     border: 1px solid red;
   }
   cursor: pointer;
-  
 `;
 
 const SolidBtn = styled.button`
@@ -131,7 +130,7 @@ const InfoUl = styled.ul`
   color: #666666;
   font-weight: 400;
   text-align: left;
-  margin-top: 0px;
+  margin-top: 5px;
 `;
 
 const InfoLi = styled.li`

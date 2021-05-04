@@ -25,13 +25,14 @@ function Navbar() {
   const showSidebar = () => setSidebar(!sidebar);
 
   const is_login = useSelector((state) => state.user.is_login);
+  const nickname = localStorage.getItem("nickname");
 
   const onLogout = () => {
-    if(window.confirm("로그아웃 하시겠습니까?")){
+    if (window.confirm("로그아웃 하시겠습니까?")) {
       dispatch(userActions.logOut());
-      history.goBack();
+      history.push('/');
     }
-  }
+  };
 
   return (
     <>
@@ -60,8 +61,13 @@ function Navbar() {
               <MdIcons.MdPhotoLibrary size="1.6rem" />
             </Link>
             <IconInfo>커뮤니티</IconInfo>
-            <Link to="/story">
-              <CgIcons.CgProfile size="1.6rem" />
+            <Link>
+              <CgIcons.CgProfile
+                size="1.6rem"
+                onClick={() => {
+                  history.push(`/story/${nickname}`);
+                }}
+              />
             </Link>
             <IconInfo>마이페이지</IconInfo>
             <Link>
@@ -79,10 +85,7 @@ function Navbar() {
 
             {is_login ? (
               <React.Fragment>
-                <GrIcons.GrLogout
-                  size="1.5rem"
-                  onClick={onLogout}
-                />
+                <GrIcons.GrLogout size="1.5rem" onClick={onLogout} />
                 <IconInfo>로그아웃</IconInfo>
               </React.Fragment>
             ) : (

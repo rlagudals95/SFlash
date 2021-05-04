@@ -21,6 +21,7 @@ import Story_Content from "../components/Story_Content";
 const Story = (props) => {
   const dispatch = useDispatch();
   const user_info = useSelector((state) => state.user.user);
+  const nickname = localStorage.getItem("nickname");
 
   // const me = localStorage.getItem('nickname');
   // const is_me = user_info.nickname === me ;
@@ -68,6 +69,15 @@ const Story = (props) => {
     }
   };
 
+  const [activeMenu, setActiveMenu] = useState("");
+  // 클릭한 인덱스 활성화
+  const menuHandleClick = (e) => {
+    const id = e.target.id;
+    if (id !== active) {
+      setActiveMenu(id);
+    }
+  };
+
   return (
     <React.Fragment>
       <Wrapper>
@@ -76,7 +86,7 @@ const Story = (props) => {
 
           <Grid>
             <Grid height="150px" />
-            <Nickname>{props.user_info.nickname}</Nickname>
+            <Nickname>{nickname}</Nickname>
             <Introduction>{props.user_info.introduction}</Introduction>
           </Grid>
 
@@ -93,17 +103,25 @@ const Story = (props) => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={openModal}>프로필 편집</MenuItem>
-              <MenuItem onClick={openModal}>비밀번호 변경</MenuItem>
+              <MenuItem onClick={() => {openModal(); handleClose();}} >프로필 편집</MenuItem>
+              <MenuItem onClick={() => {openModal(); handleClose();}}>비밀번호 변경</MenuItem>
             </Menu>
 
             <Modal isOpen={modalIsOpen} close={closeModal} style={modalStyle}>
-              <Story_EditProfile user_info={props.user_info} />
+              {/*  현재 닉네임은 로컬스토리지에서 받아온 닉네임으로 설정되어 있지만 api 연결후에는 api에서 받아온 정보로 사용하기 */}
+              <Story_EditProfile user_info={props.user_info} nickname={nickname}/>
               <CloseButton
                 src="https://image.flaticon.com/icons/png/512/458/458595.png"
                 onClick={closeModal}
               />
             </Modal>
+            {/* <Modal isOpen={modalIsOpen} close={closeModal} style={modalStyle}>
+            <Story_EditPwd />
+            <CloseButton
+                src="https://image.flaticon.com/icons/png/512/458/458595.png"
+                onClick={closeModal}
+              />
+            </Modal> */}
           </div>
         </ProfileContainer>
 
@@ -112,14 +130,14 @@ const Story = (props) => {
     active 를 활용해 같은 방법으로 제어해준다.*/}
         <Tabs>
           <Tab onClick={handleClick} active={active === "myPost"} id={"myPost"}>
-            <b>{props.user_info.nickname}</b> 님의 게시물
+            <b>{nickname}</b> 님의 게시물
             {/* <TabUnderBar active={active === "myPost"} /> */}
           </Tab>
           <text fontSize="4rem" fontWeight="700" style={{ color: "grey" }}>
             |
           </text>
           <Tab onClick={handleClick} active={active === "myLike"} id={"myLike"}>
-            <b>{props.user_info.nickname}</b> 님의 좋아요
+            <b>{nickname}</b> 님의 좋아요
             {/* <TabUnderBar active={active === "myLike"} /> */}
           </Tab>
         </Tabs>
@@ -172,10 +190,10 @@ const Setting = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  width: 160px;
+  width: 170px;
   aspect-ratio: 1/1;
   border-radius: 150px;
-  padding: 30px;
+  padding: 20px;
   margin: 20px;
   background-size: cover;
   object-fit: cover;
@@ -203,9 +221,9 @@ const modalStyle = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(247, 247, 247, 0.8)",
+    backgroundColor: "rgba(48, 48, 48, 0.6)",
     transition: "opacity 2000ms ease-in-out",
-    zIndex: 500,
+    zIndex: 800,
   },
   content: {
     width: "650px",
@@ -214,7 +232,7 @@ const modalStyle = {
     padding: "20px",
     border: "none",
     boxShadow: "0 2px 12px 0 rgba(0, 0, 0, 0.1)",
-    zIndex: 600,
+    zIndex: 900,
   },
 };
 

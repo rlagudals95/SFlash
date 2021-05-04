@@ -9,33 +9,42 @@ import { nicknameRegCheck } from "../shared/common";
 import axios from "axios";
 
 import { Grid } from "../elements/index";
-import { InputStyle, InfoUl, InfoLi } from "../Css/loginSignupCss";
+import { InfoUl, InfoLi } from "../Css/loginSignupCss";
 import { HiCamera } from "react-icons/hi";
 import { GiCheckMark } from "react-icons/gi";
+// import { set } from "immer/dist/internal";
 
 const Story_EditProfile = (props) => {
   const dispatch = useDispatch();
   // 스토리페이지에서 user_info를 props로 받아온다.
-  const { user_info } = props;
-  console.log(user_info);
-  const nickname = user_info.nickname;
+  const { user_info, nickname } = props;
+  console.log("user_info:", user_info);
+  console.log("nickname:", nickname)
+
+
   // 닉네임 정보가 있으면 수정할 수 있구요.
   const is_edit = nickname ? true : false;
   const is_uploading = useSelector((state) => state.profile.is_uploading);
   const preview = useSelector((state) => state.profile.preview);
+  // const dupCheck = useSelector((state) => state.profile.dupCheck);
+  // console.log(dupCheck);
 
-  //   React.useEffect(() => {
-  //     if(!user_info){
-  //         return false;
-  //     }
-  //     if(is_edit){
-  //       // 기존 프로필 이미지를 프리뷰로 불러오기
-  //       dispatch(profileActions.setPreview(user_info.profileImgUrl));
-  //     }else{
-  //       // 없으면 기본이미지 띄워주기
-  //       dispatch(profileActions.setPreview("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"));
-  //     }
-  // },[])
+  React.useEffect(() => {
+    if (!user_info) {
+      return false;
+    }
+    if (is_edit) {
+      // 기존 프로필 이미지를 프리뷰로 불러오기
+      dispatch(profileActions.setPreview(user_info.profileImgUrl));
+    } else {
+      // 없으면 기본이미지 띄워주기
+      dispatch(
+        profileActions.setPreview(
+          "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
+        )
+      );
+    }
+  }, []);
 
   // 이미지 업로드하기
   const fileInput = React.useRef();
@@ -80,63 +89,63 @@ const Story_EditProfile = (props) => {
   // 닉네임 입력
   const changeNickname = (e) => {
     setNewNickname(e.target.value);
-    // const nicknameInfo = document.querySelector(
-    //   "ul.checkNickname li:nth-child(1)"
-    // );
-    // const nicknameInfo_dupCheck = document.querySelector(
-    //   "ul.checkNickname li:nth-child(2)"
-    // );
-    // // 닉네임 정규식 검사
-    // if (!nicknameRegCheck(e.target.value)) {
-    //   nicknameInfo.classList.add("error");
-    //   nicknameInfo.classList.remove("ok");
-    // } else {
-    //   nicknameInfo.classList.add("ok");
-    //   nicknameInfo.classList.remove("error");
-    // }
-    // // 닉네임 중복 확인
-    // if (nicknameDup === false) {
-    //   nicknameInfo_dupCheck.classList.add("error");
-    //   nicknameInfo_dupCheck.classList.remove("ok");
-    // } else {
-    //   nicknameInfo_dupCheck.classList.add("ok");
-    //   nicknameInfo_dupCheck.classList.remove("error");
-    // }
+    const nicknameInfo = document.querySelector(
+      "ul.checkNickname li:nth-child(1)"
+    );
+    const nicknameInfo_dupCheck = document.querySelector(
+      "ul.checkNickname li:nth-child(2)"
+    );
+    // 닉네임 정규식 검사
+    if (!nicknameRegCheck(e.target.value)) {
+      nicknameInfo.classList.add("error");
+      nicknameInfo.classList.remove("ok");
+    } else {
+      nicknameInfo.classList.add("ok");
+      nicknameInfo.classList.remove("error");
+    }
+    // 닉네임 중복 확인
+    if (nicknameDup === false) {
+      nicknameInfo_dupCheck.classList.add("error");
+      nicknameInfo_dupCheck.classList.remove("ok");
+    } else {
+      nicknameInfo_dupCheck.classList.add("ok");
+      nicknameInfo_dupCheck.classList.remove("error");
+    }
   };
 
-  // 닉네임 중복확인
-  // const nicknameDupCheckAPI = (newNickname) => {
-  //   console.log(newNickname);
-  //   const API = "http://seungwook.shop/user/signup/nickchk";
-  //   axios
-  //     .post(
-  //       API,
-  //       {
-  //         nickname: newNickname,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       console.log("넥네임중복확인!", res.data);
-  //       if (res.data === false) {
-  //         alert("이미 등록된 닉네임 입니다!");
-  //       } else {
-  //         alert("사용 가능한 닉네임 입니다 :)");
-  //         setNicknameDup(true);
-  //         setEditNickname(true);
-  //         setOriginalNickname(true);
-  //         const nicknameInfo_dupCheck = document.querySelector(
-  //           "ul.checkNickname li:nth-child(2)"
-  //         );
-  //         nicknameInfo_dupCheck.classList.add("ok");
-  //         nicknameInfo_dupCheck.classList.remove("error");
-  //       }
-  //     });
-  // };
+  const nicknameDupCheckAPI = (newNickname) => {
+      return function (dispatch, getState, { history }) {
+        console.log(newNickname);
+        const API = "http://seungwook.shop/user/signup/nickchk";
+        axios
+          .post(
+            API,
+            {
+              nickname: newNickname,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            console.log("넥네임중복확인!", res.data);
+            if (res.data === false) {
+              alert("이미 등록된 닉네임 입니다!");
+            } else {
+              alert("사용 가능한 닉네임 입니다 :)");
+              setNicknameDup(true);
+              const nicknameInfo_dupCheck = document.querySelector(
+                "ul.checkNickname li:nth-child(2)"
+              );
+              nicknameInfo_dupCheck.classList.add("ok");
+              nicknameInfo_dupCheck.classList.remove("error");
+            }
+            setOriginalNickMode(true);
+          });
+      };
+    };
 
   // 자기소개 입력하기(기존에 입력한 자기소개가 있으면 띄워준다 input 창에 vaule 설정해줘야 이전에 썼던 글이 남아있음. 없으면 null;)
   const [introduction, setIntroduction] = React.useState(
@@ -160,7 +169,8 @@ const Story_EditProfile = (props) => {
       <ProfileContainer>
         <ImgContainer>
           {/* label 태그를 이용해 (input창의 id 값을 for로 받아서) 원하는 버튼으로 바꾸어줄 수 있다. */}
-          <EditImgBtn for="edit_profile_img">
+          {originalNickMode && (
+            <div><EditImgBtn for="edit_profile_img">
             <HiCamera size="25px" color="4670fd" />
           </EditImgBtn>
           <input
@@ -172,6 +182,9 @@ const Story_EditProfile = (props) => {
             // '사진선택' 버튼 안 보이도록
             style={{ display: "none" }}
           />
+          </div>
+          )}
+          
           {/* 프로필 이미지 : 프리뷰가 있으면 보여주고 없으면 기본 이미지 보여주기 */}
           <ProfileImg
             src={
@@ -183,21 +196,38 @@ const Story_EditProfile = (props) => {
           />
         </ImgContainer>
 
+        {/* originalNickMode가 true 일 때는 기존 닉네임을 보여주고 
+            닉네임변경 벼튼을 누르면 originalNickname(false)로 닉네임 변경 모드로 전환
+            변경 후에는 다시 변경된 닉네임으로 originalNickMode(true) */}
         {originalNickMode ? (
-          <NicknameContainer>
-            <Nickname>{user_info.nickname}</Nickname>
+          <Grid>
+          <NicknameContainer height="60px">
+            <Nickname>{nickname}</Nickname>
             <EditNicknameBtn
-              onClick={
-                setOriginalNickMode(false)
-                // setOriginalNickname(false)
-              }
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setOriginalNickMode(false);
+              }}
             >
-              {" "}
               닉네임 변경
             </EditNicknameBtn>
           </NicknameContainer>
-        ):(
-          <NicknameContainer>
+          <Grid flex>
+          <TextField
+            value={introduction}
+            placeholder="자기소개를 입력해주세요."
+            onChange={changeIntroduction}
+            disabled={is_uploading}
+          />
+        </Grid>
+        
+          <SolidBtn onClick={onEditProfile}>저장하기</SolidBtn>
+        </Grid>
+        ) : (
+          <div>
+            <Grid height="20px" />
+          <NicknameContainer height="50px">
             <InputStyle
               placeholder="새 닉네임 입력"
               type="type"
@@ -210,20 +240,25 @@ const Story_EditProfile = (props) => {
                 changeNickname(e);
               }}
             />
-            <EditNicknameBtn
+            <SolidBtn
+            //  disabled={is_uploading}
               onClick={() => {
-                // if (!nicknameRegCheck(newNickname)) {
-                //   alert(
-                //     "아이디는 6자 이상의 영문 혹은 영문과 숫자 조합만 가능합니다."
-                //   );
-                //   return false;
-                // }
-                setOriginalNickMode(true)
-                // nicknameDupCheckAPI(newNickname);
+                // e.preventDefault();
+                // e.stopPropagation();
+                if (!nicknameRegCheck(newNickname)) {
+                  alert(
+                    "아이디는 6자 이상의 영문 혹은 영문과 숫자 조합만 가능합니다."
+                  );
+                  return false;
+                }
+                  console.log(newNickname);
+                  nicknameDupCheckAPI(newNickname);
+                  console.log(newNickname);
               }}
             >
               중복확인
-            </EditNicknameBtn>
+            </SolidBtn>
+            </NicknameContainer>
             <InfoUl className="checkNickname">
               <InfoLi>
                 <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
@@ -234,21 +269,11 @@ const Story_EditProfile = (props) => {
                 아이디 중복확인
               </InfoLi>
             </InfoUl>
-          </NicknameContainer>
+            </div>
+          
         )}
 
-        <Grid flex margin="10px">
-          <TextField
-            value={introduction}
-            placeholder="자기소개를 입력해주세요."
-            rows={5}
-            onChange={changeIntroduction}
-            disabled={is_uploading}
-          />
-        </Grid>
-        <Grid>
-          <SaveBtn onClick={onEditProfile}>저장하기</SaveBtn>
-        </Grid>
+        
       </ProfileContainer>
     </React.Fragment>
   );
@@ -259,12 +284,11 @@ const ProfileContainer = styled.div`
   padding: 35px;
 `;
 const ImgContainer = styled.div`
-  width: 140px;
-  margin: 15px;
+  margin: 10px 20px 0px 20px;
 `;
 
 const ProfileImg = styled.img`
-  width: 150px;
+  width: 175px;
   aspect-ratio: 1/1;
   border-radius: 150px;
   padding: 0px;
@@ -275,8 +299,8 @@ const ProfileImg = styled.img`
 
 const EditImgBtn = styled.label`
   position: absolute;
-  margin-left: 110px;
-  margin-top: 110px;
+  margin-left: 130px;
+  margin-top: 130px;
   padding: 5px;
   border-radius: 50px;
   background-color: #ffffff;
@@ -289,13 +313,16 @@ const EditImgBtn = styled.label`
 `;
 
 const Nickname = styled.text`
-  font-size: 1.4rem;
+  margin-left: 10px;
+  font-size: 1.5rem;
   font-weight: 400;
 `;
 
 const NicknameContainer = styled.div`
   display: flex;
   align-items: center;
+  ${(props) => (props.height ? `height:${props.height};` : "")}
+  margin: 10px 0px 10px 12px;
 `;
 
 const EditNicknameBtn = styled.button`
@@ -308,14 +335,32 @@ const EditNicknameBtn = styled.button`
   background-color: #ffffff;
   color: ${(props) => props.theme.main_color};
   outline: none;
-  border: 1.5pt solid ${(props) => props.theme.main_color};
+  border: 1pt solid ${(props) => props.theme.main_color};
   &:hover {
     color: #ffffff;
     background-color: grey;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
-    border: 1.5pt solid grey;
+    border: 1pt solid grey;
   }
+`;
+
+const InputStyle = styled.input`
+  border: 1px solid grey;
+  width: 45%;
+  height: 38px;
+  border: 1px solid grey;
+  border-radius: 8px;
+  padding: 4px 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  margin:0px;
+  color: grey;
+  input:focus {
+    outline: none !important;
+    border: 1px solid red;
+  }
+  cursor: pointer;
 `;
 
 const TextField = styled.textarea`
@@ -326,15 +371,16 @@ const TextField = styled.textarea`
   aspect-ratio: 1/0.4;
   padding: 16px 16px;
   box-sizing: border-box;
-  margin: 0px;
+  margin: 10px;
   font-size: 1rem;
+  line-height: 1.5rem;
 `;
 
-const SaveBtn = styled.button`
+const SolidBtn = styled.button`
   display: block;
   border: none;
   margin: 20px 10px;
-  width: 120px;
+  width: 100px;
   height: 48px;
   border-radius: 8px;
   box-sizing: border-box;
