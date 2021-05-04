@@ -9,6 +9,7 @@ import { NavigateBeforeRounded } from "@material-ui/icons";
 
 const GET_CATEGORY = "GET_CATEGORY";
 const RESET_CATEGORY = "RESET_CATEGORY";
+const SELECT_CATEGORY = "SELECT_CATEGORY";
 
 const getCategory = createAction(GET_CATEGORY, (category) => ({
   category,
@@ -16,9 +17,13 @@ const getCategory = createAction(GET_CATEGORY, (category) => ({
 const resetCategory = createAction(RESET_CATEGORY, (is_category) => ({
   is_category,
 }));
+const selectCategory = createAction(SELECT_CATEGORY, (select_category) => ({
+  select_category,
+}));
 
 const initialState = {
   is_category: [], // 이제 여기에 각자 타입을 다 넣어준다? // 요 배열의 길이가 0이면 모두 출력
+  select_category: null, // 게시글 작성때 쓰일 state
 };
 
 export default handleActions(
@@ -51,10 +56,19 @@ export default handleActions(
       produce(state, (draft) => {
         draft.is_category = []; // 전체보기 효과를 위해 이렇게 리셋 해준다
       }),
+    [SELECT_CATEGORY]: (state, action) =>
+      produce(state, (draft) => {
+        draft.select_category = action.payload.select_category;
+
+        // if (draft.select_category == action.payload.select_category) {
+        //   return null;
+        // }
+      }),
   },
+
   initialState
 );
 
-const actionCreators = { getCategory, resetCategory };
+const actionCreators = { getCategory, resetCategory, selectCategory };
 
 export { actionCreators };

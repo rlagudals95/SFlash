@@ -14,10 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PublishIcon from "@material-ui/icons/Publish";
 import TextField from "@material-ui/core/TextField";
 import Upload2 from "../shared/Upload2";
-import CustomizedMenus from "./CustomizedMenus.js";
-import MenuPopupState from "./CateModal";
-
-//드랍박스
+import SelectCate from "./SelectCate";
 
 const UploadModal = (props) => {
   const dispatch = useDispatch();
@@ -208,10 +205,6 @@ const UploadModal = (props) => {
                 onChange={changeTitle}
               />
             </Title>
-            {/* <CateBtn>
-              <MenuPopupState></MenuPopupState>
-            </CateBtn> */}
-            <CustomizedMenus></CustomizedMenus>
           </MiddleBox>
 
           <TextField
@@ -223,6 +216,7 @@ const UploadModal = (props) => {
             value={contents}
             onChange={changeContents}
           />
+          <SelectCate></SelectCate>
           <WriteSubmit
             // onClick={addPost}
 
@@ -252,7 +246,7 @@ const Component = styled.div`
 const ModalComponent = styled.div`
   position: fixed !important;
   width: 580px;
-  height: 730px;
+  height: 810px;
   /* overflow: hidden; */
   top: 50%;
   left: 50%;
@@ -269,7 +263,7 @@ const ModalComponent = styled.div`
     /* all: unset; */
     position: fixed;
     width: 35vw;
-    height: 82vh;
+    height: 76vh;
     /* overflow: hidden; */
     top: 50%;
     left: 50%;
@@ -325,7 +319,7 @@ const ModalBottomContainer = styled.div`
   margin-top: 30px;
   text-align: left;
   width: 550px;
-  height: 500px;
+  height: 600px;
   display: flex;
   flex-direction: column;
   padding: 0px 12px;
@@ -333,7 +327,7 @@ const ModalBottomContainer = styled.div`
     // 1450밑으로 넓이가 내려가면
     text-align: left;
     width: 33vw;
-    height: 270px; // 이거 올려주니까 댓글창이보인다..!
+    // 이거 올려주니까 댓글창이보인다..!
     display: flex;
     flex-direction: column;
     padding: 0;
