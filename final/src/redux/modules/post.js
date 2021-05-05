@@ -52,47 +52,31 @@ const addPostAPI = () => {
   };
 };
 
-const getPostAPI = (category) => {
+const getPostAPI = () => {
   return function (dispatch, getState) {
-    // const category = getState().category.is_category;
-
-    // console.log("액시오스 카테고리 상태", category);
-
-    // if (category.length == 0) {
-    //   // category = category;
-    //   console.log("전체 출력 할끄야!");
-    // } else if (category.length > 0) {
-    //   // 당연히 렌더링 된 순간이니... 이게 먹힐려나?
-    //   // map을 돌린다음에? ${category[0]}, ${category[1]} 이런식으로 가능하려나?
-    //   console.log("카테고리 출력 할끄야!");
-    // }
-
-    return;
     axios({
-      //상태값에 따라 파라미터 주소가 달라질텐데 어떻게 해야할까..? 조건문 ? PostList에서 필터?
-      //const category = getState().category.is_category
-
       method: "GET",
-      url: `${config.api}/board/${category}`,
+      url: `${config.api}/board`,
     })
       .then((res) => {
+        console.log(res);
+        return;
         let post_list = [];
         res.data.forEach((_post) => {
           let post = {
             id: _post.id,
             title: _post.title,
-            content: _post.contents,
-            insert_dt: _post.insetDt,
+            content: _post.content,
+            // insert_dt: _post.insetDt,
             writerName: _post.writerName,
             writerImgUrl: _post.writerImgUrl,
             category: _post.category,
             imgUrl: _post.imgUrl,
             like: _post.like,
-            likeCnt: _post.likeCnt,
+            likeCnt: _post.likeCount,
           };
           post_list.unshift(post);
         });
-
         dispatch(setPost(post_list));
       })
       .catch((err) => {
@@ -106,6 +90,7 @@ const editPostAPI = (boadrd_id, post) => {
     console.log("잘나와?", post);
     const _file = getState().image2.file;
     console.log("파일가져오기", _file);
+
     // const _category = getState().category. 이건 민규님이 만들어 주신거에서 가져와야 한다..
     // 그게아니라 post_list 에서  boadrd_id가 같은 post를 찾아서 category를 빼와야한다
 
@@ -124,6 +109,9 @@ const editPostAPI = (boadrd_id, post) => {
     //   contens: post.contents,
     // };
     return;
+    // for (let i = 0; i < 10000000; i++) { // 두 배열을 비교하는 반복문
+    //   JSON.stringify(a) == JSON.stringify(b);
+    // }
     // if (_image == _post.imgUrl) {
     //   axios({
     //     method: "PUT",
@@ -132,8 +120,8 @@ const editPostAPI = (boadrd_id, post) => {
     //       title: "title",
     //       content: "content",
     //       category: "카페",
-    //       file: "파일리스트",
-    //       spotName: "주소인가??",
+    //       file: "파일리스트", // 파일이 없어야함
+    //       spotName: "_post.spotName"??",
     //     },
     //   }).then((res) => {
     //     console.log(res);
@@ -146,11 +134,12 @@ const editPostAPI = (boadrd_id, post) => {
     //       title: "title",
     //       content: "content",
     //       category: "카페",
-    //       file: "파일리스트",
+    //       file: "_file",
     //       spotName: "주소인가??",
     //     },
     //   }).then((res) => {
-    //     console.log(res);
+    //      let edit_list = {}
+    //     dispatch(editPost(board_id , post))
     //   });
     // }
   };

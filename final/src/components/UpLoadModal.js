@@ -126,7 +126,7 @@ const UploadModal = (props) => {
     box-sizing: border-box;
     width: 100%;
     height: 85vh;
-    max-height: 350px;
+
     @media (max-width: 1440px) {
       // 1450밑으로 넓이가 내려가면
       /* all: unset; */
@@ -138,7 +138,8 @@ const UploadModal = (props) => {
       border: none;
       box-sizing: border-box;
       width: 100%;
-      height: 35vh;
+      height: 480px;
+      margin-bottom: -20px;
     }
     @media (max-width: 600px) {
       // 1450밑으로 넓이가 내려가면
@@ -260,7 +261,7 @@ const Component = styled.div`
 const ModalComponent = styled.div`
   position: fixed !important;
   width: 580px;
-  height: 810px;
+  height: 870px;
   /* overflow: hidden; */
   top: 50%;
   left: 50%;
@@ -276,8 +277,9 @@ const ModalComponent = styled.div`
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
     position: fixed;
-    width: 35vw;
-    height: 82vh;
+    /* width: 35vw; */
+    width: 470px;
+    height: 79vh;
     /* overflow: hidden; */
     top: 50%;
     left: 50%;
@@ -340,13 +342,15 @@ const ModalBottomContainer = styled.div`
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     text-align: left;
-    width: 33vw;
+    width: 450px;
     // 이거 올려주니까 댓글창이보인다..!
+    height: 600px;
     display: flex;
     flex-direction: column;
     padding: 0;
     margin: 0px auto;
     margin-top: 5vh;
+    /* background-color: red; */
   }
 
   @media (max-width: 600px) {
