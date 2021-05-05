@@ -52,7 +52,7 @@ function Navbar() {
                 <CgIcons.CgProfile size="1.6rem" />
               </Link>
             </LOGO>
-
+            {/* 홈 지도보기 */}
             <Link to="/">
               <GrIcons.GrMap size="1.5rem" />
             </Link>
@@ -62,15 +62,32 @@ function Navbar() {
               <MdIcons.MdPhotoLibrary size="1.6rem" />
             </Link>
             <IconInfo>커뮤니티</IconInfo>
-            <Link>
-              <CgIcons.CgProfile
-                size="1.6rem"
-                onClick={() => {
-                  history.push(`/story/${nickname}`);
-                }}
-              />
-            </Link>
-            <IconInfo>마이페이지</IconInfo>
+            {/* 마이페이지 */}
+            {is_login ? (
+              <React.Fragment>
+                <Link>
+                  <CgIcons.CgProfile
+                    size="1.6rem"
+                    onClick={() => {
+                      history.push(`/story/${nickname}`);
+                    }}
+                  />
+                </Link>
+                <IconInfo>마이페이지</IconInfo>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <GrIcons.GrLogin
+                  size="1.5rem"
+                  onClick={() => {
+                    history.push("/login");
+                  }}
+                />
+                <IconInfo>로그인</IconInfo>
+              </React.Fragment>
+            )}
+
+            {/* About */}
             <Link>
               <IoIcons.IoMdPeople size="1.7rem" />
             </Link>
@@ -80,7 +97,7 @@ function Navbar() {
             </Link>
             <IconInfo>FAQ</IconInfo>
 
-            {is_login ? (
+            {/* {is_login ? (
               <React.Fragment>
                 <GrIcons.GrLogout size="1.5rem" onClick={onLogout} />
                 <IconInfo>로그아웃</IconInfo>
@@ -95,7 +112,7 @@ function Navbar() {
                 />
                 <IconInfo>로그인</IconInfo>
               </React.Fragment>
-            )}
+            )} */}
           </SideIcon>
           {/* <GrLogout size="1.5rem" /> */}
         </SideMini>
@@ -190,7 +207,7 @@ const SideMini = styled.div`
     justify-content: space-around;
     display: flex;
     flex-direction: row;
-    box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+    box-shadow: 2px 2px 3px 2px rgba(0, 0.1, 0.1, 0.03);
   }
   @media (max-width: 600px) {
     all: unset;

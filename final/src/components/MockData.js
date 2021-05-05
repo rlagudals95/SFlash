@@ -11,6 +11,38 @@ const post_list = [
     address: "충청남도 논산시 연무읍",
     category: "카페",
     content: "고독하구먼",
+    like: true,
+    likeCnt: 7,
+    comment: [
+      {
+        id: 1,
+        writerName: "hmk1022",
+        writerImgUrl:
+          "https://blog.kakaocdn.net/dn/6CEcF/btqxVzYzsYJ/hW9z8hX5DgILkKPk8AYr70/img.png",
+        content: "안녕하세요",
+      },
+      {
+        id: 2,
+        writerName: "777777",
+        writerImgUrl:
+          "https://blog.kakaocdn.net/dn/6CEcF/btqxVzYzsYJ/hW9z8hX5DgILkKPk8AYr70/img.png",
+        content: "안녕하세요",
+      },
+      {
+        id: 3,
+        writerName: "hmk1022",
+        writerImgUrl:
+          "https://blog.kakaocdn.net/dn/6CEcF/btqxVzYzsYJ/hW9z8hX5DgILkKPk8AYr70/img.png",
+        content: "안녕하세요",
+      },
+      {
+        id: 4,
+        writerName: "hello",
+        writerImgUrl:
+          "https://blog.kakaocdn.net/dn/6CEcF/btqxVzYzsYJ/hW9z8hX5DgILkKPk8AYr70/img.png",
+        content: "안녕하세요",
+      },
+    ],
   },
   {
     id: 2,
@@ -23,6 +55,38 @@ const post_list = [
     address: "제주시 한림읍 옹포 8길 1-3",
     category: "야경",
     content: "잠와 ㅜ",
+    like: true,
+    likeCnt: 7,
+    comment: [
+      {
+        id: 1,
+        writerName: "hmk1022",
+        writerImgUrl:
+          "https://blog.kakaocdn.net/dn/6CEcF/btqxVzYzsYJ/hW9z8hX5DgILkKPk8AYr70/img.png",
+        content: "안녕하세요",
+      },
+      {
+        id: 2,
+        writerName: "777777",
+        writerImgUrl:
+          "https://blog.kakaocdn.net/dn/6CEcF/btqxVzYzsYJ/hW9z8hX5DgILkKPk8AYr70/img.png",
+        content: "안녕하세요",
+      },
+      {
+        id: 3,
+        writerName: "hmk1022",
+        writerImgUrl:
+          "https://blog.kakaocdn.net/dn/6CEcF/btqxVzYzsYJ/hW9z8hX5DgILkKPk8AYr70/img.png",
+        content: "안녕하세요",
+      },
+      {
+        id: 4,
+        writerName: "hello",
+        writerImgUrl:
+          "https://blog.kakaocdn.net/dn/6CEcF/btqxVzYzsYJ/hW9z8hX5DgILkKPk8AYr70/img.png",
+        content: "안녕하세요",
+      },
+    ],
   },
   {
     id: 3,
@@ -33,6 +97,38 @@ const post_list = [
     address: "여수시 미평동 ",
     category: "바다",
     content: "배고파",
+    like: false,
+    likeCnt: 2,
+    comment: [
+      {
+        id: 1,
+        writerName: "hmk1022",
+        writerImgUrl:
+          "https://blog.kakaocdn.net/dn/6CEcF/btqxVzYzsYJ/hW9z8hX5DgILkKPk8AYr70/img.png",
+        content: "안녕하세요",
+      },
+      {
+        id: 2,
+        writerName: "배고파",
+        writerImgUrl:
+          "https://blog.kakaocdn.net/dn/6CEcF/btqxVzYzsYJ/hW9z8hX5DgILkKPk8AYr70/img.png",
+        content: "안녕하세요",
+      },
+      {
+        id: 3,
+        writerName: "김형민",
+        writerImgUrl:
+          "https://blog.kakaocdn.net/dn/6CEcF/btqxVzYzsYJ/hW9z8hX5DgILkKPk8AYr70/img.png",
+        content: "안녕하세요",
+      },
+      {
+        id: 4,
+        writerName: "hello",
+        writerImgUrl:
+          "https://blog.kakaocdn.net/dn/6CEcF/btqxVzYzsYJ/hW9z8hX5DgILkKPk8AYr70/img.png",
+        content: "안녕하세요",
+      },
+    ],
   },
   {
     id: 4,
@@ -43,6 +139,8 @@ const post_list = [
     address: "여수 문수 주택단지",
     category: "산",
     content: "항해99",
+    like: true,
+    likeCnt: 5,
   },
   {
     id: 5,
@@ -53,6 +151,8 @@ const post_list = [
     address: "제주시 한림읍 옹포 8길 1-3",
     category: "꽃",
     content: "화이팅 하십쇼!!",
+    like: false,
+    likeCnt: 4,
   },
   {
     id: 6,
@@ -63,6 +163,8 @@ const post_list = [
     address: "제주시 한림읍 옹포 8길 1-3",
     category: "나홀로",
     content: "최곱니당!",
+    like: true,
+    likeCnt: 11,
   },
   {
     id: 7,
@@ -73,6 +175,8 @@ const post_list = [
     address: "제주시 한림읍 옹포 8길 1-3",
     category: "연인",
     content: "고만하소잉",
+    like: false,
+    likeCnt: 3,
   },
   {
     id: 8,
@@ -83,6 +187,8 @@ const post_list = [
     address: "제주시 한림읍 옹포 8길 1-3",
     category: "친구",
     content: "뿌링클 사줄분??",
+    like: true,
+    likeCnt: 7,
   },
   {
     id: 9,
@@ -93,6 +199,8 @@ const post_list = [
     address: "제주시 한림읍 옹포 8길 1-3",
     category: "반려동물",
     content: "뿌링클 사줄분??",
+    like: false,
+    likeCnt: 2,
   },
   {
     id: 10,
@@ -103,6 +211,8 @@ const post_list = [
     address: "여수시 미평동 ",
     category: "도심",
     content: "배고파",
+    like: true,
+    likeCnt: 15,
   },
   {
     id: 11,
@@ -113,6 +223,8 @@ const post_list = [
     address: "여수 문수 주택단지",
     category: "공원",
     content: "항해99",
+    like: true,
+    likeCnt: 7,
   },
   {
     id: 12,
@@ -123,6 +235,8 @@ const post_list = [
     address: "제주시 한림읍 옹포 8길 1-3",
     category: "전시",
     content: "화이팅 하십쇼!!",
+    like: false,
+    likeCnt: 2,
   },
 ];
 
