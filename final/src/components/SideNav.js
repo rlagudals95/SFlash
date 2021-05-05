@@ -31,7 +31,7 @@ function Navbar() {
   const onLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
       dispatch(userActions.logOut());
-      history.push('/');
+      history.push("/");
     }
   };
 
@@ -190,6 +190,7 @@ const SideMini = styled.div`
     justify-content: space-around;
     display: flex;
     flex-direction: row;
+    box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
   }
   @media (max-width: 600px) {
     all: unset;

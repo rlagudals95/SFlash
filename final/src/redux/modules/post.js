@@ -15,10 +15,9 @@ const LOADING = "LOADING";
 
 const setPost = createAction(SET_POST, (post_list) => ({ post_list })); //paging은 나중에 넣기
 const addPost = createAction(ADD_POST, (post) => ({ post }));
-const editPost = createAction(EDIT_POST, (like) => ({
-  //             //   post_id, 서버 파라미터 값으로 대체
-  // like, // like: true or false 값과 like_cnt
-  //   likeCnt,
+const editPost = createAction(EDIT_POST, (post_id, post) => ({
+  post_id,
+  post,
 }));
 const deletePost = createAction(DELETE_POST, (id) => ({ id }));
 const loading = createAction(LOADING, (post) => ({ post }));
@@ -102,28 +101,60 @@ const getPostAPI = (category) => {
   };
 };
 
-// const edisPostAPI = (id, post) => {
-//   return function (dispatch, getState) {
-//     if (!id) {
-//       console.log("게시물이 없습니다!");
-//       return;
-//     }
-//     const _image = getState().image.preview;
-//     const _post_idx = getState().post.list.findIndex((p) => p.id == id);
-//     const _post = getState().post.list[_post_idx];
-//     let _edit = {
-//       contens: post.contents,
-//     };
-//     if (_image == _post.imgUrl) {
-//       axios({
-//         method: "PUT",
-//         url: `${config.api}/board/${category}`,
-//       }).then((res) => {
-//         console.log(res);
-//       });
-//     }
-//   };
-// };
+const editPostAPI = (boadrd_id, post) => {
+  return function (dispatch, getState) {
+    console.log("잘나와?", post);
+    const _file = getState().image2.file;
+    console.log("파일가져오기", _file);
+    // const _category = getState().category. 이건 민규님이 만들어 주신거에서 가져와야 한다..
+    // 그게아니라 post_list 에서  boadrd_id가 같은 post를 찾아서 category를 빼와야한다
+
+    // let idx = post_list.findIndex((p) => p.id == boadrd_id);
+
+    // const category = post_list[idx].category;
+
+    if (!boadrd_id) {
+      console.log("게시물이 없습니다!");
+      return;
+    }
+
+    // const _post_idx = getState().post.list.findIndex((p) => p.id == boadrd_id);
+    // const _post = getState().post.list[_post_idx];
+    // let _edit = {
+    //   contens: post.contents,
+    // };
+    return;
+    // if (_image == _post.imgUrl) {
+    //   axios({
+    //     method: "PUT",
+    //     url: `${config.api}/board/${boadrd_id}`,
+    //     data: {
+    //       title: "title",
+    //       content: "content",
+    //       category: "카페",
+    //       file: "파일리스트",
+    //       spotName: "주소인가??",
+    //     },
+    //   }).then((res) => {
+    //     console.log(res);
+    //   });
+    // } else {
+    //   axios({
+    //     method: "PUT",
+    //     url: `${config.api}/board/${boadrd_id}`,
+    //     data: {
+    //       title: "title",
+    //       content: "content",
+    //       category: "카페",
+    //       file: "파일리스트",
+    //       spotName: "주소인가??",
+    //     },
+    //   }).then((res) => {
+    //     console.log(res);
+    //   });
+    // }
+  };
+};
 
 // const deletePostAPI = () => {
 //   return function (dispatch, getState) {
@@ -151,6 +182,23 @@ const getPostAPI = (category) => {
 //   }
 
 // }
+
+const searchPostAPI = (search) => {
+  return function (dispatch, getState) {
+    console.log("검색어 들어오냐~?", search);
+    axios({
+      method: "GET",
+      url: `${config.api}/board/search/searchText=${search}`,
+    })
+      .then((res) => {
+        console.log(res);
+        setPost(res.data);
+      })
+      .catch((error) => {
+        window.alert("검색을 할 수 없습니다.");
+      });
+  };
+};
 
 const initialState = {
   list: [], //post_list
@@ -219,6 +267,13 @@ export default handleActions(
           }
         }, []);
       }),
+    [EDIT_POST]: (state, action) =>
+      produce(state, (draft) => {
+        let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+        // 수정한 게시물을 찾기 위해서 findindex
+        draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
+      }),
+
     [DELETE_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list = draft.list.filter((r, idx) => {
@@ -236,6 +291,8 @@ export default handleActions(
 const actionCreators = {
   getPostAPI,
   addPostAPI,
+  editPostAPI,
+  searchPostAPI,
 };
 
 export { actionCreators };

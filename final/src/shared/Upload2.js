@@ -8,7 +8,8 @@ const Upload = (props) => {
   const dispatch = useDispatch();
   //   const uploading = useSelector((state) => state.image.uploading);
   const fileInput = React.useRef();
-
+  const files = useSelector((state) => state.image2.file);
+  // console.log("파일들", files);
   const selectFile = async (e) => {
     // e.target은 input이죠!
     // input이 가진 files 객체를 살펴봅시다.
@@ -28,7 +29,8 @@ const Upload = (props) => {
 
     let images = []; // 이미지 파일들이 들어간 배열
     console.log("이미지들", images);
-
+    // images 안에 있는 파일들을 formData형식으로 넘겨주자
+    // image2 모듈안에 파일을 저장하는 곳을 따로 만들어 놔야겠다
     for (let i = 0; i < files.length; i++) {
       images.push(fileInput.current.files[i]);
     }
@@ -38,31 +40,13 @@ const Upload = (props) => {
       return;
     }
 
-    // images.forEach((img) => {
-    //   console.log(img);
-    //   reader.readAsDataURL(img);
-    // });
-
-    // reader.onloadend = () => {
-    //   console.log(reader.result);
-    //   dispatch(imageActions.setPreview(reader.result));
-    //   };
-
-    // 제이쿼리를 사용해 파일 여러개 파일리더로 읽기
-    // $.each(images, function (index, file) {
-    //   const reader = new FileReader();
-    //   reader.onload = () => {
-    //     console.log(reader.result);
-    //     dispatch(imageActions.setPreview(reader.result));
-    //   };
-    //   reader.readAsDataURL(file);
-    // });
-
     images.forEach((img) => {
+      //images의 파일들을 forEach로 모두 읽게한다
       const reader = new FileReader();
       reader.onload = () => {
         // console.log(reader.result);
         dispatch(imageActions.getPreview(reader.result));
+        dispatch(imageActions.getFile(img));
       };
       reader.readAsDataURL(img);
     });

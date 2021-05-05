@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Grid, Text, Button, Input } from "../elements/index";
-import { history } from "../redux/configStore";
+import { Grid, Text, Button, Input } from "../../elements/index";
+import { history } from "../../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as categoryActions } from "../redux/modules/category";
+import { actionCreators as categoryActions } from "../../redux/modules/category";
 import * as BiIcons from "react-icons/bi";
-import SearchBar from "./SearchBar";
-import Input2 from "../elements/Input2";
+import SearchBar from "../SearchBar";
+import Input2 from "../../elements/Input2";
+import { actionCreators as PostActions } from "../../redux/modules/post";
+
 // import { actionCreators as PostActions } from "../redux/modules/post";
 const MobileSelect = () => {
   const dispatch = useDispatch();
 
   const is_category = useSelector((state) => state.category.is_category); //이걸 가져와서 이제 눌린상탠지 안눌린 상탠지 판단
   const [search, setSearch] = React.useState("");
-  // console.log(is_category);
-  // console.log("카테고리 배열길이", is_category.length);
+
+  const getSearch = () => {
+    dispatch(PostActions.searchPostAPI(search));
+  };
+
+  console.log("검색어", search);
 
   const [cafe, setCafe] = useState();
   const [night, setNight] = useState();
@@ -44,16 +50,24 @@ const MobileSelect = () => {
         <CategoryInfo>
           <Input2
             value={search}
-            placeholder="카테고리를 검색해주세요 (●'◡'●)"
+            placeholder="검색어를 입력해 주세요 (●'◡'●)"
             _onChange={(e) => {
               setSearch(e.target.value);
             }}
           ></Input2>
+
+          {search ? (
+            <SearchBtn2 onClick={getSearch}>
+              <BiIcons.BiSearch size="2rem" />
+            </SearchBtn2>
+          ) : (
+            <SearchBtn>
+              <BiIcons.BiSearch size="2rem" />
+            </SearchBtn>
+          )}
+
           <CateGoryTitle>
-            <CategoryIcon>
-              {" "}
-              <BiIcons.BiBookBookmark size="25px" />
-            </CategoryIcon>
+            <CategoryIcon> </CategoryIcon>
             카테고리
           </CateGoryTitle>
         </CategoryInfo>
@@ -400,11 +414,19 @@ justify-content: space-between; */
   background-color: white;
   padding: 20px;
   border-radius: 7px;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
   top: -67%;
   background-color: white;
   left: 50%;
   transform: translate(-50%, -50%);
+  @media (max-width: 600px) {
+    top: -73%;
+    height: 14vh;
+  }
+  @media (max-width: 400px) {
+    height: 19.5vh;
+    top: -67%;
+  }
   /* height: 100px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
@@ -420,6 +442,27 @@ justify-content: space-between; */
     box-shadow: inset 0px 0px 5px white;
   } */
 `;
+
+const SearchBtn = styled.div`
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  z-index: 500;
+  top: 23px;
+  right: 7px;
+  opacity: 0.2;
+`;
+
+const SearchBtn2 = styled.div`
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  z-index: 500;
+  top: 23px;
+  right: 7px;
+  opacity: 0.7;
+`;
+
 const CategoryInfo = styled.div`
   display: flex;
   margin-bottom: 11px;
@@ -451,7 +494,7 @@ const Btn = styled.button`
   border: 1px solid lightgray;
   cursor: pointer;
   font-size: 12px;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
 const SelectedBtn = styled.button`
   // 선택 됐을때 버튼
@@ -466,5 +509,5 @@ const SelectedBtn = styled.button`
   font-size: 12px;
   font-weight: bold;
   color: #3897f0;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
