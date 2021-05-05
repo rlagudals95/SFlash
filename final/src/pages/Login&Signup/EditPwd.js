@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import { 
+import {
   Container,
-  Title, 
-  InputStyle, 
-  SolidBtn, 
+  Title,
+  InputStyle,
+  SolidBtn,
   BorderBtn,
-  CheckBtn, 
+  CheckBtn,
   TextBtn,
-  InfoUl } from "../../Css/loginSignupCss"
-  import RegCheck from "../../Css/RegCheck.css";
+  InfoUl,
+  InfoLi,
+} from "../../Css/loginSignupCss";
+import { GiCheckMark } from "react-icons/gi";
+import RegCheck from "../../Css/RegCheck.css";
 import { history } from "../../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -121,9 +124,18 @@ const EditPwd = () => {
           }}
         />
         <InfoUl className="checkPwd">
-          <li>10글자 이상 입력</li>
-          <li>영문/숫자/특수문자(공백 제외)만 허용,2개 이상의 조합</li>
-          <li>동일한 숫자 3개 이상 연속 사용 불가</li>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+            10글자 이상 입력
+          </InfoLi>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+            영문/숫자/특수문자(공백 제외)만 허용,2개 이상의 조합
+          </InfoLi>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+            동일한 숫자 3개 이상 연속 사용 불가
+          </InfoLi>
         </InfoUl>
 
         <InputStyle
@@ -138,7 +150,10 @@ const EditPwd = () => {
           }}
         />
         <InfoUl className="reCheckPwd">
-          <li>동일한 비밀번호를 입력해주세요.</li>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+            동일한 비밀번호를 입력해주세요.
+          </InfoLi>
         </InfoUl>
 
         <SolidBtn
@@ -154,7 +169,5 @@ const EditPwd = () => {
     </React.Fragment>
   );
 };
-
-
 
 export default EditPwd;

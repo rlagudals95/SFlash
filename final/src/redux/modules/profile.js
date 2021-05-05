@@ -7,7 +7,7 @@ import axios from "axios";
 const UPLOADING = "UPLOADING"; //업로드 여부
 const SET_PREVIEW = "SET_PREVIEW"; // 사용자 프로필 이미지를 보여주는 액션
 const EDIT_PROFILE = "EDIT_PROFILE";
-const DUP_CHECK = "DUP_CHECK";
+// const DUP_CHECK = "DUP_CHECK";
 
 // Action creators
 const uploading = createAction(UPLOADING, (uploading) => ({ uploading }));
@@ -20,7 +20,7 @@ const editProfile = createAction(
     introduction,
   })
 );
-const dupCheck = createAction(DUP_CHECK, (dupCheck) => ({ dupCheck }));
+// const dupCheck = createAction(DUP_CHECK, (dupCheck) => ({ dupCheck }));
 
 // initialState
 // 리덕스에 저장되는 데이터 틀을 설정해놓는 부분
@@ -120,10 +120,10 @@ export default handleActions(
         // 그 상황을 굳이 if 문으로 나눠서 쓰지 않고  spread 문법을 사용해 유지하거나 수정시에만 내용이 반영되도록 한다.
         draft.list[idx] = { ...draft.list[idx], ...action.payload.profile };
       }),
-    [DUP_CHECK]: (state, action) =>
-      produce(state, (draft) => {
-        draft.dupCheck = action.payload.dupCheck;
-      }),
+    // [DUP_CHECK]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     draft.dupCheck = action.payload.dupCheck;
+    //   }),
   },
   initialState
 );
