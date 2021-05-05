@@ -16,9 +16,12 @@ const Main = (props) => {
   //   dispatch(postActions.getMyPostAPI())
   // }, []);
 
+  // const post_list = useSelector((state) => state.post.post_list)
+
   return (
     <React.Fragment>
       <Map/>
+      {/* <Map post_list/> */}
     </React.Fragment>
   );
 };
