@@ -42,14 +42,22 @@ const Story = (props) => {
     setAnchorEl(null);
   };
 
-  // 모달창 띄우기
-  const [modalIsOpen, setModalIsOpen] = React.useState(false);
-  const openModal = (e) => {
-    setModalIsOpen(true);
+  // 프로필 편집 모달창
+  const [profileModal, setProfileModal] = React.useState(false);
+  const openProfileModal = () => {
+    setProfileModal(true);
   };
-  const closeModal = () => {
-    setModalIsOpen(false);
+  const closeProfileModal = () => {
+    setProfileModal(false);
   };
+  const [editPwdModal, setEditPwdModal] = React.useState(false);
+  const openEditPwdModal = () => {
+    setEditPwdModal(true);
+  };
+  const closeEditPwdModal = () => {
+    setEditPwdModal(false);
+  };
+ 
 
   // '나의 게시물/ 나의 좋아요' 탭 제어하기 : 처음에는 0번째 인덱스 활성화
   const [active, setActive] = useState("myPost");
@@ -63,23 +71,7 @@ const Story = (props) => {
 
     // 'setting' 메뉴 모달 제어하기 : 처음에는 0번째 인덱스 활성화
 
-    const menuTitle = [
-      "editProfile",
-      "editPwd",
-    ]
 
-    const menu = {
-      0: <Story_EditProfile />,
-      1: <Story_EditPwd />,
-    }
-
-    const [activeMenu, setActiveMenu] = useState(0);
-    // 클릭한 인덱스 활성화
-    const menuHandleClick = (id) => {
-      setActiveMenu(id)
-    };
-
-  
 
   return (
     <React.Fragment>
@@ -108,67 +100,57 @@ const Story = (props) => {
             >
               <MenuItem
                 onClick={() => {
-                  openModal();
+                  openProfileModal();
                   handleClose();
-                  menuHandleClick(0);
                 }}
-                active={activeMenu === 0}
-                id={0}
               >
                 프로필 편집
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  openModal();
+                  openEditPwdModal();
                   handleClose();
-                  menuHandleClick(1);
                 }}
-                active={activeMenu === 1}
-                id={1}
               >
                 비밀번호 변경
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 onClick={() => {
                   handleClose();
                 }}
               >
                 로그아웃
-              </MenuItem>
+              </MenuItem> */}
             </Menu>
          
 
 
  {/*  현재 닉네임은 로컬스토리지에서 받아온 닉네임으로 설정되어 있지만 api 연결후에는 api에서 받아온 정보로 사용하기 */}
             <Modal
-              isOpen={modalIsOpen}
-              close={closeModal}
+              isOpen={profileModal}
+              close={closeProfileModal}
               style={modalStyle}
             >
-              <Content active={activeMenu === 0}>
               <Story_EditProfile
                   user_info={props.user_info}
                   nickname={nickname}
                 />
-              </Content>
               <CloseButton
                 src="https://image.flaticon.com/icons/png/512/458/458595.png"
-                onClick={closeModal}
+                onClick={closeProfileModal}
               />
             </Modal>
-            {/* <Modal
-              isOpen={modalIsOpen}
-              close={closeModal}
+            <Modal
+              isOpen={editPwdModal}
+              close={closeEditPwdModal}
               style={modalStyle}
             >
-              <Content active={activeMenu === 1}>
               <Story_EditPwd />
-              </Content>
               <CloseButton
                 src="https://image.flaticon.com/icons/png/512/458/458595.png"
-                onClick={closeModal}
+                onClick={closeEditPwdModal}
               />
-            </Modal> */}
+            </Modal>
           </div>
         </ProfileContainer>
 

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { pwdRegCheck, pwdRegContinuousCheck } from "../shared/common";
 import axios from "axios";
+import { config } from "../../shared/config";
 
 const Story_EditPwd = () => {
   // console.log(email);
@@ -71,23 +72,21 @@ const Story_EditPwd = () => {
     }
   };
 
-  const onEditPwd = (originalPwd, newPwd, rePwd) => {
+  const editPwdAPI = (originalPwd, newPwd, rePwd) => {
     //  인증번호가 일치하면 비밀번호 변경 페이지로
     // 이메일? 닉네임?? 어떤거로 보내드리면 될까요??
-    console.log(email, originalPwd, newPwd, rePwd);
-    const API = "";
+    console.log(originalPwd, newPwd, rePwd);
     axios
       .post(
-        API,
+        `${config.api}/editpwd`,
         {
-          email: email,
-          originalpwd: originalPwd,
-          password: newPwd,
+          pwd: originalPwd,
+          newPwd: newPwd,
           pwdchk: rePwd,
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": "jwt",
           },
         }
       )
@@ -112,7 +111,6 @@ const Story_EditPwd = () => {
         <InputStyle
           placeholder="이전 비밀번호 입력"
           type="password"
-          width="98%"
           onChange={(e) => {
             changeOriginalPwd(e);
           }}
@@ -121,7 +119,6 @@ const Story_EditPwd = () => {
         <InputStyle
           placeholder="새 비밀번호 입력"
           type="password"
-          width="98%"
           onClick={() => {
             document.querySelector(".checkPwd").style.display = "block";
           }}
@@ -147,7 +144,6 @@ const Story_EditPwd = () => {
         <InputStyle
           placeholder="새 비밀번호 재입력"
           type="password"
-          width="98%"
           onClick={() => {
             document.querySelector(".reCheckPwd").style.display = "block";
           }}
@@ -166,7 +162,7 @@ const Story_EditPwd = () => {
           background-color="grey"
           style={{ display: "block" }}
           onClick={() => {
-            onEditPwd(originalPwd, newPwd, rePwd);
+            editPwdAPI(originalPwd, newPwd, rePwd);
           }}
         >
           비밀번호 변경
@@ -178,7 +174,7 @@ const Story_EditPwd = () => {
 
 const InputStyle = styled.input`
   border: 1px solid grey;
-  width: 100%;
+  width: 92%;
   height: 38px;
   border: 1px solid grey;
   border-radius: 8px;

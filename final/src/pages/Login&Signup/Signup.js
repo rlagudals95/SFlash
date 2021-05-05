@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import axios from "axios";
+import { config } from "../../shared/config";
 
 import { Grid } from "../../elements/index";
 import { 
@@ -154,10 +155,9 @@ const Signup = (props) => {
   // 닉네임 중복확인
   const nicknameDupCheckAPI = (nickname) => {
     console.log(nickname);
-    const API = "http://seungwook.shop/user/signup/nickchk";
     axios
       .post(
-        API,
+        `${config.api}/user/signup/nickchk`,
         {
           nickname: nickname,
         },
@@ -187,10 +187,9 @@ const Signup = (props) => {
   // 이메일 인증번호 전송 (입력한 이메일은 서버로 보내주고, 인증번호를 입력하는 모달 창을 띄운다.)
   const onEmailAuth = (email) => {
     console.log(email);
-    const API = "http://seungwook.shop/user/signup/emailchk";
     axios
       .post(
-        API,
+        `${config.api}/user/signup/emailchk`,
         {
           email: email,
         },
@@ -218,10 +217,9 @@ const Signup = (props) => {
   // 이메일 인증번호 확인
   const onAuthCodeSubmit = (email, authCode) => {
     console.log(email, authCode);
-    const API = "http://seungwook.shop/user/signup/authcode";
     axios
       .post(
-        API,
+        `${config.api}/user/signup/authcode`,
         {
           email: email,
           authCode: authCode,
@@ -251,33 +249,28 @@ const Signup = (props) => {
 
   // 회원가입 버튼
   const onSignup = () => {
-    if (
-      !nicknameRegCheck(nickname) ||
-      !pwdRegCheck(pwd) ||
-      pwdRegContinuousCheck(pwd) ||
-      pwd !== rePwd
-    ) {
-      alert("아이디,비밀번호 확인을 해주세요.");
-      return false;
-    }
-
     if (nickname === "") {
-      alert("닉네임을 입력해주세요.");
+      alert("닉네임을 입력해주세요!");
       return false;
     }
 
-    if (email === "") {
-      alert("이메일을 입력해주세요.");
+    if (!nicknameRegCheck(nickname)) {
+      alert("닉네임 형식을 지켜주세요!");
       return false;
     }
 
     if (nicknameDup === false) {
-      alert("닉네임 중복확인을 해주세요.");
+      alert("닉네임 중복확인을 해주세요!");
+      return false;
+    }
+
+    if (email === "") {
+      alert("이메일을 입력해주세요!");
       return false;
     }
 
     if (emailAuth === false) {
-      alert("이메일 인증을 해주세요.");
+      alert("이메일 인증을 해주세요!");
       return false;
     }
 
@@ -285,6 +278,22 @@ const Signup = (props) => {
       alert("이메일 형식을 지켜주세요!");
       return false;
     }
+
+    if (
+      !pwdRegCheck(pwd) ||
+      pwdRegContinuousCheck(pwd)
+    ) {
+      alert("비밀번호 형식을 확인을 해주세요!");
+      return false;
+    }
+
+    if (
+      pwd !== rePwd
+    ) {
+      alert("비밀번호가 일치하지 않습니다!");
+      return false;
+    }
+    
     console.log(nickname, email, pwd, rePwd);
     dispatch(userActions.signupAPI(nickname, email, pwd, rePwd));
   };

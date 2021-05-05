@@ -28,7 +28,7 @@ const initialState = {
 const signupAPI = (nickname, email, pwd, rePwd) => {
   return function (dispatch, getState, { history }) {
     axios
-      .post("http://seungwook.shop/user/signup", {
+      .post(`${config.api}/user/signup`, {
         nickname: nickname,
         email: email,
         password: pwd,
@@ -51,14 +51,14 @@ const loginAPI = (email, pwd) => {
   return function (dispatch, getState, { history }) {
     // console.log("로그인 값", email, pwd);
     axios
-      .post("http://seungwook.shop/user/login", {
+      .post(`${config.api}/user/login`, {
         email: email,
         password: pwd,
       })
       .then((res) => {
         // console.log("loginAPI(res)", res);
         localStorage.setItem("nickname", res.data.nickname);
-        setCookie("token", res.data.token);
+        setCookie("jwt", res.data.token);
         // console.log(res.config.data);
         dispatch(setUser({
           nickname: res.data.nickname,
@@ -87,7 +87,7 @@ const loginCheck = (token) => {
 //해당유저의 정보 가져오기 : Story의 유저정보
 // const getUserInfoAPI = (nickname) => {
 //   return function (dispatch, getState, { history }) {
-//     const API = `http://13.125.167.83/story/${nickname}`;
+//     const API = `${config.api}/story/${nickname}`;
 //     axios
 //       .get(API)
 //       .then((res) => {
@@ -127,7 +127,7 @@ export default handleActions(
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        deleteCookie("token");
+        deleteCookie("jwt");
         localStorage.removeItem("nickname");
         draft.user = null;
         draft.is_login = false;

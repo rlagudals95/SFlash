@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as emailActions } from "../../redux/modules/email";
 
 import axios from "axios";
+import { config } from "../../shared/config";
 
 const FindEmailPwd = () => {
   const dispatch = useDispatch();
@@ -32,10 +33,9 @@ const FindEmailPwd = () => {
   // }, []);
 
   const onFindEmailAPI = (nickname) => {
-    const API = "http://seungwook.shop/user/findemail";
     axios
       .post(
-        API,
+        `${config.api}/user/findemail`,
         {
           nickname: nickname,
         },
@@ -60,10 +60,9 @@ const FindEmailPwd = () => {
   // 이메일 입력하고 인증번호 전송하기
   const onEmailSubmit = (email) => {
     console.log(email);
-    const API = "http://seungwook.shop/user/findpwd";
     axios
       .post(
-        API,
+        `${config.api}/user/findpwd`,
         {
           email: email,
         },
@@ -87,10 +86,9 @@ const FindEmailPwd = () => {
   const onFindPwd = (email, authCode) => {
     //  인증번호가 일치하면 비밀번호 변경 페이지로
     console.log(email, authCode);
-    const API = "http://seungwook.shop/user/findpwd/authcode";
     axios
       .post(
-        API,
+        `${config.api}/user/findpwd/authcode`,
         {
           email: email,
           authCode: authCode,
