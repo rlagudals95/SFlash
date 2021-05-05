@@ -16,6 +16,8 @@ import { markerdata } from "./MarkerMockData";
 // import ModalSmallPost from "./ModalSmallPost";
 import "../Css/Map.css";
 import UpLoadModal from "./UpLoadModal";
+import Category from "../components/Category";
+import category from "../redux/modules/category";
 
 // window 객체로부터 kakao mpa api를 호출하기
 // 이것이 되게 하기 위해서는 index.html(index.js 아님!!!)의 script 태그안의 src에다가
@@ -44,6 +46,22 @@ const Maps = (props) => {
   const [_map, setMap] = useState();             // useEffect 외부에서 map을 쓰기 위한 것.
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
   //조건 걸어주기 // 나를 기준으로 몇 km 이내
+
+  // 카테고리 제어하기
+  const is_category = useSelector((state) => state.category.is_category);
+  // category 모듈의 상태값에 따른 판단여부
+  const resultCafe = is_category.find((item) => item === "카페"); //요게 카페가 나온다는건? 배열안에 카페가 있다는 것!
+  const resultNight = is_category.find((item) => item === "야경");
+  const resultOcean = is_category.find((item) => item === "바다");
+  const resultMountain = is_category.find((item) => item === "산");
+  const resultFlower = is_category.find((item) => item === "꽃");
+  const resultAlone = is_category.find((item) => item === "나홀로");
+  const resultCouple = is_category.find((item) => item === "연인");
+  const resultFreind = is_category.find((item) => item === "친구");
+  const resultPet = is_category.find((item) => item === "반려동물");
+  const resultCity = is_category.find((item) => item === "도심");
+  const resultPark = is_category.find((item) => item === "공원");
+  const resultExhibition = is_category.find((item) => item === "전시");
   
   // 각 마커별 데이터 가져오기
   // const myTotalData = useSelector((state) => state.post.my_total_data);
@@ -165,7 +183,7 @@ const Maps = (props) => {
       // 작성용 마커를 띄우기
       // 작성용 마커를 클릭하면 게시물 작성창이 뜨게 하기 : 로그인 한 사람만 되게 하기
       var writeMarkerImgUrl = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-          imageSize = new kakao.maps.Size(30, 35),
+          imageSize = new kakao.maps.Size(40, 50),
           writeMarkerImage = new kakao.maps.MarkerImage(writeMarkerImgUrl, imageSize);
 
       var position = new kakao.maps.LatLng(hereLat, hereLng)
@@ -416,7 +434,7 @@ const Maps = (props) => {
       </MapBox>
       {/* { is_total ? 
         markerdata.forEach((p) => {
-          ...각종 변수들 정의
+          //...각종 변수들 정의
           <CustomOverlay
             content={<MyOverlay />}
             lat={p.latitude}
