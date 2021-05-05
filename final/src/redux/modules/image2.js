@@ -3,12 +3,15 @@ import produce from "immer";
 
 const SET_PREVIEW = "SET_PREVIEW";
 const GET_PREVIEW = "GET_PREVIEW";
+const GET_FILE = "GET_FILE";
 
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 const getPreview = createAction(GET_PREVIEW, (preview) => ({ preview }));
+const getFile = createAction(GET_FILE, (file) => ({ file }));
 
 const initialState = {
   preview: [],
+  file: [],
 };
 
 export default handleActions(
@@ -36,6 +39,11 @@ export default handleActions(
           }
         });
       }),
+    [GET_FILE]: (state, action) =>
+      produce(state, (draft) => {
+        // draft.file = action.payload.file;
+        draft.file.push(action.payload.file);
+      }),
   },
   initialState
 );
@@ -43,6 +51,7 @@ export default handleActions(
 const actionCreators = {
   setPreview,
   getPreview,
+  getFile,
 };
 
 export { actionCreators };

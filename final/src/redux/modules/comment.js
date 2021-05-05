@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
-import { history } from "../configureStore";
+import { history } from "../configStore";
 import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
@@ -77,8 +77,10 @@ const getCommentAPI = (board_id = null) => {
 
 const addCommentAPI = (comment, board_id) => {
   return function (dispatch) {
+    console.log("댓글와유?", comment);
+    console.log("아이디와유?", board_id);
     let _comment = {
-      contentsId: post_id, //댓글 아이디는 포스트의 아이디 고유값
+      contentsId: board_id, //댓글 아이디는 포스트의 아이디 고유값
       userId: comment.user_name, // 유저네임 받아온것
       comment: comment.comment, // 댓글 받아온 것
       myImg: comment.profile_url, // 프로필 이미지 받아온 것 요건 없어도 되겠다
@@ -89,8 +91,8 @@ const addCommentAPI = (comment, board_id) => {
         url: `${config.api}/board/{boardId}/comment`,
         method: "POST",
         data: { ...comment },
-      },
-      token
+      }
+      // token
     )
       .then((res) => {
         console.log(res.data);
@@ -104,7 +106,7 @@ const addCommentAPI = (comment, board_id) => {
   };
 };
 
-const deleteCommentAPI = () => {
+const deleteCommentAPI = (id, board_id) => {
   return function (dispatch) {
     axios({
       method: "DELETE",

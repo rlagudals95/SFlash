@@ -37,8 +37,8 @@ export default function SearchBar(props) {
       <Paper component="form" className={classes.root}>
         <InputBase
           className={classes.input}
-          placeholder="카테고리를 검색해주세요 (●'◡'●)"
-          inputProps={{ "aria-label": "카테고리를 검색해주세요 (●'◡'●)" }}
+          placeholder="검색어를 입력해 주세요 (●'◡'●)"
+          inputProps={{ "aria-label": "검색어를 입력해 주세요(●'◡'●)" }}
         />
         <IconButton
           type="submit"

@@ -6,17 +6,23 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { useDispatch } from "react-redux";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import Slider from "react-slick";
 import UploadModal from "./UpLoadModal";
-import ReactModal from "react-modal";
+
 import { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as CommnetActions } from "../redux/modules/comment";
+import { actionCreators as likeActions } from "../redux/modules/like";
 
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
   // React.useEffect(() => {}, []);
 
+  // const commnet_list = props.comment_list  // 이렇게 받아오면 되려나?
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
+
+  // const is_like = props.like 라이크가 있냐 확인?
 
   const openEditModal = () => {
     setEditModal(true);
@@ -77,6 +83,21 @@ const ModalDetail = (props) => {
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
+  const addLike = () => {
+    dispatch(likeActions.addLikeAPI(props.id));
+  };
+
+  const disLike = () => {
+    dispatch(likeActions.disLikeAPI(props.id));
+  };
+
+  const getCommnet = () => {
+    //작성한 댓글 내용 디스패치로 보낸다~
+    dispatch(CommnetActions.addCommentAPI(comments, props.id));
+  };
+
+  console.log("댓글 내용", comments);
+  console.log("보드 아이디", props.id);
   const selectComment = (e) => {
     setComments(e.target.value);
   };
@@ -190,8 +211,10 @@ const ModalDetail = (props) => {
         <ModalBottomContainer>
           <InfoBox>
             <InfoBoxInner>
+              {/*is_like 여부로 하트모양 변경  */}
               <div>
-                <FavoriteBorderIcon /> 0
+                <FavoriteBorderIcon onClick={addLike} /> 0
+                <FavoriteIcon onClick={disLike} style={{ color: "red" }} />
               </div>
               {/* 작성자 에게만 보이게 설정  */}
               <ModalEdit>
@@ -258,7 +281,7 @@ const ModalDetail = (props) => {
               value={comments}
             />
             {ok_submit ? (
-              <UploadBtn>게시</UploadBtn>
+              <UploadBtn onClick={getCommnet}>게시</UploadBtn>
             ) : (
               <UploadBtn style={{ opacity: "0.3" }}>게시</UploadBtn>
             )}

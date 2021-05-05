@@ -4,7 +4,7 @@
   border-radius: 15px;
   background-color: white;
   display: flex;
-  item-align: center;
+  align-items: center;
   /* justify-content: center; */
 }
 
@@ -20,7 +20,7 @@
   justify-content: space-between;
   cursor: pointer;
   object-fit: cover;
-  /* background-size: cover; */
+  background-size : cover;
   /* background-image: url(${preview}); */
 }
 /* object-fit: cover; */
@@ -28,13 +28,13 @@
 .head {
   height: 40px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 
 .spotname {
   position: absolute;
-  top: 24px;
-  left: 24px;
+  top: 17px;
+  left: 17px;
   background-color: transparent;
   /* color: white; */
   color: white;
@@ -42,17 +42,44 @@
   padding-left: 5px;
 }
 
+.close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  height: 17px;
+  width: 17px;
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+  object-fit: cover;
+  background-size : cover;
+  background: url('https://i.postimg.cc/sXBKhhbJ/overlay-close.png');
+}
+
 .center {
   height: 120px
 }
 
 .bottomiconbox {
-  height: 40px;
+  height: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
 .likeicon {
-  padding: 10px;
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+  border: none;
+  object-fit: cover;
+  background-size : cover;
+  background-color: transparent;
+  background: url('https://i.postimg.cc/nhPDQPx6/heart-pink.png');
 }
 

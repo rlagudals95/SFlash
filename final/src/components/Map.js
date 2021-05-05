@@ -41,10 +41,25 @@ const Maps = (props) => {
   const [imgUrl, setImgUrl] = useState("");
   const [spotName, setSpotName] = useState("");  // 클릭한 위치 이름 설정
   const [_map, setMap] = useState();             // useEffect 외부에서 map을 쓰기 위한 것.
-
-  // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
   //조건 걸어주기 // 나를 기준으로 몇 km 이내
+  
+  // 각 마커별 데이터 가져오기
+  // const norm 
+  // const myMarker = "";
+  // const myLikeMarker = "";
+  // const caftMarker = "";
+  // const nightMarker = "";
+  // const oceanMarker = "";
+  // const mountainMarker = "";
+  // const flowerMarker = "";
+  // const aloneMarker = "";
+  // const coupleMarker = "";
+  // const friendMarker = "";
+  // const petfMarker = "";
+  // const cityMarker = "";
+  // const parkMarker = "";
+  // const exhibitionMarker = "";
 
   // 이래야 화면 렌더링이 계속안된다
   const debounce = _.debounce((e) => {
@@ -208,6 +223,7 @@ const Maps = (props) => {
     // var parkMarker = "",
     // var exhibitionMarker = "",
 
+  
     // 지도 렌더링시, 모든 게시물 자료들을 가져와서 마커와 함께 렌더링한다.
     // 서버와 연결되어 데이터 통신이 이뤄지면 이 코드를 사용한다
     // totalPicPostData.map((p, idx) => {
@@ -224,33 +240,44 @@ const Maps = (props) => {
         image: markerImage,
       })
 
+      // 모달창의 x 를 클릭하면 사라지게 하는 함수 
+      var closeOverlay = function() {
+        customOverlay.setMap(null);     
+      }
+
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content = '<div class="modalcontainer">' +
                         `<img class="picbox" src=${p.imgUrl} >` +
                             // `<img src=${p.imgUrl} onclick={() => {history}}>` +
-                            // `<img src=${p.imgUrl} >` +  
                             '<div class="head">' +
                                 `<div class="spotname">${p.spotName}</div>` +
                                 // '<div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+                                // `<div class="close" onclick=${closeOverlay()} title="닫기"></div>` + 
                             '</div>' +
                             // '<div class="center"></div>' +
-                            // '<div class="bottomiconbox">' +
-                            //     '<div class="likeicon"></div>' +
-                            // '</div>' +
+                            '<div class="bottomiconbox">' +
+                                '<img class="likeicon" onclick></img>' +
+                            '</div>' +
                         '</img>' +
                     '</div>';
 
+      // var content = document.createElement('div');
+      // content.innerHTML = data.title;
+      // content.style.cssText = 
+
       // 모달창(커스텀오버레이) 객체를 생성
       var customOverlay = new kakao.maps.CustomOverlay({
-        // map: map,           // 이거 있으면 처음부터 커스텀오버레이가 보인다 
+        // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다 
         clickable: true,    // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
         position: position, // 커스텀 오버레이의 좌표
         content: content,   // 엘리먼트 또는 HTML 문자열 형태의 내용
-        xAnchor: 0.3,       // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-        yAnchor: 0.9,       // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+        xAnchor: 0.5,       // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+        yAnchor: 1.2,       // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
         zIndex: 100,        //  커스텀 오버레이의 z-index
         altitude: 10,
       });
+
+      console.log(customOverlay);
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       // 마커에 마우스를 올려 놓으면 커스텀오버레이가 보이게 한다.
@@ -259,13 +286,15 @@ const Maps = (props) => {
         customOverlay.setMap(map); 
       })
 
+      var closeOverlay = function() {
+        customOverlay.setMap(null);     
+      }
+
       // 마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-      kakao.maps.event.addListener(markers, 'mouseout', function() {
-        customOverlay.setMap(null); 
-      })
-      // function closeOverlay() {
-      //   customOverlay.setMap(null);     
-      // } 
+      // kakao.maps.event.addListener(markers, 'mouseout', function() {
+      //   customOverlay.setMap(null); 
+      // })
+
     });
 
     // var marker = new kakao.maps.Marker({
@@ -287,9 +316,9 @@ const Maps = (props) => {
     setUpLoadModal(false);
   };
 
+
   // 작성창이 뜨게 하기 제어부분
   // const 
-
   // _map
 
   return (
@@ -312,12 +341,12 @@ const Maps = (props) => {
         {/* {is_modal? <ModalSmallPost imgUrl={imgUrl} spotName={spotName}/> : null} */}
       </MapBox>
       {/* {is_uploadModal ? <UpLoadModal latitude={latitude} longitude={longitude}/> : null} */}
-      {/* {is_uploadModal ? 
+      {is_uploadModal ? 
         <UpLoadModal 
           latitude={latitude}
           longitude={longitude}
           spotName={spotName}
-          close={closeUpLoadModal}/> : null} */}
+          close={closeUpLoadModal}/> : null}
     </React.Fragment>
   );
 };
