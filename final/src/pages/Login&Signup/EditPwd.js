@@ -6,9 +6,6 @@ import {
   Title,
   InputStyle,
   SolidBtn,
-  BorderBtn,
-  CheckBtn,
-  TextBtn,
   InfoUl,
   InfoLi,
 } from "../../Css/loginSignupCss";
@@ -19,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { pwdRegCheck, pwdRegContinuousCheck } from "../../shared/common";
 import axios from "axios";
+import { config } from "../../shared/config";
 
 const EditPwd = () => {
   // console.log(email);
@@ -80,10 +78,9 @@ const EditPwd = () => {
   const onEditPwd = (pwd, rePwd) => {
     //  인증번호가 일치하면 비밀번호 변경 페이지로
     console.log(email, pwd, rePwd);
-    const API = "http://seungwook.shop/user/findpwd/editpwd";
     axios
       .post(
-        API,
+        `${config.api}/user/findpwd/editpwd`,
         {
           email: email,
           password: pwd,

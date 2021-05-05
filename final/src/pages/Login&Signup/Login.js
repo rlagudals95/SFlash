@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import axios from "axios";
 
-import { 
+import {
   Container,
-  Title, 
-  InputStyle, 
-  SolidBtn, 
-  BorderBtn, 
-  TextBtn, } from "../../Css/loginSignupCss"
+  Title,
+  InputStyle,
+  SolidBtn,
+  BorderBtn,
+  TextBtn,
+} from "../../Css/loginSignupCss";
 import { Grid } from "../../elements/index";
 import { actionCreators as userActions } from "../../redux/modules/user";
 
@@ -62,17 +64,39 @@ const Login = () => {
             회원가입 하러가기
           </TextBtn>
         </Grid>
-        <SolidBtn bg="#1ec800" color="#ffffff">
-          네이버 아이디로 로그인
+        <SolidBtn
+          bg="#1ec800"
+          color="#ffffff"
+          // onClick = {naverLoginAPI}
+          onClick={() => {
+            window.location.href =
+              "http://seungwook.shop/oauth2/authorize/naver?redirect_uri=http://localhost:3000/";
+          }}
+        >
+          네이버로 로그인
         </SolidBtn>
-        <SolidBtn bg="#fee500">카카오 로그인</SolidBtn>
-        <SolidBtn bg="#f45a5c" color="#ffffff">
+        <SolidBtn
+          bg="#fee500"
+          onClick={() => {
+            window.location.href =
+              "http://seungwook.shop/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/";
+          }}
+        >
+          카카오 로그인
+        </SolidBtn>
+        <SolidBtn
+          bg="#f45a5c"
+          color="#ffffff"
+          onClick={() => {
+            window.location.href =
+              "http://seungwook.shop/oauth2/authorize/google?redirect_uri=http://localhost:3000/";
+          }}
+        >
           Google 로그인
         </SolidBtn>
       </Container>
     </React.Fragment>
   );
 };
-
 
 export default Login;

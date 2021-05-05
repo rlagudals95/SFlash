@@ -7,6 +7,7 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 import { nicknameRegCheck } from "../shared/common";
 import axios from "axios";
+import { config } from "../../shared/config";
 
 import { Grid } from "../elements/index";
 import { InfoUl, InfoLi } from "../Css/loginSignupCss";
@@ -19,7 +20,7 @@ const Story_EditProfile = (props) => {
   // 스토리페이지에서 user_info를 props로 받아온다.
   const { user_info, nickname } = props;
   console.log("user_info:", user_info);
-  console.log("nickname:", nickname)
+  console.log("nickname:", nickname);
 
 
   // 닉네임 정보가 있으면 수정할 수 있구요.
@@ -114,9 +115,8 @@ const Story_EditProfile = (props) => {
   };
 
   const nicknameDupCheckAPI = (newNickname) => {
-      return function (dispatch, getState, { history }) {
         console.log(newNickname);
-        const API = "http://seungwook.shop/user/signup/nickchk";
+        const API = `${config.api}/user/signup/nickchk`;
         axios
           .post(
             API,
@@ -142,10 +142,17 @@ const Story_EditProfile = (props) => {
               nicknameInfo_dupCheck.classList.add("ok");
               nicknameInfo_dupCheck.classList.remove("error");
             }
-            setOriginalNickMode(true);
           });
-      };
     };
+
+    const onEditNickname = () => {
+      if (nicknameDup === false) {
+        alert("닉네임 중복확인을 해주세요!");
+        return false;
+      }
+      console.log(newNickname);
+      dispatch(profileActions.editNicknameAPI(newNickname));
+    }
 
   // 자기소개 입력하기(기존에 입력한 자기소개가 있으면 띄워준다 input 창에 vaule 설정해줘야 이전에 썼던 글이 남아있음. 없으면 null;)
   const [introduction, setIntroduction] = React.useState(
@@ -250,9 +257,8 @@ const Story_EditProfile = (props) => {
                   );
                   return false;
                 }
-                  console.log(newNickname);
-                  nicknameDupCheckAPI(newNickname);
-                  console.log(newNickname);
+                console.log(newNickname);
+                nicknameDupCheckAPI(newNickname);
               }}
             >
               중복확인
@@ -268,7 +274,10 @@ const Story_EditProfile = (props) => {
                 아이디 중복확인
               </InfoLi>
             </InfoUl>
-            <SolidBtn width="140px" >닉네임 변경하기</SolidBtn>
+            <SolidBtn 
+            width="140px" 
+            onClick = {onEditNickname}
+            >닉네임 변경하기</SolidBtn>
             </div>
         )}
       </ProfileContainer>

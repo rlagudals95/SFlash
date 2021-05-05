@@ -7,7 +7,7 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { getCookie } from "./Cookie";
+import { setCookie, getCookie } from "./Cookie";
 
 import Signup from "../pages/Login&Signup/Signup";
 import Login from "../pages/Login&Signup/Login";
@@ -25,14 +25,44 @@ import Search from "@material-ui/icons/Search";
 
 function App() {
   const dispatch = useDispatch();
-  const token = getCookie("token"); // is_login 이라는 키값을 가진 토큰 가져와라
-  const is_cookie = token ? true : false; // 그리고 is_cookie로 토큰 유무판단
+  const jwt = getCookie("jwt"); // is_login 이라는 키값을 가진 토큰 가져와라
+  const is_cookie = jwt ? true : false; // 그리고 is_cookie로 토큰 유무판단
   const is_login = useSelector((state) => state.user.is_login);
 
+  const getUrlParameter =(name)=> {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(window.location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+  const token = getUrlParameter('token');
+  const error = getUrlParameter('error');
+  console.log(token);
+  console.log(error);
+
+  // if(token) {
+  //   setCookie("jwt", token)}
+//     return <Redirect to={{
+//         pathname: "/profile",
+//         state: { from: this.props.location }
+//     }}/>; 
+// } else {
+//     return <Redirect to={{
+//         pathname: "/login",
+//         state: { 
+//             from: this.props.location,
+//             error: error 
+//         }
+//     }}/>; 
+// }
+// }
+
   React.useEffect(() => {
+      if(token) {
+    setCookie("jwt", token)}
     if (is_cookie) {
       console.log("로그인 체크", is_login);
-      dispatch(userActions.loginCheck(token));
+      dispatch(userActions.loginCheck(jwt));
     } //렌더링 마다 로그인체크
   }, []);
 

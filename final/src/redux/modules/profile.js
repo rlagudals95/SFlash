@@ -2,11 +2,14 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
+import { config } from "../../shared/config";
+import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 
 // Action
 const UPLOADING = "UPLOADING"; //업로드 여부
 const SET_PREVIEW = "SET_PREVIEW"; // 사용자 프로필 이미지를 보여주는 액션
 const EDIT_PROFILE = "EDIT_PROFILE";
+const EDIT_NICKNAME = "EDIT_NICKNAME"
 // const DUP_CHECK = "DUP_CHECK";
 
 // Action creators
@@ -20,6 +23,7 @@ const editProfile = createAction(
     introduction,
   })
 );
+const editNickname = createAction(EDIT_NICKNAME, (nickname) => nickname)
 // const dupCheck = createAction(DUP_CHECK, (dupCheck) => ({ dupCheck }));
 
 // initialState
@@ -35,33 +39,61 @@ const initialState = {
 const editProfileAPI = (nickname, profileImg, introduction) => {
   return function (dispatch, getState, { history }) {
     const form_edit = new FormData();
-    form_edit.append("profileImgUrl", profileImg);
-    form_edit.append("introduction", introduction);
+    form_edit.append("profileFile", profileImg);
+    form_edit.append("introduceMsg", introduction);
     console.log(form_edit);
     console.log(nickname);
     // const jwt = getCookie("token");
 
-    axios({
+    axios.put({
       method: "put",
-      url: `/${nickname}`,
+      url: `${config.api}/editmyprofile`,
       data: form_edit,
       headers: {
-        "Content-Type": "multipart/form-data",
         "X-AUTH-TOKEN": "jwt",
+        "contentType": "multipartFile",
       },
     })
       .then((res) => {
         console.log(res);
-        let profile = {
-          profileImg: profileImg,
-          introduction: introduction,
-        };
-        dispatch(editProfile(nickname, profile));
+        // let profile = {
+        //   profileImg: profileImg,
+        //   introduction: introduction,
+        // };
+        // dispatch(editProfile(nickname, profile);
       })
       .catch((err) => {
         console.error("작성 실패", err);
       });
     history.push("/");
+  };
+};
+
+const editNicknameAPI = (newNickname) => {
+  console.log(newNickname);
+  return function (dispatch, getState, { history }) {
+    const API = `${config.api}/editnickname`
+    axios.put(API, {
+      nickname: newNickname,
+    },
+    {
+      headers: {
+      "X-AUTH-TOKEN": getCookie("jwt"),
+    },
+  })
+      .then((res) => {
+        console.log(res);
+        // let nickname = res.data.....
+        // dispatch(editNickname(nickname));
+      //   if(res.data === true){
+      //     alert("닉네임이 변경되었습니다! :)")
+      //   }
+    const nickname = localStorage.getItem("nickname");
+    history.push(`${config.api}/story/${nickname}`);
+      })
+      .catch((err) => {
+        console.error("작성 실패", err);
+      });
   };
 };
 
@@ -124,6 +156,10 @@ export default handleActions(
     //   produce(state, (draft) => {
     //     draft.dupCheck = action.payload.dupCheck;
     //   }),
+    [EDIT_NICKNAME]: (state, action) =>
+      produce(state, (draft) => {
+        draft.nickname = action.payload.nickname;
+      }),
   },
   initialState
 );
@@ -134,7 +170,8 @@ const actionCreators = {
   setPreview,
   editProfile,
   editProfileAPI,
-  // nicknameDupCheckAPI,
+  editNicknameAPI,
+  editNickname,
 };
 
 // actionCreators로 묶은 함수들을
