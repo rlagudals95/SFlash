@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import {
-  Container,
-  Title,
-  InputStyle,
-  SolidBtn,
-  BorderBtn,
-  CheckBtn,
-  TextBtn,
-  InfoUl,
-} from "../Css/loginSignupCss";
+import { Container, Title, InfoUl, InfoLi } from "../Css/loginSignupCss";
+import { GiCheckMark } from "react-icons/gi";
 import RegCheck from "../Css/RegCheck.css";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
@@ -81,8 +73,9 @@ const Story_EditPwd = () => {
 
   const onEditPwd = (originalPwd, newPwd, rePwd) => {
     //  인증번호가 일치하면 비밀번호 변경 페이지로
+    // 이메일? 닉네임?? 어떤거로 보내드리면 될까요??
     console.log(email, originalPwd, newPwd, rePwd);
-    const API = "http://seungwook.shop/user/findpwd/editpwd";
+    const API = "";
     axios
       .post(
         API,
@@ -137,9 +130,18 @@ const Story_EditPwd = () => {
           }}
         />
         <InfoUl className="checkPwd">
-          <li>10글자 이상 입력</li>
-          <li>영문/숫자/특수문자(공백 제외)만 허용,2개 이상의 조합</li>
-          <li>동일한 숫자 3개 이상 연속 사용 불가</li>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+            10글자 이상 입력
+          </InfoLi>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+            영문/숫자/특수문자(공백 제외)만 허용,2개 이상의 조합
+          </InfoLi>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+            동일한 숫자 3개 이상 연속 사용 불가
+          </InfoLi>
         </InfoUl>
 
         <InputStyle
@@ -154,7 +156,10 @@ const Story_EditPwd = () => {
           }}
         />
         <InfoUl className="reCheckPwd">
-          <li>동일한 비밀번호를 입력해주세요.</li>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+            동일한 비밀번호를 입력해주세요.
+          </InfoLi>
         </InfoUl>
 
         <SolidBtn
@@ -170,5 +175,44 @@ const Story_EditPwd = () => {
     </React.Fragment>
   );
 };
+
+const InputStyle = styled.input`
+  border: 1px solid grey;
+  width: 100%;
+  height: 38px;
+  border: 1px solid grey;
+  border-radius: 8px;
+  padding: 4px 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 8px auto;
+  color: grey;
+  input:focus {
+    outline: none !important;
+    border: 1px solid red;
+  }
+  cursor: pointer;
+`;
+
+const SolidBtn = styled.button`
+  display: block;
+  border: none;
+  margin: 15px 0px;
+  width: 150px;
+  height: 48px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: ${(props) => props.theme.main_color};
+  color: #ffffff;
+  outline: none;
+  &:hover {
+    color: grey;
+    background-color: lightgrey;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+  }
+`;
 
 export default Story_EditPwd;

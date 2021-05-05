@@ -242,9 +242,8 @@ const Story_EditProfile = (props) => {
             />
             <SolidBtn
             //  disabled={is_uploading}
+            width="100px"
               onClick={() => {
-                // e.preventDefault();
-                // e.stopPropagation();
                 if (!nicknameRegCheck(newNickname)) {
                   alert(
                     "아이디는 6자 이상의 영문 혹은 영문과 숫자 조합만 가능합니다."
@@ -269,11 +268,9 @@ const Story_EditProfile = (props) => {
                 아이디 중복확인
               </InfoLi>
             </InfoUl>
+            <SolidBtn width="140px" >닉네임 변경하기</SolidBtn>
             </div>
-          
         )}
-
-        
       </ProfileContainer>
     </React.Fragment>
   );
@@ -380,7 +377,7 @@ const SolidBtn = styled.button`
   display: block;
   border: none;
   margin: 20px 10px;
-  width: 100px;
+  ${(props) => (props.width ? `width:${props.width};` : "")}
   height: 48px;
   border-radius: 8px;
   box-sizing: border-box;

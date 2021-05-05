@@ -35,23 +35,31 @@ const Story = (props) => {
   }, []);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const settingHandleClick = (e) => {
-    setAnchorEl(e.currentTarget);
+
+  const settingHandleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  // 모달창 띄우기
+  // 설정 모달창
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
+
   const openModal = (e) => {
     setModalIsOpen(true);
+    // const id = e.target.id;
+    // if (id !== active) {
+    //   setActive(id);
+    // }
   };
   const closeModal = () => {
     setModalIsOpen(false);
   };
 
-  // '나의 게시물/ 나의 좋아요' 탭 제어하기 : 처음에는 0번째 인덱스 활성화
+  // // 탭 구현하기
+  // // 처음에는 0번째 인덱스 활성화
   const [active, setActive] = useState("myPost");
   // 클릭한 인덱스 활성화
   const handleClick = (e) => {
@@ -60,26 +68,6 @@ const Story = (props) => {
       setActive(id);
     }
   };
-
-    // 'setting' 메뉴 모달 제어하기 : 처음에는 0번째 인덱스 활성화
-
-    const menuTitle = [
-      "editProfile",
-      "editPwd",
-    ]
-
-    const menu = {
-      0: <Story_EditProfile />,
-      1: <Story_EditPwd />,
-    }
-
-    const [activeMenu, setActiveMenu] = useState(0);
-    // 클릭한 인덱스 활성화
-    const menuHandleClick = (id) => {
-      setActiveMenu(id)
-    };
-
-  
 
   return (
     <React.Fragment>
@@ -100,7 +88,7 @@ const Story = (props) => {
               <BiDotsHorizontalRounded size="35" color="grey" />
             </Setting>
             <Menu
-              // id="simple-menu"
+              id="simple-menu"
               anchorEl={anchorEl}
               keepMounted
               open={Boolean(anchorEl)}
@@ -110,10 +98,10 @@ const Story = (props) => {
                 onClick={() => {
                   openModal();
                   handleClose();
-                  menuHandleClick(0);
+                  handleClick();
                 }}
-                active={activeMenu === 0}
-                id={0}
+                active={active === "editProfile"}
+                id="editProfile"
               >
                 프로필 편집
               </MenuItem>
@@ -121,54 +109,43 @@ const Story = (props) => {
                 onClick={() => {
                   openModal();
                   handleClose();
-                  menuHandleClick(1);
+                  handleClick();
                 }}
-                active={activeMenu === 1}
-                id={1}
+                active={active === "editPwd"}
+                id="editPwd"
               >
                 비밀번호 변경
               </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                }}
-              >
-                로그아웃
-              </MenuItem>
             </Menu>
-         
 
-
- {/*  현재 닉네임은 로컬스토리지에서 받아온 닉네임으로 설정되어 있지만 api 연결후에는 api에서 받아온 정보로 사용하기 */}
             <Modal
               isOpen={modalIsOpen}
               close={closeModal}
               style={modalStyle}
+              active={active === "editProfile"}
             >
-              <Content active={activeMenu === 0}>
-              <Story_EditProfile
-                  user_info={props.user_info}
-                  nickname={nickname}
-                />
-              </Content>
+              {/*  현재 닉네임은 로컬스토리지에서 받아온 닉네임으로 설정되어 있지만 api 연결후에는 api에서 받아온 정보로 사용하기 */}
+              <Content><Story_EditProfile
+                user_info={props.user_info}
+                nickname={nickname}
+              /></Content>
               <CloseButton
                 src="https://image.flaticon.com/icons/png/512/458/458595.png"
                 onClick={closeModal}
               />
             </Modal>
-            {/* <Modal
+            <Modal
               isOpen={modalIsOpen}
               close={closeModal}
               style={modalStyle}
+              active={active === "editPwd"}
             >
-              <Content active={activeMenu === 1}>
-              <Story_EditPwd />
-              </Content>
+              <Content><Story_EditPwd /></Content>
               <CloseButton
                 src="https://image.flaticon.com/icons/png/512/458/458595.png"
                 onClick={closeModal}
               />
-            </Modal> */}
+            </Modal>
           </div>
         </ProfileContainer>
 

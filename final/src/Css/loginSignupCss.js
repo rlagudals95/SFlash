@@ -130,7 +130,7 @@ const InfoUl = styled.ul`
   color: #666666;
   font-weight: 400;
   text-align: left;
-  margin-top: 5px;
+  margin-top: px;
 `;
 
 const InfoLi = styled.li`
