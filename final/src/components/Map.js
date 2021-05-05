@@ -129,18 +129,21 @@ const Maps = (props) => {
     kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
       
       // 클릭한 위도, 경도 정보를 가져옵니다 
-      var latlng = mouseEvent.latLng;
+      const latlng = mouseEvent.latLng;
       // latlng.Ma = latlng.getLat() = 위도
       // latlng.La = latlng.getLng() = 경도
-      setLatitude(latlng.La);
-      setLongitude(latlng.Ma);
+      const hereLat = latlng.getLat()
+      const hereLng = latlng.getLng()
+      setLatitude(hereLat);  // useState() : 위도 latitude 값 전역으로 설정
+      setLongitude(hereLng); // useState() : 경도 longitude 값 전역으로 설정
+      console.log(latitude + " " + longitude);
 
-      var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-          message += '경도는 ' + latlng.getLng() + ' 입니다';
+      var message = '클릭한 위치의 위도는 ' + hereLat + ' 이고, ';
+          message += '경도는 ' + hereLng + ' 입니다';
       console.log(message);
 
       // 위도 경도 좌표로 주소 알아내기
-      var coord = new kakao.maps.LatLng(latlng.getLat(), latlng.getLng());
+      var coord = new kakao.maps.LatLng(hereLat, hereLng);
       console.log(coord);
 
       searchAddrFromCoords(mouseEvent.latLng, function(result, status) {
@@ -161,27 +164,22 @@ const Maps = (props) => {
       
       // 작성용 마커를 띄우기
       // 작성용 마커를 클릭하면 게시물 작성창이 뜨게 하기 : 로그인 한 사람만 되게 하기
-      var writeMarkerImgUrl = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"
-      var imageSize = new kakao.maps.Size(40, 40);
-      var markerImage = new kakao.maps.MarkerImage(writeMarkerImgUrl, imageSize);
+      var writeMarkerImgUrl = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+          imageSize = new kakao.maps.Size(30, 35),
+          writeMarkerImage = new kakao.maps.MarkerImage(writeMarkerImgUrl, imageSize);
 
-      // setLatitude, setLongitude는 비동기 작업이라 
-      // 바로 latitude, longitude 값이 설정 되지 않고 undefined 상태일 수 있고, 그러면 원하는 작동이 안 되므로
-      // 값이 설정되고 나서 실행이 되도록 if 문으로 분기해준다.
-      if (latitude && longitude) { 
-        var position = new kakao.maps.LatLng(latitude, longitude)
-        var marker = new kakao.maps.Marker({
-          // 클릭한 위치에 게시물 작성용 마커를 띄워준다.
-          // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
-          // map: map,
-          position: position,
-          image: markerImage,
-          clickable: true,
-          zIndex: 50,
-        })
-        
-        // marker.setMap(map);
-      }
+      var position = new kakao.maps.LatLng(hereLat, hereLng)
+      var marker = new kakao.maps.Marker({
+        // 클릭한 위치에 게시물 작성용 마커를 띄워준다.
+        // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
+        // map: map,
+        position: position,
+        image: writeMarkerImage,
+        clickable: true,
+        zIndex: 50,
+      })
+
+      marker.setMap(map);
 
       // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
       kakao.maps.event.addListener(marker, 'click', function() {
