@@ -13,6 +13,8 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import { actionCreators as modalActions } from "../redux/modules/modal";
+import { actionCreators as likeActions } from "../redux/modules/like";
+
 import "../Css/Post.css";
 
 //로그인 후에 이용가능 합니다
@@ -29,7 +31,18 @@ const Post2 = (props) => {
     setDetailModal(false);
   };
 
+  // 좋아요 함수
+  const addLike = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(likeActions.addLikeAPI(props.id));
+  };
 
+  const disLike = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(likeActions.disLikeAPI(props.id));
+  };
 
   //스타일 컴포넌트//
   const hoverBox = keyframes`
@@ -48,7 +61,8 @@ const Post2 = (props) => {
     width: 100%;
     aspect-ratio: 1/1;
     background-size: cover;
-    background-image: url("${props.imgUrl}");
+    background-image: url("${props.imgUrl}"); // [0] 안써도 자동으로 첫번째 배열 이미지가 들어가긴 한다..!
+
     background-repeat: no-repeat;
 
     /* &:hover {
@@ -59,15 +73,23 @@ const Post2 = (props) => {
 
   //스타일 컴포넌트//
 
+  // console.log("포스트 프롭스", props);
+  // console.log(props.post_image_url);
   return (
     <React.Fragment>
       <Card>
-        <PostBox src={props.post_image_url} onClick={openModal}>
+        {/* src={props.post_image_url[0]} */}
+
+        <PostBox onClick={openModal}>
           {/* 이거자체가 지금 투명 0 */}
           <div className={"hoverDark"}>
             <div className={"PostFont"}>
-              <FavoriteBorderIcon />
-              <div>0 </div>
+              {props.like ? (
+                <FavoriteIcon onClick={disLike} />
+              ) : (
+                <FavoriteBorderIcon onClick={addLike} />
+              )}
+              <div>{props.likeCnt} </div>
               <br />
               {props.address}
             </div>

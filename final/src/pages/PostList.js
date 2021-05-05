@@ -19,15 +19,19 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import "../Css/Modal.css";
 import modal from "../redux/modules/modal";
 import post_list from "../components/MockData";
-import { actionCreators as PostActions } from "../redux/modules/post";
 import category from "../redux/modules/category";
 import UploadModal from "../components/UpLoadModal";
 import MobileCate from "../components/mobile/MobileCate";
 import MobileSelect from "../components/mobile/MobileSelect";
 import MobileNav from "../components/mobile/MobileNav";
+import { actionCreators as PostActions } from "../redux/modules/post";
 
 const PostList = () => {
   const dispatch = useDispatch();
+
+  // React.useEffect(() => {
+  //   dispatch(PostActions.getPostAPI());
+  // }, []);
 
   const is_category = useSelector((state) => state.category.is_category);
 
@@ -46,6 +50,9 @@ const PostList = () => {
   const resultExhibition = is_category.find((item) => item === "전시");
 
   console.log("카페가 들어있다!", resultCafe);
+
+  const board_list = useSelector((state) => state.post.list);
+  console.log("잘 가지고 왔나~", board_list);
 
   const [search, setSearch] = React.useState("");
 

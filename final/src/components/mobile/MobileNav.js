@@ -19,7 +19,7 @@ const MobileNav = () => {
     <React.Fragment>
       <NavBox>
         <Logo>SFlash</Logo>
-        {is_login ? (
+        {/* {is_login ? (
           <React.Fragment>
             <HeaderLog>
               <GrIcons.GrLogout size="1.2rem" onClick={onLogout} />
@@ -36,7 +36,7 @@ const MobileNav = () => {
               />
             </HeaderLog>
           </React.Fragment>
-        )}
+        )} */}
       </NavBox>
     </React.Fragment>
   );

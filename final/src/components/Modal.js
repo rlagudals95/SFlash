@@ -40,46 +40,9 @@ const ModalDetail = (props) => {
     slidesToScroll: 1,
   };
 
-  const comment_list = [
-    {
-      profileImg:
-        "https://images.theconversation.com/files/348622/original/file-20200721-15-dswf3q.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop",
-      username: "hmk1022",
-      comment: "힘내시오!",
-    },
-    {
-      profileImg:
-        "data:image/jpeg;base64,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",
-      username: "hmk1022",
-      comment: "모달창 이상해요 ㅠ....",
-    },
-    {
-      profileImg:
-        "data:image/jpeg;base64,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",
-      username: "hmk1022",
-      comment: "모달창 이상해요 ㅠ....",
-    },
-    {
-      profileImg:
-        "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhIQEA8PEBAPDw8PDxAPDw8PDw8PFREWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OFxAQFy0dFx0rLS0rLSstLSstLSstLS0tLS0tLS0rLS0tLS03LS0rNy0tLS0tLTc3Nzc3LS0tNzcrLf/AABEIAKIBOAMBIgACEQEDEQH/xAAaAAADAQEBAQAAAAAAAAAAAAACAwQAAQUG/8QAJhAAAwACAQQDAAIDAQAAAAAAAAECAxEhBBIxQRNRYXGBFKGxBf/EABkBAAMBAQEAAAAAAAAAAAAAAAABAgMEBf/EAB8RAQEBAQADAAMBAQAAAAAAAAABEQISITEDQVFhE//aAAwDAQACEQMRAD8A+kSGY0LSHwe7Xh8jRRhn2IS0PijPptFE2E8ojYxSZ2L0XykvUMZS0IylcxPVTORbkcwUaxhYFDEwWgoCiGudonuS7FPH9E2adEyq6npK0HiR25ChFM5PYM64/slZXn+hLkcR3NqWkcHdgLkvWFgUMxsWkMhCqufr1Ok4/s9PAeb/AOfy0vw9bDGmcv5Ho/i+DyeCemUZUTWjPlr0XoG0Nci6SLiKmT5GJfZyZCotLPIddg41yc6hf7Fg30gt7Zg3JxTtmzAzp8WyrFh0F0vT8bHt68GXXTfnnIX2hGmQWStxnRmODotGPEDTD+P8MoOnXNlgoexiYpL2O7d8kVcOh8DponwsNrkzsXK5leyekWvDwKqRylYjaA0VVAmpNJWdjiOzH0C0dh6AlmGDmbGN6atoo+NMxvWVtJseTUmiCzJh0CsfJfkjxSZcfIqp4LMsAPFwOdJvKL4xFo9So4Iax8l89Me+MIUhJB9vISkrUSDxU0e30PVdy58o8ZFXSVoy/JNjp/Fcr2roTUnMVh0zm+OrdJsQ5Q7IxLnZpEVzX2Ktj3JojkepxyFoVkXse5I+o8j590dfC6oPpp5FzJZ00F25EczauWtE+e9B5L0S5Mm3wjLmNeqZFcHVIMfRXjXAX0J7cS40cNdGJUgzzpmlJ+RlrfkHsNt9Mg1gfo2Fc6ZThAy49PYvL9DP2Dte/wAG9oW+Dsom08HFcaNc7F6DErU7kH+R+X8EFSs6H4/aM8aY6EGoDyGEYeOCzHQm8YeJE32rn0oqNiPjZRvgKURuLzUWWOQPj9eizqsXIuEVOvSbz7IeLghyYuWez8ZH1GMrnpPfDyqRtD8uMCZN9c2e3Eijp5NGMo6aCOuvTXnlTiQy3xo5L5OUYOgp+TqgLQc8cD0sD2hqNIbMexGa9Ez2r4my3raJ5xNjXO2UYsZruMs0tYOA5Xahlsmy2TNqvUJ6jNth4I2tktst6OdGnXqI5u1RjxJDKYFUcb0tmTYGW9GJM+TZw0nLO9KEdQ28XIDgWnjsIa52tCoZTjRPRwmcfGgNaL5gDJhJ8lXlKjOfYy5AcsaGSB+IZIcBowqMZmx0oHJjFp4Vs0MYkbsHowzGuBmKTYpCjhmdq5Hcsk1StlXIrJASnY7BN1MFOPgRn5Y+fqeviG4E/EXfHybLPo1nTG8J8MFGONBYIGPgm9K559BSDlb4AfgPp/JNXGWP/Q+MQWOR3aRemk5TZCbJH2VZqSJ3tlco6KxRyPqNB4MQGce7RmQjLRHkt+h+ViVBrzGXVJiNs9DHHAOHEUaF10fPIEifqr9FFVoltbDn6rqpaRijsMaeTLxetmxiHJa9MTcHNK6eokpBY6GXiFSX9R8W40N7dk+CmVTWzHprz7S5sYpleRE2SOS+ajqEnZG/AKcFbqLMPxQmN7SfA+StIjr6059wisOgdNFTgVbFKLASMmRcVyVa2gp8+3O0G5MuBswTuK+p/jF3iLnomy0hy0rzE/xewKgpfgCY9laiwtSFUBuUglPAaMT1Pod02LXIFzyOx5PCC30OZ7OXArJbY6iarIi+gdnPIag0cjGirUyFvhE2UfmZPSK5T1U1ILHA2cbY6UkXekTkKnSA7htCaYougoH+EMnG34LMHS68jvUhTm1Lh6d+WYtzvSMRtq/GR1I5UnMafgNMlRYpyU9gm4exypscxyUwhMaKYJ6quYXlQpIqqRfaKU7A1sVUlLkXkngcpWJIWmWY2Jxzv0PlD6qeY2avRPNteeUU2uBek1oUp2FaW9+ivEyeMfoqiNC6p8xyoGSjlo6QsukJqRzk52FSpsJpHPQ2pB0PSwMob2g40MSFachFSBHnZS5AtDlKwm8jFqP0OmDsuIp+CfobSNgQypM7fbWT0lcbOfAVTINj8i8U7xi70htUKc7KiaRXIzF0+/IXC8HG2VqcUTUyDfVokoVT/QnEF7sMz5t+DCUzF5iLdexKTOPEcQ6bOeumOTINYxsh6J08RPF9DcYWSTkMrdicymOTdgaR3RGrwHaT5pKWJylcp6TQ/o7ps7P8HN6ZozOT9G7DkMdPJF9LntLXAyMuwsuMTien44H9iflVwE2Ans7KIaRx7B0GxTYQq1sS6DdHJLiK2/Q6F9gHHYjNqtEebKdyZSSq2XxyjvsXcOwT7YiH9jlXrRdRyvxUg9kuFlKRz2e3RzdjrE3Q6hLkIdJaF1sZQFs1jKlt6FVf6bJQpmkjO0NM4EkMx4tlbiZNLRh/xa8mFqvFaq0Njk7khGUfRza6MH2nZbCn9NRGrwNsSkMfJpx+ypcTZo5OpnO85NolQ3IvJCGKzUg0Wal19Cqh72yvt0Jvz4NJWVjTj2OiNAxlO1kJuqmCpojzjMlP8J62XzEd3T8H7/0qnRBKaOun+ivOidYsuye3+g6ZzTHJh267KGpCpTHzIqICpEWU5OfAFQEpWIqORjf0ehjwJeQ3r6K/6J/5/wBRzH2cb5KLnYKw+2Hkfj/HMT1/I35QfjMsRNxU2B+XZy8gXYjqw7H6GVM2bWyxYAMkNeB+ULwqF4zuLFvyN7GUYsftlXr0mcbUn+O0/sOJ0WG+Ijz/AKufj/iZ4jpRSSMLyqvGO3RyMgEm0Th6omkdaEzeg1lFipW8DEhbrYcsVEcciN8lFWvZO72/A+U9YdMoYJhMNsVVHWL+LfsKkzTsCrdmhbkdJqQaPEpwjnxDTJD0eJfxg1JRoFoNHim0NiUF8YaQXopyHsQqqQ3IJjC29sc/0X/HO9DIMsGhkJfQWwSX9uNHOwcBVE6rAKQlASQQtOQHacaGHNBowLhHVJ3R0NPHO0FyGzBowh4wUinRxyPyLxLlBI72nEhaeM5MEdDRiRS0MUhJHdDtTOSqg4kP0c0HkPEvTCSD0btDTwLkH4RmjJC0eLkoIxg08ZHe0xtiGNo2jmzuwDmjJHdnNgBGOJm2I3TaObNsA7oxzZtgHdHDbObGHdG7TbOdwBu07s5s5sCFs7sW2buAaZs4Bs3cAHs2xfcbuDBpmzbF9xu4BpmzgCo2wMwwvuMA0RjGAmOmMBuHTGAMYxhBkYxgDM4YwyriOmMAYxjAGMdMACYxgDGMYAxjGAMcMYAxjGAOHDGGTGZwwBjGMAcMdMAYxjAbGMYA/9k=",
-      username: "hmk1022",
-      comment: "모달창 이상해요 ㅠ....",
-    },
-    {
-      profileImg:
-        "data:image/jpeg;base64,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",
-      username: "hmk1022",
-      comment: "모달창 이상해요 ㅠ....",
-    },
-    {
-      profileImg:
-        "data:image/jpeg;base64,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",
-      username: "hmk1022",
-      comment: "모달창 이상해요 ㅠ....",
-    },
-  ];
+  const commentList = props.comment;
 
-  const is_comment = comment_list ? true : false;
+  const is_comment = commentList ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
@@ -96,7 +59,7 @@ const ModalDetail = (props) => {
     dispatch(CommnetActions.addCommentAPI(comments, props.id));
   };
 
-  console.log("댓글 내용", comments);
+  // console.log("댓글 내용", comments);
   console.log("보드 아이디", props.id);
   const selectComment = (e) => {
     setComments(e.target.value);
@@ -212,10 +175,19 @@ const ModalDetail = (props) => {
           <InfoBox>
             <InfoBoxInner>
               {/*is_like 여부로 하트모양 변경  */}
-              <div>
-                <FavoriteBorderIcon onClick={addLike} /> 0
-                <FavoriteIcon onClick={disLike} style={{ color: "red" }} />
-              </div>
+              {props.like ? (
+                <div>
+                  {" "}
+                  <FavoriteIcon onClick={disLike} style={{ color: "red" }} />
+                  {props.likeCnt}
+                </div>
+              ) : (
+                <div>
+                  <FavoriteBorderIcon onClick={addLike} />
+                  {props.likeCnt}
+                </div>
+              )}
+
               {/* 작성자 에게만 보이게 설정  */}
               <ModalEdit>
                 <React.Fragment onClick={props.close}>
@@ -249,7 +221,7 @@ const ModalDetail = (props) => {
           </InfoBox>
           <ModalCmtBox>
             {is_comment
-              ? comment_list.map((c, idx) => {
+              ? commentList.map((c, idx) => {
                   //여기서 댓글을 입력하고 map으로 props 값을 돌려서 화면을 띄우게 해줌
 
                   //댓글이 2개보다 작다면? 1개라면?
@@ -257,9 +229,9 @@ const ModalDetail = (props) => {
                     <ReplyBox>
                       <Replys>
                         <ReplyLeft>
-                          <ReplyImg src={c.profileImg}></ReplyImg>
-                          <ReplyWriter>{c.username}</ReplyWriter>
-                          <Reply>{c.comment}</Reply>
+                          <ReplyImg src={c.writerImgUrl}></ReplyImg>
+                          <ReplyWriter>{c.writerName}</ReplyWriter>
+                          <Reply>{c.content}</Reply>
                         </ReplyLeft>
                         <ReplyRight>
                           <CmtDate>방금 전</CmtDate>
@@ -338,11 +310,23 @@ const ModalComponent = styled.div`
     border: none;
     box-sizing: border-box;
   }
-  @media (max-width: 1210px) {
+  /* @media (max-width: 1210px) {
+    position: fixed;
+    width: 35vw;
+    height: 67vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    border: none;
+    box-sizing: border-box;
+  } */
+
+  @media (max-width: 1030px) {
     // 1210밑으로 넓이가 내려가면
     /* all: unset; */
     position: fixed;
-    width: 35vw;
+    width: 50vw;
     height: 67vh;
     /* overflow: hidden; */
     top: 50%;
@@ -398,12 +382,12 @@ const ExitBtn = styled.button`
 const ModalBottomContainer = styled.div`
   text-align: left;
   width: 550px;
-  height: 325px;
+  height: 39.5vh;
   display: flex;
   flex-direction: column;
   padding: 0px 12px;
   margin: 0px auto;
-  @media (max-width: 1600px) {
+  /* @media (max-width: 1600px) {
     // 1450밑으로 넓이가 내려가면
     text-align: left;
     width: 100%;
@@ -412,7 +396,7 @@ const ModalBottomContainer = styled.div`
     flex-direction: column;
     padding: 0;
     margin: 0px auto;
-  }
+  } */
 
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
@@ -486,22 +470,16 @@ const InfoBox = styled.div`
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     width: calc(100% - 2vw); //패딩대신... 오,....
-    height: 20vh;
+    height: 15.5vh;
     display: flex;
     flex-direction: column;
     margin: 0px auto;
   }
-  @media (max-width: 1440px) {
-    width: calc(100% - 2vw); //패딩대신... 오,....
-    height: 13vh;
-    display: flex;
-    flex-direction: column;
-    margin: 0px auto;
-  }
+
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     width: calc(100% - 7vw); //패딩대신... 오,....
-    height: 22vh;
+    height: 18vh;
     display: flex;
     flex-direction: column;
     margin: 0px auto;
@@ -525,7 +503,7 @@ const InfoBoxInner = styled.div`
 
 const ModalEdit = styled.div`
   opacity: 0.5;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 `;
 
 const PostTilte = styled.div`
@@ -535,7 +513,7 @@ const PostTilte = styled.div`
   margin-bottom: 10px;
 `;
 const PostContents = styled.div`
-  font-size: 1rem;
+  font-size: 0.9rem;
   opacity: 0.6;
   width: 550px;
   margin-top: 3px;
@@ -547,9 +525,10 @@ const PostTime = styled.div`
   margin: 15px 0px 8px 0px;
 `;
 const ModalCmtInputBox = styled.div`
+  align-items: center;
   margin-bottom: -4.5vh;
   width: 100%;
-  height: 10vh;
+  height: 7vh;
   padding: 0px;
   display: flex;
   justify-content: space-between;
@@ -557,8 +536,17 @@ const ModalCmtInputBox = styled.div`
   box-sizing: border-box;
   border: 2px solid #efefef;
   background-color: white;
-  @media (max-width: 600px) {
+  @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
+    height: 10vh;
+  }
+  @media (max-width: 1100px) {
+    // 1450밑으로 넓이가 내려가면
+    height: 7vh;
+  }
+
+  @media (max-width: 600px) {
+    height: 6vh;
   }
 `;
 
@@ -598,9 +586,16 @@ const ReplyBox = styled.div`
 const Replys = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 8px;
   justify-content: space-between;
   height: 3vh;
+  @media (max-width: 1440px) {
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+    margin-top: 1vh;
+    justify-content: space-between;
+    height: 3vh;
+  }
 `;
 const ReplyImg = styled.div`
   height: 3vh;
@@ -620,10 +615,12 @@ const ReplyWriter = styled.div`
 `;
 
 const Reply = styled.div`
-  font-size: 14px;
+  font-size: 0.8rem;
+  opacity: 0.8;
 `;
 
 const ReplyLeft = styled.div`
+  align-items: center;
   display: flex;
 `; // space-between 효과 주기위해서 쓴다
 const ReplyRight = styled.div`
@@ -655,7 +652,7 @@ const CommentInput = styled.input`
   border: none;
   outline: none;
   width: 100%;
-  padding: 10px;
+  padding: auto 0px;
   background-color: white;
 `;
 const UploadBtn = styled.div`
@@ -664,19 +661,20 @@ const UploadBtn = styled.div`
   cursor: pointer;
   opacity: 1;
   font-weight: 600;
-  margin: 10px 5px 0px 0px;
-  /* padding-bottom: 5px; */
   width: 30px;
+  margin-right: 1vw;
+  /* margin: 10px 5px 0px 0px; */
+  /* padding-bottom: 5px; */
+  /* width: 30px;
   @media (max-width: 1440px) {
-    // 1450밑으로 넓이가 내려가면
-
+   
     margin: 5px 5px 0px 0px;
   }
   @media (max-width: 600px) {
-    // 1450밑으로 넓이가 내려가면
+    
     margin: 10px 5px 0px 0px;
     width: 40px;
-  }
+  } */
 `;
 
 const EditBtn = styled.span`
