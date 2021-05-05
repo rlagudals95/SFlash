@@ -15,6 +15,7 @@ import PublishIcon from "@material-ui/icons/Publish";
 import TextField from "@material-ui/core/TextField";
 import Upload2 from "../shared/Upload2";
 import SelectCate from "./SelectCate";
+import { actionCreators as postActions } from "../redux/modules/post";
 
 const UploadModal = (props) => {
   const dispatch = useDispatch();
@@ -23,21 +24,23 @@ const UploadModal = (props) => {
   const user_info = useSelector((state) => state.user.user);
   const [contents, setContents] = React.useState("");
   const [title, setTitle] = React.useState("");
+  const post_list = useSelector((state) => state.post.list);
   // const post_id = props.match.params.id;
-  const is_edit = false;
-  console.log("프리뷰", preview);
+  // const is_edit = props.id ? true : false; 게시글 작성시 props로 id를 받냐 안받냐 차이
+  // const _post = is_edit ? post_list.find((p) => p.id == post_id) : null;
+  // console.log("프리뷰", preview);
   const ok_submit = contents ? true : false;
 
-  React.useEffect(() => {
-    // if (!preview) {
-    //   dispatch(imageActions.setPreview("http://via.placeholder.com/400x300"));
-    // }
-    if (is_edit) {
-      // 포스트의 이미지 url로 프리뷰 설정
-    } else {
-      dispatch(imageActions.setPreview("http://via.placeholder.com/400x300"));
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   // if (!preview) {
+  //   //   dispatch(imageActions.setPreview("http://via.placeholder.com/400x300"));
+  //   // }
+  //   if (is_edit) {
+  //     // 포스트의 이미지 url로 프리뷰 설정
+  //   } else {
+  //     dispatch(imageActions.setPreview("http://via.placeholder.com/400x300"));
+  //   }
+  // }, []);
 
   // React.useEffect(() => {
   //   if (is_edit && !_post) {
@@ -93,6 +96,16 @@ const UploadModal = (props) => {
   const changeTitle = (e) => {
     setTitle(e.target.value);
   };
+
+  const editPost = () => {
+    dispatch(postActions.editPostAPI(1, _post));
+  };
+
+  const _post = {
+    title: title,
+    content: contents,
+  };
+
   //캐러셀 모듈 코드
   var settings = {
     dots: true, // 이미지 밑의 점을 출력할 건지 입력
@@ -102,6 +115,7 @@ const UploadModal = (props) => {
     slidesToScroll: 1,
   };
 
+  //밑에두면 preview값을 바로 받을 수가 없다?
   const ModalImg = styled.img`
     background-image: url(${preview}});
     background-size: cover;
@@ -219,8 +233,8 @@ const UploadModal = (props) => {
           <SelectCate></SelectCate>
           <WriteSubmit
             // onClick={addPost}
-
-            onClick={props.close}
+            onClick={editPost}
+            // onClick={props.close}
           >
             게시글 작성
           </WriteSubmit>
@@ -263,7 +277,7 @@ const ModalComponent = styled.div`
     /* all: unset; */
     position: fixed;
     width: 35vw;
-    height: 76vh;
+    height: 82vh;
     /* overflow: hidden; */
     top: 50%;
     left: 50%;

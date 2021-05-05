@@ -22,8 +22,9 @@ import post_list from "../components/MockData";
 import { actionCreators as PostActions } from "../redux/modules/post";
 import category from "../redux/modules/category";
 import UploadModal from "../components/UpLoadModal";
-import MobileCate from "../components/MobileCate";
-import MobileSelect from "../components/MobileSelect";
+import MobileCate from "../components/mobile/MobileCate";
+import MobileSelect from "../components/mobile/MobileSelect";
+import MobileNav from "../components/mobile/MobileNav";
 
 const PostList = () => {
   const dispatch = useDispatch();
@@ -196,6 +197,7 @@ const PostList = () => {
         })}
       </Container>
       <Navbar />
+      <MobileNav />
       <Web>
         {" "}
         <Category />

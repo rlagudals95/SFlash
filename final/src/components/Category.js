@@ -390,7 +390,7 @@ justify-content: space-between; */
   background-color: white;
   padding: 20px;
   border-radius: 7px;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
   @media (max-width: 1450px) {
     // 1450밑으로 넓이가 내려가면
     z-index: 901;
@@ -467,7 +467,7 @@ const Btn = styled.button`
   border: 1px solid lightgray;
   cursor: pointer;
   font-size: 12px;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
 const SelectedBtn = styled.button`
   // 선택 됐을때 버튼
@@ -482,5 +482,5 @@ const SelectedBtn = styled.button`
   font-size: 12px;
   font-weight: bold;
   color: #3897f0;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;

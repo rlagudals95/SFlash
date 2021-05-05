@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 const SelectCate = () => {
   const dispatch = useDispatch();
   const category = useSelector((state) => state.category.select_category);
-  console.log(category);
+  // console.log(category);
 
   const scrollRef = React.useRef(null);
 
@@ -214,7 +214,7 @@ const Btn = styled.button`
   /* font-size: 0.8rem; */
   /* overflow-y: visible; */
   /* width: 400000000000px; */
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
   @media (max-width: 600px) {
     padding: 0px 15px;
     font-size: 0.8rem;
@@ -236,7 +236,7 @@ const SelectBtn = styled.div`
   word-break: keep-all;
   width: 200px;
   height: 38px;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
   border: 1px solid #3897f0;
   color: #3897f0;
   @media (max-width: 600px) {
