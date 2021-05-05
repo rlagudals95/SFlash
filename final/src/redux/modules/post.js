@@ -206,6 +206,20 @@ const initialState = {
   is_loading: false,
   like: false,
   //카테고리 별로 상태값을 나타내서 PostList페이지에서 쓸 예정
+  categrories: {
+    cafe: [],
+    night: [],
+    ocean: [],
+    mountain: [],
+    flower: [],
+    alone: [],
+    couple: [],
+    friend: [],
+    pet: [],
+    city: [],
+    park: [],
+    exhibition: [],
+  }
 };
 
 const initialPost = {
