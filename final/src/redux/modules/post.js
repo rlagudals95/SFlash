@@ -20,11 +20,19 @@ const editPost = createAction(EDIT_POST, (post_id, post) => ({
   post,
 }));
 const deletePost = createAction(DELETE_POST, (id) => ({ id }));
-const loading = createAction(LOADING, (post) => ({ post }));
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 // const editLike = createAction(EDIT_LIKE, (post, post_id) => ({
 //   post,
 //   post_id,
 // }));
+
+const initialState = {
+  list: [], //post_list
+  paging: { start: null, next: null, size: 3 },
+  is_loading: false,
+  like: false,
+  paging: { state: null, size: 12 },
+};
 
 const addPostAPI = () => {
   return function (dispatch, getState) {
@@ -52,36 +60,48 @@ const addPostAPI = () => {
   };
 };
 
-const getPostAPI = () => {
+const getPostAPI = (start = null, size = null) => {
   return function (dispatch, getState) {
     axios({
       method: "GET",
       url: `${config.api}/board`,
-    })
-      .then((res) => {
-        console.log(res);
-        return;
-        let post_list = [];
-        res.data.forEach((_post) => {
-          let post = {
-            id: _post.id,
-            title: _post.title,
-            content: _post.content,
-            // insert_dt: _post.insetDt,
-            writerName: _post.writerName,
-            writerImgUrl: _post.writerImgUrl,
-            category: _post.category,
-            imgUrl: _post.imgUrl,
-            like: _post.like,
-            likeCnt: _post.likeCount,
-          };
-          post_list.unshift(post);
-        });
-        dispatch(setPost(post_list));
-      })
-      .catch((err) => {
-        window.alert("게시물을 가져오는데 문제가 있어요!");
+    }).then((res) => {
+      console.log(res);
+      let result = res.data.slice(start, size);
+      // if (result.length === 0) {
+      //   //불러온 게시물이 끝났다면 return;
+      //   dispatch(loading(false)); // 로딩 중이면 스피너를 보여주게 설정해줘도 되겠구나
+      //   return;
+      // }
+      // console.log(result);
+      // let paging = {
+      //   start: start + result.length + 1,
+      //   size: size + 12,
+      // };
+
+      return;
+      let post_list = [];
+      res.data.forEach((_post) => {
+        let post = {
+          id: _post.id,
+          title: _post.title,
+          content: _post.content,
+          // insert_dt: _post.insetDt,
+          writerName: _post.writerName,
+          writerImgUrl: _post.writerImgUrl,
+          category: _post.category,
+          imgUrl: _post.imgUrl,
+          like: _post.like,
+          likeCnt: _post.likeCount,
+        };
+        post_list.unshift(post);
       });
+      dispatch(setPost(post_list));
+    });
+    // .catch((err) => {
+    //   window.alert("게시물을 가져오는데 문제가 있어요!");
+    //   console.log("게시물 로드 에러", err);
+    // });
   };
 };
 
@@ -108,7 +128,9 @@ const editPostAPI = (boadrd_id, post) => {
     // let _edit = {
     //   contens: post.contents,
     // };
-    return;
+
+    ////////////////
+
     // for (let i = 0; i < 10000000; i++) { // 두 배열을 비교하는 반복문
     //   JSON.stringify(a) == JSON.stringify(b);
     // }
@@ -117,13 +139,12 @@ const editPostAPI = (boadrd_id, post) => {
     //     method: "PUT",
     //     url: `${config.api}/board/${boadrd_id}`,
     //     data: {
-    //       title: "title",
-    //       content: "content",
+    //       ..._post,
     //       category: "카페",
-    //       file: "파일리스트", // 파일이 없어야함
     //       spotName: "_post.spotName"??",
     //     },
     //   }).then((res) => {
+    //     dispatch(editPost(board_id, post));
     //     console.log(res);
     //   });
     // } else {
@@ -131,8 +152,7 @@ const editPostAPI = (boadrd_id, post) => {
     //     method: "PUT",
     //     url: `${config.api}/board/${boadrd_id}`,
     //     data: {
-    //       title: "title",
-    //       content: "content",
+    //      ..._post,
     //       category: "카페",
     //       file: "_file",
     //       spotName: "주소인가??",
@@ -140,6 +160,8 @@ const editPostAPI = (boadrd_id, post) => {
     //   }).then((res) => {
     //      let edit_list = {}
     //     dispatch(editPost(board_id , post))
+
+    //  history.replace("/");
     //   });
     // }
   };
@@ -161,17 +183,6 @@ const editPostAPI = (boadrd_id, post) => {
 //   };
 // };
 
-// const editPostAPI = () => {
-//   return function (dispatch, getState) {
-//     axios({
-//       method: "PUT",
-//       url: `${config.api}/board`,
-//     });
-
-//   }
-
-// }
-
 const searchPostAPI = (search) => {
   return function (dispatch, getState) {
     console.log("검색어 들어오냐~?", search);
@@ -187,28 +198,6 @@ const searchPostAPI = (search) => {
         window.alert("검색을 할 수 없습니다.");
       });
   };
-};
-
-const initialState = {
-  list: [], //post_list
-  paging: { start: null, next: null, size: 3 },
-  is_loading: false,
-  like: false,
-  //카테고리 별로 상태값을 나타내서 PostList페이지에서 쓸 예정
-  categrories: {
-    cafe: [],
-    night: [],
-    ocean: [],
-    mountain: [],
-    flower: [],
-    alone: [],
-    couple: [],
-    friend: [],
-    pet: [],
-    city: [],
-    park: [],
-    exhibition: [],
-  }
 };
 
 const initialPost = {
@@ -258,7 +247,7 @@ export default handleActions(
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.push(...action.payload.post_list); // 일단 서버에서 받아온거 이니셜 스테이트 리스트에 삽입
-
+        draft.paging = action.payload.paging; // 페이징 처리
         //겹치는 게시물 중복 제거 과정
         draft.list = draft.list.reduce((acc, cur) => {
           if (acc.findIndex((a) => a.id === cur.id) === -1) {
@@ -286,6 +275,10 @@ export default handleActions(
             return [...draft.list, r]; // 그대로 출력
           }
         });
+      }),
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_loading = action.payload.is_loading;
       }),
   },
   initialState

@@ -57,13 +57,15 @@ const loginAPI = (email, pwd) => {
       })
       .then((res) => {
         // console.log("loginAPI(res)", res);
-        localStorage.setItem("nickname", res.data.nickname);
+        // localStorage.setItem("nickname", res.data.nickname);
         setCookie("jwt", res.data.token);
         // console.log(res.config.data);
-        dispatch(setUser({
-          nickname: res.data.nickname,
-          token: res.data.token
-        }));
+        dispatch(
+          setUser({
+            nickname: res.data.nickname,
+            token: res.data.token,
+          })
+        );
       })
       .catch((err) => {
         window.alert("로그인 실패", err);
@@ -76,7 +78,7 @@ const loginAPI = (email, pwd) => {
 const loginCheck = (token) => {
   return function (dispatch, getstate, { history }) {
     if (token) {
-          dispatch(setUser(token));
+      dispatch(setUser(token));
     } else {
       dispatch(logOut());
       history.goBack();

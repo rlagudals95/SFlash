@@ -1,15 +1,8 @@
+import { getCookie } from "./Cookie";
+
 const config = {
-<<<<<<< HEAD
-    api : 'http://13.125.130.32',
-  }
-  
-  export { config }
-=======
   api: "http://13.125.130.32",
-  token: {
-    headers: { authorization: `Bearer ${sessionStorage.getItem("JWT")}` },
-  },
+  token: getCookie("jwt"),
 };
 
 export { config };
->>>>>>> upstream/master
