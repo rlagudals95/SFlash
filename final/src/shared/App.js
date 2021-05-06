@@ -40,21 +40,22 @@ function App() {
   const _jwt = getUrlParameter('token');   // _jwt: 소셜로그인으로 받아온 토큰
   const _nickname = getUrlParameter('nickname');   // _nickname: 소셜로그인으로 받아온 닉네임
   const error = getUrlParameter('error');    // 에러
-  console.log("소셜로그인에서 받아온 토큰:", _jwt);
-  console.log("소셜로그인에서 받아온 닉네임:", _nickname);
+  console.log(_jwt);
+  console.log(_nickname);
   console.log(error);
 
 
   React.useEffect(() => {
       //  소셜로그인 시 실행
-      if(_jwt && _nickname) {
+    if( _jwt && _nickname ){
     setCookie("jwt", _jwt);
     localStorage.setItem("nickname", _nickname);
   }
-    if (is_cookie) {
-      console.log("로그인 체크", is_login);
-      dispatch(userActions.loginCheck(jwt));
-    } //렌더링 마다 로그인체크
+  if(is_cookie) {
+    console.log("로그인 체크", is_login); 
+    dispatch(userActions.loginCheck(jwt));
+  }
+     //렌더링 마다 로그인체크
   }, []);
 
   return (

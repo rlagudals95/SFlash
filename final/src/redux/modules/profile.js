@@ -35,23 +35,23 @@ const initialState = {
   dupCheck: false,
 };
 
+
 // 게시물 수정하기
-const editProfileAPI = (nickname, profileImg, introduction) => {
+const editProfileAPI = (profileImg, introduction) => {
   return function (dispatch, getState, { history }) {
     const form_edit = new FormData();
     form_edit.append("profileFile", profileImg);
     form_edit.append("introduceMsg", introduction);
     console.log(form_edit);
-    console.log(nickname);
     // const jwt = getCookie("token");
 
-    axios.put({
+    axios({
       method: "put",
       url: `${config.api}/editmyprofile`,
       data: form_edit,
       headers: {
-        "X-AUTH-TOKEN": "jwt",
-        "contentType": "multipartFile",
+        "X-AUTH-TOKEN": getCookie("jwt"),
+        "Content-Type" : "multipart/form-data",
       },
     })
       .then((res) => {
@@ -65,7 +65,6 @@ const editProfileAPI = (nickname, profileImg, introduction) => {
       .catch((err) => {
         console.error("작성 실패", err);
       });
-    history.push("/");
   };
 };
 
@@ -82,53 +81,19 @@ const editNicknameAPI = (newNickname) => {
     },
   })
       .then((res) => {
-        console.log(res);
-        // let nickname = res.data.....
-        // dispatch(editNickname(nickname));
-      //   if(res.data === true){
-      //     alert("닉네임이 변경되었습니다! :)")
-      //   }
-    const nickname = localStorage.getItem("nickname");
-    history.push(`${config.api}/story/${nickname}`);
+        console.log(res.data.data.nickname);
+        let nickname = res.data.data.nickname;
+        dispatch(editNickname(nickname));
+        localStorage.setItem("nickname", res.data.data.nickname)
+        // if(res.data.data.nickname === true){
+        //   alert("닉네임이 변경되었습니다! :)")
+        // }
       })
       .catch((err) => {
         console.error("작성 실패", err);
       });
   };
 };
-
-// const nicknameDupCheckAPI = (newNickname) => {
-//   return function (dispatch, getState, { history }) {
-//     console.log(newNickname);
-//     const API = "http://seungwook.shop/user/signup/nickchk";
-//     axios
-//       .post(
-//         API,
-//         {
-//           nickname: newNickname,
-//         },
-//         {
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//         }
-//       )
-//       .then((res) => {
-//         console.log("넥네임중복확인!", res.data);
-//         if (res.data === false) {
-//           alert("이미 등록된 닉네임 입니다!");
-//         } else {
-//           alert("사용 가능한 닉네임 입니다 :)");
-//           dispatch(dupCheck(res.data));
-//           const nicknameInfo_dupCheck = document.querySelector(
-//             "ul.checkNickname li:nth-child(2)"
-//           );
-//           nicknameInfo_dupCheck.classList.add("ok");
-//           nicknameInfo_dupCheck.classList.remove("error");
-//         }
-//       });
-//   };
-// };
 
 // reducer
 export default handleActions(

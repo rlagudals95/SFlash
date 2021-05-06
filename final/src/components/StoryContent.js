@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Grid, Text, Button, Input } from "../elements/index";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as storypostActions } from "../redux/modules/storypost";
 
 import Post2 from "./Post2";
 import post_list from "./MockData";
@@ -11,6 +12,7 @@ import { FiImage } from "react-icons/fi";
 import { HiOutlineMap } from "react-icons/hi";
 
 const StoryContent = (props) => {
+  const dispatch = useDispatch();
   // 버튼 탭 구현하기
   // 처음에는 0번째 인덱스 활성화git
   const [active, setActive] = useState(1);
@@ -21,6 +23,12 @@ const StoryContent = (props) => {
       setActive(index);
     }
   };
+
+  // post_list = useSelector((state) => state.storypost.list)
+
+  React.useEffect(() => {
+    dispatch(storypostActions.getMyPostAPI());
+}, []);
 
   return (
     <React.Fragment>

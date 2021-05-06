@@ -150,6 +150,8 @@ const StoryEditProfile = (props) => {
     }
     console.log(newNickname);
     dispatch(profileActions.editNicknameAPI(newNickname));
+    setOriginalNickMode(true);
+
   };
 
   // 자기소개 입력하기(기존에 입력한 자기소개가 있으면 띄워준다 input 창에 vaule 설정해줘야 이전에 썼던 글이 남아있음. 없으면 null;)
@@ -165,7 +167,7 @@ const StoryEditProfile = (props) => {
     // 1. 자기소개 내용만 수정하였을 때
     // 2. 사진과 자기소개 내용 둘다 수정하였을 때 (사진만 수정하고 글은 수정하지 않아도 수정한 걸로 인식된다.)
     const profileImg = fileInput.current.files[0];
-    dispatch(profileActions.editProfileAPI(nickname, profileImg, introduction));
+    dispatch(profileActions.editProfileAPI(profileImg, introduction));
     // window.location.reload();
   };
 
@@ -228,7 +230,7 @@ const StoryEditProfile = (props) => {
               />
             </Grid>
 
-            <SolidBtn onClick={onEditProfile}>저장하기</SolidBtn>
+            <SolidBtn width="120px" onClick={onEditProfile}>저장하기</SolidBtn>
           </Grid>
         ) : (
           <div>
