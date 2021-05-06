@@ -34,6 +34,10 @@ const PostList = () => {
   // }, []);
 
   const is_category = useSelector((state) => state.category.is_category);
+  const paging = useSelector((state) => state.post.paging);
+  const loading = useSelector((state) => state.post.is_loading);
+  const is_login = useSelector((state) => state.user.is_login);
+  const user_info = useSelector((state) => state.user.user);
 
   // category 모듈의 상태값에 따른 판단여부
   const resultCafe = is_category.find((item) => item === "카페"); //요게 카페가 나온다는건? 배열안에 카페가 있다는 것!
@@ -60,7 +64,7 @@ const PostList = () => {
     dispatch(PostActions.getPostAPI(is_category));
   }, [is_category]); //카테고리 상태값이 바뀔 때 마다 useEffect 실행
 
-  console.log("카테고리 뭐 가지고 올까?", is_category);
+  // console.log("카테고리 뭐 가지고 올까?", is_category);
 
   const searchPost = post_list.filter((val) => {
     // 검색기능(필터링)을 변수로 지정해 놓고 .map앞에 붙혀둔다
@@ -72,6 +76,11 @@ const PostList = () => {
       return val;
     }
   });
+
+  const next = () => {
+    dispatch(PostActions.getPostAPI(paging.start, paging.size));
+  };
+
   return (
     <React.Fragment>
       {/* <InfiniteScroll  // 서버와 연결되면 인피니티 스크롤 게시!
@@ -81,11 +90,13 @@ const PostList = () => {
         loader={<h4>Loading...</h4>}
       >
         <Container>
+        //여기안에 모든 내용물이 들어가야 할수도 각각 무한스크롤 적용해야 할수도?
           {post_list.map((p, idx) => {
             return <Post2 key={p.id} {...p}></Post2>;
           })}
         </Container>
       </InfiniteScroll> */}
+      {/* {loading && <Spinner />} */}
       <TopBox>
         <Search>
           {/* 검색기능  */}

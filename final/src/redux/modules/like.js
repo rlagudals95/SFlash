@@ -25,7 +25,7 @@ const addLikeAPI = (board_id) => {
       method: "POST",
       url: `${config.api}/board/{boardId}/like`,
       headers: {
-        "X-AUTH-TOKEN": "jwt", //로컬 호스트에 있는 토큰을 줘야하나?
+        "X-AUTH-TOKEN": `${config.token}`,
       },
     }).then((res) => {
       console.log(res);
@@ -39,6 +39,9 @@ const disLikeAPI = () => {
     axios({
       method: "DELETE",
       url: `${config.api}/board/{boardId}/like`,
+      headers: {
+        "X-AUTH-TOKEN": `${config.token}`,
+      },
     }).then((res) => {
       console.log(res);
       dispatch(disLike(false));

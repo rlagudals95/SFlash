@@ -8,7 +8,6 @@ import { actionCreators as profileActions } from "../redux/modules/profile";
 import { nicknameRegCheck } from "../shared/common";
 import axios from "axios";
 import { config } from "../shared/config";
-
 import { Grid } from "../elements/index";
 import { InfoUl, InfoLi } from "../Css/loginSignupCss";
 import { HiCamera } from "react-icons/hi";
@@ -21,7 +20,6 @@ const Story_EditProfile = (props) => {
   const { user_info, nickname } = props;
   console.log("user_info:", user_info);
   console.log("nickname:", nickname);
-
 
   // 닉네임 정보가 있으면 수정할 수 있구요.
   const is_edit = nickname ? true : false;
@@ -115,44 +113,44 @@ const Story_EditProfile = (props) => {
   };
 
   const nicknameDupCheckAPI = (newNickname) => {
-        console.log(newNickname);
-        const API = `${config.api}/user/signup/nickchk`;
-        axios
-          .post(
-            API,
-            {
-              nickname: newNickname,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          )
-          .then((res) => {
-            console.log("넥네임중복확인!", res.data);
-            if (res.data === false) {
-              alert("이미 등록된 닉네임 입니다!");
-            } else {
-              alert("사용 가능한 닉네임 입니다 :)");
-              setNicknameDup(true);
-              const nicknameInfo_dupCheck = document.querySelector(
-                "ul.checkNickname li:nth-child(2)"
-              );
-              nicknameInfo_dupCheck.classList.add("ok");
-              nicknameInfo_dupCheck.classList.remove("error");
-            }
-          });
-    };
+    console.log(newNickname);
+    const API = `${config.api}/user/signup/nickchk`;
+    axios
+      .post(
+        API,
+        {
+          nickname: newNickname,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log("넥네임중복확인!", res.data);
+        if (res.data === false) {
+          alert("이미 등록된 닉네임 입니다!");
+        } else {
+          alert("사용 가능한 닉네임 입니다 :)");
+          setNicknameDup(true);
+          const nicknameInfo_dupCheck = document.querySelector(
+            "ul.checkNickname li:nth-child(2)"
+          );
+          nicknameInfo_dupCheck.classList.add("ok");
+          nicknameInfo_dupCheck.classList.remove("error");
+        }
+      });
+  };
 
-    const onEditNickname = () => {
-      if (nicknameDup === false) {
-        alert("닉네임 중복확인을 해주세요!");
-        return false;
-      }
-      console.log(newNickname);
-      dispatch(profileActions.editNicknameAPI(newNickname));
+  const onEditNickname = () => {
+    if (nicknameDup === false) {
+      alert("닉네임 중복확인을 해주세요!");
+      return false;
     }
+    console.log(newNickname);
+    dispatch(profileActions.editNicknameAPI(newNickname));
+  };
 
   // 자기소개 입력하기(기존에 입력한 자기소개가 있으면 띄워준다 input 창에 vaule 설정해줘야 이전에 썼던 글이 남아있음. 없으면 null;)
   const [introduction, setIntroduction] = React.useState(
@@ -177,21 +175,22 @@ const Story_EditProfile = (props) => {
         <ImgContainer>
           {/* label 태그를 이용해 (input창의 id 값을 for로 받아서) 원하는 버튼으로 바꾸어줄 수 있다. */}
           {originalNickMode && (
-            <div><EditImgBtn for="edit_profile_img">
-            <HiCamera size="25px" color="4670fd" />
-          </EditImgBtn>
-          <input
-            type="file"
-            id="edit_profile_img"
-            ref={fileInput}
-            onChange={selectFile}
-            disabled={is_uploading}
-            // '사진선택' 버튼 안 보이도록
-            style={{ display: "none" }}
-          />
-          </div>
+            <div>
+              <EditImgBtn for="edit_profile_img">
+                <HiCamera size="25px" color="4670fd" />
+              </EditImgBtn>
+              <input
+                type="file"
+                id="edit_profile_img"
+                ref={fileInput}
+                onChange={selectFile}
+                disabled={is_uploading}
+                // '사진선택' 버튼 안 보이도록
+                style={{ display: "none" }}
+              />
+            </div>
           )}
-          
+
           {/* 프로필 이미지 : 프리뷰가 있으면 보여주고 없으면 기본 이미지 보여주기 */}
           <ProfileImg
             src={
@@ -208,61 +207,61 @@ const Story_EditProfile = (props) => {
             변경 후에는 다시 변경된 닉네임으로 originalNickMode(true) */}
         {originalNickMode ? (
           <Grid>
-          <NicknameContainer height="60px">
-            <Nickname>{nickname}</Nickname>
-            <EditNicknameBtn
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setOriginalNickMode(false);
-              }}
-            >
-              닉네임 변경
-            </EditNicknameBtn>
-          </NicknameContainer>
-          <Grid flex>
-          <TextField
-            value={introduction}
-            placeholder="자기소개를 입력해주세요."
-            onChange={changeIntroduction}
-            disabled={is_uploading}
-          />
-        </Grid>
-        
-          <SolidBtn onClick={onEditProfile}>저장하기</SolidBtn>
-        </Grid>
+            <NicknameContainer height="60px">
+              <Nickname>{nickname}</Nickname>
+              <EditNicknameBtn
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setOriginalNickMode(false);
+                }}
+              >
+                닉네임 변경
+              </EditNicknameBtn>
+            </NicknameContainer>
+            <Grid flex>
+              <TextField
+                value={introduction}
+                placeholder="자기소개를 입력해주세요."
+                onChange={changeIntroduction}
+                disabled={is_uploading}
+              />
+            </Grid>
+
+            <SolidBtn onClick={onEditProfile}>저장하기</SolidBtn>
+          </Grid>
         ) : (
           <div>
             <Grid height="20px" />
-          <NicknameContainer height="50px">
-            <InputStyle
-              placeholder="새 닉네임 입력"
-              type="type"
-              width="100%"
-              onClick={() => {
-                document.querySelector(".checkNickname").style.display =
-                  "block";
-              }}
-              onChange={(e) => {
-                changeNickname(e);
-              }}
-            />
-            <SolidBtn
-            //  disabled={is_uploading}
-            width="100px"
-              onClick={() => {
-                if (!nicknameRegCheck(newNickname)) {
-                  alert(
-                    "아이디는 6자 이상의 영문 혹은 영문과 숫자 조합만 가능합니다."
-                  );
-                  return false;
-                }
-                console.log(newNickname);
-                nicknameDupCheckAPI(newNickname);
-              }}
-            >
-              중복확인
-            </SolidBtn>
+            <NicknameContainer height="50px">
+              <InputStyle
+                placeholder="새 닉네임 입력"
+                type="type"
+                width="100%"
+                onClick={() => {
+                  document.querySelector(".checkNickname").style.display =
+                    "block";
+                }}
+                onChange={(e) => {
+                  changeNickname(e);
+                }}
+              />
+              <SolidBtn
+                //  disabled={is_uploading}
+                width="100px"
+                onClick={() => {
+                  if (!nicknameRegCheck(newNickname)) {
+                    alert(
+                      "아이디는 6자 이상의 영문 혹은 영문과 숫자 조합만 가능합니다."
+                    );
+                    return false;
+                  }
+                  console.log(newNickname);
+                  nicknameDupCheckAPI(newNickname);
+                }}
+              >
+                중복확인
+              </SolidBtn>
             </NicknameContainer>
             <InfoUl className="checkNickname">
               <InfoLi>
@@ -274,11 +273,10 @@ const Story_EditProfile = (props) => {
                 아이디 중복확인
               </InfoLi>
             </InfoUl>
-            <SolidBtn 
-            width="140px" 
-            onClick = {onEditNickname}
-            >닉네임 변경하기</SolidBtn>
-            </div>
+            <SolidBtn width="140px" onClick={onEditNickname}>
+              닉네임 변경하기
+            </SolidBtn>
+          </div>
         )}
       </ProfileContainer>
     </React.Fragment>
@@ -360,7 +358,7 @@ const InputStyle = styled.input`
   padding: 4px 16px;
   font-size: 1rem;
   font-weight: 500;
-  margin:0px;
+  margin: 0px;
   color: grey;
   input:focus {
     outline: none !important;
