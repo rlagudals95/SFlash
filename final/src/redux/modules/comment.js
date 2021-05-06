@@ -79,6 +79,7 @@ const addCommentAPI = (comment, board_id) => {
   return function (dispatch) {
     console.log("댓글와유?", comment);
     console.log("아이디와유?", board_id);
+    console.log(`${config.jwt}`);
     let _comment = {
       contentsId: board_id, //댓글 아이디는 포스트의 아이디 고유값
       userId: comment.user_name, // 유저네임 받아온것
@@ -88,9 +89,12 @@ const addCommentAPI = (comment, board_id) => {
     };
     axios(
       {
-        url: `${config.api}/board/{boardId}/comment`,
+        url: `${config.api}/board/${board_id}/comment`,
         method: "POST",
         data: { ...comment },
+        headers: {
+          "X-AUTH-TOKEN": `${config.jwt}`,
+        },
       }
       // token
     )

@@ -19,7 +19,7 @@ const resetCategory = createAction(RESET_CATEGORY, (is_category) => ({
 }));
 const selectCategory = createAction(SELECT_CATEGORY, (select_category) => ({
   select_category,
-}));
+})); 
 
 const initialState = {
   is_category: [], // 이제 여기에 각자 타입을 다 넣어준다? // 요 배열의 길이가 0이면 모두 출력

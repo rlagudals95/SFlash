@@ -9,17 +9,20 @@ import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 const SET_USER = "SET_USER";
 const GET_USER = "GET_USER";
 const LOG_OUT = "LOG_OUT";
+const LOADING = "LOADING";
 
 // actionCreators: createAction
 const setUser = createAction(SET_USER, (user) => ({ user }));
 const getUser = createAction(GET_USER, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 // initial State
 const initialState = {
   user: "", //null
   is_login: false,
   profileImg: "",
+  is_loading: false,
 };
 
 //API요청(middleware actions)
@@ -66,6 +69,7 @@ const loginAPI = (email, pwd) => {
             token: res.data.token,
           })
         );
+        history.push("/");
       })
       .catch((err) => {
         window.alert("로그인 실패", err);
@@ -78,10 +82,9 @@ const loginAPI = (email, pwd) => {
 const loginCheck = (jwt) => {
   return function (dispatch, getstate, { history }) {
     if (jwt) {
-          dispatch(setUser(jwt));
+      dispatch(setUser(jwt));
     } else {
       dispatch(logOut());
-      history.goBack();
     }
   };
 };
@@ -120,7 +123,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.user = action.payload.user;
         draft.is_login = true;
-        history.push("/");
       }),
     [GET_USER]: (state, action) =>
       produce(state, (draft) => {
@@ -135,6 +137,10 @@ export default handleActions(
         draft.user = null;
         draft.is_login = false;
       }),
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_loading = action.payload.is_loading;
+      }),
   },
   initialState
 );
@@ -147,6 +153,7 @@ const actionCreators = {
   signupAPI,
   loginAPI,
   loginCheck,
+  loading,
   // getUserInfoAPI,
 };
 

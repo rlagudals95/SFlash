@@ -47,19 +47,32 @@ const initialState = {
     city: [],
     park: [],
     exhibition: [],
-  }
+  },
 };
 
-const initialPost = {
-  id: 1,
-  writerName: "작성자 이름",
-  writerImgUrl: "작성자 이미지",
-  title: "abc",
-  content: "abc",
-  like: true,
-  likeCount: 12,
-  imgUrl: "vfsdsdf",
-};
+// const initialPost = {
+//   id: 1,
+//   writerName: "작성자 이름",
+//   writerImgUrl: "작성자 이미지",
+//   title: "abc",
+//   content: "abc",
+//   like: true,
+//   likeCount: 12,
+//   imgUrl: "vfsdsdf",
+// };
+
+// const initialPost = {
+//   id: _post.boardId, // 포스트 id
+//   title: _post.title, // 포스트 title
+//   content: _post.content, // 포스트 내용
+//   // insert_dt: _post.insetDt,
+//   writerName: _post.writerName,
+//   imgUrl: _post.boardImgReponseDtoList,
+//   category: _post.category,
+//   profileImg: _post.writerImgUrl,
+//   like: _post.liked,
+//   likeCnt: _post.likeCount,
+// };
 
 const addPostAPI = () => {
   return function (dispatch, getState) {
@@ -87,39 +100,41 @@ const addPostAPI = () => {
   };
 };
 
-const getPostAPI = (start = null, size = null) => {
+// let result = res.data.slice(start, size);
+// if (result.length === 0) {
+//   //불러온 게시물이 끝났다면 return;
+//   dispatch(loading(false)); // 로딩 중이면 스피너를 보여주게 설정해줘도 되겠구나
+//   return;
+// }
+// console.log(result);
+// let paging = {
+//   start: start + result.length + 1,
+//   size: size + 12,
+// };
+
+//start = null, size = null
+const getPostAPI = () => {
   return function (dispatch, getState) {
     axios({
       method: "GET",
       url: `${config.api}/board`,
     }).then((res) => {
       console.log(res);
-      let result = res.data.slice(start, size);
-      // if (result.length === 0) {
-      //   //불러온 게시물이 끝났다면 return;
-      //   dispatch(loading(false)); // 로딩 중이면 스피너를 보여주게 설정해줘도 되겠구나
-      //   return;
-      // }
-      // console.log(result);
-      // let paging = {
-      //   start: start + result.length + 1,
-      //   size: size + 12,
-      // };
-
-      return;
       let post_list = [];
-      res.data.forEach((_post) => {
+      console.log(res.data.data[0].boardImgReponseDtoList);
+      res.data.data.forEach((_post) => {
         let post = {
-          id: _post.id,
-          title: _post.title,
-          content: _post.content,
+          id: _post.boardId, // 포스트 id
+          title: _post.title, // 포스트 title
+          content: _post.content, // 포스트 내용
           // insert_dt: _post.insetDt,
           writerName: _post.writerName,
-          writerImgUrl: _post.writerImgUrl,
+          img_url: _post.boardImgReponseDtoList,
           category: _post.category,
-          imgUrl: _post.imgUrl,
-          like: _post.like,
+          profileImg: _post.writerImgUrl,
+          like: _post.liked,
           likeCnt: _post.likeCount,
+          comment: _post.boardDetailCommentDtoList,
         };
         post_list.unshift(post);
       });
@@ -215,18 +230,51 @@ const searchPostAPI = (search) => {
     console.log("검색어 들어오냐~?", search);
     axios({
       method: "GET",
-      url: `${config.api}/board/search/searchText=${search}`,
+      url: `${config.api}/board/search?searchText=${search}`,
     })
       .then((res) => {
-        console.log(res);
-        setPost(res.data);
+        console.log("검색결과", res.data.data);
+
+        let post_list = [];
+
+        res.data.data.forEach((p) => {
+          let post = {
+            id: p.boardId,
+            title: p.title,
+            content: p.content,
+            img_url: p.boardImgReponseDtoList,
+            writerName: p.writerName,
+            profileImg: p.writerImgUrl,
+            like: p.likeCheck,
+            category: null,
+            likeCnt: p.likeCount,
+            comment: [],
+          };
+          post_list.unshift(post);
+
+          // let post = {
+          //   id: _post.boardId, // 포스트 id
+          //   title: _post.title, // 포스트 title
+          //   content: _post.content, // 포스트 내용
+          //   // insert_dt: _post.insetDt,
+          //   writerName: _post.writerName,
+          //   img_url: _post.boardImgReponseDtoList,
+          //   category: _post.category,
+          //   profileImg: _post.writerImgUrl,
+          //   like: _post.liked,
+          //   likeCnt: _post.likeCount,
+          //   comment: _post.boardDetailCommentDtoList,
+          // };
+          // post_list.unshift(post);
+        });
+        dispatch(setPost(post_list));
       })
       .catch((error) => {
         window.alert("검색을 할 수 없습니다.");
+        console.log(error);
       });
   };
 };
-
 
 ////미들웨어로 카테고리별 API통신 만들어줘야한다
 ///그리고 아래 리듀서에서 배열정리 잘해줘야한다!
@@ -263,8 +311,10 @@ export default handleActions(
       }),
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list.push(...action.payload.post_list); // 일단 서버에서 받아온거 이니셜 스테이트 리스트에 삽입
-        draft.paging = action.payload.paging; // 페이징 처리
+        console.log(action.payload.post_list);
+        // draft.list.push(...action.payload.post_list); // 일단 서버에서 받아온거 이니셜 스테이트 리스트에 삽입
+        draft.list = action.payload.post_list;
+        // draft.paging = action.payload.paging; // 페이징 처리
         //겹치는 게시물 중복 제거 과정
         draft.list = draft.list.reduce((acc, cur) => {
           if (acc.findIndex((a) => a.id === cur.id) === -1) {

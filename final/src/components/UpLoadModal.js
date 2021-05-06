@@ -120,46 +120,6 @@ const UploadModal = (props) => {
   };
 
   //밑에두면 preview값을 바로 받을 수가 없다?
-  const ModalImg = styled.img`
-    background-image: url(${preview});
-    background-size: cover;
-    object-fit: cover;
-    background-position: 0px;
-    background-repeat: no-repeat;
-    border: none;
-    box-sizing: border-box;
-    width: 100%;
-    height: 55vh;
-    max-height: 350px;
-    @media (max-width: 1440px) {
-      // 1450밑으로 넓이가 내려가면
-      /* all: unset; */
-      background-image: url(${preview});
-      background-size: cover;
-      object-fit: cover;
-      background-position: 0px;
-      background-repeat: no-repeat;
-      border: none;
-      box-sizing: border-box;
-      width: 100%;
-      height: 35vh;
-      margin-bottom: -20px;
-    }
-    @media (max-width: 600px) {
-      // 1450밑으로 넓이가 내려가면
-      /* all: unset; */
-      background-image: url(${preview});
-      background-size: cover;
-      object-fit: cover;
-      background-position: 0px;
-      background-repeat: no-repeat;
-      border: none;
-      box-sizing: border-box;
-      width: 100%;
-      height: 40vh;
-      margin-bottom: 1vh;
-    }
-  `;
 
   return (
     <React.Fragment>
@@ -194,7 +154,7 @@ const UploadModal = (props) => {
               })}
             </Slider>
           ) : (
-            <ModalImg />
+            <ModalImg src={preview} />
           )
         ) : null}
 
@@ -264,6 +224,47 @@ const UploadModal = (props) => {
     </React.Fragment>
   );
 };
+
+const ModalImg = styled.img`
+  background-image: url("${(props) => props.src}");
+  background-size: cover;
+  object-fit: cover;
+  background-position: 0px;
+  background-repeat: no-repeat;
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+  height: 55vh;
+  max-height: 350px;
+  @media (max-width: 1440px) {
+    // 1450밑으로 넓이가 내려가면
+    /* all: unset; */
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
+    object-fit: cover;
+    background-position: 0px;
+    background-repeat: no-repeat;
+    border: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 35vh;
+    margin-bottom: -20px;
+  }
+  @media (max-width: 600px) {
+    // 1450밑으로 넓이가 내려가면
+    /* all: unset; */
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
+    object-fit: cover;
+    background-position: 0px;
+    background-repeat: no-repeat;
+    border: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 40vh;
+    margin-bottom: 1vh;
+  }
+`;
 
 const Component = styled.div`
   position: fixed;
