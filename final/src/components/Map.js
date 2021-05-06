@@ -15,6 +15,8 @@ import { markerdata } from "./MarkerMockData";
 // import ModalSmallPost from "./ModalSmallPost";
 import "../Css/Map.css";
 import UpLoadModal from "./UpLoadModal";
+import Category from "../components/Category";
+import category from "../redux/modules/category";
 
 // window 객체로부터 kakao mpa api를 호출하기
 // 이것이 되게 하기 위해서는 index.html(index.js 아님!!!)의 script 태그안의 src에다가
@@ -44,6 +46,22 @@ const Maps = (props) => {
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
   //조건 걸어주기 // 나를 기준으로 몇 km 이내
 
+  // 카테고리 제어하기
+  const is_category = useSelector((state) => state.category.is_category);
+  // category 모듈의 상태값에 따른 판단여부
+  const resultCafe = is_category.find((item) => item === "카페"); //요게 카페가 나온다는건? 배열안에 카페가 있다는 것!
+  const resultNight = is_category.find((item) => item === "야경");
+  const resultOcean = is_category.find((item) => item === "바다");
+  const resultMountain = is_category.find((item) => item === "산");
+  const resultFlower = is_category.find((item) => item === "꽃");
+  const resultAlone = is_category.find((item) => item === "나홀로");
+  const resultCouple = is_category.find((item) => item === "연인");
+  const resultFreind = is_category.find((item) => item === "친구");
+  const resultPet = is_category.find((item) => item === "반려동물");
+  const resultCity = is_category.find((item) => item === "도심");
+  const resultPark = is_category.find((item) => item === "공원");
+  const resultExhibition = is_category.find((item) => item === "전시");
+  
   // 각 마커별 데이터 가져오기
   // const myTotalData = useSelector((state) => state.post.my_total_data);
   // const myLikeData = useSelector((state) => state.post.my_like_data);
@@ -171,15 +189,11 @@ const Maps = (props) => {
 
       // 작성용 마커를 띄우기
       // 작성용 마커를 클릭하면 게시물 작성창이 뜨게 하기 : 로그인 한 사람만 되게 하기
-      var writeMarkerImgUrl =
-          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-        imageSize = new kakao.maps.Size(30, 35),
-        writeMarkerImage = new kakao.maps.MarkerImage(
-          writeMarkerImgUrl,
-          imageSize
-        );
+      var writeMarkerImgUrl = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+          imageSize = new kakao.maps.Size(40, 50),
+          writeMarkerImage = new kakao.maps.MarkerImage(writeMarkerImgUrl, imageSize);
 
-      var position = new kakao.maps.LatLng(hereLat, hereLng);
+      var position = new kakao.maps.LatLng(hereLat, hereLng)
       var marker = new kakao.maps.Marker({
         // 클릭한 위치에 게시물 작성용 마커를 띄워준다.
         // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
@@ -187,10 +201,12 @@ const Maps = (props) => {
         position: position,
         image: writeMarkerImage,
         clickable: true,
+        draggable: true, 
         zIndex: 50,
       });
 
       marker.setMap(map);
+      // marker.setDraggable(true);
 
       // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
       kakao.maps.event.addListener(marker, "click", function () {
@@ -200,6 +216,10 @@ const Maps = (props) => {
       kakao.maps.event.addListener(marker, "rightclick", function () {
         marker.setVisible(false);
       });
+
+      // kakao.maps.event.addListener(marker, 'rightclick', function() {
+      //   marker.setVisible(false);
+      // })
 
       // 클릭한 위치 위도, 경도, 장소이름을 서버로 보내기.
       // if (latitude && longitude && spotName) {
@@ -319,8 +339,7 @@ const Maps = (props) => {
         zIndex: 100, //  커스텀 오버레이의 z-index
         altitude: 10,
       });
-
-      console.log(customOverlay);
+      // console.log(customOverlay);
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
 
@@ -432,6 +451,7 @@ const Maps = (props) => {
           onChange={debounce}
         />
       </SearchBox>
+      <Category/>
       {/* <CustomOverlayUseInfo/> */}
       <MapBox>
         {/* 위에서 설정된 getElementById("map")에 의해서 id="map"인 div에 맵이 표시된다 */}
@@ -439,7 +459,7 @@ const Maps = (props) => {
       </MapBox>
       {/* { is_total ? 
         markerdata.forEach((p) => {
-          ...각종 변수들 정의
+          //...각종 변수들 정의
           <CustomOverlay
             content={<MyOverlay />}
             lat={p.latitude}
