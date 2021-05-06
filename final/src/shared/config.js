@@ -1,7 +1,7 @@
 import { setCookie, getCookie } from "./Cookie";
 
 const config = {
-    api : 'http://seungwook.shop',
+    api : 'http://13.125.130.32',
     jwt : getCookie("jwt"),
   }
 

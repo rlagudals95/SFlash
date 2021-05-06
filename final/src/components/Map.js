@@ -62,7 +62,7 @@ const Maps = (props) => {
   const resultPark = is_category.find((item) => item === "공원");
   const resultExhibition = is_category.find((item) => item === "전시");
   
-  // 각 마커별 데이터 가져오기
+  // 각 카테고리별 데이터 가져오기
   // const myTotalData = useSelector((state) => state.post.my_total_data);
   // const myLikeData = useSelector((state) => state.post.my_like_data);
   // 마커 카데고리별 데이터
@@ -200,7 +200,7 @@ const Maps = (props) => {
         // map: map,
         position: position,
         image: writeMarkerImage,
-        clickable: true,
+        // clickable: true,
         draggable: true, 
         zIndex: 50,
       });

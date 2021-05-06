@@ -120,7 +120,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.user = action.payload.user;
         draft.is_login = true;
-        history.push("/");
       }),
     [GET_USER]: (state, action) =>
       produce(state, (draft) => {
