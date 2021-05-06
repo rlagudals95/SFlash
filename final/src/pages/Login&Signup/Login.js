@@ -26,10 +26,10 @@ const Login = () => {
   const onLogin = () => {
     if (email === "" || pwd === "") {
       window.alert("아이디 혹은 비밀번호를 입력하지 않으셨습니다.");
-      return;
+      return false;
     }
     dispatch(userActions.loginAPI(email, pwd));
-    history.push("/");
+    
   };
 
   return (

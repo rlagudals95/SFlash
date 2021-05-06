@@ -10,7 +10,7 @@ import post_list from "./MockData";
 import { FiImage } from "react-icons/fi";
 import { HiOutlineMap } from "react-icons/hi";
 
-const Story_Content = (props) => {
+const StoryContent = (props) => {
   // 버튼 탭 구현하기
   // 처음에는 0번째 인덱스 활성화git
   const [active, setActive] = useState(1);
@@ -134,4 +134,4 @@ const Content = styled.div`
   ${(props) => (props.active ? "" : "display:none")}
 `;
 
-export default Story_Content;
+export default StoryContent;

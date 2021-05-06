@@ -14,7 +14,7 @@ import { HiCamera } from "react-icons/hi";
 import { GiCheckMark } from "react-icons/gi";
 // import { set } from "immer/dist/internal";
 
-const Story_EditProfile = (props) => {
+const StoryEditProfile = (props) => {
   const dispatch = useDispatch();
   // 스토리페이지에서 user_info를 props로 받아온다.
   const { user_info, nickname } = props;
@@ -401,4 +401,4 @@ const SolidBtn = styled.button`
   }
 `;
 
-export default Story_EditProfile;
+export default StoryEditProfile;
