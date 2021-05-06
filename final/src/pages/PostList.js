@@ -60,13 +60,18 @@ const PostList = () => {
 
   const [search, setSearch] = React.useState("");
 
-  React.useEffect(() => {
-    dispatch(PostActions.getPostAPI(is_category));
-  }, [is_category]); //카테고리 상태값이 바뀔 때 마다 useEffect 실행
+  React.useEffect(
+    () => {
+      dispatch(PostActions.getPostAPI());
+    },
+    [
+      // is_category
+    ]
+  ); //카테고리 상태값이 바뀔 때 마다 useEffect 실행
 
   // console.log("카테고리 뭐 가지고 올까?", is_category);
 
-  const searchPost = post_list.filter((val) => {
+  const searchPost = board_list.filter((val) => {
     // 검색기능(필터링)을 변수로 지정해 놓고 .map앞에 붙혀둔다
     if (search == "") {
       return val;

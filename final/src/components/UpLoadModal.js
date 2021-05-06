@@ -18,6 +18,11 @@ import SelectCate from "./SelectCate";
 import { actionCreators as postActions } from "../redux/modules/post";
 
 const UploadModal = (props) => {
+
+  const { latitude, longitude, spotName } = props;
+  
+  console.log("위도: " + latitude + " , " + "경도: " + longitude + " , " + "장소이름 : " + spotName);
+
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
   const preview = useSelector((state) => state.image2.preview);
@@ -63,17 +68,23 @@ const UploadModal = (props) => {
   // }, []);
 
   // 작성된 것을 리듀서-스토어에 디스패치해서 변경된 데이터를 본페이지에서 렌더링 되게 요청
-  // const addPost = () => {
-  //   if (!contents) {
-  //     window.alert("😗빈칸을 채워주세요...ㅎㅎ");
-  //     return;
-  //   }
-  //   let post = {
-  //     contents: contents,
-  //   };
-  //   console.log(post);
-  //   dispatch(postActions.addPostAPI(post));
-  // };
+  const addPost = () => {
+    if (!contents) {
+      window.alert("😗빈칸을 채워주세요...ㅎㅎ");
+      return;
+    }
+    let post = {
+      title: title,
+      content: contents,
+      latitude: props.latitude,
+      longitude: props.longitude,
+      spotName: props.spotName,
+
+    };
+    console.log(post);
+    dispatch(postActions.addPostAPI(post));
+    history.replace('/');
+  };
 
   // 수정된 것을 리듀서-스토어에 디스패치해서 변경된 데이터를 본페이지에서 렌더링 되게 요청
   //위의 수정 조건을 다 만족 했을 시에 수정 버튼을 눌러 editPostAX를 디스패치로 실행
@@ -120,46 +131,6 @@ const UploadModal = (props) => {
   };
 
   //밑에두면 preview값을 바로 받을 수가 없다?
-  const ModalImg = styled.img`
-    background-image: url(${preview});
-    background-size: cover;
-    object-fit: cover;
-    background-position: 0px;
-    background-repeat: no-repeat;
-    border: none;
-    box-sizing: border-box;
-    width: 100%;
-    height: 55vh;
-    max-height: 350px;
-    @media (max-width: 1440px) {
-      // 1450밑으로 넓이가 내려가면
-      /* all: unset; */
-      background-image: url(${preview});
-      background-size: cover;
-      object-fit: cover;
-      background-position: 0px;
-      background-repeat: no-repeat;
-      border: none;
-      box-sizing: border-box;
-      width: 100%;
-      height: 35vh;
-      margin-bottom: -20px;
-    }
-    @media (max-width: 600px) {
-      // 1450밑으로 넓이가 내려가면
-      /* all: unset; */
-      background-image: url(${preview});
-      background-size: cover;
-      object-fit: cover;
-      background-position: 0px;
-      background-repeat: no-repeat;
-      border: none;
-      box-sizing: border-box;
-      width: 100%;
-      height: 40vh;
-      margin-bottom: 1vh;
-    }
-  `;
 
   return (
     <React.Fragment>
@@ -194,7 +165,7 @@ const UploadModal = (props) => {
               })}
             </Slider>
           ) : (
-            <ModalImg />
+            <ModalImg src={preview} />
           )
         ) : null}
 
@@ -247,14 +218,13 @@ const UploadModal = (props) => {
             게시글 작성
           </WriteSubmit> : <WriteSubmit
             onClick={addPost}
-           
             // onClick={props.close}
           >
             게시글 작성
           </WriteSubmit> } */}
           <WriteSubmit
-            // onClick={addPost}
-            onClick={editPost}
+            onClick={addPost}
+            // onClick={editPost}
             // onClick={props.close}
           >
             게시글 작성
@@ -264,6 +234,47 @@ const UploadModal = (props) => {
     </React.Fragment>
   );
 };
+
+const ModalImg = styled.img`
+  background-image: url("${(props) => props.src}");
+  background-size: cover;
+  object-fit: cover;
+  background-position: 0px;
+  background-repeat: no-repeat;
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+  height: 55vh;
+  max-height: 350px;
+  @media (max-width: 1440px) {
+    // 1450밑으로 넓이가 내려가면
+    /* all: unset; */
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
+    object-fit: cover;
+    background-position: 0px;
+    background-repeat: no-repeat;
+    border: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 35vh;
+    margin-bottom: -20px;
+  }
+  @media (max-width: 600px) {
+    // 1450밑으로 넓이가 내려가면
+    /* all: unset; */
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
+    object-fit: cover;
+    background-position: 0px;
+    background-repeat: no-repeat;
+    border: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 40vh;
+    margin-bottom: 1vh;
+  }
+`;
 
 const Component = styled.div`
   position: fixed;

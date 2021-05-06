@@ -71,6 +71,7 @@ const Login = () => {
           onClick={() => {
             window.location.href =
               "http://seungwook.shop/oauth2/authorize/naver?redirect_uri=http://localhost:3000/";
+            
           }}
         >
           네이버로 로그인

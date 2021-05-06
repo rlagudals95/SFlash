@@ -5,9 +5,7 @@ const config = {
     jwt : getCookie("jwt"),
   }
 
-  export { config }
+export { config };
 
-
-
-  // 승욱님: http://seungwook.shop
-  // 세정님: http://13.125.130.32
+// 승욱님: http://seungwook.shop
+// 세정님: http://13.125.130.32
