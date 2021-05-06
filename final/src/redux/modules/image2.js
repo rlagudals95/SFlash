@@ -10,7 +10,7 @@ const getPreview = createAction(GET_PREVIEW, (preview) => ({ preview }));
 const getFile = createAction(GET_FILE, (file) => ({ file }));
 
 const initialState = {
-  preview: [],
+  preview: ["http://via.placeholder.com/400x300"],
   file: [],
 };
 

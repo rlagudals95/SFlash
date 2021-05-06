@@ -28,6 +28,7 @@
     "react-icon": "^1.0.0",
     "react-icons": "^4.2.0",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-kakao-maps": "^0.0.13",
     "react-loader-spinner": "^4.0.0",
     "react-modal": "^3.13.1",
     "react-redux": "^7.2.2",

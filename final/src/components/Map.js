@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { CustomOverlay } from 'react-kakao-maps';
-
+import { CustomOverlay } from "react-kakao-maps";
 // 리덕스를 이용하게 해주는 함수들, 모듈 파일 가져오기
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../redux/modules/map";
@@ -33,18 +32,18 @@ const Maps = (props) => {
   const [is_uploadModal, setUpLoadModal] = useState(false); // 작은 모달에서 댓글 달기를 누르면 나오는 확장된 모달
 
   // 위도, 경도, 마커, 주소
-  const [startlat, setStartLat] = useState();    // 현위치 위도 설정
-  const [startlon, setStartLon] = useState();    // 현위치 경도 설정
-  const [latitude, setLatitude] = useState();    // 클릭한 위치 위도 설정
-  const [longitude, setLongitude] = useState();  // 클릭한 위치 경도 설정
+  const [startlat, setStartLat] = useState(); // 현위치 위도 설정
+  const [startlon, setStartLon] = useState(); // 현위치 경도 설정
+  const [latitude, setLatitude] = useState(); // 클릭한 위치 위도 설정
+  const [longitude, setLongitude] = useState(); // 클릭한 위치 경도 설정
   const [address, setAddress] = useState();
   const [markerId, setMarkerId] = useState();
   const [imgUrl, setImgUrl] = useState("");
-  const [spotName, setSpotName] = useState("");  // 클릭한 위치 이름 설정
-  const [_map, setMap] = useState();             // useEffect 외부에서 map을 쓰기 위한 것.
+  const [spotName, setSpotName] = useState(""); // 클릭한 위치 이름 설정
+  const [_map, setMap] = useState(); // useEffect 외부에서 map을 쓰기 위한 것.
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
   //조건 걸어주기 // 나를 기준으로 몇 km 이내
-  
+
   // 각 마커별 데이터 가져오기
   // const myTotalData = useSelector((state) => state.post.my_total_data);
   // const myLikeData = useSelector((state) => state.post.my_like_data);
@@ -72,36 +71,45 @@ const Maps = (props) => {
     getLocation();
 
     function getLocation() {
-    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+      // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
       if (navigator.geolocation) {
-        // GeoLocation을 이용해서 접속 위치를 얻어옵니다   
+        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
         navigator.geolocation.getCurrentPosition(
-          function(position) {
-            console.log("현위치의 위도 = " + position.coords.latitude + ", 현위치의 경도 = " + position.coords.longitude);
-            setStartLat(position.coords.latitude); 
+          function (position) {
+            console.log(
+              "현위치의 위도 = " +
+                position.coords.latitude +
+                ", 현위치의 경도 = " +
+                position.coords.longitude
+            );
+            setStartLat(position.coords.latitude);
             setStartLon(position.coords.longitude);
             // var nowPositionLat = position.coords.latitude
             // var nowPositionLon = position.coords.longitude
-            }, 
-            function (error) {
-              console.error(error);
-            },
-            {
-              enableHighAccuracy: false,
-              maximumAge: 0,
-              timeout: Infinity,
-            }
-          );
-        } else {  // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-          window.alert("geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다")
-        }
+          },
+          function (error) {
+            console.error(error);
+          },
+          {
+            enableHighAccuracy: false,
+            maximumAge: 0,
+            timeout: Infinity,
+          }
+        );
+      } else {
+        // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+        window.alert(
+          "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
+        );
       }
+    }
     // geolocation은 여기까지.
     console.log(startlat, startlon);
 
     // 페이지가 렌더링 되면 지도 띄우기
     const container = document.getElementById("map"); // 지도를 표시할 div
-    const options = { //지도를 생성할 때 필요한 기본 옵션
+    const options = {
+      //지도를 생성할 때 필요한 기본 옵션
       center: new kakao.maps.LatLng(startlat, startlon), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
       level: 4, //지도 확대 레벨
     };
@@ -121,54 +129,57 @@ const Maps = (props) => {
     // 콘솔창에 클릭한 위치의 위도 경도가 표시되는 코드
     // 지도에 클릭 이벤트를 등록합니다 : 클릭하면 위도, 경도, 주소 정보를 받고 작성창이 뜨게 한다
     // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다.
-    // ** 주의!!! 구현된것들이 안정적으로 돌아간다고 판단된 이후에는 
+    // ** 주의!!! 구현된것들이 안정적으로 돌아간다고 판단된 이후에는
     // ** 로그인 한 사람만 할 수 있는 클릭이벤트가 되도록
     // ** 아래처럼 if문으로 설정한다.
     // if (is_login) {}
     // window.alert("로그인 해야 게시물을 작성할 수 있어요!")
-    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-      
-      // 클릭한 위도, 경도 정보를 가져옵니다 
+    kakao.maps.event.addListener(map, "click", function (mouseEvent) {
+      // 클릭한 위도, 경도 정보를 가져옵니다
       const latlng = mouseEvent.latLng;
       // latlng.Ma = latlng.getLat() = 위도
       // latlng.La = latlng.getLng() = 경도
-      const hereLat = latlng.getLat()
-      const hereLng = latlng.getLng()
-      setLatitude(hereLat);  // useState() : 위도 latitude 값 전역으로 설정
+      const hereLat = latlng.getLat();
+      const hereLng = latlng.getLng();
+      setLatitude(hereLat); // useState() : 위도 latitude 값 전역으로 설정
       setLongitude(hereLng); // useState() : 경도 longitude 값 전역으로 설정
       console.log(latitude + " " + longitude);
 
-      var message = '클릭한 위치의 위도는 ' + hereLat + ' 이고, ';
-          message += '경도는 ' + hereLng + ' 입니다';
+      var message = "클릭한 위치의 위도는 " + hereLat + " 이고, ";
+      message += "경도는 " + hereLng + " 입니다";
       console.log(message);
 
       // 위도 경도 좌표로 주소 알아내기
       var coord = new kakao.maps.LatLng(hereLat, hereLng);
       console.log(coord);
 
-      searchAddrFromCoords(mouseEvent.latLng, function(result, status) {
+      searchAddrFromCoords(mouseEvent.latLng, function (result, status) {
         if (status === kakao.maps.services.Status.OK) {
           //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
           var spotName = result[0].address_name;
           console.log(result[0]);
           console.log(spotName);
-          setSpotName(spotName)
+          setSpotName(spotName);
           // dispatch(mapActions.addSpotNameAPI(spotName)) // spotName을 서버로 보내서 저장시키기
-        };
+        }
       });
-      
+
       function searchAddrFromCoords(coords, callback) {
         // 좌표로 행정동 주소 정보를 요청합니다
-        geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+        geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
       }
-      
+
       // 작성용 마커를 띄우기
       // 작성용 마커를 클릭하면 게시물 작성창이 뜨게 하기 : 로그인 한 사람만 되게 하기
-      var writeMarkerImgUrl = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-          imageSize = new kakao.maps.Size(30, 35),
-          writeMarkerImage = new kakao.maps.MarkerImage(writeMarkerImgUrl, imageSize);
+      var writeMarkerImgUrl =
+          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+        imageSize = new kakao.maps.Size(30, 35),
+        writeMarkerImage = new kakao.maps.MarkerImage(
+          writeMarkerImgUrl,
+          imageSize
+        );
 
-      var position = new kakao.maps.LatLng(hereLat, hereLng)
+      var position = new kakao.maps.LatLng(hereLat, hereLng);
       var marker = new kakao.maps.Marker({
         // 클릭한 위치에 게시물 작성용 마커를 띄워준다.
         // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
@@ -177,62 +188,64 @@ const Maps = (props) => {
         image: writeMarkerImage,
         clickable: true,
         zIndex: 50,
-      })
+      });
 
       marker.setMap(map);
 
       // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
-      kakao.maps.event.addListener(marker, 'click', function() {
+      kakao.maps.event.addListener(marker, "click", function () {
         setUpLoadModal(true);
-      })
+      });
 
-      kakao.maps.event.addListener(marker, 'rightclick', function() {
+      kakao.maps.event.addListener(marker, "rightclick", function () {
         marker.setVisible(false);
-      })
+      });
 
       // 클릭한 위치 위도, 경도, 장소이름을 서버로 보내기.
       // if (latitude && longitude && spotName) {
-        // dispatch(postActions.addLatLngSpotNameAPI(latitude, longitude, spotName))
+      // dispatch(postActions.addLatLngSpotNameAPI(latitude, longitude, spotName))
       // }
-          
+
       // 클릭이벤트 종료
     });
 
     // -----------------------------------------------------------------------------
     // 키워드로 검색하기
     // 장소 검색 객체를 생성합니다
-    var ps = new kakao.maps.services.Places(); 
+    var ps = new kakao.maps.services.Places();
     // 키워드로 장소를 검색합니다
-    if (search) { // search가 빈 string일때 검색이 되어서 오류가 뜨는 경우를 없애기 위해 if문으로 분기한다.
+    if (search) {
+      // search가 빈 string일때 검색이 되어서 오류가 뜨는 경우를 없애기 위해 if문으로 분기한다.
       ps.keywordSearch(search, (data, status, pagination) => {
-      if (status === kakao.maps.services.Status.OK) {
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        var bounds = new kakao.maps.LatLngBounds();
-        console.log(data);
-        console.log(bounds);
+        if (status === kakao.maps.services.Status.OK) {
+          // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+          // LatLngBounds 객체에 좌표를 추가합니다
+          var bounds = new kakao.maps.LatLngBounds();
+          console.log(data);
+          console.log(bounds);
 
-        for (var i = 0; i < data.length; i++) {
-          // displayMarker(data[i], bounds);
-          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+          for (var i = 0; i < data.length; i++) {
+            // displayMarker(data[i], bounds);
+            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
 
-          // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다.
-          map.setBounds(bounds);
-        };
-      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-          window.alert('검색결과가 존재하지 않습니다.');
+            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다.
+            map.setBounds(bounds);
+          }
+        } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+          window.alert("검색결과가 존재하지 않습니다.");
           return;
-      } else if (status === kakao.maps.services.Status.ERROR) {
-          window.alert('검색 결과 중 오류가 발생했습니다.');
+        } else if (status === kakao.maps.services.Status.ERROR) {
+          window.alert("검색 결과 중 오류가 발생했습니다.");
           return;
         }
       });
-    }  
+    }
 
     // 마커 관련 설정
     // 마커를 생성하고 지도에 표시합니다
     // 기본(전체) 마커, 좋아요 마커, 각 카테고리별 마커들의 url
-    var normalMarkerImgUrl = "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-128.png"
+    var normalMarkerImgUrl =
+      "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-128.png";
     // var myMarker = "",
     // var myLikeMarker = "",
     // var caftMarker = "",
@@ -252,67 +265,78 @@ const Maps = (props) => {
     // 서버와 연결되어 데이터 통신이 이뤄지면 이 코드를 사용한다
     // if (totaldata) {}
     //   totalPicPostData.map((p, idx) => {
-    markerdata.forEach((p) => { // mockdate를 이용한 테스트. 나중엔 서버에서 가져온다.
+    markerdata.forEach((p) => {
+      // mockdate를 이용한 테스트. 나중엔 서버에서 가져온다.
 
       var imageSize = new kakao.maps.Size(40, 40);
-      var markerImage = new kakao.maps.MarkerImage(normalMarkerImgUrl, imageSize);
-      var position = new kakao.maps.LatLng(p.latitude, p.longitude)
+      var markerImage = new kakao.maps.MarkerImage(
+        normalMarkerImgUrl,
+        imageSize
+      );
+      var position = new kakao.maps.LatLng(p.latitude, p.longitude);
       const markers = new kakao.maps.Marker({
         // 마커들을 생성하고, 그것들을 대응되는 좌표에다가 뿌려줍니다.
         // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
         map: map,
         position: position,
         image: markerImage,
-      })
+      });
 
-      // 모달창의 x 를 클릭하면 사라지게 하는 함수 
-      var closeOverlay = function() {
-        customOverlay.setMap(null);     
-      }
+      // 모달창의 x 를 클릭하면 사라지게 하는 함수
+      var closeOverlay = function () {
+        customOverlay.setMap(null);
+      };
 
       // 모달창(커스텀오버레이)에 들어갈 내용
-      var content = '<div class="modalcontainer">' +
-                        `<img class="picbox" src=${p.imgUrl} >` +
-                            // `<img src=${p.imgUrl} onclick={() => {history}}>` +
-                            '<div class="head">' +
-                                `<div class="spotname">${p.spotName}</div>` +
-                                // `<div class="close" onclick=${closeOverlay()} title="닫기"></div>` +
-                                // '<div class="close" onclick={closeOverlay()} title="닫기"></div>' + 
-                                // `<div class="close" onclick=${() => {closeOverlay()}} title="닫기"></div>` + 
-                                // `<div class="close" onclick = 'console.log("체크체크")' title="닫기"></div>` +
-                                // '<div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-                                
-                            '</div>' +
-                            // '<div class="center"></div>' +
-                            '<div class="bottomiconbox">' +
-                                '<img class="likeicon" onclick></img>' +
-                            '</div>' +
-                        '</img>' +
-                    '</div>';
+      var content =
+        '<div class="modalcontainer">' +
+        `<img class="picbox"  src=${p.imgUrl} >` +
+        // `<img src=${p.imgUrl} onclick={() => {history}}>` +
+        '<div class="head">' +
+        `<div class="spotname">${p.spotName}</div>` +
+        // `<div class="close" onclick=${closeOverlay()} title="닫기"></div>` +
+        // '<div class="close" onclick={closeOverlay()} title="닫기"></div>' +
+        // `<div class="close" onclick=${() => {closeOverlay()}} title="닫기"></div>` +
+        // `<div class="close" onclick = 'console.log("체크체크")' title="닫기"></div>` +
+        // '<div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+
+        "</div>" +
+        // '<div class="center"></div>' +
+        '<div class="bottomiconbox">' +
+        '<img class="likeicon" onclick></img>' +
+        "</div>" +
+        "</img>" +
+        "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
       var customOverlay = new kakao.maps.CustomOverlay({
-        // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다 
-        clickable: true,    // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
+        // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
+        clickable: true, // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
         position: position, // 커스텀 오버레이의 좌표
-        content: content,   // 엘리먼트 또는 HTML 문자열 형태의 내용
-        xAnchor: 0.5,       // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-        yAnchor: 1.2,       // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-        zIndex: 100,        //  커스텀 오버레이의 z-index
+        content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
+        xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+        yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+        zIndex: 100, //  커스텀 오버레이의 z-index
         altitude: 10,
       });
 
       console.log(customOverlay);
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-      kakao.maps.event.addListener(markers, 'click', function() { // 클릭하면 열기
+
+      kakao.maps.event.addListener(markers, "click", function () {
+        // 클릭하면 열기
         customOverlay.setMap(map);
       });
 
-      kakao.maps.event.addListener(markers, 'rightclick', function() { // 우클릭하면 닫기
-        customOverlay.setMap(null); 
+      kakao.maps.event.addListener(markers, "rightclick", function () {
+        // 우클릭하면 닫기
+        customOverlay.setMap(null);
       });
 
+      // function closeOverlay() {
+      //   customOverlay.setMap(null);
+      // }
     });
 
     // if (is_cafe) {
@@ -322,14 +346,14 @@ const Maps = (props) => {
     //     var position = new kakao.maps.LatLng(cafe.latitude, cafe.longitude);
     //     const markers = new kakao.maps.Marker({
     //       map: map,
-    //       position: position, 
+    //       position: position,
     //       image: markerImage,
     //     })
     //   })
 
-    //   // 모달창의 x 를 클릭하면 사라지게 하는 함수 
+    //   // 모달창의 x 를 클릭하면 사라지게 하는 함수
     //   var closeOverlay = function() {
-    //     customOverlay.setMap(null);     
+    //     customOverlay.setMap(null);
     //   }
 
     //   // 모달창(커스텀오버레이)에 들어갈 내용
@@ -338,11 +362,11 @@ const Maps = (props) => {
     //                         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
     //                         '<div class="head">' +
     //                             `<div class="spotname">${p.spotName}</div>` +
-    //                             `<div class="close" onclick=${closeOverlay} title="닫기"></div>` + 
-    //                             // `<div class="close" onclick=${closeOverlay()} title="닫기"></div>` + 
-    //                             // `<div class="close" onclick=${() => closeOverlay()} title="닫기"></div>` + 
-    //                             // '<div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-                                
+    //                             `<div class="close" onclick=${closeOverlay} title="닫기"></div>` +
+    //                             // `<div class="close" onclick=${closeOverlay()} title="닫기"></div>` +
+    //                             // `<div class="close" onclick=${() => closeOverlay()} title="닫기"></div>` +
+    //                             // '<div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+
     //                         '</div>' +
     //                         // '<div class="center"></div>' +
     //                         '<div class="bottomiconbox">' +
@@ -353,7 +377,7 @@ const Maps = (props) => {
 
     //   // 모달창(커스텀오버레이) 객체를 생성
     //   var customOverlay = new kakao.maps.CustomOverlay({
-    //     // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다 
+    //     // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
     //     clickable: true,    // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
     //     position: position, // 커스텀 오버레이의 좌표
     //     content: content,   // 엘리먼트 또는 HTML 문자열 형태의 내용
@@ -367,22 +391,22 @@ const Maps = (props) => {
     //   // 마커에 마우스를 올려 놓으면 커스텀오버레이가 보이게 한다.
     //   kakao.maps.event.addListener(markers, 'mouseover', function() {
     //   // kakao.maps.event.addListener(markers, 'click', function() {
-    //     customOverlay.setMap(map); 
+    //     customOverlay.setMap(map);
     //   })
 
     //   // 마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
     //   // kakao.maps.event.addListener(markers, 'mouseout', function() {
-    //   //   customOverlay.setMap(null); 
+    //   //   customOverlay.setMap(null);
     //   // })
     // }
 
     // var marker = new kakao.maps.Marker({
     //     map: map,
-    //     position: new kakao.maps.LatLng(place.y, place.x) 
+    //     position: new kakao.maps.LatLng(place.y, place.x)
     // });
-  
-  // 지도 api 설정은 여기서 끝
-  // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.  
+
+    // 지도 api 설정은 여기서 끝
+    // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
   }, [search, startlat, startlon]); // 마커별로 제어가 되면 마커들도 인자로 추가한다.
   // }, [search]);
 
@@ -395,9 +419,8 @@ const Maps = (props) => {
     setUpLoadModal(false);
   };
 
-
   // 작성창이 뜨게 하기 제어부분
-  // const 
+  // const
   // _map
 
   return (
@@ -422,12 +445,14 @@ const Maps = (props) => {
             lat={p.latitude}
             lng={p.longitude}>
           </CustomOverlay>}) : null} */}
-      {is_uploadModal ? 
-        <UpLoadModal 
+      {is_uploadModal ? (
+        <UpLoadModal
           latitude={latitude}
           longitude={longitude}
           spotName={spotName}
-          close={closeUpLoadModal}/> : null}
+          close={closeUpLoadModal}
+        />
+      ) : null}
     </React.Fragment>
   );
 };
@@ -460,7 +485,7 @@ const SearchBox = styled.div`
     width: 50%;
     margin: auto;
     left: 20vw;
-  } 
+  }
 `;
 
 const SearchInput = styled.input`
@@ -483,5 +508,4 @@ const MapBox = styled.div`
   top: 0;
   bottom: 0;
   position: absolute;
-
 `;

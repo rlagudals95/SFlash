@@ -29,6 +29,7 @@ function App() {
   const is_cookie = jwt ? true : false; // 그리고 is_cookie로 토큰 유무판단
   const is_login = useSelector((state) => state.user.is_login);
 
+<<<<<<< HEAD
   // 소셜로그인을 하면 token이 url에 담겨서 오는데,
   // url에서 token을을 추출하는 함수()
   const getUrlParameter =(name)=> {
@@ -51,6 +52,42 @@ function App() {
     setCookie("jwt", _jwt);
     localStorage.setItem("nickname", _nickname);
   }
+=======
+  const getUrlParameter = (name) => {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    var results = regex.exec(window.location.search);
+    return results === null
+      ? ""
+      : decodeURIComponent(results[1].replace(/\+/g, " "));
+  };
+  const token = getUrlParameter("token");
+  const error = getUrlParameter("error");
+  console.log(token);
+  console.log(error);
+
+  // if(token) {
+  //   setCookie("jwt", token)}
+  //     return <Redirect to={{
+  //         pathname: "/profile",
+  //         state: { from: this.props.location }
+  //     }}/>;
+  // } else {
+  //     return <Redirect to={{
+  //         pathname: "/login",
+  //         state: {
+  //             from: this.props.location,
+  //             error: error
+  //         }
+  //     }}/>;
+  // }
+  // }
+
+  React.useEffect(() => {
+    if (token) {
+      setCookie("jwt", token);
+    }
+>>>>>>> upstream/master
     if (is_cookie) {
       console.log("로그인 체크", is_login);
       dispatch(userActions.loginCheck(jwt));

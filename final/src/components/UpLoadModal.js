@@ -21,6 +21,7 @@ const UploadModal = (props) => {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
   const preview = useSelector((state) => state.image2.preview);
+
   const user_info = useSelector((state) => state.user.user);
   const [contents, setContents] = React.useState("");
   const [title, setTitle] = React.useState("");
@@ -98,7 +99,10 @@ const UploadModal = (props) => {
   };
 
   const editPost = () => {
-    dispatch(postActions.editPostAPI(1, _post));
+    dispatch(postActions.editPostAPI(props.id, _post));
+    // history.replace("/postlist");
+
+    window.location.reload();
   };
 
   const _post = {
@@ -117,7 +121,7 @@ const UploadModal = (props) => {
 
   //밑에두면 preview값을 바로 받을 수가 없다?
   const ModalImg = styled.img`
-    background-image: url(${preview}});
+    background-image: url(${preview});
     background-size: cover;
     object-fit: cover;
     background-position: 0px;
@@ -125,8 +129,8 @@ const UploadModal = (props) => {
     border: none;
     box-sizing: border-box;
     width: 100%;
-    height: 85vh;
-
+    height: 55vh;
+    max-height: 350px;
     @media (max-width: 1440px) {
       // 1450밑으로 넓이가 내려가면
       /* all: unset; */
@@ -138,7 +142,7 @@ const UploadModal = (props) => {
       border: none;
       box-sizing: border-box;
       width: 100%;
-      height: 480px;
+      height: 35vh;
       margin-bottom: -20px;
     }
     @media (max-width: 600px) {
@@ -176,6 +180,8 @@ const UploadModal = (props) => {
           </ModalLeftHeader>
         </ModalHeader>
         {/* 게시물 올릴때랑 수정일때 다르게 return */}
+
+        {/* {is_edit? 수정할 때 : 수정안 할 때 via홀더 보여줌 } */}
         {preview ? (
           preview.length > 1 ? (
             <Slider {...settings}>
@@ -193,6 +199,7 @@ const UploadModal = (props) => {
         ) : null}
 
         {/* 수정할때  */}
+
         {/* {props.imgUrl.length > 1 ? (
           <Slider {...settings}>
             {props.imgUrl.map((p, idx) => {
@@ -208,7 +215,6 @@ const UploadModal = (props) => {
         )} */}
         <ModalBottomContainer>
           <MiddleBox>
-            {" "}
             <Title>
               <TextField
                 id="outlined-multiline-static"
@@ -232,6 +238,20 @@ const UploadModal = (props) => {
             onChange={changeContents}
           />
           <SelectCate></SelectCate>
+
+          {/* {is_edit? <WriteSubmit
+          
+            onClick={editPost}
+            onClick={props.close}
+          >
+            게시글 작성
+          </WriteSubmit> : <WriteSubmit
+            onClick={addPost}
+           
+            // onClick={props.close}
+          >
+            게시글 작성
+          </WriteSubmit> } */}
           <WriteSubmit
             // onClick={addPost}
             onClick={editPost}
@@ -279,7 +299,7 @@ const ModalComponent = styled.div`
     position: fixed;
     /* width: 35vw; */
     width: 470px;
-    height: 79vh;
+    height: 730px;
     /* overflow: hidden; */
     top: 50%;
     left: 50%;
