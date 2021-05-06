@@ -56,16 +56,13 @@ const loginAPI = (email, pwd) => {
         password: pwd,
       })
       .then((res) => {
-        // console.log("loginAPI(res)", res);
-        // localStorage.setItem("nickname", res.data.nickname);
+        console.log(res.data);
+        localStorage.setItem("nickname", res.data.nickname);
         setCookie("jwt", res.data.token);
-        // console.log(res.config.data);
-        dispatch(
-          setUser({
-            nickname: res.data.nickname,
-            token: res.data.token,
-          })
+        dispatch(setUser(res.data)
         );
+        // 나중에 경로는 홈 화면으로 변경
+        history.push("/");
       })
       .catch((err) => {
         window.alert("로그인 실패", err);
@@ -81,37 +78,34 @@ const loginCheck = (jwt) => {
           dispatch(setUser(jwt));
     } else {
       dispatch(logOut());
-      history.goBack();
     }
   };
 };
 
-//해당유저의 정보 가져오기 : Story의 유저정보
-// const getUserInfoAPI = (nickname) => {
-//   return function (dispatch, getState, { history }) {
-//     const API = `${config.api}/story/${nickname}`;
-//     axios
-//       .get(API)
-//       .then((res) => {
-//         console.log(res.data);
-//         let doc = res.data.account;
-//         console.log(doc);
 
-//         // let user_info = [];
-//         let user = {
-//           nickname: doc.nickname,
-//           bio: doc.bio,
-//           profileImgUrl: doc.profileImgUrl,
-//           githubUrl: doc.githubUrl,
-//         };
-//         console.log(user);
-//         dispatch(setUser(user));
-//       })
-//       .catch((err) => {
-//         console.error("게시물을 가져오는데 문제가 있습니다", err);
-//       });
-//   };
-// };
+// 해당유저의 정보 가져오기 : Story의 유저정보
+const getUserInfoAPI = (nickname) => {
+  return function (dispatch, getState, { history }) {
+    axios
+      .get(`${config.api}/story/${nickname}`)
+      .then((res) => {
+        console.log(res.data.data);
+        let doc = res.data.account;
+        console.log(doc);
+
+        let user = {
+          nickname: doc.writer,
+          profileImgUrl: doc.profileImgUrl,
+          introduction: doc.introduceMsg,
+        };
+        console.log(user);
+        dispatch(setUser(user));
+      })
+      .catch((err) => {
+        console.error("게시물을 가져오는데 문제가 있습니다", err);
+      });
+  };
+};
 
 // reducer: handleActions(immer를 통한 불변성 유지)
 export default handleActions(
@@ -120,7 +114,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.user = action.payload.user;
         draft.is_login = true;
-        history.push("/");
       }),
     [GET_USER]: (state, action) =>
       produce(state, (draft) => {
@@ -147,7 +140,7 @@ const actionCreators = {
   signupAPI,
   loginAPI,
   loginCheck,
-  // getUserInfoAPI,
+  getUserInfoAPI,
 };
 
 export { actionCreators };

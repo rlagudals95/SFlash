@@ -28,12 +28,15 @@ function Navbar() {
   const nickname = localStorage.getItem("nickname");
 
   console.log("확인", is_login);
+  
   const onLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
       dispatch(userActions.logOut());
       history.push("/");
     }
   };
+
+
 
   return (
     <>

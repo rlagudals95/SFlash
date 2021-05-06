@@ -28,9 +28,7 @@ const Story = (props) => {
   // dispatch(userActions.getUserInfoAPI(nickname));
 
   React.useEffect(() => {
-    if (!user_info) {
-      return false;
-    }
+  
     // dispatch(imageActions.setPreview(user_info.profileImg));
   }, []);
 
@@ -68,7 +66,6 @@ const Story = (props) => {
       setActive(id);
     }
   };
-
     // 'setting' 메뉴 모달 제어하기 : 처음에는 0번째 인덱스 활성화
 
 
@@ -119,6 +116,7 @@ const Story = (props) => {
                   const result = window.confirm("로그아웃 하시겠습니까?");
                   if (result) {
                     dispatch(userActions.logOut());
+                    history.replace('/');
                   }
                   handleClose();
                 }}
@@ -175,12 +173,12 @@ const Story = (props) => {
           </Tab>
         </Tabs>
 
-        <Content active={active === "myPost"}>
+        {/* <Content active={active === "myPost"}>
           <StoryContent />
         </Content>
         <Content active={active === "myLike"}>
           <StoryContent />
-        </Content>
+        </Content> */}
       </Wrapper>
     </React.Fragment>
   );
