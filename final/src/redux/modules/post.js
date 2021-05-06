@@ -6,6 +6,7 @@ import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
 import post_list from "../../components/MockData";
+import { getCookie } from "../../shared/Cookie";
 
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
@@ -74,29 +75,42 @@ const initialState = {
 //   likeCnt: _post.likeCount,
 // };
 
-const addPostAPI = () => {
+const addPostAPI = (post) => {
   return function (dispatch, getState) {
     // const user_info = getState().user.user
+    const formData = new FormData();
+    formData.append("title", post.title);
+    formData.append("content", post.content);
+    formData.append("latitude", post.latitude); 
+    formData.append("longitude", post.longitude);
+    formData.append("spotName", post.spotName);
+    const _file = getState().image2.file;
+    console.log(_file)
+    formData.append("file", _file);     // 이미지 파일
+    const _category = getState().categroy.select_category;
+    formData.append("category", _category);
+    console.log(formData);
+
     axios({
       method: "POST",
       url: `${config.api}/board/`,
-      data: {
-        // title: "abc",
-        // content: "abc",
-        // category: "카페",
-        // file: xxxx.jpg,
-        // latitude: 37.343,
-        // longitude: 37.12321,
-        // spotName: "서산 유채꽃",
-        // spotNam: "우리집",
-      },
+      data: formData,
       headers: {
-        "X-AUTH-TOKEN": `${config.headers.authorization}`,
+        "X-AUTH-TOKEN": getCookie("jwt"),
         contentType: "multipartFile",
       },
     }).then((res) => {
       console.log(res);
-    });
+      console.log(res.data);
+      // let data = {
+
+      // }
+      // dispatch(add)
+      history.replace('/');
+    }).catch((err) => {
+      console.log(err)
+      window.alert("게시물을 저장하지 못했습니다.")
+    })
   };
 };
 

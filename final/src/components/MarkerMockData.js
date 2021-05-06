@@ -33,4 +33,28 @@ export const markerdata = [
     longitude: 128.76994573038047,
     imgUrl: "https://i.postimg.cc/R0KTVHNn/Kakao-Talk-20210503-032434981.jpg",
   },
+  // {
+  //   id: 4,
+  //   title: "유채꽃밭",
+  //   spotName: "유천유채꽃밭",
+  //   latitude: 35.566981995685396,
+  //   longitude: 128.76994573038047,
+  //   imgUrl: "https://i.postimg.cc/R0KTVHNn/Kakao-Talk-20210503-032434981.jpg",
+  // },
+  // {
+  //   id: 4,
+  //   title: "유채꽃밭",
+  //   spotName: "유천유채꽃밭",
+  //   latitude: 35.566981995685396,
+  //   longitude: 128.76994573038047,
+  //   imgUrl: "https://i.postimg.cc/R0KTVHNn/Kakao-Talk-20210503-032434981.jpg",
+  // },
+  // {
+  //   id: 4,
+  //   title: "유채꽃밭",
+  //   spotName: "유천유채꽃밭",
+  //   latitude: 35.566981995685396,
+  //   longitude: 128.76994573038047,
+  //   imgUrl: "https://i.postimg.cc/R0KTVHNn/Kakao-Talk-20210503-032434981.jpg",
+  // },
 ]
