@@ -193,11 +193,13 @@ const Maps = (props) => {
         // map: map,
         position: position,
         image: writeMarkerImage,
-        clickable: true,  
+        clickable: true,
+        draggable: true, 
         zIndex: 50,
       })
 
-      marker.setMap(map);  
+      marker.setMap(map);
+      // marker.setDraggable(true);
 
       // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
       kakao.maps.event.addListener(marker, 'click', function() {
@@ -207,6 +209,10 @@ const Maps = (props) => {
       kakao.maps.event.addListener(marker, 'rightclick', function() {
         marker.setVisible(false);
       })
+
+      // kakao.maps.event.addListener(marker, 'rightclick', function() {
+      //   marker.setVisible(false);
+      // })
 
       // 클릭한 위치 위도, 경도, 장소이름을 서버로 보내기.
       // if (latitude && longitude && spotName) {
@@ -319,17 +325,20 @@ const Maps = (props) => {
         zIndex: 100,        //  커스텀 오버레이의 z-index
         altitude: 10,
       });
-
-      console.log(customOverlay);
+      // console.log(customOverlay);
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       kakao.maps.event.addListener(markers, 'click', function() { // 클릭하면 열기
         customOverlay.setMap(map);
       });
 
-      kakao.maps.event.addListener(markers, 'rightclick', function() { // 우클릭하면 닫기
-        customOverlay.setMap(null); 
+      kakao.maps.event.removeListener(markers, 'click', function() { // 클릭하면 열기
+        customOverlay.setMap(map);
       });
+
+      // kakao.maps.event.addListener(markers, 'rightclick', function() { // 우클릭하면 닫기
+      //   customOverlay.setMap(null); 
+      // });
 
     });
 
@@ -427,6 +436,7 @@ const Maps = (props) => {
           onChange={debounce}
         />
       </SearchBox>
+      <Category/>
       {/* <CustomOverlayUseInfo/> */}
       <MapBox>
         {/* 위에서 설정된 getElementById("map")에 의해서 id="map"인 div에 맵이 표시된다 */}

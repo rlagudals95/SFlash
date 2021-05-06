@@ -6,6 +6,7 @@ export const markerdata = [
     latitude: 35.57178114091584,
     longitude: 128.76807144887422,
     imgUrl: "https://i.postimg.cc/pLd7TqH5/Kakao-Talk-20210502-232358853.jpg",
+    category: "카페"
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ export const markerdata = [
     latitude: 35.57610686087492,
     longitude: 128.77388583964236,
     imgUrl: "https://www.cheongdo.go.kr/open.content/tour/dynamic/photo/?v=26891|%EC%9E%85%EC%84%A0-%EA%B9%80%EC%A7%80%EC%9A%B0-%EC%B2%AD%EB%8D%94%EB%A0%88%EC%9D%BC%EB%B0%94%EC%9D%B4%ED%81%AC2.jpg",
+    category: "연인"
   },
   {
     id: 3,

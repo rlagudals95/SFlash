@@ -196,6 +196,8 @@ const initialState = {
   like: false,
   //카테고리 별로 상태값을 나타내서 PostList페이지에서 쓸 예정
   categrories: {
+    total: [],
+    mylike: [],
     cafe: [],
     night: [],
     ocean: [],

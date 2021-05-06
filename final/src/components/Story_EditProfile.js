@@ -7,7 +7,7 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 import { nicknameRegCheck } from "../shared/common";
 import axios from "axios";
-import { config } from "../../shared/config";
+import { config } from "../shared/config";
 
 import { Grid } from "../elements/index";
 import { InfoUl, InfoLi } from "../Css/loginSignupCss";

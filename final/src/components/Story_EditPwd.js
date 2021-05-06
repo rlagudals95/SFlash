@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { pwdRegCheck, pwdRegContinuousCheck } from "../shared/common";
 import axios from "axios";
-import { config } from "../../shared/config";
+import { config } from "../shared/config";
 
 const Story_EditPwd = () => {
   // console.log(email);

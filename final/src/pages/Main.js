@@ -13,7 +13,7 @@ const Main = (props) => {
 
   // 페이지 렌더링이 되면서 모달창에 들어갈 데이터들을 받아온다.
   // useEffect(() => {
-  //   dispatch(postActions.getMyPostAPI())
+  //   dispatch(postActions.getMainAPI())
   // }, []);
 
   // const post_list = useSelector((state) => state.post.post_list)

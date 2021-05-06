@@ -34,7 +34,7 @@ function App() {
     var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
     var results = regex.exec(window.location.search);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-};
+  };
   const token = getUrlParameter('token');
   const error = getUrlParameter('error');
   console.log(token);
