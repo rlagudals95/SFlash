@@ -193,11 +193,11 @@ const Maps = (props) => {
         // map: map,
         position: position,
         image: writeMarkerImage,
-        clickable: true,
+        clickable: true,  
         zIndex: 50,
       })
 
-      marker.setMap(map);
+      marker.setMap(map);  
 
       // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
       kakao.maps.event.addListener(marker, 'click', function() {
