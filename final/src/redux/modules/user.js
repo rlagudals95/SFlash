@@ -77,13 +77,8 @@ const loginAPI = (email, pwd) => {
 // 로그인 상태 확인 (페이지가 바뀔 때마다)
 const loginCheck = (jwt) => {
   return function (dispatch, getstate, { history }) {
-<<<<<<< HEAD
     if (jwt) {
           dispatch(setUser(jwt));
-=======
-    if (token) {
-      dispatch(setUser(token));
->>>>>>> upstream/master
     } else {
       dispatch(logOut());
       history.goBack();
