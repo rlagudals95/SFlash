@@ -32,6 +32,33 @@ const initialState = {
   is_loading: false,
   like: false,
   paging: { state: null, size: 12 },
+  categrories: {
+    total: [],
+    mylike: [],
+    cafe: [],
+    night: [],
+    ocean: [],
+    mountain: [],
+    flower: [],
+    alone: [],
+    couple: [],
+    friend: [],
+    pet: [],
+    city: [],
+    park: [],
+    exhibition: [],
+  }
+};
+
+const initialPost = {
+  id: 1,
+  writerName: "작성자 이름",
+  writerImgUrl: "작성자 이미지",
+  title: "abc",
+  content: "abc",
+  like: true,
+  likeCount: 12,
+  imgUrl: "vfsdsdf",
 };
 
 const addPostAPI = () => {
@@ -200,40 +227,6 @@ const searchPostAPI = (search) => {
   };
 };
 
-const initialState = {
-  list: [], //post_list
-  paging: { start: null, next: null, size: 3 },
-  is_loading: false,
-  like: false,
-  //카테고리 별로 상태값을 나타내서 PostList페이지에서 쓸 예정
-  categrories: {
-    total: [],
-    mylike: [],
-    cafe: [],
-    night: [],
-    ocean: [],
-    mountain: [],
-    flower: [],
-    alone: [],
-    couple: [],
-    friend: [],
-    pet: [],
-    city: [],
-    park: [],
-    exhibition: [],
-  }
-};
-
-const initialPost = {
-  id: 1,
-  writerName: "작성자 이름",
-  writerImgUrl: "작성자 이미지",
-  title: "abc",
-  content: "abc",
-  like: true,
-  likeCount: 12,
-  imgUrl: "vfsdsdf",
-};
 
 ////미들웨어로 카테고리별 API통신 만들어줘야한다
 ///그리고 아래 리듀서에서 배열정리 잘해줘야한다!
