@@ -73,10 +73,10 @@ const loginAPI = (email, pwd) => {
 };
 
 // 로그인 상태 확인 (페이지가 바뀔 때마다)
-const loginCheck = (token) => {
+const loginCheck = (jwt) => {
   return function (dispatch, getstate, { history }) {
-    if (token) {
-          dispatch(setUser(token));
+    if (jwt) {
+          dispatch(setUser(jwt));
     } else {
       dispatch(logOut());
       history.goBack();
@@ -118,6 +118,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.user = action.payload.user;
         draft.is_login = true;
+        history.push("/");
       }),
     [GET_USER]: (state, action) =>
       produce(state, (draft) => {

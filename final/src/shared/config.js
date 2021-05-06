@@ -1,15 +1,13 @@
-const config = {
-<<<<<<< HEAD
-    api : 'http://13.125.130.32',
-  }
-  
-  export { config }
-=======
-  api: "http://13.125.130.32",
-  token: {
-    headers: { authorization: `Bearer ${sessionStorage.getItem("JWT")}` },
-  },
-};
+import { setCookie, getCookie } from "./Cookie";
 
-export { config };
->>>>>>> upstream/master
+const config = {
+    api : 'http://seungwook.shop',
+    jwt : getCookie("jwt"),
+  }
+
+  export { config }
+
+
+
+  // 승욱님: http://seungwook.shop
+  // 세정님: http://13.125.130.32

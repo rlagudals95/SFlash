@@ -9,9 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { pwdRegCheck, pwdRegContinuousCheck } from "../shared/common";
 import axios from "axios";
-import { config } from "../../shared/config";
+import { config } from "../shared/config";
+import { getCookie } from "../shared/Cookie";
 
-const Story_EditPwd = () => {
+const StoryEditPwd = () => {
   // console.log(email);
   const email = useSelector((state) => state.email.email);
 
@@ -86,7 +87,7 @@ const Story_EditPwd = () => {
         },
         {
           headers: {
-            "X-AUTH-TOKEN": "jwt",
+            "X-AUTH-TOKEN": getCookie("jwt"),
           },
         }
       )
@@ -211,4 +212,4 @@ const SolidBtn = styled.button`
   }
 `;
 
-export default Story_EditPwd;
+export default StoryEditPwd;

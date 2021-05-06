@@ -14,9 +14,9 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Modal from "react-modal";
 
-import Story_EditProfile from "../components/Story_EditProfile";
-import Story_EditPwd from "../components/Story_EditPwd";
-import Story_Content from "../components/Story_Content";
+import StoryEditProfile from "../components/StoryEditProfile";
+import StoryEditPwd from "../components/StoryEditPwd";
+import StoryContent from "../components/StoryContent";
 
 const Story = (props) => {
   const dispatch = useDispatch();
@@ -114,13 +114,17 @@ const Story = (props) => {
               >
                 비밀번호 변경
               </MenuItem>
-              {/* <MenuItem
+              <MenuItem
                 onClick={() => {
+                  const result = window.confirm("로그아웃 하시겠습니까?");
+                  if (result) {
+                    dispatch(userActions.logOut());
+                  }
                   handleClose();
                 }}
               >
                 로그아웃
-              </MenuItem> */}
+              </MenuItem>
             </Menu>
          
 
@@ -131,7 +135,7 @@ const Story = (props) => {
               close={closeProfileModal}
               style={modalStyle}
             >
-              <Story_EditProfile
+              <StoryEditProfile
                   user_info={props.user_info}
                   nickname={nickname}
                 />
@@ -145,7 +149,7 @@ const Story = (props) => {
               close={closeEditPwdModal}
               style={modalStyle}
             >
-              <Story_EditPwd />
+              <StoryEditPwd />
               <CloseButton
                 src="https://image.flaticon.com/icons/png/512/458/458595.png"
                 onClick={closeEditPwdModal}
@@ -172,10 +176,10 @@ const Story = (props) => {
         </Tabs>
 
         <Content active={active === "myPost"}>
-          <Story_Content />
+          <StoryContent />
         </Content>
         <Content active={active === "myLike"}>
-          <Story_Content />
+          <StoryContent />
         </Content>
       </Wrapper>
     </React.Fragment>
