@@ -13,11 +13,13 @@ import UploadModal from "./UpLoadModal";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as CommnetActions } from "../redux/modules/comment";
 import { actionCreators as likeActions } from "../redux/modules/like";
+import { forEach } from "lodash";
 
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
   // React.useEffect(() => {}, []);
 
+  // console.log("모달 프롭스", props);
   // const commnet_list = props.comment_list  // 이렇게 받아오면 되려나?
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
@@ -40,9 +42,50 @@ const ModalDetail = (props) => {
     slidesToScroll: 1,
   };
 
+  // 받아온 이미지들
+  let image_list = [];
+
+  for (let i = 0; i < props.img_url.length; i++) {
+    image_list.push(props.img_url[i]);
+  }
+
+  let images = [];
+
+  image_list.forEach((img) => {
+    images.push(img.imgUrl);
+  });
+
+  console.log("이미지들!!", images);
+  // const image = image_list[0];
+
+  // console.log("이미지!", image);
+
+  // const a = image_list.forEach((img) => {
+  //   img.imgUrl;
+  //   console.log(img.imgUrl);
+  // });
+
+  // console.log(a);
+
+  // console.log("이미지s", images);
+  // let images = [];
+
+  // for (let i = 0; i < image_list.length; i++) {
+  //   images.push(props.image_list[i]);
+  // }
+
+  //이게 서버에서 받아온 코멘트들
+  let comment_list = [];
+  for (let i = 0; i < props.comment.length; i++) {
+    comment_list.push(props.comment[i]);
+  }
+
+  console.log("코멘트", comment_list);
+
+  //가짜 코멘트 리스트
   const commentList = props.comment;
 
-  const is_comment = commentList ? true : false;
+  const is_comment = comment_list ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
@@ -69,7 +112,7 @@ const ModalDetail = (props) => {
   //이미지 스타일 컴포넌트 다른 위로 올려서 props로 이미지를 바로 받는게 좋은 것 같다
 
   const ModalImg = styled.img`
-    background-image: url(${props.imgUrl});
+    background-image: url(${props.images});
     background-size: cover;
     object-fit: cover;
     background-position: 0px;
@@ -82,7 +125,7 @@ const ModalDetail = (props) => {
     @media (max-width: 1440px) {
       /* 1450밑으로 넓이가 내려가면 */
       /* all: unset; */
-      background-image: url(${props.imgUrl});
+      background-image: url(${props.images});
       background-size: cover;
       object-fit: cover;
       background-position: 0px;
@@ -95,7 +138,7 @@ const ModalDetail = (props) => {
     @media (max-width: 600px) {
       /* 1450밑으로 넓이가 내려가면 */
       /* all: unset; */
-      background-image: url(${props.imgUrl});
+      background-image: url(${props.images});
       background-size: cover;
       object-fit: cover;
       background-position: 0px;
@@ -157,18 +200,18 @@ const ModalDetail = (props) => {
         </ModalHeader>
         {/* 이미지 슬라이드 구현 props로 받는 이미지의 개수가 1개를 초과할때  */}
         {/* 그 수만큼 map함수로 출력해준다 */}
-        {props.imgUrl.length > 1 ? (
+        {images.length > 1 ? (
           <Slider {...settings}>
-            {props.imgUrl.map((p, idx) => {
+            {images.map((p, idx) => {
               return (
                 <div>
-                  <ModalImg src={props.imgUrl[idx]} />
+                  <ModalImg src={images[idx]} />
                 </div>
               );
             })}
           </Slider>
         ) : (
-          <ModalImg />
+          <ModalImg src={images[0]} />
         )}
 
         <ModalBottomContainer>
@@ -221,7 +264,7 @@ const ModalDetail = (props) => {
           </InfoBox>
           <ModalCmtBox>
             {is_comment
-              ? commentList.map((c, idx) => {
+              ? comment_list.map((c, idx) => {
                   //여기서 댓글을 입력하고 map으로 props 값을 돌려서 화면을 띄우게 해줌
 
                   //댓글이 2개보다 작다면? 1개라면?
@@ -234,7 +277,10 @@ const ModalDetail = (props) => {
                           <Reply>{c.content}</Reply>
                         </ReplyLeft>
                         <ReplyRight>
-                          <CmtDate>방금 전</CmtDate>
+                          <CmtDate>
+                            {/* 방금 전 */}
+                            {timeForToday(c.modified)}
+                          </CmtDate>
                           <CmtDeleteBtn>
                             <DeleteForeverIcon />
                           </CmtDeleteBtn>

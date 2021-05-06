@@ -16,6 +16,7 @@ import styled from "styled-components";
 import user from "../redux/modules/user";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { config } from "../shared/config";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -25,7 +26,12 @@ function Navbar() {
   const showSidebar = () => setSidebar(!sidebar);
 
   const is_login = useSelector((state) => state.user.is_login);
-  const nickname = localStorage.getItem("nickname");
+  const nickname = localStorage.getItem("nickname"); // 로컬스토리지에 저장된 닉네임 가져오는 방법
+  const is_loading = useSelector((state) => state.user.is_loading);
+
+  React.useEffect(() => {
+    dispatch(userActions.loading(true));
+  }, [is_loading]);
 
   console.log("확인", is_login);
   const onLogout = () => {
@@ -63,7 +69,8 @@ function Navbar() {
             </Link>
             <IconInfo>커뮤니티</IconInfo>
             {/* 마이페이지 */}
-            {is_login ? (
+
+            {is_loading && config.jwt && is_login && is_login ? (
               <React.Fragment>
                 <Link>
                   <CgIcons.CgProfile

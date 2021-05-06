@@ -21,6 +21,27 @@ import "../Css/Post.css";
 const Post2 = (props) => {
   const dispatch = useDispatch();
 
+  // 이미지들 반복문으로 뽑아오기
+  let image_list = [];
+
+  for (let i = 0; i < props.img_url.length; i++) {
+    image_list.push(props.img_url[i]);
+  }
+  // console.log("이미지 리스트!", image_list);
+  // 댓글들 반복문으로 뽑아오기
+  let comment_list = [];
+  for (let i = 0; i < props.comment.length; i++) {
+    comment_list.push(props.comment[i]);
+  }
+
+  // console.log("이미지 리스트", image_list);
+  // console.log("첫번째 이미지", image_list[0]);
+
+  // console.log("썸네일", image_list[0].imgUrl);
+  // const image = props.imgUrl;
+
+  const PostImage = image_list[0].imgUrl;
+  // console.log(PostImage.imgUrl);
   // const [modalOpen, setModalOpen] = useState();
   const [is_modal, setDetailModal] = useState();
 
@@ -61,10 +82,8 @@ const Post2 = (props) => {
     width: 100%;
     aspect-ratio: 1/1;
     background-size: cover;
-    background-image: url("${props.imgUrl}"); // [0] 안써도 자동으로 첫번째 배열 이미지가 들어가긴 한다..!
-
     background-repeat: no-repeat;
-
+    background-image: url(${PostImage});
     /* &:hover {
       animation: ${hoverBox} 1s;
     } */
@@ -91,7 +110,7 @@ const Post2 = (props) => {
               )}
               <div>{props.likeCnt} </div>
               <br />
-              {props.address}
+              {props.title}
             </div>
           </div>
           {/* 투명도 0 */}

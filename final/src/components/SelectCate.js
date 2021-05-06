@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 const SelectCate = () => {
   const dispatch = useDispatch();
   const category = useSelector((state) => state.category.select_category);
-  // console.log(category);
+  console.log("선택한 카테고리는???", category);
 
   const scrollRef = React.useRef(null);
 
