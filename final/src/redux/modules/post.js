@@ -33,6 +33,7 @@ const initialState = {
   is_loading: false,
   like: false,
   paging: { state: null, size: 12 },
+  // 카테고리별 게시물 데이터
   categrories: {
     total: [],
     mylike: [],
@@ -87,9 +88,10 @@ const addPostAPI = (post) => {
     const _file = getState().image2.file;
     console.log(_file)
     formData.append("file", _file);     // 이미지 파일
-    const _category = getState().categroy.select_category;
+    const _category = getState().category.select_category;
     formData.append("category", _category);
     console.log(formData);
+    console.log("폼데이터 형식", Array.from(formData));
 
     axios({
       method: "POST",
@@ -97,7 +99,7 @@ const addPostAPI = (post) => {
       data: formData,
       headers: {
         "X-AUTH-TOKEN": getCookie("jwt"),
-        contentType: "multipartFile",
+        "Content-Type": "multipart/form-data",
       },
     }).then((res) => {
       console.log(res);

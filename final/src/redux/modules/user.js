@@ -146,12 +146,8 @@ const actionCreators = {
   signupAPI,
   loginAPI,
   loginCheck,
-<<<<<<< HEAD
-  getUserInfoAPI,
-=======
   loading,
   // getUserInfoAPI,
->>>>>>> upstream/master
 };
 
 export { actionCreators };

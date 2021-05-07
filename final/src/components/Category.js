@@ -91,7 +91,7 @@ const Category = () => {
               e.preventDefault();
               e.stopPropagation();
               setCafe(false);
-              dispatch(categoryActions.getCategory("카페")); // 혹시라고 구현이 힘들땐 그냥 이값을 is_cafe말고 cafe로 보내고 포스트 리스트에서 카테고리가 cafe인 것을 필터해주자
+              dispatch(categoryActions.getCategory("카페")); // 혹시라도 구현이 힘들땐 그냥 이값을 is_cafe말고 cafe로 보내고 포스트 리스트에서 카테고리가 cafe인 것을 필터해주자
             }}
           >
             #카페
