@@ -62,8 +62,7 @@ const loginAPI = (email, pwd) => {
         console.log(res.data);
         localStorage.setItem("nickname", res.data.nickname);
         setCookie("jwt", res.data.token);
-        dispatch(setUser(res.data)
-        );
+        dispatch(setUser(res.data));
         history.push("/");
       })
       .catch((err) => {
@@ -83,7 +82,6 @@ const loginCheck = (jwt) => {
     }
   };
 };
-
 
 
 
@@ -124,7 +122,12 @@ const actionCreators = {
   signupAPI,
   loginAPI,
   loginCheck,
+<<<<<<< HEAD
   loading
+=======
+  loading,
+  // getUserInfoAPI,
+>>>>>>> upstream/master
 };
 
 export { actionCreators };

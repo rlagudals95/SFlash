@@ -230,7 +230,9 @@ const StoryEditProfile = (props) => {
               />
             </Grid>
 
-            <SolidBtn width="120px" onClick={onEditProfile}>저장하기</SolidBtn>
+            <SolidBtn width="120px" onClick={onEditProfile}>
+              저장하기
+            </SolidBtn>
           </Grid>
         ) : (
           <div>
