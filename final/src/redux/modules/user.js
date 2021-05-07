@@ -62,8 +62,7 @@ const loginAPI = (email, pwd) => {
         console.log(res.data);
         localStorage.setItem("nickname", res.data.nickname);
         setCookie("jwt", res.data.token);
-        dispatch(setUser(res.data)
-        );
+        dispatch(setUser(res.data));
         history.push("/");
       })
       .catch((err) => {
@@ -83,7 +82,6 @@ const loginCheck = (jwt) => {
     }
   };
 };
-
 
 // 해당유저의 정보 가져오기 : Story의 유저정보
 const getUserInfoAPI = (nickname) => {

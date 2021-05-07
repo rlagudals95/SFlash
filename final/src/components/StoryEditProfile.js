@@ -151,7 +151,6 @@ const StoryEditProfile = (props) => {
     console.log(newNickname);
     dispatch(profileActions.editNicknameAPI(newNickname));
     setOriginalNickMode(true);
-
   };
 
   // 자기소개 입력하기(기존에 입력한 자기소개가 있으면 띄워준다 input 창에 vaule 설정해줘야 이전에 썼던 글이 남아있음. 없으면 null;)
@@ -230,7 +229,9 @@ const StoryEditProfile = (props) => {
               />
             </Grid>
 
-            <SolidBtn width="120px" onClick={onEditProfile}>저장하기</SolidBtn>
+            <SolidBtn width="120px" onClick={onEditProfile}>
+              저장하기
+            </SolidBtn>
           </Grid>
         ) : (
           <div>

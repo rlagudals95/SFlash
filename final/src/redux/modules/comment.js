@@ -5,6 +5,8 @@ import { history } from "../configStore";
 import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
+import { getCookie } from "../../shared/Cookie";
+import { actionCreators as postActions } from "./post";
 
 // 댓글 작성 /board/{boardId}/comment
 // 댓글 수정 board/{boardId}/comment/{commentId}
@@ -77,31 +79,25 @@ const getCommentAPI = (board_id = null) => {
 
 const addCommentAPI = (comment, board_id) => {
   return function (dispatch) {
-    console.log("댓글와유?", comment);
-    console.log("아이디와유?", board_id);
-    console.log(`${config.jwt}`);
-    let _comment = {
-      contentsId: board_id, //댓글 아이디는 포스트의 아이디 고유값
-      userId: comment.user_name, // 유저네임 받아온것
-      comment: comment.comment, // 댓글 받아온 것
-      myImg: comment.profile_url, // 프로필 이미지 받아온 것 요건 없어도 되겠다
-      commentDt: moment().format("YYYY-MM-DD HH:mm:ss"), // 지금 작성 날짜 보내준 것 요것도 없어도 되겠다
-    };
-    axios(
-      {
-        url: `${config.api}/board/${board_id}/comment`,
-        method: "POST",
-        data: { ...comment },
-        headers: {
-          "X-AUTH-TOKEN": `${config.jwt}`,
-        },
-      }
-      // token
-    )
+    // console.log("댓글와유?", comment);
+    // console.log("아이디와유?", board_id);
+    // console.log(getCookie("jwt"));
+
+    axios({
+      url: `${config.api}/board/${board_id}/comment`,
+      method: "POST",
+      data: { content: comment },
+      headers: {
+        "X-AUTH-TOKEN": getCookie("jwt"),
+      },
+    })
       .then((res) => {
-        console.log(res.data);
-        let comment_list = { ...comment, id: res.data.id };
-        dispatch(addComment(comment_list, board_id));
+        console.log(res);
+        // console.log(res.data.data.user.id); // 댓글 id
+        let comment_list = { ...comment, id: res.data.data.user.id };
+        // dispatch(setComment(comment_list, board_id));
+        // dispatch(addComment(comment, board_id));
+        dispatch(postActions.getPostAPI());
       })
       .catch((err) => {
         console.log(err.response);
@@ -111,13 +107,19 @@ const addCommentAPI = (comment, board_id) => {
 };
 
 const deleteCommentAPI = (id, board_id) => {
+  console.log("댓글 id", id);
+  console.log("보드 id", board_id);
   return function (dispatch) {
     axios({
       method: "DELETE",
-      url: `${config.api}/board/{boardId}/comment`, //서버에서 지우고
+      url: `${config.api}/board/comment/${id}`, //서버에서 지우고
+      headers: {
+        "X-AUTH-TOKEN": getCookie("jwt"),
+      },
     })
       .then((res) => {
-        dispatch(deleteComment(id, board_id)); //바로 렌더링 시켜줘야 삭제 눌렀을때 반영된다
+        // dispatch(deleteComment(id, board_id)); //바로 렌더링 시켜줘야 삭제 눌렀을때 반영된다
+        dispatch(postActions.getPostAPI());
       })
       .catch((err) => {
         window.alert("댓글 삭제에 문제가 있어요!");
@@ -135,7 +137,7 @@ export default handleActions(
           draft.list[action.payload.board_id] = [action.payload.comment];
           return;
         } //댓글이 없다면? 그냥 대체 해주는 거죠??
-        draft.list[action.payload.post_id].unshift(action.payload.comment);
+        draft.list[action.payload.board_id].unshift(action.payload.comment);
         // 어떤 포스트의 댓글 배열 안에 새로 받은 코멘트를 넣어줍니다
         //원래 이니셜 스테이트에 1맨 앞에 댓글 추가
       }),
