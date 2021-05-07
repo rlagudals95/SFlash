@@ -18,12 +18,8 @@ import { ClosedCaption } from "@material-ui/icons";
 const StoryEditProfile = (props) => {
   const dispatch = useDispatch();
   // 스토리페이지에서 user_info를 props로 받아온다.
-  const { user_info, close } = props;
-  const nickname = user_info.nickname;
+  const { user_info } = props;
 
-  // 닉네임 정보가 있으면 수정할 수 있구요.
-  const is_edit = nickname ? true : false;
-  const _user_info = is_edit? user_info : null;
   const is_uploading = useSelector((state) => state.profile.is_uploading);
   const preview = useSelector((state) => state.profile.preview);
   // const dupCheck = useSelector((state) => state.profile.dupCheck);
@@ -33,17 +29,7 @@ const StoryEditProfile = (props) => {
     if (!user_info) {
       return false;
     }
-    if (is_edit) {
-      // 기존 프로필 이미지를 프리뷰로 불러오기
-      dispatch(profileActions.setPreview(user_info.profileImgUrl));
-    } else {
-      // 없으면 기본이미지 띄워주기
-      dispatch(
-        profileActions.setPreview(
-          "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
-        )
-      );
-    }
+    dispatch(profileActions.setPreview(user_info.profileImgUrl));
   }, []);
 
   // 이미지 업로드하기
@@ -72,6 +58,7 @@ const StoryEditProfile = (props) => {
     };
   };
 
+  // 이미지 에러
   const ImageError = () => {
     window.alert("잘못된 이미지 주소 입니다. :(");
     dispatch(
@@ -82,11 +69,13 @@ const StoryEditProfile = (props) => {
   };
 
   // 닉네임 변경하기
-  const [newNickname, setNewNickname] = React.useState("");
+  // originalNickMode : true 일 때, '닉네임 변경 전' 화면을 띄워주고, false 일 때 '변경하는'화면으로 전환
   const [originalNickMode, setOriginalNickMode] = React.useState(true);
+  // 새 닉네임과 중복확인
+  const [newNickname, setNewNickname] = React.useState(user_info.nickname);
   const [nicknameDup, setNicknameDup] = React.useState(false);
 
-  // 닉네임 입력
+  // 새 닉네임 입력
   const changeNickname = (e) => {
     setNewNickname(e.target.value);
     const nicknameInfo = document.querySelector(
@@ -113,6 +102,7 @@ const StoryEditProfile = (props) => {
     }
   };
 
+  // 닉네임 중복확인
   const nicknameDupCheckAPI = (newNickname) => {
     console.log(newNickname);
     const API = `${config.api}/user/signup/nickchk`;
@@ -144,6 +134,7 @@ const StoryEditProfile = (props) => {
       });
   };
 
+  // 저장하기 버튼을 누르면, 닉네임이 변경되고 다시 프로필 편집 창으로 돌아간다.
   const onEditNickname = () => {
     if (nicknameDup === false) {
       alert("닉네임 중복확인을 해주세요!");
@@ -154,26 +145,23 @@ const StoryEditProfile = (props) => {
     setOriginalNickMode(true);
   };
 
-  // 자기소개 입력하기(기존에 입력한 자기소개가 있으면 띄워준다 input 창에 vaule 설정해줘야 이전에 썼던 글이 남아있음. 없으면 null;)
+  // 자기소개 (value를 사용해 기존에 입력한 내용을 띄워준다.)
   const [introduction, setIntroduction] = React.useState(
-    _user_info? user_info.introuduction : ""
+    user_info.introduction
   );
   const changeIntroduction = (e) => {
     setIntroduction(e.target.value);
   };
 
+  // 프로필 사진과 자기소개 수정하기
   const onEditProfile = () => {
-    // 경우의 수를 두가지로 나누어 생각
-    // 1. 자기소개 내용만 수정하였을 때
-    // 2. 사진과 자기소개 내용 둘다 수정하였을 때 (사진만 수정하고 글은 수정하지 않아도 수정한 걸로 인식된다.)
     const profileImg = fileInput.current.files[0];
 
     let profile = {
-      profileImg : profileImg,
-      introduction : introduction,
-    }
+      profileImg: profileImg,
+      introduction: introduction,
+    };
     dispatch(profileActions.editProfileAPI(profile));
-    // window.location.reload();
   };
 
   return (
@@ -213,6 +201,7 @@ const StoryEditProfile = (props) => {
             닉네임변경 벼튼을 누르면 originalNickname(false)로 닉네임 변경 모드로 전환
             변경 후에는 다시 변경된 닉네임으로 originalNickMode(true) */}
         {originalNickMode ? (
+          // 닉네임은 그대로두고 프로필 사진과 자기소개만 수정할 수 있는 모드
           <Grid>
             <NicknameContainer height="60px">
               <Nickname>{user_info.nickname}</Nickname>
@@ -240,10 +229,12 @@ const StoryEditProfile = (props) => {
             </SolidBtn>
           </Grid>
         ) : (
+          // 닉네임 변경모드
           <div>
             <Grid height="20px" />
             <NicknameContainer height="50px">
               <InputStyle
+                value={newNickname}
                 placeholder="새 닉네임 입력"
                 type="type"
                 width="100%"
@@ -282,7 +273,15 @@ const StoryEditProfile = (props) => {
                 아이디 중복확인
               </InfoLi>
             </InfoUl>
-            <SolidBtn width="140px" onClick={onEditNickname}>
+            <SolidBtn
+              width="140px"
+              onClick={() => {
+                const result = window.confirm("닉네임을 변경 하시겠습니까?");
+                if (result) {
+                  onEditNickname();
+                }
+              }}
+            >
               닉네임 변경하기
             </SolidBtn>
           </div>
@@ -385,7 +384,7 @@ const TextField = styled.textarea`
   padding: 16px 16px;
   box-sizing: border-box;
   margin: 10px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   line-height: 1.5rem;
 `;
 

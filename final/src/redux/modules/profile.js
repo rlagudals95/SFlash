@@ -37,7 +37,7 @@ const initialState = {
           "X-AUTH-TOKEN": `${config.jwt}`,
         },
       }).then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
           let _user = res.data.data;
   
           let user = {
@@ -46,7 +46,6 @@ const initialState = {
             profileImgUrl: _user.imgUrl,
             introduction: _user.introduceMsg,
           };
-          console.log(user);
           dispatch(getUserInfo(user));
         })
         .catch((err) => {
@@ -56,73 +55,66 @@ const initialState = {
   };
 
 
-// 게시물 수정하기
+// 게시물 수정하기(두개의 경우의 수로 나누어 생각하기)
 const editProfileAPI = (profile) => {
   console.log(profile)
   return function (dispatch, getState, { history }) {
 
     const _image = getState().profile.preview;
     const _user_info = getState().profile.user;
+
+    // 1. 자기소개만 변경했을 때(이미지 변경 x)
     if (_image === _user_info.profileImgUrl){
-      console.log("이미지변경 x");
-    }
-    // 자기소개만 변경했을 때
-    if (_image === _user_info.profileImgUrl){
-      const form_edit = new FormData();
-      // form_edit_intro.append("profileFile", null);
-      form_edit.append("introduceMsg", profile.introduction);
-      console.log(form_edit);
+      const formData = new FormData();
+      formData.append("introduceMsg", profile.introduction);
+      console.log(formData);
 
       axios({
         method: "PUT",
         url: `${config.api}/editmyprofile`,
-        data: form_edit,
+        data: formData,
         headers: {
           "X-AUTH-TOKEN": `${config.jwt}`,
           "Content-Type" : "multipart/form-data",
         },
       })
         .then((res) => {
-          // console.log(res)
           // console.log(res.data.data);
           let _user = res.data.data;
-          let user = {
-            // profileImgUrl: _image,
-            // profileImgUrl: _user.imgUrl,
+          let profile = {
             introduction: _user.introduceMsg,
           };
-          dispatch(editProfile(user));
+          dispatch(editProfile(profile));
         })
         .catch((err) => {
           console.error("작성 실패", err);
         });
     }
-    // 이미지 & 자기소개 모두 변경했을 때
+    // 2. 이미지 & 자기소개 모두 변경했을 때
     else {
-    const form_edit = new FormData();
-    form_edit.append("profileFile", profile.profileImg);
-    form_edit.append("introduceMsg", profile.introduction);
-    console.log(form_edit);
+    const formData = new FormData();
+    formData.append("profileFile", profile.profileImg);
+    formData.append("introduceMsg", profile.introduction);
+    console.log(formData);
     // const jwt = getCookie("token");
  
       axios({
       method: "PUT",
       url: `${config.api}/editmyprofile`,
-      data: form_edit,
+      data: formData,
       headers: {
         "X-AUTH-TOKEN": `${config.jwt}`,
         "Content-Type" : "multipart/form-data",
       },
     })
       .then((res) => {
-        // console.log(res)
         // console.log(res.data.data);
         let _user = res.data.data;
-        let user = {
+        let profile = {
           profileImgUrl: _user.imgUrl,
           introduction: _user.introduceMsg,
         };
-        dispatch(editProfile(user));
+        dispatch(editProfile(profile));
       })
       .catch((err) => {
         console.error("작성 실패", err);
@@ -167,7 +159,8 @@ export default handleActions(
       }),
     [EDIT_PROFILE]: (state, action) =>
       produce(state, (draft) => {
-        draft.user = action.payload.user;
+        // draft.user = action.payload.user;
+        draft.user = {...draft.user, ...action.payload.profile}
       }),
     [UPLOADING]: (state, action) =>
       produce(state, (draft) => {
@@ -180,7 +173,8 @@ export default handleActions(
       }),
     [EDIT_NICKNAME]: (state, action) =>
       produce(state, (draft) => {
-        draft.nickname = action.payload.nickname;
+        draft.user = {...draft.user, ...action.payload.nickname};
+        
       }),
   },
   initialState

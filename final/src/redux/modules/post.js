@@ -107,7 +107,7 @@ const addPostAPI = (post) => {
       url: `${config.api}/board/`,
       data: formData,
       headers: {
-        "X-AUTH-TOKEN": getCookie("jwt"),
+        "X-AUTH-TOKEN": `${config.jwt}`,
         "Content-Type": "multipart/form-data",
       },
     })
@@ -150,7 +150,7 @@ const getPostAPI = () => {
       method: "GET",
       url: `${config.api}/board`,
       headers: {
-        "X-AUTH-TOKEN": getCookie("jwt"),
+        "X-AUTH-TOKEN": `${config.jwt}`,
       },
     }).then((res) => {
       console.log("서버 응답값", res);
@@ -188,7 +188,7 @@ const deletePostAPI = (board_id) => {
       method: "DELETE",
       url: `${config.api}/board/${board_id}`,
       headers: {
-        "X-AUTH-TOKEN": getCookie("jwt"),
+        "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {
@@ -288,7 +288,7 @@ const getMapPostAPI = () => {
       method: "GET",
       url: `${config.api}/map`,
       headers: {
-        "X-AUTH-TOKEN": getCookie("jwt"),
+        "X-AUTH-TOKEN": `${config.jwt}`,
       },
     }).then((res) => {
       console.log("서버 응답값", res);
