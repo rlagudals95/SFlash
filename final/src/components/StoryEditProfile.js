@@ -21,7 +21,6 @@ const StoryEditProfile = (props) => {
   const { user_info, close } = props;
   const nickname = user_info.nickname;
 
-
   // 닉네임 정보가 있으면 수정할 수 있구요.
   const is_edit = nickname ? true : false;
   const _user_info = is_edit? user_info : null;

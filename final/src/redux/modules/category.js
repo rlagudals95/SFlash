@@ -22,8 +22,8 @@ const selectCategory = createAction(SELECT_CATEGORY, (select_category) => ({
 }));
 
 const initialState = {
-  is_category: [], // 이제 여기에 각자 타입을 다 넣어준다? // 요 배열의 길이가 0이면 모두 출력
-  select_category: null, // 게시글 작성때 쓰일 state
+  is_category: [], // 이제 여기에 각 카테고리를 넣어준다. 요 배열의 길이가 0이면 모두 출력. Map.js에서 사용
+  select_category: null, // 게시글 작성때 쓰일 state, 하나씩만 선택가능. UpLoadModal에서 사용.
 };
 
 export default handleActions(
