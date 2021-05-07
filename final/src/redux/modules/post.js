@@ -84,87 +84,17 @@ const addPostAPI = (post) => {
   return function (dispatch, getState) {
     const user_info = getState().user.user;
     const _file = getState().image2.file;
+    console.log("파일들", _file);
     const formData = new FormData();
     formData.append("title", post.title);
     formData.append("content", post.content);
     formData.append("latitude", post.latitude);
     formData.append("longitude", post.longitude);
     formData.append("spotName", post.spotName);
-    formData.append("file", _file);
-    // formData.append("file", { _file });
-    // console.log(_file);
-    // console.log(formData.get("file"));
-
-    // for (let i = 0; i < _file.length; i++) {
-    //   formData.append("file", _file[i]);
-    // }
-    // let file_list = [];
-
-    // for (let i = 0; i < _file.length; i++) {
-    //   // 순서대로 들어감
-    //   file_list.push(("file", _file[i]));
-    // }
-
-    // formData.append("file", file_list);
-
-    // formData.append("file", files);
-
-    console.log("폼데이터 형식", Array.from(formData));
-    let fileList = []; // [],[]
-    console.log(fileList);
+    // 폼데이터 이미지 파일들은 한개 씩 보내기!
     for (let i = 0; i < _file.length; i++) {
-      fileList.push(_file[i]);
+      formData.append("file", _file[i]);
     }
-
-    formData.append("file", fileList);
-
-    //  console.log("폼데이터 형식", Array.from(formData));
-
-    // const upload = () => {
-    //   let formData = new FormData();
-    //   for (let i = 0; i < files.length; i++) {
-    //     formData.append("files", files[i]);
-    //   }
-    // };
-
-    // 하나씩보내기
-    // let productimages = [];
-
-    // const files = event.target.files;
-
-    // for (let i = 0; i < files.length; i++) {
-    //   formData.append(`images[${i}]`, files[i]);
-    // }
-
-    // for (let i = 0; i < _file.length; i++) {
-    //   // console.log(_file[i]);
-    //   // productimages.push(_file[i]);
-    //   formData.append(`file[${i}]`, _file[i]);
-    // }
-    // formData.append("file", _file);
-
-    // 리스트로 보내기
-    // console.log(_file);
-    // formData.append("file", _file); // 이미지 파일
-
-    // const formData = new FormData();
-    // formData.append("title", post.title);
-    // formData.append("content", post.content);
-    // formData.append("latitude", post.latitude);
-    // formData.append("longitude", post.longitude);
-    // formData.append("spotName", post.spotName);
-    // const _file = getState().image2.file;
-    // formData.append("file", _file); // 이미지 파일
-    // console.log(_file);
-    // console.log("폼데이터 형식", Array.from(formData));
-    // let files = []
-    // for (let i = 0; i< _file)
-
-    // let productimages = [];
-    // for (let i = 0; i < images.length; i++) {
-    //   productimages.push(images[i]);
-    // }
-    // formData.append("productPhotos", images);
 
     //////////
     const _category = getState().category.select_category; //요기 오타가 있었네요!
@@ -182,10 +112,11 @@ const addPostAPI = (post) => {
       },
     })
       .then((res) => {
-        console.log(formData);
-        console.log("게시물이 갔다!!", res);
-        console.log(res);
-        console.log(res.data);
+        console.log("애드포스트 응답", res);
+        // console.log(formData);
+        // console.log("게시물이 갔다!!", res);
+        // console.log(res);
+        // console.log(res.data);
         // let data = {
 
         // }
@@ -248,6 +179,26 @@ const getPostAPI = () => {
     //   window.alert("게시물을 가져오는데 문제가 있어요!");
     //   console.log("게시물 로드 에러", err);
     // });
+  };
+};
+
+const deletePostAPI = (board_id) => {
+  return function (dispatch, getState) {
+    axios({
+      method: "DELETE",
+      url: `${config.api}/board/${board_id}`,
+      headers: {
+        "X-AUTH-TOKEN": getCookie("jwt"),
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        dispatch(deletePost(board_id));
+      })
+      .catch((err) => {
+        window.alert("게시물 삭제에 문제가 있어요!");
+        console.log("게시글 삭제 에러", err);
+      });
   };
 };
 
