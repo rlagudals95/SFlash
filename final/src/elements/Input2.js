@@ -82,15 +82,19 @@ const ElTextarea = styled.textarea`
   width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;
-  border-radius: 50px;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
 
 const ElInput = styled.input`
-  border: 1px solid lightgray;
+  border: none;
   width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;
-  border-radius: 7px;
+  background-color: transparent;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
 
 export default Input2;

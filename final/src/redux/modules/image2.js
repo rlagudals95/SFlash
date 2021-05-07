@@ -4,10 +4,14 @@ import produce from "immer";
 const SET_PREVIEW = "SET_PREVIEW";
 const GET_PREVIEW = "GET_PREVIEW";
 const GET_FILE = "GET_FILE";
+const DELETE_PREVIEW = "DELETE_PREVIEW";
+const DELETE_FILE = "DELETE_FILE";
 
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 const getPreview = createAction(GET_PREVIEW, (preview) => ({ preview }));
 const getFile = createAction(GET_FILE, (file) => ({ file }));
+const deletePreview = createAction(DELETE_PREVIEW, (preview) => ({ preview }));
+const deleteFile = createAction(DELETE_FILE, (file) => ({ file }));
 
 const initialState = {
   preview: ["http://via.placeholder.com/400x300"],
@@ -44,6 +48,24 @@ export default handleActions(
         // draft.file = action.payload.file;
         draft.file.push(action.payload.file);
       }),
+    [DELETE_PREVIEW]: (state, action) =>
+      produce(state, (draft) => {
+         draft.list = draft.list.filter((r, idx) => {
+           if (r.id !== action.payload.id) {
+             // console.log(r.id);
+             return [...draft.list, r];
+           }
+         });
+      }),
+    [DELETE_FILE]: (state, action) =>
+      produce(state, (draft) => {
+         draft.list = draft.list.filter((r, idx) => {
+           if (r.id !== action.payload.id) {
+             // console.log(r.id);
+             return [...draft.list, r];
+           }
+         });
+      })
   },
   initialState
 );

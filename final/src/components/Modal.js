@@ -134,8 +134,8 @@ const ModalDetail = (props) => {
     border: none;
     box-sizing: border-box;
     width: 100%;
-    height: 42.5vh;
-    max-height: 350px;
+    height: 400px;
+    height: 400px;
     @media (max-width: 1440px) {
       /* 1450밑으로 넓이가 내려가면 */
       /* all: unset; */
@@ -147,7 +147,8 @@ const ModalDetail = (props) => {
       border: none;
       box-sizing: border-box;
       width: 100%;
-      height: 35vh;
+      height: 310px;
+      max-height: 42vh;
     }
     @media (max-width: 600px) {
       /* 1450밑으로 넓이가 내려가면 */
@@ -206,8 +207,8 @@ const ModalDetail = (props) => {
                   : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
               }
             />
-            <ModalAuthor>username</ModalAuthor>
-            <PostDate>방금 전{/* {timeForToday(props.insert_dt)} */}</PostDate>
+            <ModalAuthor>{props.writerName}</ModalAuthor>
+            <PostDate>{timeForToday(props.creatAt)}</PostDate>
             <ExitContainer>
               <ExitBtn onClick={props.close}>
                 <CloseIcon fontSize="large" />
@@ -254,7 +255,37 @@ const ModalDetail = (props) => {
               )}
 
               {/* 작성자 에게만 보이게 설정  */}
-              <ModalEdit>
+
+                
+
+
+              {props.writerName == nickname ? (
+                <ModalEdit>
+                  <React.Fragment onClick={props.close}>
+                    <EditBtn
+                      onClick={() => {
+                        setEditModal(true);
+                      }}
+                    >
+                      수정
+                    </EditBtn>
+                  </React.Fragment>
+                  /
+                  <DeleteBtn
+                    onClick={(e) => {
+                      // e.prevent..., e.stopPro.. 이것들로 이벤트 버블링을 막는다
+                      e.preventDefault();
+                      e.stopPropagation();
+                      // 클릭하면 게시물 삭제
+                      dispatch(postActions.deletePostAPI(props.id));
+                    }}
+                  >
+                    삭제
+                  </DeleteBtn>
+                </ModalEdit>
+              ) : null}
+
+              {/* <ModalEdit>
                 <React.Fragment onClick={props.close}>
                   <EditBtn
                     onClick={() => {
@@ -276,12 +307,12 @@ const ModalDetail = (props) => {
                 >
                   삭제
                 </DeleteBtn>
-              </ModalEdit>
+              </ModalEdit> */}
             </InfoBoxInner>
             <React.Fragment>
               <PostTilte>{props.title}</PostTilte>
               <PostContents>{props.content}</PostContents>
-              <PostTime>방금전</PostTime>
+              <PostTime>{timeForToday(props.creatAt)}</PostTime>
             </React.Fragment>
           </InfoBox>
           <ModalCmtBox>
@@ -362,9 +393,10 @@ const Component = styled.div`
 `;
 
 const ModalComponent = styled.div`
+  border-radius: 0.5vw;
   position: fixed !important;
-  width: 580px;
-  height: 830px;
+  width: 590px;
+  height: 810px;
   /* overflow: hidden; */
   top: 50%;
   left: 50%;
@@ -380,8 +412,8 @@ const ModalComponent = styled.div`
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
     position: fixed;
-    width: 35vw;
-    height: 67vh;
+    width: 470px;
+    height: 730px;
     /* overflow: hidden; */
     top: 50%;
     left: 50%;
@@ -406,17 +438,17 @@ const ModalComponent = styled.div`
   @media (max-width: 1030px) {
     // 1210밑으로 넓이가 내려가면
     /* all: unset; */
-    position: fixed;
+    /* position: fixed;
     width: 50vw;
     height: 67vh;
-    /* overflow: hidden; */
+  
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* background-color: white; */
+
     z-index: 1000;
     border: none;
-    box-sizing: border-box;
+    box-sizing: border-box; */
   }
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
@@ -443,6 +475,23 @@ const ModalComponent = styled.div`
   } */
 `;
 
+const HeaderInner = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: auto auto;
+  align-items: center;
+  padding: 1.3vh 0px;
+  width: 95%;
+`;
+
+const HeaderEdit = styled.div`
+  color: ${(props) => props.theme.main_color};
+  font-weight: bold;
+  background-color: transparent;
+  font-size: 14px;
+  cursor: pointer;
+`;
+
 const ExitContainer = styled.div`
   z-index: 30;
   position: fixed;
@@ -463,7 +512,7 @@ const ExitBtn = styled.button`
 const ModalBottomContainer = styled.div`
   text-align: left;
   width: 550px;
-  height: 39.5vh;
+  height: 280px;
   display: flex;
   flex-direction: column;
   padding: 0px 12px;
@@ -482,19 +531,22 @@ const ModalBottomContainer = styled.div`
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     text-align: left;
-    width: 100%;
-    height: 30vh; // 이거 올려주니까 댓글창이보인다..!
+    width: 450px;
+    // 이거 올려주니까 댓글창이보인다..!
+    height: 250px;
     display: flex;
     flex-direction: column;
     padding: 0;
     margin: 0px auto;
+    margin-top: 5vh;
+    /* background-color: red; */
   }
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
     text-align: left;
     width: 100%;
-    height: 50vh; // 이거 올려주니까 댓글창이보인다..!
+    height: 47vh; // 이거 올려주니까 댓글창이보인다..!
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -544,14 +596,15 @@ const PostDate = styled.span`
 `;
 const InfoBox = styled.div`
   width: 100%;
-  height: 20vh;
+  height: 18vh;
   text-align: left;
   margin: 0px auto;
   border-bottom: 1px solid #efefef;
+  /* background-color: blue; */
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     width: calc(100% - 2vw); //패딩대신... 오,....
-    height: 15.5vh;
+    height: 130px;
     display: flex;
     flex-direction: column;
     margin: 0px auto;
@@ -574,6 +627,7 @@ const InfoBoxInner = styled.div`
   font-size: 15px;
   display: flex;
   justify-content: space-between;
+
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     width: 100%;
@@ -603,7 +657,7 @@ const PostContents = styled.div`
 const PostTime = styled.div`
   font-size: 0.7rem;
   opacity: 0.4;
-  margin: 15px 0px 8px 0px;
+  /* margin: 15px 0px 8px 0px; */
 `;
 const ModalCmtInputBox = styled.div`
   align-items: center;
@@ -617,13 +671,14 @@ const ModalCmtInputBox = styled.div`
   box-sizing: border-box;
   border: 2px solid #efefef;
   background-color: white;
+  /* background-color: red; */
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
-    height: 10vh;
+    height: 80px;
   }
   @media (max-width: 1100px) {
     // 1450밑으로 넓이가 내려가면
-    height: 7vh;
+    height: 80px;
   }
 
   @media (max-width: 600px) {
@@ -637,7 +692,7 @@ const ModalCmtBox = styled.div`
   flex-direction: column;
   height: 38vh;
   background-color: white;
-
+  /* background-color: red; */
   /* 아래 태그는 댓글이 많으면 
   스크롤로 아래 부분이 위로 올라가게 해서 
   댓글이 보여지게 함 */
@@ -647,7 +702,7 @@ const ModalCmtBox = styled.div`
   }
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
-    flex-direction: column;
+    /* flex-direction: column; */
 
     padding: 0px 14px;
     ::-webkit-scrollbar {
@@ -662,6 +717,7 @@ const ReplyBox = styled.div`
   /* margin-left: -12px; */
   width: 100%;
   margin: 0.5vh auto;
+  /* background-color: blue; */
 `;
 
 const Replys = styled.div`

@@ -20,7 +20,6 @@ const StoryEditProfile = (props) => {
   const { user_info } = props;
   const nickname = user_info.nickname;
 
-
   // 닉네임 정보가 있으면 수정할 수 있구요.
   const is_edit = nickname ? true : false;
   const is_uploading = useSelector((state) => state.profile.is_uploading);

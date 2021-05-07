@@ -69,10 +69,11 @@ Input.defaultProps = {
 };
 
 const ElTextarea = styled.textarea`
-  border: 1px solid #212121;
+  border: none;
   width: ${(props) => props.width};
   padding: 12px 4px;
   box-sizing: border-box;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
 
 const ElInput = styled.input`
@@ -82,6 +83,7 @@ const ElInput = styled.input`
   padding: 12px 4px;
   box-sizing: border-box;
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
 
 export default Input;

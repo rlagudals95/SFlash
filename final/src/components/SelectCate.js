@@ -205,12 +205,13 @@ const Btn = styled.button`
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid lightgray;
+  border: none;
+
   cursor: pointer;
   word-break: keep-all; // 특수문자 띄워쓰기x 띄워쓰기 기준으로 break 줄바꿈 제어
   width: 200px;
   height: 38px;
-
+  color: rgba(0, 0, 0, 0.5);
   /* font-size: 0.8rem; */
   /* overflow-y: visible; */
   /* width: 400000000000px; */
