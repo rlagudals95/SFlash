@@ -2,7 +2,7 @@ import { getCookie } from "./Cookie";
 
 const config = {
   api: "http://seungwook.shop",
-  jwt: getCookie("jwt"),
+  jwt: localStorage.getItem("jwt"),
 };
 
 export { config };

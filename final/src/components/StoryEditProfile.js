@@ -12,17 +12,19 @@ import { Grid } from "../elements/index";
 import { InfoUl, InfoLi } from "../Css/loginSignupCss";
 import { HiCamera } from "react-icons/hi";
 import { GiCheckMark } from "react-icons/gi";
+import { ClosedCaption } from "@material-ui/icons";
 // import { set } from "immer/dist/internal";
 
 const StoryEditProfile = (props) => {
   const dispatch = useDispatch();
   // 스토리페이지에서 user_info를 props로 받아온다.
-  const { user_info } = props;
+  const { user_info, close } = props;
   const nickname = user_info.nickname;
 
 
   // 닉네임 정보가 있으면 수정할 수 있구요.
   const is_edit = nickname ? true : false;
+  const _user_info = is_edit? user_info : null;
   const is_uploading = useSelector((state) => state.profile.is_uploading);
   const preview = useSelector((state) => state.profile.preview);
   // const dupCheck = useSelector((state) => state.profile.dupCheck);
@@ -151,12 +153,11 @@ const StoryEditProfile = (props) => {
     console.log(newNickname);
     dispatch(profileActions.editNicknameAPI(newNickname));
     setOriginalNickMode(true);
-    props.close();
   };
 
   // 자기소개 입력하기(기존에 입력한 자기소개가 있으면 띄워준다 input 창에 vaule 설정해줘야 이전에 썼던 글이 남아있음. 없으면 null;)
   const [introduction, setIntroduction] = React.useState(
-    user_info.introuduction ? user_info.introuduction : ""
+    _user_info? user_info.introuduction : ""
   );
   const changeIntroduction = (e) => {
     setIntroduction(e.target.value);
@@ -167,7 +168,12 @@ const StoryEditProfile = (props) => {
     // 1. 자기소개 내용만 수정하였을 때
     // 2. 사진과 자기소개 내용 둘다 수정하였을 때 (사진만 수정하고 글은 수정하지 않아도 수정한 걸로 인식된다.)
     const profileImg = fileInput.current.files[0];
-    dispatch(profileActions.editProfileAPI(profileImg, introduction));
+
+    let profile = {
+      profileImg : profileImg,
+      introduction : introduction,
+    }
+    dispatch(profileActions.editProfileAPI(profile));
     // window.location.reload();
   };
 
@@ -210,7 +216,7 @@ const StoryEditProfile = (props) => {
         {originalNickMode ? (
           <Grid>
             <NicknameContainer height="60px">
-              <Nickname>{nickname}</Nickname>
+              <Nickname>{user_info.nickname}</Nickname>
               <EditNicknameBtn
                 onClick={(e) => {
                   e.preventDefault();

@@ -3,7 +3,6 @@ import { produce } from "immer";
 import { history } from "../configStore";
 import axios from "axios";
 import { config } from "../../shared/config";
-import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 
 // actions
 const SET_USER = "SET_USER";
@@ -61,8 +60,8 @@ const loginAPI = (email, pwd) => {
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("nickname", res.data.nickname);
-        setCookie("jwt", res.data.token);
-        dispatch(setUser(res.data));
+        localStorage.setItem("jwt", res.data.token);
+        dispatch(setUser());
         history.push("/");
       })
       .catch((err) => {
@@ -74,9 +73,10 @@ const loginAPI = (email, pwd) => {
 
 // 로그인 상태 확인 (페이지가 바뀔 때마다)
 const loginCheck = (jwt) => {
+  console.log(jwt);
   return function (dispatch, getstate, { history }) {
     if (jwt) {
-      dispatch(setUser(jwt));
+      dispatch(setUser());
     } else {
       dispatch(logOut());
     }
@@ -90,18 +90,19 @@ export default handleActions(
   {
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        draft.user = action.payload.user;
+        // draft.user = action.payload.user;
         draft.is_login = true;
       }),
     [GET_USER]: (state, action) =>
       produce(state, (draft) => {
         localStorage.getItem("nickname");
+        localStorage.getItem("jwt");
         draft.user = action.payload.user;
         draft.is_login = true;
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        deleteCookie("jwt");
+        localStorage.removeItem("jwt");
         localStorage.removeItem("nickname");
         draft.user = null;
         draft.is_login = false;

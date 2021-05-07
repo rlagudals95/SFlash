@@ -25,9 +25,7 @@ import Search from "@material-ui/icons/Search";
 
 function App() {
   const dispatch = useDispatch();
-  const jwt = getCookie("jwt"); // is_login 이라는 키값을 가진 토큰 가져와라
-  const is_cookie = jwt ? true : false; // 그리고 is_cookie로 토큰 유무판단
-  const is_login = useSelector((state) => state.user.is_login);
+  const jwt = localStorage.getItem("jwt")? true : false; // 로컬스토리지에 저장되어있는 jwt 토큰 유무판단
 
   // 소셜로그인을 하면 token이 url에 담겨서 오는데,
   // url에서 token을을 추출하는 함수()
@@ -44,18 +42,15 @@ function App() {
   console.log(_nickname);
   console.log(error);
 
-
   React.useEffect(() => {
-      //  소셜로그인 시 실행
-    if( _jwt && _nickname ){
-    setCookie("jwt", _jwt);
-    localStorage.setItem("nickname", _nickname);
-  }
-  if(is_cookie) {
-    console.log("로그인 체크", is_login); 
+  //  소셜로그인 시 실행
+ if( _jwt && _nickname ){
+  localStorage.setItem("jwt", _jwt);
+  localStorage.setItem("nickname", _nickname);
+  dispatch(userActions.loginCheck(_jwt));
+  }else if(jwt) {
     dispatch(userActions.loginCheck(jwt));
-  }
-     //렌더링 마다 로그인체크
+  }//렌더링 마다 로그인체크
   }, []);
 
   return (
