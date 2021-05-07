@@ -1,4 +1,4 @@
-import { setCookie, getCookie } from "./Cookie";
+import { getCookie } from "./Cookie";
 
 const config = {
   api: "http://seungwook.shop",

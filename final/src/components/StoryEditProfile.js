@@ -17,9 +17,9 @@ import { GiCheckMark } from "react-icons/gi";
 const StoryEditProfile = (props) => {
   const dispatch = useDispatch();
   // 스토리페이지에서 user_info를 props로 받아온다.
-  const { user_info, nickname } = props;
-  console.log("user_info:", user_info);
-  console.log("nickname:", nickname);
+  const { user_info } = props;
+  const nickname = user_info.nickname;
+
 
   // 닉네임 정보가 있으면 수정할 수 있구요.
   const is_edit = nickname ? true : false;
@@ -151,6 +151,7 @@ const StoryEditProfile = (props) => {
     console.log(newNickname);
     dispatch(profileActions.editNicknameAPI(newNickname));
     setOriginalNickMode(true);
+    props.close();
   };
 
   // 자기소개 입력하기(기존에 입력한 자기소개가 있으면 띄워준다 input 창에 vaule 설정해줘야 이전에 썼던 글이 남아있음. 없으면 null;)

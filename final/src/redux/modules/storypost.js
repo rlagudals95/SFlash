@@ -19,30 +19,39 @@ const initialState = {
     paging: { state: null, size: 12 },
   };
 
-  
-  const getMyPostAPI = (start = null, size = null) => {
+// 스토리페이지 : 유저가 업로드한 게시물 리스트
+  // start = null, size = null
+  const getUserPostAPI = (nickname) => {
     return function (dispatch, getState) {
       axios({
         method: "GET",
-        url: `${config.api}/mypage/myboard`,
+        url: `${config.api}/story/${nickname}/board`,
         headers: {
           "X-AUTH-TOKEN": `${config.jwt}`,
         }
       }).then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         // let post_list = [];
-        // res.data.data.forEach((_post) => {
-        //   let user_info = {
-        //     nickname : _post.writer,
+      //   res.data.data.forEach((_post) => {
+      //     let post = {
+      //       id: _post.boardId,
+      //       writerName: _post.writer,
+      //       profileImg: _post.userImgUrl,    //이건 추가해야할것 같음
 
-            
-  
-        //   },
-        //   let post = {
-
-        // }
-        // )
-        // }      
+      //       title: _post.title,
+      //       content: _post.content,
+      //       img_url: _post.boardImgResponseDtoList,
+      //       category: _post.category,
+      //       spotName: _post.spotName,
+      //       like: _post.liked,
+      //       likeCnt: _post.likeCount,
+      //       modified: _post.modified,
+      //       comments: _post.comments,
+      //   }
+      //   post_list.unshift(post);
+      //   console.log(post_list);
+      // })
+      // dispatch(setPost(post_list));
       })
       .catch((err) => {
         window.alert("게시물을 가져오는데 문제가 있어요!");
@@ -51,18 +60,38 @@ const initialState = {
     };
   };
 
-  const getOthersPostAPI = (start = null, size = null) => {
-    console.log("확인확인");
+  // 스토리페이지 : 유저가 좋아요한 게시물 리스트
+  const getUserLikeAPI = (nickname) => {
     return function (dispatch, getState) {
       axios({
         method: "GET",
-        url: `${config.api}/mypage/myboard`,
+        url: `${config.api}/story/${nickname}/board`,
         headers: {
-          "X-AUTH-TOKEN": "jwt",
+          "X-AUTH-TOKEN": `${config.jwt}`,
         }
       }).then((res) => {
-        console.log(res);
-        
+        console.log(res.data.data);
+        // let post_list = [];
+      //   res.data.data.forEach((_post) => {
+      //     let post = {
+      //       id: _post.boardId,
+      //       writerName: _post.writer,
+      //       profileImg: _post.userImgUrl,    //이건 추가해야할것 같음
+
+      //       title: _post.title,
+      //       content: _post.content,
+      //       img_url: _post.boardImgResponseDtoList,
+      //       category: _post.category,
+      //       spotName: _post.spotName,
+      //       like: _post.liked,
+      //       likeCnt: _post.likeCount,
+      //       modified: _post.modified,
+      //       comments: _post.comments,
+      //   }
+      //   post_list.unshift(post);
+      //   console.log(post_list);
+      // })
+      // dispatch(setPost(post_list));
       })
       .catch((err) => {
         window.alert("게시물을 가져오는데 문제가 있어요!");
@@ -70,8 +99,6 @@ const initialState = {
       });
     };
   };
-
-
 
 
   export default handleActions(
@@ -101,9 +128,11 @@ const initialState = {
   );
 
   const actionCreators = {
-    getMyPostAPI,
+    getUserPostAPI,
+    getUserLikeAPI,
     setPost,
-    loading
+    loading,
+
   };
   
   export { actionCreators };

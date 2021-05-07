@@ -83,29 +83,7 @@ const loginCheck = (jwt) => {
   };
 };
 
-// 해당유저의 정보 가져오기 : Story의 유저정보
-const getUserInfoAPI = (nickname) => {
-  return function (dispatch, getState, { history }) {
-    axios
-      .get(`${config.api}/story/${nickname}`)
-      .then((res) => {
-        console.log(res.data.data);
-        let doc = res.data.account;
-        console.log(doc);
 
-        let user = {
-          nickname: doc.writer,
-          profileImgUrl: doc.profileImgUrl,
-          introduction: doc.introduceMsg,
-        };
-        console.log(user);
-        dispatch(setUser(user));
-      })
-      .catch((err) => {
-        console.error("게시물을 가져오는데 문제가 있습니다", err);
-      });
-  };
-};
 
 // reducer: handleActions(immer를 통한 불변성 유지)
 export default handleActions(
@@ -144,8 +122,7 @@ const actionCreators = {
   signupAPI,
   loginAPI,
   loginCheck,
-  loading,
-  // getUserInfoAPI,
+  loading
 };
 
 export { actionCreators };

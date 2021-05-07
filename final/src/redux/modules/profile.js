@@ -3,9 +3,10 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
 import { config } from "../../shared/config";
-import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
+import { getCookie } from "../../shared/Cookie";
 
 // Action
+const GET_USER_INFO = "GET_USER_INFO";
 const UPLOADING = "UPLOADING"; //업로드 여부
 const SET_PREVIEW = "SET_PREVIEW"; // 사용자 프로필 이미지를 보여주는 액션
 const EDIT_PROFILE = "EDIT_PROFILE";
@@ -13,6 +14,7 @@ const EDIT_NICKNAME = "EDIT_NICKNAME"
 // const DUP_CHECK = "DUP_CHECK";
 
 // Action creators
+const getUserInfo = createAction(GET_USER_INFO, (user) => ({ user }));
 const uploading = createAction(UPLOADING, (uploading) => ({ uploading }));
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 const editProfile = createAction(
@@ -29,15 +31,45 @@ const editNickname = createAction(EDIT_NICKNAME, (nickname) => nickname)
 // initialState
 // 리덕스에 저장되는 데이터 틀을 설정해놓는 부분
 const initialState = {
-  profileImgUrl: "",
+  user: "",
   is_uplaoding: false,
   preview: null,
   dupCheck: false,
 };
 
+  // 해당유저의 정보 가져오기 : Story의 유저정보
+  const getUserInfoAPI = (nickname) => {
+    return function (dispatch, getState, { history }) {
+      axios({
+        method: "GET",
+        url: `${config.api}/profile/${nickname}`,
+        headers: {
+          "X-AUTH-TOKEN": getCookie("jwt"),
+        },
+      }).then((res) => {
+        console.log(res.data.data);
+          let _user = res.data.data;
+  
+          let user = {
+            userId : _user.userId,
+            nickname: _user.nickname,
+            profileImgUrl: _user.imgUrl,
+            introduction: _user.introduceMsg,
+          };
+          console.log(user);
+          dispatch(getUserInfo(user));
+        })
+        .catch((err) => {
+          console.error("게시물을 가져오는데 문제가 있습니다", err);
+        });
+    };
+  };
+
 
 // 게시물 수정하기
 const editProfileAPI = (profileImg, introduction) => {
+  console.log(profileImg)
+  console.log(introduction)
   return function (dispatch, getState, { history }) {
     const form_edit = new FormData();
     form_edit.append("profileFile", profileImg);
@@ -46,7 +78,7 @@ const editProfileAPI = (profileImg, introduction) => {
     // const jwt = getCookie("token");
 
     axios({
-      method: "put",
+      method: "PUT",
       url: `${config.api}/editmyprofile`,
       data: form_edit,
       headers: {
@@ -55,12 +87,14 @@ const editProfileAPI = (profileImg, introduction) => {
       },
     })
       .then((res) => {
-        console.log(res);
-        // let profile = {
-        //   profileImg: profileImg,
-        //   introduction: introduction,
-        // };
-        // dispatch(editProfile(nickname, profile);
+        console.log(res)
+        console.log(res.data.data);
+        let _user = res.data.data;
+        let user = {
+          profileImgUrl: _user.imgUrl,
+          introduction: _user.introduceMsg,
+        };
+        dispatch(getUserInfo(user));
       })
       .catch((err) => {
         console.error("작성 실패", err);
@@ -98,6 +132,10 @@ const editNicknameAPI = (newNickname) => {
 // reducer
 export default handleActions(
   {
+    [GET_USER_INFO]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user = action.payload.user;
+      }),
     [UPLOADING]: (state, action) =>
       produce(state, (draft) => {
         draft.is_uploading = action.payload.uplaoding;
@@ -107,20 +145,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.preview = action.payload.preview;
       }),
-    [EDIT_PROFILE]: (state, action) =>
-      produce(state, (draft) => {
-        // indIndex: 배열 중에 (p) => 뒤에 조건에 맞는 idx를 찾아 준다)
-        let idx = draft.list.findIndex(
-          (u) => u.nickname === action.payload.nickname
-        );
-        // immer 에 스프레드 문법을 사용한 이유 :  수정할 때 이미지는 바꿀 수도 있고 안바꿀 수도 있는데
-        // 그 상황을 굳이 if 문으로 나눠서 쓰지 않고  spread 문법을 사용해 유지하거나 수정시에만 내용이 반영되도록 한다.
-        draft.list[idx] = { ...draft.list[idx], ...action.payload.profile };
-      }),
-    // [DUP_CHECK]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     draft.dupCheck = action.payload.dupCheck;
-    //   }),
     [EDIT_NICKNAME]: (state, action) =>
       produce(state, (draft) => {
         draft.nickname = action.payload.nickname;
@@ -131,6 +155,9 @@ export default handleActions(
 
 // 이 모듈 파일에서 정의된 액션생성함수와 미들웨어 함수들을 한데 모은다.
 const actionCreators = {
+  
+  getUserInfo,
+  getUserInfoAPI,
   uploading,
   setPreview,
   editProfile,

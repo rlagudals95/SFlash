@@ -4,7 +4,7 @@ import { Grid, Text } from "../elements/index";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { actionCreators as imageActions } from "../redux/modules/image";
+import { actionCreators as profileActions } from "../redux/modules/profile";
 
 import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -18,17 +18,21 @@ import StoryEditProfile from "../components/StoryEditProfile";
 import StoryEditPwd from "../components/StoryEditPwd";
 import StoryContent from "../components/StoryContent";
 
+import { actionCreators as storypostActions } from "../redux/modules/storypost";
+
 const Story = (props) => {
   const dispatch = useDispatch();
-  const user_info = useSelector((state) => state.user.user);
+  const user_info = useSelector((state) => state.profile.user);
   const nickname = localStorage.getItem("nickname");
+  console.log(user_info);
 
   // const me = localStorage.getItem('nickname');
   // const is_me = user_info.nickname === me ;
-  // dispatch(userActions.getUserInfoAPI(nickname));
 
   React.useEffect(() => {
-  
+    dispatch(profileActions.getUserInfoAPI(nickname));
+    // dispatch(storypostActions.getUserPostAPI());
+
     // dispatch(imageActions.setPreview(user_info.profileImg));
   }, []);
 
@@ -55,7 +59,6 @@ const Story = (props) => {
   const closeEditPwdModal = () => {
     setEditPwdModal(false);
   };
- 
 
   // '나의 게시물/ 나의 좋아요' 탭 제어하기 : 처음에는 0번째 인덱스 활성화
   const [active, setActive] = useState("myPost");
@@ -66,20 +69,22 @@ const Story = (props) => {
       setActive(id);
     }
   };
-    // 'setting' 메뉴 모달 제어하기 : 처음에는 0번째 인덱스 활성화
-
-
+  // 'setting' 메뉴 모달 제어하기 : 처음에는 0번째 인덱스 활성화
 
   return (
     <React.Fragment>
       <Wrapper>
         <ProfileContainer>
-          <ProfileImg src={props.user_info.profileImgUrl} />
+          {user_info.profileImgUrl ? (
+            <ProfileImg src={user_info.profileImgUrl} />
+          ) : (
+            <ProfileImg src={props.user_info.profileImgUrl} />
+          )}
 
           <Grid>
             <Grid height="150px" />
             <Nickname>{nickname}</Nickname>
-            <Introduction>{props.user_info.introduction}</Introduction>
+            <Introduction>{user_info.introduction}</Introduction>
           </Grid>
 
           {/* 프로필 및 비밀번호 설정(모달창) */}
@@ -116,7 +121,7 @@ const Story = (props) => {
                   const result = window.confirm("로그아웃 하시겠습니까?");
                   if (result) {
                     dispatch(userActions.logOut());
-                    history.replace('/');
+                    history.replace("/");
                   }
                   handleClose();
                 }}
@@ -124,19 +129,14 @@ const Story = (props) => {
                 로그아웃
               </MenuItem>
             </Menu>
-         
 
-
- {/*  현재 닉네임은 로컬스토리지에서 받아온 닉네임으로 설정되어 있지만 api 연결후에는 api에서 받아온 정보로 사용하기 */}
+            {/*  현재 닉네임은 로컬스토리지에서 받아온 닉네임으로 설정되어 있지만 api 연결후에는 api에서 받아온 정보로 사용하기 */}
             <Modal
               isOpen={profileModal}
               close={closeProfileModal}
               style={modalStyle}
             >
-              <StoryEditProfile
-                  user_info={props.user_info}
-                  nickname={nickname}
-                />
+              <StoryEditProfile user_info={user_info} />
               <CloseButton
                 src="https://image.flaticon.com/icons/png/512/458/458595.png"
                 onClick={closeProfileModal}
