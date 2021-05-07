@@ -10,12 +10,14 @@ import { getCookie } from "../../shared/Cookie";
 import { CgLogOut } from "react-icons/cg";
 
 const SET_POST = "SET_POST";
+const SET_MAP_POST = "SET_MAP_POST";
 const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 const LOADING = "LOADING";
 
 const setPost = createAction(SET_POST, (post_list) => ({ post_list })); //paging은 나중에 넣기
+const setMapPost = createAction(SET_MAP_POST, (map_post_list) => ({ map_post_list })); 
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const editPost = createAction(EDIT_POST, (post_id, post) => ({
   post_id,
@@ -29,15 +31,16 @@ const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 // }));
 
 const initialState = {
-  list: [], //post_list
+  list: [], //post_list, total과 같은것?
+  map_post_list: [], // 지도상에 뜨는 게시물의 데이터들.
   paging: { start: null, next: null, size: 3 },
   is_loading: false,
   like: false,
   paging: { state: null, size: 12 },
   // 카테고리별 게시물 데이터
   categrories: {
-    total: [],
-    mylike: [],
+    total: [],  // 나의 모든 게시물
+    mylike: [],   // 내가 좋아요를 누른 모든 게시물. 내 nickName, likeId?
     cafe: [],
     night: [],
     ocean: [],
@@ -277,6 +280,50 @@ const editPostAPI = (boadrd_id, post) => {
 //   };
 // };
 
+const getMapPostAPI = () => {
+  return function (dispatch, getState) {
+    console.log();
+
+    axios({
+      method: "GET",
+      url: `${config.api}/map`,
+      headers: {
+        "X-AUTH-TOKEN": getCookie("jwt"),
+      },
+    }).then((res) => {
+      console.log("서버 응답값", res);
+      let map_post_list = [];
+      console.log(res.data.data);
+      console.log(res.data.data[0].boardImgReponseDtoList);
+      res.data.data.forEach((_post) => {
+        let post = {
+          id: _post.id, // 포스트 id
+          title: _post.title, // 포스트 title
+          content: _post.content, // 포스트 내용
+          // insert_dt: _post.insetDt,
+          like: _post.like,
+          likeCount: _post.likeCount,
+          writerName: _post.writerName,
+          writerImgUrl: _post.writerImgUrl,
+          latitude: _post.latitude,
+          longitude: _post.longitude,
+          spotName: _post.spotName,
+          category: _post.category,
+          imgUrl: _post.boardImgReponseDtoList,
+          profileImg: _post.writerImgUrl,
+          comment: _post.boardDetailCommentDtoList,
+          creatAt: _post.modified,
+        };
+        map_post_list.unshift(post);
+      });
+      dispatch(setMapPost(map_post_list));
+    }).catch((err) => {
+      window.alert("게시물을 가져오는데 문제가 있어요!");
+      console.log("게시물 로드 에러", err);
+    })
+  }
+} 
+
 const searchPostAPI = (search) => {
   return function (dispatch, getState) {
     console.log("검색어 들어오냐~?", search);
@@ -378,6 +425,23 @@ export default handleActions(
           }
         }, []);
       }),
+      [SET_MAP_POST]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload.map_post_list);
+        // draft.list.push(...action.payload.post_list); // 일단 서버에서 받아온거 이니셜 스테이트 리스트에 삽입
+        draft.map_post_list = action.payload.map_post_list;
+        // draft.paging = action.payload.paging; // 페이징 처리
+        //겹치는 게시물 중복 제거 과정
+        draft.map_post_list = draft.map_post_list.reduce((acc, cur) => {
+          if (acc.findIndex((a) => a.id === cur.id) === -1) {
+            return [...acc, cur]; //같은 id를 가진 게시물이 없다면 기존 포스트들과 새로받은 포스트 리턴
+          } else {
+            // 중복되는 id가 있다면? 포스트가 중복되서 출력되는 걸 막아줘야함
+            acc[acc.findIndex((a) => a.id === cur.id)] = cur; //기존 리스트에서 새로받은 리스트와 같은 id가 있다면
+            return acc; // 그 게시물은 새로 받은 게시물 => 그러므로 cur은 return 안해준다
+          }
+        }, []);
+      }),
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
         let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
@@ -408,7 +472,7 @@ const actionCreators = {
   addPostAPI,
   editPostAPI,
   searchPostAPI,
-  deletePostAPI,
+  getMapPostAPI,
 };
 
 export { actionCreators };

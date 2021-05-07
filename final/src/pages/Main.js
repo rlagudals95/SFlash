@@ -13,10 +13,10 @@ const Main = (props) => {
 
   // 페이지 렌더링이 되면서 모달창에 들어갈 데이터들을 받아온다.
   // useEffect(() => {
-  //   dispatch(postActions.getMainAPI())
+  //   dispatch(postActions.getMapPostAPI())
   // }, []);
 
-  // const post_list = useSelector((state) => state.post.post_list)
+  // const map_post_list = useSelector((state) => state.post.map_post_list)
 
   return (
     <React.Fragment>
