@@ -45,6 +45,7 @@ const Maps = (props) => {
   //조건 걸어주기 // 나를 기준으로 몇 km 이내
 
   // 카테고리 제어하기
+  
   const is_category = useSelector((state) => state.category.is_category);
   // is_category 배열 안에 해당 카테고리가 원소로서 존재하는지 체크 : true, false가 기본값
   const is_cafe = is_category.includes((item) => item === "카페"); //요게 카페가 나온다는건? 배열안에 카페가 있다는 것!
@@ -84,7 +85,8 @@ const Maps = (props) => {
   const searchPost = all_post_data
   console.log(all_post_data);
 
-  // 기본(전체) 마커, 좋아요 마커, 각 카테고리별 마커들의 imgurl
+  // 전체 마커, 작성용마커, 좋아요마커, 각 카테고리별 마커들의 imgurl
+  const writeMarkerImgUrl = "https://i.postimg.cc/3x3kRTrC/write-Marker.png";
   const totalMyMarkerImgUrl = "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-128.png";
   // const myLikeMarkerImgUrl = "";
   // const cafeMarkerImgUrl = "";
@@ -214,9 +216,8 @@ const Maps = (props) => {
 
       // 작성용 마커를 띄우기
       // 작성용 마커를 클릭하면 게시물 작성창이 뜨게 하기 : 로그인 한 사람만 되게 하기
-      var writeMarkerImgUrl = "https://i.postimg.cc/3x3kRTrC/write-Marker.png",
-          imageSize = new kakao.maps.Size(30, 35),
-          writeMarkerImage = new kakao.maps.MarkerImage(writeMarkerImgUrl, imageSize);
+      var imageSize = new kakao.maps.Size(30, 35);
+      var writeMarkerImage = new kakao.maps.MarkerImage(writeMarkerImgUrl, imageSize);
 
       var position = new kakao.maps.LatLng(hereLat, hereLng)
       var marker = new kakao.maps.Marker({
@@ -356,8 +357,8 @@ const Maps = (props) => {
     });
 
     // 카테고리별 마커 + 커스텀오버레이 제어 시작!!
-    // 카페 카테고리 : 카페마커 + 커스텀 오버레이
-    // if (is_Cafe) {
+    // 1. 카페 카테고리 : 카페마커 + 커스텀 오버레이
+    // if (is_cafe) {
     //   // caftData.map((p, idx) => { // 
     //   cafeData.forEach((cafe, idx) => { // cafeData를 mockdata로 구현가능한지 테스트 할 것!
     //     var imageSize = new kakao.maps.Size(30, 30);
@@ -407,27 +408,27 @@ const Maps = (props) => {
     //   })
     // }
 
-    // 카페카테고리 : 카페마커 + 커스텀 오버레이
-    // if (is_Cafe) {
-    //   // caftData.map((p, idx) => { // 
-    //   cafeData.forEach((cafe, idx) => { // cafeData를 mockdata로 구현가능한지 테스트 할 것!
+    // 2. 밤카테고리 : 카페마커 + 커스텀 오버레이
+    // if (is_night) {
+    //   // nightData.map((p, idx) => { // 
+    //   nightData.forEach((night, idx) => { // nightData를 mockdata로 구현가능한지 테스트 할 것!
     //     var imageSize = new kakao.maps.Size(30, 30);
-    //     var markerImage = new kakao.maps.MarkerImage(cafeMarkerImgUrl, imageSize);
-    //     var position = new kakao.maps.LatLng(cafe.latitude, cafe.longitude);
-    //     const cafeMarkers = new kakao.maps.Marker({
+    //     var markerImage = new kakao.maps.MarkerImage(nightMarkerImgUrl, imageSize);
+    //     var position = new kakao.maps.LatLng(night.latitude, night.longitude);
+    //     const nightMarkers = new kakao.maps.Marker({
     //       map: map,
     //       position: position,
     //       image: markerImage,
     //     })
     //   })
     
-    //   // 모달창(커스텀오버레이)에 들어갈 내용
+      // 모달창(커스텀오버레이)에 들어갈 내용
     //   var content =
     //     '<div class="modalcontainer">' +
-    //       `<img class="picbox"  src=${cafe.imgUrl} >` +
+    //       `<img class="picbox"  src=${night.imgUrl} >` +
     //     // `<img src=${p.imgUrl} onclick={() => {history}}>` +
     //       '<div class="head">' +
-    //           `<div class="spotname">${cafe.spotName}</div>` +
+    //           `<div class="spotname">${night.spotName}</div>` +
     //       "</div>" +
     //     // '<div class="center"></div>' +
     //       '<div class="bottomiconbox">' +
@@ -436,7 +437,7 @@ const Maps = (props) => {
     //     "</div>";
 
     //   // 모달창(커스텀오버레이) 객체를 생성
-    //   var cafeCustomOverlay = new kakao.maps.CustomOverlay({
+    //   var nightCustomOverlay = new kakao.maps.CustomOverlay({
     //     // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
     //     clickable: true,    // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
     //     position: position, // 커스텀 오버레이의 좌표
@@ -448,12 +449,12 @@ const Maps = (props) => {
     //   });
 
     //   // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-    //   kakao.maps.event.addListener(cafeMarkers, 'click', function() {
-    //     cafeCustomOverlay.setMap(map);
+    //   kakao.maps.event.addListener(nightMarkers, 'click', function() {
+    //     nightCustomOverlay.setMap(map);
     //   })
 
     //   //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-    //   kakao.maps.event.addListener(cafeMarkers, 'rightclick', function() {
+    //   kakao.maps.event.addListener(nightMarkers, 'rightclick', function() {
     //     cafeCustomOverlay.setMap(null);
     //   })
     // }
