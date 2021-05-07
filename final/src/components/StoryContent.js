@@ -26,10 +26,6 @@ const StoryContent = (props) => {
 
   // post_list = useSelector((state) => state.storypost.list)
 
-  React.useEffect(() => {
-    dispatch(storypostActions.getMyPostAPI());
-}, []);
-
   return (
     <React.Fragment>
         <Icons>
