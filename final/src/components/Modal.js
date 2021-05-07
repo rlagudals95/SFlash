@@ -4,7 +4,7 @@ import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Slider from "react-slick";
@@ -18,12 +18,19 @@ import { forEach } from "lodash";
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
   // React.useEffect(() => {}, []);
+  console.log(props);
+  React.useEffect(() => {}, [props.comment]);
 
   // console.log("모달 프롭스", props);
   // const commnet_list = props.comment_list  // 이렇게 받아오면 되려나?
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
 
+  const user_info = useSelector((state) => state.user.user);
+
+  console.log(user_info);
+  const nickname = localStorage.getItem("nickname");
+  console.log("닉네임", nickname);
   // const is_like = props.like 라이크가 있냐 확인?
 
   const openEditModal = () => {
@@ -80,8 +87,9 @@ const ModalDetail = (props) => {
     comment_list.push(props.comment[i]);
   }
 
-  console.log("코멘트", comment_list);
+  console.log("작성자 정보", props);
 
+  console.log("코멘트 리스트", comment_list);
   //가짜 코멘트 리스트
   const commentList = props.comment;
 
@@ -97,13 +105,19 @@ const ModalDetail = (props) => {
     dispatch(likeActions.disLikeAPI(props.id));
   };
 
-  const getCommnet = () => {
+  const addComment = () => {
     //작성한 댓글 내용 디스패치로 보낸다~
     dispatch(CommnetActions.addCommentAPI(comments, props.id));
+    setComments("");
+  };
+  const deleteComment = (id) => {
+    console.log(id);
+    // console.log("하이");
+    dispatch(CommnetActions.deleteCommentAPI(id, props.id));
   };
 
   // console.log("댓글 내용", comments);
-  console.log("보드 아이디", props.id);
+
   const selectComment = (e) => {
     setComments(e.target.value);
   };
@@ -176,6 +190,8 @@ const ModalDetail = (props) => {
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
 
+  console.log("프로필사진", props.writerImgUrl);
+
   return (
     <React.Fragment>
       <Component onClick={props.close} />
@@ -183,7 +199,13 @@ const ModalDetail = (props) => {
       <ModalComponent>
         <ModalHeader>
           <ModalLeftHeader>
-            <ProCircle src={props.profile_image_url} />
+            <ProCircle
+              src={
+                props.writerImgUrl
+                  ? props.writerImgUrl
+                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+              }
+            />
             <ModalAuthor>username</ModalAuthor>
             <PostDate>방금 전{/* {timeForToday(props.insert_dt)} */}</PostDate>
             <ExitContainer>
@@ -272,7 +294,13 @@ const ModalDetail = (props) => {
                     <ReplyBox>
                       <Replys>
                         <ReplyLeft>
-                          <ReplyImg src={c.writerImgUrl}></ReplyImg>
+                          <ReplyImg
+                            src={
+                              c.writerImgUrl
+                                ? c.writerImgUrl
+                                : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                            }
+                          ></ReplyImg>
                           <ReplyWriter>{c.writerName}</ReplyWriter>
                           <Reply>{c.content}</Reply>
                         </ReplyLeft>
@@ -281,9 +309,16 @@ const ModalDetail = (props) => {
                             {/* 방금 전 */}
                             {timeForToday(c.modified)}
                           </CmtDate>
-                          <CmtDeleteBtn>
-                            <DeleteForeverIcon />
-                          </CmtDeleteBtn>
+                          {nickname == c.writerName ? (
+                            <CmtDeleteBtn
+                              onClick={() => {
+                                deleteComment(c.commentId);
+                              }}
+                            >
+                              {/*  */}
+                              <DeleteForeverIcon />
+                            </CmtDeleteBtn>
+                          ) : null}
                         </ReplyRight>
                       </Replys>
                     </ReplyBox>
@@ -299,7 +334,7 @@ const ModalDetail = (props) => {
               value={comments}
             />
             {ok_submit ? (
-              <UploadBtn onClick={getCommnet}>게시</UploadBtn>
+              <UploadBtn onClick={addComment}>게시</UploadBtn>
             ) : (
               <UploadBtn style={{ opacity: "0.3" }}>게시</UploadBtn>
             )}
@@ -626,7 +661,7 @@ const ReplyBox = styled.div`
   align-items: center;
   /* margin-left: -12px; */
   width: 100%;
-  margin: auto auto;
+  margin: 0.5vh auto;
 `;
 
 const Replys = styled.div`

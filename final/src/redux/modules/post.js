@@ -7,6 +7,7 @@ import moment from "moment";
 import { config } from "../../shared/config";
 import post_list from "../../components/MockData";
 import { getCookie } from "../../shared/Cookie";
+import { CgLogOut } from "react-icons/cg";
 
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
@@ -77,17 +78,92 @@ const initialState = {
 
 const addPostAPI = (post) => {
   return function (dispatch, getState) {
-    // const user_info = getState().user.user
+    const user_info = getState().user.user;
+    const _file = getState().image2.file;
     const formData = new FormData();
     formData.append("title", post.title);
     formData.append("content", post.content);
-    formData.append("latitude", post.latitude); 
+    formData.append("latitude", post.latitude);
     formData.append("longitude", post.longitude);
     formData.append("spotName", post.spotName);
-    const _file = getState().image2.file;
-    console.log(_file)
-    formData.append("file", _file);     // 이미지 파일
-    const _category = getState().categroy.select_category;
+    formData.append("file", _file);
+    // formData.append("file", { _file });
+    // console.log(_file);
+    // console.log(formData.get("file"));
+
+    // for (let i = 0; i < _file.length; i++) {
+    //   formData.append("file", _file[i]);
+    // }
+    // let file_list = [];
+
+    // for (let i = 0; i < _file.length; i++) {
+    //   // 순서대로 들어감
+    //   file_list.push(("file", _file[i]));
+    // }
+
+    // formData.append("file", file_list);
+
+    // formData.append("file", files);
+
+    console.log("폼데이터 형식", Array.from(formData));
+    let fileList = []; // [],[]
+    console.log(fileList);
+    for (let i = 0; i < _file.length; i++) {
+      fileList.push(_file[i]);
+    }
+
+    formData.append("file", fileList);
+
+    //  console.log("폼데이터 형식", Array.from(formData));
+
+    // const upload = () => {
+    //   let formData = new FormData();
+    //   for (let i = 0; i < files.length; i++) {
+    //     formData.append("files", files[i]);
+    //   }
+    // };
+
+    // 하나씩보내기
+    // let productimages = [];
+
+    // const files = event.target.files;
+
+    // for (let i = 0; i < files.length; i++) {
+    //   formData.append(`images[${i}]`, files[i]);
+    // }
+
+    // for (let i = 0; i < _file.length; i++) {
+    //   // console.log(_file[i]);
+    //   // productimages.push(_file[i]);
+    //   formData.append(`file[${i}]`, _file[i]);
+    // }
+    // formData.append("file", _file);
+
+    // 리스트로 보내기
+    // console.log(_file);
+    // formData.append("file", _file); // 이미지 파일
+
+    // const formData = new FormData();
+    // formData.append("title", post.title);
+    // formData.append("content", post.content);
+    // formData.append("latitude", post.latitude);
+    // formData.append("longitude", post.longitude);
+    // formData.append("spotName", post.spotName);
+    // const _file = getState().image2.file;
+    // formData.append("file", _file); // 이미지 파일
+    // console.log(_file);
+    // console.log("폼데이터 형식", Array.from(formData));
+    // let files = []
+    // for (let i = 0; i< _file)
+
+    // let productimages = [];
+    // for (let i = 0; i < images.length; i++) {
+    //   productimages.push(images[i]);
+    // }
+    // formData.append("productPhotos", images);
+
+    //////////
+    const _category = getState().category.select_category; //요기 오타가 있었네요!
     formData.append("category", _category);
     console.log(formData);
 
@@ -97,20 +173,24 @@ const addPostAPI = (post) => {
       data: formData,
       headers: {
         "X-AUTH-TOKEN": getCookie("jwt"),
-        contentType: "multipartFile",
+        "Content-Type": "multipart/form-data",
       },
-    }).then((res) => {
-      console.log(res);
-      console.log(res.data);
-      // let data = {
-
-      // }
-      // dispatch(add)
-      history.replace('/');
-    }).catch((err) => {
-      console.log(err)
-      window.alert("게시물을 저장하지 못했습니다.")
     })
+      .then((res) => {
+        console.log(formData);
+        console.log("게시물이 갔다!!", res);
+        console.log(res);
+        console.log(res.data);
+        // let data = {
+
+        // }
+        // dispatch(add)
+        history.replace("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        window.alert("게시물을 저장하지 못했습니다.");
+      });
   };
 };
 
@@ -129,13 +209,17 @@ const addPostAPI = (post) => {
 //start = null, size = null
 const getPostAPI = () => {
   return function (dispatch, getState) {
+    console.log("여기까진오지??");
     axios({
       method: "GET",
       url: `${config.api}/board`,
+      headers: {
+        "X-AUTH-TOKEN": getCookie("jwt"),
+      },
     }).then((res) => {
-      console.log(res);
+      console.log("서버 응답값", res);
       let post_list = [];
-      console.log(res.data.data[0].boardImgReponseDtoList);
+      // console.log(res.data.data[0].boardImgReponseDtoList);
       res.data.data.forEach((_post) => {
         let post = {
           id: _post.boardId, // 포스트 id
@@ -149,6 +233,7 @@ const getPostAPI = () => {
           like: _post.liked,
           likeCnt: _post.likeCount,
           comment: _post.boardDetailCommentDtoList,
+          creatAt: _post.modified,
         };
         post_list.unshift(post);
       });

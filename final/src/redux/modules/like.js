@@ -5,6 +5,8 @@ import { history } from "../configStore";
 import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
+import { getCookie } from "../../shared/Cookie";
+import { actionCreators as postActions } from "./post";
 
 const ADD_LIKE = "ADD_LIKE";
 const DIS_LIKE = "DIS_LIKE";
@@ -21,31 +23,43 @@ const disLike = createAction(DIS_LIKE, (like, likeCnt) => ({
 
 const addLikeAPI = (board_id) => {
   return function (dispatch, getState) {
+    console.log("보드아이디", board_id);
+    console.log("토큰", getCookie("jwt"));
     axios({
       method: "POST",
-      url: `${config.api}/board/{boardId}/like`,
+      url: `${config.api}/board/${board_id}/like`,
       headers: {
-        "X-AUTH-TOKEN": `${config.token}`,
+        "X-AUTH-TOKEN": getCookie("jwt"),
       },
-    }).then((res) => {
-      console.log(res);
-      dispatch(addLike(true));
-    });
+    })
+      .then((res) => {
+        console.log(res);
+        dispatch(postActions.getPostAPI());
+        dispatch(addLike(true));
+      })
+      .catch((error) => {
+        window.alert("좋아요를 할 수 없습니다.");
+      });
   };
 };
 
-const disLikeAPI = () => {
+const disLikeAPI = (board_id) => {
   return function (dispatch, getState) {
     axios({
       method: "DELETE",
-      url: `${config.api}/board/{boardId}/like`,
+      url: `${config.api}/board/${board_id}/like`,
       headers: {
-        "X-AUTH-TOKEN": `${config.token}`,
+        "X-AUTH-TOKEN": getCookie("jwt"),
       },
-    }).then((res) => {
-      console.log(res);
-      dispatch(disLike(false));
-    });
+    })
+      .then((res) => {
+        console.log(res);
+        dispatch(postActions.getPostAPI());
+        dispatch(disLike(false));
+      })
+      .catch((error) => {
+        window.alert("좋아요를 할 수 없습니다.");
+      });
   };
 };
 
