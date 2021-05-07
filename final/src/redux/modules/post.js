@@ -87,12 +87,6 @@ const addPostAPI = (post) => {
     formData.append("latitude", post.latitude);
     formData.append("longitude", post.longitude);
     formData.append("spotName", post.spotName);
-<<<<<<< HEAD
-    const _file = getState().image2.file;
-    console.log(_file)
-    formData.append("file", _file);     // 이미지 파일
-    const _category = getState().category.select_category;
-=======
     formData.append("file", _file);
     // formData.append("file", { _file });
     // console.log(_file);
@@ -171,7 +165,6 @@ const addPostAPI = (post) => {
 
     //////////
     const _category = getState().category.select_category; //요기 오타가 있었네요!
->>>>>>> upstream/master
     formData.append("category", _category);
     console.log(formData);
     console.log("폼데이터 형식", Array.from(formData));
