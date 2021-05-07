@@ -122,12 +122,7 @@ const actionCreators = {
   signupAPI,
   loginAPI,
   loginCheck,
-<<<<<<< HEAD
   loading
-=======
-  loading,
-  // getUserInfoAPI,
->>>>>>> upstream/master
 };
 
 export { actionCreators };
