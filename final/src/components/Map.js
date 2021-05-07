@@ -38,9 +38,7 @@ const Maps = (props) => {
   const [startlon, setStartLon] = useState(); // 현위치 경도 설정
   const [latitude, setLatitude] = useState(); // 클릭한 위치 위도 설정
   const [longitude, setLongitude] = useState(); // 클릭한 위치 경도 설정
-  const [address, setAddress] = useState();
   const [markerId, setMarkerId] = useState();
-  const [imgUrl, setImgUrl] = useState("");
   const [spotName, setSpotName] = useState(""); // 클릭한 위치 이름 설정
   const [_map, setMap] = useState(); // useEffect 외부에서 map을 쓰기 위한 것.
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
@@ -48,9 +46,9 @@ const Maps = (props) => {
 
   // 카테고리 제어하기
   const is_category = useSelector((state) => state.category.is_category);
-  // category 모듈의 상태값에 따른 판단여부
+  // category 모듈의 상태값에 따른 판단여부 : find 함수를 이용해서 선택한 카테고리 이름을 
   const resultCafe = is_category.find((item) => item === "카페"); //요게 카페가 나온다는건? 배열안에 카페가 있다는 것!
-  const resultNight = is_category.find((item) => item === "야경");
+  const resultNight = is_category.find((item) => item === "야경"); 
   const resultOcean = is_category.find((item) => item === "바다");
   const resultMountain = is_category.find((item) => item === "산");
   const resultFlower = is_category.find((item) => item === "꽃");
@@ -61,23 +59,39 @@ const Maps = (props) => {
   const resultCity = is_category.find((item) => item === "도심");
   const resultPark = is_category.find((item) => item === "공원");
   const resultExhibition = is_category.find((item) => item === "전시");
+
+  // useState로 각 카테고리 state 제어
+  const [cafe, setCafe] = useState();
+  const [night, setNight] = useState();
+  const [ocean, setOcean] = useState();
+  const [mountain, setMountain] = useState();
+  const [flower, setFlower] = useState();
+  const [alone, setAlone] = useState();
+  const [couple, setCouple] = useState();
+  const [freind, setFreind] = useState();
+  const [pet, setPet] = useState();
+  const [exhibition, setExhibition] = useState();
+  const [city, setCity] = useState();
+  const [park, setPark] = useState();
   
+  // 모든 게시물의 데이터들을 받아 온다.
+  const all_post_data = useSelector((state) => state.post.categories); 
   // 각 카테고리별 데이터 가져오기
-  // const myTotalData = useSelector((state) => state.post.my_total_data);
-  // const myLikeData = useSelector((state) => state.post.my_like_data);
+  const myTotalData = useSelector((state) => state.post.categrories.total);
+  const myLikeData = useSelector((state) => state.post.categrories.mylike);
   // 마커 카데고리별 데이터
-  // const caftData = useSelector((state) => state.post.cafe_data);
-  // const nightData = useSelector((state) => state.post.night_data);
-  // const oceanData = useSelector((state) => state.post.ocean_data);
-  // const mountainData = useSelector((state) => state.post.mountain_data);
-  // const flowerData = useSelector((state) => state.post.flower_data);
-  // const aloneData = useSelector((state) => state.post.alone_data);
-  // const coupleData = useSelector((state) => state.post.couple_data);
-  // const friendData = useSelector((state) => state.post.friend_data);
-  // const petData = useSelector((state) => state.post.pet_data);
-  // const cityData = useSelector((state) => state.post.city_data);
-  // const parkData = useSelector((state) => state.post.park_data);
-  // const exhibitionData = useSelector((state) => state.post.exhibition_data);
+  const caftData = useSelector((state) => state.post.categrories.cafe);
+  const nightData = useSelector((state) => state.post.categrories.night);
+  const oceanData = useSelector((state) => state.post.categrories.ocean);
+  const mountainData = useSelector((state) => state.post.categrories.mountain);
+  const flowerData = useSelector((state) => state.post.categrories.flower);
+  const aloneData = useSelector((state) => state.post.categrories.alone);
+  const coupleData = useSelector((state) => state.post.categrories.couple);
+  const friendData = useSelector((state) => state.post.categrories.friend);
+  const petData = useSelector((state) => state.post.categrories.pet);
+  const cityData = useSelector((state) => state.post.categrories.city);
+  const parkData = useSelector((state) => state.post.categrories.park);
+  const exhibitionData = useSelector((state) => state.post.categrories.exhibition);
 
   // 이래야 화면 렌더링이 계속안된다
   const debounce = _.debounce((e) => {
@@ -189,8 +203,8 @@ const Maps = (props) => {
 
       // 작성용 마커를 띄우기
       // 작성용 마커를 클릭하면 게시물 작성창이 뜨게 하기 : 로그인 한 사람만 되게 하기
-      var writeMarkerImgUrl = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-          imageSize = new kakao.maps.Size(40, 50),
+      var writeMarkerImgUrl = "https://i.postimg.cc/3x3kRTrC/write-Marker.png",
+          imageSize = new kakao.maps.Size(30, 35),
           writeMarkerImage = new kakao.maps.MarkerImage(writeMarkerImgUrl, imageSize);
 
       var position = new kakao.maps.LatLng(hereLat, hereLng)
@@ -264,8 +278,7 @@ const Maps = (props) => {
     // 마커 관련 설정
     // 마커를 생성하고 지도에 표시합니다
     // 기본(전체) 마커, 좋아요 마커, 각 카테고리별 마커들의 url
-    var normalMarkerImgUrl =
-      "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-128.png";
+    var normalMarkerImgUrl = "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-128.png";
     // var myMarker = "",
     // var myLikeMarker = "",
     // var caftMarker = "",
@@ -427,6 +440,7 @@ const Maps = (props) => {
     // 지도 api 설정은 여기서 끝
     // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
   }, [search, startlat, startlon]); // 마커별로 제어가 되면 마커들도 인자로 추가한다.
+  // }, [search, startlat, startlon, total, mylike, cafe, night, ocean, mountain, flower, alone, couple, friend, pet, city, park, exhibition]); // 마커별로 제어가 되면 마커들도 인자로 추가한다.
   // }, [search]);
 
   console.log(latitude);

@@ -34,6 +34,7 @@ const initialState = {
   is_loading: false,
   like: false,
   paging: { state: null, size: 12 },
+  // 카테고리별 게시물 데이터
   categrories: {
     total: [],
     mylike: [],
@@ -166,6 +167,7 @@ const addPostAPI = (post) => {
     const _category = getState().category.select_category; //요기 오타가 있었네요!
     formData.append("category", _category);
     console.log(formData);
+    console.log("폼데이터 형식", Array.from(formData));
 
     axios({
       method: "POST",
