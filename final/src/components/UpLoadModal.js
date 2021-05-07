@@ -107,13 +107,20 @@ const UploadModal = (props) => {
   //     window.alert("😗빈칸을 채워주세요...ㅎㅎ");
   //     return;
   //   }
+<<<<<<< HEAD
   // };
 
   //   let post = {
   //     contents: contents,
+=======
+  //   이미지는 수정할 경우, 어디서 데이터를 가져올까요????????
+  //   let edit = {
+  //     title: title,
+  //     content: contents,
+>>>>>>> ef4045d4f703ac1dcb4eb639459a51becf3a37b0
   //   };
   //   console.log(post_id);
-  //   dispatch(postActions.editPostAPI(post_id, post));
+  //   dispatch(postActions.editPostAPI(post_id, edit));
   // };
 
   const changeContents = (e) => {

@@ -256,9 +256,6 @@ const ModalDetail = (props) => {
 
               {/* 작성자 에게만 보이게 설정  */}
 
-                
-
-
               {props.writerName == nickname ? (
                 <ModalEdit>
                   <React.Fragment onClick={props.close}>
