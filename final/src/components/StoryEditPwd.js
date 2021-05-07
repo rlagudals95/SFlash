@@ -74,20 +74,25 @@ const StoryEditPwd = () => {
   };
 
   const editPwdAPI = (originalPwd, newPwd, rePwd) => {
+
+    if (originalPwd === newPwd){
+      alert("기존의 비밀번호와 같은 비밀번호를 사용할 수 없습니다. :(")
+    }else{
+
     //  인증번호가 일치하면 비밀번호 변경 페이지로
     // 이메일? 닉네임?? 어떤거로 보내드리면 될까요??
     console.log(originalPwd, newPwd, rePwd);
     axios
-      .post(
+      .put(
         `${config.api}/editpwd`,
         {
           pwd: originalPwd,
           newPwd: newPwd,
-          pwdchk: rePwd,
+          pwdChk: rePwd,
         },
         {
           headers: {
-            "X-AUTH-TOKEN": getCookie("jwt"),
+            "X-AUTH-TOKEN": `${config.jwt}`,
           },
         }
       )
@@ -95,13 +100,14 @@ const StoryEditPwd = () => {
         console.log("비밀번호 변경하기", res.data);
         if (res.status === 200) {
           alert("비밀번호가 변경되었습니다. :)");
-          history.push("/login");
         }
+        window.location.reload();
       })
       .catch((err) => {
         window.alert("비밀번호 형식을 다시 확인해주세요. :(");
         console.log("비밀번호 변경 실패", err);
       });
+    }
   };
 
   return (

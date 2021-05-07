@@ -29,11 +29,15 @@ function Navbar() {
   const nickname = localStorage.getItem("nickname"); // 로컬스토리지에 저장된 닉네임 가져오는 방법
   const is_loading = useSelector((state) => state.user.is_loading);
 
-  React.useEffect(() => {
-    dispatch(userActions.loading(true));
-  }, [is_loading]);
+  // React.useEffect(() => {
+  //   dispatch(userActions.loading(true));
+  // }, [is_loading]);
 
-  console.log("확인", is_login);
+React.useEffect(() => {
+  console.log(is_login);
+  }, [is_login]);
+
+
   
   const onLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
@@ -73,7 +77,7 @@ function Navbar() {
             <IconInfo>커뮤니티</IconInfo>
             {/* 마이페이지 */}
 
-            {is_loading && config.jwt && is_login && is_login ? (
+            {is_login ? (
               <React.Fragment>
                 <Link>
                   <CgIcons.CgProfile

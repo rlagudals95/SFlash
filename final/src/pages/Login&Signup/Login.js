@@ -1,6 +1,4 @@
 import React from "react";
-import styled from "styled-components";
-import axios from "axios";
 
 import {
   Container,
@@ -15,6 +13,7 @@ import { actionCreators as userActions } from "../../redux/modules/user";
 
 import { history } from "../../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
+import { setCookie } from "../../shared/Cookie";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -29,8 +28,37 @@ const Login = () => {
       return false;
     }
     dispatch(userActions.loginAPI(email, pwd));
-    
   };
+
+
+ 
+
+  const socialLoginSuccessHandler = () => {
+      // 소셜로그인을 하면 token이 url에 담겨서 오는데,
+  // url에서 token을을 추출하는 함수()
+    const getUrlParameter =(name)=> {
+      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+      var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+      var results = regex.exec(window.location.search);
+      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  };
+    const _jwt = getUrlParameter('token');   // _jwt: 소셜로그인으로 받아온 토큰
+    const _nickname = getUrlParameter('nickname');   // _nickname: 소셜로그인으로 받아온 닉네임
+    const error = getUrlParameter('error');    // 에러
+    console.log(_jwt);
+    console.log(_nickname);
+    console.log(error);
+
+     //  소셜로그인 시 실행
+   //  소셜로그인 시 실행
+    if( _jwt && _nickname ){
+      localStorage.setItem("nickname", _nickname);
+      localStorage.setItem("jwt", _jwt);
+    dispatch(userActions.setUser());
+  }
+
+  }
+
 
   return (
     <React.Fragment>
@@ -71,6 +99,7 @@ const Login = () => {
           onClick={() => {
             window.location.href =
               "http://seungwook.shop/oauth2/authorize/naver?redirect_uri=http://localhost:3000/";
+              // socialLoginSuccessHandler();
             
           }}
         >
@@ -81,6 +110,7 @@ const Login = () => {
           onClick={() => {
             window.location.href =
               "http://seungwook.shop/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/";
+              // socialLoginSuccessHandler();
           }}
         >
           카카오 로그인
@@ -91,6 +121,7 @@ const Login = () => {
           onClick={() => {
             window.location.href =
               "http://seungwook.shop/oauth2/authorize/google?redirect_uri=http://localhost:3000/";
+              // socialLoginSuccessHandler();
           }}
         >
           Google 로그인
