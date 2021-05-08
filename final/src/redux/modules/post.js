@@ -242,7 +242,7 @@ const getMapPostAPI = () => {
       method: "GET",
       url: `${config.api}/map`,
       headers: {
-        "X-AUTH-TOKEN": getCookie("jwt"),
+        "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {

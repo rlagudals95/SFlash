@@ -26,91 +26,94 @@ const initialState = {
   preview: null,
 };
 
-// 해당유저의 정보 가져오기 : Story의 유저정보
-const getUserInfoAPI = (nickname) => {
-  return function (dispatch, getState, { history }) {
-    axios({
-      method: "GET",
-      url: `${config.api}/profile/${nickname}`,
-      headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
-      },
-    })
-      .then((res) => {
-        console.log(res.data.data);
-        let _user = res.data.data;
+  // 해당유저의 정보 가져오기 : Story의 유저정보
+  const getUserInfoAPI = (nickname) => {
+    return function (dispatch, getState, { history }) {
 
-        let user = {
-          userId: _user.userId,
-          nickname: _user.nickname,
-          profileImgUrl: _user.imgUrl,
-          introduction: _user.introduceMsg,
-        };
-        console.log(user);
-        dispatch(getUserInfo(user));
-      })
-      .catch((err) => {
-        console.error("게시물을 가져오는데 문제가 있습니다", err);
-      });
+      axios({
+        method: "GET",
+        url: `${config.api}/profile/${nickname}`,
+        headers: {
+          "X-AUTH-TOKEN": `${config.jwt}`,
+        },
+      }).then((res) => {
+        // console.log(res.data.data);
+          let _user = res.data.data;
+  
+          let user = {
+            userId : _user.userId,
+            nickname: _user.nickname,
+            profileImgUrl: _user.imgUrl,
+            introduction: _user.introduceMsg,
+          };
+          dispatch(getUserInfo(user));
+        })
+        .catch((err) => {
+          console.error("게시물을 가져오는데 문제가 있습니다", err);
+        });
+    };
   };
-};
 
-// 게시물 수정하기
+
+// 게시물 수정하기(두개의 경우의 수로 나누어 생각하기)
 const editProfileAPI = (profile) => {
   console.log(profile);
   return function (dispatch, getState, { history }) {
     const _image = getState().profile.preview;
     const _user_info = getState().profile.user;
-    if (_image === _user_info.profileImgUrl) {
-      console.log("이미지변경 x");
-    }
-    // 자기소개만 변경했을 때
-    if (_image === _user_info.profileImgUrl) {
-      const form_edit = new FormData();
-      // form_edit_intro.append("profileFile", null);
-      form_edit.append("introduceMsg", profile.introduction);
-      console.log(form_edit);
+
+    // 1. 자기소개만 변경했을 때(이미지 변경 x)
+    if (_image === _user_info.profileImgUrl){
+      const formData = new FormData();
+      formData.append("introduceMsg", profile.introduction);
+      console.log(formData);
 
       axios({
         method: "PUT",
         url: `${config.api}/editmyprofile`,
-        data: form_edit,
+        data: formData,
         headers: {
           "X-AUTH-TOKEN": `${config.jwt}`,
           "Content-Type": "multipart/form-data",
         },
       })
         .then((res) => {
-          // console.log(res)
           // console.log(res.data.data);
           let _user = res.data.data;
-          let user = {
-            // profileImgUrl: _image,
-            // profileImgUrl: _user.imgUrl,
+          let profile = {
             introduction: _user.introduceMsg,
           };
-          dispatch(editProfile(user));
+          dispatch(editProfile(profile));
         })
         .catch((err) => {
           console.error("작성 실패", err);
         });
     }
-    // 이미지 & 자기소개 모두 변경했을 때
+    // 2. 이미지 & 자기소개 모두 변경했을 때
     else {
-      const form_edit = new FormData();
-      form_edit.append("profileFile", profile.profileImg);
-      form_edit.append("introduceMsg", profile.introduction);
-      console.log(form_edit);
-      // const jwt = getCookie("token");
-
+    const formData = new FormData();
+    formData.append("profileFile", profile.profileImg);
+    formData.append("introduceMsg", profile.introduction);
+    console.log(formData);
+    // const jwt = getCookie("token");
+ 
       axios({
-        method: "PUT",
-        url: `${config.api}/editmyprofile`,
-        data: form_edit,
-        headers: {
-          "X-AUTH-TOKEN": `${config.jwt}`,
-          "Content-Type": "multipart/form-data",
-        },
+      method: "PUT",
+      url: `${config.api}/editmyprofile`,
+      data: formData,
+      headers: {
+        "X-AUTH-TOKEN": `${config.jwt}`,
+        "Content-Type" : "multipart/form-data",
+      },
+    })
+      .then((res) => {
+        // console.log(res.data.data);
+        let _user = res.data.data;
+        let profile = {
+          profileImgUrl: _user.imgUrl,
+          introduction: _user.introduceMsg,
+        };
+        dispatch(editProfile(profile));
       })
         .then((res) => {
           // console.log(res)
@@ -170,10 +173,7 @@ export default handleActions(
       }),
     [EDIT_PROFILE]: (state, action) =>
       produce(state, (draft) => {
-        // console.log(action.payload.user);
-
-        // return;
-        draft.user = action.payload.user;
+        draft.user = {...draft.user, ...action.payload.profile}
       }),
     [UPLOADING]: (state, action) =>
       produce(state, (draft) => {
@@ -186,7 +186,8 @@ export default handleActions(
       }),
     [EDIT_NICKNAME]: (state, action) =>
       produce(state, (draft) => {
-        draft.nickname = action.payload.nickname;
+        draft.user = {...draft.user, ...action.payload.nickname};
+        
       }),
   },
   initialState
