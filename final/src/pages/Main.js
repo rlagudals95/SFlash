@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { history } from '../redux/configStore';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
+import { actionCreators as postActions } from "../redux/modules/post";
 
 // component, element 파일들 가져오기
 import Map from "../components/Map";

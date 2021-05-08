@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { CustomOverlay } from "react-kakao-maps";
 // 리덕스를 이용하게 해주는 함수들, 모듈 파일 가져오기
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as mapActions } from "../redux/modules/map";
+import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
 // import { actionCreators as markerActions } from '../redux/modules/marker';
 import { history } from "../redux/configStore";
@@ -66,6 +66,8 @@ const Maps = (props) => {
   // 모든 게시물의 데이터들을 받아 온다.
   const map_post_list = useSelector((state) => state.post.map_post_list); 
   // 각 카테고리별 데이터는 필터 함수를 이용해 생성하고 필요한 부분에 가져다 쓴다.
+  // 내가 좋아요한 게시물 데이터
+  // const likeData = map_post_list.filter((p) => p.like === true)
   // 각 카테고리별 데이터
   // const cafeData = map_post_list.filter(map_post_list => map_post_list.category === "카페");
   // const nightData = map_post_list.filter(map_post_list => map_post_list.category === "야경");
@@ -88,6 +90,7 @@ const Maps = (props) => {
 
   // 전체 마커, 작성용마커, 좋아요마커, 각 카테고리별 마커들의 imgurl
   const writeMarkerImgUrl = "https://i.postimg.cc/Fz0bW4zz/2x.png";
+  // const totalMyMarkerImgUrl = "https://i.postimg.cc/854vcQwf/2x.png";
   const totalMyMarkerImgUrl = "https://i.postimg.cc/854vcQwf/2x.png";
   const myLikeMarkerImgUrl = "https://i.postimg.cc/ZqcnFPN1/2x.png";
   const cafeMarkerImgUrl = "https://i.postimg.cc/MZg45Cz8/2x.png";
@@ -153,7 +156,7 @@ const Maps = (props) => {
     const options = {
       //지도를 생성할 때 필요한 기본 옵션
       center: new kakao.maps.LatLng(startlat, startlon), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
-      level: 4, //지도 확대 레벨
+      level: 8, //지도 확대 레벨
     };
 
     const map = new kakao.maps.Map(container, options); // 지도생성 및 객체 리턴
@@ -176,76 +179,81 @@ const Maps = (props) => {
     // ** 아래처럼 if문으로 설정한다.
     // if (is_login) {}
     // window.alert("로그인 해야 게시물을 작성할 수 있어요!")
-    kakao.maps.event.addListener(map, "click", function (mouseEvent) {
-      // 클릭한 위도, 경도 정보를 가져옵니다
-      const latlng = mouseEvent.latLng;
-      // latlng.Ma = latlng.getLat() = 위도
-      // latlng.La = latlng.getLng() = 경도
-      const hereLat = latlng.getLat();
-      const hereLng = latlng.getLng();
-      setLatitude(hereLat); // useState() : 위도 latitude 값 전역으로 설정
-      setLongitude(hereLng); // useState() : 경도 longitude 값 전역으로 설정
-      console.log(latitude + " " + longitude);
+    if (!is_login) {
+      kakao.maps.event.addListener(map, "click", function () {
+        return;
+      })
+    } else {
+      kakao.maps.event.addListener(map, "click", function (mouseEvent) {
+        // 클릭한 위도, 경도 정보를 가져옵니다
+        const latlng = mouseEvent.latLng;
+        // latlng.Ma = latlng.getLat() = 위도
+        // latlng.La = latlng.getLng() = 경도
+        const hereLat = latlng.getLat();
+        const hereLng = latlng.getLng();
+        setLatitude(hereLat); // useState() : 위도 latitude 값 전역으로 설정
+        setLongitude(hereLng); // useState() : 경도 longitude 값 전역으로 설정
+        console.log(latitude + " " + longitude);
 
-      var message = "클릭한 위치의 위도는 " + hereLat + " 이고, ";
-      message += "경도는 " + hereLng + " 입니다";
-      console.log(message);
+        var message = "클릭한 위치의 위도는 " + hereLat + " 이고, ";
+        message += "경도는 " + hereLng + " 입니다";
+        console.log(message);
 
-      // 위도 경도 좌표로 주소 알아내기
-      var coord = new kakao.maps.LatLng(hereLat, hereLng);
-      console.log(coord);
+        // 위도 경도 좌표로 주소 알아내기
+        var coord = new kakao.maps.LatLng(hereLat, hereLng);
+        console.log(coord);
 
-      searchAddrFromCoords(mouseEvent.latLng, function (result, status) {
-        if (status === kakao.maps.services.Status.OK) {
-          //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
-          var spotName = result[0].address_name;
-          console.log(result[0]);
-          console.log(spotName);
-          setSpotName(spotName);
-          // dispatch(mapActions.addSpotNameAPI(spotName)) // spotName을 서버로 보내서 저장시키기
+        searchAddrFromCoords(mouseEvent.latLng, function (result, status) {
+          if (status === kakao.maps.services.Status.OK) {
+            //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
+            var spotName = result[0].address_name;
+            console.log(result[0]);
+            console.log(spotName);
+            setSpotName(spotName);
+            // dispatch(mapActions.addSpotNameAPI(spotName)) // spotName을 서버로 보내서 저장시키기
+          }
+        });
+
+        function searchAddrFromCoords(coords, callback) {
+          // 좌표로 행정동 주소 정보를 요청합니다
+          geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
         }
-      });
 
-      function searchAddrFromCoords(coords, callback) {
-        // 좌표로 행정동 주소 정보를 요청합니다
-        geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
-      }
+        if (latitude && longitude && spotName) {
+          console.log("위도: " + latitude + " " + ", 경도: " + longitude + " " + ", 장소: " + spotName);
+        }
 
-      if (latitude && longitude && spotName) {
-        console.log("위도: " + latitude + " " + ", 경도: " + longitude + " " + ", 장소: " + spotName);
-      }
+        // 작성용 마커를 띄우기
+        // 작성용 마커를 클릭하면 게시물 작성창이 뜨게 하기 : 로그인 한 사람만 되게 하기
+        var imageSize = new kakao.maps.Size(30, 40);
+        var writeMarkerImage = new kakao.maps.MarkerImage(writeMarkerImgUrl, imageSize);
 
-      // 작성용 마커를 띄우기
-      // 작성용 마커를 클릭하면 게시물 작성창이 뜨게 하기 : 로그인 한 사람만 되게 하기
-      var imageSize = new kakao.maps.Size(30, 40);
-      var writeMarkerImage = new kakao.maps.MarkerImage(writeMarkerImgUrl, imageSize);
+        var position = new kakao.maps.LatLng(hereLat, hereLng)
+        var marker = new kakao.maps.Marker({
+          // 클릭한 위치에 게시물 작성용 마커를 띄워준다.
+          // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
+          // map: map,
+          position: position,
+          image: writeMarkerImage,
+          // clickable: true,
+          draggable: true, 
+          zIndex: 50,
+        });
 
-      var position = new kakao.maps.LatLng(hereLat, hereLng)
-      var marker = new kakao.maps.Marker({
-        // 클릭한 위치에 게시물 작성용 마커를 띄워준다.
-        // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
-        // map: map,
-        position: position,
-        image: writeMarkerImage,
-        // clickable: true,
-        draggable: true, 
-        zIndex: 50,
-      });
+        marker.setMap(map);
+        // marker.setDraggable(true);
 
-      marker.setMap(map);
-      // marker.setDraggable(true);
+        // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
+        kakao.maps.event.addListener(marker, "click", function () {
+          setUpLoadModal(true);
+        });
 
-      // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
-      kakao.maps.event.addListener(marker, "click", function () {
-        setUpLoadModal(true);
-      });
-
-      kakao.maps.event.addListener(marker, "rightclick", function () {
-        marker.setVisible(false);
-      });
-
+        kakao.maps.event.addListener(marker, "rightclick", function () {
+          marker.setVisible(false);
+        });
       // 클릭이벤트 종료
-    });
+      });
+    }
 
     // 키워드로 검색하기!!!!!!
     // 장소 검색 객체를 생성합니다
@@ -364,7 +372,7 @@ const Maps = (props) => {
     // 1. 카페 카테고리 : 카페마커 + 커스텀 오버레이
     // caftData.map((cafe, idx) => { // 
     // cafeData.forEach((cafe, idx) => { // cafeData를 mockdata로 구현가능한지 테스트 할 것!
-    else if (is_cafe) {
+    if (is_cafe) {
       cafeData.map((cafe, idx) => {
         var imageSize = new kakao.maps.Size(30, 40);
         var markerImage = new kakao.maps.MarkerImage(cafeMarkerImgUrl, imageSize);
@@ -414,7 +422,7 @@ const Maps = (props) => {
     }     
 
     // 2. 밤카테고리 : 카페마커 + 커스텀 오버레이
-    else if (is_night) {
+    if (is_night) {
       // nightData.map((night, idx) => { // 
       nightData.map((night, idx) => { // nightData를 mockdata로 구현가능한지 테스트 할 것!
         const imageSize = new kakao.maps.Size(30, 40);
@@ -978,9 +986,10 @@ const Maps = (props) => {
     // 지도 api 설정은 여기서 끝
     // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
     // useEffect의 두번째 인자들에는 검색, 시작 좌표, 카테고리 설정값이 들어간다.
+  // }, [search, startlat, startlon,
   }, [search, startlat, startlon,
-    is_cafe, is_night, is_ocean, is_mountain, is_flower,
-    is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
+      is_cafe, is_night, is_ocean, is_mountain, is_flower,
+      is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
 
 
   // 작성모달 관련
