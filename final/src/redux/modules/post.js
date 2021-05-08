@@ -29,29 +29,15 @@ const deletePost = createAction(DELETE_POST, (id) => ({ id }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 const initialState = {
+  // list와 map_post_list에 게시물 데이터가 들어간다.
+  // 카테고리별 데이터를 담을 배열을 만들 필요는 없고
+  // 데이터를 사용하는 컴포넌트에서 필터로 카테고리별 데이터를 만들면 된다.
   list: [], //post_list, total과 같은것?
   map_post_list: [], // 지도상에 뜨는 게시물의 데이터들.
   paging: { start: null, next: null, size: 3 },
   is_loading: false,
   like: false,
   paging: { state: null, size: 12 },
-  // 카테고리별 게시물 데이터
-  categrories: {
-    total: [], // 나의 모든 게시물
-    mylike: [], // 내가 좋아요를 누른 모든 게시물. 내 nickName, likeId?
-    cafe: [],
-    night: [],
-    ocean: [],
-    mountain: [],
-    flower: [],
-    alone: [],
-    couple: [],
-    friend: [],
-    pet: [],
-    city: [],
-    park: [],
-    exhibition: [],
-  },
 };
 
 const addPostAPI = (post) => {
