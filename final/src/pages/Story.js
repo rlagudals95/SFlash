@@ -79,7 +79,7 @@ const Story = (props) => {
       <Wrapper>
         <ProfileContainer>
           {/* {user_info.profileImgUrl ? ( */}
-            <ProfileImg src={user_info.profileImgUrl} />
+          <ProfileImg src={user_info.profileImgUrl} />
           {/* ) : (
             <ProfileImg src={props.user_info.profileImgUrl} />
           )} */}
@@ -92,7 +92,6 @@ const Story = (props) => {
 
           {/* 프로필 및 비밀번호 설정(모달창) */}
           <div>
-       
             <Setting onClick={settingHandleClick}>
               {/* <IconButton > */}
               <BiDotsHorizontalRounded size="35" color="grey" />
@@ -133,7 +132,6 @@ const Story = (props) => {
                 로그아웃
               </MenuItem>
             </Menu>
-       
 
             {/*  현재 닉네임은 로컬스토리지에서 받아온 닉네임으로 설정되어 있지만 api 연결후에는 api에서 받아온 정보로 사용하기 */}
             <Modal
@@ -159,9 +157,7 @@ const Story = (props) => {
               />
             </Modal>
           </div>
-
         </ProfileContainer>
-    
 
         {/* tap 클릭에 따라서 '내 게시물'과 '좋아요한 게시물'을 나눠주는 탭 active 값을 이용해 제어해 준다. 
     active 의 값에 따라 content 부분의 내용이 바뀐다. (content 내 Story_Content 컴퍼넌트에서는 리스트와 지도로 볼수 있도록 다시 나눠지는데

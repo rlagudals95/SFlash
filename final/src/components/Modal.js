@@ -274,7 +274,7 @@ const ModalDetail = (props) => {
                       e.preventDefault();
                       e.stopPropagation();
                       // 클릭하면 게시물 삭제
-                      dispatch(postActions.deletePostAPI(props.id));
+                      dispatch(postActions.deletePostAPI(props.id)); //이거 왜안될까??....
                     }}
                   >
                     삭제
