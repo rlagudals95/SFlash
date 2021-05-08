@@ -48,48 +48,38 @@ const Maps = (props) => {
   
   const is_category = useSelector((state) => state.category.is_category);
   // is_category 배열 안에 해당 카테고리가 원소로서 존재하는지 체크 : true, false가 기본값
-  const is_cafe = is_category.includes((item) => item === "카페"); //요게 카페가 나온다는건? 배열안에 카페가 있다는 것!
-  const is_night = is_category.includes((item) => item === "야경"); 
-  const is_ocean = is_category.includes((item) => item === "바다");
-  const is_mountain = is_category.includes((item) => item === "산");
-  const is_flower = is_category.includes((item) => item === "꽃");
-  const is_alone = is_category.includes((item) => item === "나홀로");
-  const is_couple = is_category.includes((item) => item === "연인");
-  const is_freind = is_category.includes((item) => item === "친구");
-  const is_pet = is_category.includes((item) => item === "반려동물");
-  const is_city = is_category.includes((item) => item === "도심");
-  const is_park = is_category.includes((item) => item === "공원");
-  const is_exhibition = is_category.includes((item) => item === "전시");
+  const is_cafe = is_category.includes("카페"); //요게 카페가 나온다는건? 배열안에 카페가 있다는 것!
+  const is_night = is_category.includes("야경"); 
+  const is_ocean = is_category.includes("바다");
+  const is_mountain = is_category.includes("산");
+  const is_flower = is_category.includes("꽃");
+  const is_alone = is_category.includes("나홀로");
+  const is_couple = is_category.includes("연인");
+  const is_freind = is_category.includes("친구");
+  const is_pet = is_category.includes("반려동물");
+  const is_city = is_category.includes("도심");
+  const is_park = is_category.includes("공원");
+  const is_exhibition = is_category.includes("전시");
   console.log(is_category);
   console.log(is_cafe);
   
   // 모든 게시물의 데이터들을 받아 온다.
-  const all_post_data = useSelector((state) => state.post.categories); 
-  // 각 카테고리별 데이터 가져오기
-  const myTotalData = useSelector((state) => state.post.categrories.total);
-  const myLikeData = useSelector((state) => state.post.categrories.mylike);
-  // 마커 카데고리별 데이터
-  const caftData = useSelector((state) => state.post.categrories.cafe);
-  const nightData = useSelector((state) => state.post.categrories.night);
-  const oceanData = useSelector((state) => state.post.categrories.ocean);
-  const mountainData = useSelector((state) => state.post.categrories.mountain);
-  const flowerData = useSelector((state) => state.post.categrories.flower);
-  const aloneData = useSelector((state) => state.post.categrories.alone);
-  const coupleData = useSelector((state) => state.post.categrories.couple);
-  const friendData = useSelector((state) => state.post.categrories.friend);
-  const petData = useSelector((state) => state.post.categrories.pet);
-  const cityData = useSelector((state) => state.post.categrories.city);
-  const parkData = useSelector((state) => state.post.categrories.park);
-  const exhibitionData = useSelector((state) => state.post.categrories.exhibition);
+  const map_post_list = useSelector((state) => state.post.map_post_list); 
+  // 각 카테고리별 데이터는 필터 함수를 이용해 생성하고 필요한 부분에 가져다 쓴다.
+  // 각 카테고리별 데이터
+  // const cafeData = map_post_list.filter(map_post_list => map_post_list.category === "카페");
+  // console.log(cafeData)
 
-  const searchPost = all_post_data
-  console.log(all_post_data);
+  // 카테고리별 데이터 가져오기.
+  // 테스트용 mockdata
+  const cafeData = markerdata.filter(markerdata => markerdata.category === "카페");
+  console.log(cafeData)
 
   // 전체 마커, 작성용마커, 좋아요마커, 각 카테고리별 마커들의 imgurl
   const writeMarkerImgUrl = "https://i.postimg.cc/3x3kRTrC/write-Marker.png";
   const totalMyMarkerImgUrl = "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-128.png";
   // const myLikeMarkerImgUrl = "";
-  // const cafeMarkerImgUrl = "";
+  const cafeMarkerImgUrl = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
   // const nightMarkerImgUrl = "";
   // const oceanMarkerImgUrl = "";
   // const mountainMarkerImgUrl = "";
@@ -278,139 +268,142 @@ const Maps = (props) => {
     }
 
     // 전체 마커 + 카테고리별 마커 설정
+    // 기본 설정 규칙 설명 --------------------------------------------------------------------------
     // useEffect의 두번째 인자에 'is_카테고리명'(true, false)에 따라 마커가 재렌더링되게 한다.
     // 1. 지도 렌더링시, 모든 게시물 자료들을 가져온다. 
     // 2. 마커를 생성하고, 지정된 지도상의 좌표에 각 마커들을 표시한다.
     // 3. 마커들을 클릭하는 등의 이벤트가 일어나면 커스텀오버레이가 뜨게 한다.
     // 4. 카테고리들을 제어해 카테고리에 맞는 마커들만 선택되도록 한다.
-    // 서버와 연결되어 데이터 통신이 이뤄지면 if문으로 분기하는 코드를 사용한다
-    // if (totaldata) {}
-    //   totalPicPostData.map((p, idx) => {
-    markerdata.forEach((p, idx) => {
-      // mockdate를 이용한 테스트. 나중엔 서버에서 가져온다.
+    // 5. 서버 연결 전 테스트중에는 MarkerMockData.js 로 하드코딩한 걸 갖고 와서 테스트한다.
+    // 6. 서버와 연결되어 데이터 통신이 이뤄지면 if문으로 분기하는 코드를 사용한다.
+    // 기본 설정 규칙 설명 끝------------------------------------------------------------------------
+    // 1. 전체마커 보이게 하는 설정
+    if (is_category.length === 0 ) {
+      markerdata.forEach((p, idx) => { // mockdate를 이용한 테스트. 나중엔 서버에서 가져온다.
+        var imageSize = new kakao.maps.Size(40, 40);
+        var markerImage = new kakao.maps.MarkerImage(
+          totalMyMarkerImgUrl,
+          imageSize
+        );
+        
+        var position = new kakao.maps.LatLng(p.latitude, p.longitude);
+        const myTotalMarkers = new kakao.maps.Marker({
+          // 마커들을 생성하고, 그것들을 대응되는 좌표에다가 뿌려줍니다.
+          // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
+          map: map,
+          position: position,
+          image: markerImage,
+        });
 
-      var imageSize = new kakao.maps.Size(40, 40);
-      var markerImage = new kakao.maps.MarkerImage(
-        totalMyMarkerImgUrl,
-        imageSize
-      );
-      var position = new kakao.maps.LatLng(p.latitude, p.longitude);
-      const myTotalMarkers = new kakao.maps.Marker({
-        // 마커들을 생성하고, 그것들을 대응되는 좌표에다가 뿌려줍니다.
-        // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
-        map: map,
-        position: position,
-        image: markerImage,
-      });
+        // 모달창의 x 를 클릭하면 사라지게 하는 함수 
+        // String으로 짠 아래 순수 HTML의 onclick으로 함수가 넘어가지 않는 문제 발생
+        // 리액트 환경이란것이 이 문제의 근본원인인 듯.
+        var closeOverlay = function () {
+          customOverlay.setMap(null);
+        };
 
-      // 모달창의 x 를 클릭하면 사라지게 하는 함수 
-      // String으로 짠 아래 순수 HTML의 onclick으로 함수가 넘어가지 않는 문제 발생
-      // 리액트 환경이란것이 이 문제의 근본원인인 듯.
-      var closeOverlay = function () {
-        customOverlay.setMap(null);
-      };
+        // 모달창(커스텀오버레이)에 들어갈 내용
+        var content =
+          '<div class="modalcontainer">' +
+            `<img class="picbox"  src=${p.imgUrl} >` +
+          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
+            '<div class="head">' +
+                `<div class="spotname">${p.spotName}</div>` +
+          // `<div class="close" onclick=${closeOverlay()} title="닫기"></div>` +
+          // '<div class="close" onclick={closeOverlay()} title="닫기"></div>' +
+          // `<div class="close" onclick=${() => {closeOverlay()}} title="닫기"></div>` +
+          // `<div class="close" onclick = 'console.log("체크체크")' title="닫기"></div>` +
+          // '<div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+            "</div>" +
+          // '<div class="center"></div>' +
+            '<div class="bottomiconbox">' +
+              '<img class="likeicon" onclick></img>' +
+            "</div>" +
+          "</div>";
 
-      // 모달창(커스텀오버레이)에 들어갈 내용
-      var content =
-        '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${p.imgUrl} >` +
-        // `<img src=${p.imgUrl} onclick={() => {history}}>` +
-          '<div class="head">' +
-              `<div class="spotname">${p.spotName}</div>` +
-        // `<div class="close" onclick=${closeOverlay()} title="닫기"></div>` +
-        // '<div class="close" onclick={closeOverlay()} title="닫기"></div>' +
-        // `<div class="close" onclick=${() => {closeOverlay()}} title="닫기"></div>` +
-        // `<div class="close" onclick = 'console.log("체크체크")' title="닫기"></div>` +
-        // '<div class="close" onclick="closeOverlay()" title="닫기"></div>' +
-          "</div>" +
-        // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
-        "</div>";
-
-      // 모달창(커스텀오버레이) 객체를 생성
-      var customOverlay = new kakao.maps.CustomOverlay({
-        // map: map,         // 이거 있으면 렌더링 마커에 클릭등의 이벤트를 하지 않아도 커스텀오버레이가 보인다
-        clickable: true,     // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
-        position: position,  // 커스텀 오버레이의 좌표
-        content: content,    // 엘리먼트 또는 HTML 문자열 형태의 내용
-        xAnchor: 0.5,        // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-        yAnchor: 1.2,        // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-        zIndex: 100,         //  커스텀 오버레이의 z-index
-        altitude: 10,
-      });
-      // console.log(customOverlay);
+        // 모달창(커스텀오버레이) 객체를 생성
+        var customOverlay = new kakao.maps.CustomOverlay({
+          // map: map,         // 이거 있으면 렌더링 마커에 클릭등의 이벤트를 하지 않아도 커스텀오버레이가 보인다
+          clickable: true,     // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
+          position: position,  // 커스텀 오버레이의 좌표
+          content: content,    // 엘리먼트 또는 HTML 문자열 형태의 내용
+          xAnchor: 0.5,        // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.2,        // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          zIndex: 100,         //  커스텀 오버레이의 z-index
+          altitude: 10,
+        });
+        // console.log(customOverlay);
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
 
-      kakao.maps.event.addListener(myTotalMarkers, "click", function () {
-        // 클릭하면 열기
-        customOverlay.setMap(map);
-      });
+        kakao.maps.event.addListener(myTotalMarkers, "click", function () {
+          // 클릭하면 열기
+          customOverlay.setMap(map);
+        });
 
-      kakao.maps.event.addListener(myTotalMarkers, "rightclick", function () {
-        // 우클릭하면 닫기
-        customOverlay.setMap(null);
+        kakao.maps.event.addListener(myTotalMarkers, "rightclick", function () {
+          // 우클릭하면 닫기
+          customOverlay.setMap(null);
+        });
       });
-
-    });
+    }
 
     // 카테고리별 마커 + 커스텀오버레이 제어 시작!!
     // 1. 카페 카테고리 : 카페마커 + 커스텀 오버레이
-    // if (is_cafe) {
-    //   // caftData.map((p, idx) => { // 
-    //   cafeData.forEach((cafe, idx) => { // cafeData를 mockdata로 구현가능한지 테스트 할 것!
-    //     var imageSize = new kakao.maps.Size(30, 30);
-    //     var markerImage = new kakao.maps.MarkerImage(cafeMarkerImgUrl, imageSize);
-    //     var position = new kakao.maps.LatLng(cafe.latitude, cafe.longitude);
-    //     const cafeMarkers = new kakao.maps.Marker({
-    //       map: map,
-    //       position: position,
-    //       image: markerImage,
-    //     })
-    //   })
-    
-    //   // 모달창(커스텀오버레이)에 들어갈 내용
-    //   var content =
-    //     '<div class="modalcontainer">' +
-    //       `<img class="picbox"  src=${cafe.imgUrl} >` +
-    //     // `<img src=${p.imgUrl} onclick={() => {history}}>` +
-    //       '<div class="head">' +
-    //           `<div class="spotname">${cafe.spotName}</div>` +
-    //       "</div>" +
-    //     // '<div class="center"></div>' +
-    //       '<div class="bottomiconbox">' +
-    //         '<img class="likeicon" onclick></img>' +
-    //       "</div>" +
-    //     "</div>";
+    // caftData.map((cafe, idx) => { // 
+    // cafeData.forEach((cafe, idx) => { // cafeData를 mockdata로 구현가능한지 테스트 할 것!
+    if (is_cafe) {
+      cafeData.forEach((cafe, idx) => {
+        var imageSize = new kakao.maps.Size(30, 30);
+        var markerImage = new kakao.maps.MarkerImage(cafeMarkerImgUrl, imageSize);
+        var position = new kakao.maps.LatLng(cafe.latitude, cafe.longitude);
+        const cafeMarkers = new kakao.maps.Marker({
+          map: map,
+          position: position,
+          image: markerImage,
+        })
 
-    //   // 모달창(커스텀오버레이) 객체를 생성
-    //   var cafeCustomOverlay = new kakao.maps.CustomOverlay({
-    //     // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
-    //     clickable: true,    // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
-    //     position: position, // 커스텀 오버레이의 좌표
-    //     content: content,   // 엘리먼트 또는 HTML 문자열 형태의 내용
-    //     xAnchor: 0.5,       // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-    //     yAnchor: 1.2,       // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-    //     zIndex: 100,        //  커스텀 오버레이의 z-index
-    //     altitude: 10,
-    //   });
+        // 모달창(커스텀오버레이)에 들어갈 내용
+        var content =
+          '<div class="modalcontainer">' +
+            `<img class="picbox"  src=${cafe.imgUrl} >` +
+          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
+            '<div class="head">' +
+                `<div class="spotname">${cafe.spotName}</div>` +
+            "</div>" +
+          // '<div class="center"></div>' +
+            '<div class="bottomiconbox">' +
+              '<img class="likeicon" onclick></img>' +
+            "</div>" +
+          "</div>";
 
-    //   // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-    //   kakao.maps.event.addListener(cafeMarkers, 'click', function() {
-    //     cafeCustomOverlay.setMap(map);
-    //   })
+        // 모달창(커스텀오버레이) 객체를 생성
+        var cafeCustomOverlay = new kakao.maps.CustomOverlay({
+          // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
+          clickable: true,    // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
+          position: position, // 커스텀 오버레이의 좌표
+          content: content,   // 엘리먼트 또는 HTML 문자열 형태의 내용
+          xAnchor: 0.5,       // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.2,       // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          zIndex: 100,        //  커스텀 오버레이의 z-index
+          altitude: 10,
+        });
 
-    //   //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-    //   kakao.maps.event.addListener(cafeMarkers, 'rightclick', function() {
-    //     cafeCustomOverlay.setMap(null);
-    //   })
-    // }
+        // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
+        kakao.maps.event.addListener(cafeMarkers, 'click', function() {
+          cafeCustomOverlay.setMap(map);
+        })
 
-    // 2. 밤카테고리 : 카페마커 + 커스텀 오버레이
+        //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
+        kakao.maps.event.addListener(cafeMarkers, 'rightclick', function() {
+          cafeCustomOverlay.setMap(null);
+        })
+      })
+    }     
+
+    // // 2. 밤카테고리 : 카페마커 + 커스텀 오버레이
     // if (is_night) {
-    //   // nightData.map((p, idx) => { // 
+    //   // nightData.map((night, idx) => { // 
     //   nightData.forEach((night, idx) => { // nightData를 mockdata로 구현가능한지 테스트 할 것!
     //     var imageSize = new kakao.maps.Size(30, 30);
     //     var markerImage = new kakao.maps.MarkerImage(nightMarkerImgUrl, imageSize);
@@ -422,7 +415,7 @@ const Maps = (props) => {
     //     })
     //   })
     
-      // 모달창(커스텀오버레이)에 들어갈 내용
+    //   // 모달창(커스텀오버레이)에 들어갈 내용
     //   var content =
     //     '<div class="modalcontainer">' +
     //       `<img class="picbox"  src=${night.imgUrl} >` +
@@ -459,9 +452,111 @@ const Maps = (props) => {
     //   })
     // }
 
+    // // 3. 바다카테고리 : 카페마커 + 커스텀 오버레이
+    // if (is_ocean) {
+    //   // oceanData.map((ocean, idx) => { // 
+    //   oceanData.forEach((ocean, idx) => { // oceanData를 mockdata로 구현가능한지 테스트 할 것!
+    //     var imageSize = new kakao.maps.Size(30, 30);
+    //     var markerImage = new kakao.maps.MarkerImage(oceanMarkerImgUrl, imageSize);
+    //     var position = new kakao.maps.LatLng(ocean.latitude, ocean.longitude);
+    //     const oceanMarkers = new kakao.maps.Marker({
+    //       map: map,
+    //       position: position,
+    //       image: markerImage,
+    //     })
+    //   })
+    
+    //   // 모달창(커스텀오버레이)에 들어갈 내용
+    //   var content =
+    //     '<div class="modalcontainer">' +
+    //       `<img class="picbox"  src=${ocean.imgUrl} >` +
+    //     // `<img src=${p.imgUrl} onclick={() => {history}}>` +
+    //       '<div class="head">' +
+    //           `<div class="spotname">${ocean.spotName}</div>` +
+    //       "</div>" +
+    //     // '<div class="center"></div>' +
+    //       '<div class="bottomiconbox">' +
+    //         '<img class="likeicon" onclick></img>' +
+    //       "</div>" +
+    //     "</div>";
+
+    //   // 모달창(커스텀오버레이) 객체를 생성
+    //   var oceanCustomOverlay = new kakao.maps.CustomOverlay({
+    //     // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
+    //     clickable: true,    // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
+    //     position: position, // 커스텀 오버레이의 좌표
+    //     content: content,   // 엘리먼트 또는 HTML 문자열 형태의 내용
+    //     xAnchor: 0.5,       // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+    //     yAnchor: 1.2,       // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+    //     zIndex: 100,        //  커스텀 오버레이의 z-index
+    //     altitude: 10,
+    //   });
+
+    //   // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
+    //   kakao.maps.event.addListener(oceanMarkers, 'click', function() {
+    //     oceanCustomOverlay.setMap(map);
+    //   })
+
+    //   //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
+    //   kakao.maps.event.addListener(oceanMarkers, 'rightclick', function() {
+    //     cafeCustomOverlay.setMap(null);
+    //   })
+    // }
+
+    // // 4. 산카테고리 : 카페마커 + 커스텀 오버레이
+    // if (is_mountain) {
+    //   // mountainData.map((mountain, idx) => { // 
+    //   mountainData.forEach((mountain, idx) => { // mountainData를 mockdata로 구현가능한지 테스트 할 것!
+    //     var imageSize = new kakao.maps.Size(30, 30);
+    //     var markerImage = new kakao.maps.MarkerImage(mountainMarkerImgUrl, imageSize);
+    //     var position = new kakao.maps.LatLng(mountain.latitude, mountain.longitude);
+    //     const mountainMarkers = new kakao.maps.Marker({
+    //       map: map,
+    //       position: position,
+    //       image: markerImage,
+    //     })
+    //   })
+    
+    //   // 모달창(커스텀오버레이)에 들어갈 내용
+    //   var content =
+    //     '<div class="modalcontainer">' +
+    //       `<img class="picbox"  src=${mountain.imgUrl} >` +
+    //     // `<img src=${p.imgUrl} onclick={() => {history}}>` +
+    //       '<div class="head">' +
+    //           `<div class="spotname">${mountain.spotName}</div>` +
+    //       "</div>" +
+    //     // '<div class="center"></div>' +
+    //       '<div class="bottomiconbox">' +
+    //         '<img class="likeicon" onclick></img>' +
+    //       "</div>" +
+    //     "</div>";
+
+    //   // 모달창(커스텀오버레이) 객체를 생성
+    //   var mountainCustomOverlay = new kakao.maps.CustomOverlay({
+    //     // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
+    //     clickable: true,    // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
+    //     position: position, // 커스텀 오버레이의 좌표
+    //     content: content,   // 엘리먼트 또는 HTML 문자열 형태의 내용
+    //     xAnchor: 0.5,       // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+    //     yAnchor: 1.2,       // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+    //     zIndex: 100,        //  커스텀 오버레이의 z-index
+    //     altitude: 10,
+    //   });
+
+    //   // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
+    //   kakao.maps.event.addListener(mountainMarkers, 'click', function() {
+    //     mountainCustomOverlay.setMap(map);
+    //   })
+
+    //   //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
+    //   kakao.maps.event.addListener(mountainMarkers, 'rightclick', function() {
+    //     cafeCustomOverlay.setMap(null);
+    //   })
+    // }
+
     // 지도 api 설정은 여기서 끝
     // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
-  }, [search, startlat, startlon]); // 마커별로 제어가 되면 마커들도 인자로 추가한다.
+  }, [search, startlat, startlon, is_cafe]); // 마커별로 제어가 되면 마커들도 인자로 추가한다.
   // }, [search, startlat, startlon, total, mylike, cafe, night, ocean, mountain, flower, alone, couple, friend, pet, city, park, exhibition]); // 마커별로 제어가 되면 마커들도 인자로 추가한다.
   // }, [search]);
 

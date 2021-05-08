@@ -88,19 +88,19 @@ const addCommentAPI = (comment, board_id) => {
       method: "POST",
       data: { content: comment },
       headers: {
-        "X-AUTH-TOKEN": getCookie("jwt"),
+        "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {
         console.log(res);
         // console.log(res.data.data.user.id); // 댓글 id
-        let comment_list = { ...comment, id: res.data.data.user.id };
+        // let comment_list = { ...comment, id: res.data.data.user.id };
         // dispatch(setComment(comment_list, board_id));
         // dispatch(addComment(comment, board_id));
         dispatch(postActions.getPostAPI());
       })
       .catch((err) => {
-        console.log(err.response);
+        console.log(err);
         window.alert("댓글 작성에 문제가 있어요!");
       });
   };
@@ -114,7 +114,7 @@ const deleteCommentAPI = (id, board_id) => {
       method: "DELETE",
       url: `${config.api}/board/comment/${id}`, //서버에서 지우고
       headers: {
-        "X-AUTH-TOKEN": getCookie("jwt"),
+        "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {
