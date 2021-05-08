@@ -6,6 +6,7 @@ import * as CgIcons from "react-icons/cg";
 import * as BiIcons from "react-icons/bi";
 import * as GrIcons from "react-icons/gr";
 import * as MdIcons from "react-icons/md";
+import {GrCircleQuestion} from 'react-icons/gr';
 import { Link } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import "../Css/Navbar.css";
@@ -110,6 +111,12 @@ React.useEffect(() => {
               <FaIcons.FaEnvelopeOpenText size="1.4rem" />
             </Link>
             <IconInfo>FAQ</IconInfo>
+            <Link to="/help">
+             <GrCircleQuestion size="1.4rem"/>
+            </Link>
+            <IconInfo>1:1</IconInfo>
+
+            
 
             {/* {is_login ? (
               <React.Fragment>

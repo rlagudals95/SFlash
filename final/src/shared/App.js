@@ -21,6 +21,9 @@ import SideNav from "../components/SideNav";
 import ScrollToTop from "./ScrollToTop"; //페이지 넘길때 스크롤 맨위로 초기화(무한 스크롤 때문에 필요함)
 import Cafe from "../pages/Category/Cafe";
 import Faq from "../pages/Faq";
+import HelpList from "../pages/HelpList";
+// import HelpDetail from "../pages/HelpDetail";
+import HelpWrite from "../pages/HelpWrite";
 import Search from "@material-ui/icons/Search";
 
 function App() {
@@ -38,9 +41,9 @@ function App() {
   const _jwt = getUrlParameter('token');   // _jwt: 소셜로그인으로 받아온 토큰
   const _nickname = getUrlParameter('nickname');   // _nickname: 소셜로그인으로 받아온 닉네임
   const error = getUrlParameter('error');    // 에러
-  console.log(_jwt);
-  console.log(_nickname);
-  console.log(error);
+  // console.log(_jwt);
+  // console.log(_nickname);
+  // console.log(error);
 
   React.useEffect(() => {
   //  소셜로그인 시 실행
@@ -67,6 +70,9 @@ function App() {
             <Route path="/postlist" exact component={PostList} />
             <Route path="/story/:id" exact component={Story} />
             <Route path="/faq" exact component={Faq} />
+            <Route path="/help" exact component={HelpList} />
+            {/* <Route path="/helpdetail/:id" exact component={HelpDetail} /> */}
+            <Route path="/helpwrite" exact component={HelpWrite} />
             <Route component={NotFound} />
             {/* 밑에서 부턴 카테고리별 페이지 */}
             <Route path="/cafe" exact component={Cafe} />

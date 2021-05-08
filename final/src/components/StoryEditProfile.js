@@ -22,8 +22,6 @@ const StoryEditProfile = (props) => {
 
   const is_uploading = useSelector((state) => state.profile.is_uploading);
   const preview = useSelector((state) => state.profile.preview);
-  // const dupCheck = useSelector((state) => state.profile.dupCheck);
-  // console.log(dupCheck);
 
   React.useEffect(() => {
     if (!user_info) {

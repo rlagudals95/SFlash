@@ -6,9 +6,11 @@ import "moment";
 import { config } from "../../shared/config";
 
 const SET_STORY_POST = "SET_STORY_POST";
+const SET_STORY_LIKE = "SET_STORY_LIKE";
 // const LOADING = "LOADING";
 
-const setStoryPost = createAction(SET_STORY_POST, (user_post_list, user_like_list) => ({ user_post_list, user_like_list }));
+const setStoryPost = createAction(SET_STORY_POST, (post_list) => ({ post_list }));
+const setStoryLike = createAction(SET_STORY_LIKE, (post_list) => ({ post_list }));
 // const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 const initialState = {
@@ -40,17 +42,18 @@ const initialState = {
 
             title: _post.title,
             content: _post.content,
-            img_url: _post.boardImgResponseDtoList,
+
+            img_url: _post.boardImgReponseDtoList,
             category: _post.category,
             spotName: _post.spotName,
             like: _post.liked,
             likeCnt: _post.likeCount,
             modified: _post.modified,
-            comments: _post.comments,
+            comment: _post.comments,
         }
-        post_list.unshift(post);
+        post_list.push(post);
         console.log(post_list);
-      })
+      });
       dispatch(setStoryPost(post_list));
       })
       .catch((err) => {
@@ -65,33 +68,35 @@ const initialState = {
     return function (dispatch, getState) {
       axios({
         method: "GET",
-        url: `${config.api}/story/${nickname}/board`,
+        url: `${config.api}/story/${nickname}/likeboard`,
         headers: {
           "X-AUTH-TOKEN": `${config.jwt}`,
         }
       }).then((res) => {
         console.log(res.data.data);
-        // let post_list = [];
-      //   res.data.data.forEach((_post) => {
-      //     let post = {
-      //       id: _post.boardId,
-      //       writerName: _post.writer,
-      //       profileImg: _post.userImgUrl,    //이건 추가해야할것 같음
+        console.log(res.data.data);
+        let post_list = [];
+        res.data.data.forEach((_post) => {
+          let post = {
+            id: _post.boardId,
+            writerName: _post.writer,
+            profileImg: _post.userImgUrl,    //이건 추가해야할것 같음
 
-      //       title: _post.title,
-      //       content: _post.content,
-      //       img_url: _post.boardImgResponseDtoList,
-      //       category: _post.category,
-      //       spotName: _post.spotName,
-      //       like: _post.liked,
-      //       likeCnt: _post.likeCount,
-      //       modified: _post.modified,
-      //       comments: _post.comments,
-      //   }
-      //   post_list.unshift(post);
-      //   console.log(post_list);
-      // })
-      // dispatch(setStoryPost(post_list));
+            title: _post.title,
+            content: _post.content,
+
+            img_url: _post.boardImgReponseDtoList,
+            category: _post.category,
+            spotName: _post.spotName,
+            like: _post.liked,
+            likeCnt: _post.likeCount,
+            modified: _post.modified,
+            comment: _post.comments,
+        }
+        post_list.unshift(post);
+        console.log(post_list);
+      })
+      dispatch(setStoryLike(post_list));
       })
       .catch((err) => {
         window.alert("게시물을 가져오는데 문제가 있어요!");
@@ -105,11 +110,14 @@ const initialState = {
     {
         [SET_STORY_POST]: (state, action) =>
         produce(state, (draft) => {
-          console.log(action.payload.post);
           draft.user_post_list = action.payload.post_list;
-        
           // draft.paging = action.payload.paging; // 페이징 처리
+        }),
 
+        [SET_STORY_LIKE]: (state, action) =>
+        produce(state, (draft) => {
+          draft.user_like_list = action.payload.post_list;
+          // draft.paging = action.payload.paging; // 페이징 처리
         }),
 
         // [LOADING]: (state, action) =>

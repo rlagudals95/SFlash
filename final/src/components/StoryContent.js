@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Grid } from "../elements/index";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as storypostActions } from "../redux/modules/storypost";
 
 import Post2 from "./Post2";
+import StoryMap from "./StoryMap";
 
 import { FiImage } from "react-icons/fi";
 import { HiOutlineMap } from "react-icons/hi";
@@ -23,10 +25,6 @@ const StoryContent = (props) => {
       setActive(index);
     }
   };
-
-  React.useEffect(() => {
-
-  }, []);
 
   return (
     <React.Fragment>
@@ -47,8 +45,11 @@ const StoryContent = (props) => {
           </GridList>
         </Content>
         <Content active={active === 2}>
-          <Box></Box>
+        <Grid height="40px" />
+          <Box><StoryMap/></Box>
         </Content>
+
+        <Grid height="300px" />
     </React.Fragment>
   );
 };
@@ -135,11 +136,8 @@ const GridList = styled.div`
 const Box = styled.div`
   text-align: center;
   margin: auto;
-  position: relative;
-  top: 50px;
   width: 100%;
-  height: 700px;
-  flex-wrap: wrap;
+  height: 1000px;
   background-color: #eee;
 `;
 
