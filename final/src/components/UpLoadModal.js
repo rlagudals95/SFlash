@@ -36,45 +36,48 @@ const UploadModal = (props) => {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
   const preview = useSelector((state) => state.image2.preview);
-  console.log(preview);
+  const onlyImg = useSelector((state) => state.image2.image);
+  // console.log(preview);
   const user_info = useSelector((state) => state.user.user);
   const [contents, setContents] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [images, setImages] = React.useState(false);
   const post_list = useSelector((state) => state.post.list);
+  const [image_list, setImageList] = React.useState();
   // const post_id = props.match.params.id;
   const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
   // console.log("수정 게시물 정보", props);
-  console.log("수정 화면 이미지들", images);
+  // console.log("수정 화면 이미지들", images);
   const nickname = localStorage.getItem("nickname");
+  const editImgList = useSelector((state) => state.image2.edit); // 요걸 가져와야해
+  // const editImage = useSelector((state) => state.image2.image);
+  const deleteId = useSelector((state) => state.image2.id);
+  console.log("삭제된 이미지 아이디들은 여기에...", deleteId);
 
-  console.log("수정 게시물 정보", props);
-  // const _post = is_edit ? post_list.find((p) => p.id == post_id) : null;
-  console.log("프리뷰", preview);
+  console.log("고치자 ㅜㅜ", editImgList); // 수정하는 포스트리스트가 온다 map으로 이미지 돌리자
+  console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
   const ok_submit = contents ? true : false;
 
   React.useEffect(() => {
     if (is_edit) {
-      let editImages = [];
-      if (props.img_url.length == 0) {
-        editImages.push("http://via.placeholder.com/400x300");
-      }
-
-      for (let i = 0; i < props.img_url.length; i++) {
-        editImages.push(props.img_url[i]);
-      }
-      setImages(editImages); // 수정 화면일 때 게시물 이미지를 보여주기 위해서 받은 props 이미지 값을 state에 저장
+      // let editImages = [];
+      // 여기서 부르지 말고 수정 클릭할때 부르자 자꾸 리렌더링되서 삭제되도 티가안난다...
+      console.log("또실행되냐?");
+      dispatch(imageActions.getPost(props.id));
+      // setImageList(Image_list);
+      // editImages.push("http://via.placeholder.com/400x300");
+      // for (let i = 0; i < props.img_url.length; i++) {
+      //   editImages.push(props.img_url[i]);
+      // }
+      // setImages(editImages); // 수정 화면일 때 게시물 이미지를 보여주기 위해서 받은 props 이미지 값을 state에 저장
     }
   }, []);
 
-  // React.useEffect(() => {
-  //   if (is_edit && !_post) {
-  //     // 포스트 id가 같지 않거나 post_id가 현재 post_list중 같은게 없다면
-  //     console.log("포스트 정보가 없어요!");
-  //     history.goBack(); // 포스팅을 찾을 수 없다는 뜻 그러므로 리턴
+  console.log("!!!!!!!!!!!!!!!!", onlyImg);
+  /////////////////이거 유즈 이펙트안에 있어야 할지 싶다
+  // if (editImgList) {
 
-  //     return;
-  //   }
+  // }
 
   //// 수정가능한 상태인지는 props.id(post_id) 여부에 따라
 
@@ -99,7 +102,7 @@ const UploadModal = (props) => {
       longitude: props.longitude,
       spotName: props.spotName,
     };
-    console.log(post);
+    // console.log(post);
     dispatch(postActions.addPostAPI(post));
     history.replace("/");
   };
@@ -140,7 +143,7 @@ const UploadModal = (props) => {
   };
 
   if (images) {
-    console.log("이미지 url", images);
+    // console.log("이미지 url", images);
   }
 
   if (images.length == 0) {
@@ -217,19 +220,34 @@ const UploadModal = (props) => {
 
         {is_edit ? (
           // images는 처음 useEffect로 뽑아내고 for문이 돌기전에 map이 먼저 실행이 되면 인식을 못해서 images값이 있을때 map함수를 실행할 수 있게 설정
-          images && (
+          // images
+          // editImgList.img_url
+          onlyImg && (
             <React.Fragment>
-              {images.length > 1 ? (
+              {onlyImg.length >= 1 ? (
                 <Slider {...settings}>
-                  {images.map((p, idx) => {
+                  {onlyImg.map((p, idx) => {
                     return (
                       <div>
-                        <ModalImg src={images[idx].imgUrl}>
+                        <ModalImg src={onlyImg[idx].imgUrl}>
                           {" "}
                           <DeleteImg
                             onClick={() => {
-                              dispatch(imageActions.deleteImg(props.id, idx));
-                              console.log("몇번 이미지인가?", idx, images[idx]);
+                              dispatch(
+                                // 프리뷰에서 이미지 상단의 x 버튼을 눌렀을 때 바로 지워지는 것 구현
+                                imageActions.deleteImage(onlyImg[idx].imgUrlId)
+                              );
+
+                              dispatch(
+                                // 서버로 삭제한 이미지 id 보내주기 위해 작성
+                                imageActions.getDeleteId(onlyImg[idx].imgUrlId)
+                              );
+
+                              console.log(
+                                "몇번 이미지인가?",
+                                idx, // 몇번 이미지인가와
+                                onlyImg[idx].imgUrlId //이미지 id
+                              );
                             }}
                           >
                             x
@@ -242,9 +260,12 @@ const UploadModal = (props) => {
               ) : (
                 <ModalImg
                   onClick={() => {
-                    console.log("몇번 이미지인가?", images[0]);
+                    console.log(
+                      "몇번 이미지인가?"
+                      // editImgList.img_url[0].imgUrl
+                    );
                   }}
-                  src={images[0].imgUrl}
+                  src={"http://via.placeholder.com/400x300"}
                 />
               )}
             </React.Fragment>
@@ -342,7 +363,8 @@ const UploadModal = (props) => {
             value={contents}
             onChange={changeContents}
           /> */}
-          <SelectCate></SelectCate>
+          {/* 카테고리는 한번 지정하면 변경 불가하므로 수정 상태에선 안보이게 처리 */}
+          {is_edit ? null : <SelectCate></SelectCate>}
 
           {/* {is_edit ? (
             <WriteSubmit onClick={editPost} onClick={props.close}>
@@ -403,7 +425,7 @@ const ModalImg = styled.div`
     border: none;
     box-sizing: border-box;
     width: 100%;
-    height: 350px;
+    height: 680px;
     max-height: 42vh;
     margin-bottom: -20px;
   }
