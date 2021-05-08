@@ -18,25 +18,30 @@ const Story = (props) => {
 
   const user_info = useSelector((state) => state.profile.user);
   const user_post_list = useSelector((state) => state.storypost.user_post_list);
-  console.log(user_info);
+  const user_like_list = useSelector((state) => state.storypost.user_like_list);
+  
   // const user_like_list = useSelector((state) => state.storypost.user_like_list);
-  console.log(user_info);
   console.log(user_post_list);
+  console.log("!!!!!!!!!!!", user_like_list);
 
   const nickname = user_info.nickname;
 
   React.useEffect(() => {
-    dispatch(profileActions.getUserInfoAPI(userId));
-    // 유저인포가 없으면 화면을 띄워주지 않도록 한다.
-
-    dispatch(storypostActions.getUserPostAPI(userId));
-    // dispatch(storypostActions.getUserLikeAPI(nickname));
+      dispatch(profileActions.getUserInfoAPI(userId));
   }, []);
+
+  React.useEffect(() => {
+    dispatch(storypostActions.getUserPostAPI(userId));
+}, []);
+
+React.useEffect(() => {
+dispatch(storypostActions.getUserLikeAPI(userId));
+}, []);
 
   // const user_post_list = useSelector((state) => {
   //   // console.log(state);
-  //   // sindow.alert('');
-  //   return state.storypost.user_post_list
+  //   // window.alert('');
+  //   return state.storypost.user_post_list;
   // });
 
   // const [active, setActive] = useState(<StoryContent />);
@@ -57,7 +62,8 @@ const Story = (props) => {
     <React.Fragment>
       <Wrapper>
         {/* 상단 유저 프로필 부분 컴포넌트 */}
-        <StoryUserProfile user_info={user_info} />
+     <StoryUserProfile user_info={user_info} />
+
         {/* 
       <Tabs>
           <Tab onClick={UserPostTab} >
@@ -95,12 +101,21 @@ const Story = (props) => {
           </Tab>
         </Tabs>
 
-        {/* <Content active={active === "myPost"}>
-          <StoryContent post_list={user_post_list} />
-        </Content>
-        <Content active={active === "myLike"}>
-          <StoryContent />
-        </Content> */}
+        {user_post_list ? (
+          <Content active={active === "myPost"}>
+            <StoryContent post_list={user_post_list} />
+          </Content>
+        ) : (
+          <p>업로드한 게시물이 없습니다.</p>
+        )} 
+        { user_like_list ? (
+            <Content active={active === "myLike"}>
+              <StoryContent post_list={user_like_list}/>
+            </Content>
+            ):(
+              <p>좋아요한 게시물이 없습니다.</p>
+            )}
+
       </Wrapper>
     </React.Fragment>
   );
