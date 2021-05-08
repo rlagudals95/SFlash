@@ -15,7 +15,7 @@ import { markerdata } from "./MarkerMockData";
 // import ModalSmallPost from "./ModalSmallPost";
 import "../Css/Map.css";
 import UpLoadModal from "./UpLoadModal";
-import Category from "../components/Category";
+import Category from "./Category";
 import category from "../redux/modules/category";
 
 // window 객체로부터 kakao mpa api를 호출하기
@@ -67,17 +67,7 @@ const Maps = (props) => {
   // 각 카테고리별 데이터는 필터 함수를 이용해 생성하고 필요한 부분에 가져다 쓴다.
   // 각 카테고리별 데이터
   // const cafeData = map_post_list.filter(map_post_list => map_post_list.category === "카페");
-  // const nightData = map_post_list.filter(map_post_list => map_post_list.category === "야경");
-  // const oceanData = map_post_list.filter(map_post_list => map_post_list.category === "바다");
-  // const mountainData = map_post_list.filter(map_post_list => map_post_list.category === "산");
-  // const flowerData = map_post_list.filter(map_post_list => map_post_list.category === "꽃");
-  // const aloneData = map_post_list.filter(map_post_list => map_post_list.category === "나홀로");
-  // const coupleData = map_post_list.filter(map_post_list => map_post_list.category === "연인");
-  // const friendData = map_post_list.filter(map_post_list => map_post_list.category === "친구");
-  // const petData = map_post_list.filter(map_post_list => map_post_list.category === "반려동물");
-  // const cityData = map_post_list.filter(map_post_list => map_post_list.category === "도심");
-  // const parkData = map_post_list.filter(map_post_list => map_post_list.category === "공원");
-  // const exhibitionData = map_post_list.filter(map_post_list => map_post_list.category === "전시");
+  // console.log(cafeData)
 
   // 카테고리별 데이터 가져오기.
   // 테스트용 mockdata
@@ -85,11 +75,11 @@ const Maps = (props) => {
   console.log(cafeData)
 
   // 전체 마커, 작성용마커, 좋아요마커, 각 카테고리별 마커들의 imgurl
-  const writeMarkerImgUrl = "https://i.postimg.cc/Fz0bW4zz/2x.png";
+  const writeMarkerImgUrl = "https://i.postimg.cc/3x3kRTrC/write-Marker.png";
   const totalMyMarkerImgUrl = "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-128.png";
   // const myLikeMarkerImgUrl = "";
   const cafeMarkerImgUrl = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-  const nightMarkerImgUrl = "https://www.pngix.com/pngfile/middle/585-5857244_cloudy-night-icon-night-icon-png-transparent-png.png";
+  // const nightMarkerImgUrl = "";
   // const oceanMarkerImgUrl = "";
   // const mountainMarkerImgUrl = "";
   // const flowerMarkerImgUrl = "";
@@ -215,7 +205,7 @@ const Maps = (props) => {
 
       // 작성용 마커를 띄우기
       // 작성용 마커를 클릭하면 게시물 작성창이 뜨게 하기 : 로그인 한 사람만 되게 하기
-      var imageSize = new kakao.maps.Size(35, 48);
+      var imageSize = new kakao.maps.Size(30, 35);
       var writeMarkerImage = new kakao.maps.MarkerImage(writeMarkerImgUrl, imageSize);
 
       var position = new kakao.maps.LatLng(hereLat, hereLng)
@@ -595,7 +585,7 @@ const Maps = (props) => {
       {/* <CustomOverlayUseInfo/> */}
       <MapBox>
         {/* 위에서 설정된 getElementById("map")에 의해서 id="map"인 div에 맵이 표시된다 */}
-        <div id="map" style={{ width: "100vw", height: "100vh" }}></div>
+        <div id="map" style={{ width: "800px", height: "800px" }}></div>
       </MapBox>
       {/* { is_total ? 
         markerdata.forEach((p) => {
