@@ -17,7 +17,9 @@ const DELETE_POST = "DELETE_POST";
 const LOADING = "LOADING";
 
 const setPost = createAction(SET_POST, (post_list) => ({ post_list })); //paging은 나중에 넣기
-const setMapPost = createAction(SET_MAP_POST, (map_post_list) => ({ map_post_list })); 
+const setMapPost = createAction(SET_MAP_POST, (map_post_list) => ({
+  map_post_list,
+}));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const editPost = createAction(EDIT_POST, (post_id, post) => ({
   post_id,
@@ -25,10 +27,6 @@ const editPost = createAction(EDIT_POST, (post_id, post) => ({
 }));
 const deletePost = createAction(DELETE_POST, (id) => ({ id }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
-// const editLike = createAction(EDIT_LIKE, (post, post_id) => ({
-//   post,
-//   post_id,
-// }));
 
 const initialState = {
   // list와 map_post_list에 게시물 데이터가 들어간다.
@@ -41,30 +39,6 @@ const initialState = {
   like: false,
   paging: { state: null, size: 12 },
 };
-
-// const initialPost = {
-//   id: 1,
-//   writerName: "작성자 이름",
-//   writerImgUrl: "작성자 이미지",
-//   title: "abc",
-//   content: "abc",
-//   like: true,
-//   likeCount: 12,
-//   imgUrl: "vfsdsdf",
-// };
-
-// const initialPost = {
-//   id: _post.boardId, // 포스트 id
-//   title: _post.title, // 포스트 title
-//   content: _post.content, // 포스트 내용
-//   // insert_dt: _post.insetDt,
-//   writerName: _post.writerName,
-//   imgUrl: _post.boardImgReponseDtoList,
-//   category: _post.category,
-//   profileImg: _post.writerImgUrl,
-//   like: _post.liked,
-//   likeCnt: _post.likeCount,
-// };
 
 const addPostAPI = (post) => {
   return function (dispatch, getState) {
@@ -93,7 +67,7 @@ const addPostAPI = (post) => {
       url: `${config.api}/board/`,
       data: formData,
       headers: {
-        "X-AUTH-TOKEN": getCookie("jwt"),
+        "X-AUTH-TOKEN": `${config.jwt}`,
         "Content-Type": "multipart/form-data",
       },
     })
@@ -136,7 +110,7 @@ const getPostAPI = () => {
       method: "GET",
       url: `${config.api}/board`,
       headers: {
-        "X-AUTH-TOKEN": getCookie("jwt"),
+        "X-AUTH-TOKEN": `${config.jwt}`,
       },
     }).then((res) => {
       console.log("서버 응답값", res);
@@ -174,7 +148,7 @@ const deletePostAPI = (board_id) => {
       method: "DELETE",
       url: `${config.api}/board/${board_id}`,
       headers: {
-        "X-AUTH-TOKEN": getCookie("jwt"),
+        "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {
@@ -205,12 +179,6 @@ const editPostAPI = (boadrd_id, post) => {
       console.log("게시물이 없습니다!");
       return;
     }
-
-    // const _post_idx = getState().post.list.findIndex((p) => p.id == boadrd_id);
-    // const _post = getState().post.list[_post_idx];
-    // let _edit = {
-    //   contens: post.contents,
-    // };
 
     ////////////////
 
@@ -276,39 +244,41 @@ const getMapPostAPI = () => {
       headers: {
         "X-AUTH-TOKEN": getCookie("jwt"),
       },
-    }).then((res) => {
-      console.log("서버 응답값", res);
-      let map_post_list = [];
-      console.log(res.data.data);
-      console.log(res.data.data[0].boardImgReponseDtoList);
-      res.data.data.forEach((_post) => {
-        let post = {
-          id: _post.id, // 포스트 id
-          title: _post.title, // 포스트 title
-          content: _post.content, // 포스트 내용
-          // insert_dt: _post.insetDt,
-          like: _post.like,
-          likeCount: _post.likeCount,
-          writerName: _post.writerName,
-          writerImgUrl: _post.writerImgUrl,
-          latitude: _post.latitude,
-          longitude: _post.longitude,
-          spotName: _post.spotName,
-          category: _post.category,
-          imgUrl: _post.boardImgReponseDtoList,
-          profileImg: _post.writerImgUrl,
-          comment: _post.boardDetailCommentDtoList,
-          creatAt: _post.modified,
-        };
-        map_post_list.unshift(post);
-      });
-      dispatch(setMapPost(map_post_list));
-    }).catch((err) => {
-      window.alert("게시물을 가져오는데 문제가 있어요!");
-      console.log("게시물 로드 에러", err);
     })
-  }
-} 
+      .then((res) => {
+        console.log("서버 응답값", res);
+        let map_post_list = [];
+        console.log(res.data.data);
+        console.log(res.data.data[0].boardImgReponseDtoList);
+        res.data.data.forEach((_post) => {
+          let post = {
+            id: _post.id, // 포스트 id
+            title: _post.title, // 포스트 title
+            content: _post.content, // 포스트 내용
+            // insert_dt: _post.insetDt,
+            like: _post.like,
+            likeCount: _post.likeCount,
+            writerName: _post.writerName,
+            writerImgUrl: _post.writerImgUrl,
+            latitude: _post.latitude,
+            longitude: _post.longitude,
+            spotName: _post.spotName,
+            category: _post.category,
+            imgUrl: _post.boardImgReponseDtoList,
+            profileImg: _post.writerImgUrl,
+            comment: _post.boardDetailCommentDtoList,
+            creatAt: _post.modified,
+          };
+          map_post_list.unshift(post);
+        });
+        dispatch(setMapPost(map_post_list));
+      })
+      .catch((err) => {
+        window.alert("게시물을 가져오는데 문제가 있어요!");
+        console.log("게시물 로드 에러", err);
+      });
+  };
+};
 
 const searchPostAPI = (search) => {
   return function (dispatch, getState) {
@@ -336,21 +306,6 @@ const searchPostAPI = (search) => {
             comment: [],
           };
           post_list.unshift(post);
-
-          // let post = {
-          //   id: _post.boardId, // 포스트 id
-          //   title: _post.title, // 포스트 title
-          //   content: _post.content, // 포스트 내용
-          //   // insert_dt: _post.insetDt,
-          //   writerName: _post.writerName,
-          //   img_url: _post.boardImgReponseDtoList,
-          //   category: _post.category,
-          //   profileImg: _post.writerImgUrl,
-          //   like: _post.liked,
-          //   likeCnt: _post.likeCount,
-          //   comment: _post.boardDetailCommentDtoList,
-          // };
-          // post_list.unshift(post);
         });
         dispatch(setPost(post_list));
       })
@@ -361,32 +316,6 @@ const searchPostAPI = (search) => {
   };
 };
 
-////미들웨어로 카테고리별 API통신 만들어줘야한다
-///그리고 아래 리듀서에서 배열정리 잘해줘야한다!
-
-// const getPostCafeAPI = () => {
-//   return function (dispatch, getState) {
-//         axios({
-//           method: "GET",
-//           url: `${config.api}/board/{boardId}/comment`,
-//         })
-//           .then((res) => {
-//             console.log(res);
-//             let commnet_list = [];
-//             res.data.forEach((c) => {
-//               let comment = {
-//                 comment: c.comment,
-//               };
-//               commnet_list.unshift(comment);
-//             });
-//             //     dispatch(setComment(comment_list, board_id));
-//           })
-//           .catch((error) => {
-//             window.alert("카테고리를 불러올 수 없습니다.");
-//           });
-//   }
-// } // 4월 29일 내일 리듀서도 만들자
-
 export default handleActions(
   {
     //애드 포스트는 간단하게 새로 받은 포스트를 리스트 맨앞에 삽입
@@ -396,7 +325,6 @@ export default handleActions(
       }),
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.post_list);
         // draft.list.push(...action.payload.post_list); // 일단 서버에서 받아온거 이니셜 스테이트 리스트에 삽입
         draft.list = action.payload.post_list;
         // draft.paging = action.payload.paging; // 페이징 처리
@@ -411,9 +339,8 @@ export default handleActions(
           }
         }, []);
       }),
-      [SET_MAP_POST]: (state, action) =>
+    [SET_MAP_POST]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.map_post_list);
         // draft.list.push(...action.payload.post_list); // 일단 서버에서 받아온거 이니셜 스테이트 리스트에 삽입
         draft.map_post_list = action.payload.map_post_list;
         // draft.paging = action.payload.paging; // 페이징 처리
@@ -456,9 +383,11 @@ export default handleActions(
 const actionCreators = {
   getPostAPI,
   addPostAPI,
+  editPost,
   editPostAPI,
   searchPostAPI,
   getMapPostAPI,
+  deletePostAPI,
 };
 
 export { actionCreators };

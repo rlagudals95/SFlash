@@ -29,7 +29,7 @@ const addLikeAPI = (board_id) => {
       method: "POST",
       url: `${config.api}/board/${board_id}/like`,
       headers: {
-        "X-AUTH-TOKEN": getCookie("jwt"),
+        "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {
@@ -49,7 +49,7 @@ const disLikeAPI = (board_id) => {
       method: "DELETE",
       url: `${config.api}/board/${board_id}/like`,
       headers: {
-        "X-AUTH-TOKEN": getCookie("jwt"),
+        "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {

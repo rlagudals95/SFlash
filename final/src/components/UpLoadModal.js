@@ -48,6 +48,7 @@ const UploadModal = (props) => {
   console.log("수정 화면 이미지들", images);
   const nickname = localStorage.getItem("nickname");
 
+  console.log("수정 게시물 정보", props);
   // const _post = is_edit ? post_list.find((p) => p.id == post_id) : null;
   console.log("프리뷰", preview);
   const ok_submit = contents ? true : false;
@@ -55,6 +56,9 @@ const UploadModal = (props) => {
   React.useEffect(() => {
     if (is_edit) {
       let editImages = [];
+      if (props.img_url.length == 0) {
+        editImages.push("http://via.placeholder.com/400x300");
+      }
 
       for (let i = 0; i < props.img_url.length; i++) {
         editImages.push(props.img_url[i]);
@@ -136,7 +140,11 @@ const UploadModal = (props) => {
   };
 
   if (images) {
-    console.log("이미지 url", images[0].imgUrl);
+    console.log("이미지 url", images);
+  }
+
+  if (images.length == 0) {
+    images.push("http://via.placeholder.com/400x300");
   }
 
   // console.log("이미지 원본", images[1].imgUrl);
@@ -216,13 +224,28 @@ const UploadModal = (props) => {
                   {images.map((p, idx) => {
                     return (
                       <div>
-                        <ModalImg src={images[idx].imgUrl} />
+                        <ModalImg src={images[idx].imgUrl}>
+                          {" "}
+                          <DeleteImg
+                            onClick={() => {
+                              dispatch(imageActions.deleteImg(props.id, idx));
+                              console.log("몇번 이미지인가?", idx, images[idx]);
+                            }}
+                          >
+                            x
+                          </DeleteImg>
+                        </ModalImg>
                       </div>
                     );
                   })}
                 </Slider>
               ) : (
-                <ModalImg src={images[0].imgUrl} />
+                <ModalImg
+                  onClick={() => {
+                    console.log("몇번 이미지인가?", images[0]);
+                  }}
+                  src={images[0].imgUrl}
+                />
               )}
             </React.Fragment>
           )
@@ -234,7 +257,7 @@ const UploadModal = (props) => {
                   {preview.map((p, idx) => {
                     return (
                       <div>
-                        <ModalImg src={preview[idx]} />
+                        <ModalImg src={preview[idx]}></ModalImg>
                       </div>
                     );
                   })}
@@ -346,7 +369,17 @@ const UploadModal = (props) => {
   );
 };
 
-const ModalImg = styled.img`
+const DeleteImg = styled.div`
+  z-index: 4700;
+  position: relative;
+  background-color: red;
+  width: 50px;
+  height: 50px;
+  top: 0px;
+  right: 0px;
+`;
+
+const ModalImg = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   object-fit: cover;

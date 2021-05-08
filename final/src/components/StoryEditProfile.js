@@ -23,7 +23,7 @@ const StoryEditProfile = (props) => {
 
   // 닉네임 정보가 있으면 수정할 수 있구요.
   const is_edit = nickname ? true : false;
-  const _user_info = is_edit? user_info : null;
+  const _user_info = is_edit ? user_info : null;
   const is_uploading = useSelector((state) => state.profile.is_uploading);
   const preview = useSelector((state) => state.profile.preview);
   // const dupCheck = useSelector((state) => state.profile.dupCheck);
@@ -156,7 +156,7 @@ const StoryEditProfile = (props) => {
 
   // 자기소개 입력하기(기존에 입력한 자기소개가 있으면 띄워준다 input 창에 vaule 설정해줘야 이전에 썼던 글이 남아있음. 없으면 null;)
   const [introduction, setIntroduction] = React.useState(
-    _user_info? user_info.introuduction : ""
+    _user_info ? user_info.introuduction : ""
   );
   const changeIntroduction = (e) => {
     setIntroduction(e.target.value);
@@ -169,9 +169,9 @@ const StoryEditProfile = (props) => {
     const profileImg = fileInput.current.files[0];
 
     let profile = {
-      profileImg : profileImg,
-      introduction : introduction,
-    }
+      profileImg: profileImg,
+      introduction: introduction,
+    };
     dispatch(profileActions.editProfileAPI(profile));
     // window.location.reload();
   };
