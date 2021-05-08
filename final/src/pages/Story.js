@@ -9,32 +9,39 @@ import { actionCreators as storypostActions } from "../redux/modules/storypost";
 import StoryUserProfile from "../components/StoryUserProfile";
 import StoryContent from "../components/StoryContent";
 
-
 const Story = (props) => {
   const dispatch = useDispatch();
 
-//  url에서 userId 불러오기
-const userId = props.match.params.id;
-console.log("userId:", userId);
+  //  url에서 userId 불러오기
+  const userId = props.match.params.id;
+  console.log("userId:", userId);
 
-const user_info = useSelector((state) => state.profile.user);
-const nickname = user_info.nickname;
+  const user_info = useSelector((state) => state.profile.user);
+  const user_post_list = useSelector((state) => state.storypost.user_post_list);
+  console.log(user_info);
+  // const user_like_list = useSelector((state) => state.storypost.user_like_list);
+  console.log(user_info);
+  console.log(user_post_list);
 
-const user_post_list = useSelector((state) => state.storypost.user_post_list);
-const user_like_list = useSelector((state) => state.storypost.user_like_list);
+  const nickname = user_info.nickname;
 
+  React.useEffect(() => {
+    dispatch(profileActions.getUserInfoAPI(userId));
+    // 유저인포가 없으면 화면을 띄워주지 않도록 한다.
 
-React.useEffect(() => {
-  dispatch(profileActions.getUserInfoAPI(userId));
+    dispatch(storypostActions.getUserPostAPI(userId));
+    // dispatch(storypostActions.getUserLikeAPI(nickname));
+  }, []);
 
-  // 유저인포가 없으면 화면을 띄워주지 않도록 한다.
-  if(!user_info){
-      return false;
-  }
-  // dispatch(storypostActions.getUserPostAPI(nickname));
-  // dispatch(storypostActions.getUserLikeAPI(nickname));
-}, []);
+  // const user_post_list = useSelector((state) => {
+  //   // console.log(state);
+  //   // sindow.alert('');
+  //   return state.storypost.user_post_list
+  // });
 
+  // const [active, setActive] = useState(<StoryContent />);
+  // const UserPostTab = () => setActive(<StoryContent />);
+  // const UserLikeTab = () => setActive(<StoryContent />);
 
   // '나의 게시물/ 나의 좋아요' 탭 제어하기 : 처음에는 0번째 인덱스 활성화
   const [active, setActive] = useState("myPost");
@@ -45,13 +52,30 @@ React.useEffect(() => {
       setActive(id);
     }
   };
-  // 'setting' 메뉴 모달 제어하기 : 처음에는 0번째 인덱스 활성화
 
   return (
     <React.Fragment>
       <Wrapper>
         {/* 상단 유저 프로필 부분 컴포넌트 */}
-      <StoryUserProfile user_info={user_info} />
+        <StoryUserProfile user_info={user_info} />
+        {/* 
+      <Tabs>
+          <Tab onClick={UserPostTab} >
+            <b>{user_info.nickname}</b> 님의 게시물
+       
+          </Tab>
+          <text fontSize="4rem" fontWeight="700" style={{ color: "grey" }}>
+            |
+          </text>
+          <Tab onClick={UserLikeTab}>
+            <b>{user_info.nickname}</b> 님의 좋아요
+     
+          </Tab>
+        </Tabs>
+
+         <Content >
+          {active}
+        </Content> */}
 
         {/* '내 게시물'과 '좋아요한 게시물'을 나눠주는 탭: active 값을 이용해 제어
     active 의 값에 따라 content 부분의 내용이 바뀐다. 
@@ -60,23 +84,23 @@ React.useEffect(() => {
         <Tabs>
           <Tab onClick={handleClick} active={active === "myPost"} id={"myPost"}>
             <b>{user_info.nickname}</b> 님의 게시물
-            {/* <TabUnderBar active={active === "myPost"} /> */}
+            <TabUnderBar active={active === "myPost"} />
           </Tab>
           <text fontSize="4rem" fontWeight="700" style={{ color: "grey" }}>
             |
           </text>
           <Tab onClick={handleClick} active={active === "myLike"} id={"myLike"}>
             <b>{user_info.nickname}</b> 님의 좋아요
-            {/* <TabUnderBar active={active === "myLike"} /> */}
+            <TabUnderBar active={active === "myLike"} />
           </Tab>
         </Tabs>
 
-        <Content active={active === "myPost"} >
-          <StoryContent post_list={user_post_list}/>
+        {/* <Content active={active === "myPost"}>
+          <StoryContent post_list={user_post_list} />
         </Content>
         <Content active={active === "myLike"}>
-          <StoryContent post_list={user_like_list}/>
-        </Content>
+          <StoryContent />
+        </Content> */}
       </Wrapper>
     </React.Fragment>
   );
