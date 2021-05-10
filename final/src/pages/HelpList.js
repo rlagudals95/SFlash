@@ -10,6 +10,8 @@ import { FiEdit3 } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 const HelpList = (props) => {
+
+
   return (
     <React.Fragment>
       <Container>
@@ -34,12 +36,16 @@ const HelpList = (props) => {
         <ContentUnit>
           <Text width="4%">{props.help.id}</Text>
 
-          <Text width="65%">
+          <TextBtn width="65%" 
+          onClick={() => history.push("/helpdetail")}
+          >
             {props.help.title}
-            <Icon onClick={() => history.push("/helpwrite/:id")}><FiEdit3 size="17"/></Icon>
-              {/* <Icon><RiDeleteBinLine size="18"/></Icon> */}
-          </Text>
-             
+            <Icon onClick={() => history.push("/helpwrite/:id")}>
+              <FiEdit3 size="17" />
+            </Icon>
+            {/* <Icon><RiDeleteBinLine size="18"/></Icon> */}
+          </TextBtn>
+
           <Text width="11%">{props.help.writerName}</Text>
           <Text width="11%">{props.help.createdAt}</Text>
         </ContentUnit>
@@ -50,8 +56,8 @@ const HelpList = (props) => {
 
 HelpList.defaultProps = {
   help: {
-    id: "11",
-    title: "로그인 관련 문의 드립니다",
+    id: 11,
+    title: "문의 제목입니다",
     writerName: "nickname",
     createdAt: "2021-05-08",
   },
@@ -105,18 +111,33 @@ const ContentUnit = styled.div`
 `;
 
 const Text = styled.div`
-align-items:center;
-display: flex;
+  align-items: center;
+  display: flex;
   font-size: 1rem;
   width: ${(props) => props.width};
   border: white;
   padding: 10px 12px;
   /* background-color: yellow; */
 `;
+
+const TextBtn = styled.div`
+  align-items: center;
+  display: flex;
+  font-size: 1rem;
+  width: ${(props) => props.width};
+  border: white;
+  padding: 10px 12px;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  /* background-color: yellow; */
+`;
+
 const Icon = styled.div`
-margin-left:5px;
-border-radius:50px;
-  padding:10px 15px;
+  margin-left: 5px;
+  border-radius: 50px;
+  padding: 10px 15px;
   &:hover {
     color: red;
     background-color: #eee;

@@ -37,9 +37,6 @@ const HelpWrite = (props) => {
           placeholder="제목 입력"
           type="type"
           width="100%"
-          onClick={() => {
-            document.querySelector(".checkNickname").style.display = "block";
-          }}
           onChange={changeTitle}
         />
         <TextField
@@ -61,15 +58,6 @@ const HelpWrite = (props) => {
       </Container>
     </React.Fragment>
   );
-};
-
-HelpWrite.defaultProps = {
-  help: {
-    id: "11",
-    title: "로그인 관련 문의 드립니다",
-    writerName: "nickname",
-    createdAt: "자기소개를 입력해주세요",
-  },
 };
 
 const Container = styled.div`
