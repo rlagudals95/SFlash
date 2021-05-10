@@ -26,6 +26,7 @@ const { kakao } = window;
 const Maps = (props) => {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
+  // const nickname = localStorage.getItem("nickname");
   // const is_session = sessionStorage.getItem('jwt') ? true : false;
 
   // 사진이 나오는 모달창 제어
@@ -65,9 +66,11 @@ const Maps = (props) => {
   
   // 모든 게시물의 데이터들을 받아 온다.
   const map_post_list = useSelector((state) => state.post.map_post_list); 
-  // 각 카테고리별 데이터는 필터 함수를 이용해 생성하고 필요한 부분에 가져다 쓴다.
+  // 종류별 데이터는 필터 함수를 이용해 묶어 내고 필요한 부분에 가져다 쓴다.
+  // 내 데이터
+  // const myData = map_post_list.filter((map_post_list) => map_post_list.writerName === nickname);
   // 내가 좋아요한 게시물 데이터
-  // const likeData = map_post_list.filter((p) => p.like === true)
+  // const likeData = map_post_list.filter((map_post_list) => map_post_list.like === true);
   // 각 카테고리별 데이터
   // const cafeData = map_post_list.filter(map_post_list => map_post_list.category === "카페");
   // const nightData = map_post_list.filter(map_post_list => map_post_list.category === "야경");
@@ -260,7 +263,7 @@ const Maps = (props) => {
     var ps = new kakao.maps.services.Places();
     // 키워드로 장소를 검색합니다
     if (search) {
-      // search가 빈 string일때 검색이 되어서 오류가 뜨는 경우를 없애기 위해 if문으로 분기한다.
+      //search가 빈 string일때 검색이 되어서 오류가 뜨는 경우를 없애기 위해 if문으로 분기한다.
       ps.keywordSearch(search, (data, status, pagination) => {
         if (status === kakao.maps.services.Status.OK) {
           // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해

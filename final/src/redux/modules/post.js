@@ -222,8 +222,7 @@ const getMapPostAPI = () => {
             id: _post.id, // 포스트 id
             title: _post.title, // 포스트 title
             content: _post.content, // 포스트 내용
-            // insert_dt: _post.insetDt,
-            like: _post.like,
+            like: _post.like,  
             likeCount: _post.likeCount,
             writerName: _post.writerName,
             writerImgUrl: _post.writerImgUrl,
@@ -232,9 +231,7 @@ const getMapPostAPI = () => {
             spotName: _post.spotName,
             category: _post.category,
             imgUrl: _post.boardImgReponseDtoList,
-            profileImg: _post.writerImgUrl,
             comment: _post.boardDetailCommentDtoList,
-            creatAt: _post.modified,
           };
           map_post_list.unshift(post);
         });
@@ -243,7 +240,8 @@ const getMapPostAPI = () => {
       .catch((err) => {
         window.alert("게시물을 가져오는데 문제가 있어요!");
         console.log("게시물 로드 에러", err);
-      });
+      }
+    );
   };
 };
 
