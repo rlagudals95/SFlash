@@ -122,17 +122,31 @@ const getPostAPI = (start = null, size = null) => {
         // console.log(res.data.data[0].boardImgReponseDtoList);
         result.forEach((_post) => {
           let post = {
+            // id: _post.boardId, // 포스트 id
+            // title: _post.title, // 포스트 title
+            // content: _post.content, // 포스트 내용
+            // writerName: _post.writerName,
+            // img_url: _post.boardImgReponseDtoList,
+            // category: _post.category,
+            // profileImg: _post.writerImgUrl,
+            // like: _post.liked,
+            // likeCnt: _post.likeCount,
+            // comment: _post.boardDetailCommentDtoList,
+            // creatAt: _post.modified,
             id: _post.boardId, // 포스트 id
+            userId: _post.userId,
+            writerName: _post.writerName,
+            writerImgUrl: _post.writerImgUrl,
             title: _post.title, // 포스트 title
             content: _post.content, // 포스트 내용
-            writerName: _post.writerName,
-            img_url: _post.boardImgReponseDtoList,
+            liked: _post.liked,
+            likeCount: _post.likeCount,
+            spotName: _post.spotName,
+            imgUrl: _post.boardImgReponseDtoList,
             category: _post.category,
             profileImg: _post.writerImgUrl,
-            like: _post.liked,
-            likeCnt: _post.likeCount,
             comment: _post.boardDetailCommentDtoList,
-            creatAt: _post.modified,
+            // creatAt: _post.modified,
           };
           post_list.unshift(post);
         });
@@ -163,7 +177,7 @@ const getMapPostAPI = () => {
         console.log(res.data.data[0].boardImgReponseDtoList);
         res.data.data.forEach((_post) => {
           let post = {
-            id: _post.id, // 포스트 id
+            id: _post.boardId, // 포스트 id
             title: _post.title, // 포스트 title
             content: _post.content, // 포스트 내용
             like: _post.like,  
@@ -307,8 +321,8 @@ export default handleActions(
       }),
     [SET_MAP_POST]: (state, action) =>
       produce(state, (draft) => {
-        // draft.list.push(...action.payload.post_list); // 일단 서버에서 받아온거 이니셜 스테이트 리스트에 삽입
-        draft.map_post_list = action.payload.map_post_list;
+        draft.map_post_list.push(...action.payload.map_post_list); // 일단 서버에서 받아온거 이니셜 스테이트 리스트에 삽입
+        // draft.map_post_list = action.payload.map_post_list;
         // draft.paging = action.payload.paging; // 페이징 처리
         //겹치는 게시물 중복 제거 과정
         draft.map_post_list = draft.map_post_list.reduce((acc, cur) => {
