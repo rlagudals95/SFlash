@@ -247,37 +247,6 @@ const Maps = (props) => {
       });
     }
 
-    // 키워드로 검색하기!!!!!!
-    // 장소 검색 객체를 생성합니다
-    var ps = new kakao.maps.services.Places();
-    // 키워드로 장소를 검색합니다
-    if (search) {
-      //search가 빈 string일때 검색이 되어서 오류가 뜨는 경우를 없애기 위해 if문으로 분기한다.
-      ps.keywordSearch(search, (data, status, pagination) => {
-        if (status === kakao.maps.services.Status.OK) {
-          // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-          // LatLngBounds 객체에 좌표를 추가합니다
-          var bounds = new kakao.maps.LatLngBounds();
-          console.log(data);
-          console.log(bounds);
-
-          for (var i = 0; i < data.length; i++) {
-            // displayMarker(data[i], bounds);
-            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-
-            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다.
-            map.setBounds(bounds);
-          }
-        } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-          window.alert("검색결과가 존재하지 않습니다.");
-          return;
-        } else if (status === kakao.maps.services.Status.ERROR) {
-          window.alert("검색 결과 중 오류가 발생했습니다.");
-          return;
-        }
-      });
-    }
-
     // 전체 마커 + 카테고리별 마커 설정
     // 기본 설정 규칙 설명 --------------------------------------------------------------------------
     // useEffect의 두번째 인자에 'is_카테고리명'(true, false)에 따라 마커가 재렌더링되게 한다.
@@ -967,10 +936,40 @@ const Maps = (props) => {
     // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
     // useEffect의 두번째 인자들에는 검색, 시작 좌표, 카테고리 설정값이 들어간다.
   // }, [search, startlat, startlon,
-  }, [search, startlat, startlon,
+  }, [startlat, startlon,
       is_cafe, is_night, is_ocean, is_mountain, is_flower,
       is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
 
+  // 키워드로 검색하기!!!!!!
+  // 장소 검색 객체를 생성합니다
+  var ps = new kakao.maps.services.Places();
+  // 키워드로 장소를 검색합니다
+  if (search) {
+    //search가 빈 string일때 검색이 되어서 오류가 뜨는 경우를 없애기 위해 if문으로 분기한다.
+    ps.keywordSearch(search, (data, status, pagination) => {
+      if (status === kakao.maps.services.Status.OK) {
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        var bounds = new kakao.maps.LatLngBounds();
+        console.log(data);
+        console.log(bounds);
+
+        for (var i = 0; i < data.length; i++) {
+          // displayMarker(data[i], bounds);
+          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+
+          // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다.
+          _map.setBounds(bounds);
+        }
+      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+        window.alert("검색결과가 존재하지 않습니다.");
+        return;
+      } else if (status === kakao.maps.services.Status.ERROR) {
+        window.alert("검색 결과 중 오류가 발생했습니다.");
+        return;
+      }
+    });
+  }      
 
   // 작성모달 관련
   const closeUpLoadModal = () => {
