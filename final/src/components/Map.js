@@ -48,6 +48,7 @@ const Maps = (props) => {
   const is_category = useSelector((state) => {
     return state.category.is_category
   });
+  console.log(is_category);
   // is_category 배열 안에 해당 카테고리가 원소로서 존재하는지 체크 : true, false가 기본값
   const is_cafe = is_category.includes("카페"); //요게 카페가 나온다는건? 배열안에 카페가 있다는 것!
   const is_night = is_category.includes("야경"); 
@@ -61,14 +62,16 @@ const Maps = (props) => {
   const is_city = is_category.includes("도심");
   const is_park = is_category.includes("공원");
   const is_exhibition = is_category.includes("전시");
-  console.log(is_category);
   
   // 모든 게시물의 데이터들을 받아 온다.
   const map_post_list = useSelector((state) => {
     return state.post.map_post_list
   });
-  console.log(map_post_list);
 
+  if (map_post_list) {
+    console.log(map_post_list);
+  };
+  
   const allData = map_post_list;
   // 종류별 데이터는 필터 함수를 이용해 묶어 내고 필요한 부분에 가져다 쓴다.
   // 내 데이터
@@ -88,7 +91,6 @@ const Maps = (props) => {
   const cityData = map_post_list.filter(map_post_list => map_post_list.category === "도심");
   const parkData = map_post_list.filter(map_post_list => map_post_list.category === "공원");
   const exhibitionData = map_post_list.filter(map_post_list => map_post_list.category === "전시");
-
   // 카테고리별 데이터 가져오기.
   // 테스트용 mockdata
   // const cafeData = markerdata.filter(markerdata => markerdata.category === "카페");
@@ -128,16 +130,8 @@ const Maps = (props) => {
         // GeoLocation을 이용해서 접속 위치를 얻어옵니다
         navigator.geolocation.getCurrentPosition(
           function (position) {
-            console.log(
-              "현위치의 위도 = " +
-                position.coords.latitude +
-                ", 현위치의 경도 = " +
-                position.coords.longitude
-            );
             setStartLat(position.coords.latitude);
             setStartLon(position.coords.longitude);
-            // var nowPositionLat = position.coords.latitude
-            // var nowPositionLon = position.coords.longitude
           },
           function (error) {
             console.error(error);
@@ -155,8 +149,11 @@ const Maps = (props) => {
         );
       }
     }
-    // geolocation은 여기까지.
-    console.log(startlat, startlon);
+
+    if (startlat && startlon) {
+      console.log("현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon);
+    }
+    // geolocation은 여기까지
 
     // 페이지가 렌더링 되면 지도 띄우기
     const container = document.getElementById("map"); // 지도를 표시할 div
