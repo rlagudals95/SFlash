@@ -20,7 +20,10 @@ const ModalDetail = (props) => {
   const dispatch = useDispatch();
   // React.useEffect(() => {}, []);
   console.log(props);
-  React.useEffect(() => {}, [props.comment]);
+  React.useEffect(() => {
+    console.log("시작");
+    dispatch(CommnetActions.getComment(props.id));
+  }, []);
 
   // console.log("모달 프롭스", props);
   // const commnet_list = props.comment_list  // 이렇게 받아오면 되려나?
@@ -64,25 +67,7 @@ const ModalDetail = (props) => {
   });
 
   console.log("이미지들!!", images);
-  // const image = image_list[0];
 
-  // console.log("이미지!", image);
-
-  // const a = image_list.forEach((img) => {
-  //   img.imgUrl;
-  //   console.log(img.imgUrl);
-  // });
-
-  // console.log(a);
-
-  // console.log("이미지s", images);
-  // let images = [];
-
-  // for (let i = 0; i < image_list.length; i++) {
-  //   images.push(props.image_list[i]);
-  // }
-
-  //이게 서버에서 받아온 코멘트들
   let comment_list = [];
   for (let i = 0; i < props.comment.length; i++) {
     comment_list.push(props.comment[i]);
@@ -94,16 +79,22 @@ const ModalDetail = (props) => {
   //가짜 코멘트 리스트
   const commentList = props.comment;
 
-  const is_comment = comment_list ? true : false;
+  const comment_List = useSelector((state) => state.comment.list);
+
+  console.log("이포스트의 댓글은??", comment_List);
+
+  const is_comment = comment_List ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
   const addLike = () => {
     dispatch(likeActions.addLikeAPI(props.id));
+    dispatch(postActions.editLikeP(props.id, props)); // 리덕스
   };
 
   const disLike = () => {
     dispatch(likeActions.disLikeAPI(props.id));
+    dispatch(postActions.editLikeD(props.id, props));
   };
 
   const addComment = () => {
@@ -325,7 +316,7 @@ const ModalDetail = (props) => {
           </InfoBox>
           <ModalCmtBox>
             {is_comment
-              ? comment_list.map((c, idx) => {
+              ? comment_List.map((c, idx) => {
                   //여기서 댓글을 입력하고 map으로 props 값을 돌려서 화면을 띄우게 해줌
                   //댓글이 2개보다 작다면? 1개라면?
                   return (

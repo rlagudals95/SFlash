@@ -16,6 +16,7 @@ import Image2 from "./modules/image2";
 import Faq from "./modules/faq";
 import Qna from "./modules/qna";
 import Storypost from "./modules/storypost";
+import Comment from "./modules/comment";
 
 
 // 스토어에 히스토리를 넣어주기
@@ -23,6 +24,7 @@ export const history = createBrowserHistory();
 
 // 리덕스 모듈 파일들의 리듀서들을 한데 모아서 통합된 리듀서를 만든다.
 const rootReducer = combineReducers({
+  comment: Comment,
   user: User,
   post: Post,
   category: Category,
@@ -33,6 +35,7 @@ const rootReducer = combineReducers({
   faq: Faq,
   storypost :Storypost,
   qna: Qna,
+
   router: connectRouter(history),
 });
 

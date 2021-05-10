@@ -11,20 +11,19 @@ import Map from "../components/Map";
 
 const Main = (props) => {
   const dispatch = useDispatch();
+  const is_login = useSelector((state) => state.user.is_login);
 
   // 페이지 렌더링이 되면서 모달창에 들어갈 데이터들을 받아온다.
-  // useEffect(() => {
-  //   dispatch(postActions.getMapPostAPI())
-  // }, []);
-
-  // const map_post_list = useSelector((state) => state.post.map_post_list)
+  useEffect(() => {
+    dispatch(postActions.getMapPostAPI())
+  }, []);
 
   return (
     <React.Fragment>
       <Map/>
-      {/* <Map post_list/> */}
     </React.Fragment>
   );
+  
 };
 
 export default Main;

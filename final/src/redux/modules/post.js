@@ -7,7 +7,6 @@ import moment from "moment";
 import { config } from "../../shared/config";
 import post_list from "../../components/MockData";
 import { getCookie } from "../../shared/Cookie";
-import { CgLogOut } from "react-icons/cg";
 
 const SET_POST = "SET_POST";
 const SET_MAP_POST = "SET_MAP_POST";
@@ -32,6 +31,16 @@ const editPost = createAction(EDIT_POST, (post_id, post) => ({
 }));
 const deletePost = createAction(DELETE_POST, (id) => ({ id }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
+/////////////////
+const add_Like = createAction(ADD_LIKE, (post_id, board) => ({
+  post_id,
+  board,
+}));
+
+const dis_Like = createAction(DIS_LIKE, (post_id, post) => ({
+  post_id,
+  post,
+}));
 
 const initialState = {
   // list와 map_post_list에 게시물 데이터가 들어간다.
@@ -122,17 +131,31 @@ const getPostAPI = (start = null, size = null) => {
         // console.log(res.data.data[0].boardImgReponseDtoList);
         result.forEach((_post) => {
           let post = {
+            // id: _post.boardId, // 포스트 id
+            // title: _post.title, // 포스트 title
+            // content: _post.content, // 포스트 내용
+            // writerName: _post.writerName,
+            // img_url: _post.boardImgReponseDtoList,
+            // category: _post.category,
+            // profileImg: _post.writerImgUrl,
+            // like: _post.liked,
+            // likeCnt: _post.likeCount,
+            // comment: _post.boardDetailCommentDtoList,
+            // creatAt: _post.modified,
             id: _post.boardId, // 포스트 id
+            userId: _post.userId,
+            writerName: _post.writerName,
+            writerImgUrl: _post.writerImgUrl,
             title: _post.title, // 포스트 title
             content: _post.content, // 포스트 내용
-            writerName: _post.writerName,
+            liked: _post.liked,
+            likeCount: _post.likeCount,
+            spotName: _post.spotName, // 주소
             img_url: _post.boardImgReponseDtoList,
             category: _post.category,
             profileImg: _post.writerImgUrl,
-            like: _post.liked,
-            likeCnt: _post.likeCount,
             comment: _post.boardDetailCommentDtoList,
-            creatAt: _post.modified,
+            // creatAt: _post.modified,
           };
           post_list.unshift(post);
         });
@@ -142,6 +165,50 @@ const getPostAPI = (start = null, size = null) => {
         window.alert("게시물을 가져오는데 문제가 있어요!");
         console.log("게시물 로드 에러", err);
       });
+  };
+};
+
+const getMapPostAPI = () => {
+  return function (dispatch, getState) {
+    console.log();
+
+    axios({
+      method: "GET",
+      url: `${config.api}/map`,
+      headers: {
+        "X-AUTH-TOKEN": `${config.jwt}`,
+      },
+    })
+      .then((res) => {
+        console.log("서버 응답값", res);
+        let map_post_list = [];
+        console.log(res.data.data);
+        console.log(res.data.data[0].boardImgReponseDtoList);
+        res.data.data.forEach((_post) => {
+          let post = {
+            id: _post.boardId, // 포스트 id
+            title: _post.title, // 포스트 title
+            content: _post.content, // 포스트 내용
+            like: _post.like,  
+            likeCount: _post.likeCount,
+            writerName: _post.writerName,
+            writerImgUrl: _post.writerImgUrl,
+            latitude: _post.latitude,
+            longitude: _post.longitude,
+            spotName: _post.spotName,
+            category: _post.category,
+            imgUrl: _post.boardImgReponseDtoList,
+            comment: _post.boardDetailCommentDtoList,
+          };
+          map_post_list.unshift(post);
+        });
+        dispatch(setMapPost(map_post_list));
+      })
+      .catch((err) => {
+        window.alert("게시물을 가져오는데 문제가 있어요!");
+        console.log("게시물 로드 에러", err);
+      }
+    );
   };
 };
 
@@ -195,55 +262,10 @@ const editPostAPI = (board_id, _edit) => {
       },
     }).then((res) => {
       console.log(res);
+      let post = [];
       // 수정된 게시물정보를 받고싶다
-      // dispatch(editPost(post, board_id))
+      // dispatch(editPost(post, board_id));
     });
-  };
-};
-
-const getMapPostAPI = () => {
-  return function (dispatch, getState) {
-    console.log();
-
-    axios({
-      method: "GET",
-      url: `${config.api}/map`,
-      headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
-      },
-    })
-      .then((res) => {
-        console.log("서버 응답값", res);
-        let map_post_list = [];
-        console.log(res.data.data);
-        console.log(res.data.data[0].boardImgReponseDtoList);
-        res.data.data.forEach((_post) => {
-          let post = {
-            id: _post.id, // 포스트 id
-            title: _post.title, // 포스트 title
-            content: _post.content, // 포스트 내용
-            // insert_dt: _post.insetDt,
-            like: _post.like,
-            likeCount: _post.likeCount,
-            writerName: _post.writerName,
-            writerImgUrl: _post.writerImgUrl,
-            latitude: _post.latitude,
-            longitude: _post.longitude,
-            spotName: _post.spotName,
-            category: _post.category,
-            imgUrl: _post.boardImgReponseDtoList,
-            profileImg: _post.writerImgUrl,
-            comment: _post.boardDetailCommentDtoList,
-            creatAt: _post.modified,
-          };
-          map_post_list.unshift(post);
-        });
-        dispatch(setMapPost(map_post_list));
-      })
-      .catch((err) => {
-        window.alert("게시물을 가져오는데 문제가 있어요!");
-        console.log("게시물 로드 에러", err);
-      });
   };
 };
 
@@ -283,6 +305,64 @@ const searchPostAPI = (search) => {
   };
 };
 
+const editLikeP = (post_id, post) => {
+  //PLUS
+  return function (dispatch, getState) {
+    console.log("dd", post_id); // 포스트 id 잘온다
+    console.log("cc", post); // 포스트도 잘온다
+
+    let _like = post.like;
+    let _likeCnt = post.likeCnt;
+    console.log(_like, _likeCnt);
+
+    let board = {
+      category: post.category,
+      comment: post.comment,
+      content: post.content,
+      creatAt: post.creatAt,
+      id: post.id,
+      img_url: post.img_url,
+      like: true,
+      likeCnt: post.likeCnt + 1,
+      profileImg: post.profileImg,
+      title: post.title,
+      writerName: post.writerName,
+    };
+    console.log("rrr", board);
+
+    dispatch(add_Like(post_id, board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
+  };
+};
+
+const editLikeD = (post_id, post) => {
+  //PLUS
+  return function (dispatch, getState) {
+    console.log("dd", post_id); // 포스트 id 잘온다
+    console.log("cc", post); // 포스트도 잘온다
+
+    let _like = post.like;
+    let _likeCnt = post.likeCnt;
+    console.log(_like, _likeCnt);
+
+    let board = {
+      category: post.category,
+      comment: post.comment,
+      content: post.content,
+      creatAt: post.creatAt,
+      id: post.id,
+      img_url: post.img_url,
+      like: false,
+      likeCnt: post.likeCnt - 1,
+      profileImg: post.profileImg,
+      title: post.title,
+      writerName: post.writerName,
+    };
+    console.log("rrr", board);
+
+    dispatch(add_Like(post_id, board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
+  };
+};
+
 export default handleActions(
   {
     //애드 포스트는 간단하게 새로 받은 포스트를 리스트 맨앞에 삽입
@@ -309,8 +389,8 @@ export default handleActions(
       }),
     [SET_MAP_POST]: (state, action) =>
       produce(state, (draft) => {
-        // draft.list.push(...action.payload.post_list); // 일단 서버에서 받아온거 이니셜 스테이트 리스트에 삽입
-        draft.map_post_list = action.payload.map_post_list;
+        draft.map_post_list.push(...action.payload.map_post_list); // 일단 서버에서 받아온거 이니셜 스테이트 리스트에 삽입
+        // draft.map_post_list = action.payload.map_post_list;
         // draft.paging = action.payload.paging; // 페이징 처리
         //겹치는 게시물 중복 제거 과정
         draft.map_post_list = draft.map_post_list.reduce((acc, cur) => {
@@ -325,6 +405,26 @@ export default handleActions(
       }),
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
+        console.log(action.payload.post_id);
+        let idx = draft.list.findIndex((p) => p.id === action.payload.board_id);
+        // 수정한 게시물을 찾기 위해서 findindex
+        draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
+      }),
+    [ADD_LIKE]: (state, action) => //이것만쓴다
+      produce(state, (draft) => {
+        //그냥 게시물 정보들 하나 가져와서 갈아준다!
+        console.log("ㅁㅇ", action.payload.post_id);
+        console.log("ㄹㅇ", action.payload.board);
+        // action.payload.post.like = true;
+        let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+        // 수정한 게시물을 찾기 위해서 findindex
+
+        draft.list[idx] = { ...draft.list[idx], ...action.payload.board };
+      }),
+
+    [DIS_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        //그냥 게시물 정보들 하나 가져와서 갈아준다!
         let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
         // 수정한 게시물을 찾기 위해서 findindex
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
@@ -356,6 +456,10 @@ const actionCreators = {
   searchPostAPI,
   getMapPostAPI,
   deletePostAPI,
+  add_Like, // ㅜ
+  dis_Like,
+  editLikeP,
+  editLikeD,
 };
 
 export { actionCreators };
