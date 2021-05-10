@@ -145,6 +145,50 @@ const getPostAPI = (start = null, size = null) => {
   };
 };
 
+const getMapPostAPI = () => {
+  return function (dispatch, getState) {
+    console.log();
+
+    axios({
+      method: "GET",
+      url: `${config.api}/map`,
+      headers: {
+        "X-AUTH-TOKEN": `${config.jwt}`,
+      },
+    })
+      .then((res) => {
+        console.log("서버 응답값", res);
+        let map_post_list = [];
+        console.log(res.data.data);
+        console.log(res.data.data[0].boardImgReponseDtoList);
+        res.data.data.forEach((_post) => {
+          let post = {
+            id: _post.id, // 포스트 id
+            title: _post.title, // 포스트 title
+            content: _post.content, // 포스트 내용
+            like: _post.like,  
+            likeCount: _post.likeCount,
+            writerName: _post.writerName,
+            writerImgUrl: _post.writerImgUrl,
+            latitude: _post.latitude,
+            longitude: _post.longitude,
+            spotName: _post.spotName,
+            category: _post.category,
+            imgUrl: _post.boardImgReponseDtoList,
+            comment: _post.boardDetailCommentDtoList,
+          };
+          map_post_list.unshift(post);
+        });
+        dispatch(setMapPost(map_post_list));
+      })
+      .catch((err) => {
+        window.alert("게시물을 가져오는데 문제가 있어요!");
+        console.log("게시물 로드 에러", err);
+      }
+    );
+  };
+};
+
 const deletePostAPI = (board_id) => {
   return function (dispatch, getState) {
     axios({
@@ -198,50 +242,6 @@ const editPostAPI = (board_id, _edit) => {
       // 수정된 게시물정보를 받고싶다
       // dispatch(editPost(post, board_id))
     });
-  };
-};
-
-const getMapPostAPI = () => {
-  return function (dispatch, getState) {
-    console.log();
-
-    axios({
-      method: "GET",
-      url: `${config.api}/map`,
-      headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
-      },
-    })
-      .then((res) => {
-        console.log("서버 응답값", res);
-        let map_post_list = [];
-        console.log(res.data.data);
-        console.log(res.data.data[0].boardImgReponseDtoList);
-        res.data.data.forEach((_post) => {
-          let post = {
-            id: _post.id, // 포스트 id
-            title: _post.title, // 포스트 title
-            content: _post.content, // 포스트 내용
-            like: _post.like,  
-            likeCount: _post.likeCount,
-            writerName: _post.writerName,
-            writerImgUrl: _post.writerImgUrl,
-            latitude: _post.latitude,
-            longitude: _post.longitude,
-            spotName: _post.spotName,
-            category: _post.category,
-            imgUrl: _post.boardImgReponseDtoList,
-            comment: _post.boardDetailCommentDtoList,
-          };
-          map_post_list.unshift(post);
-        });
-        dispatch(setMapPost(map_post_list));
-      })
-      .catch((err) => {
-        window.alert("게시물을 가져오는데 문제가 있어요!");
-        console.log("게시물 로드 에러", err);
-      }
-    );
   };
 };
 
