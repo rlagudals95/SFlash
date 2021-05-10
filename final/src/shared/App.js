@@ -22,7 +22,7 @@ import ScrollToTop from "./ScrollToTop"; //페이지 넘길때 스크롤 맨위�
 import Cafe from "../pages/Category/Cafe";
 import Faq from "../pages/Faq";
 import HelpList from "../pages/HelpList";
-// import HelpDetail from "../pages/HelpDetail";
+import HelpDetail from "../pages/HelpDetail";
 import HelpWrite from "../pages/HelpWrite";
 import Search from "@material-ui/icons/Search";
 
@@ -71,7 +71,8 @@ function App() {
             <Route path="/story/:id" exact component={Story} />
             <Route path="/faq" exact component={Faq} />
             <Route path="/help" exact component={HelpList} />
-            {/* <Route path="/helpdetail/:id" exact component={HelpDetail} /> */}
+            {/* detail과 write는 이후에 /:id로 업데이트 */}
+            <Route path="/helpdetail" exact component={HelpDetail} />
             <Route path="/helpwrite" exact component={HelpWrite} />
             <Route component={NotFound} />
             {/* 밑에서 부턴 카테고리별 페이지 */}
