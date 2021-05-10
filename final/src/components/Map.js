@@ -92,10 +92,6 @@ const Maps = (props) => {
   const parkData = map_post_list.filter(map_post_list => map_post_list.category === "공원");
   const exhibitionData = map_post_list.filter(map_post_list => map_post_list.category === "전시");
   // 카테고리별 데이터 가져오기.
-  // 테스트용 mockdata
-  // const cafeData = markerdata.filter(markerdata => markerdata.category === "카페");
-  // console.log(cafeData)
-  // const nightData = markerdata.filter(markerdata => markerdata.category === "야경");
 
   // 전체 마커, 작성용마커, 좋아요마커, 각 카테고리별 마커들의 imgurl
   const writeMarkerImgUrl = "https://i.postimg.cc/Fz0bW4zz/2x.png";
@@ -124,10 +120,8 @@ const Maps = (props) => {
     // window.alert('');
     getLocation();
 
-    function getLocation() {
-      // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-      if (navigator.geolocation) {
-        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+    function getLocation() {  // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+      if (navigator.geolocation) {  // GeoLocation을 이용해서 접속 위치를 얻어옵니다
         navigator.geolocation.getCurrentPosition(
           function (position) {
             setStartLat(position.coords.latitude);
@@ -142,8 +136,7 @@ const Maps = (props) => {
             timeout: Infinity,
           }
         );
-      } else {
-        // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+      } else {  // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
         window.alert(
           "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
         );
@@ -152,8 +145,7 @@ const Maps = (props) => {
 
     if (startlat && startlon) {
       console.log("현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon);
-    }
-    // geolocation은 여기까지
+    } // geolocation은 여기까지 
 
     // 페이지가 렌더링 되면 지도 띄우기
     const container = document.getElementById("map"); // 지도를 표시할 div
@@ -181,7 +173,6 @@ const Maps = (props) => {
     // ** 주의!!! 구현된것들이 안정적으로 돌아간다고 판단된 이후에는
     // ** 로그인 한 사람만 할 수 있는 클릭이벤트가 되도록
     // ** 아래처럼 if문으로 설정한다.
-    // if (is_login) {}
     // window.alert("로그인 해야 게시물을 작성할 수 있어요!")
     if (!is_login) {
       kakao.maps.event.addListener(map, "click", function () {
@@ -191,10 +182,8 @@ const Maps = (props) => {
       kakao.maps.event.addListener(map, "click", function (mouseEvent) {
         // 클릭한 위도, 경도 정보를 가져옵니다
         const latlng = mouseEvent.latLng;
-        // latlng.Ma = latlng.getLat() = 위도
-        // latlng.La = latlng.getLng() = 경도
-        const hereLat = latlng.getLat();
-        const hereLng = latlng.getLng();
+        const hereLat = latlng.getLat(); // 위도 = latlng.Ma = latlng.getLat()
+        const hereLng = latlng.getLng(); // 경도 = latlng.La = latlng.getLng()
         setLatitude(hereLat); // useState() : 위도 latitude 값 전역으로 설정
         setLongitude(hereLng); // useState() : 경도 longitude 값 전역으로 설정
         console.log(latitude + " " + longitude);
@@ -214,7 +203,6 @@ const Maps = (props) => {
             console.log(result[0]);
             console.log(spotName);
             setSpotName(spotName);
-            // dispatch(mapActions.addSpotNameAPI(spotName)) // spotName을 서버로 보내서 저장시키기
           }
         });
 
@@ -438,7 +426,6 @@ const Maps = (props) => {
           position: position,
           image: markerImage,
         })
-
     
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
@@ -489,7 +476,6 @@ const Maps = (props) => {
           position: position,
           image: markerImage,
         })
-
     
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
@@ -540,7 +526,6 @@ const Maps = (props) => {
           position: position,
           image: markerImage,
         })
-
     
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
@@ -591,7 +576,6 @@ const Maps = (props) => {
           position: position,
           image: markerImage,
         })
-
     
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
@@ -643,7 +627,6 @@ const Maps = (props) => {
           image: markerImage,
         })
 
-    
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
           '<div class="modalcontainer">' +
@@ -694,7 +677,6 @@ const Maps = (props) => {
           image: markerImage,
         })
 
-    
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
           '<div class="modalcontainer">' +
@@ -796,7 +778,6 @@ const Maps = (props) => {
           image: markerImage,
         })
 
-    
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
           '<div class="modalcontainer">' +
@@ -847,7 +828,6 @@ const Maps = (props) => {
           image: markerImage,
         })
 
-    
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
           '<div class="modalcontainer">' +
@@ -898,7 +878,6 @@ const Maps = (props) => {
           image: markerImage,
         })
 
-    
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
           '<div class="modalcontainer">' +
@@ -949,7 +928,6 @@ const Maps = (props) => {
           image: markerImage,
         })
 
-    
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
           '<div class="modalcontainer">' +
