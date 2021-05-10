@@ -7,7 +7,6 @@ import moment from "moment";
 import { config } from "../../shared/config";
 import post_list from "../../components/MockData";
 import { getCookie } from "../../shared/Cookie";
-import { CgLogOut } from "react-icons/cg";
 
 const SET_POST = "SET_POST";
 const SET_MAP_POST = "SET_MAP_POST";
@@ -32,6 +31,16 @@ const editPost = createAction(EDIT_POST, (post_id, post) => ({
 }));
 const deletePost = createAction(DELETE_POST, (id) => ({ id }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
+/////////////////
+const add_Like = createAction(ADD_LIKE, (post_id, board) => ({
+  post_id,
+  board,
+}));
+
+const dis_Like = createAction(DIS_LIKE, (post_id, post) => ({
+  post_id,
+  post,
+}));
 
 const initialState = {
   // list와 map_post_list에 게시물 데이터가 들어간다.
@@ -195,8 +204,9 @@ const editPostAPI = (board_id, _edit) => {
       },
     }).then((res) => {
       console.log(res);
+      let post = [];
       // 수정된 게시물정보를 받고싶다
-      // dispatch(editPost(post, board_id))
+      // dispatch(editPost(post, board_id));
     });
   };
 };
@@ -222,7 +232,7 @@ const getMapPostAPI = () => {
             id: _post.id, // 포스트 id
             title: _post.title, // 포스트 title
             content: _post.content, // 포스트 내용
-            like: _post.like,  
+            like: _post.like,
             likeCount: _post.likeCount,
             writerName: _post.writerName,
             writerImgUrl: _post.writerImgUrl,
@@ -240,8 +250,7 @@ const getMapPostAPI = () => {
       .catch((err) => {
         window.alert("게시물을 가져오는데 문제가 있어요!");
         console.log("게시물 로드 에러", err);
-      }
-    );
+      });
   };
 };
 
@@ -278,6 +287,64 @@ const searchPostAPI = (search) => {
         window.alert("검색을 할 수 없습니다.");
         console.log(error);
       });
+  };
+};
+
+const editLikeP = (post_id, post) => {
+  //PLUS
+  return function (dispatch, getState) {
+    console.log("dd", post_id); // 포스트 id 잘온다
+    console.log("cc", post); // 포스트도 잘온다
+
+    let _like = post.like;
+    let _likeCnt = post.likeCnt;
+    console.log(_like, _likeCnt);
+
+    let board = {
+      category: post.category,
+      comment: post.comment,
+      content: post.content,
+      creatAt: post.creatAt,
+      id: post.id,
+      img_url: post.img_url,
+      like: true,
+      likeCnt: post.likeCnt + 1,
+      profileImg: post.profileImg,
+      title: post.title,
+      writerName: post.writerName,
+    };
+    console.log("rrr", board);
+
+    dispatch(add_Like(post_id, board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
+  };
+};
+
+const editLikeD = (post_id, post) => {
+  //PLUS
+  return function (dispatch, getState) {
+    console.log("dd", post_id); // 포스트 id 잘온다
+    console.log("cc", post); // 포스트도 잘온다
+
+    let _like = post.like;
+    let _likeCnt = post.likeCnt;
+    console.log(_like, _likeCnt);
+
+    let board = {
+      category: post.category,
+      comment: post.comment,
+      content: post.content,
+      creatAt: post.creatAt,
+      id: post.id,
+      img_url: post.img_url,
+      like: false,
+      likeCnt: post.likeCnt - 1,
+      profileImg: post.profileImg,
+      title: post.title,
+      writerName: post.writerName,
+    };
+    console.log("rrr", board);
+
+    dispatch(add_Like(post_id, board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
   };
 };
 
@@ -323,6 +390,26 @@ export default handleActions(
       }),
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
+        console.log(action.payload.post_id);
+        let idx = draft.list.findIndex((p) => p.id === action.payload.board_id);
+        // 수정한 게시물을 찾기 위해서 findindex
+        draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
+      }),
+    [ADD_LIKE]: (state, action) => //이것만쓴다
+      produce(state, (draft) => {
+        //그냥 게시물 정보들 하나 가져와서 갈아준다!
+        console.log("ㅁㅇ", action.payload.post_id);
+        console.log("ㄹㅇ", action.payload.board);
+        // action.payload.post.like = true;
+        let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+        // 수정한 게시물을 찾기 위해서 findindex
+
+        draft.list[idx] = { ...draft.list[idx], ...action.payload.board };
+      }),
+
+    [DIS_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        //그냥 게시물 정보들 하나 가져와서 갈아준다!
         let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
         // 수정한 게시물을 찾기 위해서 findindex
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
@@ -354,6 +441,10 @@ const actionCreators = {
   searchPostAPI,
   getMapPostAPI,
   deletePostAPI,
+  add_Like, // ㅜ
+  dis_Like,
+  editLikeP,
+  editLikeD,
 };
 
 export { actionCreators };
