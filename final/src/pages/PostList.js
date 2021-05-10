@@ -26,7 +26,7 @@ import MobileSelect from "../components/mobile/MobileSelect";
 import MobileNav from "../components/mobile/MobileNav";
 import Spinner from "../shared/Spinner";
 import { actionCreators as PostActions } from "../redux/modules/post";
-
+import { actionCreators as likeActions } from "../redux/modules/like";
 const PostList = () => {
   const dispatch = useDispatch();
 
@@ -63,13 +63,19 @@ const PostList = () => {
 
   React.useEffect(() => {
     dispatch(PostActions.getPostAPI(paging.start, paging.size));
+    dispatch(likeActions.getLikePost());
   }, []);
 
   const next = () => {
     dispatch(PostActions.getPostAPI(paging.start, paging.size));
   };
 
+  const like_list = useSelector((state) => state.like.list);
+
+  console.log("!!!!!!!!", like_list);
+
   // React.useEffect(
+
   //   () => {
   //     dispatch(PostActions.getPostAPI(paging.start, paging.size));
   //   },
@@ -100,7 +106,7 @@ const PostList = () => {
             value={search}
             placeholder="카테고리를 검색해주세요 (●'◡'●)"
             _onChange={(e) => {
-              setSearch(board_list);
+              setSearch(e.target.value);
             }}
           ></Input2>
         </Search>
