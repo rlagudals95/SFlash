@@ -24,6 +24,7 @@ import UploadModal from "../components/UpLoadModal";
 import MobileCate from "../components/mobile/MobileCate";
 import MobileSelect from "../components/mobile/MobileSelect";
 import MobileNav from "../components/mobile/MobileNav";
+import Spinner from "../shared/Spinner";
 import { actionCreators as PostActions } from "../redux/modules/post";
 
 const PostList = () => {
@@ -60,14 +61,22 @@ const PostList = () => {
 
   const [search, setSearch] = React.useState("");
 
-  React.useEffect(
-    () => {
-      dispatch(PostActions.getPostAPI());
-    },
-    [
-      // is_category
-    ]
-  ); //카테고리 상태값이 바뀔 때 마다 useEffect 실행
+  React.useEffect(() => {
+    dispatch(PostActions.getPostAPI(paging.start, paging.size));
+  }, []);
+
+  const next = () => {
+    dispatch(PostActions.getPostAPI(paging.start, paging.size));
+  };
+
+  // React.useEffect(
+  //   () => {
+  //     dispatch(PostActions.getPostAPI(paging.start, paging.size));
+  //   },
+  //   [
+  //     // is_category
+  //   ]
+  // ); //카테고리 상태값이 바뀔 때 마다 useEffect 실행
 
   // console.log("카테고리 뭐 가지고 올까?", is_category);
 
@@ -82,26 +91,8 @@ const PostList = () => {
     }
   });
 
-  const next = () => {
-    dispatch(PostActions.getPostAPI(paging.start, paging.size));
-  };
-
   return (
     <React.Fragment>
-      {/* <InfiniteScroll  // 서버와 연결되면 인피니티 스크롤 게시!
-        dataLength={post_list.length}
-        next={next}
-        hasMore={true}
-        loader={<h4>Loading...</h4>}
-      >
-        <Container>
-        //여기안에 모든 내용물이 들어가야 할수도 각각 무한스크롤 적용해야 할수도?
-          {post_list.map((p, idx) => {
-            return <Post2 key={p.id} {...p}></Post2>;
-          })}
-        </Container>
-      </InfiniteScroll> */}
-      {/* {loading && <Spinner />} */}
       <TopBox>
         <Search>
           {/* 검색기능  */}
@@ -109,116 +100,126 @@ const PostList = () => {
             value={search}
             placeholder="카테고리를 검색해주세요 (●'◡'●)"
             _onChange={(e) => {
-              setSearch(e.target.value);
+              setSearch(board_list);
             }}
           ></Input2>
         </Search>
       </TopBox>
       {/* 검색기능 구현 */}
-      <Container>
-        {/* 전체보기 선택 */}
-        {searchPost.map((p) => {
-          if (is_category.length == 0) {
-            return <Post2 key={p.id} {...p}></Post2>;
-          }
-        })}
-        {/* {"카페 선택"} */}
-        {searchPost.map((p) => {
-          if (resultCafe) {
-            if (p.category == "카페") {
+      <InfiniteScroll // 서버와 연결되면 인피니티 스크롤 게시!
+        dataLength={searchPost.length}
+        next={next}
+        hasMore={true}
+        loader={loading && <Spinner />}
+      >
+        {/* {loading && <Spinner />} */}
+        <Container>
+          {/* 전체보기 선택 */}
+          {searchPost.map((p) => {
+            if (is_category.length == 0) {
               return <Post2 key={p.id} {...p}></Post2>;
             }
-          }
-        })}
-        {/* {"야경 선택"} */}
-        {searchPost.map((p) => {
-          if (resultNight) {
-            if (p.category == "야경") {
-              return <Post2 key={p.id} {...p}></Post2>;
+          })}
+          {/* {"카페 선택"} */}
+          {searchPost.map((p) => {
+            if (resultCafe) {
+              if (p.category == "카페") {
+                return <Post2 key={p.id} {...p}></Post2>;
+              }
             }
-          }
-        })}
-        {/* {"바다 선택"} */}
-        {searchPost.map((p) => {
-          if (resultOcean) {
-            if (p.category == "바다") {
-              return <Post2 key={p.id} {...p}></Post2>;
+          })}
+          {/* {"야경 선택"} */}
+          {searchPost.map((p) => {
+            if (resultNight) {
+              if (p.category == "야경") {
+                return <Post2 key={p.id} {...p}></Post2>;
+              }
             }
-          }
-        })}
-        {/* {"산 선택"} */}
-        {searchPost.map((p) => {
-          if (resultMountain) {
-            if (p.category == "산") {
-              return <Post2 key={p.id} {...p}></Post2>;
+          })}
+          {/* {"바다 선택"} */}
+          {searchPost.map((p) => {
+            if (resultOcean) {
+              if (p.category == "바다") {
+                return <Post2 key={p.id} {...p}></Post2>;
+              }
             }
-          }
-        })}
-        {/* {"꽃 선택"} */}
-        {searchPost.map((p) => {
-          if (resultFlower) {
-            if (p.category == "꽃") {
-              return <Post2 key={p.id} {...p}></Post2>;
+          })}
+          {/* {"산 선택"} */}
+          {searchPost.map((p) => {
+            if (resultMountain) {
+              if (p.category == "산") {
+                return <Post2 key={p.id} {...p}></Post2>;
+              }
             }
-          }
-        })}
-        {/* {"나홀로 선택"} */}
-        {searchPost.map((p) => {
-          if (resultAlone) {
-            if (p.category == "나홀로") {
-              return <Post2 key={p.id} {...p}></Post2>;
+          })}
+          {/* {"꽃 선택"} */}
+          {searchPost.map((p) => {
+            if (resultFlower) {
+              if (p.category == "꽃") {
+                return <Post2 key={p.id} {...p}></Post2>;
+              }
             }
-          }
-        })}
-        {/* {"연인 선택"} */}
-        {searchPost.map((p) => {
-          if (resultCouple) {
-            if (p.category == "연인") {
-              return <Post2 key={p.id} {...p}></Post2>;
+          })}
+          {/* {"나홀로 선택"} */}
+          {searchPost.map((p) => {
+            if (resultAlone) {
+              if (p.category == "나홀로") {
+                return <Post2 key={p.id} {...p}></Post2>;
+              }
             }
-          }
-        })}
-        {/* {"친구 선택"} */}
-        {searchPost.map((p) => {
-          if (resultFreind) {
-            if (p.category == "친구") {
-              return <Post2 key={p.id} {...p}></Post2>;
+          })}
+          {/* {"연인 선택"} */}
+          {searchPost.map((p) => {
+            if (resultCouple) {
+              if (p.category == "연인") {
+                return <Post2 key={p.id} {...p}></Post2>;
+              }
             }
-          }
-        })}
-        {/* {"반려동물 선택"} */}
-        {searchPost.map((p) => {
-          if (resultPet) {
-            if (p.category == "반려동물") {
-              return <Post2 key={p.id} {...p}></Post2>;
+          })}
+          {/* {"친구 선택"} */}
+          {searchPost.map((p) => {
+            if (resultFreind) {
+              if (p.category == "친구") {
+                return <Post2 key={p.id} {...p}></Post2>;
+              }
             }
-          }
-        })}
-        {/* {"도심 선택"} */}
-        {searchPost.map((p) => {
-          if (resultCity) {
-            if (p.category == "도심") {
-              return <Post2 key={p.id} {...p}></Post2>;
+          })}
+          {/* {"반려동물 선택"} */}
+          {searchPost.map((p) => {
+            if (resultPet) {
+              if (p.category == "반려동물") {
+                return <Post2 key={p.id} {...p}></Post2>;
+              }
             }
-          }
-        })}{" "}
-        {/* {"공원 선택"} */}
-        {searchPost.map((p) => {
-          if (resultPark) {
-            if (p.category == "공원") {
-              return <Post2 key={p.id} {...p}></Post2>;
+          })}
+          {/* {"도심 선택"} */}
+          {searchPost.map((p) => {
+            if (resultCity) {
+              if (p.category == "도심") {
+                return <Post2 key={p.id} {...p}></Post2>;
+              }
             }
-          }
-        })}
-        {/* {"전시 선택"} */}
-        {searchPost.map((p) => {
-          if (resultExhibition) {
-            if (p.category == "전시") {
-              return <Post2 key={p.id} {...p}></Post2>;
+          })}{" "}
+          {/* {"공원 선택"} */}
+          {searchPost.map((p) => {
+            if (resultPark) {
+              if (p.category == "공원") {
+                return <Post2 key={p.id} {...p}></Post2>;
+              }
             }
-          }
-        })}
-      </Container>
+          })}
+          {/* {"전시 선택"} */}
+          {searchPost.map((p) => {
+            if (resultExhibition) {
+              if (p.category == "전시") {
+                return <Post2 key={p.id} {...p}></Post2>;
+              }
+            }
+          })}
+          {/* {loading && <Spinner />} */}
+        </Container>
+      </InfiniteScroll>
+
       <Navbar />
       <MobileNav />
       <Web>

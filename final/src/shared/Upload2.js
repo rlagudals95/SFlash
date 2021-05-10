@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as imageActions } from "../redux/modules/image2";
 import styled from "styled-components";
-import $ from "jquery";
+import * as MdIcons from "react-icons/md";
 
 const Upload = (props) => {
   const dispatch = useDispatch();
@@ -50,50 +50,54 @@ const Upload = (props) => {
       };
       reader.readAsDataURL(img);
     });
-
-    //   $.each(images, function (index, file) {
-    //     const reader = new FileReader();
-    //     reader.onload = function (e) {
-    //       fileData = e.target.result;
-    //       //요 fileData로 파일 내 텍스트가 읽어드려진다.
-    //     };
-    //     reader.readAsDataURL(file);
-    //   });
-    //   images.forEach((img) => {
-    //     console.log(img);
-    //     return img;
-    //   });
-    // };
-
-    // reader.readAsDataURL(files);
-
-    //   function readFile2(fileNames) {
-    //     const target = document.getElementsByName(fileNames);
-    //     const fileLength = target[0].files.length;
-    //     if (fileLength < 1) return;
-    //     $.each(target[0].files, function (index, file) {
-    //       const reader = new FileReader();
-    //       reader.onload = function (e) {
-    //         fileData = e.target.result;
-    //         //요 fileData로 파일 내 텍스트가 읽어드려진다.
-    //       };
-    //       reader.readAsText(file, "euc-kr");
-    //     });
-    //   }
-
-    // reader.onloadend = () => {
-    //   // console.log(reader.result);
-    //   dispatch(imageActions.setPreview(reader.result));
-    // };
   };
 
   return (
     <React.Fragment>
       {/* multiple붙이면 파일여러개 업로드가능! */}
-      <FileInput type="file" ref={fileInput} onChange={selectFile} multiple />
+
+      <InputBtn>
+        <Label for="file">
+          {/* 사진추가 아이콘 */}
+          <MdIcons.MdAddToPhotos size="2.5rem" color="#fff" />
+        </Label>
+        <FileInput
+          id="file"
+          type="file"
+          ref={fileInput}
+          onChange={selectFile}
+          multiple
+          style={{ display: "none" }}
+        />
+      </InputBtn>
     </React.Fragment>
   );
 };
+
+const InputBtn = styled.div`
+  all: unset;
+  font-size: 2px;
+  border: none;
+  margin-left: 2vw;
+  z-index: 7001;
+  width: 50px;
+  position: fixed;
+  right: 5px;
+  top: 380px;
+  cursor: pointer;
+  @media (max-width: 1440px) {
+    right: 0px;
+    top: 350px;
+  }
+  @media (max-width: 600px) {
+  }
+`;
+
+const Label = styled.label`
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+`;
 
 const FileInput = styled.input`
   font-size: 2px;

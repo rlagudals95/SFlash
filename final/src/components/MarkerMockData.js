@@ -69,7 +69,7 @@ export const markerdata = [
     longitude: 128.71012285949175,
     spotName: "혼신지",
     imgUrl: "https://t1.daumcdn.net/cfile/blog/25229E335317DDF51F",
-    category: "연인"
+    category: "야경"
   },
   {
     id: 9,
@@ -78,7 +78,7 @@ export const markerdata = [
     longitude: 128.70506307668668,
     spotName: "청도읍성",
     imgUrl: "http://www.dbeway.co.kr/_UPLOAD/IMAGE/TravelPoint/TravelMain/2016/12/eaWK9vuDrqC6jmfT.JPG",
-    category: "꽃"
+    category: "야경"
   },
   {
     id: 10,
@@ -87,6 +87,6 @@ export const markerdata = [
     longitude: 128.7519151137017,
     spotName: "복사꽃밭",
     imgUrl: "https://i.postimg.cc/Df1cp7bF/Kakao-Talk-20210508-093747215.jpg",
-    category: "꽃"
+    category: "야경"
   }
 ]
