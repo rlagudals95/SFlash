@@ -363,8 +363,6 @@ const Maps = (props) => {
 
     // 카테고리별 마커 + 커스텀오버레이 제어 시작!!
     // 1. 카페 카테고리 : 카페마커 + 커스텀 오버레이
-    // caftData.map((cafe, idx) => { // 
-    // cafeData.forEach((cafe, idx) => { // cafeData를 mockdata로 구현가능한지 테스트 할 것!
     if (is_cafe) {
       cafeData.map((cafe, idx) => {
         var imageSize = new kakao.maps.Size(30, 40);
@@ -416,7 +414,6 @@ const Maps = (props) => {
 
     // 2. 밤카테고리 : 카페마커 + 커스텀 오버레이
     if (is_night) {
-      // nightData.map((night, idx) => { // 
       nightData.map((night, idx) => { // nightData를 mockdata로 구현가능한지 테스트 할 것!
         const imageSize = new kakao.maps.Size(30, 40);
         const markerImage = new kakao.maps.MarkerImage(nightMarkerImgUrl, imageSize);
