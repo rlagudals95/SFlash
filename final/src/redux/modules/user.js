@@ -60,6 +60,7 @@ const loginAPI = (email, pwd) => {
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("nickname", res.data.nickname);
+        localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("jwt", res.data.token);
         dispatch(setUser());
         history.push("/");
@@ -97,6 +98,7 @@ export default handleActions(
       produce(state, (draft) => {
         localStorage.getItem("nickname");
         localStorage.getItem("jwt");
+        localStorage.getItem("userId");
         draft.user = action.payload.user;
         draft.is_login = true;
       }),
@@ -104,6 +106,7 @@ export default handleActions(
       produce(state, (draft) => {
         localStorage.removeItem("jwt");
         localStorage.removeItem("nickname");
+        localStorage.removeItem("userId");
         draft.user = null;
         draft.is_login = false;
       }),

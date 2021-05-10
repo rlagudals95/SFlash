@@ -1,42 +1,46 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 import { actionCreators as storypostActions } from "../redux/modules/storypost";
 
 import StoryUserProfile from "../components/StoryUserProfile";
 import StoryContent from "../components/StoryContent";
 
+// 유저가 작성한/좋아요한 게시물들을 모아볼 수 있는 페이지 입니다.
+// 다른 사람들도 유저의 스토리를 열람할 수 있습니다.
 const Story = (props) => {
   const dispatch = useDispatch();
 
   //  url에서 userId 불러오기
   const userId = props.match.params.id;
-  console.log("userId:", userId);
+  // console.log("userId:", userId);
 
+  // 스토리 페이지는 크게 3가지로 나뉩니다.
+  // (1) 유저 정보: user_info (2) 유저가 올린 게시물: user_post_list (3)유저가 좋아요한 게시물: user_like_list
   const user_info = useSelector((state) => state.profile.user);
   const user_post_list = useSelector((state) => state.storypost.user_post_list);
   const user_like_list = useSelector((state) => state.storypost.user_like_list);
-  
-  // const user_like_list = useSelector((state) => state.storypost.user_like_list);
-  console.log(user_post_list);
-  console.log("!!!!!!!!!!!", user_like_list);
-
-  const nickname = user_info.nickname;
+  console.log("user_like_list", user_post_list);
+  console.log("user_like_list", user_like_list);
 
   React.useEffect(() => {
-      dispatch(profileActions.getUserInfoAPI(userId));
+    dispatch(profileActions.getUserInfoAPI(userId));
+    dispatch(storypostActions.getUserPostAPI(userId));
+    dispatch(storypostActions.getUserLikeAPI(userId));
   }, []);
 
-  React.useEffect(() => {
-    dispatch(storypostActions.getUserPostAPI(userId));
-}, []);
+  // '유저의 게시물/ 유저의 좋아요' 탭 제어하기 : 처음에는 유저의 게시물("myPost") 탭 활성화
+  const [active, setActive] = React.useState("myPost");
+  // 클릭한 인덱스 활성화
+  const handleClick = (e) => {
+    const id = e.target.id;
+    if (id !== active) {
+      setActive(id);
+    }
+  };
 
-React.useEffect(() => {
-dispatch(storypostActions.getUserLikeAPI(userId));
-}, []);
 
   // const user_post_list = useSelector((state) => {
   //   // console.log(state);
@@ -48,40 +52,11 @@ dispatch(storypostActions.getUserLikeAPI(userId));
   // const UserPostTab = () => setActive(<StoryContent />);
   // const UserLikeTab = () => setActive(<StoryContent />);
 
-  // '나의 게시물/ 나의 좋아요' 탭 제어하기 : 처음에는 0번째 인덱스 활성화
-  const [active, setActive] = useState("myPost");
-  // 클릭한 인덱스 활성화
-  const handleClick = (e) => {
-    const id = e.target.id;
-    if (id !== active) {
-      setActive(id);
-    }
-  };
-
   return (
     <React.Fragment>
       <Wrapper>
         {/* 상단 유저 프로필 부분 컴포넌트 */}
-     <StoryUserProfile user_info={user_info} />
-
-        {/* 
-      <Tabs>
-          <Tab onClick={UserPostTab} >
-            <b>{user_info.nickname}</b> 님의 게시물
-       
-          </Tab>
-          <text fontSize="4rem" fontWeight="700" style={{ color: "grey" }}>
-            |
-          </text>
-          <Tab onClick={UserLikeTab}>
-            <b>{user_info.nickname}</b> 님의 좋아요
-     
-          </Tab>
-        </Tabs>
-
-         <Content >
-          {active}
-        </Content> */}
+          <StoryUserProfile user_info={user_info} userId={userId}/>
 
         {/* '내 게시물'과 '좋아요한 게시물'을 나눠주는 탭: active 값을 이용해 제어
     active 의 값에 따라 content 부분의 내용이 바뀐다. 
@@ -101,21 +76,31 @@ dispatch(storypostActions.getUserLikeAPI(userId));
           </Tab>
         </Tabs>
 
-        {user_post_list ? (
           <Content active={active === "myPost"}>
             <StoryContent post_list={user_post_list} />
           </Content>
-        ) : (
-          <p>업로드한 게시물이 없습니다.</p>
-        )} 
-        { user_like_list ? (
-            <Content active={active === "myLike"}>
-              <StoryContent post_list={user_like_list}/>
-            </Content>
-            ):(
-              <p>좋아요한 게시물이 없습니다.</p>
-            )}
+          <Content active={active === "myLike"}>
+            <StoryContent post_list={user_like_list} />
+          </Content>
 
+         {/* 
+      <Tabs>
+          <Tab onClick={UserPostTab} >
+            <b>{user_info.nickname}</b> 님의 게시물
+       
+          </Tab>
+          <text fontSize="4rem" fontWeight="700" style={{ color: "grey" }}>
+            |
+          </text>
+          <Tab onClick={UserLikeTab}>
+            <b>{user_info.nickname}</b> 님의 좋아요
+     
+          </Tab>
+        </Tabs>
+
+         <Content >
+          {active}
+        </Content> */}
       </Wrapper>
     </React.Fragment>
   );

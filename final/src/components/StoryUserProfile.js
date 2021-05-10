@@ -14,17 +14,32 @@ import Modal from "react-modal";
 import StoryEditProfile from "../components/StoryEditProfile";
 import StoryEditPwd from "../components/StoryEditPwd";
 
-
 const StoryUserProfile = (props) => {
   const dispatch = useDispatch();
-  const {user_info} = props;
+  const {user_info, userId} = props;
 
-  const nickname = user_info.nickname;
-  const local_nickname = localStorage.getItem("nickname");
-// 현재 닉네임과 내 로컬 스토리지의 닉네임이 일치하면 '나의 페이지'로 판단하여
-// 메뉴버튼(프로필 편집, 로그아웃 등)을 보여준다.
-  const is_me = (nickname === local_nickname) ? true : false;
+// is_me: 현재 닉네임과 내 로컬 스토리지의 닉네임이 일치하면 '나의 페이지'로 판단하여
+// 메뉴버튼(프로필 편집, 로그아웃 등)을 보여줍니다.
+  const local_userId = localStorage.getItem("userId");
+  const is_me = (userId === local_userId) ? true : false;
+  console.log("is_me:", is_me);
+  const preview = useSelector((state) => state.profile.preview);
 
+  React.useEffect(() => {
+    dispatch(profileActions.setPreview(user_info.profileImgUrl));
+}, []);
+
+  // 이미지 에러
+  const ImageError = () => {
+    window.alert("잘못된 이미지 주소 입니다. :(");
+    dispatch(
+      profileActions.setPreview(
+        "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
+      )
+    );
+  };
+
+  // 프로필 메뉴 버튼 제어
   const [anchorEl, setAnchorEl] = React.useState(null);
   const settingHandleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -32,8 +47,7 @@ const StoryUserProfile = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  // 프로필 편집 모달창 제어(프로필 편집 & 비밀번호)
+  // 프로필 편집 모달창 제어
   const [profileModal, setProfileModal] = React.useState(false);
   const openProfileModal = () => {
     setProfileModal(true);
@@ -41,6 +55,7 @@ const StoryUserProfile = (props) => {
   const closeProfileModal = () => {
     setProfileModal(false);
   };
+   // 비밀번호 변경 모달창 제어
   const [editPwdModal, setEditPwdModal] = React.useState(false);
   const openEditPwdModal = () => {
     setEditPwdModal(true);
@@ -53,15 +68,18 @@ const StoryUserProfile = (props) => {
   return (
     <React.Fragment>
         <ProfileContainer>
-          {user_info.profileImgUrl ? (
-            <ProfileImg src={user_info.profileImgUrl} />
-         ) : (
-            <ProfileImg src={props.user_info.profileImgUrl} />
-          )}
+        <ProfileImg
+            src={
+              preview
+                ? preview
+                : "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
+            }
+            onError={ImageError}
+          />
 
           <Grid>
             <Grid height="150px" />
-            <Nickname>{nickname}</Nickname>
+            <Nickname>{user_info.nickname}</Nickname>
             <Introduction>{user_info.introduction}</Introduction>
           </Grid>
 
@@ -115,7 +133,7 @@ const StoryUserProfile = (props) => {
               close={closeProfileModal}
               style={modalStyle}
             >
-              <StoryEditProfile user_info={user_info} />
+              <StoryEditProfile user_info={user_info} closeModal={closeProfileModal}/>
               <CloseButton
                 src="https://image.flaticon.com/icons/png/512/458/458595.png"
                 onClick={closeProfileModal}
