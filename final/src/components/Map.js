@@ -1095,4 +1095,4 @@ const MapBox = styled.div`
   top: 0;
   bottom: 0;
   position: absolute;
-`;
+  `;
