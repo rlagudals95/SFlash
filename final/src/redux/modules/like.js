@@ -22,18 +22,56 @@ const disLike = createAction(DIS_LIKE, (like, likeCnt) => ({
   likeCnt,
 }));
 
+const getLike = createAction(GET_LIKE, (like_list) => ({ like_list }));
+
 // const getLike = createAction(GET_LIST, (like) => ({ like }));
 
-const addLikeAPI = (board_id) => {
+const initialState = {
+  list: [],
+  like: false,
+  likeCnt: 0,
+  // paging: { start: null, size: 15 },
+};
+
+const getLikePost = () => {
   return function (dispatch, getState) {
-    console.log("보드아이디", board_id);
-    console.log("토큰", getCookie("jwt"));
     const post_list = getState().post.list;
-    console.log("포스트 가져와!", post_list);
+    //여기서 like만뺀다?
+    console.log("!!!!!!!!!!", post_list);
 
-    // const idx = post_list.findIndex((p) => p.id === board_id);
+    let like_list = [];
 
-    // console.log("몇번째냐~?", idx);
+    for (let i = 0; i < post_list.length; i++) {
+      like_list.push(post_list[i].like);
+    }
+
+    console.log(like_list);
+    dispatch(getLike(like_list));
+  };
+};
+
+const addLikeAPI = (board_id, board) => {
+  return function (dispatch, getState, { history }) {
+    const paging = getState().post.paging;
+    console.log("보드아이디", board_id);
+    console.log("보드", board);
+
+    // let post = {
+    //   id: board.id,
+    //   title: board.title,
+    //   content: board.content,
+    //   img_url: board.img_url,
+    //   writerName: board.writerName,
+    //   profileImg: board.profileImg,
+    //   like: board.like,
+    //   category: board.category,
+    //   likeCnt: board.likeCnt,
+    //   comment: board.comment,
+    //   creatAt: board.creatAt,
+    // };
+
+    // const post_list = getState().post.list;
+    // console.log("포스트 가져와!", post_list);
 
     axios({
       method: "POST",
@@ -43,9 +81,8 @@ const addLikeAPI = (board_id) => {
       },
     })
       .then((res) => {
-        console.log(res);
-        dispatch(postActions.getPostAPI());
         dispatch(addLike(true));
+        // dispatch(getLike(true));
       })
       .catch((error) => {
         window.alert("좋아요를 할 수 없습니다.");
@@ -53,8 +90,8 @@ const addLikeAPI = (board_id) => {
   };
 };
 
-const disLikeAPI = (board_id) => {
-  return function (dispatch, getState) {
+const disLikeAPI = (board_id, board) => {
+  return function (dispatch, getState, { history }) {
     axios({
       method: "DELETE",
       url: `${config.api}/board/${board_id}/like`,
@@ -63,19 +100,16 @@ const disLikeAPI = (board_id) => {
       },
     })
       .then((res) => {
-        console.log(res);
-        dispatch(postActions.getPostAPI());
+        // console.log(res);
+
         dispatch(disLike(false));
+        // dispatch(getLike(false));
+        // dispatch(postActions.getPostAPI(paging.start, paging.size));
       })
       .catch((error) => {
         window.alert("좋아요를 할 수 없습니다.");
       });
   };
-};
-
-const initialState = {
-  like: false,
-  likeCnt: 0,
 };
 
 export default handleActions(
@@ -90,6 +124,10 @@ export default handleActions(
         draft.like = action.payload.like;
         draft.likeCnt = draft.likeCnt - 1;
       }),
+    [GET_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload.like_list;
+      }),
   },
   initialState
 );
@@ -97,6 +135,7 @@ export default handleActions(
 const actionCreators = {
   addLikeAPI,
   disLikeAPI,
+  getLikePost,
 };
 
 export { actionCreators };

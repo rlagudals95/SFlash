@@ -14,11 +14,25 @@ import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import { actionCreators as modalActions } from "../redux/modules/modal";
 import { actionCreators as likeActions } from "../redux/modules/like";
+import { actionCreators as PostActions } from "../redux/modules/post";
 
 import "../Css/Post.css";
 
 //로그인 후에 이용가능 합니다
 const Post2 = (props) => {
+  const paging = useSelector((state) => state.post.paging);
+
+  const like = useSelector((state) => state.like.like);
+
+  React.useEffect(() => {
+    console.log("시작");
+    // dispatch(likeActions.getLikePost());
+  }, [like]);
+
+  //
+  console.log("like", like);
+
+  console.log("????????", props.id, props);
   const dispatch = useDispatch();
   // console.log(props);
 
@@ -57,13 +71,16 @@ const Post2 = (props) => {
   const addLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(likeActions.addLikeAPI(props.id));
+
+    dispatch(likeActions.addLikeAPI(props.id, props)); //서버
+    dispatch(PostActions.editLikeP(props.id, props)); // 리덕스
   };
 
   const disLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
     dispatch(likeActions.disLikeAPI(props.id));
+    dispatch(PostActions.editLikeD(props.id, props));
   };
 
   //스타일 컴포넌트//
@@ -103,6 +120,7 @@ const Post2 = (props) => {
         <PostBox onClick={openModal}>
           {/* 이거자체가 지금 투명 0 */}
           <div className={"hoverDark"}>
+            {like}
             <div className={"PostFont"}>
               {props.like ? (
                 <FavoriteIcon fontSize="24px" onClick={disLike} />
