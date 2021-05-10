@@ -6,6 +6,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
+import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as imageActions } from "../redux/modules/image2";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Slider from "react-slick";
@@ -13,11 +14,14 @@ import UploadImg from "../components/UpLoadModal";
 import { useDispatch, useSelector } from "react-redux";
 import PublishIcon from "@material-ui/icons/Publish";
 import TextField from "@material-ui/core/TextField";
+// 업로드용 파일선택 버튼
 import Upload2 from "../shared/Upload2";
+// 수정용 파일선택 버튼
+import UploadEdit from "../shared/UploadEdit";
 import SelectCate from "./SelectCate";
-import { actionCreators as postActions } from "../redux/modules/post";
 import Input from "../elements/Input";
 import Input2 from "../elements/Input2";
+import { CgLogOut } from "react-icons/cg";
 
 const UploadModal = (props) => {
   const { latitude, longitude, spotName } = props;
@@ -36,11 +40,16 @@ const UploadModal = (props) => {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
   const preview = useSelector((state) => state.image2.preview);
+  // 수정 페이지 이미지
   const onlyImg = useSelector((state) => state.image2.image);
+  // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
+  console.log("추가한 이미지 확인", onlyImg);
+  const editFile = useSelector((state) => state.image2.edit_file);
+  console.log("서버로 보내줄 수정파일", editFile);
   // console.log(preview);
   const user_info = useSelector((state) => state.user.user);
-  const [contents, setContents] = React.useState("");
-  const [title, setTitle] = React.useState("");
+  const [contents, setContents] = React.useState(props.content);
+  const [title, setTitle] = React.useState(props.title);
   const [images, setImages] = React.useState(false);
   const post_list = useSelector((state) => state.post.list);
   const [image_list, setImageList] = React.useState();
@@ -58,39 +67,22 @@ const UploadModal = (props) => {
   console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
   const ok_submit = contents ? true : false;
 
+  console.log("모달창 닫기", props.close);
   React.useEffect(() => {
     if (is_edit) {
-      // let editImages = [];
-      // 여기서 부르지 말고 수정 클릭할때 부르자 자꾸 리렌더링되서 삭제되도 티가안난다...
-      console.log("또실행되냐?");
       dispatch(imageActions.getPost(props.id));
-      // setImageList(Image_list);
-      // editImages.push("http://via.placeholder.com/400x300");
-      // for (let i = 0; i < props.img_url.length; i++) {
-      //   editImages.push(props.img_url[i]);
-      // }
-      // setImages(editImages); // 수정 화면일 때 게시물 이미지를 보여주기 위해서 받은 props 이미지 값을 state에 저장
     }
   }, []);
 
   console.log("!!!!!!!!!!!!!!!!", onlyImg);
   /////////////////이거 유즈 이펙트안에 있어야 할지 싶다
-  // if (editImgList) {
 
-  // }
-
-  //// 수정가능한 상태인지는 props.id(post_id) 여부에 따라
-
-  //   //만약 수정가능 상태라면
-  //   if (is_edit) {
-  //     dispatch(imageActions.setPreview(_post.post_image_url)); // 페이지가 렌더링 되면서 기존 이미지 같이 렌더링
-  //   } else {
-  //     dispatch(imageActions.setPreview("http://via.placeholder.com/400x300"));
-  //   }
-  // }, []);
+  // const closeModal = (e) => {
+  //   props.close;
+  // };
 
   // 작성된 것을 리듀서-스토어에 디스패치해서 변경된 데이터를 본페이지에서 렌더링 되게 요청
-  const addPost = () => {
+  const addPost = (e) => {
     if (!contents) {
       window.alert("😗빈칸을 채워주세요...ㅎㅎ");
       return;
@@ -104,24 +96,31 @@ const UploadModal = (props) => {
     };
     // console.log(post);
     dispatch(postActions.addPostAPI(post));
-    history.replace("/");
+    // closeModal();
+    props.close();
+    // history.replace("/");
   };
 
-  // 수정된 것을 리듀서-스토어에 디스패치해서 변경된 데이터를 본페이지에서 렌더링 되게 요청
-  //위의 수정 조건을 다 만족 했을 시에 수정 버튼을 눌러 editPostAX를 디스패치로 실행
-  // const editPost = () => {
-  //   if (!contents) {
-  //     window.alert("😗빈칸을 채워주세요...ㅎㅎ");
-  //     return;
-  //   }
-  //   이미지는 수정할 경우, 어디서 데이터를 가져올까요????????
-  //   let edit = {
-  //     title: title,
-  //     content: contents,
-  //   };
-  //   console.log(post_id);
-  //   dispatch(postActions.editPostAPI(post_id, edit));
-  // };
+  const editPost = () => {
+    if (!contents) {
+      window.alert("😗빈칸을 채워주세요...ㅎㅎ");
+      return;
+    }
+    if (!title) {
+      window.alert("😗빈칸을 채워주세요...ㅎㅎ");
+      return;
+    }
+    if (onlyImg.length > 5) {
+      window.alert("😗사진은 최대 5장까지 업로드 가능합니다...ㅎㅎ");
+      return;
+    }
+    let edit = {
+      title: title,
+      contents: contents,
+    };
+    dispatch(postActions.editPostAPI(props.id, edit));
+    props.close();
+  };
 
   const changeContents = (e) => {
     setContents(e.target.value);
@@ -130,21 +129,6 @@ const UploadModal = (props) => {
   const changeTitle = (e) => {
     setTitle(e.target.value);
   };
-
-  const editPost = () => {
-    if (!contents) {
-      window.alert("😗빈칸을 채워주세요...ㅎㅎ");
-      return;
-    }
-    dispatch(postActions.editPostAPI(props.id, _post));
-    // history.replace("/postlist");
-
-    // window.location.reload();
-  };
-
-  if (images) {
-    // console.log("이미지 url", images);
-  }
 
   if (images.length == 0) {
     images.push("http://via.placeholder.com/400x300");
@@ -192,12 +176,10 @@ const UploadModal = (props) => {
               />
               <ModalAuthor>{nickname}</ModalAuthor>
             </ModalLeftHeader>
-            <Upload2></Upload2>
+            {/* 업로드와 수정시 파일선택 버튼이 다르게 설정 */}
 
             {is_edit ? (
-              <HeaderEdit onClick={editPost} onClick={props.close}>
-                수정
-              </HeaderEdit>
+              <HeaderEdit onClick={editPost}>수정</HeaderEdit>
             ) : (
               <HeaderEdit
                 onClick={addPost}
@@ -217,7 +199,7 @@ const UploadModal = (props) => {
         {/* 게시물 올릴때랑 수정일때 다르게 return */}
 
         {/* {is_edit? 수정할 때 : 수정안 할 때 via홀더 보여줌 } */}
-
+        {is_edit ? <UploadEdit /> : <Upload2 />}
         {is_edit ? (
           // images는 처음 useEffect로 뽑아내고 for문이 돌기전에 map이 먼저 실행이 되면 인식을 못해서 images값이 있을때 map함수를 실행할 수 있게 설정
           // images
@@ -229,8 +211,15 @@ const UploadModal = (props) => {
                   {onlyImg.map((p, idx) => {
                     return (
                       <div>
-                        <ModalImg src={onlyImg[idx].imgUrl}>
-                          {" "}
+                        {/* imgUrl이 없다면?! */}
+                        <ModalImg
+                          // 수정 중에 추가한 이미지엔 imgUrl이 없고 파일리더로 읽은 값만 있기 때문에 src에 그냥 값을 넣어주도록 조건설정
+                          src={
+                            onlyImg[idx].imgUrl
+                              ? onlyImg[idx].imgUrl
+                              : onlyImg[idx]
+                          }
+                        >
                           <DeleteImg
                             onClick={() => {
                               dispatch(
@@ -250,7 +239,7 @@ const UploadModal = (props) => {
                               );
                             }}
                           >
-                            x
+                            삭제
                           </DeleteImg>
                         </ModalImg>
                       </div>
@@ -353,38 +342,8 @@ const UploadModal = (props) => {
               </React.Fragment>
             )}
           </MiddleBox>
-
-          {/* <TextField
-            id="outlined-multiline-static"
-            label="📝글 작성"
-            multiline
-            rows={6}
-            variant="outlined"
-            value={contents}
-            onChange={changeContents}
-          /> */}
-          {/* 카테고리는 한번 지정하면 변경 불가하므로 수정 상태에선 안보이게 처리 */}
+          {/* 카테고리는 수정할 수 없기때문에 게시글 수정 모달에선 가려준다 */}
           {is_edit ? null : <SelectCate></SelectCate>}
-
-          {/* {is_edit ? (
-            <WriteSubmit onClick={editPost} onClick={props.close}>
-              게시글 수정
-            </WriteSubmit>
-          ) : (
-            <WriteSubmit
-              onClick={addPost}
-              // onClick={props.close}
-            >
-              게시글 작성
-            </WriteSubmit>
-          )} */}
-          {/* <WriteSubmit
-            onClick={addPost}
-            // onClick={editPost}
-            // onClick={props.close}
-          >
-            게시글 작성
-          </WriteSubmit> */}
         </ModalBottomContainer>
       </ModalComponent>
     </React.Fragment>
@@ -393,12 +352,21 @@ const UploadModal = (props) => {
 
 const DeleteImg = styled.div`
   z-index: 4700;
+  text-align: center;
   position: relative;
   background-color: red;
   width: 50px;
-  height: 50px;
-  top: 0px;
-  right: 0px;
+  top: 15px;
+  right: -15px;
+  padding: 3px 8px;
+  background-color: white;
+  color: rgba(0, 0, 0, 0, 0.1);
+  opacity: 0.5;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 13px;
+  /* border: 1px solid rgba(0, 0, 0, 0, 0.08); */
+  cursor: pointer;
 `;
 
 const ModalImg = styled.div`
@@ -440,7 +408,7 @@ const ModalImg = styled.div`
     border: none;
     box-sizing: border-box;
     width: 100%;
-    height: 40vh;
+    height: 600px;
     max-height: 40vh;
     margin-bottom: 1vh;
   }

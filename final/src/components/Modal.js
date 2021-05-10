@@ -14,6 +14,7 @@ import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as CommnetActions } from "../redux/modules/comment";
 import { actionCreators as likeActions } from "../redux/modules/like";
 import { forEach } from "lodash";
+import { history } from "../redux/configStore";
 
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
@@ -122,48 +123,52 @@ const ModalDetail = (props) => {
     setComments(e.target.value);
   };
 
+  const goProfile = () => {
+    history.replace("/story/hmk1995");
+  };
+
   //////////////////////////////////////////////////////////////////////////////////
   //이미지 스타일 컴포넌트 다른 위로 올려서 props로 이미지를 바로 받는게 좋은 것 같다
 
-  const ModalImg = styled.img`
-    background-image: url(${props.images});
-    background-size: cover;
-    object-fit: cover;
-    background-position: 0px;
-    background-repeat: no-repeat;
-    border: none;
-    box-sizing: border-box;
-    width: 100%;
-    height: 400px;
-    height: 400px;
-    @media (max-width: 1440px) {
-      /* 1450밑으로 넓이가 내려가면 */
-      /* all: unset; */
-      background-image: url(${props.images});
-      background-size: cover;
-      object-fit: cover;
-      background-position: 0px;
-      background-repeat: no-repeat;
-      border: none;
-      box-sizing: border-box;
-      width: 100%;
-      height: 310px;
-      max-height: 42vh;
-    }
-    @media (max-width: 600px) {
-      /* 1450밑으로 넓이가 내려가면 */
-      /* all: unset; */
-      background-image: url(${props.images});
-      background-size: cover;
-      object-fit: cover;
-      background-position: 0px;
-      background-repeat: no-repeat;
-      border: none;
-      box-sizing: border-box;
-      width: 100%;
-      height: 40vh;
-    }
-  `;
+  // const ModalImg = styled.img`
+  //   background-image: url(${props.images});
+  //   background-size: cover;
+  //   object-fit: cover;
+  //   background-position: 0px;
+  //   background-repeat: no-repeat;
+  //   border: none;
+  //   box-sizing: border-box;
+  //   width: 100%;
+  //   height: 400px;
+  //   height: 400px;
+  //   @media (max-width: 1440px) {
+  //     /* 1450밑으로 넓이가 내려가면 */
+  //     /* all: unset; */
+  //     background-image: url(${props.images});
+  //     background-size: cover;
+  //     object-fit: cover;
+  //     background-position: 0px;
+  //     background-repeat: no-repeat;
+  //     border: none;
+  //     box-sizing: border-box;
+  //     width: 100%;
+  //     height: 310px;
+  //     max-height: 42vh;
+  //   }
+  //   @media (max-width: 600px) {
+  //     /* 1450밑으로 넓이가 내려가면 */
+  //     /* all: unset; */
+  //     background-image: url(${props.images});
+  //     background-size: cover;
+  //     object-fit: cover;
+  //     background-position: 0px;
+  //     background-repeat: no-repeat;
+  //     border: none;
+  //     box-sizing: border-box;
+  //     width: 100%;
+  //     height: 40vh;
+  //   }
+  // `;
 
   //작성 날짜 설정하기
   const timeForToday = (value) => {
@@ -200,14 +205,19 @@ const ModalDetail = (props) => {
       <ModalComponent>
         <ModalHeader>
           <ModalLeftHeader>
-            <ProCircle
-              src={
-                props.writerImgUrl
-                  ? props.writerImgUrl
-                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-              }
-            />
-            <ModalAuthor>{props.writerName}</ModalAuthor>
+            <React.Fragment>
+              <ProCircle
+                src={
+                  props.writerImgUrl
+                    ? props.writerImgUrl
+                    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                }
+                onClick={() => {
+                  history.replace(`/story/${props.writerName}`);
+                }}
+              />
+              <ModalAuthor>{props.writerName}</ModalAuthor>
+            </React.Fragment>
             <PostDate>{timeForToday(props.creatAt)}</PostDate>
             <ExitContainer>
               <ExitBtn onClick={props.close}>
@@ -317,20 +327,24 @@ const ModalDetail = (props) => {
             {is_comment
               ? comment_list.map((c, idx) => {
                   //여기서 댓글을 입력하고 map으로 props 값을 돌려서 화면을 띄우게 해줌
-
                   //댓글이 2개보다 작다면? 1개라면?
                   return (
                     <ReplyBox>
                       <Replys>
                         <ReplyLeft>
-                          <ReplyImg
-                            src={
-                              c.writerImgUrl
-                                ? c.writerImgUrl
-                                : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                            }
-                          ></ReplyImg>
-                          <ReplyWriter>{c.writerName}</ReplyWriter>
+                          <React.Fragment>
+                            <ReplyImg
+                              src={
+                                c.writerImgUrl
+                                  ? c.writerImgUrl
+                                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                              }
+                              onClick={() => {
+                                history.replace(`/story/${c.writerName}`);
+                              }}
+                            ></ReplyImg>
+                            <ReplyWriter>{c.writerName}</ReplyWriter>
+                          </React.Fragment>
                           <Reply>{c.content}</Reply>
                         </ReplyLeft>
                         <ReplyRight>
@@ -377,6 +391,46 @@ const ModalDetail = (props) => {
   );
 };
 
+const ModalImg = styled.img`
+  background-image: url("${(props) => props.src}");
+  background-size: cover;
+  object-fit: cover;
+  background-position: 0px;
+  background-repeat: no-repeat;
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+  height: 400px;
+  height: 400px;
+  @media (max-width: 1440px) {
+    /* 1450밑으로 넓이가 내려가면 */
+    /* all: unset; */
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
+    object-fit: cover;
+    background-position: 0px;
+    background-repeat: no-repeat;
+    border: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 310px;
+    max-height: 42vh;
+  }
+  @media (max-width: 600px) {
+    /* 1450밑으로 넓이가 내려가면 */
+    /* all: unset; */
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
+    object-fit: cover;
+    background-position: 0px;
+    background-repeat: no-repeat;
+    border: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 40vh;
+  }
+`;
+
 const Component = styled.div`
   position: fixed;
   opacity: 0.4;
@@ -421,32 +475,8 @@ const ModalComponent = styled.div`
     border: none;
     box-sizing: border-box;
   }
-  /* @media (max-width: 1210px) {
-    position: fixed;
-    width: 35vw;
-    height: 67vh;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-    border: none;
-    box-sizing: border-box;
-  } */
 
   @media (max-width: 1030px) {
-    // 1210밑으로 넓이가 내려가면
-    /* all: unset; */
-    /* position: fixed;
-    width: 50vw;
-    height: 67vh;
-  
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    z-index: 1000;
-    border: none;
-    box-sizing: border-box; */
   }
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
@@ -462,15 +492,8 @@ const ModalComponent = styled.div`
     z-index: 1000;
     border: none;
     box-sizing: border-box;
-
     z-index: 7000;
   }
-  /* @media (max-width: 950px) {
-    width: 350px;
-  }
-  @media (max-width: 350px) {
-    width: 100%;
-  } */
 `;
 
 const HeaderInner = styled.div`

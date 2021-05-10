@@ -16,7 +16,12 @@ const CHANGE_IMG = "CHANGE_IMG";
 /////////
 const GET_IMAGE = "GET_IMAGE";
 const DELETE_IMAGE = "DELETE_IMAGE";
+// 수정할때 삭제된 이미지 ID들을 관리하는 액션
 const GET_DELETE_ID = "GET_DELETE_ID";
+// 수정할때 삭제된 파일들을 관리하는 액션
+const GET_EDIT_FILE = "GET_EDIT_FILE";
+// 수정시 이미지를 추가할 때 필요한 액션
+const ADD_EDIT_IMAGE = "ADD_EDIT_IMAGE";
 
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 const getPreview = createAction(GET_PREVIEW, (preview) => ({ preview }));
@@ -37,6 +42,10 @@ const getImage = createAction(GET_IMAGE, (image) => ({ image }));
 const deleteImage = createAction(DELETE_IMAGE, (imgUrlId) => ({ imgUrlId }));
 // 삭제한 이미지 아이디 저장
 const getDeleteId = createAction(GET_DELETE_ID, (id) => ({ id }));
+// 수정할때 삭제된 파일들을 관리하는 액션
+const getEditFile = createAction(GET_EDIT_FILE, (edit_file) => ({ edit_file }));
+// 수정시 이미지를 추가할 때 필요한 액션
+const addEditImage = createAction(ADD_EDIT_IMAGE, (image) => ({ image }));
 
 //가져와서 post 에서 리스트 하나 가져와서 edit에 두고
 const initialState = {
@@ -44,8 +53,9 @@ const initialState = {
   file: [],
   edit: false, // 잘들어온다 //고쳐야할놈
   image: [], // 이미지를 따로 빼오자 // 이미지 x 클릭시 x 이미지를 제외한 배열이 들어옴
-  id: [],
+  id: [], //삭제한 id가 들어간 배열
   //이것을 editPost의 img_url로 바꿔주고 setPost 해줘야 한다
+  edit_file: [],
 };
 
 //요기서 수정해야하는 board를 찾아서 image에 저장해준다 image를 이용해 프리뷰를 뿌려주고 x 버튼으로 수정 해준다
@@ -245,6 +255,15 @@ export default handleActions(
       produce(state, (draft) => {
         draft.id.push(action.payload.id);
       }),
+    [GET_EDIT_FILE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.edit_file.push(action.payload.edit_file);
+      }),
+    [ADD_EDIT_IMAGE]: (state, action) =>
+      //여기서 imgUrl:(파일리더로 읽은값,,,)이렇게 해줘야하나?
+      produce(state, (draft) => {
+        draft.image.push(action.payload.image);
+      }),
   },
   initialState
 );
@@ -258,6 +277,8 @@ const actionCreators = {
   ChangeEdit,
   deleteImage, //수정중 x 버튼을 누를때 이미지 사라지게 하기
   getDeleteId, //삭제된 이미지 아이디 가져오기
+  getEditFile,
+  addEditImage,
 };
 
 export { actionCreators };

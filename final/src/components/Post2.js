@@ -20,7 +20,7 @@ import "../Css/Post.css";
 //로그인 후에 이용가능 합니다
 const Post2 = (props) => {
   const dispatch = useDispatch();
-  console.log(props);
+  // console.log(props);
 
   // 이미지들 반복문으로 뽑아오기
   let image_list = [];
@@ -105,9 +105,9 @@ const Post2 = (props) => {
           <div className={"hoverDark"}>
             <div className={"PostFont"}>
               {props.like ? (
-                <FavoriteIcon onClick={disLike} />
+                <FavoriteIcon fontSize="24px" onClick={disLike} />
               ) : (
-                <FavoriteBorderIcon onClick={addLike} />
+                <FavoriteBorderIcon fontSize="24px" onClick={addLike} />
               )}
               <div>{props.likeCnt} </div>
               <br />

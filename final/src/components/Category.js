@@ -447,7 +447,6 @@ const CateGoryTitle = styled.div`
   border-bottom: 1px solid lightgray;
   width: 100%;
   font-size: 17px;
-
   padding-bottom: 7px;
   @media (max-width: 1450px) {
     display: none;
@@ -460,7 +459,7 @@ const CategoryIcon = styled.div`
 
 const Btn = styled.button`
   margin: 3px;
-  padding: 3px 7px;
+  padding: 5px 9px;
   background-color: white;
   border-radius: 50px;
   box-sizing: border-box;
@@ -472,7 +471,7 @@ const Btn = styled.button`
 const SelectedBtn = styled.button`
   // 선택 됐을때 버튼
   margin: 2px;
-  padding: 3px 7px;
+  padding: 5px 9px;
   /* background-color: #3897f0; */
   background-color: white;
   border-radius: 50px;

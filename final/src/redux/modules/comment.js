@@ -98,6 +98,7 @@ const addCommentAPI = (comment, board_id) => {
         // dispatch(setComment(comment_list, board_id));
         // dispatch(addComment(comment, board_id));
         dispatch(postActions.getPostAPI());
+        // dispatch(postActions.setPost());
       })
       .catch((err) => {
         console.log(err);

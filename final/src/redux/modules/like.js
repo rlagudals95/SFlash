@@ -8,6 +8,7 @@ import { config } from "../../shared/config";
 import { getCookie } from "../../shared/Cookie";
 import { actionCreators as postActions } from "./post";
 
+const GET_LIKE = "GET_LIKE";
 const ADD_LIKE = "ADD_LIKE";
 const DIS_LIKE = "DIS_LIKE";
 
@@ -21,10 +22,19 @@ const disLike = createAction(DIS_LIKE, (like, likeCnt) => ({
   likeCnt,
 }));
 
+// const getLike = createAction(GET_LIST, (like) => ({ like }));
+
 const addLikeAPI = (board_id) => {
   return function (dispatch, getState) {
     console.log("보드아이디", board_id);
     console.log("토큰", getCookie("jwt"));
+    const post_list = getState().post.list;
+    console.log("포스트 가져와!", post_list);
+
+    // const idx = post_list.findIndex((p) => p.id === board_id);
+
+    // console.log("몇번째냐~?", idx);
+
     axios({
       method: "POST",
       url: `${config.api}/board/${board_id}/like`,
