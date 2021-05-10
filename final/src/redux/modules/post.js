@@ -141,8 +141,8 @@ const getPostAPI = (start = null, size = null) => {
             content: _post.content, // 포스트 내용
             liked: _post.liked,
             likeCount: _post.likeCount,
-            spotName: _post.spotName,
-            imgUrl: _post.boardImgReponseDtoList,
+            spotName: _post.spotName, // 주소
+            img_url: _post.boardImgReponseDtoList,
             category: _post.category,
             profileImg: _post.writerImgUrl,
             comment: _post.boardDetailCommentDtoList,

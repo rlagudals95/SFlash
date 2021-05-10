@@ -251,11 +251,8 @@ const Maps = (props) => {
     // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
     // useEffect의 두번째 인자들에는 검색, 시작 좌표, 카테고리 설정값이 들어간다.
   // }, [search, startlat, startlon,
-  // }, [search, startlat, startlon,
-  //     is_cafe, is_night, is_ocean, is_mountain, is_flower,
-  //     is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
-  }, [startlat, startlon,]);
-  
+  }, [startlat, startlon]);
+
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다
   var ps = new kakao.maps.services.Places();
@@ -285,7 +282,7 @@ const Maps = (props) => {
         return;
       }
     });
-  }
+  }      
 
   // 전체 마커 + 카테고리별 마커 설정
   // 기본 설정 규칙 설명 --------------------------------------------------------------------------

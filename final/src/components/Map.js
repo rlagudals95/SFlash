@@ -939,6 +939,7 @@ const Maps = (props) => {
   }, [startlat, startlon,
       is_cafe, is_night, is_ocean, is_mountain, is_flower,
       is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
+  // }, [startlat, startlon,]);
 
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다
