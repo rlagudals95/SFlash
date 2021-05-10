@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Grid } from "../elements/index";
 import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as qnaActions } from "../redux/modules/qna";
 
-const HelpDetail = (props) => {
+const QnaDetail = (props) => {
   const dispatch = useDispatch();
   const is_uploading = useSelector((state) => state.profile.is_uploading);
   const preview = useSelector((state) => state.profile.preview);
@@ -29,24 +30,24 @@ const HelpDetail = (props) => {
 
         <TitleContainer>
           <Text size="1.5rem" weight="600" width="70%">
-            {props.help.title}
+            {props.qna.title}
           </Text>
           <Grid is_flex width="25%">
-            <Text>{props.help.writerName}</Text>
+            <Text>{props.qna.writerName}</Text>
             <Text>|</Text>
-            <Text>{props.help.createdAt}</Text>
+            <Text>{props.qna.createdAt}</Text>
           </Grid>
         </TitleContainer>
         <ContentContainer>
-          <Text>{props.help.contents}</Text>
+          <Text>{props.qna.contents}</Text>
         </ContentContainer>
         <CommentContainer>
           <Comment>
             <Grid flex>
-            <Text weight="600">{props.help.comment.writerName}</Text>
-            <Text width="65%">{props.help.comment.contents}</Text>
+            <Text weight="600">{props.qna.comment.writerName}</Text>
+            <Text width="65%">{props.hqna.comment.contents}</Text>
             </Grid>
-            <Text>{props.help.comment.createdAt}</Text>
+            <Text>{props.qna.comment.createdAt}</Text>
           </Comment>
           <Comment>
             <Text weight="600">{myNickname}</Text>
@@ -66,8 +67,8 @@ const HelpDetail = (props) => {
   );
 };
 
-HelpDetail.defaultProps = {
-  help: {
+QnaDetail.defaultProps = {
+  qna: {
     id: 11,
     title: "문의 제목",
     contents: "안녕하세요? 문의 내용 입니다. 감사합니다.",
@@ -83,10 +84,6 @@ HelpDetail.defaultProps = {
 };
 
 const Container = styled.div`
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   margin: auto;
   height: 100%;
 
@@ -192,4 +189,4 @@ const BorderBtn = styled.button`
   }
 `;
 
-export default HelpDetail;
+export default QnaDetail;

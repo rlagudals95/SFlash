@@ -27,12 +27,12 @@ const initialState = {
 };
 
   // 해당유저의 정보 가져오기 : Story의 유저정보
-  const getUserInfoAPI = (nickname) => {
+  const getUserInfoAPI = (userId) => {
     return function (dispatch, getState, { history }) {
 
       axios({
         method: "GET",
-        url: `${config.api}/profile/${nickname}`,
+        url: `${config.api}/profile/${userId}`,
         headers: {
           "X-AUTH-TOKEN": `${config.jwt}`,
         },
@@ -55,8 +55,8 @@ const initialState = {
   };
 
 
-// 게시물 수정하기(두개의 경우의 수로 나누어 생각하기)
-const editProfileAPI = (profile) => {
+// 프로필 수정하기(두개의 경우의 수로 나누어 생각하기)
+const editProfileAPI = (profile, userId) => {
   console.log(profile);
   return function (dispatch, getState, { history }) {
     const _image = getState().profile.preview;
@@ -70,7 +70,7 @@ const editProfileAPI = (profile) => {
 
       axios({
         method: "PUT",
-        url: `${config.api}/editmyprofile`,
+        url: `${config.api}/editmyprofile/${userId}`,
         data: formData,
         headers: {
           "X-AUTH-TOKEN": `${config.jwt}`,
@@ -99,7 +99,7 @@ const editProfileAPI = (profile) => {
  
       axios({
       method: "PUT",
-      url: `${config.api}/editmyprofile`,
+      url: `${config.api}/editmyprofile/${userId}`,
       data: formData,
       headers: {
         "X-AUTH-TOKEN": `${config.jwt}`,
@@ -133,10 +133,10 @@ const editProfileAPI = (profile) => {
   };
 };
 
-const editNicknameAPI = (newNickname) => {
+const editNicknameAPI = (newNickname, userId) => {
   console.log(newNickname);
   return function (dispatch, getState, { history }) {
-    const API = `${config.api}/editnickname`;
+    const API = `${config.api}/editnickname/${userId}`;
     axios
       .put(
         API,
@@ -150,13 +150,16 @@ const editNicknameAPI = (newNickname) => {
         }
       )
       .then((res) => {
-        console.log(res.data.data.nickname);
-        let nickname = res.data.data.nickname;
+        console.log(res.data.data);
+          let nickname = {
+            nickname: res.data.data.nickname
+          };
+          console.log("닉네임 수정 정보", nickname);
+          // let nickname = res.data.data.nickname;
         dispatch(editNickname(nickname));
-        localStorage.setItem("nickname", res.data.data.nickname);
-        // if(res.data.data.nickname === true){
-        //   alert("닉네임이 변경되었습니다! :)")
-        // }
+        if(res.data.data.nickname === true){
+          alert("닉네임이 변경되었습니다! :)")
+        }
       })
       .catch((err) => {
         console.error("작성 실패", err);

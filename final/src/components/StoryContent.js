@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Grid } from "../elements/index";
+import { Grid, Text } from "../elements/index";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as storypostActions } from "../redux/modules/storypost";
@@ -28,6 +28,13 @@ const StoryContent = (props) => {
 
   return (
     <React.Fragment>
+      {post_list.length === 0 ? 
+        (<Warning>
+          <Text bold size="2rem">SFlash(Logo)</Text>
+          <Text size="1.3rem">등록된 게시물이 없습니다 ㅠㅠ!</Text>
+        </Warning>
+        ):(
+          <>
         <Icons>
           <Icon onClick={handleClick} active={active === 1} id={1}>
             <FiImage size="30" onClick={handleClick} active={active === 1} id={1}/>
@@ -36,8 +43,8 @@ const StoryContent = (props) => {
             <HiOutlineMap size="30" onClick={handleClick} active={active === 2} id={2}/>
           </Icon>
         </Icons>
-        
-        <Content active={active === 1}>
+
+            <Content active={active === 1}>
           <GridList>
             {post_list.map((p) => {
               return <Post2 key={p.id} {...p}></Post2>;
@@ -48,11 +55,20 @@ const StoryContent = (props) => {
         <Grid height="40px" />
           <Box><StoryMap/></Box>
         </Content>
+          </>
+        )}
+        
+        
 
         <Grid height="300px" />
     </React.Fragment>
   );
 };
+
+const Warning = styled.div`
+  text-align: center;
+  margin: 100px auto;
+`;
 
 const Icons = styled.div`
   position: fixed;
