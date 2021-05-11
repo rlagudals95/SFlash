@@ -6,38 +6,71 @@ import { config } from "../../shared/config";
 import _ from "lodash";
 
 const SET_QNA = "SET_QNA";
+const SET_QNA_DETAIL = "SET_QNA_DETAIL";
 const ADD_QNA = "ADD_QNA";
 const EDIT_QNA = "EDIT_QNA";
 const DELETE_QNA = "DELETE_QNA";
 
-const setQna = (SET_QNA, (list) => ({ list }));
-const addQna = (ADD_QNA, (qna) => ({ qna }));
-const editQna = (EDIT_QNA, (qna) => ({ qna }));
-const deleteQna = (DELETE_QNA, (id) => ({ id }));
+const setQna = createAction(SET_QNA, (qna_list) => ({ qna_list }));
+const setQnaDetail = createAction(SET_QNA_DETAIL, (qna) => ({ qna }));
+const addQna = createAction(ADD_QNA, (qna) => ({ qna }));
+const editQna = createAction(EDIT_QNA, (qna) => ({ qna }));
+const deleteQna = createAction(DELETE_QNA, (id) => ({ id }));
 
 const initialState = {
   list: [],
+  qna: [],
 };
 
-const getQnaAPI = (start = null, size = null) => {
+const getQnaAPI = (page=1, size=10) => {
   console.log("getQnaAPI");
   return function (dispatch, getState, { history }) {
     axios({
       method: "GET",
-      url: `${config.api}/qna?page={page}&size={size}`,
+      url: `${config.api}/qna?page=${page}&size=${size}`,
+    })
+      .then((res) => {
+        console.log(res);
+        let qna_list = [];
+        res.data.data.forEach((_qna) => {
+          let qna = {
+            id: _qna.id,
+            title: _qna.title,
+            content: _qna.content,
+            writer: _qna.writer, 
+            modified: _qna.modified,
+          };
+          qna_list.push(qna);
+          console.log(qna_list);
+        });
+        dispatch(setQna(qna_list));
+      })
+      .catch((err) => {
+        console.error("작성 실패", err);
+      });
+  };
+};
+
+const getQnaDetailAPI = (qnaId) => {
+  console.log("qnaId:", qnaId);
+  return function (dispatch, getState, { history }) {
+    axios({
+      method: "GET",
+      url: `${config.api}/qna/${qnaId}/detail`,
     })
       .then((res) => {
         console.log(res.data.data);
-        // let qna_list = [];
-        // res.data.data.forEach((_qna) => {
-        //   let post = {
-        //     id: _.qna.id,
-        //     title: _qna.title,
-        //     contents: _qna.contents,
-        //   };
-        //   qna_list.push(post);
-        // });
-        // dispatch(setQna(qna_list));
+        let _qna =res.data.data
+          let qna = {
+            id: _qna.id,
+            title: _qna.title,
+            content: _qna.content,
+            modified: _qna.modified,
+            writer: _qna.writer, 
+            qcomments: _qna.qcomments,
+          };
+          console.log(qna);
+        dispatch(setQnaDetail(qna));
       })
       .catch((err) => {
         console.error("작성 실패", err);
@@ -78,7 +111,6 @@ const editQnaAPI = (qna, qnaId) => {
       data: qna,
       headers: {
         "X-AUTH-TOKEN": `${config.jwt}`,
-        "Content-Type": "multipart/form-data",
       },
     })
       .then((res) => {
@@ -86,9 +118,29 @@ const editQnaAPI = (qna, qnaId) => {
         let _qna = res.data.data;
         let qna = {
           title: _qna.title,
-          contents: _qna.contents,
+          content: _qna.content,
         };
         dispatch(editQna(qna, qnaId));
+      })
+      .catch((err) => {
+        console.error("작성 실패", err);
+      });
+  };
+};
+
+const deleteQnaAPI = (qnaId) => {
+  console.log("deleteQnaAPI", qnaId);
+  return function (dispatch, getState, { history }) {
+    axios({
+      method: "DELETE",
+      url: `${config.api}/qna/${qnaId}`,
+      headers: {
+        "X-AUTH-TOKEN": `${config.jwt}`,
+      },
+    })
+      .then((res) => {
+        console.log(res.data.data);
+        dispatch(deleteQna(qnaId));
       })
       .catch((err) => {
         console.error("작성 실패", err);
@@ -100,15 +152,28 @@ export default handleActions(
   {
     [SET_QNA]: (state, action) => 
       produce(state, (draft) => {
+        console.log("오 이제 나온다");
     draft.list = action.payload.qna_list;
-      draft.list = draft.list.reduce((acc, cur) => {
-        if(acc.findIndex(a => a.id === cur.id) === -1 ){
-          return [...acc, cur];
-        }else{
-          acc[acc.findIndex((a) => a.id === cur.id)] = cur;
-          return acc;
-        }
-      }, []);
+      // draft.list = draft.list.reduce((acc, cur) => {
+      //   if(acc.findIndex(a => a.id === cur.id) === -1 ){
+      //     return [...acc, cur];
+      //   }else{
+      //     acc[acc.findIndex((a) => a.id === cur.id)] = cur;
+      //     return acc;
+      //   }
+      // }, []);
+      }),
+      [SET_QNA_DETAIL]: (state, action) => 
+      produce(state, (draft) => {
+    draft.qna = action.payload.qna;
+      // draft.list = draft.list.reduce((acc, cur) => {
+      //   if(acc.findIndex(a => a.id === cur.id) === -1 ){
+      //     return [...acc, cur];
+      //   }else{
+      //     acc[acc.findIndex((a) => a.id === cur.id)] = cur;
+      //     return acc;
+      //   }
+      // }, []);
       }),
     [ADD_QNA]: (state, action) => 
       produce(state, (draft) => {
@@ -132,12 +197,15 @@ export default handleActions(
 );
 const actionCreators = {
   getQnaAPI,
+  getQnaDetailAPI,
   addQna,
   addQnaAPI,
   setQna,
+  setQnaDetail,
   editQna,
   editQnaAPI,
   deleteQna,
+  deleteQnaAPI,
 };
 
 export { actionCreators };

@@ -67,7 +67,9 @@ const StoryContent = (props) => {
 
 const Warning = styled.div`
   text-align: center;
-  margin: 100px auto;
+  margin: 30px auto;
+  padding: 150px;
+  background-color: #eee;
 `;
 
 const Icons = styled.div`
