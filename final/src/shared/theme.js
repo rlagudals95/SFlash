@@ -19,6 +19,7 @@ const theme = {
       width: calc(100% - 1px);
     }
     margin: auto;
+    padding-bottom: 300px;
     `,
 
   main_color: "rgb(70, 112, 253)",

@@ -74,7 +74,7 @@ function App() {
             <Route path="/faq" exact component={Faq} />
             <Route path="/qna" exact component={QnaList} />
             {/* detail과 write는 이후에 /:id로 업데이트 */}
-            <Route path="/qnadetail" exact component={QnaDetail} />
+            <Route path="/qnadetail/:id" exact component={QnaDetail} />
             <Route path="/qnawrite" exact component={QnaWrite} />
             <Route component={NotFound} />
             {/* 밑에서 부턴 카테고리별 페이지 */}
