@@ -102,8 +102,10 @@ const ModalDetail = (props) => {
     dispatch(CommnetActions.addCommentAPI(comments, props.id));
     setComments("");
   };
+
   const deleteComment = (id) => {
     console.log(id);
+    console.log(props.id);
     // console.log("하이");
     dispatch(CommnetActions.deleteCommentAPI(id, props.id));
   };

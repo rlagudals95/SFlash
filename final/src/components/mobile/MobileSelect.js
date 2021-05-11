@@ -12,12 +12,12 @@ import { actionCreators as PostActions } from "../../redux/modules/post";
 // import { actionCreators as PostActions } from "../redux/modules/post";
 const MobileSelect = () => {
   const dispatch = useDispatch();
-
+  const paging = useSelector((state) => state.post.paging);
   const is_category = useSelector((state) => state.category.is_category); //이걸 가져와서 이제 눌린상탠지 안눌린 상탠지 판단
   const [search, setSearch] = React.useState("");
-
+  console.log("슬라이스", null, 15);
   const getSearch = () => {
-    dispatch(PostActions.searchPostAPI(search));
+    dispatch(PostActions.searchPostAPI(search, null, 15));
   };
 
   console.log("검색어", search);
