@@ -36,18 +36,14 @@ function Navbar() {
 
 React.useEffect(() => {
   console.log(is_login);
-  }, []);
+  }, [is_login]);
 
-
-  
   const onLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
       dispatch(userActions.logOut());
       history.push("/");
     }
   };
-
-
 
   return (
     <>

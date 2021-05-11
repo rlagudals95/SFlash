@@ -21,8 +21,8 @@ const editNickname = createAction(EDIT_NICKNAME, (nickname) => ({ nickname }));
 // initialState
 // 리덕스에 저장되는 데이터 틀을 설정해놓는 부분
 const initialState = {
-  user: false,
-  is_uplaoding: false,
+  user: "",
+  is_uplaoding: false, 
   preview: null,
 };
 

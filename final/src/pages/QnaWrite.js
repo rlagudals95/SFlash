@@ -9,6 +9,7 @@ const QnaWrite = (props) => {
   const dispatch = useDispatch();
   const qnaId = props.id;
   const is_edit = qnaId ? true : false; //qna_id는 게시물이 존재하므로 수정 가능함
+  const qna = useSelector((state) => state.qna.qna);
   // const preview = useSelector((state) => state.image.preview);
   // const is_uploading = useSelector((state) => state.image.is_uploading);
 
@@ -16,19 +17,23 @@ const QnaWrite = (props) => {
     if (!qnaId) {
       return false;
     }
-    // dispatch(imageActions.setPreview());
+    dispatch(qnaActions.getQnaDetailAPI(qnaId));
   }, []);
 
   // 제목 입력 값 가져오기
-  const [title, setTitle] = React.useState("");
+  const [title, setTitle] = React.useState(
+    is_edit? qna.title : ""
+  );
   const changeTitle = (e) => {
     setTitle(e.target.value);
   };
 
   // 내용 입력 값 가져오기
-  const [contents, setContents] = React.useState("");
-  const changeContents = (e) => {
-    setContents(e.target.value);
+  const [content, setContent] = React.useState(
+    is_edit? qna.content : ""
+  );
+  const changeContent = (e) => {
+    setContent(e.target.value);
   };
 
   // // 이미지 업로드하기
@@ -56,24 +61,24 @@ const QnaWrite = (props) => {
   // };
 
   const onAddQna = () => {
-    if (!title || !contents) {
+    if (!title || !content) {
       window.alert("제목과 내용을 모두 입력해주세요 :(");
     }
     let qna = {
       title: title,
-      contents: contents,
+      content: content,
       // image: fileInput.current.files[0],
     };
     dispatch(qnaActions.addQnaAPI(qna));
   };
 
   const onEditQna = () => {
-    if (!title || !contents) {
+    if (!title || !content) {
       window.alert("제목과 내용을 모두 입력해주세요 :(");
     }
     let qna = {
       title: title,
-      contents: contents,
+      content: content,
       // image: fileInput.current.files[0],
     };
     dispatch(qnaActions.editQnaAPI(qna, qnaId));
@@ -92,9 +97,9 @@ const QnaWrite = (props) => {
             onChange={changeTitle}
           />
           <TextField
-            value={contents}
+            value={content}
             placeholder="문의내용을 입력해주세요."
-            onChange={changeContents}
+            onChange={changeContent}
           />
 
           {/* <button

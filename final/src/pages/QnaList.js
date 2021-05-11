@@ -12,77 +12,106 @@ import { RiDeleteBinLine } from "react-icons/ri";
 
 const QnaList = (props) => {
   const dispatch = useDispatch();
-  const qna_list = useSelector ((state) => state.qna.list);
+  const qna_list = useSelector((state) => state.qna.list);
+  console.log("qna_list:", qna_list);
 
-  React.useEffect (() => {
+  React.useEffect(() => {
     dispatch(qnaActions.getQnaAPI());
   }, []);
 
-
-  return (
-    <React.Fragment>
-      <Container>
-        <Title>문의하기</Title>
-        <SolidBtn width="120px" onClick={() => history.push("/qnawrite")}>
-          새 글 등록
-        </SolidBtn>
-        <Content>
-          {/* <Text width="4%">
-            <b>NO.</b>
-          </Text> */}
-          <Text width="65%">
-            <b>제목</b>
-          </Text>
-          <Text width="11%">
-            <b>작성자</b>
-          </Text>
-          <Text width="11%">
-            <b>일자</b>
-          </Text>
-        </Content>
-        {qna_list.map((q) => { 
-            return <ContentUnit key={q.id} {...q}>
-            {/* <Text width="4%">{props.help.id}</Text> */}
-            <TextBtn width="65%" 
-            onClick={() => history.push("/qnadetail")}
-            >
-              {props.qna.title}
-              <Icon onClick={() => history.push("/qnawrite/:id")}>
-                <FiEdit3 size="17" />
-              </Icon>
-              {/* <Icon><RiDeleteBinLine size="18"/></Icon> */}
-            </TextBtn>
-            <Text width="11%">{props.qna.writerName}</Text>
-            <Text width="11%">{props.qna.createdAt}</Text>
-          </ContentUnit>
+  if (qna_list.length === 0) {
+    return (
+      <React.Fragment>
+        <Container>
+          <Title>문의하기</Title>
+          <SolidBtn width="120px" onClick={() => history.push("/qnawrite")}>
+            새 글 등록
+          </SolidBtn>
+          <Content>
+            {/* <Text width="4%">
+          <b>NO.</b>
+        </Text> */}
+            <Text width="65%">
+              <b>제목</b>
+            </Text>
+            <Text width="11%">
+              <b>작성자</b>
+            </Text>
+            <Text width="11%">
+              <b>일자</b>
+            </Text>
+          </Content>
+          <Warning>
+          <text style={{fontSize:"1.4rem"}}>등록된 게시물이 없습니다.</text>
+        </Warning>
+        </Container>
+      </React.Fragment>
+    );
+  } else {
+    return (
+      <React.Fragment>
+        <Container>
+          <Title>문의하기</Title>
+          <SolidBtn width="120px" onClick={() => history.push("/qnawrite")}>
+            새 글 등록
+          </SolidBtn>
+          <Content>
+            {/* <Text width="4%">
+          <b>NO.</b>
+        </Text> */}
+            <Text width="65%">
+              <b>제목</b>
+            </Text>
+            <Text width="11%">
+              <b>작성자</b>
+            </Text>
+            <Text width="11%">
+              <b>일자</b>
+            </Text>
+          </Content>
+          {qna_list.map((q,idx) => {
+            return (
+              <ContentUnit key={q.id} {...q}>
+                {/* <Text width="4%">{props.help.id}</Text> */}
+                <TextBtn width="65%" onClick={() => history.push(`/qnadetail/${q.id}`)}>
+                  {q.title}
+                  <Icon onClick={() => history.push("/qnawrite/:id")}>
+                    <FiEdit3 size="17" />
+                  </Icon>
+                  {/* <Icon><RiDeleteBinLine size="18"/></Icon> */}
+                </TextBtn>
+                <Text width="11%">{q.writer}</Text>
+                <Text width="11%">{q.modified}</Text>
+              </ContentUnit>
+            );
           })}
-
-      </Container>
-    </React.Fragment>
-  );
+        </Container>
+      </React.Fragment>
+    );
+  }
 };
 
 QnaList.defaultProps = {
- qna: [
+  qna: [
     {
       // id: 11,
       title: "문의 제목입니다",
-      writerName: "nickname",
-      createdAt: "2021-05-08",
+      writer: "nickname",
+      modifiedDate: "2021-05-08",
     },
     {
       // id: 11,
       title: "문의 제목입니다",
-      writerName: "nickname",
-      createdAt: "2021-05-08",
+      writer: "nickname",
+      modifiedDate: "2021-05-08",
     },
     {
       // id: 11,
       title: "문의 제목입니다",
-      writerName: "nickname",
-      createdAt: "2021-05-08",
+      writer: "nickname",
+      modifiedDate: "2021-05-08",
     },
-  ] 
+  ],
 };
 
 const Container = styled.div`
@@ -129,7 +158,6 @@ const ContentUnit = styled.div`
 `;
 
 const Text = styled.div`
-  align-items: center;
   display: flex;
   font-size: 1rem;
   width: ${(props) => props.width};
@@ -185,5 +213,11 @@ const SolidBtn = styled.button`
     transition: all 0.5s ease-in-out;
   }
 `;
-
+const Warning = styled.div`
+  text-align: center;
+  align-items: center;
+  margin: 20px auto;
+  background-color: #eee;
+  padding: 150px;
+`;
 export default QnaList;
