@@ -94,7 +94,7 @@ const UploadModal = (props) => {
     dispatch(postActions.addPostAPI(post));
     // closeModal();
     props.close();
-    // history.replace("/");
+    history.replace("/");
   };
 
   const editPost = () => {

@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as categoryActionsInMap } from "../redux/modules/category_in_map";
 import * as BiIcons from "react-icons/bi";
 // import { actionCreators as PostActions } from "../redux/modules/post";
+
 const Category = () => {
   const dispatch = useDispatch();
-
+  const is_login = useSelector((state) => state.user.is_login);
   const is_category_in_map = useSelector((state) => state.category_in_map.is_category_in_map); //이걸 가져와서 이제 눌린상탠지 안눌린 상탠지 판단
 
   // console.log(is_category);
@@ -26,6 +27,8 @@ const Category = () => {
   const [exhibition, setExhibition] = useState();
   const [city, setCity] = useState();
   const [park, setPark] = useState();
+  const [showMine, setShowMine] = useState(false);
+  const [showLike, setShowLike] = useState(false);
 
   React.useEffect(() => {}, []);
 
@@ -336,7 +339,7 @@ const Category = () => {
         <MiddleBox/>
         {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
         <SpotSelectBox>
-          {/* 전체스팟 */}
+          {/* 전체스팟 찾기 */}
           {is_category_in_map.length == 0 ? (
             <AllSpotsSelected
               onClick={(e) => {
@@ -365,29 +368,40 @@ const Category = () => {
                 setCity(false);
                 setPark(false);
                 dispatch(categoryActionsInMap.resetCategoryInMap());
+                // dispatch(categoryActionsInMap.getMineOrLikeInMap("내 게시물"))
               }}
-            >
-              전체스팟
+            > 전체스팟
             </AllSpots>
           )}
-          {/* 내스팟 */}
-          {/* {is_login && ( 
-          
+          {/* 내스팟 찾기 */}
+          {showMine ? (
             <MySpotsSelected
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                setShowMine(false);
                 setCafe(false);
-                dispatch(categoryActionsInMap.getCategoryInMap("카페")); // 혹시라도 구현이 힘들땐 그냥 이값을 is_cafe말고 cafe로 보내고 포스트 리스트에서 카테고리가 cafe인 것을 필터해주자
+                setNight(false);
+                setOcean(false);
+                setMountain(false);
+                setFlower(false);
+                setAlone(false);
+                setCouple(false);
+                setFreind(false);
+                setPet(false);
+                setExhibition(false);
+                setCity(false);
+                setPark(false);
+                dispatch(categoryActionsInMap.resetCategoryInMap());
               }}
-            >
-              내스팟  
-
+            > 내스팟  
             </MySpotsSelected>
-            
-            :)} */}
-          <MySpots>내 스팟</MySpots>
-          <MyLikeSpots>좋아요 스팟</MyLikeSpots>
+            ) : (
+            <MySpots>내스팟</MySpots>
+            )} 
+          <MyLikeSpots>
+            좋아요 스팟
+          </MyLikeSpots>
         </SpotSelectBox>      
       </CategoryBox>
     </React.Fragment>
@@ -403,83 +417,115 @@ const MiddleBox = styled.div`
 const SpotSelectBox = styled.div`
   display: flex;
   justify-content: space-evenly;
-
 `;
 
 const AllSpotsSelected = styled.button`
+  display: flex;
+  flex-direction: column;
   width: 55px;
   height: 55px;
-  font-size: 15px;
+  font-size: 10px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   border: 1px solid #3897f0;
   cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
 `;
 
 const AllSpots = styled.button`
+  display: flex;
+  flex-direction: column;
   width: 55px;
   height: 55px;
-  font-size: 15px;
+  font-size: 10px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   border: 1px solid lightgray;
+  cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
 `;
 
 const MySpotsSelected = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 55px;
   height: 55px;
-  font-size: 15px;
+  font-size: 10px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   border: 1px solid #3897f0;
   cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
 `;
 
 const MySpots = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 55px;
   height: 55px;
-  font-size: 15px;
+  font-size: 10px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   border: 1px solid lightgray;
+  cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
 `;
 
 const MyLikeSpotsSelected = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 55px;
   height: 55px;
-  font-size: 15px;
+  font-size: 10px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   border: 1px solid #3897f0;
   cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
 `;
 
 const MyLikeSpots = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 55px;
   height: 55px;
-  font-size: 15px;
+  font-size: 10px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   border: 1px solid lightgray;
+  cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
 `;
 
 const CategoryBox = styled.div`
   /* display: flex;
 justify-content: space-between; */
-  width: 180px;
+  width: 210px;
   /* border-top: 1px solid #efefef;
   border-bottom: 1px solid #efefef; */
   padding: 8px 0px;
   position: fixed;
   z-index: 300;
   right: 50px;
-  top: 15vh;
+  top: 18vh;
   /* bottom: 50vh; */
   background-color: white;
   padding: 20px;
@@ -546,9 +592,9 @@ const CateGoryTitle = styled.div`
   width: 100%;
   font-size: 17px;
   padding-bottom: 7px;
-  @media (max-width: 1450px) {
-    display: none;
-  }
+  /* @media (max-width: 1450px) {
+    display: none; */
+  /* } */
 `;
 
 const CategoryIcon = styled.div`
