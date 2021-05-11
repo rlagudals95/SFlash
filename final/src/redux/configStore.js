@@ -8,6 +8,7 @@ import { connectRouter } from "connected-react-router";
 import User from "./modules/user";
 import Post from "./modules/post";
 import Category from "./modules/category";
+import CategoryInMap from "./modules/category_in_map";
 import Email from "./modules/email";
 import Profile from "./modules/profile";
 // import Image from "./modules/image";
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   user: User,
   post: Post,
   category: Category,
+  category_in_map: CategoryInMap,
   email: Email,
   profile: Profile,
   image2: Image2,
