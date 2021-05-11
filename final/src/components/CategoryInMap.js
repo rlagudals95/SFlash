@@ -397,8 +397,8 @@ const Category = () => {
 export default Category;
 
 const MiddleBox = styled.div`
-  height: 25px;
-`
+  height: 35px;
+`;
 
 const SpotSelectBox = styled.div`
   display: flex;
@@ -422,7 +422,7 @@ const AllSpots = styled.button`
   height: 55px;
   font-size: 15px;
   background-color: white;
-  border-radius: 50px;
+  border-radius: 5px;
   box-sizing: border-box;
   border: 1px solid lightgray;
 `;
@@ -443,7 +443,7 @@ const MySpots = styled.div`
   height: 55px;
   font-size: 15px;
   background-color: white;
-  border-radius: 50px;
+  border-radius: 5px;
   box-sizing: border-box;
   border: 1px solid lightgray;
 `;
@@ -464,7 +464,7 @@ const MyLikeSpots = styled.div`
   height: 55px;
   font-size: 15px;
   background-color: white;
-  border-radius: 50px;
+  border-radius: 5px;
   box-sizing: border-box;
   border: 1px solid lightgray;
 `;
@@ -479,7 +479,8 @@ justify-content: space-between; */
   position: fixed;
   z-index: 300;
   right: 50px;
-  bottom: 55vh;
+  top: 15vh;
+  /* bottom: 50vh; */
   background-color: white;
   padding: 20px;
   border-radius: 7px;
