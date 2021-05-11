@@ -26,7 +26,6 @@ const { kakao } = window;
 const Maps = (props) => {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
-  const nickname = localStorage.getItem("nickname");
 
   // 사진이 나오는 모달창 제어
   const [is_modal, setModal] = useState(false); // 마커 클릭하면 나오는 작은 모달
@@ -48,6 +47,9 @@ const Maps = (props) => {
     return state.category_in_map.is_category_in_map
   });
   console.log(is_category_in_map);
+  const is_all = is_category_in_map.length === 0  ? true : false;
+  console.log(is_all);
+
   // is_category 배열 안에 해당 카테고리가 원소로서 존재하는지 체크 : true, false가 기본값
   const is_cafe = is_category_in_map.includes("카페"); //요게 카페가 나온다는건? 배열안에 카페가 있다는 것!
   const is_night = is_category_in_map.includes("야경"); 
@@ -74,7 +76,7 @@ const Maps = (props) => {
   // 종류별 데이터는 필터 함수를 이용해 묶어 내고 필요한 부분에 가져다 쓴다.
   // 전체 마커, 내 마커, 내가 좋아요한 마커
   const allData = map_post_list;
-  const myData = map_post_list.filter((map_post_list) => map_post_list.writerName === nickname);
+  // const myData = map_post_list.filter((map_post_list) => map_post_list.writerName === nickname);
   const mylikeData = map_post_list.filter((map_post_list) => map_post_list.like === true);
   // 각 카테고리별 데이터
   const cafeData = map_post_list.filter(map_post_list => map_post_list.category === "카페");
@@ -256,7 +258,7 @@ const Maps = (props) => {
   // 6. 서버와 연결되어 데이터 통신이 이뤄지면 if문으로 분기하는 코드를 사용한다.
   // 기본 설정 규칙 설명 끝------------------------------------------------------------------------
   // 1. 전체마커 보이게 하는 설정 // 서버랑 통신 되면 이걸로 바꾸기 allData
-  if (is_category_in_map.length === 0 ) {  
+  if (is_all) {  
     // console.log(markerdata); 
     // markerdata.forEach((p, idx) => { // mockdate를 이용한 테스트. 나중엔 서버에서 가져온다.
     allData.forEach((all, idx) => { 
@@ -285,7 +287,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${all.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${all.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${all.spotName}</div>` +
@@ -344,7 +346,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${cafe.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${cafe.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${cafe.spotName}</div>` +
@@ -394,7 +396,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       const content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${night.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${night.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${night.spotName}</div>` +
@@ -444,7 +446,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${ocean.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${ocean.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${ocean.spotName}</div>` +
@@ -494,7 +496,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${mountain.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${mountain.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${mountain.spotName}</div>` +
@@ -544,7 +546,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${flower.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${flower.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${flower.spotName}</div>` +
@@ -594,7 +596,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${alone.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${alone.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${alone.spotName}</div>` +
@@ -644,7 +646,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${couple.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${couple.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${couple.spotName}</div>` +
@@ -695,7 +697,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${friend.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${friend.imgUrlOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${friend.spotName}</div>` +
@@ -745,7 +747,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${pet.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${pet.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${pet.spotName}</div>` +
@@ -795,7 +797,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${city.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${city.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${city.spotName}</div>` +
@@ -845,7 +847,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${park.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${park.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${park.spotName}</div>` +
@@ -895,7 +897,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       const content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${exhibition.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${exhibition.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${exhibition.spotName}</div>` +
@@ -936,7 +938,7 @@ const Maps = (props) => {
   // }, [search, startlat, startlon,
   // }, [startlat, startlon]);
   }, [startlat, startlon,
-    is_cafe, is_night, is_ocean, is_mountain, is_flower,
+    is_all, is_cafe, is_night, is_ocean, is_mountain, is_flower,
     is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
 
 

@@ -12,6 +12,7 @@ import { push } from "react-router-redux";
 const SET_POST = "SET_POST";
 const SET_MAP_POST = "SET_MAP_POST";
 const ADD_POST = "ADD_POST";
+const ADD_MAP_POST = "ADD_MAP_POST";
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 const LOADING = "LOADING";
@@ -29,6 +30,7 @@ const setMapPost = createAction(SET_MAP_POST, (map_post_list) => ({
   map_post_list,
 }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
+const addMapPost = createAction(ADD_MAP_POST, (map_post) => ({ map_post }));
 const editPost = createAction(EDIT_POST, (board_id, post) => ({
   board_id,
   post,
@@ -81,6 +83,7 @@ const addPostAPI = (post) => { // 지도상에서 게시물을 추가할 때 서
     // 폼데이터 이미지 파일들은 한개 씩 보내기!
     for (let i = 0; i < _file.length; i++) {
       formData.append("file", _file[i]);
+      console.log(_file[i]);
     }
 
     //////////
@@ -101,8 +104,17 @@ const addPostAPI = (post) => { // 지도상에서 게시물을 추가할 때 서
       .then((res) => {
         console.log("애드포스트 응답", res);
         // 민규님 이부분 해주셔야 할 것 같습니다 : 민규 작업중
-        dispatch(addPost(post))
-        history.replace("/");
+        let map_post = {
+          latitude: post.latitude,
+          longitude: post.longitude,
+          imgForOverlay: _file[0],
+          spotName: post.spotName,
+        }
+        console.log(map_post);
+        dispatch(addMapPost(map_post));
+        // history.replace("/");
+        // dispatch(addPost(post))
+        window.location.replace("/");
       })
       .catch((err) => {
         console.log(err);
@@ -194,6 +206,7 @@ const getMapPostAPI = () => {
             spotName: _post.spotName,
             category: _post.category,
             imgUrl: _post.boardImgReponseDtoList,
+            imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
             comment: _post.boardDetailCommentDtoList,
           };
           map_post_list.unshift(post);
@@ -416,6 +429,11 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
       }),
+    [ADD_MAP_POST]: (state, action) =>
+    produce(state, (draft) => {
+      draft.map_post_list.unshift(action.payload.map_post);
+      console.log(draft.map_post_list);
+    }),
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.push(...action.payload.post_list); // 일단 서버에서 받아온거 이니셜 스테이트 리스트에 삽입
@@ -511,6 +529,8 @@ export default handleActions(
 const actionCreators = {
   getPostAPI,
   addPostAPI,
+  addPost,
+  addMapPost,
   editPost,
   editPostAPI,
   searchPostAPI,
