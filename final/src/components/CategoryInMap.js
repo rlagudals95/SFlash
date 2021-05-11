@@ -403,7 +403,6 @@ const MiddleBox = styled.div`
 const SpotSelectBox = styled.div`
   display: flex;
   justify-content: space-evenly;
-
 `;
 
 const AllSpotsSelected = styled.button`
@@ -415,6 +414,9 @@ const AllSpotsSelected = styled.button`
   box-sizing: border-box;
   border: 1px solid #3897f0;
   cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
 `;
 
 const AllSpots = styled.button`
@@ -425,6 +427,10 @@ const AllSpots = styled.button`
   border-radius: 5px;
   box-sizing: border-box;
   border: 1px solid lightgray;
+  cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
 `;
 
 const MySpotsSelected = styled.div`
@@ -436,6 +442,9 @@ const MySpotsSelected = styled.div`
   box-sizing: border-box;
   border: 1px solid #3897f0;
   cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
 `;
 
 const MySpots = styled.div`
@@ -446,6 +455,10 @@ const MySpots = styled.div`
   border-radius: 5px;
   box-sizing: border-box;
   border: 1px solid lightgray;
+  cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
 `;
 
 const MyLikeSpotsSelected = styled.div`
@@ -457,6 +470,9 @@ const MyLikeSpotsSelected = styled.div`
   box-sizing: border-box;
   border: 1px solid #3897f0;
   cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
 `;
 
 const MyLikeSpots = styled.div`
@@ -467,6 +483,10 @@ const MyLikeSpots = styled.div`
   border-radius: 5px;
   box-sizing: border-box;
   border: 1px solid lightgray;
+  cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
 `;
 
 const CategoryBox = styled.div`
@@ -546,8 +566,8 @@ const CateGoryTitle = styled.div`
   width: 100%;
   font-size: 17px;
   padding-bottom: 7px;
-  @media (max-width: 1450px) {
-    display: none;
+  /* @media (max-width: 1450px) {
+    display: none; */
   }
 `;
 
