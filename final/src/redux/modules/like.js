@@ -50,48 +50,46 @@ const getLikePost = () => {
   };
 };
 
-const addLikeAPI = (board_id, board) => {
+const addLikeAPI = (board_id) => {
   return function (dispatch, getState, { history }) {
     const paging = getState().post.paging;
     console.log("보드아이디", board_id);
-    console.log("보드", board);
 
-
+    console.log("토큰있나요??", localStorage.getItem("jwt"));
     axios({
       method: "POST",
       url: `${config.api}/board/${board_id}/like`,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
-        dispatch(addLike(true));
+        // dispatch(addLike(true));
         // dispatch(getLike(true));
       })
       .catch((error) => {
-        window.alert("좋아요를 할 수 없습니다.");
+        // window.alert("좋아요를 할 수 없습니다.");
       });
   };
 };
 
-const disLikeAPI = (board_id, board) => {
+const disLikeAPI = (board_id) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: "DELETE",
       url: `${config.api}/board/${board_id}/like`,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
         // console.log(res);
-
-        dispatch(disLike(false));
+        // dispatch(disLike(false));
         // dispatch(getLike(false));
         // dispatch(postActions.getPostAPI(paging.start, paging.size));
       })
       .catch((error) => {
-        window.alert("좋아요를 할 수 없습니다.");
+        // window.alert("좋아요를 할 수 없습니다.");
       });
   };
 };

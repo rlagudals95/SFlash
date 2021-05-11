@@ -28,6 +28,8 @@ const DELETE_FILE_IDX = "DELETE_FILE_IDX";
 const DELETE_EDIT = "DELETE_EDIT";
 // 이미지 idx 로 지우기
 const DELETE_IMAGE_IDX = "DELETE_IMAGE_IDX";
+// 수정시 업로드한 이미지를 삭제할 때 idx값을 이용해 파일도 같이 삭제하기위해 이미지를 파일배열안에 넣어놓는다
+const GET_IMAGE_TO_FILE = "GET_IMAGE_TO_FILE";
 
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 const getPreview = createAction(GET_PREVIEW, (preview) => ({ preview }));
@@ -56,7 +58,8 @@ const getDeleteId = createAction(GET_DELETE_ID, (id) => ({ id }));
 const getEditFile = createAction(GET_EDIT_FILE, (edit_file) => ({ edit_file }));
 // 수정시 이미지를 추가할 때 필요한 액션
 const addEditImage = createAction(ADD_EDIT_IMAGE, (image) => ({ image }));
-//
+// 수정시 업로드한 이미지를 삭제할 때 idx값을 이용해 파일도 같이 삭제하기위해 이미지를 파일배열안에 넣어놓는다
+const getImgToFile = createAction(GET_IMAGE_TO_FILE, (image) => ({ image }));
 
 //가져와서 post 에서 리스트 하나 가져와서 edit에 두고
 const initialState = {
@@ -83,7 +86,13 @@ const getPost = (board_id) => {
 
     const onlyImg = editPost.img_url;
     // dispatch(getEditPost(editPost));
-    dispatch(getImage(onlyImg));
+    dispatch(getImage(onlyImg)); // 온리이미지르르..파일에도 넣자?
+
+    // console.log("이미지들길이", onlyImg.length);
+    // console.log("이미지들길이", onlyImg[0]);
+    for (let i = 0; i < onlyImg.length; i++) {
+      dispatch(getImgToFile(onlyImg[i]));
+    }
   };
 };
 
@@ -220,7 +229,7 @@ export default handleActions(
         //여긴 순서로 비교하자
         //오히려 위의 DELETE_IMAGE가 필요없을수도?
         //draft.image =
-        console.log("요부분 없애줘야하는데 .....", action.payload.idx);
+        // console.log("요부분 없애줘야하는데 .....", action.payload.idx);
 
         draft.image = draft.image.filter((i, idx) => {
           if (i !== action.payload.idx) {
@@ -239,7 +248,13 @@ export default handleActions(
       }),
     [DELETE_FILE_IDX]: (state, action) =>
       produce(state, (draft) => {
-        console.log("파일지워야되", action.payload.idx);
+        console.log("파일지워야되", action.payload.idx); //이미지 리더 값이 나온다... 파일이랑 연관짓자
+        // 처음엔 이미지 파일과 같이 들어있는 배열이온다
+        //idx를 받으면 해당 패열에서 idx 받은 곳의 요소 1개를 삭제한다
+        draft.edit_file.splice(action.payload.idx, 1);
+
+        // draft.edit_file = draft.edit_file.splice(action.payload.idx, 1);
+
         // draft.edit_file = draft.edit_file.spilce(action.payload.idx, 1);
         //  draft.edit_file = draft.edit_file.filter((i, idx) => {
         //    if (i !== action.payload.idx) {
@@ -249,7 +264,12 @@ export default handleActions(
 
         // 원래 이미지에서 idx으로 값으로 받은 위치의 원소 하나 제거 이런식이면 파일도 가능할거같다 이미지 id도 필요없이?
       }),
+    [GET_IMAGE_TO_FILE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.edit_file.push(action.payload.image);
+      }),
   },
+
   initialState
 );
 

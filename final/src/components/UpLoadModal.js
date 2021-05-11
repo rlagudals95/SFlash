@@ -26,16 +26,16 @@ import { CgLogOut } from "react-icons/cg";
 const UploadModal = (props) => {
   const { latitude, longitude, spotName } = props;
 
-  console.log(
-    "위도: " +
-      latitude +
-      " , " +
-      "경도: " +
-      longitude +
-      " , " +
-      "장소이름 : " +
-      spotName
-  );
+  // console.log(
+  //   "위도: " +
+  //     latitude +
+  //     " , " +
+  //     "경도: " +
+  //     longitude +
+  //     " , " +
+  //     "장소이름 : " +
+  //     spotName
+  // );
 
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
@@ -46,7 +46,11 @@ const UploadModal = (props) => {
   console.log("온리이미지~!~!~!!", onlyImg); //
   // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
   const editFile = useSelector((state) => state.image2.edit_file);
-  console.log("서버로 보내줄 수정파일", editFile);
+  console.log("서버로 보내줄 수정파일(에딧 파일)", editFile); // 수정중 다시 맘에 안들어서 삭제하고 싶다면 여길 수정
+  console.log("서버로 보내줄 수정파일", editFile[0]);
+  console.log("서버로 보내줄 수정파일", editFile[1]);
+  console.log("서버로 보내줄 수정파일", editFile[2]);
+  console.log("서버로 보내줄 수정파일", editFile[3]);
   // console.log(preview);
   const user_info = useSelector((state) => state.user.user);
   const [contents, setContents] = React.useState(props.content);
@@ -64,11 +68,10 @@ const UploadModal = (props) => {
   const deleteId = useSelector((state) => state.image2.id);
   console.log("삭제된 이미지 아이디들은 여기에...", deleteId);
 
-  console.log("고치자 ㅜㅜ", editImgList); // 수정하는 포스트리스트가 온다 map으로 이미지 돌리자
+  // console.log("고치자 ㅜㅜ", editImgList); // 수정하는 포스트리스트가 온다 map으로 이미지 돌리자
   // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
   const ok_submit = contents ? true : false;
 
-  console.log("모달창 닫기", props.close);
   React.useEffect(() => {
     if (is_edit) {
       dispatch(imageActions.getPost(props.id));
@@ -91,7 +94,7 @@ const UploadModal = (props) => {
     dispatch(postActions.addPostAPI(post));
     // closeModal();
     props.close();
-    // history.replace("/");
+    history.replace("/");
   };
 
   const editPost = () => {
@@ -207,7 +210,7 @@ const UploadModal = (props) => {
                           src={
                             onlyImg[idx].imgUrl
                               ? onlyImg[idx].imgUrl
-                              : onlyImg[idx]
+                              : onlyImg[idx] // 파일리더로 읽은값 그대로 src에 삽입
                           }
                         >
                           <DeleteImg
@@ -225,16 +228,18 @@ const UploadModal = (props) => {
                                 );
                               } else {
                                 dispatch(
-                                  imageActions.deleteImageIdx(onlyImg[idx])
+                                  imageActions.deleteImageIdx(onlyImg[idx])//asdjuifhuiawefhuiewbhfiubawefbiuewabiuf
                                 );
                                 //파일 삭제하는 액션
-                                
+
                                 // dispatch(
-                                //   imageActions.deleteFileIdx(onlyImg[idx])
+
                                 // );
                               }
+                              
+                              dispatch(imageActions.deleteFileIdx(idx));
                               // 수정시 등록하는 사진에는 id값이 없어서 직접 값을 비교해서 삭제해줌
-                              console.log("주목!!", onlyImg[idx]);
+                              // console.log("주목!!", onlyImg[idx]);
                               console.log(
                                 "몇번 이미지인가?",
                                 idx, // 몇번 이미지인가와
