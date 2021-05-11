@@ -30,9 +30,9 @@ const Post2 = (props) => {
   }, [like]);
 
   //
-  console.log("like", like);
+  // console.log("like", like);
 
-  console.log("????????", props.id, props);
+  // console.log("????????", props.id, props);
   const dispatch = useDispatch();
   // console.log(props);
 
@@ -54,8 +54,12 @@ const Post2 = (props) => {
 
   // console.log("썸네일", image_list[0].imgUrl);
   // const image = props.imgUrl;
-
   const PostImage = image_list[0].imgUrl;
+  // const PostImage = image_list[0].imgUrl
+  //   ? image_list[0].imgUrl
+  //   : "http://via.placeholder.com/400x300";
+
+  // const PostImage = "http://via.placeholder.com/400x300";
   // console.log(PostImage.imgUrl);
   // const [modalOpen, setModalOpen] = useState();
   const [is_modal, setDetailModal] = useState();

@@ -7,6 +7,7 @@ import moment from "moment";
 import { config } from "../../shared/config";
 import post_list from "../../components/MockData";
 import { getCookie } from "../../shared/Cookie";
+import { push } from "react-router-redux";
 
 const SET_POST = "SET_POST";
 const SET_MAP_POST = "SET_MAP_POST";
@@ -230,20 +231,35 @@ const editPostAPI = (board_id, _edit) => {
   return function (dispatch, getState) {
     const deleteImg = getState().image2.id;
     const addFile = getState().image2.edit_file;
+    //여기서
+    // for (let i = 0; i < addFile.length; i++) {
+    //   console.log(addFile[i].imgUrl);
+    // }
 
     console.log("삭제된 이미지 아이디들", deleteImg);
     console.log("추가될 이미지파일", addFile);
     console.log("바뀔 게시글", board_id);
     console.log("바뀔 타이틀", _edit.title);
     console.log("바뀔 글내용", _edit.contents);
-
+    // addFile[i]번째에 imgUrl 이 있을경우 제외 시킨다
     const formData = new FormData();
     formData.append("title", _edit.title);
     formData.append("content", _edit.contents);
     formData.append("deleteImages", deleteImg);
 
+    let _addFile = [];
     for (let i = 0; i < addFile.length; i++) {
-      formData.append("file", addFile[i]);
+      //가져온 어레이만큼 반복문을 돌리는데 이때 url형식의 기존 이미지는 제거
+      if (!addFile[i].imgUrl) {
+        _addFile.push(addFile[i]);
+      }
+    }
+    //파일 리스트 중에 기존에 있던 imgUrl이 있는 이미지들을 제외하고 새로추가한 파일형식의 요소만 폼데이터로 수정(추가)요청
+
+    console.log("최종추가될 이미지", _addFile);
+
+    for (let i = 0; i < _addFile.length; i++) {
+      formData.append("file", _addFile[i]);
     }
 
     axios({
