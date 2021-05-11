@@ -17,7 +17,9 @@ const QnaDetail = (props) => {
   //  url에서 userId 불러오기
   const qnaId = props.match.params.id;
   const qna = useSelector((state) => state.qna.qna);
+  const comment_list = qna.qcomments;
   console.log(qna);
+  console.log(qna.qcomments);
   // 댓글 남길 때 필요한 내 닉네임은 로컬스토리지에서 가져와 사용한다.
   // 댓글은 관리자만 ???????????????
   const me = localStorage.getItem("nickname");
@@ -34,6 +36,15 @@ const QnaDetail = (props) => {
     setComment(e.target.value);
   };
 
+  const onAddComment = (comment) => {
+    console.log(comment);
+    if (!comment) {
+      alert("댓글을 입력하지 않으셨습니다.");
+    } else {
+      dispatch(qnaActions.addQnaCommentAPI(comment, qnaId));
+    }
+  };
+
   return (
     <React.Fragment>
       <Container>
@@ -43,19 +54,21 @@ const QnaDetail = (props) => {
           <Text size="1.1rem" width="100%">
             {qna.title}
           </Text>
-          <Grid is_flex width="40%">
-          <TextBtn onClick={() => history.push("/qnawrite/:id")}>
-           수정
-          </TextBtn>
-          <TextBtn onClick = {() => 
-          { window.confirm("게시물을 삭제하시겠습니까") &&
-            dispatch(qnaActions.deleteQnaAPI(qnaId))
-          }}>
-           삭제
-          </TextBtn>
+          <Grid is_flex width="50%">
+            <TextBtn onClick={() => history.push(`/qnawrite/${qnaId}`)}>
+              수정
+            </TextBtn>
+            <TextBtn
+              onClick={() => {
+                window.confirm("게시물을 삭제하시겠습니까") &&
+                  dispatch(qnaActions.deleteQnaAPI(qnaId));
+              }}
+            >
+              삭제
+            </TextBtn>
             <Text>{qna.writer}</Text>
             <Text>|</Text>
-            <Text>{qna.modified}</Text>
+            <Text width="90px">{qna.modified}</Text>
           </Grid>
         </TitleContainer>
 
@@ -63,22 +76,30 @@ const QnaDetail = (props) => {
           <Text>{qna.content}</Text>
         </ContentContainer>
         <CommentContainer>
-          <Comment>
+          {comment_list ? (comment_list.map((c) => {
+            return(
+              <Comment key={c.id} {...c}>
             <Grid flex>
-              <Text weight="600">{props.qna.qcomments.writer}</Text>
-              <Text width="65%">{props.qna.qcomments.content}</Text>
+              <Text weight="600">{c.writer}</Text>
+              <Text width="55%">{c.content}</Text>
             </Grid>
-            <Text width="100px">{props.qna.qcomments.modified}</Text>
+            <Text width="130px">{c.modified.split('T')[0]}</Text>
             <Icon onClick={() => history.push("/qnawrite/:id")}>
-            <FiEdit3 size="17" />
-          </Icon>
-          <Icon onClick = {() => 
-          { window.confirm("댓글을 삭제하시겠습니까") &&
-            dispatch(qnaActions.deleteQnaAPI(qnaId))
-          }}>
-            <RiDeleteBinLine size="18" />
-          </Icon>
+              <FiEdit3 size="17" />
+            </Icon>
+            <Icon
+              onClick={() => {
+                window.confirm("댓글을 삭제하시겠습니까") &&
+                  dispatch(qnaActions.deleteQnaAPI(qnaId));
+              }}
+            >
+              <RiDeleteBinLine size="18" />
+            </Icon>
           </Comment>
+            )
+          })):(null)
+        }
+          
           <Comment>
             <Text weight="600">{me}</Text>
             <InputStyle
@@ -88,9 +109,9 @@ const QnaDetail = (props) => {
               width="60%"
               onChange={changeComment}
             />
-            <BorderBtn>게시</BorderBtn>
+            <BorderBtn onClick={()=>onAddComment(comment)}>게시</BorderBtn>
           </Comment>
-        </CommentContainer>
+    </CommentContainer>
         <Grid height="200px" />
       </Container>
     </React.Fragment>

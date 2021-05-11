@@ -38,9 +38,9 @@ function App() {
     var results = regex.exec(window.location.search);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
-  const _jwt = getUrlParameter('token');   // _jwt: 소셜로그인으로 받아온 토큰
-  const _nickname = getUrlParameter('nickname');   // _nickname: 소셜로그인으로 받아온 닉네임
-  const _userId = getUrlParameter('userId');   // _nickname: 소셜로그인으로 받아온 닉네임
+  const social_jwt = getUrlParameter('token');   // social_jwt: 소셜로그인으로 받아온 토큰
+  // const _nickname = getUrlParameter('nickname');   // _nickname: 소셜로그인으로 받아온 닉네임
+  const social_userId = getUrlParameter('userId');   // _nickname: 소셜로그인으로 받아온 닉네임
   const error = getUrlParameter('error');    // 에러
   // console.log(_jwt);
   // console.log(_nickname);
@@ -48,13 +48,13 @@ function App() {
 
   React.useEffect(() => {
   //  소셜로그인 시 실행
-  if( _jwt && _nickname ){
-  localStorage.setItem("jwt", _jwt);
-  localStorage.setItem("nickname", _nickname);
-  localStorage.setItem("userId", _userId);
-  dispatch(userActions.loginCheck(_jwt));
-  }else if(jwt) {
-    dispatch(userActions.loginCheck(jwt));
+  if( social_jwt && social_userId ){
+  localStorage.setItem("jwt", social_jwt);
+  // localStorage.setItem("nickname", _nickname);
+  localStorage.setItem("userId", social_userId);
+  dispatch(userActions.loginCheck(social_jwt));
+  }else if(social_jwt || jwt) {
+    dispatch(userActions.loginCheck(social_jwt || jwt));
   }//렌더링 마다 로그인체크
   }, []);
 
@@ -73,9 +73,8 @@ function App() {
             <Route path="/story/:id" exact component={Story} />
             <Route path="/faq" exact component={Faq} />
             <Route path="/qna" exact component={QnaList} />
-            {/* detail과 write는 이후에 /:id로 업데이트 */}
             <Route path="/qnadetail/:id" exact component={QnaDetail} />
-            <Route path="/qnawrite" exact component={QnaWrite} />
+            <Route path="/qnawrite/:id" exact component={QnaWrite} />
             <Route component={NotFound} />
             {/* 밑에서 부턴 카테고리별 페이지 */}
             <Route path="/cafe" exact component={Cafe} />
