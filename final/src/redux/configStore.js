@@ -35,6 +35,10 @@ const rootReducer = combineReducers({
   faq: Faq,
   storypost :Storypost,
   qna: Qna,
+<<<<<<< HEAD
+=======
+
+>>>>>>> f526b6ed036959080939860ee7d27695ff9de093
   router: connectRouter(history),
 });
 

@@ -14,18 +14,13 @@ const Main = (props) => {
   const is_login = useSelector((state) => state.user.is_login);
 
   // 페이지 렌더링이 되면서 모달창에 들어갈 데이터들을 받아온다.
-  // useEffect(() => {
-  //   dispatch(postActions.getLogoutMapPostAPI())
-  // }, []);
-
-  // const map_post_list = useSelector((state) => {
-  //   return state.post.map_post_list
-  // });
+  useEffect(() => {
+    dispatch(postActions.getMapPostAPI())
+  }, []);
 
   return (
     <React.Fragment>
       <Map/>
-      {/* <Map map_post_list={map_post_list}/> */}
     </React.Fragment>
   );
   
