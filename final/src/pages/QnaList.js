@@ -5,24 +5,31 @@ import { history } from "../redux/configStore";
 import { Grid } from "../elements/index";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { actionCreators as qnaActions } from "../redux/modules/qna";
 
 import { FiEdit3 } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-const HelpList = (props) => {
+const QnaList = (props) => {
+  const dispatch = useDispatch();
+  const qna_list = useSelector ((state) => state.qna.list);
+
+  React.useEffect (() => {
+    dispatch(qnaActions.getQnaAPI());
+  }, []);
 
 
   return (
     <React.Fragment>
       <Container>
         <Title>문의하기</Title>
-        <SolidBtn width="120px" onClick={() => history.push("/helpwrite")}>
+        <SolidBtn width="120px" onClick={() => history.push("/qnawrite")}>
           새 글 등록
         </SolidBtn>
         <Content>
-          <Text width="4%">
+          {/* <Text width="4%">
             <b>NO.</b>
-          </Text>
+          </Text> */}
           <Text width="65%">
             <b>제목</b>
           </Text>
@@ -33,41 +40,52 @@ const HelpList = (props) => {
             <b>일자</b>
           </Text>
         </Content>
-        <ContentUnit>
-          <Text width="4%">{props.help.id}</Text>
+        {qna_list.map((q) => { 
+            return <ContentUnit key={q.id} {...q}>
+            {/* <Text width="4%">{props.help.id}</Text> */}
+            <TextBtn width="65%" 
+            onClick={() => history.push("/qnadetail")}
+            >
+              {props.qna.title}
+              <Icon onClick={() => history.push("/qnawrite/:id")}>
+                <FiEdit3 size="17" />
+              </Icon>
+              {/* <Icon><RiDeleteBinLine size="18"/></Icon> */}
+            </TextBtn>
+            <Text width="11%">{props.qna.writerName}</Text>
+            <Text width="11%">{props.qna.createdAt}</Text>
+          </ContentUnit>
+          })}
 
-          <TextBtn width="65%" 
-          onClick={() => history.push("/helpdetail")}
-          >
-            {props.help.title}
-            <Icon onClick={() => history.push("/helpwrite/:id")}>
-              <FiEdit3 size="17" />
-            </Icon>
-            {/* <Icon><RiDeleteBinLine size="18"/></Icon> */}
-          </TextBtn>
-
-          <Text width="11%">{props.help.writerName}</Text>
-          <Text width="11%">{props.help.createdAt}</Text>
-        </ContentUnit>
       </Container>
     </React.Fragment>
   );
 };
 
-HelpList.defaultProps = {
-  help: {
-    id: 11,
-    title: "문의 제목입니다",
-    writerName: "nickname",
-    createdAt: "2021-05-08",
-  },
+QnaList.defaultProps = {
+ qna: [
+    {
+      // id: 11,
+      title: "문의 제목입니다",
+      writerName: "nickname",
+      createdAt: "2021-05-08",
+    },
+    {
+      // id: 11,
+      title: "문의 제목입니다",
+      writerName: "nickname",
+      createdAt: "2021-05-08",
+    },
+    {
+      // id: 11,
+      title: "문의 제목입니다",
+      writerName: "nickname",
+      createdAt: "2021-05-08",
+    },
+  ] 
 };
 
 const Container = styled.div`
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   margin: auto;
   height: 100%;
 
@@ -168,4 +186,4 @@ const SolidBtn = styled.button`
   }
 `;
 
-export default HelpList;
+export default QnaList;

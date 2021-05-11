@@ -222,7 +222,15 @@ const StoryEditProfile = (props) => {
               />
             </Grid>
 
-            <SolidBtn width="120px" onClick={onEditProfile}>
+            <SolidBtn width="120px" 
+             onClick={() => {
+              const result = window.confirm("변경된 내용을 저장 하시겠습니까?");
+              if (result) {
+                onEditProfile();
+                props.closeModal();
+              }
+            }}
+            >
               저장하기
             </SolidBtn>
           </Grid>

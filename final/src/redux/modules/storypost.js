@@ -22,12 +22,12 @@ const initialState = {
 
 // 스토리페이지 : 유저가 업로드한 게시물 리스트
   // start = null, size = null
-  const getUserPostAPI = (nickname) => {
-    console.log(nickname);
+  const getUserPostAPI = (userId) => {
+    console.log(userId);
     return function (dispatch, getState) {
       axios({
         method: "GET",
-        url: `${config.api}/story/${nickname}/board`,
+        url: `${config.api}/story/${userId}/board`,
         headers: {
           "X-AUTH-TOKEN": `${config.jwt}`,
         }
@@ -64,11 +64,11 @@ const initialState = {
   };
 
   // 스토리페이지 : 유저가 좋아요한 게시물 리스트
-  const getUserLikeAPI = (nickname) => {
+  const getUserLikeAPI = (userId) => {
     return function (dispatch, getState) {
       axios({
         method: "GET",
-        url: `${config.api}/story/${nickname}/likeboard`,
+        url: `${config.api}/story/${userId}/likeboard`,
         headers: {
           "X-AUTH-TOKEN": `${config.jwt}`,
         }

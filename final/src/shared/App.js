@@ -21,9 +21,9 @@ import SideNav from "../components/SideNav";
 import ScrollToTop from "./ScrollToTop"; //페이지 넘길때 스크롤 맨위로 초기화(무한 스크롤 때문에 필요함)
 import Cafe from "../pages/Category/Cafe";
 import Faq from "../pages/Faq";
-import HelpList from "../pages/HelpList";
-import HelpDetail from "../pages/HelpDetail";
-import HelpWrite from "../pages/HelpWrite";
+import QnaList from "../pages/QnaList";
+import QnaDetail from "../pages/QnaDetail";
+import QnaWrite from "../pages/QnaWrite";
 import Search from "@material-ui/icons/Search";
 
 function App() {
@@ -40,6 +40,7 @@ function App() {
 };
   const _jwt = getUrlParameter('token');   // _jwt: 소셜로그인으로 받아온 토큰
   const _nickname = getUrlParameter('nickname');   // _nickname: 소셜로그인으로 받아온 닉네임
+  const _userId = getUrlParameter('userId');   // _nickname: 소셜로그인으로 받아온 닉네임
   const error = getUrlParameter('error');    // 에러
   // console.log(_jwt);
   // console.log(_nickname);
@@ -50,6 +51,7 @@ function App() {
   if( _jwt && _nickname ){
   localStorage.setItem("jwt", _jwt);
   localStorage.setItem("nickname", _nickname);
+  localStorage.setItem("userId", _userId);
   dispatch(userActions.loginCheck(_jwt));
   }else if(jwt) {
     dispatch(userActions.loginCheck(jwt));
@@ -70,10 +72,10 @@ function App() {
             <Route path="/postlist" exact component={PostList} />
             <Route path="/story/:id" exact component={Story} />
             <Route path="/faq" exact component={Faq} />
-            <Route path="/help" exact component={HelpList} />
+            <Route path="/qna" exact component={QnaList} />
             {/* detail과 write는 이후에 /:id로 업데이트 */}
-            <Route path="/helpdetail" exact component={HelpDetail} />
-            <Route path="/helpwrite" exact component={HelpWrite} />
+            <Route path="/qnadetail" exact component={QnaDetail} />
+            <Route path="/qnawrite" exact component={QnaWrite} />
             <Route component={NotFound} />
             {/* 밑에서 부턴 카테고리별 페이지 */}
             <Route path="/cafe" exact component={Cafe} />

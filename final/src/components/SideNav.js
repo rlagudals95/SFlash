@@ -27,7 +27,7 @@ function Navbar() {
   const showSidebar = () => setSidebar(!sidebar);
 
   const is_login = useSelector((state) => state.user.is_login);
-  const nickname = localStorage.getItem("nickname"); // 로컬스토리지에 저장된 닉네임 가져오는 방법
+  const userId = localStorage.getItem("userId"); // 로컬스토리지에 저장된 닉네임 가져오는 방법
   const is_loading = useSelector((state) => state.user.is_loading);
 
   // React.useEffect(() => {
@@ -36,7 +36,7 @@ function Navbar() {
 
 React.useEffect(() => {
   console.log(is_login);
-  }, [is_login]);
+  }, []);
 
 
   
@@ -84,7 +84,7 @@ React.useEffect(() => {
                   <CgIcons.CgProfile
                     size="1.6rem"
                     onClick={() => {
-                      history.push(`/story/${nickname}`);
+                      history.push(`/story/${userId}`);
                     }}
                   />
                 </Link>
@@ -111,7 +111,7 @@ React.useEffect(() => {
               <FaIcons.FaEnvelopeOpenText size="1.4rem" />
             </Link>
             <IconInfo>FAQ</IconInfo>
-            <Link to="/help">
+            <Link to="/qna">
              <GrCircleQuestion size="1.4rem"/>
             </Link>
             <IconInfo>1:1</IconInfo>
