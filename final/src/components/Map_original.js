@@ -150,7 +150,7 @@ const Maps = (props) => {
     var options = {
       //지도를 생성할 때 필요한 기본 옵션
       center: new kakao.maps.LatLng(startlat, startlon), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
-      level: 12, //지도 확대 레벨
+      level: 8, //지도 확대 레벨
     };
 
     var map = new kakao.maps.Map(container, options); // 지도생성 및 객체 리턴
@@ -939,7 +939,6 @@ const Maps = (props) => {
     is_cafe, is_night, is_ocean, is_mountain, is_flower,
     is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
 
-
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다
   var ps = new kakao.maps.services.Places();
@@ -1015,7 +1014,7 @@ export default Maps;
 const SearchBox = styled.div`
   position: fixed;
   margin: auto;
-  top: 70px;
+  top: 75px;
   left: 110px;
   /* transform: translate(-60%, -60%); */
   z-index: 10;
@@ -1027,14 +1026,14 @@ const SearchBox = styled.div`
     width: 400px;
   }
   @media (max-width: 960px) {
-    top: 80px;
+    top: 60px;
     /* left: 110px; */
     margin: auto;
     width: 350px;
     left: 10vw;
   }
   @media (max-width: 400px) {
-    top: 50px;
+    top: 60px;
     width: 50%;
     margin: auto;
     left: 20vw;

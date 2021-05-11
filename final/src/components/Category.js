@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as categoryActions } from "../redux/modules/category";
 import * as BiIcons from "react-icons/bi";
 // import { actionCreators as PostActions } from "../redux/modules/post";
+
 const Category = () => {
   const dispatch = useDispatch();
 

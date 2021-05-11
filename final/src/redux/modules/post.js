@@ -66,7 +66,7 @@ const initialState = {
   like: false, // 접속유저의 like유무를 파악해 게시물의 하트 모양을 관리함
 };
 
-const addPostAPI = (post) => {
+const addPostAPI = (post) => { // 지도상에서 게시물을 추가할 때 서버로 데이터 보내는 미들웨어
   return function (dispatch, getState) {
     const user_info = getState().user.user;
     const _file = getState().image2.file;
@@ -99,9 +99,9 @@ const addPostAPI = (post) => {
     })
       .then((res) => {
         console.log("애드포스트 응답", res);
-        //민규님 이부분 해주셔야 할 것 같습니다
-
-        // dispatch(addPost(post))
+        // 민규님 이부분 해주셔야 할 것 같습니다 : 민규 작업중
+        dispatch(addPost(post))
+        history.replace("/");
       })
       .catch((err) => {
         console.log(err);
