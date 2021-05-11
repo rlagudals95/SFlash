@@ -94,7 +94,7 @@ const Maps = (props) => {
   // 전체 마커, 작성용마커, 좋아요마커, 각 카테고리별 마커들의 imgurl
   const writeMarkerImgUrl = "https://i.postimg.cc/Fz0bW4zz/2x.png";
   // const totalMyMarkerImgUrl = "https://i.postimg.cc/854vcQwf/2x.png";
-  const totalMyMarkerImgUrl = "https://i.postimg.cc/854vcQwf/2x.png";
+  const totalMarkerImgUrl = "https://i.postimg.cc/854vcQwf/2x.png";
   const myLikeMarkerImgUrl = "https://i.postimg.cc/ZqcnFPN1/2x.png";
   const cafeMarkerImgUrl = "https://i.postimg.cc/MZg45Cz8/2x.png";
   const nightMarkerImgUrl = "https://i.postimg.cc/4xVWWyB6/2x.png";
@@ -245,44 +245,6 @@ const Maps = (props) => {
       });
     }
 
-    // 지도 api 설정은 여기서 끝
-    // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
-    // useEffect의 두번째 인자들에는 검색, 시작 좌표, 카테고리 설정값이 들어간다.
-  // }, [search, startlat, startlon,
-  }, [startlat, startlon]);
-  // }, [startlat, startlon,
-  //   is_cafe, is_night, is_ocean, is_mountain, is_flower,
-  //   is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
-
-  // 키워드로 검색하기!!!!!!
-  // 장소 검색 객체를 생성합니다
-  var ps = new kakao.maps.services.Places();
-  // 키워드로 장소를 검색합니다
-  if (search) {
-    //search가 빈 string일때 검색이 되어서 오류가 뜨는 경우를 없애기 위해 if문으로 분기한다.
-    ps.keywordSearch(search, (data, status, pagination) => {
-      if (status === kakao.maps.services.Status.OK) {  // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        var bounds = new kakao.maps.LatLngBounds();    // LatLngBounds 객체에 좌표를 추가합니다
-        console.log(data);
-        console.log(bounds);
-
-        for (var i = 0; i < data.length; i++) {
-          // displayMarker(data[i], bounds);
-          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-
-          // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다.
-          _map.setBounds(bounds);
-        }
-      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-        window.alert("검색결과가 존재하지 않습니다.");
-        return;
-      } else if (status === kakao.maps.services.Status.ERROR) {
-        window.alert("검색 결과 중 오류가 발생했습니다.");
-        return;
-      }
-    });
-  }      
-
   // 전체 마커 + 카테고리별 마커 설정
   // 기본 설정 규칙 설명 --------------------------------------------------------------------------
   // useEffect의 두번째 인자에 'is_카테고리명'(true, false)에 따라 마커가 재렌더링되게 한다.
@@ -300,15 +262,15 @@ const Maps = (props) => {
     allData.forEach((all, idx) => { 
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(
-        totalMyMarkerImgUrl,
+        totalMarkerImgUrl,
         imageSize
       );
       
       var position = new kakao.maps.LatLng(all.latitude, all.longitude);
-      const myTotalMarkers = new kakao.maps.Marker({
+      var totalMarkers = new kakao.maps.Marker({
         // 마커들을 생성하고, 그것들을 대응되는 좌표에다가 뿌려줍니다.
         // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
-        map: _map,
+        map: map,
         position: position,
         image: markerImage,
       });
@@ -354,19 +316,19 @@ const Maps = (props) => {
 
     // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
 
-      kakao.maps.event.addListener(myTotalMarkers, "click", function () {
+      kakao.maps.event.addListener(totalMarkers, "click", function () {
         // 클릭하면 열기
-        customOverlay.setMap(_map);
+        customOverlay.setMap(map);
       });
 
-      kakao.maps.event.addListener(myTotalMarkers, "rightclick", function () {
+      kakao.maps.event.addListener(totalMarkers, "rightclick", function () {
         // 우클릭하면 닫기
         customOverlay.setMap(null);
       });
     });
   }
 
-  // 카테고리별 마커 + 커스텀오버레이 제어 시작!!
+// 카테고리별 마커 + 커스텀오버레이 제어 시작!!
   // 1. 카페 카테고리 : 카페마커 + 커스텀 오버레이
   if (is_cafe) {
     cafeData.map((cafe, idx) => {
@@ -374,7 +336,7 @@ const Maps = (props) => {
       var markerImage = new kakao.maps.MarkerImage(cafeMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(cafe.latitude, cafe.longitude);
       const cafeMarkers = new kakao.maps.Marker({
-        map: _map,
+        map: map,
         position: position,
         image: markerImage,
       })
@@ -407,7 +369,7 @@ const Maps = (props) => {
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       kakao.maps.event.addListener(cafeMarkers, 'click', function() {
-        cafeCustomOverlay.setMap(_map);
+        cafeCustomOverlay.setMap(map);
       })
 
       //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
@@ -424,7 +386,7 @@ const Maps = (props) => {
       const markerImage = new kakao.maps.MarkerImage(nightMarkerImgUrl, imageSize);
       const position = new kakao.maps.LatLng(night.latitude, night.longitude);
       const nightMarkers = new kakao.maps.Marker({
-        map: _map,
+        map: map,
         position: position,
         image: markerImage,
       })
@@ -457,7 +419,7 @@ const Maps = (props) => {
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       kakao.maps.event.addListener(nightMarkers, 'click', function() {
-        nightCustomOverlay.setMap(_map);
+        nightCustomOverlay.setMap(map);
       })
 
       //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
@@ -474,7 +436,7 @@ const Maps = (props) => {
       const markerImage = new kakao.maps.MarkerImage(oceanMarkerImgUrl, imageSize);
       const position = new kakao.maps.LatLng(ocean.latitude, ocean.longitude);
       const oceanMarkers = new kakao.maps.Marker({
-        map: _map,
+        map: map,
         position: position,
         image: markerImage,
       })
@@ -507,7 +469,7 @@ const Maps = (props) => {
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       kakao.maps.event.addListener(oceanMarkers, 'click', function() {
-        oceanCustomOverlay.setMap(_map);
+        oceanCustomOverlay.setMap(map);
       })
 
       //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
@@ -524,7 +486,7 @@ const Maps = (props) => {
       const markerImage = new kakao.maps.MarkerImage(mountainMarkerImgUrl, imageSize);
       const position = new kakao.maps.LatLng(mountain.latitude, mountain.longitude);
       const mountainMarkers = new kakao.maps.Marker({
-        map: _map,
+        map: map,
         position: position,
         image: markerImage,
       })
@@ -557,7 +519,7 @@ const Maps = (props) => {
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       kakao.maps.event.addListener(mountainMarkers, 'click', function() {
-        mountainCustomOverlay.setMap(_map);
+        mountainCustomOverlay.setMap(map);
       })
 
       //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
@@ -574,7 +536,7 @@ const Maps = (props) => {
       const markerImage = new kakao.maps.MarkerImage(flowerMarkerImgUrl, imageSize);
       const position = new kakao.maps.LatLng(flower.latitude, flower.longitude);
       const flowerMarkers = new kakao.maps.Marker({
-        map: _map,
+        map: map,
         position: position,
         image: markerImage,
       })
@@ -607,7 +569,7 @@ const Maps = (props) => {
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       kakao.maps.event.addListener(flowerMarkers, 'click', function() {
-        flowerCustomOverlay.setMap(_map);
+        flowerCustomOverlay.setMap(map);
       })
 
       //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
@@ -624,7 +586,7 @@ const Maps = (props) => {
       const markerImage = new kakao.maps.MarkerImage(aloneMarkerImgUrl, imageSize);
       const position = new kakao.maps.LatLng(alone.latitude, alone.longitude);
       const aloneMarkers = new kakao.maps.Marker({
-        map: _map,
+        map: map,
         position: position,
         image: markerImage,
       })
@@ -657,7 +619,7 @@ const Maps = (props) => {
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       kakao.maps.event.addListener(aloneMarkers, 'click', function() {
-        aloneCustomOverlay.setMap(_map);
+        aloneCustomOverlay.setMap(map);
       })
 
       //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
@@ -674,7 +636,7 @@ const Maps = (props) => {
       const markerImage = new kakao.maps.MarkerImage(coupleMarkerImgUrl, imageSize);
       const position = new kakao.maps.LatLng(couple.latitude, couple.longitude);
       const coupleMarkers = new kakao.maps.Marker({
-        map: _map,
+        map: map,
         position: position,
         image: markerImage,
       })
@@ -707,7 +669,7 @@ const Maps = (props) => {
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       kakao.maps.event.addListener(coupleMarkers, 'click', function() {
-        coupleCustomOverlay.setMap(_map);
+        coupleCustomOverlay.setMap(map);
       })
 
       //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
@@ -724,7 +686,7 @@ const Maps = (props) => {
       const markerImage = new kakao.maps.MarkerImage(friendMarkerImgUrl, imageSize);
       const position = new kakao.maps.LatLng(friend.latitude, friend.longitude);
       const friendMarkers = new kakao.maps.Marker({
-        map: _map,
+        map: map,
         position: position,
         image: markerImage,
       })
@@ -758,7 +720,7 @@ const Maps = (props) => {
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       kakao.maps.event.addListener(friendMarkers, 'click', function() {
-        friendCustomOverlay.setMap(_map);
+        friendCustomOverlay.setMap(map);
       })
 
       //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
@@ -775,7 +737,7 @@ const Maps = (props) => {
       const markerImage = new kakao.maps.MarkerImage(petMarkerImgUrl, imageSize);
       const position = new kakao.maps.LatLng(pet.latitude, pet.longitude);
       const petMarkers = new kakao.maps.Marker({
-        map: _map,
+        map: map,
         position: position,
         image: markerImage,
       })
@@ -808,7 +770,7 @@ const Maps = (props) => {
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       kakao.maps.event.addListener(petMarkers, 'click', function() {
-        petCustomOverlay.setMap(_map);
+        petCustomOverlay.setMap(map);
       })
 
       //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
@@ -825,7 +787,7 @@ const Maps = (props) => {
       const markerImage = new kakao.maps.MarkerImage(cityMarkerImgUrl, imageSize);
       const position = new kakao.maps.LatLng(city.latitude, city.longitude);
       const cityMarkers = new kakao.maps.Marker({
-        map: _map,
+        map: map,
         position: position,
         image: markerImage,
       })
@@ -858,7 +820,7 @@ const Maps = (props) => {
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       kakao.maps.event.addListener(cityMarkers, 'click', function() {
-        cityCustomOverlay.setMap(_map);
+        cityCustomOverlay.setMap(map);
       })
 
       //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
@@ -875,7 +837,7 @@ const Maps = (props) => {
       const markerImage = new kakao.maps.MarkerImage(parkMarkerImgUrl, imageSize);
       const position = new kakao.maps.LatLng(park.latitude, park.longitude);
       const parkMarkers = new kakao.maps.Marker({
-        map: _map,
+        map: map,
         position: position,
         image: markerImage,
       })
@@ -908,7 +870,7 @@ const Maps = (props) => {
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       kakao.maps.event.addListener(parkMarkers, 'click', function() {
-        parkCustomOverlay.setMap(_map);
+        parkCustomOverlay.setMap(map);
       })
 
       //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
@@ -925,7 +887,7 @@ const Maps = (props) => {
       const markerImage = new kakao.maps.MarkerImage(exhibitionMarkerImgUrl, imageSize);
       const position = new kakao.maps.LatLng(exhibition.latitude, exhibition.longitude);
       const exhibitionMarkers = new kakao.maps.Marker({
-        map: _map,
+        map: map,
         position: position,
         image: markerImage,
       })
@@ -958,7 +920,7 @@ const Maps = (props) => {
 
       // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
       kakao.maps.event.addListener(exhibitionMarkers, 'click', function() {
-        exhibitionCustomOverlay.setMap(_map);
+        exhibitionCustomOverlay.setMap(map);
       })
 
       //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
@@ -967,6 +929,44 @@ const Maps = (props) => {
       })
     })
   }
+
+    // 지도 api 설정은 여기서 끝
+    // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
+    // useEffect의 두번째 인자들에는 검색, 시작 좌표, 카테고리 설정값이 들어간다.
+  // }, [search, startlat, startlon,
+  // }, [startlat, startlon]);
+  }, [startlat, startlon,
+    is_cafe, is_night, is_ocean, is_mountain, is_flower,
+    is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
+
+  // 키워드로 검색하기!!!!!!
+  // 장소 검색 객체를 생성합니다
+  var ps = new kakao.maps.services.Places();
+  // 키워드로 장소를 검색합니다
+  if (search) {
+    //search가 빈 string일때 검색이 되어서 오류가 뜨는 경우를 없애기 위해 if문으로 분기한다.
+    ps.keywordSearch(search, (data, status, pagination) => {
+      if (status === kakao.maps.services.Status.OK) {  // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        var bounds = new kakao.maps.LatLngBounds();    // LatLngBounds 객체에 좌표를 추가합니다
+        console.log(data);
+        console.log(bounds);
+
+        for (var i = 0; i < data.length; i++) {
+          // displayMarker(data[i], bounds);
+          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+
+          // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다.
+          _map.setBounds(bounds);
+        }
+      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+        window.alert("검색결과가 존재하지 않습니다.");
+        return;
+      } else if (status === kakao.maps.services.Status.ERROR) {
+        window.alert("검색 결과 중 오류가 발생했습니다.");
+        return;
+      }
+    });
+  }      
 
   // 작성모달 관련
   const closeUpLoadModal = () => {

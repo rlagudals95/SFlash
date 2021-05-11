@@ -48,42 +48,6 @@ const Category = () => {
             카테고리
           </CateGoryTitle>
         </CategoryInfo>
-        {is_category_in_map.length == 0 ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              dispatch(categoryActionsInMap.resetCategoryInMap());
-              //여기서 모든 스테이트 false로 바꿔주는 작업도 해줘야한다
-            }}
-          >
-            #전체
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setCafe(false);
-              setNight(false);
-              setOcean(false);
-              setMountain(false);
-              setFlower(false);
-              setAlone(false);
-              setCouple(false);
-              setFreind(false);
-              setPet(false);
-              setExhibition(false);
-              setCity(false);
-              setPark(false);
-              dispatch(categoryActionsInMap.resetCategoryInMap()); //카테고리 상태 배열을 0으로 만듦
-              // window.location.reload();
-              //여기서 모든 스테이트 false로 바꿔주는 작업도 해줘야한다
-            }}
-          >
-            #전체
-          </Btn>
-        )}
         {/* 카페 */}
         {cafe ? (
           <SelectedBtn
@@ -369,7 +333,7 @@ const Category = () => {
             #반려동물
           </Btn>
         )}
-
+        <MiddleBox/>
         {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
         <SpotSelectBox>
           {/* 전체스팟 */}
@@ -431,6 +395,10 @@ const Category = () => {
 };
 
 export default Category;
+
+const MiddleBox = styled.div`
+  height: 25px;
+`
 
 const SpotSelectBox = styled.div`
   display: flex;
