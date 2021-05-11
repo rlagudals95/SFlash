@@ -131,30 +131,31 @@ const getPostAPI = (start = null, size = null) => {
         // console.log(res.data.data[0].boardImgReponseDtoList);
         result.forEach((_post) => {
           let post = {
-            // id: _post.boardId, // 포스트 id
-            // title: _post.title, // 포스트 title
-            // content: _post.content, // 포스트 내용
-            // writerName: _post.writerName,
-            // img_url: _post.boardImgReponseDtoList,
-            // category: _post.category,
-            // profileImg: _post.writerImgUrl,
-            // like: _post.liked,
-            // likeCnt: _post.likeCount,
-            // comment: _post.boardDetailCommentDtoList,
-            // creatAt: _post.modified,
             id: _post.boardId, // 포스트 id
-            userId: _post.userId,
-            writerName: _post.writerName,
-            writerImgUrl: _post.writerImgUrl,
             title: _post.title, // 포스트 title
             content: _post.content, // 포스트 내용
-            liked: _post.liked,
-            likeCount: _post.likeCount,
-            spotName: _post.spotName, // 주소
+            writerName: _post.writerName,
             img_url: _post.boardImgReponseDtoList,
             category: _post.category,
             profileImg: _post.writerImgUrl,
+            like: _post.liked,
+            likeCnt: _post.likeCount,
             comment: _post.boardDetailCommentDtoList,
+            creatAt: _post.modified, 
+            
+            // id: _post.boardId, // 포스트 id
+            // userId: _post.userId,
+            // writerName: _post.writerName,
+            // writerImgUrl: _post.writerImgUrl,
+            // title: _post.title, // 포스트 title
+            // content: _post.content, // 포스트 내용
+            // liked: _post.liked,
+            // likeCount: _post.likeCount,
+            // spotName: _post.spotName, // 주소
+            // img_url: _post.boardImgReponseDtoList,
+            // category: _post.category,
+            // profileImg: _post.writerImgUrl,
+            // comment: _post.boardDetailCommentDtoList,
             // creatAt: _post.modified,
           };
           post_list.unshift(post);
