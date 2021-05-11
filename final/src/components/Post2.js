@@ -129,7 +129,7 @@ const Post2 = (props) => {
               )}
               <div>{props.likeCnt} </div>
               <br />
-              {props.title}
+              {props.spotName}
             </div>
           </div>
           {/* 투명도 0 */}

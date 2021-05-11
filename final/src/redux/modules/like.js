@@ -56,22 +56,6 @@ const addLikeAPI = (board_id, board) => {
     console.log("보드아이디", board_id);
     console.log("보드", board);
 
-    // let post = {
-    //   id: board.id,
-    //   title: board.title,
-    //   content: board.content,
-    //   img_url: board.img_url,
-    //   writerName: board.writerName,
-    //   profileImg: board.profileImg,
-    //   like: board.like,
-    //   category: board.category,
-    //   likeCnt: board.likeCnt,
-    //   comment: board.comment,
-    //   creatAt: board.creatAt,
-    // };
-
-    // const post_list = getState().post.list;
-    // console.log("포스트 가져와!", post_list);
 
     axios({
       method: "POST",

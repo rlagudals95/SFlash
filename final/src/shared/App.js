@@ -48,7 +48,7 @@ function App() {
 
   React.useEffect(() => {
   //  소셜로그인 시 실행
- if( _jwt && _nickname ){
+  if( _jwt && _nickname ){
   localStorage.setItem("jwt", _jwt);
   localStorage.setItem("nickname", _nickname);
   localStorage.setItem("userId", _userId);

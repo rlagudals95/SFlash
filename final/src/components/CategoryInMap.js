@@ -1,26 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Grid, Text, Button, Input } from "../../elements/index";
-import { history } from "../../redux/configStore";
+import { Grid, Text, Button, Input } from "../elements/index";
+import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as categoryActions } from "../../redux/modules/category";
+import { actionCreators as categoryActionsInMap } from "../redux/modules/category_in_map";
 import * as BiIcons from "react-icons/bi";
-import SearchBar from "../SearchBar";
-import Input2 from "../../elements/Input2";
-import { actionCreators as PostActions } from "../../redux/modules/post";
-
 // import { actionCreators as PostActions } from "../redux/modules/post";
-const MobileSelect = () => {
+const Category = () => {
   const dispatch = useDispatch();
-  const paging = useSelector((state) => state.post.paging);
-  const is_category = useSelector((state) => state.category.is_category); //이걸 가져와서 이제 눌린상탠지 안눌린 상탠지 판단
-  const [search, setSearch] = React.useState("");
-  console.log("슬라이스", null, 15);
-  const getSearch = () => {
-    dispatch(PostActions.searchPostAPI(search, null, 15));
-  };
 
-  console.log("검색어", search);
+  const is_category_in_map = useSelector((state) => state.category_in_map.is_category_in_map); //이걸 가져와서 이제 눌린상탠지 안눌린 상탠지 판단
+
+  // console.log(is_category);
+  // console.log("카테고리 배열길이", is_category.length);
 
   const [cafe, setCafe] = useState();
   const [night, setNight] = useState();
@@ -48,65 +40,14 @@ const MobileSelect = () => {
         {/*  */}
         {/* 전체보기 버튼 */}
         <CategoryInfo>
-          <Input2
-            value={search}
-            placeholder="검색어를 입력해 주세요 (●'◡'●)"
-            _onChange={(e) => {
-              setSearch(e.target.value);
-            }}
-          ></Input2>
-
-          {search ? (
-            <SearchBtn2 onClick={getSearch}>
-              <BiIcons.BiSearch size="2rem" />
-            </SearchBtn2>
-          ) : (
-            <SearchBtn>
-              <BiIcons.BiSearch size="2rem" />
-            </SearchBtn>
-          )}
-
           <CateGoryTitle>
-            <CategoryIcon> </CategoryIcon>
+            <CategoryIcon>
+              {" "}
+              <BiIcons.BiBookBookmark size="25px" />
+            </CategoryIcon>
             카테고리
           </CateGoryTitle>
         </CategoryInfo>
-        {is_category.length == 0 ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              dispatch(categoryActions.resetCategory());
-              //여기서 모든 스테이트 false로 바꿔주는 작업도 해줘야한다
-            }}
-          >
-            #전체
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setCafe(false);
-              setNight(false);
-              setOcean(false);
-              setMountain(false);
-              setFlower(false);
-              setAlone(false);
-              setCouple(false);
-              setFreind(false);
-              setPet(false);
-              setExhibition(false);
-              setCity(false);
-              setPark(false);
-              dispatch(categoryActions.resetCategory()); //카테고리 상태 배열을 0으로 만듦
-              // window.location.reload();
-              //여기서 모든 스테이트 false로 바꿔주는 작업도 해줘야한다
-            }}
-          >
-            #전체
-          </Btn>
-        )}
         {/* 카페 */}
         {cafe ? (
           <SelectedBtn
@@ -114,7 +55,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setCafe(false);
-              dispatch(categoryActions.getCategory("카페")); // 혹시라고 구현이 힘들땐 그냥 이값을 is_cafe말고 cafe로 보내고 포스트 리스트에서 카테고리가 cafe인 것을 필터해주자
+              dispatch(categoryActionsInMap.getCategoryInMap("카페")); // 혹시라도 구현이 힘들땐 그냥 이값을 is_cafe말고 cafe로 보내고 포스트 리스트에서 카테고리가 cafe인 것을 필터해주자
             }}
           >
             #카페
@@ -125,7 +66,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setCafe("cafe");
-              dispatch(categoryActions.getCategory("카페"));
+              dispatch(categoryActionsInMap.getCategoryInMap("카페"));
             }}
           >
             #카페
@@ -138,7 +79,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setNight(false);
-              dispatch(categoryActions.getCategory("야경"));
+              dispatch(categoryActionsInMap.getCategoryInMap("야경"));
             }}
           >
             #야경
@@ -149,7 +90,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setNight("night");
-              dispatch(categoryActions.getCategory("야경"));
+              dispatch(categoryActionsInMap.getCategoryInMap("야경"));
             }}
           >
             #야경
@@ -162,7 +103,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setOcean(false);
-              dispatch(categoryActions.getCategory("바다"));
+              dispatch(categoryActionsInMap.getCategoryInMap("바다"));
             }}
           >
             #바다
@@ -173,7 +114,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setOcean("night");
-              dispatch(categoryActions.getCategory("바다"));
+              dispatch(categoryActionsInMap.getCategoryInMap("바다"));
             }}
           >
             #바다
@@ -186,7 +127,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setMountain(false);
-              dispatch(categoryActions.getCategory("산"));
+              dispatch(categoryActionsInMap.getCategoryInMap("산"));
             }}
           >
             #산
@@ -197,7 +138,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setMountain("mountain");
-              dispatch(categoryActions.getCategory("산"));
+              dispatch(categoryActionsInMap.getCategoryInMap("산"));
             }}
           >
             #산
@@ -210,7 +151,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setCity(false);
-              dispatch(categoryActions.getCategory("도심"));
+              dispatch(categoryActionsInMap.getCategoryInMap("도심"));
             }}
           >
             #도심
@@ -221,7 +162,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setCity("city");
-              dispatch(categoryActions.getCategory("도심"));
+              dispatch(categoryActionsInMap.getCategoryInMap("도심"));
             }}
           >
             #도심
@@ -234,7 +175,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setExhibition(false);
-              dispatch(categoryActions.getCategory("전시"));
+              dispatch(categoryActionsInMap.getCategoryInMap("전시"));
             }}
           >
             #전시
@@ -245,7 +186,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setExhibition("exhibitiom");
-              dispatch(categoryActions.getCategory("전시"));
+              dispatch(categoryActionsInMap.getCategoryInMap("전시"));
             }}
           >
             #전시
@@ -258,7 +199,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setPark(false);
-              dispatch(categoryActions.getCategory("공원"));
+              dispatch(categoryActionsInMap.getCategoryInMap("공원"));
             }}
           >
             #공원
@@ -269,7 +210,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setPark("park");
-              dispatch(categoryActions.getCategory("공원"));
+              dispatch(categoryActionsInMap.getCategoryInMap("공원"));
             }}
           >
             #공원
@@ -282,7 +223,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setFlower(false);
-              dispatch(categoryActions.getCategory("꽃"));
+              dispatch(categoryActionsInMap.getCategoryInMap("꽃"));
             }}
           >
             #꽃
@@ -293,7 +234,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setFlower("flower");
-              dispatch(categoryActions.getCategory("꽃"));
+              dispatch(categoryActionsInMap.getCategoryInMap("꽃"));
             }}
           >
             #꽃
@@ -306,7 +247,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setAlone(false);
-              dispatch(categoryActions.getCategory("나홀로"));
+              dispatch(categoryActionsInMap.getCategoryInMap("나홀로"));
             }}
           >
             #나홀로
@@ -317,7 +258,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setAlone("alone");
-              dispatch(categoryActions.getCategory("나홀로"));
+              dispatch(categoryActionsInMap.getCategoryInMap("나홀로"));
             }}
           >
             #나홀로
@@ -329,7 +270,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setCouple(false);
-              dispatch(categoryActions.getCategory("연인"));
+              dispatch(categoryActionsInMap.getCategoryInMap("연인"));
             }}
           >
             #연인
@@ -340,7 +281,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setCouple("couple");
-              dispatch(categoryActions.getCategory("연인"));
+              dispatch(categoryActionsInMap.getCategoryInMap("연인"));
             }}
           >
             #연인
@@ -352,7 +293,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setFreind(false);
-              dispatch(categoryActions.getCategory("친구"));
+              dispatch(categoryActionsInMap.getCategoryInMap("친구"));
             }}
           >
             #친구
@@ -363,7 +304,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setFreind("freind");
-              dispatch(categoryActions.getCategory("친구"));
+              dispatch(categoryActionsInMap.getCategoryInMap("친구"));
             }}
           >
             #친구
@@ -375,7 +316,7 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setPet(false);
-              dispatch(categoryActions.getCategory("반려동물"));
+              dispatch(categoryActionsInMap.getCategoryInMap("반려동물"));
             }}
           >
             #반려동물
@@ -386,46 +327,196 @@ const MobileSelect = () => {
               e.preventDefault();
               e.stopPropagation();
               setPet("pet");
-              dispatch(categoryActions.getCategory("반려동물"));
+              dispatch(categoryActionsInMap.getCategoryInMap("반려동물"));
             }}
           >
             #반려동물
           </Btn>
         )}
+        <MiddleBox/>
+        {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
+        <SpotSelectBox>
+          {/* 전체스팟 */}
+          {is_category_in_map.length == 0 ? (
+            <AllSpotsSelected
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dispatch(categoryActionsInMap.resetCategoryInMap());
+              }}
+            >
+              전체스팟
+            </AllSpotsSelected>
+          ) :  (
+            <AllSpots
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCafe(false);
+                setNight(false);
+                setOcean(false);
+                setMountain(false);
+                setFlower(false);
+                setAlone(false);
+                setCouple(false);
+                setFreind(false);
+                setPet(false);
+                setExhibition(false);
+                setCity(false);
+                setPark(false);
+                dispatch(categoryActionsInMap.resetCategoryInMap());
+              }}
+            >
+              전체스팟
+            </AllSpots>
+          )}
+          {/* 내스팟 */}
+          {/* {is_login && ( 
+          
+            <MySpotsSelected
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCafe(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("카페")); // 혹시라도 구현이 힘들땐 그냥 이값을 is_cafe말고 cafe로 보내고 포스트 리스트에서 카테고리가 cafe인 것을 필터해주자
+              }}
+            >
+              내스팟  
+
+            </MySpotsSelected>
+            
+            :)} */}
+          <MySpots>내 스팟</MySpots>
+          <MyLikeSpots>좋아요 스팟</MyLikeSpots>
+        </SpotSelectBox>      
       </CategoryBox>
     </React.Fragment>
   );
 };
 
-export default MobileSelect;
+export default Category;
+
+const MiddleBox = styled.div`
+  height: 35px;
+`;
+
+const SpotSelectBox = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+
+`;
+
+const AllSpotsSelected = styled.button`
+  width: 55px;
+  height: 55px;
+  font-size: 15px;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: 1px solid #3897f0;
+  cursor: pointer;
+`;
+
+const AllSpots = styled.button`
+  width: 55px;
+  height: 55px;
+  font-size: 15px;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: 1px solid lightgray;
+`;
+
+const MySpotsSelected = styled.div`
+  width: 55px;
+  height: 55px;
+  font-size: 15px;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: 1px solid #3897f0;
+  cursor: pointer;
+`;
+
+const MySpots = styled.div`
+  width: 55px;
+  height: 55px;
+  font-size: 15px;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: 1px solid lightgray;
+`;
+
+const MyLikeSpotsSelected = styled.div`
+  width: 55px;
+  height: 55px;
+  font-size: 15px;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: 1px solid #3897f0;
+  cursor: pointer;
+`;
+
+const MyLikeSpots = styled.div`
+  width: 55px;
+  height: 55px;
+  font-size: 15px;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: 1px solid lightgray;
+`;
 
 const CategoryBox = styled.div`
   /* display: flex;
 justify-content: space-between; */
-  width: 85vw;
-  height: 19.5vh;
+  width: 180px;
   /* border-top: 1px solid #efefef;
   border-bottom: 1px solid #efefef; */
   padding: 8px 0px;
   position: fixed;
   z-index: 300;
   right: 50px;
-  bottom: 50vh;
+  top: 15vh;
+  /* bottom: 50vh; */
   background-color: white;
   padding: 20px;
   border-radius: 7px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
-  top: -67%;
-  background-color: white;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  @media (max-width: 600px) {
-    top: -73%;
-    height: 14vh;
-  }
   @media (max-width: 400px) {
-    height: 19.5vh;
-    top: -67%;
+    /* 1450밑으로 넓이가 내려가면 */
+    z-index: 300;
+    position: fixed;
+    margin: auto;
+    width: 50%;
+    left: 15vw;
+    /* width: 100%;
+    left: 0;
+    bottom: 0;
+    justify-content: space-around;
+    flex-direction: row;
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0px 4px;
+    padding-top: -50px;
+    padding-bottom: 10px; */
+  }
+  /* @media (max-width: 600px) {
+    // 1450밑으로 넓이가 내려가면
+    z-index: 901;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 140px;
+    justify-content: space-around;
+    flex-direction: row;
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0px 4px;
+    padding-top: -50px;
+    padding-bottom: 10px;
   }
   /* height: 100px;
   overflow-y: scroll;
@@ -440,27 +531,7 @@ justify-content: space-between; */
     background-color: lightgrey;
     border-radius: 10px;
     box-shadow: inset 0px 0px 5px white;
-  } */
-`;
-
-const SearchBtn = styled.div`
-  width: 50px;
-  height: 50px;
-  position: fixed;
-  z-index: 500;
-  top: 23px;
-  right: 7px;
-  opacity: 0.2;
-`;
-
-const SearchBtn2 = styled.div`
-  width: 50px;
-  height: 50px;
-  position: fixed;
-  z-index: 500;
-  top: 23px;
-  right: 7px;
-  opacity: 0.7;
+  } */ 
 `;
 
 const CategoryInfo = styled.div`
@@ -474,7 +545,6 @@ const CateGoryTitle = styled.div`
   border-bottom: 1px solid lightgray;
   width: 100%;
   font-size: 17px;
-
   padding-bottom: 7px;
   @media (max-width: 1450px) {
     display: none;
@@ -487,7 +557,7 @@ const CategoryIcon = styled.div`
 
 const Btn = styled.button`
   margin: 3px;
-  padding: 3px 7px;
+  padding: 5px 9px;
   background-color: white;
   border-radius: 50px;
   box-sizing: border-box;
@@ -499,7 +569,7 @@ const Btn = styled.button`
 const SelectedBtn = styled.button`
   // 선택 됐을때 버튼
   margin: 2px;
-  padding: 3px 7px;
+  padding: 5px 9px;
   /* background-color: #3897f0; */
   background-color: white;
   border-radius: 50px;

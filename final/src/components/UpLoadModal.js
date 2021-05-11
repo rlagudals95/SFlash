@@ -42,8 +42,9 @@ const UploadModal = (props) => {
   const preview = useSelector((state) => state.image2.preview);
   // 수정 페이지 이미지
   const onlyImg = useSelector((state) => state.image2.image);
+
+  console.log("온리이미지~!~!~!!", onlyImg); //
   // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
-  console.log("추가한 이미지 확인", onlyImg);
   const editFile = useSelector((state) => state.image2.edit_file);
   console.log("서버로 보내줄 수정파일", editFile);
   // console.log(preview);
@@ -64,7 +65,7 @@ const UploadModal = (props) => {
   console.log("삭제된 이미지 아이디들은 여기에...", deleteId);
 
   console.log("고치자 ㅜㅜ", editImgList); // 수정하는 포스트리스트가 온다 map으로 이미지 돌리자
-  console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
+  // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
   const ok_submit = contents ? true : false;
 
   console.log("모달창 닫기", props.close);
@@ -74,14 +75,6 @@ const UploadModal = (props) => {
     }
   }, []);
 
-  console.log("!!!!!!!!!!!!!!!!", onlyImg);
-  /////////////////이거 유즈 이펙트안에 있어야 할지 싶다
-
-  // const closeModal = (e) => {
-  //   props.close;
-  // };
-
-  // 작성된 것을 리듀서-스토어에 디스패치해서 변경된 데이터를 본페이지에서 렌더링 되게 요청
   const addPost = (e) => {
     if (!contents) {
       window.alert("😗빈칸을 채워주세요...ㅎㅎ");
@@ -201,9 +194,6 @@ const UploadModal = (props) => {
         {/* {is_edit? 수정할 때 : 수정안 할 때 via홀더 보여줌 } */}
         {is_edit ? <UploadEdit /> : <Upload2 />}
         {is_edit ? (
-          // images는 처음 useEffect로 뽑아내고 for문이 돌기전에 map이 먼저 실행이 되면 인식을 못해서 images값이 있을때 map함수를 실행할 수 있게 설정
-          // images
-          // editImgList.img_url
           onlyImg && (
             <React.Fragment>
               {onlyImg.length >= 1 ? (
@@ -223,15 +213,28 @@ const UploadModal = (props) => {
                           <DeleteImg
                             onClick={() => {
                               dispatch(
-                                // 프리뷰에서 이미지 상단의 x 버튼을 눌렀을 때 바로 지워지는 것 구현
-                                imageActions.deleteImage(onlyImg[idx].imgUrlId)
-                              );
-
-                              dispatch(
                                 // 서버로 삭제한 이미지 id 보내주기 위해 작성
                                 imageActions.getDeleteId(onlyImg[idx].imgUrlId)
                               );
-
+                              //미리 등록해둔 이미지가 있는 경우엔 imgUrlId값이 있어 그것으로 삭제가능
+                              if (onlyImg[idx].imgUrlId) {
+                                dispatch(
+                                  imageActions.deleteImage(
+                                    onlyImg[idx].imgUrlId
+                                  )
+                                );
+                              } else {
+                                dispatch(
+                                  imageActions.deleteImageIdx(onlyImg[idx])
+                                );
+                                //파일 삭제하는 액션
+                                
+                                // dispatch(
+                                //   imageActions.deleteFileIdx(onlyImg[idx])
+                                // );
+                              }
+                              // 수정시 등록하는 사진에는 id값이 없어서 직접 값을 비교해서 삭제해줌
+                              console.log("주목!!", onlyImg[idx]);
                               console.log(
                                 "몇번 이미지인가?",
                                 idx, // 몇번 이미지인가와
@@ -393,8 +396,8 @@ const ModalImg = styled.div`
     border: none;
     box-sizing: border-box;
     width: 100%;
-    height: 680px;
-    max-height: 42vh;
+    height: 630px;
+    max-height: 350px;
     margin-bottom: -20px;
   }
   @media (max-width: 600px) {
