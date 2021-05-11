@@ -59,9 +59,17 @@ const loginAPI = (email, pwd) => {
       })
       .then((res) => {
         console.log(res.data);
+       
+        // let user = {
+        //   id : res.data.userId,
+        //   nickname : res.data.nickname,
+        //   profile : res.data.profileImgUrl,
+        //   role: res.data.role,
+        // }
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("jwt", res.data.token);
+        localStorage.setItem("role", res.data.role);
         dispatch(setUser());
         history.push("/");
       })
@@ -94,19 +102,12 @@ export default handleActions(
         // draft.user = action.payload.user;
         draft.is_login = true;
       }),
-    [GET_USER]: (state, action) =>
-      produce(state, (draft) => {
-        localStorage.getItem("nickname");
-        localStorage.getItem("jwt");
-        localStorage.getItem("userId");
-        draft.user = action.payload.user;
-        draft.is_login = true;
-      }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        localStorage.removeItem("jwt");
         localStorage.removeItem("nickname");
+        localStorage.removeItem("jwt");
         localStorage.removeItem("userId");
+        localStorage.removeItem("role");
         draft.user = null;
         draft.is_login = false;
       }),
@@ -121,7 +122,6 @@ export default handleActions(
 // actionCreators export
 const actionCreators = {
   setUser,
-  getUser,
   logOut,
   signupAPI,
   loginAPI,

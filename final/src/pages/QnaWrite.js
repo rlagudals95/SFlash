@@ -7,9 +7,12 @@ import { actionCreators as imageActions } from "../redux/modules/image";
 
 const QnaWrite = (props) => {
   const dispatch = useDispatch();
-  const qnaId = props.id;
+  const qnaId = props.match.params.id;
+  console.log(qnaId);
   const is_edit = qnaId ? true : false; //qna_id는 게시물이 존재하므로 수정 가능함
+  console.log(is_edit);
   const qna = useSelector((state) => state.qna.qna);
+  console.log(qna);
   // const preview = useSelector((state) => state.image.preview);
   // const is_uploading = useSelector((state) => state.image.is_uploading);
 
@@ -101,33 +104,6 @@ const QnaWrite = (props) => {
             placeholder="문의내용을 입력해주세요."
             onChange={changeContent}
           />
-
-          {/* <button
-            variant="outlined"
-            component="label"
-            color="default"
-            // startIcon={<CloudUploadIcon/>}
-            size="small"
-          >
-            <input
-              id={"file-input"}
-              multiple
-              style={{ display: "none" }}
-              type="file"
-              name="imageFile"
-              onChange={selectFile}
-              ref={fileInput}
-              disabled={is_uploading}
-            />
-          </button>
-          <PreviewImg
-            src={
-              preview
-                ? preview
-                : "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
-            }
-            onError={ImageError}
-          /> */}
 
           {is_edit ? (
             <SolidBtn width="150px" onClick={onEditQna}>

@@ -22,11 +22,9 @@ const StoryUserProfile = (props) => {
 // 메뉴버튼(프로필 편집, 로그아웃 등)을 보여줍니다.
   const local_userId = localStorage.getItem("userId");
   const is_me = (userId === local_userId) ? true : false;
-  console.log("is_me:", is_me);
-  const preview = useSelector((state) => state.profile.preview);
+  console.log("내 스토리 인가요?", is_me);
 
   React.useEffect(() => {
-    dispatch(profileActions.setPreview(user_info.profileImgUrl));
 }, []);
 
   // 이미지 에러
@@ -70,8 +68,8 @@ const StoryUserProfile = (props) => {
         <ProfileContainer>
         <ProfileImg
             src={
-              preview
-                ? preview
+              user_info.profileImgUrl
+                ? user_info.profileImgUrl
                 : "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
             }
             onError={ImageError}
