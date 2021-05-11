@@ -112,9 +112,9 @@ const addCommentAPI = (comment, board_id) => {
         const comment_data = res.data.data;
         console.log("댓글정보", comment_data);
         let comment_list = {
-          commentId: "k",
+          commentId: comment_data.commentId,
           content: comment_data.content,
-          modified: "?", //이거좀 고치자! 현준님이 id랑 날짜주면 !
+          modified: comment_data.modified, //이거좀 고치자! 현준님이 id랑 날짜주면 !
           userId: comment_data.userId,
           writerImgUrl: comment_data.userImgUrl,
           writerName: comment_data.nickName,

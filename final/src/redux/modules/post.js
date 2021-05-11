@@ -16,6 +16,9 @@ const DELETE_POST = "DELETE_POST";
 const LOADING = "LOADING";
 const ADD_LIKE = "ADD_LIKE";
 const DIS_LIKE = "DIS_LIKE";
+// 검색했을때 검색 결과 게시물만 보여주는 액션
+const GET_SEARCH = "GET_SEARCH";
+const SEARCH_POST = "SEARCH_POST";
 
 const setPost = createAction(SET_POST, (post_list, paging) => ({
   post_list,
@@ -25,8 +28,8 @@ const setMapPost = createAction(SET_MAP_POST, (map_post_list) => ({
   map_post_list,
 }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
-const editPost = createAction(EDIT_POST, (post_id, post) => ({
-  post_id,
+const editPost = createAction(EDIT_POST, (board_id, post) => ({
+  board_id,
   post,
 }));
 const deletePost = createAction(DELETE_POST, (id) => ({ id }));
@@ -40,6 +43,16 @@ const add_Like = createAction(ADD_LIKE, (post_id, board) => ({
 const dis_Like = createAction(DIS_LIKE, (post_id, post) => ({
   post_id,
   post,
+}));
+
+const getSearch = createAction(GET_SEARCH, (post_list, paging) => ({
+  post_list,
+  paging,
+}));
+
+const search_Post = createAction(SEARCH_POST, (post_list, paging) => ({
+  post_list,
+  paging,
 }));
 
 const initialState = {
@@ -86,15 +99,9 @@ const addPostAPI = (post) => {
     })
       .then((res) => {
         console.log("애드포스트 응답", res);
-        // console.log(formData);
-        // console.log("게시물이 갔다!!", res);
-        // console.log(res);
-        // console.log(res.data);
-        // let data = {
+        //민규님 이부분 해주셔야 할 것 같습니다
 
-        // }
-        // dispatch(add)
-        history.replace("/");
+        // dispatch(addPost(post))
       })
       .catch((err) => {
         console.log(err);
@@ -114,6 +121,7 @@ const getPostAPI = (start = null, size = null) => {
       },
     })
       .then((res) => {
+        console.log("!!!!!!!!!", res);
         let result = res.data.data.slice(start, size); // 서버에서 받아오는 게시물들을 start와 size를 정해서 나눠준다
         console.log("페이징 갯수", result.length);
         if (result.length == 0) {
@@ -131,31 +139,18 @@ const getPostAPI = (start = null, size = null) => {
         // console.log(res.data.data[0].boardImgReponseDtoList);
         result.forEach((_post) => {
           let post = {
-            // id: _post.boardId, // 포스트 id
-            // title: _post.title, // 포스트 title
-            // content: _post.content, // 포스트 내용
-            // writerName: _post.writerName,
-            // img_url: _post.boardImgReponseDtoList,
-            // category: _post.category,
-            // profileImg: _post.writerImgUrl,
-            // like: _post.liked,
-            // likeCnt: _post.likeCount,
-            // comment: _post.boardDetailCommentDtoList,
-            // creatAt: _post.modified,
             id: _post.boardId, // 포스트 id
-            userId: _post.userId,
-            writerName: _post.writerName,
-            writerImgUrl: _post.writerImgUrl,
             title: _post.title, // 포스트 title
             content: _post.content, // 포스트 내용
-            liked: _post.liked,
-            likeCount: _post.likeCount,
-            spotName: _post.spotName, // 주소
+            writerName: _post.writerName,
             img_url: _post.boardImgReponseDtoList,
             category: _post.category,
             profileImg: _post.writerImgUrl,
+            like: _post.liked,
+            likeCnt: _post.likeCount,
             comment: _post.boardDetailCommentDtoList,
-            // creatAt: _post.modified,
+            creatAt: _post.modified,
+            spotName: _post.spotName,
           };
           post_list.unshift(post);
         });
@@ -189,7 +184,7 @@ const getMapPostAPI = () => {
             id: _post.boardId, // 포스트 id
             title: _post.title, // 포스트 title
             content: _post.content, // 포스트 내용
-            like: _post.like,  
+            like: _post.like,
             likeCount: _post.likeCount,
             writerName: _post.writerName,
             writerImgUrl: _post.writerImgUrl,
@@ -207,8 +202,7 @@ const getMapPostAPI = () => {
       .catch((err) => {
         window.alert("게시물을 가져오는데 문제가 있어요!");
         console.log("게시물 로드 에러", err);
-      }
-    );
+      });
   };
 };
 
@@ -261,27 +255,62 @@ const editPostAPI = (board_id, _edit) => {
         "Content-Type": "multipart/form-data",
       },
     }).then((res) => {
-      console.log(res);
-      let post = [];
+      console.log("수정반응값!", res);
+      let _post = res.data.data;
+      let post = {
+        id: _post.boardId, // 포스트 id
+        title: _post.title, // 포스트 title
+        content: _post.content, // 포스트 내용
+        writerName: _post.writerName,
+        img_url: _post.boardImgReponseDtoList,
+        category: _post.category,
+        profileImg: _post.writerImgUrl,
+        like: _post.liked,
+        likeCnt: _post.likeCount,
+        comment: _post.boardDetailCommentDtoList,
+        creatAt: _post.modified,
+        spotName: _post.spotName,
+      };
+      console.log("!??!@12", post);
       // 수정된 게시물정보를 받고싶다
-      // dispatch(editPost(post, board_id));
+      dispatch(editPost(board_id, post));
     });
   };
 };
 
-const searchPostAPI = (search) => {
+// `http://localhost:3000/${encodeURIComponent("한글파라미터")}`;
+
+const searchPostAPI = (search, start = null, size = null) => {
   return function (dispatch, getState) {
     console.log("검색어 들어오냐~?", search);
     axios({
       method: "GET",
-      url: `${config.api}/board/search?searchText=${search}`,
+      url: `${config.api}/board/search?searchText=${encodeURIComponent(
+        search
+      )}`,
+      headers: {
+        "X-AUTH-TOKEN": `${config.jwt}`,
+        "Content-Type": "text/plain; charset=utf-8",
+      },
     })
       .then((res) => {
+        console.log("스타트와 사이즈", start, size);
         console.log("검색결과", res.data.data);
+        let result = res.data.data.slice(start, size);
+        console.log("슬라이스한 데이터", result);
+        if (result.length == 0) {
+          // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
+          dispatch(loading(false));
+          return;
+        }
+        let paging = {
+          start: start + result.length + 1,
+          size: size + 15,
+        };
 
         let post_list = [];
 
-        res.data.data.forEach((p) => {
+        result.forEach((p) => {
           let post = {
             id: p.boardId,
             title: p.title,
@@ -290,13 +319,14 @@ const searchPostAPI = (search) => {
             writerName: p.writerName,
             profileImg: p.writerImgUrl,
             like: p.likeCheck,
-            category: null,
+            category: p.category,
             likeCnt: p.likeCount,
-            comment: [],
+            comment: p.boardDetailCommentDtoList,
           };
           post_list.unshift(post);
         });
-        dispatch(setPost(post_list));
+        console.log("포스트 리스트 잘나와?", post_list);
+        dispatch(getSearch(post_list, paging));
       })
       .catch((error) => {
         window.alert("검색을 할 수 없습니다.");
@@ -405,12 +435,16 @@ export default handleActions(
       }),
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.post_id);
-        let idx = draft.list.findIndex((p) => p.id === action.payload.board_id);
+        console.log(action.payload.post);
+        console.log(action.payload.board_id); //??
+        let idx = draft.list.findIndex((p) => p.id == action.payload.board_id);
         // 수정한 게시물을 찾기 위해서 findindex
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
       }),
-    [ADD_LIKE]: (state, action) => //이것만쓴다
+    [ADD_LIKE]: (
+      state,
+      action //이것만쓴다
+    ) =>
       produce(state, (draft) => {
         //그냥 게시물 정보들 하나 가져와서 갈아준다!
         console.log("ㅁㅇ", action.payload.post_id);
@@ -443,6 +477,16 @@ export default handleActions(
     [LOADING]: (state, action) =>
       produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;
+      }),
+    [SEARCH_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload.list;
+        draft.paging = action.payload.paging;
+      }),
+    [GET_SEARCH]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload.post_list;
+        draft.paging = action.payload.paging;
       }),
   },
   initialState

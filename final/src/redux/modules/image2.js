@@ -22,20 +22,30 @@ const GET_DELETE_ID = "GET_DELETE_ID";
 const GET_EDIT_FILE = "GET_EDIT_FILE";
 // 수정시 이미지를 추가할 때 필요한 액션
 const ADD_EDIT_IMAGE = "ADD_EDIT_IMAGE";
+// 수정시 수정전의 파일 말고 이미지를 구별해서 삭제할때 필요한 액션 // 음 둘다 가능할 것 같다 해보자! 수정전과 수정할때 둘다!
+const DELETE_FILE_IDX = "DELETE_FILE_IDX";
+// 올라간 파일이 맘에 안들어 다시 삭제하고 싶을때 하는 액션
+const DELETE_EDIT = "DELETE_EDIT";
+// 이미지 idx 로 지우기
+const DELETE_IMAGE_IDX = "DELETE_IMAGE_IDX";
 
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 const getPreview = createAction(GET_PREVIEW, (preview) => ({ preview }));
 const getFile = createAction(GET_FILE, (file) => ({ file }));
 
+const deleteImageIdx = createAction(DELETE_IMAGE_IDX, (idx) => ({ idx })); // 이건딱히,..,?
+
+const deleteFileIdx = createAction(DELETE_FILE_IDX, (idx) => ({ idx }));
+
 // const deletePreview = createAction(DELETE_PREVIEW, (preview) => ({ preview }));
 // const deleteFile = createAction(DELETE_FILE, (file) => ({ file }));
 
-// 고쳐야할 리스트를 post 에서 가져와서 찾아주는 액션
-const getEditPost = createAction(GET_EDIT_POST, (edit) => ({ edit }));
-// props의 이미지들을 지워줘야하는데..... 이걸 어디다 저장 해두냐,,?!
-const editPost = createAction(EDIT_POST, (edit) => ({ edit }));
+// // 고쳐야할 리스트를 post 에서 가져와서 찾아주는 액션
+// const getEditPost = createAction(GET_EDIT_POST, (edit) => ({ edit }));
+// // props의 이미지들을 지워줘야하는데..... 이걸 어디다 저장 해두냐,,?!
+// const editPost = createAction(EDIT_POST, (edit) => ({ edit }));
 
-const changeImg = createAction(CHANGE_IMG, (edit) => ({ edit }));
+// const changeImg = createAction(CHANGE_IMG, (edit) => ({ edit }));
 /////////////////////////////////
 const getImage = createAction(GET_IMAGE, (image) => ({ image }));
 // 고쳐야할 포스트의 img_url을 바꿔준다
@@ -46,16 +56,17 @@ const getDeleteId = createAction(GET_DELETE_ID, (id) => ({ id }));
 const getEditFile = createAction(GET_EDIT_FILE, (edit_file) => ({ edit_file }));
 // 수정시 이미지를 추가할 때 필요한 액션
 const addEditImage = createAction(ADD_EDIT_IMAGE, (image) => ({ image }));
+//
 
 //가져와서 post 에서 리스트 하나 가져와서 edit에 두고
 const initialState = {
   preview: ["http://via.placeholder.com/400x300"],
   file: [],
   edit: false, // 잘들어온다 //고쳐야할놈
-  image: [], // 이미지를 따로 빼오자 // 이미지 x 클릭시 x 이미지를 제외한 배열이 들어옴
+  image: [], // 이미지를 따로 빼오자 // 이미지 x 클릭시 x 이미지를 제외한 배열이 들어옴 //이게 onlyImage
   id: [], //삭제한 id가 들어간 배열
   //이것을 editPost의 img_url로 바꿔주고 setPost 해줘야 한다
-  edit_file: [],
+  edit_file: [], //여기에 파일이 들어온다!
 };
 
 //요기서 수정해야하는 board를 찾아서 image에 저장해준다 image를 이용해 프리뷰를 뿌려주고 x 버튼으로 수정 해준다
@@ -91,86 +102,22 @@ const ChangeEdit = (Img_idx) => {
     console.log("??", c);
   };
 };
-const ChangeImg_Url = (Img_idx) => {
-  return function (dispatch, getState) {
-    const beforeEditPost = getState().image2.edit;
-    const editImage = getState().image2.image;
 
-    console.log("고쳐기 전의 포스트", beforeEditPost);
-    console.log("img_url 이걸로 바꾸자", editImage); // 다른게 있다면 splice?
-
-    for (let i = 0; i < beforeEditPost.img_url.length; i++) {
-      if (beforeEditPost.img_url[i] !== editImage) {
-        beforeEditPost.img_url.splice(i, 1);
-        // i--; //배열 1개가 비워지기 때문에 i를 1개 빼준다 이건 사실 안써도 무방
-      }
-    }
-
-    //여기서 리스트 자체에   editImage를 바꿔서 아래 리듀서에 전달해야한다..
-    // dispatch(changeImg(editImage));
-
-    // for (let i = 0; i < beforeEditPost.img_url; i++) {
-    //   if (beforeEditPost.img_url[i].imgUrl == editImage[0].imgUrl) {
-    //     Fresult.push(beforeEditPost.img_url[i].imgUrl);
-    //   }
-    // }
-    // let Fresult = [];
-    // console.log(Fresult);
-    // const result = beforeEditPost.img_url.filter((i) => {
-
-    // })
-  };
-};
-
-//일단 가져와서 찾고 그리고 삭제하는 과정이 따로 있어야 겠다
-
-// const deleteImg = (board_id, imgNum) => {
+// const ChangeImg_Url = (Img_idx) => {
 //   return function (dispatch, getState) {
-//     //여기서 삭제된 포스트를 만들어서 post.js의 editPost 액션을 디스패치 해줘야한다
+//     const beforeEditPost = getState().image2.edit;
+//     const editImage = getState().image2.image;
 
-//     //여기서 한번더 갈아줘야하나?? 리듀서를 만들어서
+//     console.log("고쳐기 전의 포스트", beforeEditPost);
+//     console.log("img_url 이걸로 바꾸자", editImage); // 다른게 있다면 splice?
 
-//     // console.log("object");
-//     // console.log("삭제하려는 보드", board_id);
-//     // console.log("삭제하려는 이미지 번호", imgNum);
-//     const post_list = getState().post.list;
-
-//     let idx = post_list.findIndex((p) => p.id === board_id);
-//     const editPost = post_list[idx]; //고쳐야할 포스트
-
-//     console.log("고쳐야할 포스트", editPost);
-//     console.log("내가 삭제할 이미지??", editPost.img_url[imgNum]);
-
-//     const deleteImg = editPost.img_url[imgNum];
-//     let deleteOk = [];
-//     for (let i = 0; i < editPost.img_url.length; i++) {
-//       if (editPost.img_url[i].imgUrl !== editPost.img_url[imgNum].imgUrl) {
-//         deleteOk.push(editPost.img_url[i]);
+//     for (let i = 0; i < beforeEditPost.img_url.length; i++) {
+//       if (beforeEditPost.img_url[i] !== editImage) {
+//         beforeEditPost.img_url.splice(i, 1);
+//         // i--; //배열 1개가 비워지기 때문에 i를 1개 빼준다 이건 사실 안써도 무방
 //       }
 //     }
 
-//     if (deleteOk) {
-//       console.log("삭제된 배열", deleteOk);
-//     } else {
-//       console.log("삭제된 배열2", deleteOk);
-//     }
-
-//     //여기 까지해서 이미지 삭제? 필터링 완료 여기서 바꾸고자 하는 포스트의 img 배열을 딜리트 ok로 바꾸면된다
-
-//     // if (deleteOk.length >= 0) {
-//     //   // editPost.img_url = deleteOk;
-//     //   console.log("다 삭제됨", deleteOk);
-//     // } else if (deleteOk.length >= 1) {
-//     //   editPost.img_url = deleteOk;
-//     //   console.log("이미지 삭제된 포스트", editPost);
-//     // }
-
-//     // 이제 포스트리스트 안에서
-//     // console.log("포스트 리스트 뽑자", post_list);
-
-//     // dispatch(PostActions.editPost(board_id, editPost)); // 보드 id와 바꾸려는 보드가 들어가야함
-//     // 여기서 이미지를 뽑아서 받은 이미지와 같으면 삭제
-//     // 그리고 dispatch 셋포스트로 다시 게시물 처리!
 //   };
 // };
 
@@ -213,15 +160,15 @@ export default handleActions(
           }
         });
       }),
-    [DELETE_FILE]: (state, action) =>
-      produce(state, (draft) => {
-        draft.list = draft.list.filter((r, idx) => {
-          if (r.id !== action.payload.id) {
-            // console.log(r.id);
-            return [...draft.list, r];
-          }
-        });
-      }),
+    // [DELETE_FILE]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     draft.list = draft.list.filter((r, idx) => {
+    //       if (r.id !== action.payload.id) {
+    //         // console.log(r.id);
+    //         return [...draft.list, r];
+    //       }
+    //     });
+    //   }),
 
     [GET_EDIT_POST]: (state, action) =>
       //여기서 고쳐야할 리스트를 받아온다
@@ -250,6 +197,8 @@ export default handleActions(
             return [...draft.image, i];
           }
         });
+
+        //아니면 여기서 idx만 받아서 삭제 할 수가 있나?
       }),
     [GET_DELETE_ID]: (state, action) =>
       produce(state, (draft) => {
@@ -263,6 +212,42 @@ export default handleActions(
       //여기서 imgUrl:(파일리더로 읽은값,,,)이렇게 해줘야하나?
       produce(state, (draft) => {
         draft.image.push(action.payload.image);
+      }),
+    ////////idx로 한번 지워보자!
+    [DELETE_IMAGE_IDX]: (state, action) =>
+      produce(state, (draft) => {
+        //draft.image[idx] !== action.payload[idx]
+        //여긴 순서로 비교하자
+        //오히려 위의 DELETE_IMAGE가 필요없을수도?
+        //draft.image =
+        console.log("요부분 없애줘야하는데 .....", action.payload.idx);
+
+        draft.image = draft.image.filter((i, idx) => {
+          if (i !== action.payload.idx) {
+            return i;
+          }
+        });
+
+        // draft.image = draft.image.filter((i, idx) => {
+        //   if (i[idx] !== action.payload.idx) {
+        //     return [...draft.image, i];
+        //   }
+        // });
+        // 드래프트 리스트트에 받은 idx번째 요소를 삭제해라
+        // draft.image = draft.image.spilce(action.payload.idx, 1);
+        // 원래 이미지에서 idx으로 값으로 받은 위치의 원소 하나 제거
+      }),
+    [DELETE_FILE_IDX]: (state, action) =>
+      produce(state, (draft) => {
+        console.log("파일지워야되", action.payload.idx);
+        // draft.edit_file = draft.edit_file.spilce(action.payload.idx, 1);
+        //  draft.edit_file = draft.edit_file.filter((i, idx) => {
+        //    if (i !== action.payload.idx) {
+        //      return i;
+        //    }
+        //  });
+
+        // 원래 이미지에서 idx으로 값으로 받은 위치의 원소 하나 제거 이런식이면 파일도 가능할거같다 이미지 id도 필요없이?
       }),
   },
   initialState
@@ -279,6 +264,8 @@ const actionCreators = {
   getDeleteId, //삭제된 이미지 아이디 가져오기
   getEditFile,
   addEditImage,
+  deleteImageIdx, // idx로 지워보자
+  deleteFileIdx, //idx로 지우자
 };
 
 export { actionCreators };
