@@ -6,24 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/configStore";
 import { actionCreators as qnaActions } from "../redux/modules/qna";
 
-import { FiEdit3 } from "react-icons/fi";
-import { RiDeleteBinLine } from "react-icons/ri";
+import QnaDetailComment from "./QnaDetailComment"
 
 const QnaDetail = (props) => {
   const dispatch = useDispatch();
-  const is_uploading = useSelector((state) => state.profile.is_uploading);
-  const preview = useSelector((state) => state.profile.preview);
 
   //  url에서 userId 불러오기
   const qnaId = props.match.params.id;
   const qna = useSelector((state) => state.qna.qna);
-  const comment_list = qna.qcomments;
-  console.log(qna);
-  console.log(qna.qcomments);
-  // 댓글 남길 때 필요한 내 닉네임은 로컬스토리지에서 가져와 사용한다.
-  // 댓글은 관리자만 ???????????????
-  const me = localStorage.getItem("nickname");
-
+  // console.log(qna);
+  // console.log(qna.qcomments);
+ 
   React.useEffect(() => {
     if (!qnaId) {
       return false;
@@ -31,19 +24,6 @@ const QnaDetail = (props) => {
     dispatch(qnaActions.getQnaDetailAPI(qnaId));
   }, []);
 
-  const [comment, setComment] = React.useState("");
-  const changeComment = (e) => {
-    setComment(e.target.value);
-  };
-
-  const onAddComment = (comment) => {
-    console.log(comment);
-    if (!comment) {
-      alert("댓글을 입력하지 않으셨습니다.");
-    } else {
-      dispatch(qnaActions.addQnaCommentAPI(comment, qnaId));
-    }
-  };
 
   return (
     <React.Fragment>
@@ -55,6 +35,9 @@ const QnaDetail = (props) => {
             {qna.title}
           </Text>
           <Grid is_flex width="50%">
+            <Text>{qna.writer}</Text>
+            <Text>|</Text>
+            <Text width="90px">{qna.modified}</Text>
             <TextBtn onClick={() => history.push(`/qnawrite/${qnaId}`)}>
               수정
             </TextBtn>
@@ -66,52 +49,15 @@ const QnaDetail = (props) => {
             >
               삭제
             </TextBtn>
-            <Text>{qna.writer}</Text>
-            <Text>|</Text>
-            <Text width="90px">{qna.modified}</Text>
           </Grid>
         </TitleContainer>
 
         <ContentContainer>
           <Text>{qna.content}</Text>
         </ContentContainer>
-        <CommentContainer>
-          {comment_list ? (comment_list.map((c) => {
-            return(
-              <Comment key={c.id} {...c}>
-            <Grid flex>
-              <Text weight="600">{c.writer}</Text>
-              <Text width="55%">{c.content}</Text>
-            </Grid>
-            <Text width="130px">{c.modified.split('T')[0]}</Text>
-            <Icon onClick={() => history.push("/qnawrite/:id")}>
-              <FiEdit3 size="17" />
-            </Icon>
-            <Icon
-              onClick={() => {
-                window.confirm("댓글을 삭제하시겠습니까") &&
-                  dispatch(qnaActions.deleteQnaAPI(qnaId));
-              }}
-            >
-              <RiDeleteBinLine size="18" />
-            </Icon>
-          </Comment>
-            )
-          })):(null)
-        }
-          
-          <Comment>
-            <Text weight="600">{me}</Text>
-            <InputStyle
-              value={comment}
-              placeholder="댓글 입력"
-              type="type"
-              width="60%"
-              onChange={changeComment}
-            />
-            <BorderBtn onClick={()=>onAddComment(comment)}>게시</BorderBtn>
-          </Comment>
-    </CommentContainer>
+
+       <QnaDetailComment qnaId={qnaId}/>
+
         <Grid height="200px" />
       </Container>
     </React.Fragment>
@@ -161,19 +107,6 @@ const Title = styled.div`
   margin-bottom: 30px;
 `;
 
-const Icon = styled.div`
-  margin-left: 0px;
-  border-radius: 50px;
-  padding: 8px 12px;
-  &:hover {
-    color: red;
-    background-color: #eee;
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
-  }
-  /* background-color: green; */
-`;
-
 const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -184,19 +117,10 @@ const TitleContainer = styled.div`
 `;
 
 const ContentContainer = styled.div`
-  min-height: 500px;
+  min-height: 450px;
   border-bottom: 1pt solid grey;
-`;
-
-const CommentContainer = styled.div`
-  justify-content: space-between;
-  height: 40px;
-`;
-const Comment = styled.div`
-  display: flex;
-  align-items: center;
-  /* justify-content: space-between; */
-  /* background-color: red; */
+  background-color: #f8f8f8;
+  padding: 15px;
 `;
 
 const Text = styled.div`
@@ -206,61 +130,24 @@ const Text = styled.div`
   font-weight: ${(props) => props.weight};
   width: ${(props) => props.width};
   border: white;
-  padding: 18px 14px;
+  padding: 10px 10px;
   word-break: keep-all;
   /* background-color: green; */
 `;
 
 const TextBtn = styled.text`
   font-size: 1rem;
-  padding: 5px;
+  padding: 5px 10px 10px 10px;
+  margin: 5px;
+  border-radius: 4px;
   word-break: keep-all;
+  background-color:#eee;
   &:hover {
     text-decoration: underline;
     cursor: pointer;
+    background-color:light grey;
   }
 `;
 
-const InputStyle = styled.input`
-  border: 1px solid grey;
-  width: 100%;
-  min-width: 380px;
-  height: 38px;
-  border: 1px solid grey;
-  border-radius: 4px;
-  padding: 4px 16px;
-  font-size: 1rem;
-  font-weight: 500;
-  margin: 16px 10px;
-  color: grey;
-  input:focus {
-    outline: none !important;
-    border: 1px solid red;
-  }
-  cursor: pointer;
-`;
-
-const BorderBtn = styled.button`
-  width: 60px;
-  min-height: 45px;
-  max-height: 70px;
-  border: 1px solid grey;
-  box-sizing: border-box;
-  border-radius: 4px;
-  margin: 8px auto;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: grey;
-  background-color: #ffffff;
-  :focus {
-    outline: none;
-  }
-  &:hover {
-    color: grey;
-    background-color: lightgrey;
-    border: none;
-    cursor: pointer;
-  }
-`;
 
 export default QnaDetail;

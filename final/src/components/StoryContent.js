@@ -69,8 +69,8 @@ const Warning = styled.div`
   text-align: center;
   margin: 30px auto;
   padding: 150px;
-  background-color: #eee;
-`;
+  border: 2.5pt solid #eee;
+`
 
 const Icons = styled.div`
   position: fixed;

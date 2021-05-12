@@ -16,6 +16,7 @@ import Like from "./modules/like";
 import Image2 from "./modules/image2";
 import Faq from "./modules/faq";
 import Qna from "./modules/qna";
+import QnaComment from "./modules/qnacomment";
 import Storypost from "./modules/storypost";
 import Comment from "./modules/comment";
 
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   faq: Faq,
   storypost :Storypost,
   qna: Qna,
+  qnacomment: QnaComment,
   router: connectRouter(history),
 });
 

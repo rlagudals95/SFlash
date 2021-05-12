@@ -10,14 +10,12 @@ const SET_QNA_DETAIL = "SET_QNA_DETAIL";
 const ADD_QNA = "ADD_QNA";
 const EDIT_QNA = "EDIT_QNA";
 const DELETE_QNA = "DELETE_QNA";
-const ADD_QNA_COMMENT = "ADD_QNA_COMMENT";
 
 const setQna = createAction(SET_QNA, (qna_list) => ({ qna_list }));
 const setQnaDetail = createAction(SET_QNA_DETAIL, (qna) => ({ qna }));
 const addQna = createAction(ADD_QNA, (qna) => ({ qna }));
 const editQna = createAction(EDIT_QNA, (qna) => ({ qna }));
 const deleteQna = createAction(DELETE_QNA, (id) => ({ id }));
-const addQnaComment = createAction(ADD_QNA_COMMENT, (comment,qnaId) => ({ comment, qnaId }));
 
 const initialState = {
   list: [],
@@ -96,7 +94,6 @@ const addQnaAPI = (qna) => {
         if (res.status === 200)
           window.alert("문의 내용이 정상적으로 등록되었습니다.");
         history.goBack();
-        // dispatch(getQnaAPI());
       })
       .catch((err) => {
         console.error("작성 실패", err);
@@ -116,15 +113,17 @@ const editQnaAPI = (qna, qnaId) => {
       },
     })
       .then((res) => {
-        console.log(res.data.data);
-        let _qna = res.data.data;
-        let qna = {
-          title: _qna.title,
-          content: _qna.content,
-        };
-        dispatch(editQna(qna, qnaId));
+        console.log(res);
+        // console.log(res.data.data);
+        // let _qna = res.data.data;
+        // let qna = {
+        //   title: _qna.title,
+        //   content: _qna.content,
+        // };
+        // dispatch(editQna(qna, qnaId));
+        if(res.status===200)
         window.alert("게시물이 수정되었습니다.");
-        history.goBack();
+        history.replace(`/qnadetail/${qnaId}`)
       })
       .catch((err) => {
         console.error("작성 실패", err);
@@ -145,6 +144,7 @@ const deleteQnaAPI = (qnaId) => {
       .then((res) => {
         console.log(res.data.data);
         dispatch(deleteQna(qnaId));
+        history.push('/qna');
       })
       .catch((err) => {
         console.error("작성 실패", err);
@@ -152,54 +152,6 @@ const deleteQnaAPI = (qnaId) => {
   };
 };
 
-const addQnaCommentAPI = (comment, qnaId) => {
-  console.log("addQnaCommentAPI", comment, qnaId);
-  return function (dispatch, getState, { history }) {
-    axios({
-      method: "POST",
-      url: `${config.api}/qcomment/${qnaId}`,
-      data: {
-        content: comment,
-      },
-      headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
-        "Content-Type": "application/json"
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        // let _qcomment = res.
-        // dispatch(addQnaComment());
-      })
-      .catch((err) => {
-        console.error("작성 실패", err);
-      });
-  };
-};
-
-const editQnaCommentAPI = (comment, qcommentId, qnaId) => {
-  console.log("addQnaCommentAPI", comment, qcommentId, qnaId);
-  return function (dispatch, getState, { history }) {
-    axios({
-      method: "PUT",
-      url: `${config.api}/qcomment/${qcommentId}/qna/${qnaId}`,
-      data: {
-        content: comment,
-      },
-      headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        // let _qcomment = res.
-        // dispatch(addQnaComment());
-      })
-      .catch((err) => {
-        console.error("작성 실패", err);
-      });
-  };
-};
 
 export default handleActions(
   {
@@ -245,10 +197,6 @@ export default handleActions(
           }
         });
       }),
-      [ADD_QNA_COMMENT]: (state, action) => 
-      produce(state, (draft) => {
-        draft.list.unshift(action.payload.qna);
-      }),
   },
   initialState
 );
@@ -263,8 +211,6 @@ const actionCreators = {
   editQnaAPI,
   deleteQna,
   deleteQnaAPI,
-  addQnaComment,
-  addQnaCommentAPI,
 };
 
 export { actionCreators };

@@ -57,7 +57,7 @@ const initialState = {
 
 // 프로필 수정하기(두개의 경우의 수로 나누어 생각하기)
 const editProfileAPI = (profile, userId) => {
-  console.log(profile);
+  console.log(profile, userId);
   return function (dispatch, getState, { history }) {
     const _image = getState().profile.preview;
     const _user_info = getState().profile.user;
@@ -78,7 +78,7 @@ const editProfileAPI = (profile, userId) => {
         },
       })
         .then((res) => {
-          // console.log(res.data.data);
+          console.log(res.data.data);
           let _user = res.data.data;
           let profile = {
             introduction: _user.introduceMsg,
@@ -107,24 +107,13 @@ const editProfileAPI = (profile, userId) => {
       },
     })
       .then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         let _user = res.data.data;
         let profile = {
           profileImgUrl: _user.imgUrl,
           introduction: _user.introduceMsg,
         };
         dispatch(editProfile(profile));
-      })
-        .then((res) => {
-          // console.log(res)
-          // console.log(res.data.data);
-          let _user = res.data.data;
-          let user = {
-            profileImgUrl: _user.imgUrl,
-            introduction: _user.introduceMsg,
-          };
-          console.log("프로필 수정 정보", user);
-          dispatch(editProfile(user));
         })
         .catch((err) => {
           console.error("작성 실패", err);
@@ -134,7 +123,7 @@ const editProfileAPI = (profile, userId) => {
 };
 
 const editNicknameAPI = (newNickname, userId) => {
-  console.log(newNickname);
+  console.log(newNickname, userId);
   return function (dispatch, getState, { history }) {
     const API = `${config.api}/editnickname/${userId}`;
     axios
