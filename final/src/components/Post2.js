@@ -39,14 +39,21 @@ const Post2 = (props) => {
   // 이미지들 반복문으로 뽑아오기
   let image_list = [];
 
-  for (let i = 0; i < props.img_url.length; i++) {
-    image_list.push(props.img_url[i]);
+  if (props.img_url) {
+    //이거 좀 위태위태한거 같다
+    for (let i = 0; i < props.img_url.length; i++) {
+      image_list.push(props.img_url[i]);
+    }
   }
+
   // console.log("이미지 리스트!", image_list);
   // 댓글들 반복문으로 뽑아오기
   let comment_list = [];
-  for (let i = 0; i < props.comment.length; i++) {
-    comment_list.push(props.comment[i]);
+
+  if (props.comment) {
+    for (let i = 0; i < props.comment.length; i++) {
+      comment_list.push(props.comment[i]);
+    }
   }
 
   // console.log("이미지 리스트", image_list);
@@ -54,7 +61,7 @@ const Post2 = (props) => {
 
   // console.log("썸네일", image_list[0].imgUrl);
   // const image = props.imgUrl;
-  const PostImage = image_list[0].imgUrl;
+
   // const PostImage = image_list[0].imgUrl
   //   ? image_list[0].imgUrl
   //   : "http://via.placeholder.com/400x300";
@@ -87,33 +94,10 @@ const Post2 = (props) => {
     dispatch(PostActions.editLikeD(props.id, props));
   };
 
-  //스타일 컴포넌트//
-  const hoverBox = keyframes`
-  0% {
-    transform: translateY(10px);
-    opacity: 0.3;
-    
-  }
-  100% {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-`;
-
-  const PostBox = styled.div`
-    width: 100%;
-    aspect-ratio: 1/1;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-image: url(${PostImage});
-    /* &:hover {
-      animation: ${hoverBox} 1s;
-    } */
-    cursor: pointer;
-  `;
+  // console.log("뭘까......???", image_list[0].imgUrl);
 
   //스타일 컴포넌트//
-
+  // const PostImage = image_list[0].imgUrl;
   // console.log("포스트 프롭스", props);
   // console.log(props.post_image_url);
   return (
@@ -121,7 +105,14 @@ const Post2 = (props) => {
       <Card>
         {/* src={props.post_image_url[0]} */}
 
-        <PostBox onClick={openModal}>
+        <PostBox
+          onClick={openModal}
+          src={
+            image_list[0].imgUrl //썸네일 이미지가 있다면>?
+              ? image_list[0].imgUrl
+              : null
+          }
+        >
           {/* 이거자체가 지금 투명 0 */}
           <div className={"hoverDark"}>
             {like}
@@ -148,6 +139,15 @@ const Post2 = (props) => {
     </React.Fragment> //여기서 댓글 정보랑 모든걸 넘겨주려나?
   );
 };
+
+const PostBox = styled.div`
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("${(props) => props.src}");
+  cursor: pointer;
+`;
 
 const hoverBox = keyframes`
   0% {
