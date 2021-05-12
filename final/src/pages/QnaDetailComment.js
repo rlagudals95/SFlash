@@ -13,84 +13,164 @@ import { RiDeleteBinLine } from "react-icons/ri";
 const QnaDetailComment = (props) => {
   const dispatch = useDispatch();
 
-  //  url에서 userId 불러오기
-  const {qnaId} = props;
-  
-  const comment_list = useSelector((state) => state.qnacomment.list);
-  console.log(comment_list);
- 
-  // 댓글 남길 때 필요한 내 닉네임은 로컬스토리지에서 가져와 사용한다.
-  // 댓글은 관리자만 작성 가능하다
+  // userId 값을 props로 받아옵니다.
+  const { qnaId } = props;
+
+  // me: 게시물 열람이나 댓글 권한 여부를 판단하기 위해 로컬스토리지의 nickname을 사용합니다.
+  // role: 관리자 여부를 판단해 관리자만 댓글 작성이 가능하도록 합니다.
   const me = localStorage.getItem("nickname");
+  const role = localStorage.getItem("role");
 
   React.useEffect(() => {
     if (!qnaId) {
-      return false; 
+      return;
     }
     dispatch(qnaCommentActions.getQnaCommentAPI(qnaId));
   }, []);
 
-  const [comment, setComment] = React.useState("");
+  // 해당 게시물의 댓글 리스트 불러오기
+  const comment_list = useSelector((state) => state.qnacomment.list);
+  console.log(comment_list);
+  const editIdx = useSelector((state) => state.qnacomment.idx);
+
+  //  댓글 등록, 수정
+  const [comment, setComment] = React.useState(
+    editIdx ? comment_list[editIdx].content : ""
+  );
   const changeComment = (e) => {
     setComment(e.target.value);
   };
-  const [editComment, setEditComment] = React.useState(false);
-  const editCommentMode = () => {
-    setEditComment(true);
-  }
+  const [editCommentMode, setEditCommentMode] = React.useState(false);
 
-  const onAddComment = (comment) => {
+  // 댓글 등록 버튼을 누르면 실행되는 함수
+  // 내용의 유무를 판단하고 백으로 값을 전달합니다.
+  const onAddCommentSubmit = (comment) => {
     console.log(comment);
     if (!comment) {
       alert("댓글을 입력하지 않으셨습니다.");
+      return;
+    } else if (role !== "ADMIN") {
+      alert("댓글 권한이 없습니다.");
+      return;
     } else {
       dispatch(qnaCommentActions.addQnaCommentAPI(comment, qnaId));
+      setComment("");
     }
   };
 
-  return ( 
-    <React.Fragment>
-        <CommentContainer>
-          {comment_list ? (comment_list.map((c, idx) => {
-            return(
+  // 댓글 등록 버튼을 누르면 실행되는 함수
+  // 내용의 유무를 판단하고 백으로 값을 전달합니다.
+  const onEditCommentMode = (idx) => {
+    console.log(idx);
+    dispatch(qnaCommentActions.editCommentMode(idx));
+    setEditCommentMode(true);
+  };
 
+  const onEditCommentSubmit = (comment) => {
+    console.log(comment);
+    const qcommentId = comment_list[editIdx].id;
+    if (!comment) {
+      alert("댓글을 입력하지 않으셨습니다.");
+      return;
+    } else if (role !== "ADMIN") {
+      alert("댓글 권한이 없습니다.");
+      return;
+    } else {
+      if (window.confirm("댓글을 수정 하시겠습니까?")) {
+        dispatch(qnaCommentActions.editQnaCommentAPI(comment, qcommentId, qnaId));
+        setComment("");
+        setEditCommentMode(false);
+      }
+    }
+  };
+
+  return (
+    <React.Fragment>
+      <CommentContainer>
+        {/* 댓글 리스트 부분 */}
+        {comment_list &&
+          comment_list.map((c, idx) => {
+            const qcommentId = comment_list[idx].id;
+            return (
               <Comment key={c.id} {...c}>
-            <Grid flex>
-              <Text weight="600">{c.writer}</Text>
-              <Text >{c.content}</Text>
-              <Text width="130px" style={{color:"lightgrey"}}>{c.modified.split('T')[0]}</Text>
-            </Grid>
-            
-            {/* 댓글, 수정 삭제 버튼 */}
-            <Icon onClick={editCommentMode}>
-              <FiEdit3 size="17" />
-            </Icon>
-            <Icon
-              onClick={() => {
-                const qcommentId = comment_list[idx].id;
-                window.confirm("댓글을 삭제하시겠습니까") &&
-                  dispatch(qnaCommentActions.deleteQnaCommentAPI(qcommentId, qnaId));
-              }}
-            >
-              <RiDeleteBinLine size="18" />
-            </Icon>
-          </Comment>
-            )
-          })):(null)
-        }
-          
+                <Grid flex>
+                  <Text weight="600">{c.writer}</Text>
+                  <Text>{c.content}</Text>
+                  <Text width="130px" style={{ color: "grey" }}>
+                    {c.modified.split("T")[0]}
+                  </Text>
+                </Grid>
+
+                {/* 댓글, 수정 삭제 버튼 */}
+                <Icon onClick={() => onEditCommentMode(idx)}>
+                  <FiEdit3 size="17" />
+                </Icon>
+                <Icon
+                  onClick={() => {
+                    window.confirm("댓글을 삭제하시겠습니까") &&
+                      dispatch(
+                        qnaCommentActions.deleteQnaCommentAPI(qcommentId, qnaId)
+                      );
+                  }}
+                >
+                  <RiDeleteBinLine size="18" />
+                </Icon>
+              </Comment>
+            );
+          })}
+
+        {/* 댓글 입력창 부분 */}
+        {editCommentMode ? (
           <Comment>
             <Text weight="600">{me}</Text>
             <InputStyle
               value={comment}
-              placeholder="댓글 입력"
+              placeholder="댓글을 입력해주세요"
               type="type"
               width="60%"
               onChange={changeComment}
             />
-            <BorderBtn onClick={()=>onAddComment(comment)}>게시</BorderBtn>
+            <BorderBtn
+              width="100px"
+              onClick={() => onEditCommentSubmit(comment)}
+            >
+              수정하기
+            </BorderBtn>
+            <BorderBtn width="65px" onClick={() => setEditCommentMode(false)}>
+              취소
+            </BorderBtn>
           </Comment>
-    </CommentContainer>
+        ) : (
+          <Comment>
+            <Text weight="600">{me}</Text>
+            <InputStyle
+              value={comment}
+              placeholder="댓글을 입력해주세요"
+              type="type"
+              width="60%"
+              onChange={changeComment}
+            />
+            <BorderBtn
+              width="100px"
+              onClick={() => onAddCommentSubmit(comment)}
+            >
+              댓글 달기
+            </BorderBtn>
+          </Comment>
+        )}
+
+        {/* <Comment>
+            <Text weight="600">{me}</Text>
+            <InputStyle
+              value={comment}
+              placeholder="댓글을 입력해주세요"
+              type="type"
+              width="60%"
+              onChange={changeComment}
+            />
+            <BorderBtn onClick={()=>onAddComment(comment)}>댓글 달기</BorderBtn>
+          </Comment> */}
+      </CommentContainer>
     </React.Fragment>
   );
 };
@@ -151,12 +231,12 @@ const InputStyle = styled.input`
 `;
 
 const BorderBtn = styled.button`
-  width: 75px;
+  width: ${(props) => props.width};
   height: 48px;
   border: 1px solid grey;
   box-sizing: border-box;
   border-radius: 4px;
-  margin: 8px auto;
+  margin: 8px 4px;
   font-size: 0.9rem;
   font-weight: 500;
   color: grey;

@@ -198,7 +198,8 @@ const FindEmailPwd = () => {
           >
             비밀번호 찾기
           </SolidBtn>
-          <Grid >
+
+          <Grid padding="10px">
             <TextBtn onClick={() => history.push("/login")}>
               로그인으로 돌아가기
             </TextBtn>

@@ -55,15 +55,16 @@ const SolidBtn = styled.button`
   box-sizing: border-box;
   margin: 10px auto;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #ffffff;
   background-color: ${(props) =>props.theme.main_color};
   :focus {
     outline: none;
   }
   &:hover {
-    color: grey;
-    background-color: lightgrey;
+    background-color: #ffffff;
+    color: ${(props) => props.theme.main_color};
+    border: 2pt solid ${(props) => props.theme.main_color};
     cursor: pointer;
     transition: ease-in-out, width .35s ease-in-out;
   }
@@ -71,11 +72,11 @@ const SolidBtn = styled.button`
 
 const SocialBtn = styled.button`
   border: none;
-  width: 100%;
-  height: 48px;
-  border-radius: 4px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
   box-sizing: border-box;
-  margin: 10px auto;
+  margin: 10px;
   font-size: 0.9rem;
   font-weight: 500;
 
@@ -91,6 +92,7 @@ const SocialBtn = styled.button`
     transition: ease-in-out, width .35s ease-in-out;
   }
 `;
+
 
 const BorderBtn = styled.button`
   width: 100%;
@@ -116,23 +118,23 @@ const BorderBtn = styled.button`
 `;
 
 const CheckBtn = styled.button`
-  min-width: 24%;
+  min-width: 25%;
   height: 46px;
   border: 1px solid ${(props) =>props.theme.main_color};
   box-sizing: border-box;
   border-radius: 5px;
   margin: 0px auto 0px 8px;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #ffffff;
   background-color: ${(props) =>props.theme.main_color};
   :focus {
     outline: none;
   }
   &:hover {
-    color: grey;
-    background-color: lightgrey;
-    border: none;
+    background-color: #ffffff;
+    color: ${(props) => props.theme.main_color};
+    border: 2pt solid ${(props) => props.theme.main_color};
     cursor: pointer;
   }
   position: relative;
@@ -141,7 +143,8 @@ const CheckBtn = styled.button`
 `;
 
 const TextBtn = styled.text`
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  margin: 5px 0px;
   &:hover {
     text-decoration: underline;
     cursor: pointer;

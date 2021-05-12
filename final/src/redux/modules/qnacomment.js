@@ -7,14 +7,19 @@ import _ from "lodash";
 
 const SET_QNA_COMMENT = "SET_QNA_COMMENT";
 const ADD_QNA_COMMENT = "ADD_QNA_COMMENT";
+const SET_EDIT_COMMENT_MODE = "SET_EDIT_COMMENT_MODE";
+const EDIT_QNA_COMMENT = "EDIT_QNA_COMMENT";
 const DELETE_QNA_COMMENT = "DELETE_QNA_COMMENT";
 
 const setQnaComment = createAction(SET_QNA_COMMENT, (comment_list) => ({ comment_list }));
-const addQnaComment = createAction(ADD_QNA_COMMENT, (comment,qnaId) => ({ comment, qnaId }));
+const setEditCommentMode = createAction(SET_EDIT_COMMENT_MODE, (idx) => ({ idx }));
+const editQnaComment = createAction(EDIT_QNA_COMMENT, (qcommentId) => ({ qcommentId }));
+const addQnaComment = createAction(ADD_QNA_COMMENT, (qcomment) => ({ qcomment }));
 const deleteQnaComment = createAction(DELETE_QNA_COMMENT, (qcommentId) => ({ qcommentId }));
 
 const initialState = {
   list: [],
+  idx: "",
 };
 
 const getQnaCommentAPI = (qnaId) => {
@@ -51,15 +56,28 @@ const addQnaCommentAPI = (comment, qnaId) => {
       },
     })
       .then((res) => {
-        console.log(res);
-        // let _qcomment = res.
-        // dispatch(addQnaComment());
+        console.log(res.data.data);
+        let _qcomment = res.data.data;
+        let qcomment = {
+          id : _qcomment.id,
+          writer : _qcomment.writer,
+          content: _qcomment.content,
+          modified: _qcomment.modified,
+        }
+        dispatch(addQnaComment(qcomment));
       })
       .catch((err) => {
         console.error("작성 실패", err);
       });
   };
 };
+
+const editCommentMode = (idx) =>{ 
+  console.log(idx);
+  return function (dispatch, getState, { history }) {
+    dispatch(setEditCommentMode(idx));
+  }
+}
 
 const editQnaCommentAPI = (comment, qcommentId, qnaId) => {
   console.log("addQnaCommentAPI", comment, qcommentId, qnaId);
@@ -75,9 +93,15 @@ const editQnaCommentAPI = (comment, qcommentId, qnaId) => {
       },
     })
       .then((res) => {
-        console.log(res);
-        // let _qcomment = res.
-        // dispatch(addQnaComment());
+        console.log(res.data.data);
+        let _qcomment = res.data.data;
+        let qcomment = {
+          id : _qcomment.id,
+          writer : _qcomment.writer,
+          content: _qcomment.content,
+          modified: _qcomment.modified,
+        }
+        dispatch(editQnaComment(qcomment));
       })
       .catch((err) => {
         console.error("작성 실패", err);
@@ -113,9 +137,17 @@ export default handleActions(
         console.log(action.payload.comment_list);
         draft.list = action.payload.comment_list;
       }),
+      [SET_EDIT_COMMENT_MODE]: (state, action) => 
+      produce(state, (draft) => {
+        draft.idx = action.payload.idx ;
+      }),
+      [EDIT_QNA_COMMENT]: (state, action) => 
+      produce(state, (draft) => {
+        draft.list.splice(draft.idx, 1, action.payload.qcomment);
+      }),
       [ADD_QNA_COMMENT]: (state, action) => 
       produce(state, (draft) => {
-        draft.list.unshift(action.payload.qna);
+        draft.list.push(action.payload.qcomment);
       }),
       [DELETE_QNA_COMMENT]: (state, action) => 
       produce(state, (draft) => {
@@ -133,6 +165,9 @@ export default handleActions(
 const actionCreators = {
   getQnaCommentAPI,
   setQnaComment,
+  editCommentMode,
+  editQnaComment,
+  editQnaCommentAPI,
   addQnaComment,
   addQnaCommentAPI,
   deleteQnaCommentAPI,

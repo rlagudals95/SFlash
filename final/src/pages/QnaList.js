@@ -9,6 +9,7 @@ import { actionCreators as qnaActions } from "../redux/modules/qna";
 
 import { BsFillLockFill } from "react-icons/bs";
 import { RiEditFill } from "react-icons/ri";
+// import Pagination from '@material-ui/lab/Pagination';
 
 const QnaList = (props) => {
   const dispatch = useDispatch();
@@ -26,8 +27,8 @@ const QnaList = (props) => {
       <React.Fragment>
         <Container>
           <Title>문의하기</Title>
-          <SolidBtn  onClick={() => history.push("/qnawrite")}>
-           <RiEditFill size="12"/> 글쓰기
+          <SolidBtn onClick={() => history.push("/qnawrite")}>
+            <RiEditFill size="12" /> 글쓰기
           </SolidBtn>
           <Content>
             {/* <Text width="4%">
@@ -44,8 +45,10 @@ const QnaList = (props) => {
             </Text>
           </Content>
           <Warning>
-          <text style={{fontSize:"1.4rem"}}>등록된 게시물이 없습니다.</text>
-        </Warning>
+            <text style={{ fontSize: "1.4rem" }}>
+              등록된 게시물이 없습니다.
+            </text>
+          </Warning>
         </Container>
       </React.Fragment>
     );
@@ -54,8 +57,11 @@ const QnaList = (props) => {
       <React.Fragment>
         <Container>
           <Title>문의하기</Title>
-          <SolidBtn  onClick={() => history.push("/qnawrite")}>
-          <Icon><RiEditFill size="18" /></Icon> 글쓰기
+          <SolidBtn onClick={() => history.push("/qnawrite")}>
+            <Icon>
+              <RiEditFill size="18" />
+            </Icon>{" "}
+            글쓰기
           </SolidBtn>
           <Content>
             {/* <Text width="4%">
@@ -71,24 +77,26 @@ const QnaList = (props) => {
               <b>일자</b>
             </Text>
           </Content>
-          {qna_list.map((q,idx) => {
+          {qna_list.map((q, idx) => {
             return (
               <ContentUnit key={q.id} {...q}>
                 {/* <Text width="4%">{props.help.id}</Text> */}
-                <TextBtn width="70%" onClick={() => {
-                   if(q.writer!==me){
-                    alert("해당 게시물에 대한 권힌이 없습니다.")
+                <TextBtn
+                  width="70%"
+                  onClick={() => {
+                    if (q.writer !== me && role !== "ADMIN") {
+                      alert("해당 게시물에 대한 권힌이 없습니다.");
                       return;
-                  }else{
-                    history.push(`/qnadetail/${q.id}`)
-                  }
-                }
-                 }>
+                    } else {
+                      history.push(`/qnadetail/${q.id}`);
+                    }
+                  }}
+                >
                   {q.title}
-                  {q.writer !== me &&
-                  <Icon onClick={() => history.push("/qnawrite/:id")}>
-                    <BsFillLockFill size="17" color="grey" />
-                  </Icon>
+                  {(q.writer !== me && role !== "ADMIN") &&
+                    <Icon onClick={() => history.push("/qnawrite/:id")}>
+                      <BsFillLockFill size="17" color="grey" />
+                    </Icon>
                   }
                 </TextBtn>
                 <Text width="13%">{q.writer}</Text>
@@ -96,6 +104,7 @@ const QnaList = (props) => {
               </ContentUnit>
             );
           })}
+          {/* <Pagination count={10} color="primary" /> */}
         </Container>
       </React.Fragment>
     );
@@ -199,8 +208,8 @@ const Icon = styled.div`
 `;
 
 const SolidBtn = styled.button`
-align-items: center;
-display:flex;
+  align-items: center;
+  display: flex;
   float: right;
   border: none;
   padding: 7px 20px 7px 0px;

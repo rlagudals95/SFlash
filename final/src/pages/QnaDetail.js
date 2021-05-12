@@ -31,12 +31,12 @@ const QnaDetail = (props) => {
         <Title>문의하기</Title>
 
         <TitleContainer>
-          <Text size="1.1rem" width="100%">
+          <Text size="1.3rem" width="100%">
             {qna.title}
           </Text>
           <Grid is_flex width="50%">
-            <Text>{qna.writer}</Text>
-            <Text>|</Text>
+            <Text size="1rem">{qna.writer}</Text>
+            <Text size="1rem">|</Text>
             <Text width="90px">{qna.modified}</Text>
             <TextBtn onClick={() => history.push(`/qnawrite/${qnaId}`)}>
               수정
@@ -58,7 +58,7 @@ const QnaDetail = (props) => {
 
        <QnaDetailComment qnaId={qnaId}/>
 
-        <Grid height="200px" />
+        <Grid height="600px" />
       </Container>
     </React.Fragment>
   );

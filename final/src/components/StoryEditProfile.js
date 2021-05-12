@@ -17,8 +17,8 @@ import { ClosedCaption } from "@material-ui/icons";
 
 const StoryEditProfile = (props) => {
   const dispatch = useDispatch();
-  // 스토리페이지에서 user_info를 props로 받아온다.
-  const { user_info } = props;
+  
+  const { user_info } = props;        // Story.js 에서 user_info를 props로 받아오기
   const userId = localStorage.getItem("userId");
 
   const is_uploading = useSelector((state) => state.profile.is_uploading);
@@ -30,6 +30,91 @@ const StoryEditProfile = (props) => {
     }
     dispatch(profileActions.setPreview(user_info.profileImgUrl));
   }, []);
+
+  // 닉네임 변경하기-----------------------------------------------------------------------------
+  // originalNickMode : true 일 때, '닉네임 변경 전' 화면을 띄워주고, false 일 때 '변경하는'화면으로 전환
+  const [originalNickMode, setOriginalNickMode] = React.useState(true);
+  // 새 닉네임과 중복확인
+  const [newNickname, setNewNickname] = React.useState(user_info.nickname);
+  const [nicknameDup, setNicknameDup] = React.useState(false);
+
+  // 새 닉네임 입력
+  const changeNickname = (e) => {
+    setNewNickname(e.target.value);
+    const nicknameInfo = document.querySelector(
+      "ul.checkNickname li:nth-child(1)"
+    );
+    const nicknameInfo_dupCheck = document.querySelector(
+      "ul.checkNickname li:nth-child(2)"
+    );
+    // 닉네임 정규식 검사
+    if (!nicknameRegCheck(e.target.value)) {
+      nicknameInfo.classList.add("error");
+      nicknameInfo.classList.remove("ok");
+    } else {
+      nicknameInfo.classList.add("ok");
+      nicknameInfo.classList.remove("error");
+    }
+    // 닉네임 중복 확인
+    if (nicknameDup === false) {
+      nicknameInfo_dupCheck.classList.add("error");
+      nicknameInfo_dupCheck.classList.remove("ok");
+    } else {
+      nicknameInfo_dupCheck.classList.add("ok");
+      nicknameInfo_dupCheck.classList.remove("error");
+    }
+  };
+
+  // 닉네임 중복확인
+  const nicknameDupCheckAPI = (newNickname) => {
+    axios
+      .post(
+        `${config.api}/user/signup/nickchk`,
+        {
+          nickname: newNickname,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log("넥네임중복확인!", res.data);
+        if (res.data === false) {
+          alert("이미 등록된 닉네임 입니다!");
+        } else {
+          alert("사용 가능한 닉네임 입니다 :)");
+          setNicknameDup(true);
+          const nicknameInfo_dupCheck = document.querySelector(
+            "ul.checkNickname li:nth-child(2)"
+          );
+          nicknameInfo_dupCheck.classList.add("ok");
+          nicknameInfo_dupCheck.classList.remove("error");
+        }
+      });
+  };
+
+  // 저장하기 버튼을 누르면, 닉네임이 변경되고 다시 프로필 편집 창으로 돌아간다.
+  const onEditNickname = () => {
+    if (nicknameDup === false) {
+      alert("닉네임 중복확인을 해주세요!");
+      return false;
+    }
+    console.log(newNickname);
+    dispatch(profileActions.editNicknameAPI(newNickname, userId));
+    setOriginalNickMode(true);
+  };
+
+  
+  // 프로필 사진과 자기소개 수정하기-------------------------------------------------------------------
+  // 자기소개 (value를 사용해 기존에 입력한 내용을 띄워준다.)
+  const [introduction, setIntroduction] = React.useState(
+    user_info.introduction
+  );
+  const changeIntroduction = (e) => {
+    setIntroduction(e.target.value);
+  };
 
   // 이미지 업로드하기
   const fileInput = React.useRef();
@@ -67,95 +152,9 @@ const StoryEditProfile = (props) => {
     );
   };
 
-  // 닉네임 변경하기
-  // originalNickMode : true 일 때, '닉네임 변경 전' 화면을 띄워주고, false 일 때 '변경하는'화면으로 전환
-  const [originalNickMode, setOriginalNickMode] = React.useState(true);
-  // 새 닉네임과 중복확인
-  const [newNickname, setNewNickname] = React.useState(user_info.nickname);
-  const [nicknameDup, setNicknameDup] = React.useState(false);
-
-  // 새 닉네임 입력
-  const changeNickname = (e) => {
-    setNewNickname(e.target.value);
-    const nicknameInfo = document.querySelector(
-      "ul.checkNickname li:nth-child(1)"
-    );
-    const nicknameInfo_dupCheck = document.querySelector(
-      "ul.checkNickname li:nth-child(2)"
-    );
-    // 닉네임 정규식 검사
-    if (!nicknameRegCheck(e.target.value)) {
-      nicknameInfo.classList.add("error");
-      nicknameInfo.classList.remove("ok");
-    } else {
-      nicknameInfo.classList.add("ok");
-      nicknameInfo.classList.remove("error");
-    }
-    // 닉네임 중복 확인
-    if (nicknameDup === false) {
-      nicknameInfo_dupCheck.classList.add("error");
-      nicknameInfo_dupCheck.classList.remove("ok");
-    } else {
-      nicknameInfo_dupCheck.classList.add("ok");
-      nicknameInfo_dupCheck.classList.remove("error");
-    }
-  };
-
-  // 닉네임 중복확인
-  const nicknameDupCheckAPI = (newNickname) => {
-    console.log(newNickname);
-    const API = `${config.api}/user/signup/nickchk`;
-    axios
-      .post(
-        API,
-        {
-          nickname: newNickname,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        console.log("넥네임중복확인!", res.data);
-        if (res.data === false) {
-          alert("이미 등록된 닉네임 입니다!");
-        } else {
-          alert("사용 가능한 닉네임 입니다 :)");
-          setNicknameDup(true);
-          const nicknameInfo_dupCheck = document.querySelector(
-            "ul.checkNickname li:nth-child(2)"
-          );
-          nicknameInfo_dupCheck.classList.add("ok");
-          nicknameInfo_dupCheck.classList.remove("error");
-        }
-      });
-  };
-
-  // 저장하기 버튼을 누르면, 닉네임이 변경되고 다시 프로필 편집 창으로 돌아간다.
-  const onEditNickname = () => {
-    if (nicknameDup === false) {
-      alert("닉네임 중복확인을 해주세요!");
-      return false;
-    }
-    console.log(newNickname);
-    dispatch(profileActions.editNicknameAPI(newNickname, userId));
-    setOriginalNickMode(true);
-  };
-
-  // 자기소개 (value를 사용해 기존에 입력한 내용을 띄워준다.)
-  const [introduction, setIntroduction] = React.useState(
-    user_info.introduction
-  );
-  const changeIntroduction = (e) => {
-    setIntroduction(e.target.value);
-  };
-
-  // 프로필 사진과 자기소개 수정하기
+  // ref={fiileInput}으로 받아온 자료에서 이미지 정보를 추출해 보내줍니다.
   const onEditProfile = () => {
     const profileImg = fileInput.current.files[0];
-
     let profile = {
       profileImg: profileImg,
       introduction: introduction,
@@ -171,11 +170,15 @@ const StoryEditProfile = (props) => {
           {originalNickMode && (
             <div>
               <EditImgBtn for="edit_profile_img">
-                <HiCamera size="25px" color="4670fd" />
+                <HiCamera
+                  size="25px"
+                  color="white"
+                />
               </EditImgBtn>
               <input
                 type="file"
                 id="edit_profile_img"
+                // ref로 사진 파일 받아오기
                 ref={fileInput}
                 onChange={selectFile}
                 disabled={is_uploading}
@@ -203,6 +206,7 @@ const StoryEditProfile = (props) => {
           // 닉네임은 그대로두고 프로필 사진과 자기소개만 수정할 수 있는 모드
           <Grid>
             <NicknameContainer height="60px">
+              <div>
               <Nickname>{user_info.nickname}</Nickname>
               <EditNicknameBtn
                 onClick={(e) => {
@@ -213,6 +217,7 @@ const StoryEditProfile = (props) => {
               >
                 닉네임 변경
               </EditNicknameBtn>
+              </div>
             </NicknameContainer>
             <Grid flex>
               <TextField
@@ -223,14 +228,16 @@ const StoryEditProfile = (props) => {
               />
             </Grid>
 
-            <SolidBtn width="120px" 
-             onClick={() => {
-              const result = window.confirm("변경된 내용을 저장 하시겠습니까?");
-              if (result) {
-                onEditProfile();
-                props.closeModal();
-              }
-            }}
+            <SolidBtn
+              width="95%"
+              onClick={() => {
+                const result =
+                  window.confirm("변경된 내용을 저장 하시겠습니까?");
+                if (result) {
+                  onEditProfile();
+                  props.closeModal();
+                }
+              }}
             >
               저장하기
             </SolidBtn>
@@ -253,7 +260,7 @@ const StoryEditProfile = (props) => {
                   changeNickname(e);
                 }}
               />
-              <SolidBtn
+              <CheckBtn
                 //  disabled={is_uploading}
                 width="100px"
                 onClick={() => {
@@ -268,9 +275,9 @@ const StoryEditProfile = (props) => {
                 }}
               >
                 중복확인
-              </SolidBtn>
+              </CheckBtn>
             </NicknameContainer>
-            <InfoUl className="checkNickname">
+            <InfoUl className="checkNickname" style={{ marginLeft: "90px" }} >
               <InfoLi>
                 <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
                 6자 이상의 영문 혹은 영문과 숫자를 조합
@@ -281,7 +288,7 @@ const StoryEditProfile = (props) => {
               </InfoLi>
             </InfoUl>
             <SolidBtn
-              width="140px"
+              width="70%"
               onClick={() => {
                 const result = window.confirm("닉네임을 변경 하시겠습니까?");
                 if (result) {
@@ -300,17 +307,19 @@ const StoryEditProfile = (props) => {
 
 const ProfileContainer = styled.div`
   align-items: center;
+  margin: auto;
   padding: 35px;
 `;
 const ImgContainer = styled.div`
-  margin: 10px 20px 0px 20px;
+  text-align: center;
+  align-items: center;
+  margin-top: 10px;
 `;
 
 const ProfileImg = styled.img`
   width: 175px;
   aspect-ratio: 1/1;
   border-radius: 150px;
-  padding: 0px;
   background-size: cover;
   object-fit: cover;
   cursor: pointer;
@@ -318,13 +327,13 @@ const ProfileImg = styled.img`
 
 const EditImgBtn = styled.label`
   position: absolute;
-  margin-left: 130px;
-  margin-top: 130px;
-  padding: 5px;
+  margin-left: 40px;
+  margin-top: 135px;
+  padding: 5px 5px 1px 5px;
   border-radius: 50px;
-  background-color: #ffffff;
+  background-color: ${(props) => props.theme.main_color};
   &:hover {
-    background-color: #eee;
+    background-color: grey;
     color: #ffffff;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
@@ -332,6 +341,7 @@ const EditImgBtn = styled.label`
 `;
 
 const Nickname = styled.text`
+  margin-top: 10px;
   margin-left: 10px;
   font-size: 1.5rem;
   font-weight: 400;
@@ -339,28 +349,29 @@ const Nickname = styled.text`
 
 const NicknameContainer = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
   ${(props) => (props.height ? `height:${props.height};` : "")}
-  margin: 10px 0px 10px 12px;
+  margin: 10px 0px 0px 12px;
+  /* background-color:#eee; */
 `;
 
 const EditNicknameBtn = styled.button`
   padding: 8px;
-  margin-left: 16px;
+  margin-left: 16px ;
   border-radius: 5px;
   box-sizing: border-box;
   font-size: 0.8rem;
-  font-weight: 400;
+  font-weight: 700;
   background-color: #ffffff;
   color: ${(props) => props.theme.main_color};
   outline: none;
-  border: 1pt solid ${(props) => props.theme.main_color};
+  border: 1.5pt solid ${(props) => props.theme.main_color};
   &:hover {
     color: #ffffff;
-    background-color: grey;
+    background-color: ${(props) => props.theme.main_color};
     cursor: pointer;
     transition: all 0.5s ease-in-out;
-    border: 1pt solid grey;
   }
 `;
 
@@ -391,26 +402,49 @@ const TextField = styled.textarea`
   padding: 16px 16px;
   box-sizing: border-box;
   margin: 10px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1.5rem;
 `;
 
-const SolidBtn = styled.button`
+const CheckBtn = styled.button`
   display: block;
   border: none;
-  margin: 20px 10px;
+  margin: 10px 15px;
   ${(props) => (props.width ? `width:${props.width};` : "")}
   height: 48px;
   border-radius: 8px;
   box-sizing: border-box;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   background-color: ${(props) => props.theme.main_color};
   color: #ffffff;
   outline: none;
   &:hover {
-    color: grey;
-    background-color: lightgrey;
+    background-color: #ffffff;
+    color: ${(props) => props.theme.main_color};
+    border: 2pt solid ${(props) => props.theme.main_color};
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+  }
+`;
+
+const SolidBtn = styled.button`
+  display: block;
+  border: none;
+  margin: 15px auto;
+  ${(props) => (props.width ? `width:${props.width};` : "")}
+  height: 48px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: ${(props) => props.theme.main_color};
+  color: #ffffff;
+  outline: none;
+  &:hover {
+    background-color: #ffffff;
+    color: ${(props) => props.theme.main_color};
+    border: 2pt solid ${(props) => props.theme.main_color};
     cursor: pointer;
     transition: all 0.5s ease-in-out;
   }
