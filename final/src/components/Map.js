@@ -26,6 +26,7 @@ const { kakao } = window;
 const Maps = (props) => {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
+  const nickname = localStorage.getItem("nickname");  // 내가 작성한 게시물을 판별하는 기준 상수
 
   // 사진이 나오는 모달창 제어
   const [is_modal, setModal] = useState(false); // 마커 클릭하면 나오는 작은 모달
@@ -84,21 +85,49 @@ const Maps = (props) => {
   // 종류별 데이터는 필터 함수를 이용해 묶어 내고 필요한 부분에 가져다 쓴다.
   // 전체 마커, 내 마커, 내가 좋아요한 마커
   const allData = map_post_list;
-  // const myData = map_post_list.filter((map_post_list) => map_post_list.writerName === nickname);
-  const mylikeData = map_post_list.filter((map_post_list) => map_post_list.like === true);
+  const myData = map_post_list.filter(
+    (map_post_list) => map_post_list.writerName === nickname
+  );
+  const mylikeData = map_post_list.filter(
+    (map_post_list) => map_post_list.like === true
+  );
   // 각 카테고리별 데이터
-  const cafeData = map_post_list.filter(map_post_list => map_post_list.category === "카페");
-  const nightData = map_post_list.filter(map_post_list => map_post_list.category === "야경");
-  const oceanData = map_post_list.filter(map_post_list => map_post_list.category === "바다");
-  const mountainData = map_post_list.filter(map_post_list => map_post_list.category === "산");
-  const flowerData = map_post_list.filter(map_post_list => map_post_list.category === "꽃");
-  const aloneData = map_post_list.filter(map_post_list => map_post_list.category === "나홀로");
-  const coupleData = map_post_list.filter(map_post_list => map_post_list.category === "연인");
-  const friendData = map_post_list.filter(map_post_list => map_post_list.category === "친구");
-  const petData = map_post_list.filter(map_post_list => map_post_list.category === "반려동물");
-  const cityData = map_post_list.filter(map_post_list => map_post_list.category === "도심");
-  const parkData = map_post_list.filter(map_post_list => map_post_list.category === "공원");
-  const exhibitionData = map_post_list.filter(map_post_list => map_post_list.category === "전시");
+  const cafeData = map_post_list.filter(
+    (map_post_list) => map_post_list.category === "카페"
+  );
+  const nightData = map_post_list.filter(
+    (map_post_list) => map_post_list.category === "야경"
+  );
+  const oceanData = map_post_list.filter(
+    (map_post_list) => map_post_list.category === "바다"
+  );
+  const mountainData = map_post_list.filter(
+    (map_post_list) => map_post_list.category === "산"
+  );
+  const flowerData = map_post_list.filter(
+    (map_post_list) => map_post_list.category === "꽃"
+  );
+  const aloneData = map_post_list.filter(
+    (map_post_list) => map_post_list.category === "나홀로"
+  );
+  const coupleData = map_post_list.filter(
+    (map_post_list) => map_post_list.category === "연인"
+  );
+  const friendData = map_post_list.filter(
+    (map_post_list) => map_post_list.category === "친구"
+  );
+  const petData = map_post_list.filter(
+    (map_post_list) => map_post_list.category === "반려동물"
+  );
+  const cityData = map_post_list.filter(
+    (map_post_list) => map_post_list.category === "도심"
+  );
+  const parkData = map_post_list.filter(
+    (map_post_list) => map_post_list.category === "공원"
+  );
+  const exhibitionData = map_post_list.filter(
+    (map_post_list) => map_post_list.category === "전시"
+  );
   // 카테고리별 데이터 가져오기.
 
   // 전체 마커, 작성용마커, 좋아요마커, 각 카테고리별 마커들의 imgurl
