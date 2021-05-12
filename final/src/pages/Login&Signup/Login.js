@@ -112,7 +112,7 @@ const Login = () => {
             color="#ffffff"
             onClick={() => {
               window.location.href =
-                "http://seungwook.shop/oauth2/authorize/naver?redirect_uri=http://localhost:3000/";
+                "http://13.125.97.117/oauth2/authorize/naver?redirect_uri=http://localhost:3000/";
               // onSocialLogin();
             }}
           >
@@ -122,7 +122,7 @@ const Login = () => {
             bg="#fee500"
             onClick={() => {
               window.location.href =
-                "http://seungwook.shop/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/";
+              "http://13.125.97.117/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/";
               // onSocialLogin();
             }}
           >
@@ -133,7 +133,7 @@ const Login = () => {
             color="#ffffff"
             onClick={() => {
               window.location.href =
-                "http://seungwook.shop/oauth2/authorize/google?redirect_uri=http://localhost:3000/";
+              "http://13.125.97.117/oauth2/authorize/google?redirect_uri=http://localhost:3000/";
               // onSocialLogin();
             }}
           >
