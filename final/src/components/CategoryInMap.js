@@ -27,18 +27,18 @@ const CategoryInMap = () => {
   // console.log(is_category);
   // console.log("카테고리 배열길이", is_category.length);
 
-  const [cafe, setCafe] = useState();
-  const [night, setNight] = useState();
-  const [ocean, setOcean] = useState();
-  const [mountain, setMountain] = useState();
-  const [flower, setFlower] = useState();
-  const [alone, setAlone] = useState();
-  const [couple, setCouple] = useState();
-  const [freind, setFreind] = useState();
-  const [pet, setPet] = useState();
-  const [exhibition, setExhibition] = useState();
-  const [city, setCity] = useState();
-  const [park, setPark] = useState();
+  const [cafe, setCafe] = useState("cafe");
+  const [night, setNight] = useState("night");
+  const [ocean, setOcean] = useState("ocean");
+  const [mountain, setMountain] = useState("mountain");
+  const [flower, setFlower] = useState("flower");
+  const [alone, setAlone] = useState("alone");
+  const [couple, setCouple] = useState("couple");
+  const [friend, setFreind] = useState("friend");
+  const [pet, setPet] = useState("pet");
+  const [exhibition, setExhibition] = useState("exhibition");
+  const [city, setCity] = useState("city");
+  const [park, setPark] = useState("park");
   const [showMine, setShowMine] = useState(false);
   const [showLike, setShowLike] = useState(false);
 
@@ -81,7 +81,11 @@ const CategoryInMap = () => {
               e.preventDefault();
               e.stopPropagation();
               setCafe("cafe");
+              setShowMine(false);
+              setShowLike(false);
               dispatch(categoryActionsInMap.getCategoryInMap("카페"));
+              dispatch(categoryActionsInMap.resetMyPostInMap());
+              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #카페
@@ -105,7 +109,11 @@ const CategoryInMap = () => {
               e.preventDefault();
               e.stopPropagation();
               setNight("night");
+              setShowMine(false);
+              setShowLike(false);
               dispatch(categoryActionsInMap.getCategoryInMap("야경"));
+              dispatch(categoryActionsInMap.resetMyPostInMap());
+              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #야경
@@ -129,7 +137,11 @@ const CategoryInMap = () => {
               e.preventDefault();
               e.stopPropagation();
               setOcean("night");
+              setShowMine(false);
+              setShowLike(false);
               dispatch(categoryActionsInMap.getCategoryInMap("바다"));
+              dispatch(categoryActionsInMap.resetMyPostInMap());
+              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #바다
@@ -153,7 +165,11 @@ const CategoryInMap = () => {
               e.preventDefault();
               e.stopPropagation();
               setMountain("mountain");
+              setShowMine(false);
+              setShowLike(false);
               dispatch(categoryActionsInMap.getCategoryInMap("산"));
+              dispatch(categoryActionsInMap.resetMyPostInMap());
+              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #산
@@ -177,7 +193,11 @@ const CategoryInMap = () => {
               e.preventDefault();
               e.stopPropagation();
               setCity("city");
+              setShowMine(false);
+              setShowLike(false);
               dispatch(categoryActionsInMap.getCategoryInMap("도심"));
+              dispatch(categoryActionsInMap.resetMyPostInMap());
+              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #도심
@@ -201,7 +221,11 @@ const CategoryInMap = () => {
               e.preventDefault();
               e.stopPropagation();
               setExhibition("exhibitiom");
+              setShowMine(false);
+              setShowLike(false);
               dispatch(categoryActionsInMap.getCategoryInMap("전시"));
+              dispatch(categoryActionsInMap.resetMyPostInMap());
+              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #전시
@@ -225,7 +249,11 @@ const CategoryInMap = () => {
               e.preventDefault();
               e.stopPropagation();
               setPark("park");
+              setShowMine(false);
+              setShowLike(false);
               dispatch(categoryActionsInMap.getCategoryInMap("공원"));
+              dispatch(categoryActionsInMap.resetMyPostInMap());
+              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #공원
@@ -249,7 +277,11 @@ const CategoryInMap = () => {
               e.preventDefault();
               e.stopPropagation();
               setFlower("flower");
+              setShowMine(false);
+              setShowLike(false);
               dispatch(categoryActionsInMap.getCategoryInMap("꽃"));
+              dispatch(categoryActionsInMap.resetMyPostInMap());
+              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #꽃
@@ -273,7 +305,11 @@ const CategoryInMap = () => {
               e.preventDefault();
               e.stopPropagation();
               setAlone("alone");
+              setShowMine(false);
+              setShowLike(false);
               dispatch(categoryActionsInMap.getCategoryInMap("나홀로"));
+              dispatch(categoryActionsInMap.resetMyPostInMap());
+              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #나홀로
@@ -296,13 +332,17 @@ const CategoryInMap = () => {
               e.preventDefault();
               e.stopPropagation();
               setCouple("couple");
+              setShowMine(false);
+              setShowLike(false);
               dispatch(categoryActionsInMap.getCategoryInMap("연인"));
+              dispatch(categoryActionsInMap.resetMyPostInMap());
+              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #연인
           </Btn>
         )}
-        {freind ? (
+        {friend ? (
           <SelectedBtn
             onClick={(e) => {
               e.preventDefault();
@@ -318,8 +358,12 @@ const CategoryInMap = () => {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              setFreind("freind");
+              setFreind("friend");
+              setShowMine(false);
+              setShowLike(false);
               dispatch(categoryActionsInMap.getCategoryInMap("친구"));
+              dispatch(categoryActionsInMap.resetMyPostInMap());
+              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #친구
@@ -342,13 +386,18 @@ const CategoryInMap = () => {
               e.preventDefault();
               e.stopPropagation();
               setPet("pet");
+              setShowMine(false);
+              setShowLike(false);
               dispatch(categoryActionsInMap.getCategoryInMap("반려동물"));
+              dispatch(categoryActionsInMap.resetMyPostInMap());
+              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #반려동물
           </Btn>
         )}
         <MiddleBox/>
+
         {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
         <SpotSelectBox>
           {/* 전체스팟 찾기 */}
@@ -357,6 +406,8 @@ const CategoryInMap = () => {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                setShowMine(false);
+                setShowLike(false);
                 dispatch(categoryActionsInMap.resetCategoryInMap());
               }}
             >
@@ -379,19 +430,30 @@ const CategoryInMap = () => {
                 setExhibition(false);
                 setCity(false);
                 setPark(false);
+                setShowMine(false);
+                setShowLike(false);
                 dispatch(categoryActionsInMap.resetCategoryInMap());
-                dispatch(categoryActionsInMap.resetMineAndMyLikeInMap());
               }}
             > 전체스팟
             </AllSpots>
           )}
           {/* 내스팟 찾기 */}
           {showMine ? (
-            <MySpotsSelected
+            <MyPostSpotsSelected
+              onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowMine(false);
+              setShowLike(false);
+              dispatch(categoryActionsInMap.resetCategoryInMap());
+              }}
+            > 내스팟  
+            </MyPostSpotsSelected>
+            ) : (
+            <MyPostSpots
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                setShowMine(false);
                 setCafe(false);
                 setNight(false);
                 setOcean(false);
@@ -404,22 +466,12 @@ const CategoryInMap = () => {
                 setExhibition(false);
                 setCity(false);
                 setPark(false);
-                setShowMine(false);
-                dispatch(categoryActionsInMap.resetCategoryInMap());
-                dispatch(categoryActionsInMap.resetMineAndMyLikeInMap());
+                setShowMine(true);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getMyPostInMap());
               }}
             > 내스팟  
-            </MySpotsSelected>
-            ) : (
-            <MySpots
-              onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setShowMine(true);
-              dispatch(categoryActionsInMap.getMineAndMyLikeInMap("내꺼"));
-              }}
-            > 내스팟  
-            </MySpots>
+            </MyPostSpots>
             )}
           {/* 내좋아요스팟 찾기 */}
           {showLike ? (
@@ -428,6 +480,16 @@ const CategoryInMap = () => {
                 e.preventDefault();
                 e.stopPropagation();
                 setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.resetCategoryInMap());
+              }}
+            > 좋아요 스팟
+            </MyLikeSpotsSelected>
+            ) : (
+              <MyLikeSpots
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 setCafe(false);
                 setNight(false);
                 setOcean(false);
@@ -440,19 +502,9 @@ const CategoryInMap = () => {
                 setExhibition(false);
                 setCity(false);
                 setPark(false);
-                setShowLike(false);
-                dispatch(categoryActionsInMap.resetCategoryInMap());
-                dispatch(categoryActionsInMap.resetMineAndMyLikeInMap());
-              }}
-            > 좋아요 스팟
-            </MyLikeSpotsSelected>
-            ) : (
-            <MyLikeSpots
-              onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setShowLike(true);
-              dispatch(categoryActionsInMap.getMineAndMyLikeInMap("내좋아요"));
+                setShowMine(false);
+                setShowLike(true);
+                dispatch(categoryActionsInMap.getMyLikeInMap());
               }}
             > 좋아요 스팟
             </MyLikeSpots>
@@ -506,7 +558,7 @@ const AllSpots = styled.button`
   text-align: center;
 `;
 
-const MySpotsSelected = styled.div`
+const MyPostSpotsSelected = styled.div`
   display: flex;
   flex-direction: column;
   width: 55px;
@@ -522,16 +574,17 @@ const MySpotsSelected = styled.div`
   text-align: center;
 `;
 
-const MySpots = styled.div`
+const MyPostSpots = styled.div`
   display: flex;
   flex-direction: column;
   width: 55px;
   height: 55px;
   font-size: 10px;
-  background-color: white;
+  background-color: white; 
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid lightgray;
+  /* 테두리 갈색 */
+  border: 1px solid lightgray;  
   cursor: pointer;
   margin: 5px;
   padding: 5px;

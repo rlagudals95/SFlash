@@ -24,9 +24,10 @@ import { LeakRemoveOutlined } from "@material-ui/icons";
 const { kakao } = window;
 
 const Maps = (props) => {
+  // props 데이터 : props.map_post_list, props.is_category_in_map 
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
-  const nickname = localStorage.getItem("nickname");
+  const nickname = localStorage.getItem("nickname");  // 내가 작성한 게시물을 판별하는 기준 상수
 
   // 사진이 나오는 모달창 제어
   const [is_modal, setModal] = useState(false); // 마커 클릭하면 나오는 작은 모달
@@ -42,53 +43,53 @@ const Maps = (props) => {
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
   //조건 걸어주기 // 나를 기준으로 몇 km 이내
 
-  // 카테고리 제어하기
-  
-  const is_category_in_map = useSelector((state) => {
-    return state.category_in_map.is_category_in_map
-  });
-  console.log(is_category_in_map);
-  // is_category 배열 안에 해당 카테고리가 원소로서 존재하는지 체크 : true, false가 기본값
-  const is_cafe = is_category_in_map.includes("카페"); //요게 카페가 나온다는건? 배열안에 카페가 있다는 것!
-  const is_night = is_category_in_map.includes("야경"); 
-  const is_ocean = is_category_in_map.includes("바다");
-  const is_mountain = is_category_in_map.includes("산");
-  const is_flower = is_category_in_map.includes("꽃");
-  const is_alone = is_category_in_map.includes("나홀로");
-  const is_couple = is_category_in_map.includes("연인");
-  const is_friend = is_category_in_map.includes("친구");
-  const is_pet = is_category_in_map.includes("반려동물");
-  const is_city = is_category_in_map.includes("도심");
-  const is_park = is_category_in_map.includes("공원");
-  const is_exhibition = is_category_in_map.includes("전시");
-  
-  // 모든 게시물의 데이터들을 받아 온다.
-  const map_post_list = useSelector((state) => {
-    return state.post.map_post_list
-  });
+  console.log("props.is_category_in_map: " + props.is_category_in_map);
+  const is_all = props.is_category_in_map.length === 0  ? true : false; // props로 받은 카테고리 리스트에 아무것도 없을 때
+  console.log(is_all);
+  const all_Category_list = props.is_category_in_map; // 카테고리 리스트를 all_Category_list 상수에 할당 
 
-  if (map_post_list) {
-    console.log(map_post_list);
-  };
+  // all_Category_list 배열 안에 해당 카테고리가 원소로서 존재 여부를 true, false로 설정한다.
+  const is_cafe = all_Category_list.includes("카페"); //요게 카페가 나온다는건? 배열안에 카페가 있다는 것!
+  const is_night = all_Category_list.includes("야경"); 
+  const is_ocean = all_Category_list.includes("바다");
+  const is_mountain = all_Category_list.includes("산");
+  const is_flower = all_Category_list.includes("꽃");
+  const is_alone = all_Category_list.includes("나홀로");
+  const is_couple = all_Category_list.includes("연인");
+  const is_friend = all_Category_list.includes("친구");
+  const is_pet = all_Category_list.includes("반려동물");
+  const is_city = all_Category_list.includes("도심");
+  const is_park = all_Category_list.includes("공원");
+  const is_exhibition = all_Category_list.includes("전시");
+
+  // // 내가 작성한 게시물만 보기 + 내가 좋아요한 게시물만 보기 제어.
+  // const is_mypost_or_mylike_in_map = useSelector((state) => {
+  //   return state.category_in_map.is_mypost_or_mylike_in_map
+  // });
+
+  // // is_mine_and_mylike_in_map "내꺼", "내좋아요"가 원소로서 존재 여부를 true, false로 설정한다.
+  // const is_mypost = is_mypost_or_mylike_in_map.includes("내꺼"); 
+  // const is_mylike = is_mypost_or_mylike_in_map.includes("내좋아요"); 
   
   // 종류별 데이터는 필터 함수를 이용해 묶어 내고 필요한 부분에 가져다 쓴다.
   // 전체 마커, 내 마커, 내가 좋아요한 마커
-  const allData = map_post_list;
-  const myData = map_post_list.filter((map_post_list) => map_post_list.writerName === nickname);
-  const mylikeData = map_post_list.filter((map_post_list) => map_post_list.like === true);
+  const allData = props.map_post_list;
+  console.log(allData);
+  const myData = allData.filter((allData) => allData.writerName === nickname);
+  const mylikeData = allData.filter((allData) => allData.like === true);
   // 각 카테고리별 데이터
-  const cafeData = map_post_list.filter(map_post_list => map_post_list.category === "카페");
-  const nightData = map_post_list.filter(map_post_list => map_post_list.category === "야경");
-  const oceanData = map_post_list.filter(map_post_list => map_post_list.category === "바다");
-  const mountainData = map_post_list.filter(map_post_list => map_post_list.category === "산");
-  const flowerData = map_post_list.filter(map_post_list => map_post_list.category === "꽃");
-  const aloneData = map_post_list.filter(map_post_list => map_post_list.category === "나홀로");
-  const coupleData = map_post_list.filter(map_post_list => map_post_list.category === "연인");
-  const friendData = map_post_list.filter(map_post_list => map_post_list.category === "친구");
-  const petData = map_post_list.filter(map_post_list => map_post_list.category === "반려동물");
-  const cityData = map_post_list.filter(map_post_list => map_post_list.category === "도심");
-  const parkData = map_post_list.filter(map_post_list => map_post_list.category === "공원");
-  const exhibitionData = map_post_list.filter(map_post_list => map_post_list.category === "전시");
+  const cafeData = allData.filter((allData) => allData.category === "카페");
+  const nightData = allData.filter((allData) => allData.category === "야경");
+  const oceanData = allData.filter((allData) => allData.category === "바다");
+  const mountainData = allData.filter((allData) => allData.category === "산");
+  const flowerData = allData.filter((allData) => allData.category === "꽃");
+  const aloneData = allData.filter((allData) => allData.category === "나홀로");
+  const coupleData = allData.filter((allData) => allData.category === "연인");
+  const friendData = allData.filter((allData) => allData.category === "친구");
+  const petData = allData.filter((allData) => allData.category === "반려동물");
+  const cityData = allData.filter((allData) => allData.category === "도심");
+  const parkData = allData.filter((allData) => allData.category === "공원");
+  const exhibitionData = allData.filter((allData) => allData.category === "전시");
   // 카테고리별 데이터 가져오기.
 
   // 전체 마커, 작성용마커, 좋아요마커, 각 카테고리별 마커들의 imgurl
@@ -145,15 +146,17 @@ const Maps = (props) => {
       console.log("현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon);
     } // geolocation은 여기까지 
 
-    // 페이지가 렌더링 되면 지도 띄우기
-    var container = document.getElementById("map"); // 지도를 표시할 div
-    var options = {
-      //지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(startlat, startlon), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
-      level: 8, //지도 확대 레벨
-    };
+    if (allData) {
+      // 페이지가 렌더링 되면 지도 띄우기
+      var container = document.getElementById("map"); // 지도를 표시할 div
+      var options = {
+        //지도를 생성할 때 필요한 기본 옵션
+        center: new kakao.maps.LatLng(startlat, startlon), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
+        level: 12, //지도 확대 레벨
+      };
 
-    var map = new kakao.maps.Map(container, options); // 지도생성 및 객체 리턴
+      var map = new kakao.maps.Map(container, options); // 지도생성 및 객체 리턴
+    }
     // -----------------------------------------------------------------------------------
     // 여기까지는 지도를 가져오기 위한 필수 부분.
     // 아래부터 우리가 원하는걸 구현하는 코드를 작성한다.
@@ -256,9 +259,7 @@ const Maps = (props) => {
   // 6. 서버와 연결되어 데이터 통신이 이뤄지면 if문으로 분기하는 코드를 사용한다.
   // 기본 설정 규칙 설명 끝------------------------------------------------------------------------
   // 1. 전체마커 보이게 하는 설정 // 서버랑 통신 되면 이걸로 바꾸기 allData
-  if (is_category_in_map.length === 0 ) {  
-    // console.log(markerdata); 
-    // markerdata.forEach((p, idx) => { // mockdate를 이용한 테스트. 나중엔 서버에서 가져온다.
+  if (is_all) {  
     allData.forEach((all, idx) => { 
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(
@@ -285,7 +286,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${all.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${all.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${all.spotName}</div>` +
@@ -331,7 +332,7 @@ const Maps = (props) => {
 // 카테고리별 마커 + 커스텀오버레이 제어 시작!!
   // 1. 카페 카테고리 : 카페마커 + 커스텀 오버레이
   if (is_cafe) {
-    cafeData.map((cafe, idx) => {
+    cafeData.forEach((cafe) => {
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(cafeMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(cafe.latitude, cafe.longitude);
@@ -344,7 +345,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${cafe.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${cafe.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${cafe.spotName}</div>` +
@@ -381,7 +382,7 @@ const Maps = (props) => {
 
   // 2. 밤카테고리 : 카페마커 + 커스텀 오버레이
   if (is_night) {
-    nightData.map((night, idx) => { // nightData를 mockdata로 구현가능한지 테스트 할 것!
+    nightData.forEach((night) => { // nightData를 mockdata로 구현가능한지 테스트 할 것!
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(nightMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(night.latitude, night.longitude);
@@ -394,7 +395,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       const content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${night.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${night.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${night.spotName}</div>` +
@@ -431,7 +432,7 @@ const Maps = (props) => {
 
   // 3. 바다카테고리 : 카페마커 + 커스텀 오버레이
   if (is_ocean) {
-    oceanData.map((ocean, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    oceanData.forEach((ocean) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(oceanMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(ocean.latitude, ocean.longitude);
@@ -444,7 +445,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${ocean.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${ocean.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${ocean.spotName}</div>` +
@@ -494,7 +495,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${mountain.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${mountain.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${mountain.spotName}</div>` +
@@ -531,7 +532,7 @@ const Maps = (props) => {
 
   // 5. 꽃카테고리 : 카페마커 + 커스텀 오버레이
   if (is_flower) {
-    flowerData.map((flower, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    flowerData.forEach((flower) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(flowerMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(flower.latitude, flower.longitude);
@@ -544,7 +545,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${flower.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${flower.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${flower.spotName}</div>` +
@@ -594,7 +595,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${alone.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${alone.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${alone.spotName}</div>` +
@@ -631,7 +632,7 @@ const Maps = (props) => {
   
   // 7. 커플카테고리 : 카페마커 + 커스텀 오버레이
   if (is_couple) {
-    coupleData.map((couple, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    coupleData.forEach((couple) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(coupleMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(couple.latitude, couple.longitude);
@@ -644,7 +645,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${couple.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${couple.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${couple.spotName}</div>` +
@@ -681,7 +682,7 @@ const Maps = (props) => {
 
   // 8. 친구카테고리 : 카페마커 + 커스텀 오버레이
   if (is_friend) {
-    friendData.map((friend, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    friendData.forEach((friend) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(friendMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(friend.latitude, friend.longitude);
@@ -695,7 +696,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${friend.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${friend.imgUrlOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${friend.spotName}</div>` +
@@ -732,7 +733,7 @@ const Maps = (props) => {
   
   // 9. 반려동물카테고리 : 카페마커 + 커스텀 오버레이
   if (is_pet) {
-    petData.map((pet, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    petData.forEach((pet) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(petMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(pet.latitude, pet.longitude);
@@ -745,7 +746,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${pet.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${pet.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${pet.spotName}</div>` +
@@ -782,7 +783,7 @@ const Maps = (props) => {
   
   // 10. 도심카테고리 : 카페마커 + 커스텀 오버레이
   if (is_city) {
-    cityData.map((city, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    cityData.forEach((city) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(cityMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(city.latitude, city.longitude);
@@ -795,7 +796,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${city.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${city.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${city.spotName}</div>` +
@@ -832,7 +833,7 @@ const Maps = (props) => {
   
   // 11. 공원카테고리 : 카페마커 + 커스텀 오버레이
   if (is_park) {
-    parkData.map((park, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    parkData.forEach((park) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(parkMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(park.latitude, park.longitude);
@@ -845,7 +846,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       var content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${park.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${park.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${park.spotName}</div>` +
@@ -882,7 +883,7 @@ const Maps = (props) => {
   
   // 12. 전시카테고리 : 카페마커 + 커스텀 오버레이
   if (is_exhibition) {
-    exhibitionData.map((exhibition, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    exhibitionData.forEach((exhibition) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       const imageSize = new kakao.maps.Size(30, 40);
       const markerImage = new kakao.maps.MarkerImage(exhibitionMarkerImgUrl, imageSize);
       const position = new kakao.maps.LatLng(exhibition.latitude, exhibition.longitude);
@@ -895,7 +896,7 @@ const Maps = (props) => {
       // 모달창(커스텀오버레이)에 들어갈 내용
       const content =
         '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${exhibition.imgUrl[0].imgUrl} >` +
+          `<img class="picbox"  src=${exhibition.imgForOverlay} >` +
         // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
               `<div class="spotname">${exhibition.spotName}</div>` +
@@ -936,8 +937,9 @@ const Maps = (props) => {
   // }, [search, startlat, startlon,
   // }, [startlat, startlon]);
   }, [startlat, startlon,
-    is_cafe, is_night, is_ocean, is_mountain, is_flower,
+    is_all, is_cafe, is_night, is_ocean, is_mountain, is_flower,
     is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
+
 
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다
@@ -1014,7 +1016,7 @@ export default Maps;
 const SearchBox = styled.div`
   position: fixed;
   margin: auto;
-  top: 75px;
+  top: 70px;
   left: 110px;
   /* transform: translate(-60%, -60%); */
   z-index: 10;
@@ -1026,14 +1028,14 @@ const SearchBox = styled.div`
     width: 400px;
   }
   @media (max-width: 960px) {
-    top: 60px;
+    top: 80px;
     /* left: 110px; */
     margin: auto;
     width: 350px;
     left: 10vw;
   }
   @media (max-width: 400px) {
-    top: 60px;
+    top: 50px;
     width: 50%;
     margin: auto;
     left: 20vw;

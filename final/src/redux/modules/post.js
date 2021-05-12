@@ -238,7 +238,7 @@ const getMapPostAPI = () => {
             id: _post.boardId, // 포스트 id
             title: _post.title, // 포스트 title
             content: _post.content, // 포스트 내용
-            like: _post.like,
+            like: _post.liked,
             likeCount: _post.likeCount,
             writerName: _post.writerName,
             writerImgUrl: _post.writerImgUrl,
