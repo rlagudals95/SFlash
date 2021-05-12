@@ -25,7 +25,8 @@ const ModalDetail = (props) => {
     dispatch(CommnetActions.getComment(props.id));
   }, []);
 
-  // console.log("모달 프롭스", props);
+  const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
+  console.log("게시물 작성자 id!", userId);
   // const commnet_list = props.comment_list  // 이렇게 받아오면 되려나?
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
@@ -104,14 +105,14 @@ const ModalDetail = (props) => {
   };
 
   const deleteComment = (id) => {
-    console.log(id);
-    console.log(props.id);
+    // console.log(id);
+    // console.log(props.id);
     // console.log("하이");
     dispatch(CommnetActions.deleteCommentAPI(id, props.id));
   };
 
   // console.log("댓글 내용", comments);
-
+  console.log("어떤정보가!??!", props);
   const selectComment = (e) => {
     setComments(e.target.value);
   };
@@ -211,7 +212,7 @@ const ModalDetail = (props) => {
               />
               <ModalAuthor>{props.writerName}</ModalAuthor>
             </React.Fragment>
-            <PostDate>{timeForToday(props.creatAt)}</PostDate>
+            {/* <PostDate>{timeForToday(props.creatAt)}</PostDate> */}
             <ExitContainer>
               <ExitBtn onClick={props.close}>
                 <CloseIcon fontSize="large" />
@@ -265,6 +266,7 @@ const ModalDetail = (props) => {
                     <EditBtn
                       onClick={() => {
                         setEditModal(true);
+
                         // dispatch(imageActions.getPost(props.id));
                       }}
                     >
@@ -311,9 +313,11 @@ const ModalDetail = (props) => {
               </ModalEdit> */}
             </InfoBoxInner>
             <React.Fragment>
-              <PostTilte>{props.title}</PostTilte>
+              <PostTilte>
+                {props.title} <PostDate>{timeForToday(props.creatAt)}</PostDate>
+              </PostTilte>
               <PostContents>{props.content}</PostContents>
-              <PostTime>{timeForToday(props.creatAt)}</PostTime>
+              <PostTime>{props.spotName}</PostTime>
             </React.Fragment>
           </InfoBox>
           <ModalCmtBox>
@@ -333,7 +337,7 @@ const ModalDetail = (props) => {
                                   : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                               }
                               onClick={() => {
-                                history.replace(`/story/${c.writerName}`);
+                                history.replace(`/story/${c.userId}`);
                               }}
                             ></ReplyImg>
                             <ReplyWriter>{c.writerName}</ReplyWriter>
@@ -446,7 +450,7 @@ const ModalComponent = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: #fafafc;
   z-index: 1000;
   display: flex;
   flex-direction: column;
@@ -547,13 +551,12 @@ const ModalBottomContainer = styled.div`
     text-align: left;
     width: 450px;
     // 이거 올려주니까 댓글창이보인다..!
-    height: 250px;
+    height: 300px;
     display: flex;
     flex-direction: column;
     padding: 0;
     margin: 0px auto;
-    margin-top: 5vh;
-    /* background-color: red; */
+    margin-top: 1.3vh;
   }
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
@@ -581,6 +584,7 @@ const ModalHeader = styled.div`
 const ModalLeftHeader = styled.div`
   display: flex;
   align-items: center;
+  margin: 0px auto;
 `;
 
 // const ModalRightHeader = styled.div`
@@ -685,6 +689,7 @@ const ModalCmtInputBox = styled.div`
   box-sizing: border-box;
   border: 2px solid #efefef;
   background-color: white;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.1);
   /* background-color: red; */
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
@@ -808,7 +813,9 @@ const CommentInput = styled.input`
 `;
 const UploadBtn = styled.div`
   font-size: 14px;
-  color: #3897f0;
+
+  /* color: #3897f0; */
+  color: ${(props) => props.theme.main_color};
   cursor: pointer;
   opacity: 1;
   font-weight: 600;

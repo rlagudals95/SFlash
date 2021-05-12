@@ -238,8 +238,8 @@ const SelectBtn = styled.div`
   width: 200px;
   height: 38px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
-  border: 1px solid #3897f0;
-  color: #3897f0;
+  border: 1px solid ${(props) => props.theme.main_color};
+  color: ${(props) => props.theme.main_color};
   @media (max-width: 600px) {
     padding: 0px 15px;
     font-size: 0.8rem;

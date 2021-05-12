@@ -504,10 +504,10 @@ const SelectedBtn = styled.button`
   background-color: white;
   border-radius: 50px;
   box-sizing: border-box;
-  border: 1px solid #3897f0;
+  border: 1px solid ${(props) => props.theme.main_color};
   cursor: pointer;
   font-size: 12px;
   font-weight: bold;
-  color: #3897f0;
+  color: ${(props) => props.theme.main_color};
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;

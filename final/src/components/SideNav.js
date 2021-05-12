@@ -6,7 +6,7 @@ import * as CgIcons from "react-icons/cg";
 import * as BiIcons from "react-icons/bi";
 import * as GrIcons from "react-icons/gr";
 import * as MdIcons from "react-icons/md";
-import {GrCircleQuestion} from 'react-icons/gr';
+import { GrCircleQuestion } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import "../Css/Navbar.css";
@@ -34,8 +34,8 @@ function Navbar() {
   //   dispatch(userActions.loading(true));
   // }, [is_loading]);
 
-React.useEffect(() => {
-  console.log(is_login);
+  React.useEffect(() => {
+    console.log(is_login);
   }, [is_login]);
 
   const onLogout = () => {
@@ -58,61 +58,89 @@ React.useEffect(() => {
         <SideMini>
           <SideIcon>
             <LOGO>
+              {/* 로고 들어갈자리 */}
               <Link to="/story">
                 <CgIcons.CgProfile size="1.6rem" />
               </Link>
             </LOGO>
             {/* 홈 지도보기 */}
-            <Link to="/">
-              <GrIcons.GrMap size="1.5rem" />
-            </Link>
+            <RoundColor>
+              <RoundInner>
+                <Link to="/">
+                  <GrIcons.GrMap size="1.5rem" color="#fff" />
+                </Link>
+              </RoundInner>
+            </RoundColor>
             <IconInfo>홈</IconInfo>
 
-            <Link to="/postlist">
-              <MdIcons.MdPhotoLibrary size="1.6rem" />
-            </Link>
+            <RoundColor>
+              <RoundInner>
+                <Link to="/postlist">
+                  <MdIcons.MdPhotoLibrary size="1.6rem" />
+                </Link>
+              </RoundInner>
+            </RoundColor>
             <IconInfo>커뮤니티</IconInfo>
+
             {/* 마이페이지 */}
 
             {is_login ? (
               <React.Fragment>
-                <Link>
-                  <CgIcons.CgProfile
-                    size="1.6rem"
-                    onClick={() => {
-                      history.push(`/story/${userId}`);
-                    }}
-                  />
-                </Link>
+                <RoundColor>
+                  <RoundInner>
+                    <Link>
+                      <CgIcons.CgProfile
+                        size="1.6rem"
+                        onClick={() => {
+                          history.push(`/story/${userId}`);
+                        }}
+                      />
+                    </Link>
+                  </RoundInner>
+                </RoundColor>
                 <IconInfo>마이페이지</IconInfo>
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <GrIcons.GrLogin
-                  size="1.5rem"
-                  onClick={() => {
-                    history.push("/login");
-                  }}
-                />
+                <RoundColor>
+                  <RoundInner>
+                    <GrIcons.GrLogin
+                      size="1.5rem"
+                      onClick={() => {
+                        history.push("/login");
+                      }}
+                    />
+                  </RoundInner>
+                </RoundColor>
                 <IconInfo>로그인</IconInfo>
               </React.Fragment>
             )}
 
             {/* About */}
-            <Link>
-              <IoIcons.IoMdPeople size="1.7rem" />
-            </Link>
+            <RoundColor>
+              <RoundInner>
+                <Link>
+                  <IoIcons.IoMdPeople size="1.7rem" />
+                </Link>
+              </RoundInner>
+            </RoundColor>
             <IconInfo>About</IconInfo>
-            <Link to="/faq">
-              <FaIcons.FaEnvelopeOpenText size="1.4rem" />
-            </Link>
+            <RoundColor>
+              <RoundInner>
+                <Link to="/faq">
+                  <FaIcons.FaEnvelopeOpenText size="1.4rem" />
+                </Link>
+              </RoundInner>
+            </RoundColor>
             <IconInfo>FAQ</IconInfo>
-            <Link to="/qna">
-             <GrCircleQuestion size="1.4rem"/>
-            </Link>
+            <RoundColor>
+              <RoundInner>
+                <Link to="/qna">
+                  <GrCircleQuestion size="1.4rem" />
+                </Link>
+              </RoundInner>
+            </RoundColor>
             <IconInfo>1:1</IconInfo>
-
-            
 
             {/* {is_login ? (
               <React.Fragment>
@@ -211,6 +239,7 @@ const SideMini = styled.div`
   z-index: 20;
   display: flex;
   flex-direction: column;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
   @media (max-width: 1400px) {
     all: unset;
     align-items: center;
@@ -246,8 +275,8 @@ const SideIcon = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 500px;
-  margin-top: 25px;
+  height: 560px;
+  margin-top: 30px;
   @media (max-width: 1400px) {
     width: 100%;
     height: 7vh;
@@ -260,7 +289,8 @@ const SideIcon = styled.div`
 const CategoryInfo = styled.div`
   display: flex;
   margin-bottom: 25px;
-
+  font-weight: bold;
+  font-size: 20px;
   @media (max-width: 960px) {
     // 1450밑으로 넓이가 내려가면
     display: none;
@@ -273,6 +303,23 @@ const CategoryIcon = styled.div`
 
 const Bubble = styled.div`
   z-index: 400;
+`;
+
+const RoundInner = styled.div`
+  margin: auto;
+  margin-bottom: 3.2px;
+  color: white;
+`;
+
+const RoundColor = styled.div`
+  /* background-color: ${(props) => props.theme.main_color}; */
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
+  align-items: center;
+  display: flex;
+  padding: 3px;
+  color: white;
 `;
 
 const IconInfo = styled.div`

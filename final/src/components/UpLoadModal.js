@@ -43,14 +43,13 @@ const UploadModal = (props) => {
   // 수정 페이지 이미지
   const onlyImg = useSelector((state) => state.image2.image);
 
-  console.log("온리이미지~!~!~!!", onlyImg); //
   // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
   const editFile = useSelector((state) => state.image2.edit_file);
-  console.log("서버로 보내줄 수정파일(에딧 파일)", editFile); // 수정중 다시 맘에 안들어서 삭제하고 싶다면 여길 수정
-  console.log("서버로 보내줄 수정파일", editFile[0]);
-  console.log("서버로 보내줄 수정파일", editFile[1]);
-  console.log("서버로 보내줄 수정파일", editFile[2]);
-  console.log("서버로 보내줄 수정파일", editFile[3]);
+
+  // console.log("서버로 보내줄 수정파일", editFile[0]);
+  // console.log("서버로 보내줄 수정파일", editFile[1]);
+  // console.log("서버로 보내줄 수정파일", editFile[2]);
+  // console.log("서버로 보내줄 수정파일", editFile[3]);
   // console.log(preview);
   const user_info = useSelector((state) => state.user.user);
   const [contents, setContents] = React.useState(props.content);
@@ -58,6 +57,8 @@ const UploadModal = (props) => {
   const [images, setImages] = React.useState(false);
   const post_list = useSelector((state) => state.post.list);
   const [image_list, setImageList] = React.useState();
+  const is_file = useSelector((state) => state.image2.file);
+  console.log("이미지는 최소한장!", is_file);
   // const post_id = props.match.params.id;
   const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
   // console.log("수정 게시물 정보", props);
@@ -66,23 +67,47 @@ const UploadModal = (props) => {
   const editImgList = useSelector((state) => state.image2.edit); // 요걸 가져와야해
   // const editImage = useSelector((state) => state.image2.image);
   const deleteId = useSelector((state) => state.image2.id);
-  console.log("삭제된 이미지 아이디들은 여기에...", deleteId);
+  const is_category = useSelector((state) => state.category.select_category);
+  console.log("카테고리 선택했니?", is_category);
+  console.log("삭제된 id", deleteId);
+  console.log("서버로 보내줄 수정파일(에딧 파일)", editFile); // 수정중 다시 맘에 안들어서 삭제하고 싶다면 여길 수정
+  console.log("서버로 보내줄 수정파일(에딧 파일)", editFile);
+  console.log("서버로 보내줄 수정파일(에딧 파일)", editFile);
+  console.log("서버로 보내줄 수정파일(에딧 파일)", editFile);
+  console.log("서버로 보내줄 수정파일(에딧 파일)", editFile); // 이거 리스트 반복문 돌려서 날려야하나?
 
+  console.log("온리이미지~!~!~!!", onlyImg); //
   // console.log("고치자 ㅜㅜ", editImgList); // 수정하는 포스트리스트가 온다 map으로 이미지 돌리자
   // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
   const ok_submit = contents ? true : false;
 
   React.useEffect(() => {
     if (is_edit) {
+      // dispatch(imageActions.resetEdit([])); //
       dispatch(imageActions.getPost(props.id));
     }
   }, []);
 
   const addPost = (e) => {
+    if (!is_file) {
+      window.alert("😗사진은 최소 1장 이상 업로드 해주세요!");
+      return;
+    }
     if (!contents) {
       window.alert("😗빈칸을 채워주세요...ㅎㅎ");
       return;
     }
+    if (!title) {
+      window.alert("😗빈칸을 채워주세요...ㅎㅎ");
+      return;
+    }
+    if (!is_category) {
+      window.alert("😗카테고리를 선택해주세요...ㅎㅎ");
+      return;
+    }
+
+    //카테고리 선택 조건
+
     let post = {
       title: title,
       content: contents,
@@ -91,10 +116,16 @@ const UploadModal = (props) => {
       spotName: props.spotName,
     };
     // console.log(post);
-    dispatch(postActions.addPostAPI(post));
+    if (is_file) {
+      dispatch(postActions.addPostAPI(post));
+    } else {
+      window.alert("😗사진은 최소 1장 이상 업로드 해주세요!");
+      return;
+    }
+
     // closeModal();
     props.close();
-    history.replace("/");
+    // history.replace("/");
   };
 
   const editPost = () => {
@@ -104,6 +135,10 @@ const UploadModal = (props) => {
     }
     if (!title) {
       window.alert("😗빈칸을 채워주세요...ㅎㅎ");
+      return;
+    }
+    if (onlyImg.length == 0) {
+      window.alert("😗사진을 최소 1장 이상 업로드 해주세요!");
       return;
     }
     if (onlyImg.length > 5) {
@@ -116,6 +151,9 @@ const UploadModal = (props) => {
     };
     dispatch(postActions.editPostAPI(props.id, edit));
     props.close();
+
+    dispatch(imageActions.resetEdit([])); //업로드 후 리덕스에 남은 수정 정보 모두 리셋
+    //에딧파일 초기화...
   };
 
   const changeContents = (e) => {
@@ -158,8 +196,7 @@ const UploadModal = (props) => {
           <HeaderInner>
             <ExitContainer>
               <ExitBtn onClick={props.close}>
-                취소
-                {/* <CloseIcon fontSize="large" /> */}
+                <CloseIcon fontSize="large" />
               </ExitBtn>
             </ExitContainer>
             <ModalLeftHeader>
@@ -174,16 +211,11 @@ const UploadModal = (props) => {
             </ModalLeftHeader>
             {/* 업로드와 수정시 파일선택 버튼이 다르게 설정 */}
 
-            {is_edit ? (
+            {/* {is_edit ? (
               <HeaderEdit onClick={editPost}>수정</HeaderEdit>
             ) : (
-              <HeaderEdit
-                onClick={addPost}
-                // onClick={props.close}
-              >
-                게시
-              </HeaderEdit>
-            )}
+              <HeaderEdit onClick={addPost}>게시</HeaderEdit>
+            )} */}
             {/* <HeaderEdit
               onClick={addPost}
               // onClick={props.close}
@@ -228,7 +260,7 @@ const UploadModal = (props) => {
                                 );
                               } else {
                                 dispatch(
-                                  imageActions.deleteImageIdx(onlyImg[idx])//asdjuifhuiawefhuiewbhfiubawefbiuewabiuf
+                                  imageActions.deleteImageIdx(onlyImg[idx]) //asdjuifhuiawefhuiewbhfiubawefbiuewabiuf
                                 );
                                 //파일 삭제하는 액션
 
@@ -236,7 +268,7 @@ const UploadModal = (props) => {
 
                                 // );
                               }
-                              
+
                               dispatch(imageActions.deleteFileIdx(idx));
                               // 수정시 등록하는 사진에는 id값이 없어서 직접 값을 비교해서 삭제해줌
                               // console.log("주목!!", onlyImg[idx]);
@@ -352,11 +384,34 @@ const UploadModal = (props) => {
           </MiddleBox>
           {/* 카테고리는 수정할 수 없기때문에 게시글 수정 모달에선 가려준다 */}
           {is_edit ? null : <SelectCate></SelectCate>}
+          {is_edit ? (
+            <BottomEdit onClick={editPost}>수정</BottomEdit>
+          ) : (
+            <BottomEdit onClick={addPost}>게시</BottomEdit>
+          )}
         </ModalBottomContainer>
       </ModalComponent>
     </React.Fragment>
   );
 };
+
+const BottomEdit = styled.div`
+  color: white;
+  font-weight: bold;
+  background-color: ${(props) => props.theme.main_color};
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  padding: 12px 0px;
+  border-radius: 7px;
+  margin: 15px 0px;
+
+  @media (max-width: 1440px) {
+  }
+  @media (max-width: 600px) {
+  }
+`;
 
 const DeleteImg = styled.div`
   z-index: 4700;
@@ -439,8 +494,8 @@ const ModalComponent = styled.div`
   border-radius: 0.5vw;
   position: fixed !important;
   width: 590px;
-  height: 780px;
-  max-height: 780px;
+  height: 820px;
+  max-height: 820px;
   /* overflow: hidden; */
   top: 50%;
   left: 50%;
@@ -505,6 +560,7 @@ const ModalHeader = styled.div`
 const ModalLeftHeader = styled.div`
   display: flex;
   align-items: center;
+  margin: 0px auto;
 `;
 
 const HeaderInner = styled.div`
@@ -526,20 +582,19 @@ const HeaderEdit = styled.div`
 
 const ExitContainer = styled.div`
   z-index: 30;
-  font-weight: bold;
-  /* top: 0;
-  right: 0; */
-  /* padding: 5px; */
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 5px;
 `;
 
 // color: ${(props) => (props.active ? props.theme.main_color : "grey")};
 const ExitBtn = styled.button`
-  all: unset;
   cursor: pointer;
-  color: ${(props) => props.theme.main_color};
-  font-weight: bold;
+  color: lightgray;
   background-color: transparent;
   border: none;
+  outline: none;
   font-size: 14px;
 `;
 
@@ -548,13 +603,13 @@ const ModalBottomContainer = styled.div`
   margin: 0px auto;
   margin-top: 30px;
   text-align: left;
+
   width: 550px;
-  height: 330px;
+  height: 380px;
   display: flex;
   flex-direction: column;
   padding: 0px 12px;
   /* background-color: blue; */
-
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     text-align: left;
@@ -633,6 +688,12 @@ const WriteSubmit = styled.button`
 const MiddleBox = styled.div`
   display: flex;
   flex-direction: column;
+  height: 255px;
+  @media (max-width: 1440px) {
+    // 1450밑으로 넓이가 내려가면
+    height: 235px;
+    /* background-color: red; */
+  }
   /* justify-content: space-between; */
   /* background-color: red; */
 `;

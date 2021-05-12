@@ -22,7 +22,7 @@ const theme = {
     padding-bottom: 300px;
     `,
 
-  main_color: "rgb(70, 112, 253)",
+  main_color: "rgb(255, 183, 25)",
   main_white: "#ffffff",
   main_bg_color: "#f7f8f9",
   gray: "#adb5bd",

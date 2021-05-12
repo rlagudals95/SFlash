@@ -30,6 +30,10 @@ const DELETE_EDIT = "DELETE_EDIT";
 const DELETE_IMAGE_IDX = "DELETE_IMAGE_IDX";
 // 수정시 업로드한 이미지를 삭제할 때 idx값을 이용해 파일도 같이 삭제하기위해 이미지를 파일배열안에 넣어놓는다
 const GET_IMAGE_TO_FILE = "GET_IMAGE_TO_FILE";
+// 수정후에 수정시 사용한 리덕스 상태 값들 초기화
+const RESET_EDIT = "RESET_EDIT";
+// 파일만 따로 리셋 해보자
+const RESET_FILE = "RESET_FILE";
 
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 const getPreview = createAction(GET_PREVIEW, (preview) => ({ preview }));
@@ -60,16 +64,20 @@ const getEditFile = createAction(GET_EDIT_FILE, (edit_file) => ({ edit_file }));
 const addEditImage = createAction(ADD_EDIT_IMAGE, (image) => ({ image }));
 // 수정시 업로드한 이미지를 삭제할 때 idx값을 이용해 파일도 같이 삭제하기위해 이미지를 파일배열안에 넣어놓는다
 const getImgToFile = createAction(GET_IMAGE_TO_FILE, (image) => ({ image }));
-
+// 수정후에 수정시 사용한 리덕스 상태 값들 초기화
+const resetEdit = createAction(RESET_EDIT, (edit) => ({ edit }));
+// 파일만 따로 리셋 해보자
+const resetFile = createAction(RESET_FILE, (edit) => ({ edit }));
 //가져와서 post 에서 리스트 하나 가져와서 edit에 두고
+
 const initialState = {
   preview: ["http://via.placeholder.com/400x300"],
   file: [],
   edit: false, // 잘들어온다 //고쳐야할놈
   image: [], // 이미지를 따로 빼오자 // 이미지 x 클릭시 x 이미지를 제외한 배열이 들어옴 //이게 onlyImage
-  id: [], //삭제한 id가 들어간 배열
+  id: [], //삭제한 id가 들어간 배열  // 게시 버튼과 동시에 초기화!
   //이것을 editPost의 img_url로 바꿔주고 setPost 해줘야 한다
-  edit_file: [], //여기에 파일이 들어온다!
+  edit_file: [], //여기에 파일이 들어온다! //게시 버튼과 동시에 초기화
 };
 
 //요기서 수정해야하는 board를 찾아서 image에 저장해준다 image를 이용해 프리뷰를 뿌려주고 x 버튼으로 수정 해준다
@@ -111,6 +119,14 @@ const ChangeEdit = (Img_idx) => {
     console.log("??", c);
   };
 };
+
+// const resetEdit = () => {
+//   return function (dispatch, getState) {
+//     console.log("object");
+
+//     //여기서 수정할때 썻던 데이터들을 초기화해보자~
+//   };
+// };
 
 // const ChangeImg_Url = (Img_idx) => {
 //   return function (dispatch, getState) {
@@ -268,6 +284,21 @@ export default handleActions(
       produce(state, (draft) => {
         draft.edit_file.push(action.payload.image);
       }),
+
+    //모든 상태값 초기화
+
+    [RESET_EDIT]: (state, action) =>
+      produce(state, (draft) => {
+        console.log("ssdfdsfsdf", action.payload.edit);
+        draft.edit_file = action.payload.edit;
+        draft.image = action.payload.edit;
+        draft.id = action.payload.edit;
+      }),
+
+    [RESET_FILE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.editFile = action.payload.edit;
+      }),
   },
 
   initialState
@@ -286,6 +317,8 @@ const actionCreators = {
   addEditImage,
   deleteImageIdx, // idx로 지워보자
   deleteFileIdx, //idx로 지우자
+  resetEdit,
+  resetFile, // 파일만따로
 };
 
 export { actionCreators };
