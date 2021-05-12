@@ -105,7 +105,7 @@ const Icon = styled.button`
   box-sizing: border-box;
 
   color: ${(props) => (props.active ? props.theme.main_color : "grey")};
-  border: ${(props) => (props.active ? "2pt solid #4670fd" : "")};
+  border-color: ${(props) => (props.active ? props.theme.main_color : "")};
   background-color: ${(props) => (props.active ? "white" : "#eee")};
   transition: background-color 0.5s ease-in-out;
   :hover {

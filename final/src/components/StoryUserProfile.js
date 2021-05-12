@@ -222,27 +222,30 @@ const modalStyle = {
     bottom: 0,
     backgroundColor: "rgba(48, 48, 48, 0.6)",
     transition: "opacity 2000ms ease-in-out",
-    zIndex: 800,
+    zIndex: 200,
   },
   content: {
-    width: "650px",
-    height: "630px",
+    width: "620px",
+    height: "600px",
     margin: "auto",
-    padding: "20px",
+    padding: "30px",
     border: "none",
     boxShadow: "0 2px 12px 0 rgba(0, 0, 0, 0.1)",
-    zIndex: 900,
+    zIndex: 250,
   },
 };
 
 const CloseButton = styled.img`
-  width: 11px;
+  width: 15px;
   position: absolute;
   top: 30px;
   right: 30px;
+  padding:10px;
+  border-radius:20px;
   &:hover {
     cursor: pointer;
     color: grey;
+    background-color: #eee;
   }
 `;
 

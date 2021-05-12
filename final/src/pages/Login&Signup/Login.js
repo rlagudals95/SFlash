@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 
 import {
   Container,
@@ -9,12 +10,17 @@ import {
   BorderBtn,
   TextBtn,
 } from "../../Css/loginSignupCss";
+import "../../Css/SocialLogin.css";
 import { Grid } from "../../elements/index";
 import { actionCreators as userActions } from "../../redux/modules/user";
 
 import { history } from "../../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { setCookie } from "../../shared/Cookie";
+import { GolfCourse } from "@material-ui/icons";
+import google from "../../static/google.svg";
+import naver from "../../static/naver.svg";
+import kakao from "../../static/kakao.svg";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -58,6 +64,21 @@ const Login = () => {
     }
   };
 
+//   $(document).ready( function() {
+
+//      $('.login-naver').click(function() {
+//         naverLogin();
+//     });
+
+//     $('.login-kakao').click(function() {
+//         kakaoLogin();
+//     });
+
+//     $('.login-google').click(function() {
+//         googleLogin();
+//     });
+// });
+
   return (
     <React.Fragment>
       <Container>
@@ -83,53 +104,58 @@ const Login = () => {
             이메일/비밀번호 찾기
           </TextBtn>
         </Grid>
-        <Grid padding="10px"></Grid>
-        <Grid is_flex>{/* <Line><span>OR</span></Line>  */}</Grid>
 
-        <SocialBtn
-          bg="#1ec800"
-          color="#ffffff"
-          onClick={() => {
-            window.location.href =
-              "http://13.125.97.117/oauth2/authorize/naver?redirect_uri=http://localhost:3000/";
-            // onSocialLogin();
-          }}
-        >
-          네이버로 로그인
-        </SocialBtn>
-        <SocialBtn
-          bg="#fee500"
-          onClick={() => {
-            window.location.href =
-              "http://13.125.97.117/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/";
-            // onSocialLogin();
-          }}
-        >
-          카카오 로그인
-        </SocialBtn>
-        <SocialBtn
-          bg="#f45a5c"
-          color="#ffffff"
-          onClick={() => {
-            window.location.href =
-              "http://13.125.97.117/oauth2/authorize/google?redirect_uri=http://localhost:3000/";
-            // onSocialLogin();
-          }}
-        >
-          Google 로그인
-        </SocialBtn>
+        <Grid padding="5px"></Grid>
+
+        <div>
+          <SocialBtn
+            bg="#1ec800"
+            color="#ffffff"
+            onClick={() => {
+              window.location.href =
+                "http://seungwook.shop/oauth2/authorize/naver?redirect_uri=http://localhost:3000/";
+              // onSocialLogin();
+            }}
+          >
+              <SocialIcon width="45%" src={naver}/>
+          </SocialBtn>
+          <SocialBtn
+            bg="#fee500"
+            onClick={() => {
+              window.location.href =
+                "http://seungwook.shop/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/";
+              // onSocialLogin();
+            }}
+          >
+             <SocialIcon width="52%" src={kakao}/>
+          </SocialBtn>
+          <SocialBtn
+            bg="#f45a5c"
+            color="#ffffff"
+            onClick={() => {
+              window.location.href =
+                "http://seungwook.shop/oauth2/authorize/google?redirect_uri=http://localhost:3000/";
+              // onSocialLogin();
+            }}
+          >
+            <SocialIcon width="50%" src={google}/>
+          </SocialBtn>
+        </div>
+
+        <Grid padding="5px"></Grid>
+
         <TextBtn onClick={() => history.push("/signup")}>
-          회원가입 하러가기
+          아직 회원이 아니신가요?
         </TextBtn>
+
       </Container>
     </React.Fragment>
   );
 };
 
-// const Line = styled.div`
-//   font-size: 2rem;
-//   font-weight: bold;
-//   margin-bottom: 30px;
-// `;
+const SocialIcon = styled.img`
+  ${(props) => (props.width ? `color:${props.width};` : "")}
+  
+`;
 
 export default Login;
