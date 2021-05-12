@@ -67,10 +67,21 @@ const initialState = {
   like: false, // 접속유저의 like유무를 파악해 게시물의 하트 모양을 관리함
 };
 
-const addPostAPI = (post) => { // 지도상에서 게시물을 추가할 때 서버로 데이터 보내는 미들웨어
+const addPostAPI = (post) => {
+  // 지도상에서 게시물을 추가할 때 서버로 데이터 보내는 미들웨어
   return function (dispatch, getState) {
     const user_info = getState().user.user;
     const _file = getState().image2.file;
+
+    if (_file.length == 0) {
+      window.alert("😗사진을 최소 1장 이상 업로드 해주세요!");
+      return;
+    }
+    if (_file.length > 5) {
+      window.alert("😗사진은 5장까지 업로드 가능합니다");
+      return;
+    }
+
     console.log("파일들", _file);
     const formData = new FormData();
     formData.append("title", post.title);
@@ -100,9 +111,31 @@ const addPostAPI = (post) => { // 지도상에서 게시물을 추가할 때 서
     })
       .then((res) => {
         console.log("애드포스트 응답", res);
-        // 민규님 이부분 해주셔야 할 것 같습니다 : 민규 작업중
-        dispatch(addPost(post))
-        history.replace("/");
+        // const profile = getState().user.profileImg;
+        // const nickname = localStorage.getItem("nickname");
+        // const preview = getState().image2.preview;
+
+        // for (let i = 0; i < preview.length; i++) {
+        //   let i = preview[i];
+        //   console.log(i);
+        //   return i;
+        // }
+
+        // console.log("프리뷰!", preview);
+        // let post = {
+        //   title: post.title, // post.title
+        //   content: post.content, // post.content
+        //   writerName: nickname,
+        //   img_url: preview,
+        //   category: _category,
+        //   profileImg: profile,
+        //   like: false,
+        //   likeCnt: 0,
+        //   comment: [],
+        //   creatAt: "방금전",
+        //   spotName: post.spotName,
+        // };
+        history.replace("/"); // 이부분 실행이 잘안되면 imgUrl인식을 못함 변수명 잘지켜주세요!
       })
       .catch((err) => {
         console.log(err);
@@ -290,6 +323,7 @@ const editPostAPI = (board_id, _edit) => {
       console.log("!??!@12", post);
       // 수정된 게시물정보를 받고싶다
       dispatch(editPost(board_id, post));
+      /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌
     });
   };
 };

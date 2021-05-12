@@ -28,34 +28,36 @@ import Search from "@material-ui/icons/Search";
 
 function App() {
   const dispatch = useDispatch();
-  const jwt = localStorage.getItem("jwt")? true : false; // 로컬스토리지에 저장되어있는 jwt 토큰 유무판단
+  const jwt = localStorage.getItem("jwt") ? true : false; // 로컬스토리지에 저장되어있는 jwt 토큰 유무판단
 
   // 소셜로그인을 하면 token이 url에 담겨서 오는데,
   // url에서 token을을 추출하는 함수()
-  const getUrlParameter =(name)=> {
-    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  const getUrlParameter = (name) => {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
     var results = regex.exec(window.location.search);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-};
-  const social_jwt = getUrlParameter('accessToken');   // social_jwt: 소셜로그인으로 받아온 토큰
-  const social_nickname = getUrlParameter('nickname');   // _nickname: 소셜로그인으로 받아온 닉네임
-  const social_userId = getUrlParameter('userId');   // _nickname: 소셜로그인으로 받아온 닉네임
-  const error = getUrlParameter('error');    // 에러
+    return results === null
+      ? ""
+      : decodeURIComponent(results[1].replace(/\+/g, " "));
+  };
+  const social_jwt = getUrlParameter("token"); // social_jwt: 소셜로그인으로 받아온 토큰
+  const social_nickname = getUrlParameter("nickname"); // _nickname: 소셜로그인으로 받아온 닉네임
+  const social_userId = getUrlParameter("userId"); // _nickname: 소셜로그인으로 받아온 닉네임
+  const error = getUrlParameter("error"); // 에러
   // console.log(_jwt);
   // console.log(_nickname);
   // console.log(error);
 
   React.useEffect(() => {
-  //  소셜로그인 시 실행
-  if( social_jwt && social_userId ){
-  localStorage.setItem("jwt", social_jwt);
-  localStorage.setItem("nickname", social_nickname);
-  localStorage.setItem("userId", social_userId);
-  dispatch(userActions.loginCheck(social_jwt));
-  }else if(social_jwt || jwt) {
-    dispatch(userActions.loginCheck(social_jwt || jwt));
-  }//렌더링 마다 로그인체크
+    //  소셜로그인 시 실행
+    if (social_jwt && social_userId) {
+      localStorage.setItem("jwt", social_jwt);
+      localStorage.setItem("nickname", social_nickname);
+      localStorage.setItem("userId", social_userId);
+      dispatch(userActions.loginCheck(social_jwt));
+    } else if (social_jwt || jwt) {
+      dispatch(userActions.loginCheck(social_jwt || jwt));
+    } //렌더링 마다 로그인체크
   }, []);
 
   return (

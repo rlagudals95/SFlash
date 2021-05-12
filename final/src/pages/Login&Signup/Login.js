@@ -41,25 +41,25 @@ const Login = () => {
       name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
       var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
       var results = regex.exec(window.location.search);
-      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-  };
-    const _jwt = getUrlParameter('token');   // _jwt: 소셜로그인으로 받아온 토큰
-    const _nickname = getUrlParameter('nickname');   // _nickname: 소셜로그인으로 받아온 닉네임
-    const error = getUrlParameter('error');    // 에러
+      return results === null
+        ? ""
+        : decodeURIComponent(results[1].replace(/\+/g, " "));
+    };
+    const _jwt = getUrlParameter("token"); // _jwt: 소셜로그인으로 받아온 토큰
+    const _nickname = getUrlParameter("nickname"); // _nickname: 소셜로그인으로 받아온 닉네임
+    const error = getUrlParameter("error"); // 에러
     console.log(_jwt);
     console.log(_nickname);
     console.log(error);
 
-     //  소셜로그인 시 실행
-   //  소셜로그인 시 실행
-    if( _jwt && _nickname ){
+    //  소셜로그인 시 실행
+    //  소셜로그인 시 실행
+    if (_jwt && _nickname) {
       localStorage.setItem("nickname", _nickname);
       localStorage.setItem("jwt", _jwt);
-    dispatch(userActions.setUser());
-  }
-
-  }
-
+      dispatch(userActions.setUser());
+    }
+  };
 
   return (
     <React.Fragment>
