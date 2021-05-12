@@ -8,6 +8,7 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as imageActions } from "../redux/modules/image2";
+import { actionCreators as profileActions } from "../redux/modules/profile";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Slider from "react-slick";
 import UploadImg from "../components/UpLoadModal";
@@ -25,6 +26,17 @@ import { CgLogOut } from "react-icons/cg";
 
 const UploadModal = (props) => {
   const { latitude, longitude, spotName } = props;
+  const userId = localStorage.getItem("userId");
+
+  React.useEffect(() => {
+    if (is_edit) {
+      // dispatch(imageActions.resetEdit([])); //
+      dispatch(imageActions.getPost(props.id));
+
+      console.log("hi");
+    }
+    dispatch(profileActions.getUserInfoAPI(userId));
+  }, []);
 
   // console.log(
   //   "위도: " +
@@ -46,16 +58,23 @@ const UploadModal = (props) => {
   // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
   const editFile = useSelector((state) => state.image2.edit_file);
 
+  const post_list = useSelector((state) => state.post.list);
+  const user_info = useSelector((state) => state.user.user);
+  const profile = useSelector((state) => state.profile.user);
+  console.log("유저아이디", userId);
+  console.log("포스트리스트", post_list);
+  console.log("유저정보", user_info);
+  console.log("유저프로필", profile);
   // console.log("서버로 보내줄 수정파일", editFile[0]);
   // console.log("서버로 보내줄 수정파일", editFile[1]);
   // console.log("서버로 보내줄 수정파일", editFile[2]);
   // console.log("서버로 보내줄 수정파일", editFile[3]);
   // console.log(preview);
-  const user_info = useSelector((state) => state.user.user);
+
   const [contents, setContents] = React.useState(props.content);
   const [title, setTitle] = React.useState(props.title);
   const [images, setImages] = React.useState(false);
-  const post_list = useSelector((state) => state.post.list);
+
   const [image_list, setImageList] = React.useState();
   const is_file = useSelector((state) => state.image2.file);
   console.log("이미지는 최소한장!", is_file);
@@ -68,25 +87,14 @@ const UploadModal = (props) => {
   // const editImage = useSelector((state) => state.image2.image);
   const deleteId = useSelector((state) => state.image2.id);
   const is_category = useSelector((state) => state.category.select_category);
-  console.log("카테고리 선택했니?", is_category);
-  console.log("삭제된 id", deleteId);
-  console.log("서버로 보내줄 수정파일(에딧 파일)", editFile); // 수정중 다시 맘에 안들어서 삭제하고 싶다면 여길 수정
-  console.log("서버로 보내줄 수정파일(에딧 파일)", editFile);
-  console.log("서버로 보내줄 수정파일(에딧 파일)", editFile);
-  console.log("서버로 보내줄 수정파일(에딧 파일)", editFile);
-  console.log("서버로 보내줄 수정파일(에딧 파일)", editFile); // 이거 리스트 반복문 돌려서 날려야하나?
 
-  console.log("온리이미지~!~!~!!", onlyImg); //
+  // console.log("카테고리 선택했니?", is_category);
+  // console.log("삭제된 id", deleteId);
+  // console.log("서버로 보내줄 수정파일(에딧 파일)", editFile); // 수정중 다시 맘에 안들어서 삭제하고 싶다면 여길 수정
+  // console.log("온리이미지~!~!~!!", onlyImg); //
   // console.log("고치자 ㅜㅜ", editImgList); // 수정하는 포스트리스트가 온다 map으로 이미지 돌리자
   // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
   const ok_submit = contents ? true : false;
-
-  React.useEffect(() => {
-    if (is_edit) {
-      // dispatch(imageActions.resetEdit([])); //
-      dispatch(imageActions.getPost(props.id));
-    }
-  }, []);
 
   const addPost = (e) => {
     if (!is_file) {
@@ -202,9 +210,11 @@ const UploadModal = (props) => {
             <ModalLeftHeader>
               <ProCircle
                 src={
-                  props.profileImg
+                  is_edit
                     ? props.profileImg
-                    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                      ? props.profileImg
+                      : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                    : profile.profileImgUrl
                 }
               />
               <ModalAuthor>{nickname}</ModalAuthor>
@@ -324,29 +334,31 @@ const UploadModal = (props) => {
         <ModalBottomContainer>
           <MiddleBox>
             {is_edit ? (
-              <React.Fragment>
-                <Title>
-                  <Input2
+              <EditCommentBox>
+                <React.Fragment>
+                  <Title>
+                    <Input2
+                      id="outlined-multiline-static"
+                      // label="📝제목 작성"
+                      placeholder={props.title}
+                      rows={1}
+                      variant="outlined"
+                      value={title}
+                      _onChange={changeTitle}
+                    ></Input2>
+                  </Title>
+                  <Input
                     id="outlined-multiline-static"
                     // label="📝제목 작성"
-                    placeholder={props.title}
-                    rows={1}
+                    placeholder={props.content}
+                    rows={6}
+                    multiLine
                     variant="outlined"
-                    value={title}
-                    _onChange={changeTitle}
-                  ></Input2>
-                </Title>
-                <Input
-                  id="outlined-multiline-static"
-                  // label="📝제목 작성"
-                  placeholder={props.content}
-                  rows={6}
-                  multiLine
-                  variant="outlined"
-                  value={contents}
-                  _onChange={changeContents}
-                ></Input>
-              </React.Fragment>
+                    value={contents}
+                    _onChange={changeContents}
+                  ></Input>
+                </React.Fragment>
+              </EditCommentBox>
             ) : (
               <React.Fragment>
                 <Title>
@@ -385,7 +397,7 @@ const UploadModal = (props) => {
           {/* 카테고리는 수정할 수 없기때문에 게시글 수정 모달에선 가려준다 */}
           {is_edit ? null : <SelectCate></SelectCate>}
           {is_edit ? (
-            <BottomEdit onClick={editPost}>수정</BottomEdit>
+            <BottomEdit2 onClick={editPost}>수정</BottomEdit2>
           ) : (
             <BottomEdit onClick={addPost}>게시</BottomEdit>
           )}
@@ -408,6 +420,24 @@ const BottomEdit = styled.div`
   margin: 15px 0px;
 
   @media (max-width: 1440px) {
+  }
+  @media (max-width: 600px) {
+  }
+`;
+const BottomEdit2 = styled.div`
+  color: white;
+  font-weight: bold;
+  background-color: ${(props) => props.theme.main_color};
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  padding: 12px 0px;
+  border-radius: 7px;
+  margin: 15px 0px;
+  margin-top: 100px;
+  @media (max-width: 1440px) {
+    margin: 15px 0px;
   }
   @media (max-width: 600px) {
   }
@@ -441,9 +471,8 @@ const ModalImg = styled.div`
   border: none;
   box-sizing: border-box;
   width: 100%;
-  height: 400px;
-  height: 400px;
-  /* max-height: 350px; */
+  height: 410px;
+  max-height: 350px;
   /* background-color: red; */
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
@@ -458,6 +487,23 @@ const ModalImg = styled.div`
     width: 100%;
     height: 630px;
     max-height: 350px;
+    margin-bottom: -20px;
+  }
+  @media (max-width: 1155px) {
+    // 1450밑으로 넓이가 내려가면
+    /* all: unset; */
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
+    object-fit: cover;
+    background-position: 0px;
+    background-repeat: no-repeat;
+    border: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 335px;
+    max-height: 335px;
+    /* height: 465px;
+    max-height: 465px; */
     margin-bottom: -20px;
   }
   @media (max-width: 600px) {
@@ -525,6 +571,23 @@ const ModalComponent = styled.div`
     border: none;
     box-sizing: border-box;
   }
+  @media (max-width: 1155px) {
+    // 1450밑으로 넓이가 내려가면
+    /* all: unset; */
+    position: fixed;
+    /* width: 35vw; */
+    width: 470px;
+    height: 780px;
+    /* overflow: hidden; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* background-color: white; */
+    z-index: 1000;
+    border: none;
+    box-sizing: border-box;
+  }
+
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
@@ -586,12 +649,13 @@ const ExitContainer = styled.div`
   top: 0;
   right: 0;
   padding: 5px;
+  opacity: 0.5;
 `;
 
 // color: ${(props) => (props.active ? props.theme.main_color : "grey")};
 const ExitBtn = styled.button`
   cursor: pointer;
-  color: lightgray;
+  color: ${(props) => props.theme.main_color};
   background-color: transparent;
   border: none;
   outline: none;
@@ -609,7 +673,7 @@ const ModalBottomContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 12px;
-  /* background-color: blue; */
+
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     text-align: left;
@@ -623,6 +687,20 @@ const ModalBottomContainer = styled.div`
     margin-top: 5vh;
     /* background-color: red; */
   }
+  @media (max-width: 1155px) {
+    // 1450밑으로 넓이가 내려가면
+    /* all: unset; */
+    // 1450밑으로 넓이가 내려가면
+    text-align: left;
+    width: 450px;
+    // 이거 올려주니까 댓글창이보인다..!
+    height: 370px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0px auto;
+    margin-top: 5vh;
+  }
 
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
@@ -634,12 +712,14 @@ const ModalBottomContainer = styled.div`
     flex-direction: column;
     padding: 0;
     margin: 0px auto;
-    margin-top: 5vh;
+    margin-top: 2vh;
   }
   /* justify-content: space-between; */
 
   /* border-left: 1px solid #efefef; */
 `;
+
+const EditCommentBox = styled.div``;
 
 const ProCircle = styled.img`
   margin-left: 0.1vw;
@@ -657,34 +737,6 @@ const ModalAuthor = styled.span`
   color: rgba(0, 0, 0, 0.5);
 `;
 
-const WriteSubmit = styled.button`
-  margin: auto;
-  text-align: center;
-  font-weight: 600;
-  background-color: #0095f6;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 3px;
-  cursor: pointer;
-  outline: none;
-  border: none;
-  @media (max-width: 600px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
-    margin: auto;
-    margin-top: 2vh;
-    text-align: center;
-    font-weight: 600;
-    background-color: #0095f6;
-    color: white;
-    padding: 8px 14px;
-    border-radius: 3px;
-    cursor: pointer;
-    outline: none;
-    border: none;
-  }
-`;
-
 const MiddleBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -696,6 +748,10 @@ const MiddleBox = styled.div`
   }
   /* justify-content: space-between; */
   /* background-color: red; */
+  @media (max-width: 600px) {
+    // 1450밑으로 넓이가 내려가면
+    height: 220px;
+  }
 `;
 
 const Title = styled.div`

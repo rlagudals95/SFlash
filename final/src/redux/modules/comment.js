@@ -92,7 +92,7 @@ const addCommentAPI = (comment, board_id) => {
   return function (dispatch) {
     // console.log("댓글와유?", comment);
     // console.log("아이디와유?", board_id);
-    // console.log(getCookie("jwt"));
+    console.log(config.jwt);
 
     axios({
       url: `${config.api}/board/${board_id}/comment`,

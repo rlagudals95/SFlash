@@ -22,38 +22,37 @@ const editNickname = createAction(EDIT_NICKNAME, (nickname) => ({ nickname }));
 // 리덕스에 저장되는 데이터 틀을 설정해놓는 부분
 const initialState = {
   user: "",
-  is_uplaoding: false, 
+  is_uplaoding: false,
   preview: null,
 };
 
-  // 해당유저의 정보 가져오기 : Story의 유저정보
-  const getUserInfoAPI = (userId) => {
-    return function (dispatch, getState, { history }) {
-
-      axios({
-        method: "GET",
-        url: `${config.api}/profile/${userId}`,
-        headers: {
-          "X-AUTH-TOKEN": `${config.jwt}`,
-        },
-      }).then((res) => {
+// 해당유저의 정보 가져오기 : Story의 유저정보
+const getUserInfoAPI = (userId) => {
+  return function (dispatch, getState, { history }) {
+    axios({
+      method: "GET",
+      url: `${config.api}/profile/${userId}`,
+      headers: {
+        "X-AUTH-TOKEN": `${config.jwt}`,
+      },
+    })
+      .then((res) => {
         // console.log(res.data.data);
-          let _user = res.data.data;
-  
-          let user = {
-            userId : _user.userId,
-            nickname: _user.nickname,
-            profileImgUrl: _user.imgUrl,
-            introduction: _user.introduceMsg,
-          };
-          dispatch(getUserInfo(user));
-        })
-        .catch((err) => {
-          console.error("게시물을 가져오는데 문제가 있습니다", err);
-        });
-    };
-  };
+        let _user = res.data.data;
 
+        let user = {
+          userId: _user.userId,
+          nickname: _user.nickname,
+          profileImgUrl: _user.imgUrl,
+          introduction: _user.introduceMsg,
+        };
+        dispatch(getUserInfo(user));
+      })
+      .catch((err) => {
+        console.error("게시물을 가져오는데 문제가 있습니다", err);
+      });
+  };
+};
 
 // 프로필 수정하기(두개의 경우의 수로 나누어 생각하기)
 const editProfileAPI = (profile, userId) => {
@@ -63,7 +62,7 @@ const editProfileAPI = (profile, userId) => {
     const _user_info = getState().profile.user;
 
     // 1. 자기소개만 변경했을 때(이미지 변경 x)
-    if (_image === _user_info.profileImgUrl){
+    if (_image === _user_info.profileImgUrl) {
       const formData = new FormData();
       formData.append("introduceMsg", profile.introduction);
       console.log(formData);
@@ -91,29 +90,29 @@ const editProfileAPI = (profile, userId) => {
     }
     // 2. 이미지 & 자기소개 모두 변경했을 때
     else {
-    const formData = new FormData();
-    formData.append("profileFile", profile.profileImg);
-    formData.append("introduceMsg", profile.introduction);
-    console.log(formData);
-    // const jwt = getCookie("token");
- 
+      const formData = new FormData();
+      formData.append("profileFile", profile.profileImg);
+      formData.append("introduceMsg", profile.introduction);
+      console.log(formData);
+      // const jwt = getCookie("token");
+
       axios({
-      method: "PUT",
-      url: `${config.api}/editmyprofile/${userId}`,
-      data: formData,
-      headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
-        "Content-Type" : "multipart/form-data",
-      },
-    })
-      .then((res) => {
-        console.log(res.data.data);
-        let _user = res.data.data;
-        let profile = {
-          profileImgUrl: _user.imgUrl,
-          introduction: _user.introduceMsg,
-        };
-        dispatch(editProfile(profile));
+        method: "PUT",
+        url: `${config.api}/editmyprofile/${userId}`,
+        data: formData,
+        headers: {
+          "X-AUTH-TOKEN": `${config.jwt}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+        .then((res) => {
+          console.log(res.data.data);
+          let _user = res.data.data;
+          let profile = {
+            profileImgUrl: _user.imgUrl,
+            introduction: _user.introduceMsg,
+          };
+          dispatch(editProfile(profile));
         })
         .catch((err) => {
           console.error("작성 실패", err);
@@ -140,14 +139,14 @@ const editNicknameAPI = (newNickname, userId) => {
       )
       .then((res) => {
         console.log(res.data.data);
-          let nickname = {
-            nickname: res.data.data.nickname
-          };
-          console.log("닉네임 수정 정보", nickname);
-          // let nickname = res.data.data.nickname;
+        let nickname = {
+          nickname: res.data.data.nickname,
+        };
+        console.log("닉네임 수정 정보", nickname);
+        // let nickname = res.data.data.nickname;
         dispatch(editNickname(nickname));
-        if(res.data.data.nickname === true){
-          alert("닉네임이 변경되었습니다! :)")
+        if (res.data.data.nickname === true) {
+          alert("닉네임이 변경되었습니다! :)");
         }
       })
       .catch((err) => {
@@ -165,7 +164,7 @@ export default handleActions(
       }),
     [EDIT_PROFILE]: (state, action) =>
       produce(state, (draft) => {
-        draft.user = {...draft.user, ...action.payload.profile}
+        draft.user = { ...draft.user, ...action.payload.profile };
       }),
     [UPLOADING]: (state, action) =>
       produce(state, (draft) => {
@@ -178,8 +177,7 @@ export default handleActions(
       }),
     [EDIT_NICKNAME]: (state, action) =>
       produce(state, (draft) => {
-        draft.user = {...draft.user, ...action.payload.nickname};
-        
+        draft.user = { ...draft.user, ...action.payload.nickname };
       }),
   },
   initialState

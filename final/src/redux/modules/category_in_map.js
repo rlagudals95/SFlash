@@ -9,20 +9,43 @@ import { NavigateBeforeRounded } from "@material-ui/icons";
 
 const GET_CATEGORY_IN_MAP = "GET_CATEGORY_IN_MAP";
 const RESET_CATEGORY_IN_MAP = "RESET_CATEGORY_IN_MAP";
+
+const GET_MYPOST_IN_MAP = "GET_MYPOST_IN_MAP";
+const GET_MYLIKE_IN_MAP = "GET_MYLIKE_IN_MAP";
+
+const RESET_MYPOST_IN_MAP = "RESET_MYPOST_IN_MAP";
+const RESET_MYLIKE_IN_MAP = "RESET_MYLIKE_IN_MAP";
 const SELECT_CATEGORY_IN_MAP = "SELECT_CATEGORY_IN_MAP";
 
 const getCategoryInMap = createAction(GET_CATEGORY_IN_MAP, (category_in_map) => ({
-  category_in_map,
+  category_in_map,     // category_in_map은 입력하는 카테고리명이에요
 }));
 const resetCategoryInMap = createAction(RESET_CATEGORY_IN_MAP, (is_category_in_map) => ({
+  is_category_in_map,  // 이건 카테고리가 담긴 배열이에요. 근데 사실 없어도 되는 것. 알고싶으면 500원! 아님 리듀서를 보면 이해가능
+}));
+
+const getMyPostInMap = createAction(GET_MYPOST_IN_MAP, (is_category_in_map) => ({
   is_category_in_map,
 }));
+const getMyLikeInMap = createAction(GET_MYLIKE_IN_MAP, (is_category_in_map) => ({
+  is_category_in_map,
+}));
+
+const resetMyPostInMap = createAction(RESET_MYPOST_IN_MAP, (is_category_in_map) => ({
+  is_category_in_map,
+}));
+const resetMyLikeInMap = createAction(RESET_MYLIKE_IN_MAP, (is_category_in_map) => ({
+  is_category_in_map,
+}));
+
 const selectCategoryInMap = createAction(SELECT_CATEGORY_IN_MAP, (select_category_in_map) => ({
   select_category_in_map,
 }));
 
 const initialState = {
-  is_category_in_map: [], // 이제 여기에 각 카테고리를 넣어준다. 요 배열의 길이가 0이면 모두 출력. Map.js에서 사용
+  // is_category_in_map: [],
+  is_category_in_map: ["카페", "야경", "바다", "산", "꽃", "나홀로", "연인", "친구", "반려동물", "도심", "공원", "전시"], // 이제 여기에 각 카테고리를 넣어준다. 요 배열의 길이가 0이면 모두 출력. Map.js에서 사용
+  is_mypost_or_mylike_in_map: [], // 내가 작성한 게시물, 내가 좋아요한 게시물 카테고리를 넣어준다.
   select_category_in_map: null, // 게시글 작성때 쓰일 state, 하나씩만 선택가능. UpLoadModal에서 사용.
 };
 
@@ -52,10 +75,41 @@ export default handleActions(
           }
         }, []);
       }),
+
     [RESET_CATEGORY_IN_MAP]: (state, action) =>
       produce(state, (draft) => {
         draft.is_category_in_map = []; // 전체보기 효과를 위해 이렇게 리셋 해준다
       }),
+
+      
+    [GET_MYPOST_IN_MAP]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_category_in_map = ["내꺼"]
+      }), 
+
+    [GET_MYLIKE_IN_MAP]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_category_in_map = ["내좋아요"]
+      }), 
+
+    [RESET_MYPOST_IN_MAP]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_category_in_map = draft.is_category_in_map.filter((r) => {
+          if (r !== "내꺼") {
+            return [...draft.is_category_in_map, r]
+          }
+        })
+      }),
+
+    [RESET_MYLIKE_IN_MAP]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_category_in_map = draft.is_category_in_map.filter((r) => {
+          if (r !== "내좋아요") {
+            return [...draft.is_category_in_map, r]
+          }
+        })
+      }),
+
     [SELECT_CATEGORY_IN_MAP]: (state, action) =>
       produce(state, (draft) => {
         draft.select_category_in_map = action.payload.select_category_in_map;
@@ -69,6 +123,14 @@ export default handleActions(
   initialState
 );
 
-const actionCreators = { getCategoryInMap, resetCategoryInMap, selectCategoryInMap };
+const actionCreators = { 
+  getCategoryInMap,
+  resetCategoryInMap,
+  getMyPostInMap,
+  getMyLikeInMap,
+  resetMyPostInMap,
+  resetMyLikeInMap,
+  selectCategoryInMap 
+};
 
 export { actionCreators };
