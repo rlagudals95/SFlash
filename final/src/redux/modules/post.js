@@ -12,6 +12,7 @@ import { push } from "react-router-redux";
 const SET_POST = "SET_POST";
 const SET_MAP_POST = "SET_MAP_POST";
 const ADD_POST = "ADD_POST";
+const ADD_MAP_POST = "ADD_MAP_POST";
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 const LOADING = "LOADING";
@@ -29,6 +30,7 @@ const setMapPost = createAction(SET_MAP_POST, (map_post_list) => ({
   map_post_list,
 }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
+const addMapPost = createAction(ADD_MAP_POST, (map_post) => ({ map_post }));
 const editPost = createAction(EDIT_POST, (board_id, post) => ({
   board_id,
   post,
@@ -92,6 +94,7 @@ const addPostAPI = (post) => {
     // 폼데이터 이미지 파일들은 한개 씩 보내기!
     for (let i = 0; i < _file.length; i++) {
       formData.append("file", _file[i]);
+      console.log(_file[i]);
     }
 
     //////////
@@ -135,7 +138,8 @@ const addPostAPI = (post) => {
         //   creatAt: "방금전",
         //   spotName: post.spotName,
         // };
-        history.replace("/"); // 이부분 실행이 잘안되면 imgUrl인식을 못함 변수명 잘지켜주세요!
+        history.replace("/"); // 이부분 실행이 잘안되면 imgUrl인식을 못함 변수명 잘지켜주세요! : 민규 - 이건 데이터 변경없이 사이트만 변경해주는걸로 알고 있습니다
+        window.location.replace("/"); // 민규 - 이 명령어는 데이터 변경이 반영되는 새로고침으로 알고 있어요. 게시물 업로드하고 반영된걸 바로 보려고 넣은 명령어에요.
       })
       .catch((err) => {
         console.log(err);
@@ -147,12 +151,27 @@ const addPostAPI = (post) => {
 //start = null, size = null
 const getPostAPI = (start = null, size = null) => {
   return function (dispatch, getState) {
+    const board_list = getState().post.list;
+    console.log("잘가지고 왔겠지", board_list);
+
+    let end_board = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
+      board_list.length == 0
+        ? Number.MAX_SAFE_INTEGER // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
+        : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
+          board_list[board_list.length - 1].id; // 이제 처음 받은 포스트중 가장 마지막 포스트 id 기준으로 15개씩 게시물을 받아온다
+
+    console.log("마지막 포스트 정보", end_board);
+
     axios({
       method: "GET",
       url: `${config.api}/board`,
-      headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+      data: {
+        // size: 15,
+        // lastAriticleId: end_board.id // 처음에는 9000조를 보낸다
       },
+      // headers: {
+      //   "X-AUTH-TOKEN": `${config.jwt}`,
+      // },
     })
       .then((res) => {
         console.log("!!!!!!!!!", res);
@@ -185,6 +204,7 @@ const getPostAPI = (start = null, size = null) => {
             comment: _post.boardDetailCommentDtoList,
             creatAt: _post.modified,
             spotName: _post.spotName,
+            writerId: _post.writerId,
           };
           post_list.unshift(post);
         });
@@ -218,7 +238,7 @@ const getMapPostAPI = () => {
             id: _post.boardId, // 포스트 id
             title: _post.title, // 포스트 title
             content: _post.content, // 포스트 내용
-            like: _post.like,
+            like: _post.liked,
             likeCount: _post.likeCount,
             writerName: _post.writerName,
             writerImgUrl: _post.writerImgUrl,
@@ -227,6 +247,7 @@ const getMapPostAPI = () => {
             spotName: _post.spotName,
             category: _post.category,
             imgUrl: _post.boardImgReponseDtoList,
+            imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
             comment: _post.boardDetailCommentDtoList,
           };
           map_post_list.unshift(post);
@@ -450,6 +471,11 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
       }),
+    [ADD_MAP_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.map_post_list.unshift(action.payload.map_post);
+        console.log(draft.map_post_list);
+      }),
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.push(...action.payload.post_list); // 일단 서버에서 받아온거 이니셜 스테이트 리스트에 삽입
@@ -545,6 +571,8 @@ export default handleActions(
 const actionCreators = {
   getPostAPI,
   addPostAPI,
+  addPost,
+  addMapPost,
   editPost,
   editPostAPI,
   searchPostAPI,

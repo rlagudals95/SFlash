@@ -118,9 +118,17 @@ const Post2 = (props) => {
             {like}
             <div className={"PostFont"}>
               {props.like ? (
-                <FavoriteIcon fontSize="24px" onClick={disLike} />
+                <FavoriteIcon
+                  fontSize="24px"
+                  onClick={disLike}
+                  style={{ fontSize: 40 }}
+                />
               ) : (
-                <FavoriteBorderIcon fontSize="24px" onClick={addLike} />
+                <FavoriteBorderIcon
+                  fontSize="24px"
+                  onClick={addLike}
+                  style={{ fontSize: 40 }}
+                />
               )}
               <div>{props.likeCnt} </div>
               <br />

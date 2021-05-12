@@ -19,22 +19,24 @@ import { history } from "../redux/configStore";
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
   // React.useEffect(() => {}, []);
-  console.log(props);
+
   React.useEffect(() => {
-    console.log("시작");
+    // console.log("시작");
     dispatch(CommnetActions.getComment(props.id));
   }, []);
 
   const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
-  console.log("게시물 작성자 id!", userId);
+
   // const commnet_list = props.comment_list  // 이렇게 받아오면 되려나?
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
 
   const user_info = useSelector((state) => state.user.user);
 
-  console.log(user_info);
+  // console.log(user_info);
   const nickname = localStorage.getItem("nickname");
+  const user_id = localStorage.getItem("userId");
+
   console.log("닉네임", nickname);
   // const is_like = props.like 라이크가 있냐 확인?
 
@@ -74,11 +76,10 @@ const ModalDetail = (props) => {
     comment_list.push(props.comment[i]);
   }
 
-  console.log("작성자 정보", props);
+  // console.log("작성자 정보", props);
 
-  console.log("코멘트 리스트", comment_list);
+  // console.log("코멘트 리스트", comment_list);
   //가짜 코멘트 리스트
-  const commentList = props.comment;
 
   const comment_List = useSelector((state) => state.comment.list);
 
@@ -121,49 +122,6 @@ const ModalDetail = (props) => {
     history.replace("/story/hmk1995");
   };
 
-  //////////////////////////////////////////////////////////////////////////////////
-  //이미지 스타일 컴포넌트 다른 위로 올려서 props로 이미지를 바로 받는게 좋은 것 같다
-
-  // const ModalImg = styled.img`
-  //   background-image: url(${props.images});
-  //   background-size: cover;
-  //   object-fit: cover;
-  //   background-position: 0px;
-  //   background-repeat: no-repeat;
-  //   border: none;
-  //   box-sizing: border-box;
-  //   width: 100%;
-  //   height: 400px;
-  //   height: 400px;
-  //   @media (max-width: 1440px) {
-  //     /* 1450밑으로 넓이가 내려가면 */
-  //     /* all: unset; */
-  //     background-image: url(${props.images});
-  //     background-size: cover;
-  //     object-fit: cover;
-  //     background-position: 0px;
-  //     background-repeat: no-repeat;
-  //     border: none;
-  //     box-sizing: border-box;
-  //     width: 100%;
-  //     height: 310px;
-  //     max-height: 42vh;
-  //   }
-  //   @media (max-width: 600px) {
-  //     /* 1450밑으로 넓이가 내려가면 */
-  //     /* all: unset; */
-  //     background-image: url(${props.images});
-  //     background-size: cover;
-  //     object-fit: cover;
-  //     background-position: 0px;
-  //     background-repeat: no-repeat;
-  //     border: none;
-  //     box-sizing: border-box;
-  //     width: 100%;
-  //     height: 40vh;
-  //   }
-  // `;
-
   //작성 날짜 설정하기
   const timeForToday = (value) => {
     const today = new Date();
@@ -190,7 +148,7 @@ const ModalDetail = (props) => {
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
 
-  console.log("프로필사진", props.writerImgUrl);
+  console.log("프로필사진", props.profileImg);
 
   return (
     <React.Fragment>
@@ -202,15 +160,21 @@ const ModalDetail = (props) => {
             <React.Fragment>
               <ProCircle
                 src={
-                  props.writerImgUrl
-                    ? props.writerImgUrl
+                  props.profileImg
+                    ? props.profileImg
                     : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                 }
                 onClick={() => {
-                  history.replace(`/story/${props.writerName}`);
+                  history.replace(`/story/${props.writerId}`);
                 }}
               />
-              <ModalAuthor>{props.writerName}</ModalAuthor>
+              <ModalAuthor
+                onClick={() => {
+                  history.replace(`/story/${props.writerId}`);
+                }}
+              >
+                {props.writerName}
+              </ModalAuthor>
             </React.Fragment>
             {/* <PostDate>{timeForToday(props.creatAt)}</PostDate> */}
             <ExitContainer>
@@ -246,21 +210,29 @@ const ModalDetail = (props) => {
             <InfoBoxInner>
               {/*is_like 여부로 하트모양 변경  */}
               {props.like ? (
-                <div>
+                <div style={{ cursor: "pointer" }}>
                   {" "}
-                  <FavoriteIcon onClick={disLike} style={{ color: "red" }} />
+                  <FavoriteIcon
+                    onClick={disLike}
+                    style={{ color: "rgb(255, 183, 25)", fontSize: 30 }}
+                  />
                   {props.likeCnt}
                 </div>
               ) : (
-                <div>
-                  <FavoriteBorderIcon onClick={addLike} />
+                <div style={{ cursor: "pointer" }}>
+                  <FavoriteBorderIcon
+                    // style={{ color: "rgb(255, 183, 25)" }}
+                    style={{ fontSize: 30 }}
+                    onClick={addLike}
+                  />
                   {props.likeCnt}
                 </div>
               )}
 
               {/* 작성자 에게만 보이게 설정  */}
 
-              {props.writerName == nickname ? (
+              {/* props.writerId == user_id*/}
+              {props.writerId == user_id ? (
                 <ModalEdit>
                   <React.Fragment onClick={props.close}>
                     <EditBtn
@@ -286,7 +258,11 @@ const ModalDetail = (props) => {
                     삭제
                   </DeleteBtn>
                 </ModalEdit>
-              ) : null}
+              ) : (
+                <ModalCate>
+                  <ModalCateInner>#{props.category}</ModalCateInner>
+                </ModalCate>
+              )}
 
               {/* <ModalEdit>
                 <React.Fragment onClick={props.close}>
@@ -340,7 +316,13 @@ const ModalDetail = (props) => {
                                 history.replace(`/story/${c.userId}`);
                               }}
                             ></ReplyImg>
-                            <ReplyWriter>{c.writerName}</ReplyWriter>
+                            <ReplyWriter
+                              onClick={() => {
+                                history.replace(`/story/${c.userId}`);
+                              }}
+                            >
+                              {c.writerName}
+                            </ReplyWriter>
                           </React.Fragment>
                           <Reply>{c.content}</Reply>
                         </ReplyLeft>
@@ -516,11 +498,12 @@ const ExitContainer = styled.div`
   top: 0;
   right: 0;
   padding: 5px;
+  opacity: 0.7;
 `;
 
 const ExitBtn = styled.button`
   cursor: pointer;
-  color: lightgray;
+  color: ${(props) => props.theme.main_color};
   background-color: transparent;
   border: none;
   outline: none;
@@ -530,28 +513,43 @@ const ExitBtn = styled.button`
 const ModalBottomContainer = styled.div`
   text-align: left;
   width: 550px;
-  height: 280px;
+  height: 290px;
   display: flex;
   flex-direction: column;
   padding: 0px 12px;
   margin: 0px auto;
-  /* @media (max-width: 1600px) {
-    // 1450밑으로 넓이가 내려가면
+
+  @media (max-width: 1600px) {
     text-align: left;
-    width: 100%;
-    height: 340px; // 이거 올려주니까 댓글창이보인다..!
+    width: 550px;
+    height: 290px;
     display: flex;
     flex-direction: column;
-    padding: 0;
+    padding: 0px 12px;
     margin: 0px auto;
-  } */
+    /* background-color: red; */
+  }
 
   @media (max-width: 1440px) {
+    /* background-color: red; */
     // 1450밑으로 넓이가 내려가면
     text-align: left;
     width: 450px;
     // 이거 올려주니까 댓글창이보인다..!
-    height: 300px;
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0px auto;
+    margin-top: 1.3vh;
+  }
+  @media (max-width: 1080px) {
+    /* background-color: red; */
+    // 1450밑으로 넓이가 내려가면
+    text-align: left;
+    width: 450px;
+    // 이거 올려주니까 댓글창이보인다..!
+    height: 295px;
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -575,7 +573,7 @@ const ModalBottomContainer = styled.div`
 `;
 
 const ModalHeader = styled.div`
-  padding: 1.5vh;
+  padding: 1vh;
   /* border-bottom: 1px solid #efefef; */
   display: flex;
   /* align-items: center; */
@@ -598,13 +596,14 @@ const ProCircle = styled.img`
   border-radius: 50%;
   background-size: cover;
   background-image: url("${(props) => props.src}");
-  background-size: cover;
+
   cursor: pointer;
 `;
 const ModalAuthor = styled.span`
   font-size: 1rem;
   font-weight: 600;
   margin-right: 5px;
+  cursor: pointer;
 `;
 
 const PostDate = styled.span`
@@ -614,11 +613,12 @@ const PostDate = styled.span`
 `;
 const InfoBox = styled.div`
   width: 100%;
-  height: 18vh;
+  height: 480px;
   text-align: left;
   margin: 0px auto;
   border-bottom: 1px solid #efefef;
   /* background-color: blue; */
+  /* background-color: red; */
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     width: calc(100% - 2vw); //패딩대신... 오,....
@@ -627,7 +627,6 @@ const InfoBox = styled.div`
     flex-direction: column;
     margin: 0px auto;
   }
-
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     width: calc(100% - 7vw); //패딩대신... 오,....
@@ -649,10 +648,24 @@ const InfoBoxInner = styled.div`
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     width: 100%;
-    height: 20vh;
+    height: 15vh;
     padding: 0px;
   }
 `;
+
+const ModalCate = styled.div`
+  background-color: white;
+  width: 90px;
+  height: 28px;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  vertical-align: middle;
+  line-height: 28px;
+  display: inline-block;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.2);
+`;
+const ModalCateInner = styled.div``;
 
 const ModalEdit = styled.div`
   opacity: 0.5;
@@ -675,13 +688,15 @@ const PostContents = styled.div`
 const PostTime = styled.div`
   font-size: 0.7rem;
   opacity: 0.4;
+  margin-top: 13px;
+
   /* margin: 15px 0px 8px 0px; */
 `;
 const ModalCmtInputBox = styled.div`
   align-items: center;
   margin-bottom: -4.5vh;
   width: 100%;
-  height: 7vh;
+  height: 8vw;
   padding: 0px;
   display: flex;
   justify-content: space-between;
@@ -701,7 +716,8 @@ const ModalCmtInputBox = styled.div`
   }
 
   @media (max-width: 600px) {
-    height: 6vh;
+    height: 100px;
+    margin-bottom: -7vh;
   }
 `;
 
@@ -709,8 +725,8 @@ const ModalCmtBox = styled.div`
   padding: 0px 0px;
   display: flex;
   flex-direction: column;
-  height: 38vh;
-  background-color: white;
+  height: 600px;
+
   /* background-color: red; */
   /* 아래 태그는 댓글이 많으면 
   스크롤로 아래 부분이 위로 올라가게 해서 
@@ -722,7 +738,7 @@ const ModalCmtBox = styled.div`
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     /* flex-direction: column; */
-
+    /* background-color: red; */
     padding: 0px 14px;
     ::-webkit-scrollbar {
       display: none;
@@ -754,8 +770,8 @@ const Replys = styled.div`
   }
 `;
 const ReplyImg = styled.div`
-  height: 3vh;
-  width: 3vh;
+  height: 2.2vh;
+  width: 2.2vh;
   border-radius: 50%;
   background-size: cover;
   margin-right: 10px;
@@ -765,9 +781,10 @@ const ReplyImg = styled.div`
 `;
 
 const ReplyWriter = styled.div`
-  font-size: 1.5vh;
+  font-size: 1.1vh;
   font-weight: bold;
   padding-right: 10px;
+  cursor: pointer;
 `;
 
 const Reply = styled.div`
@@ -810,6 +827,8 @@ const CommentInput = styled.input`
   width: 100%;
   padding: auto 0px;
   background-color: white;
+  @media (max-width: 600px) {
+  }
 `;
 const UploadBtn = styled.div`
   font-size: 14px;
