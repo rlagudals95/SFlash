@@ -7,10 +7,22 @@ import { actionCreators as categoryActionsInMap } from "../redux/modules/categor
 import * as BiIcons from "react-icons/bi";
 // import { actionCreators as PostActions } from "../redux/modules/post";
 
-const Category = () => {
+const CategoryInMap = () => {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
-  const is_category_in_map = useSelector((state) => state.category_in_map.is_category_in_map); //이걸 가져와서 이제 눌린상탠지 안눌린 상탠지 판단
+  const nickname = localStorage.getItem("nickname");
+  
+  const is_category_in_map = useSelector((state) => {
+    return state.category_in_map.is_category_in_map
+  });
+  const map_post_list = useSelector((state) => {
+    return state.post.map_post_list
+  });
+
+  const is_all = is_category_in_map.length === 0  ? true : false;        // 모든 게시물 판단 기준
+  const is_mine = map_post_list.writerName === nickname ? true : false;  // 내게시물 판단 기준
+  const is_mylike = map_post_list.like === true ? true : false;          // 내가 좋아요 한 게시물 판단 기준.
+  console.log(is_all);
 
   // console.log(is_category);
   // console.log("카테고리 배열길이", is_category.length);
@@ -340,7 +352,7 @@ const Category = () => {
         {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
         <SpotSelectBox>
           {/* 전체스팟 찾기 */}
-          {is_category_in_map.length == 0 ? (
+          {is_all ? (  // is_category_in_map 리스트안에 아무것도 없다면
             <AllSpotsSelected
               onClick={(e) => {
                 e.preventDefault();
@@ -368,7 +380,7 @@ const Category = () => {
                 setCity(false);
                 setPark(false);
                 dispatch(categoryActionsInMap.resetCategoryInMap());
-                // dispatch(categoryActionsInMap.getMineOrLikeInMap("내 게시물"))
+                dispatch(categoryActionsInMap.resetMineAndMyLikeInMap());
               }}
             > 전체스팟
             </AllSpots>
@@ -392,23 +404,66 @@ const Category = () => {
                 setExhibition(false);
                 setCity(false);
                 setPark(false);
+                setShowMine(false);
                 dispatch(categoryActionsInMap.resetCategoryInMap());
+                dispatch(categoryActionsInMap.resetMineAndMyLikeInMap());
               }}
             > 내스팟  
             </MySpotsSelected>
             ) : (
-            <MySpots>내스팟</MySpots>
+            <MySpots
+              onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowMine(true);
+              dispatch(categoryActionsInMap.getMineAndMyLikeInMap("내꺼"));
+              }}
+            > 내스팟  
+            </MySpots>
+            )}
+          {/* 내좋아요스팟 찾기 */}
+          {showLike ? (
+            <MyLikeSpotsSelected
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowMine(false);
+                setCafe(false);
+                setNight(false);
+                setOcean(false);
+                setMountain(false);
+                setFlower(false);
+                setAlone(false);
+                setCouple(false);
+                setFreind(false);
+                setPet(false);
+                setExhibition(false);
+                setCity(false);
+                setPark(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.resetCategoryInMap());
+                dispatch(categoryActionsInMap.resetMineAndMyLikeInMap());
+              }}
+            > 좋아요 스팟
+            </MyLikeSpotsSelected>
+            ) : (
+            <MyLikeSpots
+              onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowLike(true);
+              dispatch(categoryActionsInMap.getMineAndMyLikeInMap("내좋아요"));
+              }}
+            > 좋아요 스팟
+            </MyLikeSpots>
             )} 
-          <MyLikeSpots>
-            좋아요 스팟
-          </MyLikeSpots>
         </SpotSelectBox>      
       </CategoryBox>
     </React.Fragment>
   );
 };
 
-export default Category;
+export default CategoryInMap;
 
 const MiddleBox = styled.div`
   height: 35px;
