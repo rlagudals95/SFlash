@@ -7,13 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { actionCreators as qnaActions } from "../redux/modules/qna";
 
-import { FiEdit3 } from "react-icons/fi";
-import { RiDeleteBinLine } from "react-icons/ri";
+import { BsFillLockFill } from "react-icons/bs";
+import { RiEditFill } from "react-icons/ri";
 
 const QnaList = (props) => {
   const dispatch = useDispatch();
   const qna_list = useSelector((state) => state.qna.list);
   console.log("qna_list:", qna_list);
+  const me = localStorage.getItem("nickname");
+  const role = localStorage.getItem("role");
 
   React.useEffect(() => {
     dispatch(qnaActions.getQnaAPI());
@@ -24,14 +26,14 @@ const QnaList = (props) => {
       <React.Fragment>
         <Container>
           <Title>문의하기</Title>
-          <SolidBtn width="120px" onClick={() => history.push("/qnawrite")}>
-            새 글 등록
+          <SolidBtn  onClick={() => history.push("/qnawrite")}>
+           <RiEditFill size="12"/> 글쓰기
           </SolidBtn>
           <Content>
             {/* <Text width="4%">
           <b>NO.</b>
         </Text> */}
-            <Text width="65%">
+            <Text width="70%">
               <b>제목</b>
             </Text>
             <Text width="11%">
@@ -52,20 +54,20 @@ const QnaList = (props) => {
       <React.Fragment>
         <Container>
           <Title>문의하기</Title>
-          <SolidBtn width="120px" onClick={() => history.push("/qnawrite")}>
-            새 글 등록
+          <SolidBtn  onClick={() => history.push("/qnawrite")}>
+          <Icon><RiEditFill size="18" /></Icon> 글쓰기
           </SolidBtn>
           <Content>
             {/* <Text width="4%">
           <b>NO.</b>
         </Text> */}
-            <Text width="65%">
+            <Text width="70%">
               <b>제목</b>
             </Text>
-            <Text width="11%">
+            <Text width="13%">
               <b>작성자</b>
             </Text>
-            <Text width="11%">
+            <Text width="10%">
               <b>일자</b>
             </Text>
           </Content>
@@ -73,15 +75,24 @@ const QnaList = (props) => {
             return (
               <ContentUnit key={q.id} {...q}>
                 {/* <Text width="4%">{props.help.id}</Text> */}
-                <TextBtn width="65%" onClick={() => history.push(`/qnadetail/${q.id}`)}>
+                <TextBtn width="70%" onClick={() => {
+                   if(q.writer!==me){
+                    alert("해당 게시물에 대한 권힌이 없습니다.")
+                      return;
+                  }else{
+                    history.push(`/qnadetail/${q.id}`)
+                  }
+                }
+                 }>
                   {q.title}
+                  {q.writer !== me &&
                   <Icon onClick={() => history.push("/qnawrite/:id")}>
-                    <FiEdit3 size="17" />
+                    <BsFillLockFill size="17" color="grey" />
                   </Icon>
-                  {/* <Icon><RiDeleteBinLine size="18"/></Icon> */}
+                  }
                 </TextBtn>
-                <Text width="11%">{q.writer}</Text>
-                <Text width="11%">{q.modified}</Text>
+                <Text width="13%">{q.writer}</Text>
+                <Text width="10%">{q.modified}</Text>
               </ContentUnit>
             );
           })}
@@ -142,7 +153,7 @@ const Title = styled.div`
 `;
 
 const Content = styled.div`
-  border-bottom: 1px solid grey;
+  border-bottom: 1.5px solid grey;
   display: flex;
   align-items: center;
   width: 100%;
@@ -150,10 +161,11 @@ const Content = styled.div`
 `;
 
 const ContentUnit = styled.div`
-  border-bottom: 0.2px solid grey;
+  border-bottom: 0.2px solid lightgrey;
   display: flex;
   align-items: center;
   width: 100%;
+  height: 60px;
   /* background-color: green; */
 `;
 
@@ -181,30 +193,25 @@ const TextBtn = styled.div`
 `;
 
 const Icon = styled.div`
-  margin-left: 5px;
   border-radius: 50px;
-  padding: 10px 15px;
-  &:hover {
-    color: red;
-    background-color: #eee;
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
-  }
+  padding: 5px 10px 5px 20px;
   /* background-color: green; */
 `;
 
 const SolidBtn = styled.button`
+align-items: center;
+display:flex;
   float: right;
   border: none;
-  margin: 5px 0px;
+  padding: 7px 20px 7px 0px;
+  margin: 10px 0px;
   ${(props) => (props.width ? `width:${props.width};` : "")}
-  height: 48px;
   border-radius: 8px;
   box-sizing: border-box;
   font-size: 1rem;
   font-weight: 500;
   background-color: ${(props) => props.theme.main_color};
-  color: #ffffff;
+  /* color: #ffffff; */
   outline: none;
   &:hover {
     color: grey;
@@ -217,7 +224,9 @@ const Warning = styled.div`
   text-align: center;
   align-items: center;
   margin: 20px auto;
-  background-color: #eee;
+  border: 2.5pt solid #eee;
   padding: 150px;
 `;
+
+
 export default QnaList;

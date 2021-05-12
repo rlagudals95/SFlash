@@ -5,6 +5,7 @@ import {
   Title,
   InputStyle,
   SolidBtn,
+  SocialBtn,
   BorderBtn,
   TextBtn,
 } from "../../Css/loginSignupCss";
@@ -30,12 +31,15 @@ const Login = () => {
     dispatch(userActions.loginAPI(email, pwd));
   };
 
-  const socialLoginSuccessHandler = () => {
-    // 소셜로그인을 하면 token이 url에 담겨서 오는데,
-    // url에서 token을을 추출하는 함수()
-    const getUrlParameter = (name) => {
-      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+
+ 
+
+  const onSocialLogin = () => {
+      // 소셜로그인을 하면 token이 url에 담겨서 오는데,
+  // url에서 token을을 추출하는 함수()
+    const getUrlParameter =(name)=> {
+      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+      var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
       var results = regex.exec(window.location.search);
       return results === null
         ? ""
@@ -76,55 +80,65 @@ const Login = () => {
           }}
         />
 
-        <BorderBtn bg="grey" onClick={onLogin}>
+        <SolidBtn onClick={onLogin}>
           로그인하기
-        </BorderBtn>
+        </SolidBtn>
         <Grid padding="10px">
           <TextBtn onClick={() => history.push("/findemailpwd")}>
             이메일/비밀번호 찾기
           </TextBtn>
         </Grid>
         <Grid padding="10px">
-          <TextBtn onClick={() => history.push("/signup")}>
-            회원가입 하러가기
-          </TextBtn>
         </Grid>
-        <SolidBtn
+        <Grid is_flex>
+        {/* <Line><span>OR</span></Line>  */}
+        </Grid>
+       
+        <SocialBtn
           bg="#1ec800"
           color="#ffffff"
-          // onClick = {naverLoginAPI}
           onClick={() => {
             window.location.href =
-              "http://13.125.97.117/oauth2/authorize/naver?redirect_uri=http://localhost:3000/";
-            // socialLoginSuccessHandler();
+              "http://seungwook.shop/oauth2/authorize/naver?redirect_uri=http://localhost:3000/";
+              // onSocialLogin();
+            
           }}
         >
           네이버로 로그인
-        </SolidBtn>
-        <SolidBtn
+        </SocialBtn>
+        <SocialBtn
           bg="#fee500"
           onClick={() => {
             window.location.href =
-              "http://13.125.97.117/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/";
-            // socialLoginSuccessHandler();
+              "http://seungwook.shop/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/";
+              // onSocialLogin();
           }}
         >
           카카오 로그인
-        </SolidBtn>
-        <SolidBtn
+        </SocialBtn>
+        <SocialBtn
           bg="#f45a5c"
           color="#ffffff"
           onClick={() => {
             window.location.href =
-              "http://13.125.97.117/oauth2/authorize/google?redirect_uri=http://localhost:3000/";
-            // socialLoginSuccessHandler();
+              "http://seungwook.shop/oauth2/authorize/google?redirect_uri=http://localhost:3000/";
+              // onSocialLogin();
           }}
         >
           Google 로그인
-        </SolidBtn>
+        </SocialBtn>
+        <TextBtn onClick={() => history.push("/signup")}>
+            회원가입 하러가기
+          </TextBtn>
       </Container>
     </React.Fragment>
   );
 };
+
+// const Line = styled.div`
+//   font-size: 2rem;
+//   font-weight: bold;
+//   margin-bottom: 30px;
+// `;
 
 export default Login;

@@ -19,6 +19,7 @@ const StoryEditProfile = (props) => {
   const dispatch = useDispatch();
   // 스토리페이지에서 user_info를 props로 받아온다.
   const { user_info } = props;
+  const userId = localStorage.getItem("userId");
 
   const is_uploading = useSelector((state) => state.profile.is_uploading);
   const preview = useSelector((state) => state.profile.preview);
@@ -139,7 +140,7 @@ const StoryEditProfile = (props) => {
       return false;
     }
     console.log(newNickname);
-    dispatch(profileActions.editNicknameAPI(newNickname));
+    dispatch(profileActions.editNicknameAPI(newNickname, userId));
     setOriginalNickMode(true);
   };
 
@@ -159,7 +160,7 @@ const StoryEditProfile = (props) => {
       profileImg: profileImg,
       introduction: introduction,
     };
-    dispatch(profileActions.editProfileAPI(profile));
+    dispatch(profileActions.editProfileAPI(profile, userId));
   };
 
   return (
