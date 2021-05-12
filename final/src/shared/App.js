@@ -76,6 +76,7 @@ function App() {
             <Route path="/faq" exact component={Faq} />
             <Route path="/qna" exact component={QnaList} />
             <Route path="/qnadetail/:id" exact component={QnaDetail} />
+            <Route path="/qnawrite" exact component={QnaWrite} />
             <Route path="/qnawrite/:id" exact component={QnaWrite} />
             <Route component={NotFound} />
             {/* 밑에서 부턴 카테고리별 페이지 */}
