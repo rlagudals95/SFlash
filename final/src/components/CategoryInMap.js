@@ -71,8 +71,6 @@ const CategoryInMap = () => {
               e.stopPropagation();
               setCafe(false);
               dispatch(categoryActionsInMap.getCategoryInMap("카페")); // 혹시라도 구현이 힘들땐 그냥 이값을 is_cafe말고 cafe로 보내고 포스트 리스트에서 카테고리가 cafe인 것을 필터해주자
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #카페
@@ -101,8 +99,6 @@ const CategoryInMap = () => {
               e.stopPropagation();
               setNight(false);
               dispatch(categoryActionsInMap.getCategoryInMap("야경"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #야경
@@ -131,8 +127,6 @@ const CategoryInMap = () => {
               e.stopPropagation();
               setOcean(false);
               dispatch(categoryActionsInMap.getCategoryInMap("바다"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #바다
@@ -161,8 +155,6 @@ const CategoryInMap = () => {
               e.stopPropagation();
               setMountain(false);
               dispatch(categoryActionsInMap.getCategoryInMap("산"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #산
@@ -191,8 +183,6 @@ const CategoryInMap = () => {
               e.stopPropagation();
               setCity(false);
               dispatch(categoryActionsInMap.getCategoryInMap("도심"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #도심
@@ -221,8 +211,6 @@ const CategoryInMap = () => {
               e.stopPropagation();
               setExhibition(false);
               dispatch(categoryActionsInMap.getCategoryInMap("전시"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #전시
@@ -251,8 +239,6 @@ const CategoryInMap = () => {
               e.stopPropagation();
               setPark(false);
               dispatch(categoryActionsInMap.getCategoryInMap("공원"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #공원
@@ -281,8 +267,6 @@ const CategoryInMap = () => {
               e.stopPropagation();
               setFlower(false);
               dispatch(categoryActionsInMap.getCategoryInMap("꽃"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #꽃
@@ -311,8 +295,6 @@ const CategoryInMap = () => {
               e.stopPropagation();
               setAlone(false);
               dispatch(categoryActionsInMap.getCategoryInMap("나홀로"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #나홀로
@@ -340,8 +322,6 @@ const CategoryInMap = () => {
               e.stopPropagation();
               setCouple(false);
               dispatch(categoryActionsInMap.getCategoryInMap("연인"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #연인
@@ -369,8 +349,6 @@ const CategoryInMap = () => {
               e.stopPropagation();
               setFreind(false);
               dispatch(categoryActionsInMap.getCategoryInMap("친구"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #친구
@@ -398,8 +376,6 @@ const CategoryInMap = () => {
               e.stopPropagation();
               setPet(false);
               dispatch(categoryActionsInMap.getCategoryInMap("반려동물"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
             }}
           >
             #반려동물
