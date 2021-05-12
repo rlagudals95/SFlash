@@ -41,8 +41,7 @@ const Maps = (props) => {
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
   //조건 걸어주기 // 나를 기준으로 몇 km 이내
 
-  // 카테고리 제어하기
-  
+  // 카테고리 제어하기 : 12가지 + 전체카테고리
   const is_category_in_map = useSelector((state) => {
     return state.category_in_map.is_category_in_map
   });
@@ -50,7 +49,7 @@ const Maps = (props) => {
   const is_all = is_category_in_map.length === 0  ? true : false;
   console.log(is_all);
 
-  // is_category 배열 안에 해당 카테고리가 원소로서 존재하는지 체크 : true, false가 기본값
+  // is_category_in_map 배열 안에 해당 카테고리가 원소로서 존재 여부를 true, false로 설정한다.
   const is_cafe = is_category_in_map.includes("카페"); //요게 카페가 나온다는건? 배열안에 카페가 있다는 것!
   const is_night = is_category_in_map.includes("야경"); 
   const is_ocean = is_category_in_map.includes("바다");
@@ -63,7 +62,16 @@ const Maps = (props) => {
   const is_city = is_category_in_map.includes("도심");
   const is_park = is_category_in_map.includes("공원");
   const is_exhibition = is_category_in_map.includes("전시");
-  
+
+  // 내가 작성한 게시물만 보기 + 내가 좋아요한 게시물만 보기 제어.
+  const is_mine_and_mylike_in_map = useSelector((state) => {
+    return state.category_in_map.is_mine_and_mylike_in_map
+  });
+
+  // is_mine_and_mylike_in_map "내꺼", "내좋아요"가 원소로서 존재 여부를 true, false로 설정한다.
+  const is_mine = is_mine_and_mylike_in_map.includes("내꺼"); 
+  const is_mylike = is_mine_and_mylike_in_map.includes("내좋아요"); 
+
   // 모든 게시물의 데이터들을 받아 온다.
   const map_post_list = useSelector((state) => {
     return state.post.map_post_list

@@ -352,7 +352,7 @@ const CategoryInMap = () => {
         {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
         <SpotSelectBox>
           {/* 전체스팟 찾기 */}
-          {is_category_in_map.length == 0 ? (
+          {is_all ? (  // is_category_in_map 리스트안에 아무것도 없다면
             <AllSpotsSelected
               onClick={(e) => {
                 e.preventDefault();
@@ -380,7 +380,7 @@ const CategoryInMap = () => {
                 setCity(false);
                 setPark(false);
                 dispatch(categoryActionsInMap.resetCategoryInMap());
-                // dispatch(categoryActionsInMap.getMineOrLikeInMap("내 게시물"))
+                dispatch(categoryActionsInMap.resetMineAndMyLikeInMap());
               }}
             > 전체스팟
             </AllSpots>
@@ -404,16 +404,59 @@ const CategoryInMap = () => {
                 setExhibition(false);
                 setCity(false);
                 setPark(false);
+                setShowMine(false);
                 dispatch(categoryActionsInMap.resetCategoryInMap());
+                dispatch(categoryActionsInMap.resetMineAndMyLikeInMap());
               }}
             > 내스팟  
             </MySpotsSelected>
             ) : (
-            <MySpots>내스팟</MySpots>
+            <MySpots
+              onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowMine(true);
+              dispatch(categoryActionsInMap.getMineAndMyLikeInMap("내꺼"));
+              }}
+            > 내스팟  
+            </MySpots>
+            )}
+          {/* 내좋아요스팟 찾기 */}
+          {showLike ? (
+            <MyLikeSpotsSelected
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowMine(false);
+                setCafe(false);
+                setNight(false);
+                setOcean(false);
+                setMountain(false);
+                setFlower(false);
+                setAlone(false);
+                setCouple(false);
+                setFreind(false);
+                setPet(false);
+                setExhibition(false);
+                setCity(false);
+                setPark(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.resetCategoryInMap());
+                dispatch(categoryActionsInMap.resetMineAndMyLikeInMap());
+              }}
+            > 좋아요 스팟
+            </MyLikeSpotsSelected>
+            ) : (
+            <MyLikeSpots
+              onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowLike(true);
+              dispatch(categoryActionsInMap.getMineAndMyLikeInMap("내좋아요"));
+              }}
+            > 좋아요 스팟
+            </MyLikeSpots>
             )} 
-          <MyLikeSpots>
-            좋아요 스팟
-          </MyLikeSpots>
         </SpotSelectBox>      
       </CategoryBox>
     </React.Fragment>
