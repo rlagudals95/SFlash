@@ -24,6 +24,8 @@ import { LeakRemoveOutlined } from "@material-ui/icons";
 const { kakao } = window;
 
 const Maps = (props) => {
+
+  
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
   const nickname = localStorage.getItem("nickname");  // 내가 작성한 게시물을 판별하는 기준 상수
