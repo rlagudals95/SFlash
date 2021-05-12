@@ -46,7 +46,7 @@ const Maps = (props) => {
   const is_category_in_map = useSelector((state) => {
     return state.category_in_map.is_category_in_map
   });
-  console.log(is_category_in_map);
+  console.log("is_category_in_map: " + is_category_in_map);
   const is_all = is_category_in_map.length === 0  ? true : false;
   console.log(is_all);
 
@@ -65,13 +65,13 @@ const Maps = (props) => {
   const is_exhibition = is_category_in_map.includes("전시");
 
   // 내가 작성한 게시물만 보기 + 내가 좋아요한 게시물만 보기 제어.
-  const is_mine_and_mylike_in_map = useSelector((state) => {
-    return state.category_in_map.is_mine_and_mylike_in_map
+  const is_mypost_or_mylike_in_map = useSelector((state) => {
+    return state.category_in_map.is_mypost_or_mylike_in_map
   });
 
   // is_mine_and_mylike_in_map "내꺼", "내좋아요"가 원소로서 존재 여부를 true, false로 설정한다.
-  const is_mine = is_mine_and_mylike_in_map.includes("내꺼"); 
-  const is_mylike = is_mine_and_mylike_in_map.includes("내좋아요"); 
+  const is_mypost = is_mypost_or_mylike_in_map.includes("내꺼"); 
+  const is_mylike = is_mypost_or_mylike_in_map.includes("내좋아요"); 
 
   // 모든 게시물의 데이터들을 받아 온다.
   const map_post_list = useSelector((state) => {
@@ -370,7 +370,7 @@ const Maps = (props) => {
 // 카테고리별 마커 + 커스텀오버레이 제어 시작!!
   // 1. 카페 카테고리 : 카페마커 + 커스텀 오버레이
   if (is_cafe) {
-    cafeData.map((cafe, idx) => {
+    cafeData.forEach((cafe) => {
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(cafeMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(cafe.latitude, cafe.longitude);
@@ -420,7 +420,7 @@ const Maps = (props) => {
 
   // 2. 밤카테고리 : 카페마커 + 커스텀 오버레이
   if (is_night) {
-    nightData.map((night, idx) => { // nightData를 mockdata로 구현가능한지 테스트 할 것!
+    nightData.forEach((night) => { // nightData를 mockdata로 구현가능한지 테스트 할 것!
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(nightMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(night.latitude, night.longitude);
@@ -470,7 +470,7 @@ const Maps = (props) => {
 
   // 3. 바다카테고리 : 카페마커 + 커스텀 오버레이
   if (is_ocean) {
-    oceanData.map((ocean, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    oceanData.forEach((ocean) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(oceanMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(ocean.latitude, ocean.longitude);
@@ -570,7 +570,7 @@ const Maps = (props) => {
 
   // 5. 꽃카테고리 : 카페마커 + 커스텀 오버레이
   if (is_flower) {
-    flowerData.map((flower, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    flowerData.forEach((flower) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(flowerMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(flower.latitude, flower.longitude);
@@ -670,7 +670,7 @@ const Maps = (props) => {
   
   // 7. 커플카테고리 : 카페마커 + 커스텀 오버레이
   if (is_couple) {
-    coupleData.map((couple, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    coupleData.forEach((couple) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(coupleMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(couple.latitude, couple.longitude);
@@ -720,7 +720,7 @@ const Maps = (props) => {
 
   // 8. 친구카테고리 : 카페마커 + 커스텀 오버레이
   if (is_friend) {
-    friendData.map((friend, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    friendData.forEach((friend) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(friendMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(friend.latitude, friend.longitude);
@@ -771,7 +771,7 @@ const Maps = (props) => {
   
   // 9. 반려동물카테고리 : 카페마커 + 커스텀 오버레이
   if (is_pet) {
-    petData.map((pet, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    petData.forEach((pet) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(petMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(pet.latitude, pet.longitude);
@@ -821,7 +821,7 @@ const Maps = (props) => {
   
   // 10. 도심카테고리 : 카페마커 + 커스텀 오버레이
   if (is_city) {
-    cityData.map((city, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    cityData.forEach((city) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(cityMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(city.latitude, city.longitude);
@@ -871,7 +871,7 @@ const Maps = (props) => {
   
   // 11. 공원카테고리 : 카페마커 + 커스텀 오버레이
   if (is_park) {
-    parkData.map((park, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    parkData.forEach((park) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
       var markerImage = new kakao.maps.MarkerImage(parkMarkerImgUrl, imageSize);
       var position = new kakao.maps.LatLng(park.latitude, park.longitude);
@@ -921,7 +921,7 @@ const Maps = (props) => {
   
   // 12. 전시카테고리 : 카페마커 + 커스텀 오버레이
   if (is_exhibition) {
-    exhibitionData.map((exhibition, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+    exhibitionData.forEach((exhibition) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       const imageSize = new kakao.maps.Size(30, 40);
       const markerImage = new kakao.maps.MarkerImage(exhibitionMarkerImgUrl, imageSize);
       const position = new kakao.maps.LatLng(exhibition.latitude, exhibition.longitude);
