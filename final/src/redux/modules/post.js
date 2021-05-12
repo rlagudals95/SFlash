@@ -103,18 +103,14 @@ const addPostAPI = (post) => { // 지도상에서 게시물을 추가할 때 서
     })
       .then((res) => {
         console.log("애드포스트 응답", res);
-        // 민규님 이부분 해주셔야 할 것 같습니다 : 민규 작업중
-        let map_post = {
-          latitude: post.latitude,
-          longitude: post.longitude,
-          imgForOverlay: _file[0],
-          spotName: post.spotName,
-        }
-        console.log(map_post);
-        dispatch(addMapPost(map_post));
-        // history.replace("/");
+        // 형민 : 민규님 이부분 해주셔야 할 것 같습니다 - 민규 작업중(2021.5.11)
+        // 민규 : 저는 dispatch(addMapPost(map_post))를 할 필요가 없어져서 안 씁니다. 
+        // 형민님 필요에 맞게 dispatch 하도록 코드 짜서 쓰세요!
+        // let post = { // 이런식으로 코드 짜시겠죠??
+          
+        // }
         // dispatch(addPost(post))
-        window.location.replace("/");
+        window.location.replace("/"); // UpLoadModal의 게시 버튼을 누르면 새로고침!
       })
       .catch((err) => {
         console.log(err);

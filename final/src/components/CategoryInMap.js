@@ -7,10 +7,22 @@ import { actionCreators as categoryActionsInMap } from "../redux/modules/categor
 import * as BiIcons from "react-icons/bi";
 // import { actionCreators as PostActions } from "../redux/modules/post";
 
-const Category = () => {
+const CategoryInMap = () => {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
-  const is_category_in_map = useSelector((state) => state.category_in_map.is_category_in_map); //이걸 가져와서 이제 눌린상탠지 안눌린 상탠지 판단
+  const nickname = localStorage.getItem("nickname");
+  
+  const is_category_in_map = useSelector((state) => {
+    return state.category_in_map.is_category_in_map
+  });
+  const map_post_list = useSelector((state) => {
+    return state.post.map_post_list
+  });
+
+  const is_all = is_category_in_map.length === 0  ? true : false;        // 모든 게시물 판단 기준
+  const is_mine = map_post_list.writerName === nickname ? true : false;  // 내게시물 판단 기준
+  const is_mylike = map_post_list.like === true ? true : false;          // 내가 좋아요 한 게시물 판단 기준.
+  console.log(is_all);
 
   // console.log(is_category);
   // console.log("카테고리 배열길이", is_category.length);
@@ -408,7 +420,7 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default CategoryInMap;
 
 const MiddleBox = styled.div`
   height: 35px;
