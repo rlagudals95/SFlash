@@ -75,7 +75,7 @@ const InputBtn = styled.div`
   width: 50px;
   position: fixed;
   right: 5px;
-  top: 400px;
+  top: 350px;
   cursor: pointer;
   @media (max-width: 1440px) {
     right: 0px;

@@ -31,15 +31,12 @@ const Login = () => {
     dispatch(userActions.loginAPI(email, pwd));
   };
 
-
- 
-
   const onSocialLogin = () => {
-      // 소셜로그인을 하면 token이 url에 담겨서 오는데,
-  // url에서 token을을 추출하는 함수()
-    const getUrlParameter =(name)=> {
-      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-      var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    // 소셜로그인을 하면 token이 url에 담겨서 오는데,
+    // url에서 token을을 추출하는 함수()
+    const getUrlParameter = (name) => {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
       var results = regex.exec(window.location.search);
       return results === null
         ? ""
@@ -80,28 +77,22 @@ const Login = () => {
           }}
         />
 
-        <SolidBtn onClick={onLogin}>
-          로그인하기
-        </SolidBtn>
+        <SolidBtn onClick={onLogin}>로그인하기</SolidBtn>
         <Grid padding="10px">
           <TextBtn onClick={() => history.push("/findemailpwd")}>
             이메일/비밀번호 찾기
           </TextBtn>
         </Grid>
-        <Grid padding="10px">
-        </Grid>
-        <Grid is_flex>
-        {/* <Line><span>OR</span></Line>  */}
-        </Grid>
-       
+        <Grid padding="10px"></Grid>
+        <Grid is_flex>{/* <Line><span>OR</span></Line>  */}</Grid>
+
         <SocialBtn
           bg="#1ec800"
           color="#ffffff"
           onClick={() => {
             window.location.href =
-              "http://seungwook.shop/oauth2/authorize/naver?redirect_uri=http://localhost:3000/";
-              // onSocialLogin();
-            
+              "http://13.125.97.117/oauth2/authorize/naver?redirect_uri=http://localhost:3000/";
+            // onSocialLogin();
           }}
         >
           네이버로 로그인
@@ -110,8 +101,8 @@ const Login = () => {
           bg="#fee500"
           onClick={() => {
             window.location.href =
-              "http://seungwook.shop/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/";
-              // onSocialLogin();
+              "http://13.125.97.117/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/";
+            // onSocialLogin();
           }}
         >
           카카오 로그인
@@ -121,15 +112,15 @@ const Login = () => {
           color="#ffffff"
           onClick={() => {
             window.location.href =
-              "http://seungwook.shop/oauth2/authorize/google?redirect_uri=http://localhost:3000/";
-              // onSocialLogin();
+              "http://13.125.97.117/oauth2/authorize/google?redirect_uri=http://localhost:3000/";
+            // onSocialLogin();
           }}
         >
           Google 로그인
         </SocialBtn>
         <TextBtn onClick={() => history.push("/signup")}>
-            회원가입 하러가기
-          </TextBtn>
+          회원가입 하러가기
+        </TextBtn>
       </Container>
     </React.Fragment>
   );

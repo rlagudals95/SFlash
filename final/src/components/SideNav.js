@@ -60,86 +60,68 @@ function Navbar() {
             <LOGO>
               {/* 로고 들어갈자리 */}
               <Link to="/story">
-                <CgIcons.CgProfile size="1.6rem" />
+                <SflashLogo></SflashLogo>
               </Link>
             </LOGO>
             {/* 홈 지도보기 */}
-            <RoundColor>
-              <RoundInner>
-                <Link to="/">
-                  <GrIcons.GrMap size="1.5rem" color="#fff" />
-                </Link>
-              </RoundInner>
-            </RoundColor>
+
+            <Link to="/">
+              <Home></Home>
+            </Link>
+
             <IconInfo>홈</IconInfo>
 
-            <RoundColor>
-              <RoundInner>
-                <Link to="/postlist">
-                  <MdIcons.MdPhotoLibrary size="1.6rem" />
-                </Link>
-              </RoundInner>
-            </RoundColor>
+            <Link to="/postlist">
+              <Community></Community>
+            </Link>
+
             <IconInfo>커뮤니티</IconInfo>
 
             {/* 마이페이지 */}
 
             {is_login ? (
               <React.Fragment>
-                <RoundColor>
-                  <RoundInner>
-                    <Link>
-                      <CgIcons.CgProfile
-                        size="1.6rem"
-                        onClick={() => {
-                          history.push(`/story/${userId}`);
-                        }}
-                      />
-                    </Link>
-                  </RoundInner>
-                </RoundColor>
-                <IconInfo>마이페이지</IconInfo>
+                <Link>
+                  <Story
+                    onClick={() => {
+                      history.push(`/story/${userId}`);
+                    }}
+                  ></Story>
+                </Link>
+
+                <IconInfo>내스토리</IconInfo>
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <RoundColor>
-                  <RoundInner>
-                    <GrIcons.GrLogin
-                      size="1.5rem"
-                      onClick={() => {
-                        history.push("/login");
-                      }}
-                    />
-                  </RoundInner>
-                </RoundColor>
+                <GrIcons.GrLogin
+                  size="1.5rem"
+                  onClick={() => {
+                    history.push("/login");
+                  }}
+                />
+                {/* 로그인 아이콘 */}
                 <IconInfo>로그인</IconInfo>
               </React.Fragment>
             )}
 
             {/* About */}
-            <RoundColor>
-              <RoundInner>
-                <Link>
-                  <IoIcons.IoMdPeople size="1.7rem" />
-                </Link>
-              </RoundInner>
-            </RoundColor>
+
+            <Link>
+              <About></About>
+            </Link>
+
             <IconInfo>About</IconInfo>
-            <RoundColor>
-              <RoundInner>
-                <Link to="/faq">
-                  <FaIcons.FaEnvelopeOpenText size="1.4rem" />
-                </Link>
-              </RoundInner>
-            </RoundColor>
+
+            <Link to="/faq">
+              <FaQ></FaQ>
+            </Link>
+
             <IconInfo>FAQ</IconInfo>
-            <RoundColor>
-              <RoundInner>
-                <Link to="/qna">
-                  <GrCircleQuestion size="1.4rem" />
-                </Link>
-              </RoundInner>
-            </RoundColor>
+
+            <Link to="/qna">
+              <QnA></QnA>
+            </Link>
+
             <IconInfo>1:1</IconInfo>
 
             {/* {is_login ? (
@@ -258,7 +240,7 @@ const SideMini = styled.div`
   @media (max-width: 600px) {
     all: unset;
     margin: 0px;
-    z-index: 5000;
+    z-index: 10000;
     position: fixed;
     width: 100%;
     height: 51px;
@@ -328,6 +310,76 @@ const IconInfo = styled.div`
   @media (max-width: 1450px) {
     /* 1450밑으로 넓이가 내려가면 */
     display: none;
+  }
+`;
+const SflashLogo = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A0.png?alt=media&token=92594323-944a-40d7-8085-b323c23246fe");
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+`;
+
+const QnA = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/1%EB%8C%801%20%EB%AC%B8%EC%9D%98%402x.png?alt=media&token=0435735d-279c-4973-a882-244c9e634fc3");
+  width: 35px;
+  height: 35px;
+  background-size: cover;
+  @media (max-width: 600px) {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
+const FaQ = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/FAQ%402x.png?alt=media&token=20277e6f-072e-4d02-bc45-71cd33ba5f87");
+  width: 35px;
+  height: 35px;
+  background-size: cover;
+  @media (max-width: 600px) {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
+const About = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/about%402x.png?alt=media&token=474a87ed-c405-472f-b4dc-e532a1ea2c43");
+  width: 35px;
+  height: 35px;
+  background-size: cover;
+  @media (max-width: 600px) {
+    width: 30px;
+    height: 30px;
+  }
+`;
+const Story = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EB%82%B4%20%EC%8A%A4%ED%86%A0%EB%A6%AC%402x.png?alt=media&token=c4f3ab36-e824-4123-805f-b6ae9b114d08");
+  width: 35px;
+  height: 35px;
+  background-size: cover;
+  @media (max-width: 600px) {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
+const Community = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%BB%A4%EB%AE%A4%EB%8B%88%ED%8B%B0%402x.png?alt=media&token=f44ee0b7-e503-442a-b1d0-6f2a34edc202");
+  width: 35px;
+  height: 35px;
+  background-size: cover;
+  @media (max-width: 600px) {
+    width: 30px;
+    height: 30px;
+  }
+`;
+const Home = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%ED%99%88%402x.png?alt=media&token=e3d76895-0f7a-4b4b-9048-87e81a043cc5");
+  width: 35px;
+  height: 35px;
+  background-size: cover;
+  @media (max-width: 600px) {
+    width: 30px;
+    height: 30px;
   }
 `;
 

@@ -42,10 +42,10 @@ const Category = () => {
         {/* 전체보기 버튼 */}
         <CategoryInfo>
           <CateGoryTitle>
-            <CategoryIcon>
+            {/* <CategoryIcon>
               {" "}
               <BiIcons.BiBookBookmark size="25px" />
-            </CategoryIcon>
+            </CategoryIcon> */}
             카테고리
           </CateGoryTitle>
         </CategoryInfo>
@@ -380,7 +380,7 @@ export default Category;
 const CategoryBox = styled.div`
   /* display: flex;
 justify-content: space-between; */
-  width: 200px;
+  width: 175px;
   /* border-top: 1px solid #efefef;
   border-bottom: 1px solid #efefef; */
   padding: 8px 0px;
@@ -465,6 +465,7 @@ const Btn = styled.button`
   border-radius: 50px;
   box-sizing: border-box;
   border: 1px solid lightgray;
+
   cursor: pointer;
   font-size: 12px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);

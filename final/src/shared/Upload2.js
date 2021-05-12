@@ -59,7 +59,11 @@ const Upload = (props) => {
       <InputBtn>
         <Label for="file">
           {/* 사진추가 아이콘 */}
-          <MdIcons.MdAddToPhotos size="2.5rem" color="#fff" />
+          <UploadBtn>
+            <IconRound>
+              <MdIcons.MdAddToPhotos size="2.5rem" color="#fff" />
+            </IconRound>
+          </UploadBtn>
         </Label>
         <FileInput
           id="file"
@@ -83,13 +87,15 @@ const InputBtn = styled.div`
   width: 50px;
   position: fixed;
   right: 5px;
-  top: 380px;
+  top: 350px;
   cursor: pointer;
   @media (max-width: 1440px) {
-    right: 0px;
-    top: 335px;
+    right: 5px;
+    top: 285px;
   }
   @media (max-width: 600px) {
+    top: 255px;
+    right: 10px;
   }
 `;
 
@@ -103,6 +109,22 @@ const FileInput = styled.input`
   font-size: 2px;
   border: none;
   margin-left: 2vw;
+`;
+
+const UploadBtn = styled.div`
+  width: 50px;
+  height: 50px;
+  /* background-color: ${(props) => props.theme.main_color}; */
+  border-radius: 25px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const IconRound = styled.div`
+  width: 50px;
+  height: 50px;
+  margin: auto;
 `;
 
 export default Upload;

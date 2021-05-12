@@ -151,12 +151,27 @@ const addPostAPI = (post) => {
 //start = null, size = null
 const getPostAPI = (start = null, size = null) => {
   return function (dispatch, getState) {
+    const board_list = getState().post.list;
+    console.log("잘가지고 왔겠지", board_list);
+
+    let end_board = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
+      board_list.length == 0
+        ? Number.MAX_SAFE_INTEGER // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
+        : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
+          board_list[board_list.length - 1].id; // 이제 처음 받은 포스트중 가장 마지막 포스트 id 기준으로 15개씩 게시물을 받아온다
+
+    console.log("마지막 포스트 정보", end_board);
+
     axios({
       method: "GET",
       url: `${config.api}/board`,
-      headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+      data: {
+        // size: 15,
+        // lastAriticleId: end_board.id // 처음에는 9000조를 보낸다
       },
+      // headers: {
+      //   "X-AUTH-TOKEN": `${config.jwt}`,
+      // },
     })
       .then((res) => {
         console.log("!!!!!!!!!", res);
@@ -189,6 +204,7 @@ const getPostAPI = (start = null, size = null) => {
             comment: _post.boardDetailCommentDtoList,
             creatAt: _post.modified,
             spotName: _post.spotName,
+            writerId: _post.writerId,
           };
           post_list.unshift(post);
         });
@@ -456,10 +472,10 @@ export default handleActions(
         draft.list.unshift(action.payload.post);
       }),
     [ADD_MAP_POST]: (state, action) =>
-    produce(state, (draft) => {
-      draft.map_post_list.unshift(action.payload.map_post);
-      console.log(draft.map_post_list);
-    }),
+      produce(state, (draft) => {
+        draft.map_post_list.unshift(action.payload.map_post);
+        console.log(draft.map_post_list);
+      }),
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.push(...action.payload.post_list); // 일단 서버에서 받아온거 이니셜 스테이트 리스트에 삽입
