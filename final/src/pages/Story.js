@@ -122,6 +122,7 @@ const Tabs = styled.div`
   overflow: hidden;
   background: #fff;
   margin: 0 auto;
+  margin-bottom: 3%;
   width: 100%;
 `;
 

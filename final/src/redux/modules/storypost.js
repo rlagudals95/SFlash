@@ -50,7 +50,7 @@ const initialState = {
             longitude: _post.longitude,
             like: _post.liked,
             likeCnt: _post.likeCount,
-            modified: _post.modified,
+            creatAt: _post.modified,
             comment: _post.comments,
         }
         post_list.push(post);
@@ -94,7 +94,7 @@ const initialState = {
             longitude: _post.longitude,
             like: _post.liked,
             likeCnt: _post.likeCount,
-            modified: _post.modified,
+            creatAt: _post.modified,
             comment: _post.comments,
         }
         post_list.unshift(post);
