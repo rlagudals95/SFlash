@@ -169,7 +169,7 @@ const StoryEditProfile = (props) => {
           {/* label 태그를 이용해 (input창의 id 값을 for로 받아서) 원하는 버튼으로 바꾸어줄 수 있다. */}
           {originalNickMode && (
             <div>
-              <EditImgBtn for="edit_profile_img">
+              <EditImgBtn htmlfor="edit_profile_img">
                 <HiCamera
                   size="25px"
                   color="white"

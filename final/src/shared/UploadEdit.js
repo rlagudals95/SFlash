@@ -49,7 +49,7 @@ const UploadEdit = (props) => {
 
       <InputBtn>
         {/* 인풋버튼을 커스터마이징 하기위해 라벨을 이용 */}
-        <Label for="file">
+        <Label htmlfor="file">
           {/* 사진추가 아이콘 */}
           <LabelIcon></LabelIcon>
           {/* <MdIcons.MdAddToPhotos size="2.5rem" color="#fff" /> */}

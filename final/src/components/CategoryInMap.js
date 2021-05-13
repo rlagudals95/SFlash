@@ -558,6 +558,11 @@ const AllSpots = styled.button`
   text-align: center;
 `;
 
+const AllSpotsImg = styled.img`
+  width: 90%;
+  background-image: url("${(props) => props.src}");
+`;
+
 const MyPostSpotsSelected = styled.div`
   display: flex;
   flex-direction: column;
