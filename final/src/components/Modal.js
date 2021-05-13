@@ -360,13 +360,16 @@ const ModalDetail = (props) => {
 const ModalImg = styled.img`
   background-image: url("${(props) => props.src}");
   background-size: cover;
-  object-fit: contain;
-  background-position: 0px;
+  object-fit: cover;
+
   background-repeat: no-repeat;
   border: none;
   box-sizing: border-box;
   width: 100%;
   height: 400px;
+  height: 400px;
+  background-position: center;
+
   @media (max-width: 1440px) {
     /* 1450밑으로 넓이가 내려가면 */
     /* all: unset; */
