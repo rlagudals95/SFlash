@@ -567,7 +567,7 @@ const MyPostSpotsSelected = styled.div`
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid #3897f0;
+  border: 1px solid #27eb40;
   cursor: pointer;
   margin: 5px;
   padding: 5px;
@@ -600,7 +600,7 @@ const MyLikeSpotsSelected = styled.div`
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid #3897f0;
+  border: 1px solid #f20b45;
   cursor: pointer;
   margin: 5px;
   padding: 5px;
