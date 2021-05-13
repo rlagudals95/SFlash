@@ -106,7 +106,7 @@ function Navbar() {
 
             {/* About */}
 
-            <Link>
+            <Link to="/about">
               <About></About>
             </Link>
 

@@ -22,7 +22,7 @@ const initialState = {
   qna: [],
 };
 
-const getQnaAPI = (page = 1, size = 10) => {
+const getQnaAPI = (page, size) => {
   console.log("getQnaAPI");
   return function (dispatch, getState, { history }) {
     axios({
