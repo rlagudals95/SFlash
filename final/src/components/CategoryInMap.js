@@ -483,7 +483,7 @@ const CategoryInMap = () => {
                 setShowLike(false);
                 dispatch(categoryActionsInMap.resetCategoryInMap());
               }}
-            > 좋아요 스팟
+            > 좋아요한 스팟
             </MyLikeSpotsSelected>
             ) : (
               <MyLikeSpots
@@ -506,7 +506,7 @@ const CategoryInMap = () => {
                 setShowLike(true);
                 dispatch(categoryActionsInMap.getMyLikeInMap());
               }}
-            > 좋아요 스팟
+            > 좋아요한 스팟
             </MyLikeSpots>
             )} 
         </SpotSelectBox>      
@@ -529,8 +529,8 @@ const SpotSelectBox = styled.div`
 const AllSpotsSelected = styled.button`
   display: flex;
   flex-direction: column;
-  width: 55px;
-  height: 55px;
+  width: 70px;
+  height: 70px;
   font-size: 10px;
   background-color: white;
   border-radius: 5px;
@@ -545,8 +545,8 @@ const AllSpotsSelected = styled.button`
 const AllSpots = styled.button`
   display: flex;
   flex-direction: column;
-  width: 55px;
-  height: 55px;
+  width: 70px;
+  height: 70px;
   font-size: 10px;
   background-color: white;
   border-radius: 5px;
@@ -561,13 +561,13 @@ const AllSpots = styled.button`
 const MyPostSpotsSelected = styled.div`
   display: flex;
   flex-direction: column;
-  width: 55px;
-  height: 55px;
+  width: 70px;
+  height: 70px;
   font-size: 10px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid #3897f0;
+  border: 1px solid #27eb40;
   cursor: pointer;
   margin: 5px;
   padding: 5px;
@@ -577,8 +577,8 @@ const MyPostSpotsSelected = styled.div`
 const MyPostSpots = styled.div`
   display: flex;
   flex-direction: column;
-  width: 55px;
-  height: 55px;
+  width: 70px;
+  height: 70px;
   font-size: 10px;
   background-color: white; 
   border-radius: 5px;
@@ -594,13 +594,13 @@ const MyPostSpots = styled.div`
 const MyLikeSpotsSelected = styled.div`
   display: flex;
   flex-direction: column;
-  width: 55px;
-  height: 55px;
+  width: 70px;
+  height: 70px;
   font-size: 10px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid #3897f0;
+  border: 1px solid #f20b45;
   cursor: pointer;
   margin: 5px;
   padding: 5px;
@@ -610,8 +610,8 @@ const MyLikeSpotsSelected = styled.div`
 const MyLikeSpots = styled.div`
   display: flex;
   flex-direction: column;
-  width: 55px;
-  height: 55px;
+  width: 70px;
+  height: 70px;
   font-size: 10px;
   background-color: white;
   border-radius: 5px;
@@ -626,7 +626,7 @@ const MyLikeSpots = styled.div`
 const CategoryBox = styled.div`
   /* display: flex;
 justify-content: space-between; */
-  width: 210px;
+  width: 220px;
   /* border-top: 1px solid #efefef;
   border-bottom: 1px solid #efefef; */
   padding: 8px 0px;
@@ -721,7 +721,7 @@ const Btn = styled.button`
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
 const SelectedBtn = styled.button`
-  // 선택 됐을때 버튼
+  /* 선택 됐을때 버튼 */
   margin: 2px;
   padding: 5px 9px;
   /* background-color: #3897f0; */
