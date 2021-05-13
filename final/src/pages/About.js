@@ -14,10 +14,10 @@ const About = (props) => {
         <Grid height="50px"></Grid>
         <SflashLogo src = {SFlash_logo}/>
         <Grid height="50px"></Grid>
-        <Text>인스타, 블로그 나만 모르는 명소들... 대체 거기가 어디야?!!</Text>
-        <Text>늘 가던 곳이 아닌 새로운 스팟이 필요하다면? 내 주변에 숨겨진 스팟이 궁금하다면?!</Text>
+        <Text>인스타, 블로그 나만 모르는 명소들... 대체 거기가 어디야?</Text>
+        <Text>늘 가던 곳이 아닌 새로운 스팟이 필요하다면? 내 주변에 숨겨진 스팟이 궁금하다면?</Text>
         <Text>SFlash는 지도와 이미지로 멋진 포토스팟을 찾을 수 있도록 도와주는 서비스 입니다.</Text>
-        <Text>내 스토리에 마음에 드는 스팟을 모으고, 나만의 스팟도 공유하며 스플래쉬(SFlash) 하세요!! </Text>
+        <Text>내 스토리에 마음에 드는 스팟을 모으고, 나만의 스팟도 공유하며 스플래쉬(SFlash) 하세요 :) </Text>
        
       </Container>
       </Background>
