@@ -56,7 +56,7 @@ const Upload = (props) => {
       {/* multiple붙이면 파일여러개 업로드가능! */}
 
       <InputBtn>
-        <Label for="file">
+        <Label htmlfor="file">
           {/* 사진추가 아이콘 */}
           <UploadBtn>
             <IconRound>
