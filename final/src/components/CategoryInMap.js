@@ -411,7 +411,8 @@ const CategoryInMap = () => {
                 dispatch(categoryActionsInMap.resetCategoryInMap());
               }}
             >
-              전체스팟
+              <AllSpotsImg src={}/>
+              <AllSpotsTitle>전체스팟</AllSpotsTitle>
             </AllSpotsSelected>
           ) :  (
             <AllSpots
@@ -559,8 +560,11 @@ const AllSpots = styled.button`
 `;
 
 const AllSpotsImg = styled.img`
-  width: 90%;
-  background-image: url("${(props) => props.src}");
+  width: 80%;
+`;
+
+const AllSpotsTitle = styled.div`
+  width: 10%;
 `;
 
 const MyPostSpotsSelected = styled.div`
