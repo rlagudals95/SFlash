@@ -62,7 +62,9 @@ const resetFile = createAction(RESET_FILE, (edit) => ({ edit }));
 //가져와서 post 에서 리스트 하나 가져와서 edit에 두고
 
 const initialState = {
-  preview: ["http://via.placeholder.com/400x300"],
+  preview: [
+    "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36",
+  ],
   file: [],
   edit: false, // 잘들어온다 //고쳐야할놈
   image: [], // 이미지를 따로 빼오자 // 이미지 x 클릭시 x 이미지를 제외한 배열이 들어옴 //이게 onlyImage

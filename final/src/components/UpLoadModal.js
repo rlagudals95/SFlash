@@ -174,7 +174,9 @@ const UploadModal = (props) => {
   };
 
   if (images.length == 0) {
-    images.push("http://via.placeholder.com/400x300");
+    images.push(
+      "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
+    );
   }
 
   const _post = {
@@ -286,7 +288,9 @@ const UploadModal = (props) => {
                   onClick={() => {
                     console.log("몇번 이미지인가?");
                   }}
-                  src={"http://via.placeholder.com/400x300"}
+                  src={
+                    "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
+                  }
                 />
               )}
             </React.Fragment>
@@ -447,17 +451,25 @@ const DeleteImg = styled.div`
   cursor: pointer;
 `;
 
+const ImgOutter = styled.div`
+  text-align: center;
+  display: table;
+`;
+
 const ModalImg = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   object-fit: cover;
-  background-position: 0px;
+  background-position: center;
   background-repeat: no-repeat;
   border: none;
   box-sizing: border-box;
   width: 100%;
   height: 410px;
   max-height: 350px;
+  border-top: 2px solid darkgray;
+  border-bottom: 2px solid darkgray;
+  /* display: table-cell; */
   /* background-color: red; */
   @media (max-width: 1440px) {
     background-image: url("${(props) => props.src}");
@@ -471,6 +483,8 @@ const ModalImg = styled.div`
     height: 630px;
     max-height: 330px;
     margin-bottom: -20px;
+    border-top: 2px solid darkgray;
+    border-bottom: 2px solid darkgray;
   }
   @media (max-width: 1155px) {
     background-image: url("${(props) => props.src}");
@@ -486,6 +500,8 @@ const ModalImg = styled.div`
     /* height: 465px;
     max-height: 465px; */
     margin-bottom: -20px;
+    border-top: 2px solid darkgray;
+    border-bottom: 2px solid darkgray;
   }
   @media (max-width: 600px) {
     background-image: url("${(props) => props.src}");
@@ -499,6 +515,8 @@ const ModalImg = styled.div`
     height: 600px;
     max-height: 40vh;
     margin-bottom: 1vh;
+    border-top: 2px solid darkgray;
+    border-bottom: 2px solid darkgray;
   }
 `;
 
