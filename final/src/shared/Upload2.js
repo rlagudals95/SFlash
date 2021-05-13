@@ -44,9 +44,8 @@ const Upload = (props) => {
       //images의 파일들을 forEach로 모두 읽게한다
       const reader = new FileReader();
       reader.onload = () => {
-        // console.log(reader.result);
-        dispatch(imageActions.getPreview(reader.result));
-        dispatch(imageActions.getFile(img));
+        dispatch(imageActions.getPreview(reader.result)); // reader값은 업로드시 바로 확인할 수 있게 프리뷰로 보여주고
+        dispatch(imageActions.getFile(img)); // 파일은 따로 리덕스 데이터에 저장
       };
       reader.readAsDataURL(img);
     });

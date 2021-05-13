@@ -27,7 +27,6 @@ const ModalDetail = (props) => {
 
   const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
 
-  // const commnet_list = props.comment_list  // 이렇게 받아오면 되려나?
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
 
@@ -37,7 +36,7 @@ const ModalDetail = (props) => {
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
 
-  console.log("닉네임", nickname);
+  // console.log("닉네임", nickname);
   // const is_like = props.like 라이크가 있냐 확인?
 
   const openEditModal = () => {
@@ -76,11 +75,6 @@ const ModalDetail = (props) => {
     comment_list.push(props.comment[i]);
   }
 
-  // console.log("작성자 정보", props);
-
-  // console.log("코멘트 리스트", comment_list);
-  //가짜 코멘트 리스트
-
   const comment_List = useSelector((state) => state.comment.list);
 
   console.log("이포스트의 댓글은??", comment_List);
@@ -100,15 +94,13 @@ const ModalDetail = (props) => {
   };
 
   const addComment = () => {
-    //작성한 댓글 내용 디스패치로 보낸다~
+    //작성한 댓글 내용서버로 보낸단
     dispatch(CommnetActions.addCommentAPI(comments, props.id));
     setComments("");
   };
 
   const deleteComment = (id) => {
-    // console.log(id);
-    // console.log(props.id);
-    // console.log("하이");
+    //삭제한 댓글의 내용과 board id를 서버로 보낸다
     dispatch(CommnetActions.deleteCommentAPI(id, props.id));
   };
 
@@ -118,9 +110,9 @@ const ModalDetail = (props) => {
     setComments(e.target.value);
   };
 
-  const goProfile = () => {
-    history.replace("/story/hmk1995");
-  };
+  // const goProfile = () => {
+  //   history.replace("/story/hmk1995");
+  // };
 
   //작성 날짜 설정하기
   const timeForToday = (value) => {
@@ -148,7 +140,22 @@ const ModalDetail = (props) => {
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
 
-  console.log("프로필사진", props.profileImg);
+  // console.log("프로필사진", props.profileImg);
+
+  // 콘텐츠 내용이 너무 길때 더보기로 대체해준다
+  // const Box = () => {
+  //   const contentRef = useRef(null);
+  //   const onClick = (e) => {
+  //     contentRef.current.classList.add("show");
+  //     e.currentTarget.classList.add("hide");
+  //   };
+  //   return (
+  //     <Wrap>
+  //       <Ellipsis ref={contentRef}>{data}</Ellipsis>
+  //       <Button>...더보기</Button>
+  //     </Wrap>
+  //   );
+  // };
 
   return (
     <React.Fragment>
@@ -165,12 +172,12 @@ const ModalDetail = (props) => {
                     : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                 }
                 onClick={() => {
-                  history.replace(`/story/${props.writerId}`);
+                  history.replace(`/story/${props.writerId}`); // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                 }}
               />
               <ModalAuthor
                 onClick={() => {
-                  history.replace(`/story/${props.writerId}`);
+                  history.replace(`/story/${props.writerId}`); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                 }}
               >
                 {props.writerName}
@@ -183,11 +190,6 @@ const ModalDetail = (props) => {
               </ExitBtn>
             </ExitContainer>
           </ModalLeftHeader>
-          {/* {props.user_id === props.is_me ? (
-              <ModalRightHeader onClick={props.openChangeModal}>
-                <MoreHorizIcon height="14px" width="14px" cursor="pointer" />
-              </ModalRightHeader>
-            ) : null} */}
         </ModalHeader>
         {/* 이미지 슬라이드 구현 props로 받는 이미지의 개수가 1개를 초과할때  */}
         {/* 그 수만큼 map함수로 출력해준다 */}
@@ -211,7 +213,7 @@ const ModalDetail = (props) => {
               {/*is_like 여부로 하트모양 변경  */}
               {props.like ? (
                 <div style={{ cursor: "pointer" }}>
-                  {" "}
+                  {/* 좋아요 상태에 따라서 하트 모양의 조건부 렌더 */}
                   <FavoriteIcon
                     onClick={disLike}
                     style={{ color: "rgb(255, 183, 25)", fontSize: 30 }}
@@ -229,9 +231,7 @@ const ModalDetail = (props) => {
                 </div>
               )}
 
-              {/* 작성자 에게만 보이게 설정  */}
-
-              {/* props.writerId == user_id*/}
+              {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
               {props.writerId == user_id ? (
                 <ModalEdit>
                   <React.Fragment onClick={props.close}>
@@ -263,30 +263,6 @@ const ModalDetail = (props) => {
                   <ModalCateInner>#{props.category}</ModalCateInner>
                 </ModalCate>
               )}
-
-              {/* <ModalEdit>
-                <React.Fragment onClick={props.close}>
-                  <EditBtn
-                    onClick={() => {
-                      setEditModal(true);
-                    }}
-                  >
-                    수정
-                  </EditBtn>
-                </React.Fragment>
-                /
-                <DeleteBtn
-                  onClick={(e) => {
-                    // e.prevent..., e.stopPro.. 이것들로 이벤트 버블링을 막는다
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // 클릭하면 게시물 삭제
-                    dispatch(postActions.deletePostAPI(props.id));
-                  }}
-                >
-                  삭제
-                </DeleteBtn>
-              </ModalEdit> */}
             </InfoBoxInner>
             <React.Fragment>
               <PostTilte>
@@ -308,6 +284,7 @@ const ModalDetail = (props) => {
                           <React.Fragment>
                             <ReplyImg
                               src={
+                                //댓글 작성자가 아직 프로필 이미지를 등록 안했을 경우엔 기본이미지를 보여주도록 설정
                                 c.writerImgUrl
                                   ? c.writerImgUrl
                                   : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"

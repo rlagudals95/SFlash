@@ -11,7 +11,7 @@ import { actionCreators as imageActions } from "../redux/modules/image2";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Slider from "react-slick";
-import UploadImg from "../components/UpLoadModal";
+
 import { useDispatch, useSelector } from "react-redux";
 import PublishIcon from "@material-ui/icons/Publish";
 import TextField from "@material-ui/core/TextField";
@@ -85,7 +85,7 @@ const UploadModal = (props) => {
   const nickname = localStorage.getItem("nickname");
   const editImgList = useSelector((state) => state.image2.edit); // 요걸 가져와야해
   // const editImage = useSelector((state) => state.image2.image);
-  const deleteId = useSelector((state) => state.image2.id);
+
   const is_category = useSelector((state) => state.category.select_category);
 
   // console.log("카테고리 선택했니?", is_category);
@@ -96,6 +96,7 @@ const UploadModal = (props) => {
   // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
   const ok_submit = contents ? true : false;
 
+  //게시물 작성시 조건을 걸어두었다
   const addPost = (e) => {
     if (!is_file) {
       window.alert("😗사진은 최소 1장 이상 업로드 해주세요!");
@@ -131,11 +132,11 @@ const UploadModal = (props) => {
       return;
     }
 
-    // closeModal();
     props.close();
     // history.replace("/");
   };
 
+  //게시물 수정 시 조건을 걸어 두었다
   const editPost = () => {
     if (!contents) {
       window.alert("😗빈칸을 채워주세요...ㅎㅎ");
@@ -176,9 +177,6 @@ const UploadModal = (props) => {
     images.push("http://via.placeholder.com/400x300");
   }
 
-  // console.log("이미지 원본", images[1].imgUrl);
-  // console.log("이미지 url", images[0].imgUrl);
-
   const _post = {
     title: title,
     content: contents,
@@ -199,7 +197,7 @@ const UploadModal = (props) => {
     <React.Fragment>
       <Component onClick={props.close} />
       <ModalComponent>
-        {/* <UploadImg setImage={setImage} /> */}
+        
         <ModalHeader>
           <HeaderInner>
             <ExitContainer>
@@ -210,7 +208,7 @@ const UploadModal = (props) => {
             <ModalLeftHeader>
               <ProCircle
                 src={
-                  is_edit
+                  is_edit // 수정시에 작성자의 프로필 사진의 유무에 따라서 조건부 렌더링 설정
                     ? props.profileImg
                       ? props.profileImg
                       : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
@@ -220,28 +218,18 @@ const UploadModal = (props) => {
               <ModalAuthor>{nickname}</ModalAuthor>
             </ModalLeftHeader>
             {/* 업로드와 수정시 파일선택 버튼이 다르게 설정 */}
-
-            {/* {is_edit ? (
-              <HeaderEdit onClick={editPost}>수정</HeaderEdit>
-            ) : (
-              <HeaderEdit onClick={addPost}>게시</HeaderEdit>
-            )} */}
-            {/* <HeaderEdit
-              onClick={addPost}
-              // onClick={props.close}
-            >
-              게시
-            </HeaderEdit> */}
           </HeaderInner>
         </ModalHeader>
         {/* 게시물 올릴때랑 수정일때 다르게 return */}
 
-        {/* {is_edit? 수정할 때 : 수정안 할 때 via홀더 보여줌 } */}
+        {/* {is_edit? 수정할 때 : 수정안 할 때 via홀더를 보여준다 } */}
+        {/* 게시물 작성시와 수정시 사진업로드 버튼을 따로 만들어 두었다 */}
         {is_edit ? <UploadEdit /> : <Upload2 />}
         {is_edit ? (
-          onlyImg && (
+          onlyImg && ( //onlyimg는 게시물 수정시 보여지는 모든 이미지를 리스트다
+            //만약 수정전 게시물 사진이 2개이면 수정시 2개의 이미지가 보이고 2개를 더 추가하면 onlyImg.length는 4가 된다
             <React.Fragment>
-              {onlyImg.length >= 1 ? (
+              {onlyImg.length >= 1 ? ( // 수정시 이미지가 1개 이상일때
                 <Slider {...settings}>
                   {onlyImg.map((p, idx) => {
                     return (
@@ -269,24 +257,17 @@ const UploadModal = (props) => {
                                   )
                                 );
                               } else {
+                                // 만약 수정시 이미지를 추가하고 다시 올린이미지가 맘에 안들어 삭제하고 싶다
+                                // 그러나 수정시 추가한 이미지엔 서버에서 준 이미지id가 따로 없다
                                 dispatch(
+                                  //그래서 이미지 idx 기준으로 삭제해준다!
                                   imageActions.deleteImageIdx(onlyImg[idx]) //asdjuifhuiawefhuiewbhfiubawefbiuewabiuf
                                 );
-                                //파일 삭제하는 액션
-
-                                // dispatch(
-
-                                // );
                               }
-
+                              // 이미지와 파일이 둘다 삭제되어야 서버에 보내줄때 차질이 없으름로
+                              // 파일또한 idx 값을 이용해서 삭제해준다
                               dispatch(imageActions.deleteFileIdx(idx));
                               // 수정시 등록하는 사진에는 id값이 없어서 직접 값을 비교해서 삭제해줌
-                              // console.log("주목!!", onlyImg[idx]);
-                              console.log(
-                                "몇번 이미지인가?",
-                                idx, // 몇번 이미지인가와
-                                onlyImg[idx].imgUrlId //이미지 id
-                              );
                             }}
                           >
                             삭제
@@ -297,12 +278,10 @@ const UploadModal = (props) => {
                   })}
                 </Slider>
               ) : (
+                // 이미지를 모두 삭제하면 기본 설정 화면이 보인다
                 <ModalImg
                   onClick={() => {
-                    console.log(
-                      "몇번 이미지인가?"
-                      // editImgList.img_url[0].imgUrl
-                    );
+                    console.log("몇번 이미지인가?");
                   }}
                   src={"http://via.placeholder.com/400x300"}
                 />
@@ -311,7 +290,8 @@ const UploadModal = (props) => {
           )
         ) : (
           <React.Fragment>
-            {preview ? (
+            {/* 수정시가 아닌 일반 게시물 모달 */}
+            {preview ? ( //게시물이 여러개일땐 캐러셀을 구현하여 여러장을 보여줄 수 있도록 조건부 렌더링
               preview.length > 1 ? (
                 <Slider {...settings}>
                   {preview.map((p, idx) => {
@@ -333,6 +313,7 @@ const UploadModal = (props) => {
 
         <ModalBottomContainer>
           <MiddleBox>
+            {/* 이미지 이외의 제목, 내용작성 */}
             {is_edit ? (
               <EditCommentBox>
                 <React.Fragment>
@@ -562,7 +543,7 @@ const ModalComponent = styled.div`
     position: fixed;
     /* width: 35vw; */
     width: 470px;
-    height: 730px;
+    height: 780px;
     /* overflow: hidden; */
     top: 50%;
     left: 50%;

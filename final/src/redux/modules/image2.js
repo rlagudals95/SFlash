@@ -43,15 +43,6 @@ const deleteImageIdx = createAction(DELETE_IMAGE_IDX, (idx) => ({ idx })); // �
 
 const deleteFileIdx = createAction(DELETE_FILE_IDX, (idx) => ({ idx }));
 
-// const deletePreview = createAction(DELETE_PREVIEW, (preview) => ({ preview }));
-// const deleteFile = createAction(DELETE_FILE, (file) => ({ file }));
-
-// // 고쳐야할 리스트를 post 에서 가져와서 찾아주는 액션
-// const getEditPost = createAction(GET_EDIT_POST, (edit) => ({ edit }));
-// // props의 이미지들을 지워줘야하는데..... 이걸 어디다 저장 해두냐,,?!
-// const editPost = createAction(EDIT_POST, (edit) => ({ edit }));
-
-// const changeImg = createAction(CHANGE_IMG, (edit) => ({ edit }));
 /////////////////////////////////
 const getImage = createAction(GET_IMAGE, (image) => ({ image }));
 // 고쳐야할 포스트의 img_url을 바꿔준다
@@ -120,32 +111,6 @@ const ChangeEdit = (Img_idx) => {
   };
 };
 
-// const resetEdit = () => {
-//   return function (dispatch, getState) {
-//     console.log("object");
-
-//     //여기서 수정할때 썻던 데이터들을 초기화해보자~
-//   };
-// };
-
-// const ChangeImg_Url = (Img_idx) => {
-//   return function (dispatch, getState) {
-//     const beforeEditPost = getState().image2.edit;
-//     const editImage = getState().image2.image;
-
-//     console.log("고쳐기 전의 포스트", beforeEditPost);
-//     console.log("img_url 이걸로 바꾸자", editImage); // 다른게 있다면 splice?
-
-//     for (let i = 0; i < beforeEditPost.img_url.length; i++) {
-//       if (beforeEditPost.img_url[i] !== editImage) {
-//         beforeEditPost.img_url.splice(i, 1);
-//         // i--; //배열 1개가 비워지기 때문에 i를 1개 빼준다 이건 사실 안써도 무방
-//       }
-//     }
-
-//   };
-// };
-
 export default handleActions(
   {
     [SET_PREVIEW]: (state, action) =>
@@ -185,15 +150,6 @@ export default handleActions(
           }
         });
       }),
-    // [DELETE_FILE]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     draft.list = draft.list.filter((r, idx) => {
-    //       if (r.id !== action.payload.id) {
-    //         // console.log(r.id);
-    //         return [...draft.list, r];
-    //       }
-    //     });
-    //   }),
 
     [GET_EDIT_POST]: (state, action) =>
       //여기서 고쳐야할 리스트를 받아온다
@@ -241,26 +197,12 @@ export default handleActions(
     ////////idx로 한번 지워보자!
     [DELETE_IMAGE_IDX]: (state, action) =>
       produce(state, (draft) => {
-        //draft.image[idx] !== action.payload[idx]
-        //여긴 순서로 비교하자
-        //오히려 위의 DELETE_IMAGE가 필요없을수도?
-        //draft.image =
-        // console.log("요부분 없애줘야하는데 .....", action.payload.idx);
-
+        // 수정시 이미지 왼쪽상단의 삭제 버튼을 누르면 해당이미지의 idx값을 받아 이미지를 선택해 삭제
         draft.image = draft.image.filter((i, idx) => {
           if (i !== action.payload.idx) {
             return i;
           }
         });
-
-        // draft.image = draft.image.filter((i, idx) => {
-        //   if (i[idx] !== action.payload.idx) {
-        //     return [...draft.image, i];
-        //   }
-        // });
-        // 드래프트 리스트트에 받은 idx번째 요소를 삭제해라
-        // draft.image = draft.image.spilce(action.payload.idx, 1);
-        // 원래 이미지에서 idx으로 값으로 받은 위치의 원소 하나 제거
       }),
     [DELETE_FILE_IDX]: (state, action) =>
       produce(state, (draft) => {
@@ -268,17 +210,6 @@ export default handleActions(
         // 처음엔 이미지 파일과 같이 들어있는 배열이온다
         //idx를 받으면 해당 패열에서 idx 받은 곳의 요소 1개를 삭제한다
         draft.edit_file.splice(action.payload.idx, 1);
-
-        // draft.edit_file = draft.edit_file.splice(action.payload.idx, 1);
-
-        // draft.edit_file = draft.edit_file.spilce(action.payload.idx, 1);
-        //  draft.edit_file = draft.edit_file.filter((i, idx) => {
-        //    if (i !== action.payload.idx) {
-        //      return i;
-        //    }
-        //  });
-
-        // 원래 이미지에서 idx으로 값으로 받은 위치의 원소 하나 제거 이런식이면 파일도 가능할거같다 이미지 id도 필요없이?
       }),
     [GET_IMAGE_TO_FILE]: (state, action) =>
       produce(state, (draft) => {
@@ -289,7 +220,9 @@ export default handleActions(
 
     [RESET_EDIT]: (state, action) =>
       produce(state, (draft) => {
-        console.log("ssdfdsfsdf", action.payload.edit);
+        // 혹시라도 다른 게시물을 연속으로 수정할 경우 전에 수정하던 데이터가 보여질 수 있으므로
+        // 수정 버튼을 누르고 수정을 하고 나면 수정시 리덕스의 상태값을 모두 빈배열로 리셋 해준다
+
         draft.edit_file = action.payload.edit;
         draft.image = action.payload.edit;
         draft.id = action.payload.edit;

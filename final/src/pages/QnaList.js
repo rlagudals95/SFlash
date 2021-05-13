@@ -14,8 +14,6 @@ import { RiEditFill } from "react-icons/ri";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 
-
-
 const QnaList = (props) => {
   const dispatch = useDispatch();
   const qna_list = useSelector((state) => state.qna.list);
@@ -28,7 +26,7 @@ const QnaList = (props) => {
 
   //pageNumber = [1,2,3,4,5,...]
   const pageNumber = [];
-  for (let i = 1; i <= Math.ceil(200 / size); i++) {
+  for (let i = 1; i <= Math.ceil(100 / size); i++) {
     pageNumber.push(i);
   }
 
@@ -43,10 +41,10 @@ const QnaList = (props) => {
 
   // 오른쪽 화살표 함수
   const forward = () => {
-    if (page < 20) {
+    if (page < 10) {
       setPage(page + 1);
     } else {
-      window.alert("마지막 페이지에요!");
+      window.alert("다음 페이지가 없습니다!");
     }
   };
   // 왼쪽 화살표 함수
@@ -54,7 +52,7 @@ const QnaList = (props) => {
     if (page > 1) {
       setPage(page - 1);
     } else {
-      window.alert("첫번째 페이지에요!");
+      window.alert("이전 페이지가 없습니다.");
     }
   };
 
@@ -81,8 +79,8 @@ const QnaList = (props) => {
             </Text>
           </Content>
           <Warning>
-          <SflashLogo />
-        </Warning>
+            <SflashLogo />
+          </Warning>
         </Container>
       </React.Fragment>
     );
@@ -127,32 +125,35 @@ const QnaList = (props) => {
                   }}
                 >
                   {q.title}
-                  {(q.writer !== me && role !== "ADMIN") &&
+                  {q.writer !== me && role !== "ADMIN" && (
                     <Icon onClick={() => history.push("/qnawrite/:id")}>
                       <BsFillLockFill size="17" color="grey" />
                     </Icon>
-                  }
+                  )}
                 </TextBtn>
                 <Text width="13%">{q.writer}</Text>
                 <Text width="10%">{q.modified}</Text>
               </ContentUnit>
             );
           })}
+
           {/* <Pagination count={10} color="primary" /> */}
-          <Container>
-        <ul className="pagination">
-          <ArrowLeftIcon
-            style={{ cursor: "pointer", verticalAlign: "-30px" }}
-            onClick={backward}
-          />
-          {pageNumber.map((pageNum) => (
-            <li key={pageNum} className="pagination_item">
-              <PageSpan onClick={() => paginate(pageNum)}>{pageNum}</PageSpan>
-            </li>
-          ))}
-          <ArrowRightIcon style={{ cursor: "pointer" }} onClick={forward} />
-        </ul>
-      </Container>
+          <PaginationContainer>
+            <ul className="pagination">
+              <ArrowLeftIcon
+                style={{ cursor: "pointer", verticalAlign: "-30px" }}
+                onClick={backward}
+              />
+              {pageNumber.map((pageNum) => (
+                <li key={pageNum} className="pagination_item">
+                  <PageSpan onClick={() => paginate(pageNum)}>
+                    {pageNum}
+                  </PageSpan>
+                </li>
+              ))}
+              <ArrowRightIcon style={{ cursor: "pointer" }} onClick={forward} />
+            </ul>
+          </PaginationContainer>
         </Container>
       </React.Fragment>
     );
@@ -291,6 +292,22 @@ const SflashLogo = styled.div`
   background-size: cover;
 `;
 
+const PaginationContainer = styled.div`
+  display: flex;
+  margin: 0 auto;
+  margin-top: 2rem;
+  ul {
+    list-style: none;
+    display: flex;
+  }
+  li {
+    cursor: pointer;
+  }
+  svg {
+    padding-top: 1rem;
+  }
+`;
+
 const PageSpan = styled.div`
   padding: 1rem;
   width: 1rem;
@@ -304,6 +321,5 @@ const PageSpan = styled.div`
     color: #212121;
   }
 `;
-
 
 export default QnaList;

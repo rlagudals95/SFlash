@@ -10,7 +10,7 @@ import * as BiIcons from "react-icons/bi";
 const Category = () => {
   const dispatch = useDispatch();
 
-  const is_category = useSelector((state) => state.category.is_category); //이걸 가져와서 이제 눌린상탠지 안눌린 상탠지 판단
+  const is_category = useSelector((state) => state.category.is_category); //이걸 가져와서 카테고리가 선택된 상탠지 아닌지 판단
 
   // console.log(is_category);
   // console.log("카테고리 배열길이", is_category.length);
@@ -49,14 +49,14 @@ const Category = () => {
             카테고리
           </CateGoryTitle>
         </CategoryInfo>
-        {is_category.length == 0 ? (
+        {is_category.length == 0 ? ( // 카테고리가 선택된게 없다? 즉, is_category값이 0이면 전체 게시물을 보여주는 상태값
           <SelectedBtn
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               dispatch(categoryActions.resetCategory());
               //여기서 모든 스테이트 false로 바꿔주는 작업도 해줘야한다
-            }}
+            }} // 다른 카테고리들이 선택 되있는 상태에서 전체 버튼을 클릭하면 resetCategory가 실행되면서 모든 상태값을 지워준다
           >
             #전체
           </SelectedBtn>
@@ -92,11 +92,11 @@ const Category = () => {
               e.preventDefault();
               e.stopPropagation();
               setCafe(false);
-              dispatch(categoryActions.getCategory("카페")); // 혹시라도 구현이 힘들땐 그냥 이값을 is_cafe말고 cafe로 보내고 포스트 리스트에서 카테고리가 cafe인 것을 필터해주자
+              dispatch(categoryActions.getCategory("카페")); //각각 버튼엔 각가의 카테고리를 getCategory로 전달
             }}
           >
             #카페
-          </SelectedBtn>
+          </SelectedBtn> // 해당 카테고리가 is_category 상태값 안에 있을 경우 버튼 디자인을 다르게 보여줌
         ) : (
           <Btn
             onClick={(e) => {
