@@ -54,9 +54,8 @@ const Upload = (props) => {
   return (
     <React.Fragment>
       {/* multiple붙이면 파일여러개 업로드가능! */}
-
       <InputBtn>
-        <Label htmlfor="file">
+        <Label for="file">
           {/* 사진추가 아이콘 */}
           <UploadBtn>
             <IconRound>

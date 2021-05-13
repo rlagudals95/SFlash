@@ -84,13 +84,13 @@ const ModalDetail = (props) => {
   const ok_submit = comments ? true : false;
 
   const addLike = () => {
-    dispatch(likeActions.addLikeAPI(props.id));
-    dispatch(postActions.editLikeP(props.id, props)); // 리덕스
+    dispatch(likeActions.addLikeAPI(props.id, props));
+    // dispatch(postActions.editLikeP(props.id, props)); // 리덕스
   };
 
   const disLike = () => {
-    dispatch(likeActions.disLikeAPI(props.id));
-    dispatch(postActions.editLikeD(props.id, props));
+    dispatch(likeActions.disLikeAPI(props.id, props));
+    // dispatch(postActions.editLikeD(props.id, props));
   };
 
   const addComment = () => {
