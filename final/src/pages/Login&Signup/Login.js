@@ -64,20 +64,20 @@ const Login = () => {
     }
   };
 
-//   $(document).ready( function() {
+  //   $(document).ready( function() {
 
-//      $('.login-naver').click(function() {
-//         naverLogin();
-//     });
+  //      $('.login-naver').click(function() {
+  //         naverLogin();
+  //     });
 
-//     $('.login-kakao').click(function() {
-//         kakaoLogin();
-//     });
+  //     $('.login-kakao').click(function() {
+  //         kakaoLogin();
+  //     });
 
-//     $('.login-google').click(function() {
-//         googleLogin();
-//     });
-// });
+  //     $('.login-google').click(function() {
+  //         googleLogin();
+  //     });
+  // });
 
   return (
     <React.Fragment>
@@ -117,7 +117,7 @@ const Login = () => {
               // onSocialLogin();
             }}
           >
-              <SocialIcon width="45%" src={naver}/>
+            <SocialIcon width="45%" src={naver} />
           </SocialBtn>
           <SocialBtn
             bg="#fee500"
@@ -127,7 +127,7 @@ const Login = () => {
               // onSocialLogin();
             }}
           >
-             <SocialIcon width="52%" src={kakao}/>
+            <SocialIcon width="52%" src={kakao} />
           </SocialBtn>
           <SocialBtn
             bg="#f45a5c"
@@ -138,7 +138,7 @@ const Login = () => {
               // onSocialLogin();
             }}
           >
-            <SocialIcon width="50%" src={google}/>
+            <SocialIcon width="50%" src={google} />
           </SocialBtn>
         </div>
 
@@ -147,7 +147,6 @@ const Login = () => {
         <TextBtn onClick={() => history.push("/signup")}>
           아직 회원이 아니신가요?
         </TextBtn>
-
       </Container>
     </React.Fragment>
   );
@@ -155,7 +154,6 @@ const Login = () => {
 
 const SocialIcon = styled.img`
   ${(props) => (props.width ? `color:${props.width};` : "")}
-  
 `;
 
 export default Login;

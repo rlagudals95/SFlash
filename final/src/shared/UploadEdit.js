@@ -51,7 +51,8 @@ const UploadEdit = (props) => {
         {/* 인풋버튼을 커스터마이징 하기위해 라벨을 이용 */}
         <Label for="file">
           {/* 사진추가 아이콘 */}
-          <MdIcons.MdAddToPhotos size="2.5rem" color="#fff" />
+          <LabelIcon></LabelIcon>
+          {/* <MdIcons.MdAddToPhotos size="2.5rem" color="#fff" /> */}
         </Label>
         <FileInput
           id="file"
@@ -78,18 +79,32 @@ const InputBtn = styled.div`
   top: 350px;
   cursor: pointer;
   @media (max-width: 1440px) {
-    right: 0px;
+    right: 5px;
+    top: 285px;
+  }
+  @media (max-width: 1155px) {
+    right: 10px;
     top: 320px;
   }
   @media (max-width: 600px) {
-    top: 40vh;
+    top: 250px;
+    right: 20px;
   }
 `;
 
+const LabelIcon = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EA%B2%8C%EC%8B%9C%EA%B8%80%EC%9E%91%EC%84%B1%20%EC%82%AC%EC%A7%84%EC%B6%94%EA%B0%80%402x.png?alt=media&token=94c42450-dbf5-4998-854f-8c193084507d");
+  width: 50px;
+  height: 50px;
+  background-size: cover;
+`;
+
 const Label = styled.label`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EA%B2%8C%EC%8B%9C%EA%B8%80%EC%9E%91%EC%84%B1%20%EC%82%AC%EC%A7%84%EC%B6%94%EA%B0%80%402x.png?alt=media&token=94c42450-dbf5-4998-854f-8c193084507d");
   width: 50px;
   height: 50px;
   cursor: pointer;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.3);
 `;
 
 const FileInput = styled.input``;
