@@ -132,10 +132,13 @@ const Post2 = (props) => {
 };
 
 const PostBox = styled.div`
+  background-position: center;
+  object-fit: cover;
   width: 100%;
   aspect-ratio: 1/1;
   background-size: cover;
   background-repeat: no-repeat;
+
   background-image: url("${(props) => props.src}");
   cursor: pointer;
 `;
