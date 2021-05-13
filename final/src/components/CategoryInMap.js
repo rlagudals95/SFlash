@@ -5,6 +5,8 @@ import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as categoryActionsInMap } from "../redux/modules/category_in_map";
 import * as BiIcons from "react-icons/bi";
+import IconAllSpots from "../shared/images/IconAllSpots.png"
+import IconMyLikes from "../shared/images/IconMyLikes.png"
 // import { actionCreators as PostActions } from "../redux/modules/post";
 
 const CategoryInMap = () => {
@@ -411,7 +413,7 @@ const CategoryInMap = () => {
                 dispatch(categoryActionsInMap.resetCategoryInMap());
               }}
             >
-              <AllSpotsImg src={}/>
+              <AllSpotsImg src={IconAllSpots}/>
               <AllSpotsTitle>전체스팟</AllSpotsTitle>
             </AllSpotsSelected>
           ) :  (
@@ -435,7 +437,9 @@ const CategoryInMap = () => {
                 setShowLike(false);
                 dispatch(categoryActionsInMap.resetCategoryInMap());
               }}
-            > 전체스팟
+            >
+              <AllSpotsImg src={IconAllSpots}/>
+              <AllSpotsTitle>전체스팟</AllSpotsTitle>
             </AllSpots>
           )}
           {/* 내스팟 찾기 */}
@@ -532,15 +536,15 @@ const AllSpotsSelected = styled.button`
   flex-direction: column;
   width: 70px;
   height: 70px;
-  font-size: 10px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid #3897f0;
+  border: 1px solid rgb(255, 183, 25);
   cursor: pointer;
   margin: 5px;
   padding: 5px;
   text-align: center;
+  align-items: center;
 `;
 
 const AllSpots = styled.button`
@@ -548,7 +552,6 @@ const AllSpots = styled.button`
   flex-direction: column;
   width: 70px;
   height: 70px;
-  font-size: 10px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
@@ -557,14 +560,18 @@ const AllSpots = styled.button`
   margin: 5px;
   padding: 5px;
   text-align: center;
+  align-items: center;
 `;
 
 const AllSpotsImg = styled.img`
   width: 80%;
+  padding-top: 3px;
 `;
 
 const AllSpotsTitle = styled.div`
   width: 10%;
+  font-size: 5px;
+  padding-top: 2px;
 `;
 
 const MyPostSpotsSelected = styled.div`
