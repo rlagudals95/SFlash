@@ -87,7 +87,7 @@ const StoryUserProfile = (props) => {
 
         {/* 나의 페이지에서만 보이는 메뉴(프로필 편집, 로그아웃 등) 버튼*/}
           {is_me &&       
-          <div>
+          <>
             <Setting onClick={settingHandleClick}>
               {/* <IconButton > */}
               <BiDotsHorizontalRounded size="35" color="grey" />
@@ -152,7 +152,7 @@ const StoryUserProfile = (props) => {
                 onClick={closeEditPwdModal}
               />
             </Modal>
-          </div>
+          </>
            }
 
         </ProfileContainer>
