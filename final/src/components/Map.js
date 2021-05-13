@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configStore";
+import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지url
 
 import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
 
 // component, element 파일들 가져오기
 import { markerdata } from "./MarkerMockData";
-// import ModalSmallPost from "./ModalSmallPost";
 import "../Css/Map.css";
 import UpLoadModal from "./UpLoadModal";
 import CategoryInMap from "../components/CategoryInMap";
@@ -65,15 +65,6 @@ const Maps = (props) => {
   const is_city = is_category_in_map.includes("도심");
   const is_park = is_category_in_map.includes("공원");
   const is_exhibition = is_category_in_map.includes("전시");
-
-  // // 내가 작성한 게시물만 보기 + 내가 좋아요한 게시물만 보기 제어.
-  // const is_mypost_or_mylike_in_map = useSelector((state) => {
-  //   return state.category_in_map.is_mypost_or_mylike_in_map
-  // });
-
-  // // is_mine_and_mylike_in_map "내꺼", "내좋아요"가 원소로서 존재 여부를 true, false로 설정한다.
-  // const is_mypost = is_mypost_or_mylike_in_map.includes("내꺼"); 
-  // const is_mylike = is_mypost_or_mylike_in_map.includes("내좋아요"); 
 
   // 모든 게시물의 데이터들을 받아 온다.
   const map_post_list = useSelector((state) => {
@@ -131,27 +122,6 @@ const Maps = (props) => {
   const exhibitionData = map_post_list.filter(
     (map_post_list) => map_post_list.category === "전시"
   );
-  // 카테고리별 데이터 가져오기.
-
-  // 작성용마커 imgurl
-  const writeMarkerImgUrl = "https://i.postimg.cc/Fz0bW4zz/2x.png";
-  // 전체, 내게시물, 내좋아요 imgurl
-  const totalMarkerImgUrl = "https://i.postimg.cc/854vcQwf/2x.png";
-  const myPostMarkerImgUrl = "https://i.postimg.cc/854vcQwf/2x.png";
-  const myLikeMarkerImgUrl = "https://i.postimg.cc/ZqcnFPN1/2x.png";
-  // 카테고리 imgurl  
-  const cafeMarkerImgUrl = "https://i.postimg.cc/MZg45Cz8/2x.png";
-  const nightMarkerImgUrl = "https://i.postimg.cc/4xVWWyB6/2x.png";
-  const oceanMarkerImgUrl = "https://i.postimg.cc/LXccJwXR/2x.png";
-  const mountainMarkerImgUrl = "https://i.postimg.cc/yx3GBPX5/2x.png";
-  const flowerMarkerImgUrl = "https://i.postimg.cc/rwBvp7YJ/2x.png";
-  const aloneMarkerImgUrl = "https://i.postimg.cc/mrcgxx1y/2x.png";
-  const coupleMarkerImgUrl = "https://i.postimg.cc/Gt6ZsNmd/1-2x.png";
-  const friendMarkerImgUrl = "https://i.postimg.cc/zX6JntcL/2x.png";
-  const petMarkerImgUrl = "https://i.postimg.cc/44wyh1Gt/2x.png";
-  const cityMarkerImgUrl = "https://i.postimg.cc/Pr2DTjJg/2x.png";
-  const parkMarkerImgUrl = "https://i.postimg.cc/HLfsdSQD/2x.png";
-  const exhibitionMarkerImgUrl = "https://i.postimg.cc/WzV9LvzD/2x.png";
 
   // 이래야 화면 렌더링이 계속안된다
   const debounce = _.debounce((e) => {
@@ -264,7 +234,7 @@ const Maps = (props) => {
         // 작성용 마커를 띄우기
         // 작성용 마커를 클릭하면 게시물 작성창이 뜨게 하기 : 로그인 한 사람만 되게 하기
         var imageSize = new kakao.maps.Size(30, 40);
-        var writeMarkerImage = new kakao.maps.MarkerImage(writeMarkerImgUrl, imageSize);
+        var writeMarkerImage = new kakao.maps.MarkerImage(`${markerImgUrls.writeMarkerImgUrl}`, imageSize);
 
         var position = new kakao.maps.LatLng(hereLat, hereLng)
         var marker = new kakao.maps.Marker({
@@ -309,7 +279,7 @@ const Maps = (props) => {
     // markerdata.forEach((p, idx) => { // mockdate를 이용한 테스트. 나중엔 서버에서 가져온다.
     allData.forEach((all, idx) => { 
       var imageSize = new kakao.maps.Size(30, 40);
-      var markerImage = new kakao.maps.MarkerImage(totalMarkerImgUrl, imageSize);
+      var markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.totalMarkerImgUrl}`, imageSize);
       var position = new kakao.maps.LatLng(all.latitude, all.longitude);
       var totalMarkers = new kakao.maps.Marker({
         // 마커들을 생성하고, 그것들을 대응되는 좌표에다가 뿌려줍니다.
@@ -340,9 +310,9 @@ const Maps = (props) => {
         // '<div class="close" onclick="closeOverlay()" title="닫기"></div>' +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -376,7 +346,7 @@ const Maps = (props) => {
   if (is_mypost) {
     myPostData.forEach((mypost) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       const imageSize = new kakao.maps.Size(30, 40);
-      const markerImage = new kakao.maps.MarkerImage(myPostMarkerImgUrl, imageSize);
+      const markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.myPostMarkerImgUrl}`, imageSize);
       const position = new kakao.maps.LatLng(mypost.latitude, mypost.longitude);
       const mypostMarkers = new kakao.maps.Marker({
         map: map,
@@ -393,9 +363,9 @@ const Maps = (props) => {
               `<div class="spotname">${mypost.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -426,7 +396,7 @@ const Maps = (props) => {
   if (is_mylike) {
     myLikeData.forEach((mylike) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       const imageSize = new kakao.maps.Size(30, 40);
-      const markerImage = new kakao.maps.MarkerImage(myLikeMarkerImgUrl, imageSize);
+      const markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.myLikeMarkerImgUrl}`, imageSize);
       const position = new kakao.maps.LatLng(mylike.latitude, mylike.longitude);
       const mylikeMarkers = new kakao.maps.Marker({
         map: map,
@@ -443,9 +413,9 @@ const Maps = (props) => {
               `<div class="spotname">${mylike.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -478,7 +448,7 @@ const Maps = (props) => {
   if (is_cafe) {
     cafeData.forEach((cafe) => {
       var imageSize = new kakao.maps.Size(30, 40);
-      var markerImage = new kakao.maps.MarkerImage(cafeMarkerImgUrl, imageSize);
+      var markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.cafeMarkerImgUrl}`, imageSize);
       var position = new kakao.maps.LatLng(cafe.latitude, cafe.longitude);
       var cafeMarkers = new kakao.maps.Marker({
         map: map,
@@ -495,9 +465,9 @@ const Maps = (props) => {
               `<div class="spotname">${cafe.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -528,7 +498,7 @@ const Maps = (props) => {
   if (is_night) {
     nightData.forEach((night) => { // nightData를 mockdata로 구현가능한지 테스트 할 것!
       var imageSize = new kakao.maps.Size(30, 40);
-      var markerImage = new kakao.maps.MarkerImage(nightMarkerImgUrl, imageSize);
+      var markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.nightMarkerImgUrl}`, imageSize);
       var position = new kakao.maps.LatLng(night.latitude, night.longitude);
       var nightMarkers = new kakao.maps.Marker({
         map: map,
@@ -545,9 +515,9 @@ const Maps = (props) => {
               `<div class="spotname">${night.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -578,7 +548,7 @@ const Maps = (props) => {
   if (is_ocean) {
     oceanData.forEach((ocean) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
-      var markerImage = new kakao.maps.MarkerImage(oceanMarkerImgUrl, imageSize);
+      var markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.oceanMarkerImgUrl}`, imageSize);
       var position = new kakao.maps.LatLng(ocean.latitude, ocean.longitude);
       var oceanMarkers = new kakao.maps.Marker({
         map: map,
@@ -595,9 +565,9 @@ const Maps = (props) => {
               `<div class="spotname">${ocean.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -628,7 +598,7 @@ const Maps = (props) => {
   if (is_mountain) {
     mountainData.map((mountain, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
-      var markerImage = new kakao.maps.MarkerImage(mountainMarkerImgUrl, imageSize);
+      var markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.mountainMarkerImgUrl}`, imageSize);
       var position = new kakao.maps.LatLng(mountain.latitude, mountain.longitude);
       var mountainMarkers = new kakao.maps.Marker({
         map: map,
@@ -645,9 +615,9 @@ const Maps = (props) => {
               `<div class="spotname">${mountain.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -678,7 +648,7 @@ const Maps = (props) => {
   if (is_flower) {
     flowerData.forEach((flower) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
-      var markerImage = new kakao.maps.MarkerImage(flowerMarkerImgUrl, imageSize);
+      var markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.flowerMarkerImgUrl}`, imageSize);
       var position = new kakao.maps.LatLng(flower.latitude, flower.longitude);
       var flowerMarkers = new kakao.maps.Marker({
         map: map,
@@ -695,9 +665,9 @@ const Maps = (props) => {
               `<div class="spotname">${flower.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -728,7 +698,7 @@ const Maps = (props) => {
   if (is_alone) {
     aloneData.map((alone, idx) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
-      var markerImage = new kakao.maps.MarkerImage(aloneMarkerImgUrl, imageSize);
+      var markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.aloneMarkerImgUrl}`, imageSize);
       var position = new kakao.maps.LatLng(alone.latitude, alone.longitude);
       var aloneMarkers = new kakao.maps.Marker({
         map: map,
@@ -745,9 +715,9 @@ const Maps = (props) => {
               `<div class="spotname">${alone.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -778,7 +748,7 @@ const Maps = (props) => {
   if (is_couple) {
     coupleData.forEach((couple) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
-      var markerImage = new kakao.maps.MarkerImage(coupleMarkerImgUrl, imageSize);
+      var markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.coupleMarkerImgUrl}`, imageSize);
       var position = new kakao.maps.LatLng(couple.latitude, couple.longitude);
       var coupleMarkers = new kakao.maps.Marker({
         map: map,
@@ -795,9 +765,9 @@ const Maps = (props) => {
               `<div class="spotname">${couple.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -828,7 +798,7 @@ const Maps = (props) => {
   if (is_friend) {
     friendData.forEach((friend) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
-      var markerImage = new kakao.maps.MarkerImage(friendMarkerImgUrl, imageSize);
+      var markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.friendMarkerImgUrl}`, imageSize);
       var position = new kakao.maps.LatLng(friend.latitude, friend.longitude);
       var friendMarkers = new kakao.maps.Marker({
         map: map,
@@ -846,9 +816,9 @@ const Maps = (props) => {
               `<div class="spotname">${friend.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -879,7 +849,7 @@ const Maps = (props) => {
   if (is_pet) {
     petData.forEach((pet) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
-      var markerImage = new kakao.maps.MarkerImage(petMarkerImgUrl, imageSize);
+      var markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.petMarkerImgUrl}`, imageSize);
       var position = new kakao.maps.LatLng(pet.latitude, pet.longitude);
       var petMarkers = new kakao.maps.Marker({
         map: map,
@@ -896,9 +866,9 @@ const Maps = (props) => {
               `<div class="spotname">${pet.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -929,7 +899,7 @@ const Maps = (props) => {
   if (is_city) {
     cityData.forEach((city) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
-      var markerImage = new kakao.maps.MarkerImage(cityMarkerImgUrl, imageSize);
+      var markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.cityMarkerImgUrl}`, imageSize);
       var position = new kakao.maps.LatLng(city.latitude, city.longitude);
       var cityMarkers = new kakao.maps.Marker({
         map: map,
@@ -946,9 +916,9 @@ const Maps = (props) => {
               `<div class="spotname">${city.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -979,7 +949,7 @@ const Maps = (props) => {
   if (is_park) {
     parkData.forEach((park) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       var imageSize = new kakao.maps.Size(30, 40);
-      var markerImage = new kakao.maps.MarkerImage(parkMarkerImgUrl, imageSize);
+      var markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.parkMarkerImgUrl}`, imageSize);
       var position = new kakao.maps.LatLng(park.latitude, park.longitude);
       var parkMarkers = new kakao.maps.Marker({
         map: map,
@@ -996,9 +966,9 @@ const Maps = (props) => {
               `<div class="spotname">${park.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
@@ -1029,7 +999,7 @@ const Maps = (props) => {
   if (is_exhibition) {
     exhibitionData.forEach((exhibition) => { // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
       const imageSize = new kakao.maps.Size(30, 40);
-      const markerImage = new kakao.maps.MarkerImage(exhibitionMarkerImgUrl, imageSize);
+      const markerImage = new kakao.maps.MarkerImage(`${markerImgUrls.exhibitionMarkerImgUrl}`, imageSize);
       const position = new kakao.maps.LatLng(exhibition.latitude, exhibition.longitude);
       const exhibitionMarkers = new kakao.maps.Marker({
         map: map,
@@ -1046,9 +1016,9 @@ const Maps = (props) => {
               `<div class="spotname">${exhibition.spotName}</div>` +
           "</div>" +
         // '<div class="center"></div>' +
-          '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-          "</div>" +
+          // '<div class="bottomiconbox">' +
+          //   '<img class="likeicon" onclick></img>' +
+          // "</div>" +
         "</div>";
 
       // 모달창(커스텀오버레이) 객체를 생성
