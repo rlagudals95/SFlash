@@ -6,7 +6,7 @@ import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
 import { getCookie } from "../../shared/Cookie";
-import { actionCreators as postActions } from "./post";
+import { actionCreators as PostActions } from "./post";
 
 const GET_LIKE = "GET_LIKE";
 const ADD_LIKE = "ADD_LIKE";
@@ -50,10 +50,11 @@ const getLikePost = () => {
   };
 };
 
-const addLikeAPI = (board_id) => {
+const addLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
     const paging = getState().post.paging;
     console.log("보드아이디", board_id);
+    console.log("보드", board);
 
     console.log("토큰있나요??", localStorage.getItem("jwt"));
     axios({
@@ -65,6 +66,7 @@ const addLikeAPI = (board_id) => {
     })
       .then((res) => {
         console.log("좋아요 완료!", res);
+        dispatch(PostActions.editLikeP(board_id, board)); // 리덕스
         // dispatch(addLike(true));
         // dispatch(getLike(true));
       })
@@ -74,8 +76,11 @@ const addLikeAPI = (board_id) => {
   };
 };
 
-const disLikeAPI = (board_id) => {
+const disLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
+    console.log("보드아이디", board_id);
+    console.log("보드", board);
+
     axios({
       method: "DELETE",
       url: `${config.api}/board/${board_id}/like`,
@@ -85,6 +90,7 @@ const disLikeAPI = (board_id) => {
     })
       .then((res) => {
         console.log("좋아요 취소!", res);
+        dispatch(PostActions.editLikeD(board_id, board));
         // console.log(res);
         // dispatch(disLike(false));
         // dispatch(getLike(false));

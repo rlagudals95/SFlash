@@ -24,7 +24,7 @@ const Post2 = (props) => {
 
   const like = useSelector((state) => state.like.like);
 
-  console.log('좋아요 정보',like)
+  console.log("좋아요 정보", like);
   React.useEffect(() => {
     console.log("시작");
     dispatch(likeActions.getLikePost());
@@ -67,14 +67,14 @@ const Post2 = (props) => {
     e.stopPropagation();
 
     dispatch(likeActions.addLikeAPI(props.id, props)); //서버
-    dispatch(PostActions.editLikeP(props.id, props)); // 리덕스
+    // dispatch(PostActions.editLikeP(props.id, props)); // 리덕스
   };
 
   const disLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(likeActions.disLikeAPI(props.id));
-    dispatch(PostActions.editLikeD(props.id, props));
+    dispatch(likeActions.disLikeAPI(props.id, props));
+    // dispatch(PostActions.editLikeD(props.id, props));
   };
 
   // console.log("뭘까......???", image_list[0].imgUrl);
@@ -132,10 +132,13 @@ const Post2 = (props) => {
 };
 
 const PostBox = styled.div`
+  background-position: center;
+  object-fit: cover;
   width: 100%;
   aspect-ratio: 1/1;
   background-size: cover;
   background-repeat: no-repeat;
+
   background-image: url("${(props) => props.src}");
   cursor: pointer;
 `;

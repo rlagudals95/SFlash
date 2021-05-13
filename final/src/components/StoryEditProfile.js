@@ -194,7 +194,7 @@ const StoryEditProfile = (props) => {
             src={
               preview
                 ? preview
-                : profileDefault
+                : "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
             }
             onError={ImageError}
           />
@@ -230,7 +230,7 @@ const StoryEditProfile = (props) => {
             </Grid>
 
             <SolidBtn
-              width="95%"
+              width="96%"
               onClick={() => {
                 const result =
                   window.confirm("변경된 내용을 저장 하시겠습니까?");
@@ -432,7 +432,7 @@ const CheckBtn = styled.button`
 const SolidBtn = styled.button`
   display: block;
   border: none;
-  margin: 15px auto;
+  margin: 12px auto;
   ${(props) => (props.width ? `width:${props.width};` : "")}
   height: 48px;
   border-radius: 8px;

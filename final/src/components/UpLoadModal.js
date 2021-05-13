@@ -191,13 +191,14 @@ const UploadModal = (props) => {
     slidesToScroll: 1,
   };
 
+  console.log("업로드 프롭스", props);
+
   //밑에두면 preview값을 바로 받을 수가 없다?
 
   return (
     <React.Fragment>
       <Component onClick={props.close} />
       <ModalComponent>
-        
         <ModalHeader>
           <HeaderInner>
             <ExitContainer>
@@ -209,10 +210,12 @@ const UploadModal = (props) => {
               <ProCircle
                 src={
                   is_edit // 수정시에 작성자의 프로필 사진의 유무에 따라서 조건부 렌더링 설정
-                    ? props.profileImg
-                      ? props.profileImg
+                    ? profile.profileImgUrl // 수정일때 프로필 이미지가 있냐?
+                      ? profile.profileImgUrl
                       : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                     : profile.profileImgUrl
+                    ? profile.profileImgUrl // 업로드시 프로필 이미지가 있으면 그것으로 없으면 기본이미지로!
+                    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                 }
               />
               <ModalAuthor>{nickname}</ModalAuthor>
