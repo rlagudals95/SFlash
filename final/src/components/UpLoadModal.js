@@ -371,15 +371,6 @@ const UploadModal = (props) => {
                     value={title}
                     _onChange={changeTitle}
                   ></Input2>
-                  {/* <TextField
-                id="outlined-multiline-static"
-                label="📝제목 작성"
-                multiline
-                rows={1}
-                variant="outlined"
-                value={title}
-                onChange={changeTitle}
-              /> */}
                 </Title>
                 <Input
                   id="outlined-multiline-static"
@@ -397,9 +388,9 @@ const UploadModal = (props) => {
           {/* 카테고리는 수정할 수 없기때문에 게시글 수정 모달에선 가려준다 */}
           {is_edit ? null : <SelectCate></SelectCate>}
           {is_edit ? (
-            <BottomEdit2 onClick={editPost}>수정</BottomEdit2>
+            <BottomEdit2 onClick={editPost}>수정하기</BottomEdit2>
           ) : (
-            <BottomEdit onClick={addPost}>게시</BottomEdit>
+            <BottomEdit onClick={addPost}>게시하기</BottomEdit>
           )}
         </ModalBottomContainer>
       </ModalComponent>
@@ -408,9 +399,10 @@ const UploadModal = (props) => {
 };
 
 const BottomEdit = styled.div`
-  color: white;
+  color: ${(props) => props.theme.main_color};
   font-weight: bold;
-  background-color: ${(props) => props.theme.main_color};
+  /* background-color: ${(props) => props.theme.main_color}; */
+  border: 2px solid ${(props) => props.theme.main_color};
   font-size: 14px;
   cursor: pointer;
   width: 100%;
@@ -418,16 +410,21 @@ const BottomEdit = styled.div`
   padding: 12px 0px;
   border-radius: 7px;
   margin: 15px 0px;
-
+  box-sizing: border-box;
+  :hover {
+    background-color: ${(props) => props.theme.main_color};
+    color: white;
+  }
   @media (max-width: 1440px) {
   }
   @media (max-width: 600px) {
   }
 `;
 const BottomEdit2 = styled.div`
-  color: white;
+  color: ${(props) => props.theme.main_color};
   font-weight: bold;
-  background-color: ${(props) => props.theme.main_color};
+  /* background-color: ${(props) => props.theme.main_color}; */
+  border: 2px solid ${(props) => props.theme.main_color};
   font-size: 14px;
   cursor: pointer;
   width: 100%;
@@ -435,7 +432,11 @@ const BottomEdit2 = styled.div`
   padding: 12px 0px;
   border-radius: 7px;
   margin: 15px 0px;
-  margin-top: 100px;
+  box-sizing: border-box;
+  :hover {
+    background-color: ${(props) => props.theme.main_color};
+    color: white;
+  }
   @media (max-width: 1440px) {
     margin: 15px 0px;
   }
@@ -475,8 +476,6 @@ const ModalImg = styled.div`
   max-height: 350px;
   /* background-color: red; */
   @media (max-width: 1440px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
     background-image: url("${(props) => props.src}");
     background-size: cover;
     object-fit: cover;
@@ -486,12 +485,10 @@ const ModalImg = styled.div`
     box-sizing: border-box;
     width: 100%;
     height: 630px;
-    max-height: 350px;
+    max-height: 330px;
     margin-bottom: -20px;
   }
   @media (max-width: 1155px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
     background-image: url("${(props) => props.src}");
     background-size: cover;
     object-fit: cover;
@@ -500,15 +497,13 @@ const ModalImg = styled.div`
     border: none;
     box-sizing: border-box;
     width: 100%;
-    height: 335px;
-    max-height: 335px;
+    height: 320px;
+    max-height: 320px;
     /* height: 465px;
     max-height: 465px; */
     margin-bottom: -20px;
   }
   @media (max-width: 600px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
     background-image: url("${(props) => props.src}");
     background-size: cover;
     object-fit: cover;
@@ -534,6 +529,12 @@ const Component = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
+  @media (max-width: 600px) {
+    // 1450밑으로 넓이가 내려가면
+    /* all: unset; */
+
+    z-index: 6999;
+  }
 `;
 
 const ModalComponent = styled.div`

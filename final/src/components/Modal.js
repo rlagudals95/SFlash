@@ -471,7 +471,7 @@ const ModalComponent = styled.div`
     z-index: 1000;
     border: none;
     box-sizing: border-box;
-    z-index: 7000;
+    z-index: 6998;
   }
 `;
 
