@@ -11,7 +11,7 @@ const About = (props) => {
     <React.Fragment>
       <Background>
       <Container>
-      <Grid height="50px"></Grid>
+        <Grid height="50px"></Grid>
         <SflashLogo src = {SFlash_logo}/>
         <Grid height="50px"></Grid>
         <Text>인스타, 블로그 나만 모르는 명소들... 대체 거기가 어디야?!!</Text>
