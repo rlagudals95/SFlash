@@ -133,7 +133,10 @@ export default handleActions(
 
         draft.preview = draft.preview.filter((r) => {
           // 프리뷰 이미지를 걸러내주는 작업
-          if (r !== "http://via.placeholder.com/400x300") {
+          if (
+            r !==
+            "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
+          ) {
             return [...draft.preview, r];
           }
         });
