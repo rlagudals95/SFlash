@@ -63,6 +63,7 @@ function Navbar() {
                 <SflashLogo></SflashLogo>
               </Link>
             </LOGO>
+
             {/* 홈 지도보기 */}
 
             <Link to="/">
@@ -93,12 +94,17 @@ function Navbar() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <GrIcons.GrLogin
+                {/* <GrIcons.GrLogin
                   size="1.5rem"
                   onClick={() => {
                     history.push("/login");
                   }}
-                />
+                /> */}
+                <Log
+                  onClick={() => {
+                    history.replace("/login");
+                  }}
+                ></Log>
                 {/* 로그인 아이콘 */}
                 <IconInfo>로그인</IconInfo>
               </React.Fragment>
@@ -123,23 +129,6 @@ function Navbar() {
             </Link>
 
             <IconInfo>1:1</IconInfo>
-
-            {/* {is_login ? (
-              <React.Fragment>
-                <GrIcons.GrLogout size="1.5rem" onClick={onLogout} />
-                <IconInfo>로그아웃</IconInfo>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <GrIcons.GrLogin
-                  size="1.5rem"
-                  onClick={() => {
-                    history.push("/login");
-                  }}
-                />
-                <IconInfo>로그인</IconInfo>
-              </React.Fragment>
-            )} */}
           </SideIcon>
           {/* <GrLogout size="1.5rem" /> */}
         </SideMini>
@@ -201,6 +190,13 @@ function Navbar() {
     </>
   );
 }
+
+const LogoBack = styled.div`
+  background-color: darkgray;
+  width: 100%;
+  height: 200px;
+`;
+
 const LOGO = styled.div`
   margin-bottom: 7vh;
 
@@ -351,6 +347,18 @@ const About = styled.div`
     height: 30px;
   }
 `;
+
+const Log = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%82%AC%EC%9D%B4%EB%93%9C%EB%B0%94_%EB%A1%9C%EA%B7%B8%EC%9D%B8%402x.png?alt=media&token=0cd29526-bfe0-41bb-a07c-b5146ac5a7c9");
+  width: 35px;
+  height: 35px;
+  background-size: cover;
+  @media (max-width: 600px) {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
 const Story = styled.div`
   background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EB%82%B4%20%EC%8A%A4%ED%86%A0%EB%A6%AC%402x.png?alt=media&token=c4f3ab36-e824-4123-805f-b6ae9b114d08");
   width: 35px;
