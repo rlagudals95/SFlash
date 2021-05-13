@@ -414,7 +414,7 @@ const CategoryInMap = () => {
               }}
             >
               <AllSpotsImg src={IconAllSpots}/>
-              <AllSpotsTitle>전체스팟</AllSpotsTitle>
+              <AllSpotsTitle>모든스팟</AllSpotsTitle>
             </AllSpotsSelected>
           ) :  (
             <AllSpots
@@ -439,7 +439,7 @@ const CategoryInMap = () => {
               }}
             >
               <AllSpotsImg src={IconAllSpots}/>
-              <AllSpotsTitle>전체스팟</AllSpotsTitle>
+              <AllSpotsTitle>모든스팟</AllSpotsTitle>
             </AllSpots>
           )}
           {/* 내스팟 찾기 */}
@@ -452,7 +452,10 @@ const CategoryInMap = () => {
               setShowLike(false);
               dispatch(categoryActionsInMap.resetCategoryInMap());
               }}
-            > 내스팟  
+            > 
+                {/* <MyPostSpotsImg src={IconAllSpots}/> */}
+                <MyPostSpotsImg/>
+                <MyPostSpotsTitle>내스팟</MyPostSpotsTitle>
             </MyPostSpotsSelected>
             ) : (
             <MyPostSpots
@@ -475,7 +478,10 @@ const CategoryInMap = () => {
                 setShowLike(false);
                 dispatch(categoryActionsInMap.getMyPostInMap());
               }}
-            > 내스팟  
+            > 
+              {/* <MyPostSpotsImg src={IconAllSpots}/> */}
+              <MyPostSpotsImg/>
+              <MyPostSpotsTitle>내스팟</MyPostSpotsTitle> 
             </MyPostSpots>
             )}
           {/* 내좋아요스팟 찾기 */}
@@ -488,7 +494,9 @@ const CategoryInMap = () => {
                 setShowLike(false);
                 dispatch(categoryActionsInMap.resetCategoryInMap());
               }}
-            > 좋아요한 스팟
+            > 
+              <MyLikeSpotsImg src={IconMyLikes}/>
+              <MyLikeSpotsTitle>좋아요스팟</MyLikeSpotsTitle>
             </MyLikeSpotsSelected>
             ) : (
               <MyLikeSpots
@@ -511,7 +519,9 @@ const CategoryInMap = () => {
                 setShowLike(true);
                 dispatch(categoryActionsInMap.getMyLikeInMap());
               }}
-            > 좋아요한 스팟
+            >
+              <MyLikeSpotsImg src={IconMyLikes}/>
+              <MyLikeSpotsTitle>좋아요스팟</MyLikeSpotsTitle>
             </MyLikeSpots>
             )} 
         </SpotSelectBox>      
@@ -531,7 +541,7 @@ const SpotSelectBox = styled.div`
   justify-content: space-evenly;
 `;
 
-const AllSpotsSelected = styled.button`
+const AllSpotsSelected = styled.div`
   display: flex;
   flex-direction: column;
   width: 70px;
@@ -547,7 +557,7 @@ const AllSpotsSelected = styled.button`
   align-items: center;
 `;
 
-const AllSpots = styled.button`
+const AllSpots = styled.div`
   display: flex;
   flex-direction: column;
   width: 70px;
@@ -564,14 +574,16 @@ const AllSpots = styled.button`
 `;
 
 const AllSpotsImg = styled.img`
-  width: 80%;
-  padding-top: 3px;
+  width: 70%;
+  padding-top: 2px;
 `;
 
 const AllSpotsTitle = styled.div`
-  width: 10%;
-  font-size: 5px;
-  padding-top: 2px;
+  height: 30%; 
+  font-size: 3px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  text-align: center;
 `;
 
 const MyPostSpotsSelected = styled.div`
@@ -579,15 +591,15 @@ const MyPostSpotsSelected = styled.div`
   flex-direction: column;
   width: 70px;
   height: 70px;
-  font-size: 10px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid #27eb40;
+  border: 1px solid rgb(27, 38, 133);
   cursor: pointer;
   margin: 5px;
   padding: 5px;
   text-align: center;
+  align-items: center;
 `;
 
 const MyPostSpots = styled.div`
@@ -595,15 +607,27 @@ const MyPostSpots = styled.div`
   flex-direction: column;
   width: 70px;
   height: 70px;
-  font-size: 10px;
-  background-color: white; 
+  background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  /* 테두리 갈색 */
-  border: 1px solid lightgray;  
+  border: 1px solid lightgray;
   cursor: pointer;
   margin: 5px;
   padding: 5px;
+  text-align: center;
+  align-items: center;
+`;
+
+const MyPostSpotsImg = styled.img`
+  width: 75%;
+  padding-top: 2px;
+`;
+
+const MyPostSpotsTitle = styled.div`
+  height: 20%; 
+  font-size: 3px;
+  margin-top: 3px;
+  margin-bottom: 3px;
   text-align: center;
 `;
 
@@ -612,15 +636,15 @@ const MyLikeSpotsSelected = styled.div`
   flex-direction: column;
   width: 70px;
   height: 70px;
-  font-size: 10px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid #f20b45;
+  border: 1px solid rgb(253, 133, 152);
   cursor: pointer;
   margin: 5px;
   padding: 5px;
   text-align: center;
+  align-items: center;
 `;
 
 const MyLikeSpots = styled.div`
@@ -628,14 +652,27 @@ const MyLikeSpots = styled.div`
   flex-direction: column;
   width: 70px;
   height: 70px;
-  font-size: 10px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid lightgray;
+  border: 1px solid lightgrey;
   cursor: pointer;
   margin: 5px;
   padding: 5px;
+  text-align: center;
+  align-items: center;
+`;
+
+const MyLikeSpotsImg = styled.img`
+  width: 75%;
+  padding-top: 2px;
+`;
+
+const MyLikeSpotsTitle = styled.div`
+  height: 20%; 
+  font-size: 2px;
+  margin-top: 3px;
+  margin-bottom: 3px;
   text-align: center;
 `;
 
@@ -660,8 +697,8 @@ justify-content: space-between; */
     z-index: 300;
     position: fixed;
     margin: auto;
-    width: 50%;
-    left: 15vw;
+    width: 98%;
+    /* left: 15vw; */
     /* width: 100%;
     left: 0;
     bottom: 0;
