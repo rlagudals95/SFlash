@@ -13,6 +13,7 @@ import { InfoUl, InfoLi } from "../Css/loginSignupCss";
 import { HiCamera } from "react-icons/hi";
 import { GiCheckMark } from "react-icons/gi";
 import { ClosedCaption } from "@material-ui/icons";
+import profileDefault from "../static/profileDefault.svg";
 // import { set } from "immer/dist/internal";
 
 const StoryEditProfile = (props) => {
@@ -129,9 +130,9 @@ const StoryEditProfile = (props) => {
     var img = fileInput.current.files[0];
     if (img === undefined) {
       dispatch(
-        profileActions.setPreview(
-          "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
-        )
+        // profileActions.setPreview(
+        //   "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
+        // )
       );
     }
     reader.readAsDataURL(img); // readAsDataURL(읽고 싶은 파일) 메서드를 이용한다.
@@ -193,7 +194,7 @@ const StoryEditProfile = (props) => {
             src={
               preview
                 ? preview
-                : "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
+                : profileDefault
             }
             onError={ImageError}
           />
@@ -317,7 +318,7 @@ const ImgContainer = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  width: 175px;
+  width: 160px;
   aspect-ratio: 1/1;
   border-radius: 150px;
   background-size: cover;
@@ -327,8 +328,8 @@ const ProfileImg = styled.img`
 
 const EditImgBtn = styled.label`
   position: absolute;
-  margin-left: 40px;
-  margin-top: 135px;
+  margin-left: 35px;
+  margin-top: 120px;
   padding: 5px 5px 1px 5px;
   border-radius: 50px;
   background-color: ${(props) => props.theme.main_color};
