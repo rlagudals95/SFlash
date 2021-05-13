@@ -18,7 +18,11 @@ const MobileNav = () => {
   return (
     <React.Fragment>
       <NavBox>
-        <Logo>SFlash</Logo>
+        <Logo
+          onClick={() => {
+            history.replace("/");
+          }}
+        ></Logo>
         {/* {is_login ? (
           <React.Fragment>
             <HeaderLog>
@@ -45,7 +49,11 @@ const MobileNav = () => {
 export default MobileNav;
 
 const Logo = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A02.jpg?alt=media&token=ba866422-e9e7-4a3c-ab9d-e3072e10f1ab");
   margin: 0px auto;
+  width: 103px;
+  height: 30px;
+  background-size: cover;
 `;
 
 const NavBox = styled.div`
