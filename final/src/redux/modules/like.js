@@ -36,8 +36,8 @@ const initialState = {
 const getLikePost = () => {
   return function (dispatch, getState) {
     const post_list = getState().post.list;
-    //여기서 like만뺀다?
-    console.log("!!!!!!!!!!", post_list);
+
+    // console.log("!!!!!!!!!!", post_list);
 
     let like_list = [];
 
@@ -45,7 +45,7 @@ const getLikePost = () => {
       like_list.push(post_list[i].like);
     }
 
-    console.log(like_list);
+    // console.log(like_list);
     dispatch(getLike(like_list));
   };
 };
@@ -64,11 +64,12 @@ const addLikeAPI = (board_id) => {
       },
     })
       .then((res) => {
+        console.log("좋아요 완료!", res);
         // dispatch(addLike(true));
         // dispatch(getLike(true));
       })
       .catch((error) => {
-        // window.alert("좋아요를 할 수 없습니다.");
+        window.alert("좋아요를 할 수 없습니다.");
       });
   };
 };
@@ -83,6 +84,7 @@ const disLikeAPI = (board_id) => {
       },
     })
       .then((res) => {
+        console.log("좋아요 취소!", res);
         // console.log(res);
         // dispatch(disLike(false));
         // dispatch(getLike(false));

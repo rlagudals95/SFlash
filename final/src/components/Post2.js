@@ -24,15 +24,12 @@ const Post2 = (props) => {
 
   const like = useSelector((state) => state.like.like);
 
+  console.log('좋아요 정보',like)
   React.useEffect(() => {
     console.log("시작");
-    // dispatch(likeActions.getLikePost());
-  }, [like]);
+    dispatch(likeActions.getLikePost());
+  }, []);
 
-  //
-  // console.log("like", like);
-
-  // console.log("????????", props.id, props);
   const dispatch = useDispatch();
   // console.log(props);
 
@@ -55,20 +52,6 @@ const Post2 = (props) => {
       comment_list.push(props.comment[i]);
     }
   }
-
-  // console.log("이미지 리스트", image_list);
-  // console.log("첫번째 이미지", image_list[0]);
-
-  // console.log("썸네일", image_list[0].imgUrl);
-  // const image = props.imgUrl;
-
-  // const PostImage = image_list[0].imgUrl
-  //   ? image_list[0].imgUrl
-  //   : "http://via.placeholder.com/400x300";
-
-  // const PostImage = "http://via.placeholder.com/400x300";
-  // console.log(PostImage.imgUrl);
-  // const [modalOpen, setModalOpen] = useState();
   const [is_modal, setDetailModal] = useState();
 
   const openModal = () => {

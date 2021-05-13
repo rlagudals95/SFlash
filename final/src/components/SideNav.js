@@ -141,15 +141,6 @@ function Navbar() {
                 <AiIcons.AiOutlineClose />
               </Link>
             </li>
-            {/* <LOGO
-              onClick={(e) => {
-                history.push("/");
-                e.preventDefault();
-                e.stopPropagation();
-              }}
-            >
-              LOGO
-            </LOGO> */}
             <CategoryInfo>
               <CategoryIcon>
                 {" "}

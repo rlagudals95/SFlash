@@ -11,9 +11,12 @@ const GET_CATEGORY = "GET_CATEGORY";
 const RESET_CATEGORY = "RESET_CATEGORY";
 const SELECT_CATEGORY = "SELECT_CATEGORY";
 
+//카테고리를 선택할때 마다 is_category 배열에 하나씩 카테고리를 넣어줌
+//이미 선택된 카테고리를 누를 시에 중복된 상태값이 들어오면 지워지도록 아래 리듀서에서 설정
 const getCategory = createAction(GET_CATEGORY, (category) => ({
   category,
 }));
+// # 전체를 눌렀을 때 카테고리 상태값을 모두 지워줘 is_category.length가 0이 되면서 전체 게시물이 보여짐
 const resetCategory = createAction(RESET_CATEGORY, (is_category) => ({
   is_category,
 }));
@@ -59,10 +62,6 @@ export default handleActions(
     [SELECT_CATEGORY]: (state, action) =>
       produce(state, (draft) => {
         draft.select_category = action.payload.select_category;
-
-        // if (draft.select_category == action.payload.select_category) {
-        //   return null;
-        // }
       }),
   },
 

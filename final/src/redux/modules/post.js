@@ -5,7 +5,7 @@ import { history } from "../configStore";
 import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
-import post_list from "../../components/MockData";
+
 import { getCookie } from "../../shared/Cookie";
 import { push } from "react-router-redux";
 
@@ -169,14 +169,24 @@ const getPostAPI = (start = null, size = null) => {
         // size: 15,
         // lastAriticleId: end_board.id // 처음에는 9000조를 보낸다
       },
-      // headers: {
-      //   "X-AUTH-TOKEN": `${config.jwt}`,
-      // },
+      headers: {
+        "X-AUTH-TOKEN": `${config.jwt}`,
+      },
     })
       .then((res) => {
-        console.log("!!!!!!!!!", res);
+        console.log("!!!!!!!!!", res.data.data);
+
+        // 라이크 값이 자꾸 false로 오니까 리스트를 뽑아보자!
+        let like_list = [];
+
+        for (let i = 0; i < res.data.data.length; i++) {
+          like_list.push(res.data.data[i].liked);
+        }
+
+        console.log("받아오는 라이크 값들", like_list);
+
         let result = res.data.data.slice(start, size); // 서버에서 받아오는 게시물들을 start와 size를 정해서 나눠준다
-        console.log("페이징 갯수", result.length);
+        // console.log("페이징 갯수", result.length);
         if (result.length == 0) {
           // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
           dispatch(loading(false));

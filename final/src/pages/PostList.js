@@ -18,7 +18,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import "../Css/Modal.css";
 import modal from "../redux/modules/modal";
-import post_list from "../components/MockData";
+
 import category from "../redux/modules/category";
 import UploadModal from "../components/UpLoadModal";
 import MobileCate from "../components/mobile/MobileCate";
@@ -30,9 +30,9 @@ import { actionCreators as likeActions } from "../redux/modules/like";
 const PostList = () => {
   const dispatch = useDispatch();
 
-  // React.useEffect(() => {
-  //   dispatch(PostActions.getPostAPI());
-  // }, []);
+  React.useEffect(() => {
+    dispatch(PostActions.getPostAPI());
+  }, []);
 
   const is_category = useSelector((state) => state.category.is_category);
   const paging = useSelector((state) => state.post.paging);
@@ -41,7 +41,7 @@ const PostList = () => {
   const user_info = useSelector((state) => state.user.user);
 
   // category 모듈의 상태값에 따른 판단여부
-  const resultCafe = is_category.find((item) => item === "카페"); //요게 카페가 나온다는건? 배열안에 카페가 있다는 것!
+  const resultCafe = is_category.find((item) => item === "카페"); //is_catagory 안에서 해당 카테고리가 찾아진다면 값이 true로 나오고 없다면 false로 나온다
   const resultNight = is_category.find((item) => item === "야경");
   const resultOcean = is_category.find((item) => item === "바다");
   const resultMountain = is_category.find((item) => item === "산");
@@ -54,7 +54,7 @@ const PostList = () => {
   const resultPark = is_category.find((item) => item === "공원");
   const resultExhibition = is_category.find((item) => item === "전시");
 
-  console.log("카페가 들어있다!", resultCafe);
+  // console.log("카페가 들어있다!", resultCafe);
 
   const board_list = useSelector((state) => state.post.list);
   console.log("잘 가지고 왔나~", board_list);
@@ -67,20 +67,24 @@ const PostList = () => {
   }, []);
 
   const next = () => {
+    //스크롤이 바닥에 닿을때 마다 포스트를 정해진 paging 사이즈만큼 가져오는 함수
     dispatch(PostActions.getPostAPI(paging.start, paging.size));
   };
 
-  const like_list = useSelector((state) => state.like.list);
+  // const like_list = useSelector((state) => state.like.list);
 
-  console.log("!!!!!!!!", like_list);
+  // console.log("!!!!!!!!", like_list);
 
   const searchPost = board_list.filter((val) => {
     // 검색기능(필터링)을 변수로 지정해 놓고 .map앞에 붙혀둔다
     if (search == "") {
+      // 검색창의 내용에 따라 보여지는 게시물이 필터링 된다
       return val;
     } else if (val.title.includes(search)) {
+      // 검색어에 제목이 포함되었는지 판단
       return val;
     } else if (val.content.includes(search)) {
+      // 검색어에 내용이 포함되었는지 판단
       return val;
     }
   });
@@ -89,7 +93,7 @@ const PostList = () => {
     <React.Fragment>
       <TopBox>
         <Search>
-          {/* 검색기능  */}
+          {/* 검색기능  모바일용으로 만들어 놓은 검색창이다! 넓이가 600px 밑으로 가면 기존의 검색창이 사라지고 나타남*/}
           <Input2
             value={search}
             placeholder="검색어를 입력해주세요 (●'◡'●)"
@@ -100,17 +104,18 @@ const PostList = () => {
         </Search>
       </TopBox>
       {/* 검색기능 구현 */}
-      <InfiniteScroll // 서버와 연결되면 인피니티 스크롤 게시!
+      <InfiniteScroll // 무한스크롤 페이징처리 라이브러리다
         dataLength={searchPost.length}
         next={next}
         hasMore={true}
-        loader={loading && <Spinner />}
+        loader={loading && <Spinner />} //상태값이 loading 중 일땐 스피너가 보여서 뒤에 게시물이 더 있을음 알려준다
       >
         {/* {loading && <Spinner />} */}
         <Container>
           {/* 전체보기 선택 */}
           {searchPost.map((p) => {
             if (is_category.length == 0) {
+              // is_category의 길이가 0이라는 것은 아무 카테고리가 선택되지 않았음을 의미하며 모든 게시물을 보여준다
               return <Post2 key={p.id} {...p}></Post2>;
             }
           })}
@@ -221,16 +226,8 @@ const PostList = () => {
         <Category />
       </Web>
       <MobileCate></MobileCate>
-      {/* <MobileCate></MobileCate> */}
 
       <Box></Box>
-      {/* <Button
-        is_float
-        text="+"
-        _onClick={() => {
-          history.push("/postwrite");
-        }}
-      ></Button> */}
     </React.Fragment>
   );
 };
