@@ -172,7 +172,7 @@ StoryUserProfile.defaultProps = {
 const ProfileContainer = styled.div`
   display: flex;
   min-height: 200px;
-  margin: 3% auto;
+  margin: 70px auto;
 `;
 const Setting = styled.div`
   position: static;

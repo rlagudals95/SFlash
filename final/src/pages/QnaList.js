@@ -22,11 +22,11 @@ const QnaList = (props) => {
   const role = localStorage.getItem("role");
 
   const [page, setPage] = React.useState(1); //현재페이지, 1부터 시작
-  const [size, setSize] = React.useState(10); //페이지당 post갯수 = 10개씩(고정값) (사실 setSize 안써도 됨)
+  const [size, setSize] = React.useState(7); //페이지당 post갯수 = 7개씩(고정값) (사실 setSize 안써도 됨)
 
   //pageNumber = [1,2,3,4,5,...]
   const pageNumber = [];
-  for (let i = 1; i <= Math.ceil(100 / size); i++) {
+  for (let i = 1; i <= Math.ceil(14 / size); i++) {
     pageNumber.push(i);
   }
 
@@ -41,7 +41,7 @@ const QnaList = (props) => {
 
   // 오른쪽 화살표 함수
   const forward = () => {
-    if (page < 10) {
+    if (page < 5) {
       setPage(page + 1);
     } else {
       window.alert("다음 페이지가 없습니다!");
@@ -294,8 +294,9 @@ const SflashLogo = styled.div`
 
 const PaginationContainer = styled.div`
   display: flex;
-  margin: 0 auto;
-  margin-top: 2rem;
+  margin: auto;
+  margin-top: 1rem;
+
   ul {
     list-style: none;
     display: flex;
@@ -306,6 +307,7 @@ const PaginationContainer = styled.div`
   svg {
     padding-top: 1rem;
   }
+  margin-left: 350px;
 `;
 
 const PageSpan = styled.div`

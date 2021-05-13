@@ -71,33 +71,33 @@ const Maps = (props) => {
 
   useEffect(() => {
     // window.alert('');
-    getLocation();
+    // getLocation();
 
-    function getLocation() {
-      // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-      if (navigator.geolocation) {
-        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-        navigator.geolocation.getCurrentPosition(
-          function (position) {
-            setStartLat(position.coords.latitude);
-            setStartLon(position.coords.longitude);
-          },
-          function (error) {
-            console.error(error);
-          },
-          {
-            enableHighAccuracy: false,
-            maximumAge: 0,
-            timeout: Infinity,
-          }
-        );
-      } else {
-        // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-        window.alert(
-          "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
-        );
-      }
-    }
+    // function getLocation() {
+    //   // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+    //   if (navigator.geolocation) {
+    //     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+    //     navigator.geolocation.getCurrentPosition(
+    //       function (position) {
+    //         setStartLat(position.coords.latitude);
+    //         setStartLon(position.coords.longitude);
+    //       },
+    //       function (error) {
+    //         console.error(error);
+    //       },
+    //       {
+    //         enableHighAccuracy: false,
+    //         maximumAge: 0,
+    //         timeout: Infinity,
+    //       }
+    //     );
+    //   } else {
+    //     // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+    //     window.alert(
+    //       "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
+    //     );
+    //   }
+    // }
 
     if (startlat && startlon) {
       console.log(

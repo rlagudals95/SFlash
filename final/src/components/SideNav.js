@@ -59,7 +59,7 @@ function Navbar() {
           <SideIcon>
             <LOGO>
               {/* 로고 들어갈자리 */}
-              <Link to="/story">
+              <Link to="/">
                 <SflashLogo></SflashLogo>
               </Link>
             </LOGO>
