@@ -129,39 +129,34 @@ const Maps = (props) => {
 
   useEffect(() => {
     // window.alert('');
-    getLocation();
+    // getLocation();
 
-    function getLocation() {
-      // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-      if (navigator.geolocation) {
-        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-        navigator.geolocation.getCurrentPosition(
-          function (position) {
-            setStartLat(position.coords.latitude);
-            setStartLon(position.coords.longitude);
-          },
-          function (error) {
-            console.error(error);
-          },
-          {
-            enableHighAccuracy: false,
-            maximumAge: 0,
-            timeout: Infinity,
-          }
-        );
-      } else {
-        // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-        window.alert(
-          "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
-        );
-      }
-    }
+    // function getLocation() {  // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+    //   if (navigator.geolocation) {  // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+    //     navigator.geolocation.getCurrentPosition(
+    //       function (position) {
+    //         setStartLat(position.coords.latitude);
+    //         setStartLon(position.coords.longitude);
+    //       },
+    //       function (error) {
+    //         console.error(error);
+    //       },
+    //       {
+    //         enableHighAccuracy: false,
+    //         maximumAge: 0,
+    //         timeout: Infinity,
+    //       }
+    //     );
+    //   } else {  // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+    //     window.alert(
+    //       "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
+    //     );
+    //   }
+    // }
 
-    if (startlat && startlon) {
-      console.log(
-        "현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon
-      );
-    } // geolocation은 여기까지
+    // if (startlat && startlon) {
+    //   console.log("현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon);
+    // } // geolocation은 여기까지 
 
     if (!map_post_list) {
       return;
@@ -170,7 +165,7 @@ const Maps = (props) => {
       var container = document.getElementById("map"); // 지도를 표시할 div
       var options = {
         //지도를 생성할 때 필요한 기본 옵션
-        center: new kakao.maps.LatLng(startlat, startlon), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
+        center: new kakao.maps.LatLng(35.83819028173818, 127.88227108131916), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
         level: 12, //지도 확대 레벨
       };
 
@@ -1140,27 +1135,12 @@ const Maps = (props) => {
     // 지도 api 설정은 여기서 끝
     // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
     // useEffect의 두번째 인자들에는 검색, 시작 좌표, 카테고리 설정값이 들어간다.
-    // }, [search, startlat, startlon,
-    // }, [startlat, startlon]);
-  }, [
-    startlat,
-    startlon,
-    is_mypost,
-    is_mylike,
-    is_all,
-    is_cafe,
-    is_night,
-    is_ocean,
-    is_mountain,
-    is_flower,
-    is_alone,
-    is_couple,
-    is_friend,
-    is_pet,
-    is_city,
-    is_park,
-    is_exhibition,
-  ]);
+  // }, [search, startlat, startlon,
+  // }, [startlat, startlon]);
+  }, [is_mypost, is_mylike,
+    is_all, is_cafe, is_night, is_ocean, is_mountain, is_flower,
+    is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
+
 
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다
@@ -1243,22 +1223,25 @@ const SearchBox = styled.div`
   z-index: 10;
   @media (min-width: 1280px) {
     width: 600px;
-    top: 90px;
+    top: 150px;
   }
   @media (max-width: 1280px) {
+    position: fixed;
     /* top: 140px; */
     width: 400px;
-    top: 90px;
+    top: 150px;
   }
   @media (max-width: 960px) {
-    top: 90px;
+    /* position: fixed; */
+    top: 150px;
     /* left: 110px; */
     margin: auto;
     width: 350px;
-    left: 10vw;
+    left: 100px;
   }
   @media (max-width: 400px) {
-    top: 50px;
+    /* position: fixed; */
+    top: 80px;
     width: 50%;
     margin: auto;
     left: 20vw;
