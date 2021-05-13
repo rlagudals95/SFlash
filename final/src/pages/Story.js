@@ -41,6 +41,10 @@ const Story = (props) => {
     }
   };
 
+   // Marker Icon
+   const userPostMarkerImgUrl = "https://i.postimg.cc/3w264rbs/2x.png";
+   const userLikeMarkerImgUrl = "https://i.postimg.cc/3rZTf11s/2x.png";
+
 
   // const user_post_list = useSelector((state) => {
   //   // console.log(state);
@@ -77,10 +81,10 @@ const Story = (props) => {
         </Tabs>
 
           <Content active={active === "myPost"}>
-            <StoryContent post_list={user_post_list} />
+            <StoryContent post_list={user_post_list} marker_icon={userPostMarkerImgUrl}/>
           </Content>
           <Content active={active === "myLike"}>
-            <StoryContent post_list={user_like_list} />
+            <StoryContent post_list={user_like_list} marker_icon={userLikeMarkerImgUrl}/>
           </Content>
 
          {/* 
@@ -132,7 +136,20 @@ const Tab = styled.button`
   :hover {
     background-color: ${(props) => (props.active ? "white" : "#eee")};
   }
+  @media (min-width: 1280px) {
+      
+    }
+    @media (max-width: 1280px) {
+    
+    }
+    @media (max-width: 960px) {
+      font-size: 1.1rem;
+    }
+    @media (max-width: 400px) {
+      font-size: 1rem;
+    }
 `;
+
 const TabUnderBar = styled.div`
   width: 55%;
   height: 3pt;

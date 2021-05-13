@@ -7,6 +7,8 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 
 import { BiDotsHorizontalRounded } from "react-icons/bi";
+import profileDefault from "../static/profileDefault.svg";
+
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Modal from "react-modal";
@@ -30,11 +32,11 @@ const StoryUserProfile = (props) => {
   // 이미지 에러
   const ImageError = () => {
     window.alert("잘못된 이미지 주소 입니다. :(");
-    dispatch(
-      profileActions.setPreview(
-        "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
-      )
-    );
+    // dispatch(
+    //   profileActions.setPreview(
+    //     "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
+    //   )
+    // );
   };
 
   // 프로필 메뉴 버튼 제어
@@ -70,13 +72,15 @@ const StoryUserProfile = (props) => {
             src={
               user_info.profileImgUrl
                 ? user_info.profileImgUrl
-                : "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
+                : 
+                // profileDefault
+                "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
             }
             onError={ImageError}
           />
 
           <Grid>
-            <Grid height="150px" />
+            <Grid height="130px" />
             <Nickname>{user_info.nickname}</Nickname>
             <Introduction>{user_info.introduction}</Introduction>
           </Grid>
@@ -189,20 +193,21 @@ const Setting = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  width: 170px;
+  width: 140px;
   aspect-ratio: 1/1;
   border-radius: 150px;
   padding: 20px;
-  margin: 20px;
+  margin: 10px;
   background-size: cover;
   object-fit: cover;
   cursor: pointer;
+  
 `;
 
 const Nickname = styled.text`
   font-size: 1.8rem;
   font-weight: 600;
-  color: ${(props) => props.theme.main_color};
+  color: darkslategrey;
 `;
 const Introduction = styled.text`
   display: block;

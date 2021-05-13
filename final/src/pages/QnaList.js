@@ -11,6 +11,11 @@ import { BsFillLockFill } from "react-icons/bs";
 import { RiEditFill } from "react-icons/ri";
 // import Pagination from '@material-ui/lab/Pagination';
 
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
+import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
+
+
+
 const QnaList = (props) => {
   const dispatch = useDispatch();
   const qna_list = useSelector((state) => state.qna.list);
@@ -18,9 +23,40 @@ const QnaList = (props) => {
   const me = localStorage.getItem("nickname");
   const role = localStorage.getItem("role");
 
+  const [page, setPage] = React.useState(1); //현재페이지, 1부터 시작
+  const [size, setSize] = React.useState(10); //페이지당 post갯수 = 10개씩(고정값) (사실 setSize 안써도 됨)
+
+  //pageNumber = [1,2,3,4,5,...]
+  const pageNumber = [];
+  for (let i = 1; i <= Math.ceil(200 / size); i++) {
+    pageNumber.push(i);
+  }
+
+  //paginate : page 바꾸기 setPage로 바꾼다
+  const paginate = (PageNumber) => setPage(PageNumber);
+
   React.useEffect(() => {
-    dispatch(qnaActions.getQnaAPI());
-  }, []);
+    dispatch(qnaActions.getQnaAPI(page, size));
+  }, [page]);
+
+  //페이지네이션 화살표 함수
+
+  // 오른쪽 화살표 함수
+  const forward = () => {
+    if (page < 20) {
+      setPage(page + 1);
+    } else {
+      window.alert("마지막 페이지에요!");
+    }
+  };
+  // 왼쪽 화살표 함수
+  const backward = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    } else {
+      window.alert("첫번째 페이지에요!");
+    }
+  };
 
   if (qna_list.length === 0) {
     return (
@@ -45,10 +81,8 @@ const QnaList = (props) => {
             </Text>
           </Content>
           <Warning>
-            <text style={{ fontSize: "1.4rem" }}>
-              등록된 게시물이 없습니다.
-            </text>
-          </Warning>
+          <SflashLogo />
+        </Warning>
         </Container>
       </React.Fragment>
     );
@@ -105,6 +139,20 @@ const QnaList = (props) => {
             );
           })}
           {/* <Pagination count={10} color="primary" /> */}
+          <Container>
+        <ul className="pagination">
+          <ArrowLeftIcon
+            style={{ cursor: "pointer", verticalAlign: "-30px" }}
+            onClick={backward}
+          />
+          {pageNumber.map((pageNum) => (
+            <li key={pageNum} className="pagination_item">
+              <PageSpan onClick={() => paginate(pageNum)}>{pageNum}</PageSpan>
+            </li>
+          ))}
+          <ArrowRightIcon style={{ cursor: "pointer" }} onClick={forward} />
+        </ul>
+      </Container>
         </Container>
       </React.Fragment>
     );
@@ -231,10 +279,30 @@ const SolidBtn = styled.button`
 `;
 const Warning = styled.div`
   text-align: center;
-  align-items: center;
-  margin: 20px auto;
-  border: 2.5pt solid #eee;
+  margin: 30px auto;
   padding: 150px;
+  border: 2.5pt solid #eee;
+`;
+const SflashLogo = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A0.png?alt=media&token=92594323-944a-40d7-8085-b323c23246fe");
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  background-size: cover;
+`;
+
+const PageSpan = styled.div`
+  padding: 1rem;
+  width: 1rem;
+  border-radius: 10rem;
+  text-align: center;
+  transition: font-weight 100ms ease-in, background-color 100ms ease-in,
+    color 100ms ease-in;
+  :hover {
+    font-weight: 900;
+    background-color: #d2d2d21a;
+    color: #212121;
+  }
 `;
 
 
