@@ -31,7 +31,9 @@ const StoryContent = (props) => {
       {post_list.length === 0 ? (
         <Warning>
           <SflashLogo />
-          <Text size="1.1rem" color="grey">게시물을 등록해 주세요!</Text>
+          <Text size="1.1rem" color="grey">
+            게시물을 등록해 주세요!
+          </Text>
         </Warning>
       ) : (
         <>
@@ -176,7 +178,5 @@ const Box = styled.div`
 const Content = styled.div`
   ${(props) => (props.active ? "" : "display:none")}
 `;
-
-
 
 export default StoryContent;

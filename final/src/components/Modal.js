@@ -211,24 +211,30 @@ const ModalDetail = (props) => {
           <InfoBox>
             <InfoBoxInner>
               {/*is_like 여부로 하트모양 변경  */}
+
               {props.like ? (
-                <div style={{ cursor: "pointer" }}>
-                  {/* 좋아요 상태에 따라서 하트 모양의 조건부 렌더 */}
-                  <FavoriteIcon
-                    onClick={disLike}
-                    style={{ color: "rgb(255, 183, 25)", fontSize: 30 }}
-                  />
-                  {props.likeCnt}
-                </div>
+                <LikeBox>
+                  <div style={{ cursor: "pointer" }}>
+                    {/* 좋아요 상태에 따라서 하트 모양의 조건부 렌더 */}
+                    <FavoriteIcon
+                      onClick={disLike}
+                      style={{ color: "rgb(255, 183, 25)", fontSize: 30 }}
+                    />
+                    <LikeCntBox> {props.likeCnt}</LikeCntBox>
+                  </div>
+                </LikeBox>
               ) : (
-                <div style={{ cursor: "pointer" }}>
-                  <FavoriteBorderIcon
-                    // style={{ color: "rgb(255, 183, 25)" }}
-                    style={{ fontSize: 30 }}
-                    onClick={addLike}
-                  />
-                  {props.likeCnt}
-                </div>
+                <LikeBox>
+                  <div style={{ cursor: "pointer" }}>
+                    <FavoriteBorderIcon
+                      style={{ color: "rgb(255, 183, 25)" }}
+                      style={{ fontSize: 30, color: "rgb(255, 183, 25)" }}
+                      onClick={addLike}
+                    />
+
+                    <LikeCntBox> {props.likeCnt}</LikeCntBox>
+                  </div>
+                </LikeBox>
               )}
 
               {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
@@ -301,7 +307,9 @@ const ModalDetail = (props) => {
                               {c.writerName}
                             </ReplyWriter>
                           </React.Fragment>
-                          <Reply>{c.content}</Reply>
+                          <ReplyContainer>
+                            <Reply>{c.content}</Reply>
+                          </ReplyContainer>
                         </ReplyLeft>
                         <ReplyRight>
                           <CmtDate>
@@ -356,6 +364,19 @@ const ModalDetail = (props) => {
 //   width: 100%;
 //   height: 400px;
 //   height: 400px;
+
+const LikeBox = styled.div`
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  width: 60px;
+`;
+
+const LikeCntBox = styled.span`
+  margin: auto 0px;
+  font-weight: bold;
+  opacity: 0.7;
+`;
 
 const ModalImg = styled.img`
   background-image: url("${(props) => props.src}");
@@ -415,7 +436,8 @@ const Component = styled.div`
 const ModalComponent = styled.div`
   border-radius: 0.5vw;
   position: fixed !important;
-  width: 590px;
+  /* width: 590px; */
+  width: 500px;
   height: 810px;
   /* overflow: hidden; */
   top: 50%;
@@ -501,22 +523,21 @@ const ExitBtn = styled.button`
 
 const ModalBottomContainer = styled.div`
   text-align: left;
-  width: 550px;
+  width: 480px;
   height: 290px;
   display: flex;
   flex-direction: column;
   padding: 0px 12px;
   margin: 0px auto;
-
+  /* background-color: red; */
   @media (max-width: 1600px) {
     text-align: left;
-    width: 550px;
+    width: 470px;
     height: 290px;
     display: flex;
     flex-direction: column;
     padding: 0px 12px;
     margin: 0px auto;
-    /* background-color: red; */
   }
 
   @media (max-width: 1440px) {
@@ -627,7 +648,7 @@ const InfoBox = styled.div`
 `;
 
 const InfoBoxInner = styled.div`
-  width: 550px; //요놈 크기 바꿔
+  width: 480px; //요놈 크기 바꿔
   height: 33px;
   margin-top: 10px;
   font-size: 15px;
@@ -644,12 +665,12 @@ const InfoBoxInner = styled.div`
 
 const ModalCate = styled.div`
   background-color: white;
-  width: 90px;
-  height: 28px;
+  width: 80px;
+  height: 24px;
   color: rgba(0, 0, 0, 0.5);
   text-align: center;
   vertical-align: middle;
-  line-height: 28px;
+  line-height: 24px;
   display: inline-block;
   border-radius: 5px;
   box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.2);
@@ -672,6 +693,10 @@ const PostContents = styled.div`
   opacity: 0.6;
   width: 550px;
   margin-top: 3px;
+  /* overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  } */
 `;
 
 const PostTime = styled.div`
@@ -749,6 +774,7 @@ const Replys = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 3vh;
+  width: 100%;
   @media (max-width: 1440px) {
     /* background-color: red; */
     display: flex;
@@ -774,6 +800,14 @@ const ReplyWriter = styled.div`
   font-weight: bold;
   padding-right: 10px;
   cursor: pointer;
+`;
+
+const ReplyContainer = styled.div`
+  width: 270px;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Reply = styled.div`

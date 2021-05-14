@@ -156,7 +156,7 @@ const Maps = (props) => {
 
     // if (startlat && startlon) {
     //   console.log("현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon);
-    // } // geolocation은 여기까지 
+    // } // geolocation은 여기까지
 
     if (!map_post_list) {
       return;
@@ -1135,12 +1135,25 @@ const Maps = (props) => {
     // 지도 api 설정은 여기서 끝
     // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
     // useEffect의 두번째 인자들에는 검색, 시작 좌표, 카테고리 설정값이 들어간다.
-  // }, [search, startlat, startlon,
-  // }, [startlat, startlon]);
-  }, [is_mypost, is_mylike,
-    is_all, is_cafe, is_night, is_ocean, is_mountain, is_flower,
-    is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
-
+    // }, [search, startlat, startlon,
+    // }, [startlat, startlon]);
+  }, [
+    is_mypost,
+    is_mylike,
+    is_all,
+    is_cafe,
+    is_night,
+    is_ocean,
+    is_mountain,
+    is_flower,
+    is_alone,
+    is_couple,
+    is_friend,
+    is_pet,
+    is_city,
+    is_park,
+    is_exhibition,
+  ]);
 
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다

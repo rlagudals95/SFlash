@@ -18,7 +18,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import "../Css/Modal.css";
 import modal from "../redux/modules/modal";
-
+import * as BiIcons from "react-icons/bi";
 import category from "../redux/modules/category";
 import UploadModal from "../components/UpLoadModal";
 import MobileCate from "../components/mobile/MobileCate";
@@ -27,7 +27,7 @@ import MobileNav from "../components/mobile/MobileNav";
 import Spinner from "../shared/Spinner";
 import { actionCreators as PostActions } from "../redux/modules/post";
 import { actionCreators as likeActions } from "../redux/modules/like";
-const PostList = () => {
+const PostList = (props) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -101,6 +101,9 @@ const PostList = () => {
               setSearch(e.target.value);
             }}
           ></Input2>
+          <SearchBtn>
+            <BiIcons.BiSearch size="2rem" color="rgb(255, 183, 25)" />
+          </SearchBtn>
         </Search>
       </TopBox>
       {/* 검색기능 구현 */}
@@ -234,7 +237,14 @@ const PostList = () => {
 
 export default PostList;
 
+const SearchBtn = styled.div`
+  /* margin-top: 5px; */
+  margin: auto 0px;
+  margin-right: 3px;
+`;
+
 //그리드 속성을 이렇게 줘야 모달창이 잘만들어진다!
+
 const Container = styled.div`
   ${(prop) => prop.theme.responsiveContainer};
   display: grid;
@@ -317,11 +327,13 @@ const Search = styled.div`
   margin: auto auto;
   margin-top: 130px;
   display: flex;
-  width: 24vw;
+  width: 28vw;
   margin-bottom: 20px;
   /* box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1); */
   border: none;
   box-sizing: border-box;
+  border: 3px solid ${(props) => props.theme.main_color};
+  border-radius: 5px;
   @media (max-width: 1450px) {
     // 1450밑으로 넓이가 내려가면
     width: 35vw;
