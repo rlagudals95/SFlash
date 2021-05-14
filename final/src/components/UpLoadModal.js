@@ -77,7 +77,7 @@ const UploadModal = (props) => {
 
   const [image_list, setImageList] = React.useState();
   const is_file = useSelector((state) => state.image2.file);
-  console.log("이미지는 최소한장!", is_file);
+  console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
   // const post_id = props.match.params.id;
   const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
   // console.log("수정 게시물 정보", props);
@@ -85,6 +85,11 @@ const UploadModal = (props) => {
   const nickname = localStorage.getItem("nickname");
   const editImgList = useSelector((state) => state.image2.edit); // 요걸 가져와야해
   // const editImage = useSelector((state) => state.image2.image);
+
+  const previewSet = useSelector((state) => state.image2.preview);
+  console.log("프리뷰를 알자!", previewSet);
+  const file = useSelector((state) => state.image2.file);
+  console.log("업로드 파일들을 알자!", file);
 
   const is_category = useSelector((state) => state.category.select_category);
 
@@ -95,6 +100,15 @@ const UploadModal = (props) => {
   // console.log("고치자 ㅜㅜ", editImgList); // 수정하는 포스트리스트가 온다 map으로 이미지 돌리자
   // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
   const ok_submit = contents ? true : false;
+
+  console.log("??????", localStorage.getItem("jwt"));
+  const resetPreview = () => {
+    const basicPreview =
+      "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36";
+    // 업로드하다 모달창을 닫을 때 남은 데이터들을 모두 초기화
+    props.close();
+    dispatch(imageActions.resetPreview([basicPreview], [])); // preview는 map함수를 쓰기 때문에 기본이미지를 배열안에 넣어주자
+  };
 
   //게시물 작성시 조건을 걸어두었다
   const addPost = (e) => {
@@ -133,6 +147,8 @@ const UploadModal = (props) => {
     }
 
     props.close();
+
+    resetPreview();
     // history.replace("/");
   };
 
@@ -199,7 +215,11 @@ const UploadModal = (props) => {
 
   return (
     <React.Fragment>
-      <Component onClick={props.close} />
+      <Component
+        onClick={resetPreview}
+
+        // onClick={props.close}
+      />
       <ModalComponent>
         <ModalHeader>
           <HeaderInner>
@@ -298,7 +318,7 @@ const UploadModal = (props) => {
         ) : (
           <React.Fragment>
             {/* 수정시가 아닌 일반 게시물 모달 */}
-            {preview ? ( //게시물이 여러개일땐 캐러셀을 구현하여 여러장을 보여줄 수 있도록 조건부 렌더링
+            {preview && preview ? ( //게시물이 여러개일땐 캐러셀을 구현하여 여러장을 보여줄 수 있도록 조건부 렌더링
               preview.length > 1 ? (
                 <Slider {...settings}>
                   {preview.map((p, idx) => {

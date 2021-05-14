@@ -84,6 +84,8 @@ const addPostAPI = (post) => {
       return;
     }
 
+    console.log("??????", localStorage.getItem("jwt"));
+
     console.log("파일들", _file);
     const formData = new FormData();
     formData.append("title", post.title);
@@ -97,6 +99,7 @@ const addPostAPI = (post) => {
       console.log(_file[i]);
     }
 
+    console.log("토큰이 넘어 올까요~?", config.jwt);
     //////////
     const _category = getState().category.select_category; //요기 오타가 있었네요!
     formData.append("category", _category);
