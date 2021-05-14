@@ -42,12 +42,12 @@ const Story = (props) => {
     dispatch(postActions.getPostAPI());
   }, []);
 
-  // React.useEffect(() => {
-  //   dispatch(storypostActions.getUserPostAPI(userId));
-  // }, []);
-  // React.useEffect(() => {
-  //   dispatch(storypostActions.getUserLikeAPI(userId));
-  // }, []);
+  const [content, setContent] = React.useState(
+    <StoryContent
+      post_list={user_post_list}
+      marker_icon={userPostMarkerImgUrl}
+    />
+  );
 
   // const [activeTab, setActiveTab] = React.useState(0)
   //   const clickHandler = (id) => {
@@ -71,9 +71,7 @@ const Story = (props) => {
     ),
   };
 
-  // Marker Icon
-  const userPostMarkerImgUrl = "https://i.postimg.cc/3w264rbs/2x.png";
-  const userLikeMarkerImgUrl = "https://i.postimg.cc/3rZTf11s/2x.png";
+  const tabArr = Object.keys(tabObj);
 
   const [isFocused, setIsFocused] = useState(0);
 
@@ -92,22 +90,25 @@ const Story = (props) => {
     (content 내 Story_Content 컴퍼넌트에서는 리스트와 지도로 볼수 있도록 다시 나눠지는데
     active 를 활용해 같은 방법으로 제어해준다.*/}
 
-        <Content active={active === "myPost"}>
-          <StoryContent
-            post_list={user_post_list}
-            marker_icon={userPostMarkerImgUrl}
-          />
-        </Content>
-        <Content active={active === "myLike"}>
-          <StoryContent
-            post_list={user_like_list}
-            marker_icon={userLikeMarkerImgUrl}
-          />
-        </Content>
+        {/* <Tabs>
+          <Tab onClick={clickHandler(0)}>userPost</Tab>
+          <Tab onClick={clickHandler(1)}>userLike</Tab>
+        </Tabs>
+        <Content>
+         {obj[activeTab]}
+        </Content> */}
 
-        {/* 
-      <Tabs>
-          <Tab onClick={UserPostTab} >
+        <Tabs>
+          <Tab
+            onClick={() =>
+              setContent(
+                <StoryContent
+                  post_list={user_post_list}
+                  marker_icon={userPostMarkerImgUrl}
+                />
+              )
+            }
+          >
             <b>{user_info.nickname}</b> 님의 게시물
             <TabUnderBar />
           </Tab>
