@@ -855,7 +855,7 @@ const Maps = (props) => {
       });
     }
 
-    // 8. 친구카테고리 : 카페마커 + 커스텀 오버레이
+    // 8. 친구카테고리 : 친구마커 + 커스텀 오버레이
     if (is_friend) {
       friendData.forEach((friend) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
