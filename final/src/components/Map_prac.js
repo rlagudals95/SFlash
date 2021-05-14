@@ -1192,14 +1192,14 @@ const Maps = (props) => {
         {/* 위에서 설정된 getElementById("map")에 의해서 id="map"인 div에 맵이 표시된다 */}
         <div id="map" style={{ width: "100vw", height: "100vh" }}></div>
       </MapBox>
-      {/* { is_total ? 
-        markerdata.forEach((p) => {
-          //...각종 변수들 정의
+      {/* { is_all ? 
+        allData.forEach((p) => {
           <CustomOverlay
-            content={<MyOverlay />}
-            lat={p.latitude}
-            lng={p.longitude}>
-          </CustomOverlay>}) : null} */}
+            content={<MyOverlay p={p} />}
+            latitude={p.latitude}
+            longitude={p.longitude}
+            spotName={p.spotName}
+            {...p}/>) : null} */}
       {is_uploadModal ? (
         <UpLoadModal
           latitude={latitude}

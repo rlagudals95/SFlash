@@ -1137,7 +1137,7 @@ const Maps = (props) => {
     // useEffect의 두번째 인자들에는 검색, 시작 좌표, 카테고리 설정값이 들어간다.
   // }, [search, startlat, startlon,
   // }, [startlat, startlon]);
-  }, [is_mypost, is_mylike,
+  }, [is_mypost, is_mylike, map_post_list,
     is_all, is_cafe, is_night, is_ocean, is_mountain, is_flower,
     is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
 
@@ -1255,6 +1255,9 @@ const SearchInput = styled.input`
   padding-left: 15px;
   font-size: 15px;
   border: none;
+  background-image: url('https://i.postimg.cc/P5xKdMqb/71403.png');
+  background-position: top right;
+  background-repeat:no-repeat;
   &:focus {
     /* outline: blue; */
     border-radius: 5px;

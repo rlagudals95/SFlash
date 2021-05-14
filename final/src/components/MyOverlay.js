@@ -1,4 +1,4 @@
-// 부모 컴포넌트는 Main.js
+// 부모 컴포넌트는 Map.js
 import React from "react";
 
 import styled from "styled-components";
@@ -34,13 +34,13 @@ const CustomOverlay = (props) => {
         </PicBox>
       </ModalContainer>
     </React.Fragment>
-  ) 
-}
+  )
+};
 
 ModalSmallPost.defatultProps = {
   imgUrl: "https://i.pinimg.com/originals/3b/b2/5c/3bb25c56d66d633b2e6a47250b0eacbb.jpg",
   spotName: "제주도 유채밭",
-}
+};
 
 const ModalContainer = styled.div`
   width: 250px;
