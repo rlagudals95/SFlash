@@ -37,8 +37,8 @@ const PostList = (props) => {
   const is_category = useSelector((state) => state.category.is_category);
   const paging = useSelector((state) => state.post.paging);
   const loading = useSelector((state) => state.post.is_loading);
-  const is_login = useSelector((state) => state.user.is_login);
-  const user_info = useSelector((state) => state.user.user);
+  // const is_login = useSelector((state) => state.user.is_login);
+  // const user_info = useSelector((state) => state.user.user);
 
   // category 모듈의 상태값에 따른 판단여부
   const resultCafe = is_category.find((item) => item === "카페"); //is_catagory 안에서 해당 카테고리가 찾아진다면 값이 true로 나오고 없다면 false로 나온다
