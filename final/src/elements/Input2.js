@@ -94,7 +94,7 @@ const ElInput = styled.input`
   box-sizing: border-box;
   background-color: transparent;
   border-radius: 5px;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+  /* box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1); */
 `;
 
 export default Input2;

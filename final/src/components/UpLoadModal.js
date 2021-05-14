@@ -77,7 +77,7 @@ const UploadModal = (props) => {
 
   const [image_list, setImageList] = React.useState();
   const is_file = useSelector((state) => state.image2.file);
-  console.log("이미지는 최소한장!", is_file);
+  console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
   // const post_id = props.match.params.id;
   const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
   // console.log("수정 게시물 정보", props);
@@ -85,6 +85,11 @@ const UploadModal = (props) => {
   const nickname = localStorage.getItem("nickname");
   const editImgList = useSelector((state) => state.image2.edit); // 요걸 가져와야해
   // const editImage = useSelector((state) => state.image2.image);
+
+  const previewSet = useSelector((state) => state.image2.preview);
+  console.log("프리뷰를 알자!", previewSet);
+  const file = useSelector((state) => state.image2.file);
+  console.log("업로드 파일들을 알자!", file);
 
   const is_category = useSelector((state) => state.category.select_category);
 
@@ -95,6 +100,15 @@ const UploadModal = (props) => {
   // console.log("고치자 ㅜㅜ", editImgList); // 수정하는 포스트리스트가 온다 map으로 이미지 돌리자
   // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
   const ok_submit = contents ? true : false;
+
+  console.log("??????", localStorage.getItem("jwt"));
+  const resetPreview = () => {
+    const basicPreview =
+      "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36";
+    // 업로드하다 모달창을 닫을 때 남은 데이터들을 모두 초기화
+    props.close();
+    dispatch(imageActions.resetPreview([basicPreview], [])); // preview는 map함수를 쓰기 때문에 기본이미지를 배열안에 넣어주자
+  };
 
   //게시물 작성시 조건을 걸어두었다
   const addPost = (e) => {
@@ -133,6 +147,8 @@ const UploadModal = (props) => {
     }
 
     props.close();
+
+    resetPreview();
     // history.replace("/");
   };
 
@@ -174,7 +190,9 @@ const UploadModal = (props) => {
   };
 
   if (images.length == 0) {
-    images.push("http://via.placeholder.com/400x300");
+    images.push(
+      "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
+    );
   }
 
   const _post = {
@@ -197,12 +215,16 @@ const UploadModal = (props) => {
 
   return (
     <React.Fragment>
-      <Component onClick={props.close} />
+      <Component
+        onClick={resetPreview}
+
+        // onClick={props.close}
+      />
       <ModalComponent>
         <ModalHeader>
           <HeaderInner>
             <ExitContainer>
-              <ExitBtn onClick={props.close}>
+              <ExitBtn onClick={resetPreview}>
                 <CloseIcon fontSize="large" />
               </ExitBtn>
             </ExitContainer>
@@ -286,7 +308,9 @@ const UploadModal = (props) => {
                   onClick={() => {
                     console.log("몇번 이미지인가?");
                   }}
-                  src={"http://via.placeholder.com/400x300"}
+                  src={
+                    "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
+                  }
                 />
               )}
             </React.Fragment>
@@ -294,7 +318,7 @@ const UploadModal = (props) => {
         ) : (
           <React.Fragment>
             {/* 수정시가 아닌 일반 게시물 모달 */}
-            {preview ? ( //게시물이 여러개일땐 캐러셀을 구현하여 여러장을 보여줄 수 있도록 조건부 렌더링
+            {preview && preview ? ( //게시물이 여러개일땐 캐러셀을 구현하여 여러장을 보여줄 수 있도록 조건부 렌더링
               preview.length > 1 ? (
                 <Slider {...settings}>
                   {preview.map((p, idx) => {
@@ -327,6 +351,7 @@ const UploadModal = (props) => {
                       placeholder={props.title}
                       rows={1}
                       variant="outlined"
+                      width={"100%"}
                       value={title}
                       _onChange={changeTitle}
                     ></Input2>
@@ -337,6 +362,7 @@ const UploadModal = (props) => {
                     placeholder={props.content}
                     rows={6}
                     multiLine
+                    width={"100%"}
                     variant="outlined"
                     value={contents}
                     _onChange={changeContents}
@@ -353,6 +379,7 @@ const UploadModal = (props) => {
                     rows={1}
                     variant="outlined"
                     value={title}
+                    width={"100%"}
                     _onChange={changeTitle}
                   ></Input2>
                 </Title>
@@ -364,6 +391,7 @@ const UploadModal = (props) => {
                   multiLine
                   variant="outlined"
                   value={contents}
+                  width={"100%"}
                   _onChange={changeContents}
                 ></Input>
               </React.Fragment>
@@ -432,7 +460,7 @@ const DeleteImg = styled.div`
   z-index: 4700;
   text-align: center;
   position: relative;
-  background-color: red;
+  /* background-color: red; */
   width: 50px;
   top: 15px;
   right: -15px;
@@ -447,17 +475,25 @@ const DeleteImg = styled.div`
   cursor: pointer;
 `;
 
+const ImgOutter = styled.div`
+  text-align: center;
+  display: table;
+`;
+
 const ModalImg = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   object-fit: cover;
-  background-position: 0px;
+  background-position: center;
   background-repeat: no-repeat;
   border: none;
   box-sizing: border-box;
   width: 100%;
   height: 410px;
   max-height: 350px;
+  border-top: 2px solid darkgray;
+  border-bottom: 2px solid darkgray;
+  /* display: table-cell; */
   /* background-color: red; */
   @media (max-width: 1440px) {
     background-image: url("${(props) => props.src}");
@@ -471,6 +507,8 @@ const ModalImg = styled.div`
     height: 630px;
     max-height: 330px;
     margin-bottom: -20px;
+    border-top: 2px solid darkgray;
+    border-bottom: 2px solid darkgray;
   }
   @media (max-width: 1155px) {
     background-image: url("${(props) => props.src}");
@@ -486,6 +524,8 @@ const ModalImg = styled.div`
     /* height: 465px;
     max-height: 465px; */
     margin-bottom: -20px;
+    border-top: 2px solid darkgray;
+    border-bottom: 2px solid darkgray;
   }
   @media (max-width: 600px) {
     background-image: url("${(props) => props.src}");
@@ -499,6 +539,8 @@ const ModalImg = styled.div`
     height: 600px;
     max-height: 40vh;
     margin-bottom: 1vh;
+    border-top: 2px solid darkgray;
+    border-bottom: 2px solid darkgray;
   }
 `;
 
@@ -524,14 +566,14 @@ const Component = styled.div`
 const ModalComponent = styled.div`
   border-radius: 0.5vw;
   position: fixed !important;
-  width: 590px;
+  /* width: 590px; */
+  width: 500px;
   height: 820px;
   max-height: 820px;
   /* overflow: hidden; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
   background-color: green;
   background-color: #fafafc;
   z-index: 1001;
@@ -540,6 +582,7 @@ const ModalComponent = styled.div`
   border: none;
   box-sizing: border-box;
   min-width: 380px;
+  /* overflow-x: hidden; */
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
@@ -652,8 +695,7 @@ const ModalBottomContainer = styled.div`
   margin: 0px auto;
   margin-top: 30px;
   text-align: left;
-
-  width: 550px;
+  width: 450px;
   height: 380px;
   display: flex;
   flex-direction: column;
@@ -726,22 +768,28 @@ const MiddleBox = styled.div`
   display: flex;
   flex-direction: column;
   height: 255px;
+  width: 100%;
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     height: 235px;
     /* background-color: red; */
   }
   /* justify-content: space-between; */
-  /* background-color: red; */
+
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     height: 220px;
   }
 `;
+const InputOutter = styled.div`
+  margin: 0px auto;
+  width: 100%;
+`;
 
 const Title = styled.div`
   margin-bottom: 1vh;
 `;
+
 const CateBtn = styled.div`
   font-size: bold;
   width: 6.5vw;

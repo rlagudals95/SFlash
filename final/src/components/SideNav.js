@@ -66,69 +66,75 @@ function Navbar() {
 
             {/* 홈 지도보기 */}
 
-            <Link to="/">
-              <Home></Home>
-            </Link>
+            <IconOutter>
+              <Link to="/">
+                <Home></Home>
+              </Link>
+              <IconInfo>홈</IconInfo>
+            </IconOutter>
 
-            <IconInfo>홈</IconInfo>
+            <IconOutter>
+              <Link to="/postlist">
+                <Community></Community>
+              </Link>
 
-            <Link to="/postlist">
-              <Community></Community>
-            </Link>
-
-            <IconInfo>커뮤니티</IconInfo>
-
+              <IconInfo>커뮤니티</IconInfo>
+            </IconOutter>
             {/* 마이페이지 */}
 
-            {is_login ? (
-              <React.Fragment>
-                <Link>
-                  <Story
-                    onClick={() => {
-                      history.push(`/story/${userId}`);
-                    }}
-                  ></Story>
-                </Link>
+            <IconOutter>
+              {is_login ? (
+                <React.Fragment>
+                  <Link>
+                    <Story
+                      onClick={() => {
+                        history.push(`/story/${userId}`);
+                      }}
+                    ></Story>
+                  </Link>
 
-                <IconInfo>내스토리</IconInfo>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                {/* <GrIcons.GrLogin
+                  <IconInfo>내스토리</IconInfo>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {/* <GrIcons.GrLogin
                   size="1.5rem"
                   onClick={() => {
                     history.push("/login");
                   }}
                 /> */}
-                <Log
-                  onClick={() => {
-                    history.replace("/login");
-                  }}
-                ></Log>
-                {/* 로그인 아이콘 */}
-                <IconInfo>로그인</IconInfo>
-              </React.Fragment>
-            )}
+                  <Log
+                    onClick={() => {
+                      history.replace("/login");
+                    }}
+                  ></Log>
+                  {/* 로그인 아이콘 */}
+                  <IconInfo>로그인</IconInfo>
+                </React.Fragment>
+              )}
+            </IconOutter>
 
             {/* About */}
+            <IconOutter>
+              <Link to="/about">
+                <About></About>
+              </Link>
+              <IconInfo>About</IconInfo>
+            </IconOutter>
 
-            <Link to="/about">
-              <About></About>
-            </Link>
+            <IconOutter>
+              <Link to="/faq">
+                <FaQ></FaQ>
+              </Link>
+              <IconInfo>FAQ</IconInfo>
+            </IconOutter>
+            <IconOutter>
+              <Link to="/qna">
+                <QnA></QnA>
+              </Link>
 
-            <IconInfo>About</IconInfo>
-
-            <Link to="/faq">
-              <FaQ></FaQ>
-            </Link>
-
-            <IconInfo>FAQ</IconInfo>
-
-            <Link to="/qna">
-              <QnA></QnA>
-            </Link>
-
-            <IconInfo>1:1</IconInfo>
+              <IconInfo>1:1</IconInfo>
+            </IconOutter>
           </SideIcon>
           {/* <GrLogout size="1.5rem" /> */}
         </SideMini>
@@ -188,6 +194,28 @@ const LogoBack = styled.div`
   height: 200px;
 `;
 
+const IconOutter = styled.div`
+  @media (max-width: 1450px) {
+    /* 1450밑으로 넓이가 내려가면 */
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+const IconInfo = styled.div`
+  font-size: 9px;
+  margin: 0px auto;
+  text-align: center;
+  @media (max-width: 1450px) {
+    /* 1450밑으로 넓이가 내려가면 */
+    margin: 0 auto;
+  }
+
+  @media (max-width: 600px) {
+    /* 1450밑으로 넓이가 내려가면 */
+    display: none;
+  }
+`;
 const LOGO = styled.div`
   margin-bottom: 7vh;
 
@@ -291,14 +319,6 @@ const RoundColor = styled.div`
   color: white;
 `;
 
-const IconInfo = styled.div`
-  font-size: 9px;
-  margin-top: -15px;
-  @media (max-width: 1450px) {
-    /* 1450밑으로 넓이가 내려가면 */
-    display: none;
-  }
-`;
 const SflashLogo = styled.div`
   background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A0.png?alt=media&token=92594323-944a-40d7-8085-b323c23246fe");
   width: 60px;

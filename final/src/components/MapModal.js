@@ -13,6 +13,7 @@ import { actionCreators as imageActions } from "../redux/modules/image2";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as CommnetActions } from "../redux/modules/comment";
 import { actionCreators as likeActions } from "../redux/modules/like";
+import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import { forEach } from "lodash";
 import { history } from "../redux/configStore";
 
@@ -23,6 +24,7 @@ const ModalDetail = (props) => {
   React.useEffect(() => {
     // console.log("시작");
     dispatch(CommnetActions.getComment(props.id));
+    // dispatch(ModalActions.getModalPost());
   }, []);
 
   const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
@@ -30,6 +32,19 @@ const ModalDetail = (props) => {
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
 
+  const modalData = useSelector((state) => state.mapmodal.post);
+
+  const getData = []; // 모달데이터가 오기도 전에 실행되서 이렇게 조건을 주어 데이터가 온후에 사용할 수 있게 했다
+  if (modalData) {
+    getData.push(modalData);
+  }
+
+  console.log("짜잔~", getData);
+
+  console.log(getData[0].id);
+  console.log(getData[0].content);
+  console.log(getData[0].like);
+  console.log(getData[0].likeCount);
   const user_info = useSelector((state) => state.user.user);
 
   // console.log(user_info);
@@ -58,7 +73,11 @@ const ModalDetail = (props) => {
   // 받아온 이미지들
   let image_list = [];
 
-  for (let i = 0; i < props.img_url.length; i++) {
+  //   for (let i = 0; i < props.img_url.length; i++) {
+  //     image_list.push(props.img_url[i]);
+  //   }
+
+  for (let i = 0; i < props.img_url; i++) {
     image_list.push(props.img_url[i]);
   }
 
@@ -70,13 +89,18 @@ const ModalDetail = (props) => {
 
   console.log("이미지들!!", images);
 
+  //   let comment_list = [];
+  //   for (let i = 0; i < props.comment.length; i++) {
+  //     comment_list.push(props.comment[i]);
+  //   }
+
   let comment_list = [];
-  for (let i = 0; i < props.comment.length; i++) {
+  for (let i = 0; i < props.comment; i++) {
     comment_list.push(props.comment[i]);
   }
 
-  const comment_List = useSelector((state) => state.comment.list);
-
+  //   const comment_List = useSelector((state) => state.comment.list);
+  const comment_List = [1, 2, 3];
   console.log("이포스트의 댓글은??", comment_List);
 
   const is_comment = comment_List ? true : false;
@@ -140,47 +164,29 @@ const ModalDetail = (props) => {
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
 
-  // console.log("프로필사진", props.profileImg);
-
-  // 콘텐츠 내용이 너무 길때 더보기로 대체해준다
-  // const Box = () => {
-  //   const contentRef = useRef(null);
-  //   const onClick = (e) => {
-  //     contentRef.current.classList.add("show");
-  //     e.currentTarget.classList.add("hide");
-  //   };
-  //   return (
-  //     <Wrap>
-  //       <Ellipsis ref={contentRef}>{data}</Ellipsis>
-  //       <Button>...더보기</Button>
-  //     </Wrap>
-  //   );
-  // };
-
   return (
     <React.Fragment>
       <Component onClick={props.close} />
-
       <ModalComponent>
         <ModalHeader>
           <ModalLeftHeader>
             <React.Fragment>
               <ProCircle
                 src={
-                  props.profileImg
-                    ? props.profileImg
+                  getData[0].profileImg
+                    ? getData[0].profileImg
                     : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                 }
                 onClick={() => {
-                  history.replace(`/story/${props.writerId}`); // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                  history.replace(`/story/${getData[0].writerId}`); // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                 }}
               />
               <ModalAuthor
                 onClick={() => {
-                  history.replace(`/story/${props.writerId}`); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                  history.replace(`/story/${getData[0].writerId}`); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                 }}
               >
-                {props.writerName}
+                {getData[0].writerName}
               </ModalAuthor>
             </React.Fragment>
             {/* <PostDate>{timeForToday(props.creatAt)}</PostDate> */}
@@ -212,7 +218,7 @@ const ModalDetail = (props) => {
             <InfoBoxInner>
               {/*is_like 여부로 하트모양 변경  */}
 
-              {props.like ? (
+              {getData[0].like ? (
                 <LikeBox>
                   <div style={{ cursor: "pointer" }}>
                     {/* 좋아요 상태에 따라서 하트 모양의 조건부 렌더 */}
@@ -220,7 +226,7 @@ const ModalDetail = (props) => {
                       onClick={disLike}
                       style={{ color: "rgb(255, 183, 25)", fontSize: 30 }}
                     />
-                    <LikeCntBox> {props.likeCnt}</LikeCntBox>
+                    <LikeCntBox> {getData[0].likeCount}</LikeCntBox>
                   </div>
                 </LikeBox>
               ) : (
@@ -232,13 +238,13 @@ const ModalDetail = (props) => {
                       onClick={addLike}
                     />
 
-                    <LikeCntBox> {props.likeCnt}</LikeCntBox>
+                    <LikeCntBox> {getData[0].likeCount}</LikeCntBox>
                   </div>
                 </LikeBox>
               )}
 
               {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
-              {props.writerId == user_id ? (
+              {getData.writerId == user_id ? (
                 <ModalEdit>
                   <React.Fragment onClick={props.close}>
                     <EditBtn
@@ -266,16 +272,17 @@ const ModalDetail = (props) => {
                 </ModalEdit>
               ) : (
                 <ModalCate>
-                  <ModalCateInner>#{props.category}</ModalCateInner>
+                  <ModalCateInner>#{getData[0].category}</ModalCateInner>
                 </ModalCate>
               )}
             </InfoBoxInner>
             <React.Fragment>
               <PostTilte>
-                {props.title} <PostDate>{timeForToday(props.creatAt)}</PostDate>
+                {props.title}{" "}
+                <PostDate>{timeForToday(getData[0].creatAt)}</PostDate>
               </PostTilte>
-              <PostContents>{props.content}</PostContents>
-              <PostTime>{props.spotName}</PostTime>
+              <PostContents>{getData[0].content}</PostContents>
+              <PostTime>{getData[0].spotName}</PostTime>
             </React.Fragment>
           </InfoBox>
           <ModalCmtBox>

@@ -36,7 +36,11 @@ const Upload = (props) => {
     }
 
     if (file === undefined) {
-      dispatch(imageActions.setPreview("http://via.placeholder.com/400x300"));
+      dispatch(
+        imageActions.setPreview(
+          "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
+        )
+      );
       return;
     }
 

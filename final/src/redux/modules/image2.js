@@ -5,6 +5,11 @@ import { conforms, result } from "lodash";
 
 const SET_PREVIEW = "SET_PREVIEW";
 const GET_PREVIEW = "GET_PREVIEW";
+
+//게시글 작성중 업로드 모닫을 닫을 시 초기화하는 액션
+
+const RESET_PREVIEW = "RESET_PREVIEW";
+
 const GET_FILE = "GET_FILE";
 const DELETE_PREVIEW = "DELETE_PREVIEW";
 const DELETE_FILE = "DELETE_FILE";
@@ -38,6 +43,11 @@ const RESET_FILE = "RESET_FILE";
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 const getPreview = createAction(GET_PREVIEW, (preview) => ({ preview }));
 const getFile = createAction(GET_FILE, (file) => ({ file }));
+//게시글 작성중 업로드 모닫을 닫을 시 초기화하는 액션
+const resetPreview = createAction(RESET_PREVIEW, (preview, file) => ({
+  preview,
+  file,
+}));
 
 const deleteImageIdx = createAction(DELETE_IMAGE_IDX, (idx) => ({ idx })); // 이건딱히,..,?
 
@@ -62,7 +72,9 @@ const resetFile = createAction(RESET_FILE, (edit) => ({ edit }));
 //가져와서 post 에서 리스트 하나 가져와서 edit에 두고
 
 const initialState = {
-  preview: ["http://via.placeholder.com/400x300"],
+  preview: [
+    "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36",
+  ],
   file: [],
   edit: false, // 잘들어온다 //고쳐야할놈
   image: [], // 이미지를 따로 빼오자 // 이미지 x 클릭시 x 이미지를 제외한 배열이 들어옴 //이게 onlyImage
@@ -131,7 +143,10 @@ export default handleActions(
 
         draft.preview = draft.preview.filter((r) => {
           // 프리뷰 이미지를 걸러내주는 작업
-          if (r !== "http://via.placeholder.com/400x300") {
+          if (
+            r !==
+            "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
+          ) {
             return [...draft.preview, r];
           }
         });
@@ -232,8 +247,15 @@ export default handleActions(
       produce(state, (draft) => {
         draft.editFile = action.payload.edit;
       }),
-  },
 
+    [RESET_PREVIEW]: (state, action) =>
+      produce(state, (draft) => {
+        console.log("프리뷰 초기화!", action.payload.preview);
+        console.log("파일 초기화!", action.payload.file);
+        draft.preview = action.payload.preview;
+        draft.file = action.payload.file;
+      }),
+  },
   initialState
 );
 
@@ -252,6 +274,7 @@ const actionCreators = {
   deleteFileIdx, //idx로 지우자
   resetEdit,
   resetFile, // 파일만따로
+  resetPreview,
 };
 
 export { actionCreators };

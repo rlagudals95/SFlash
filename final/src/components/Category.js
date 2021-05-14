@@ -388,7 +388,7 @@ justify-content: space-between; */
   z-index: 300;
   right: 50px;
   bottom: 50vh;
-  background-color: white;
+  background-color: #f2f3f7;
   padding: 20px;
   border-radius: 7px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
@@ -448,6 +448,8 @@ const CateGoryTitle = styled.div`
   border-bottom: 1px solid lightgray;
   width: 100%;
   font-size: 17px;
+  font-weight: bold;
+  opacity: 0.6;
   padding-bottom: 7px;
   @media (max-width: 1450px) {
     display: none;
@@ -465,7 +467,6 @@ const Btn = styled.button`
   border-radius: 50px;
   box-sizing: border-box;
   border: 1px solid lightgray;
-
   cursor: pointer;
   font-size: 12px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
