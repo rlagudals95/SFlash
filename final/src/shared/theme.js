@@ -20,6 +20,7 @@ const theme = {
     }
     margin: auto;
     padding-bottom: 300px;
+    
     `,
 
   main_color: "rgb(255, 183, 25)",

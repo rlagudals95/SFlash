@@ -18,11 +18,11 @@ const setStoryLike = createAction(SET_STORY_LIKE, (post_list) => ({
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 const initialState = {
-  user_post_list: [], //내가 올린 게시물 리스트
-  user_like_list: [], //내가 좋아요한 게시물 리스트
-  // paging: { start: null, next: null, size: 10 },
-  is_loading: false,
-};
+    user_post_list: [], //내가 올린 게시물 리스트
+    user_like_list: [], //내가 좋아요한 게시물 리스트
+    is_loading: false,
+    paging: { start: null, size: 15 },
+  };
 
 // 스토리페이지 : 유저가 업로드한 게시물 리스트
 // start = null, size = null
@@ -43,10 +43,10 @@ const getUserPostAPI = (userId) => {
         res.data.data.forEach((_post) => {
           let post = {
             id: _post.boardId,
-            writerName: _post.writer,
-            profileImg: _post.writerImgUrl, //이건 추가해야할것 같음
             title: _post.title,
             content: _post.content,
+            writerName: _post.writer,
+            profileImg: _post.writerImgUrl,   
             img_url: _post.boardImgResponseDtoList,
             category: _post.category,
             spotName: _post.spotName,
@@ -89,10 +89,10 @@ const getUserLikeAPI = (userId) => {
         res.data.data.forEach((_post) => {
           let post = {
             id: _post.boardId,
-            writerName: _post.writer,
-            profileImg: _post.writerImgUrl, //이건 추가해야할것 같음
             title: _post.title,
             content: _post.content,
+            writerName: _post.writer,
+            profileImg: _post.writerImgUrl,   
             img_url: _post.boardImgResponseDtoList,
             category: _post.category,
             spotName: _post.spotName,

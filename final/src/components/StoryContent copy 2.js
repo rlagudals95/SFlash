@@ -17,54 +17,25 @@ const StoryContent = (props) => {
 
   // 버튼 탭 구현하기
   // 처음에는 0번째 인덱스 활성화 git
-  // const [active, setActive] = useState(1);
-  // // 클릭한 인덱스 활성화
-  // const handleClick = (e) => {
-  //   const index = parseInt(e.target.id);
-  //   if (index !== active) {
-  //     setActive(index);
-  //   }
-  // };
-  const [gridMode, setGridMode] = React.useState(true);
+  const [active, setActive] = useState(1);
+  // 클릭한 인덱스 활성화
+  const handleClick = (e) => {
+    const index = parseInt(e.target.id);
+    if (index !== active) {
+      setActive(index);
+    }
+  };
 
-  if (post_list === 0) {
-    return (
-      <React.Fragment>
+  return (
+    <React.Fragment>
+      {post_list.length === 0 ? (
         <Warning>
           <SflashLogo />
-          <Text size="1.1rem" color="grey">
-            게시물을 등록해 주세요!
-          </Text>
+          <Text size="1.1rem" color="grey">게시물을 등록해 주세요!</Text>
         </Warning>
-      </React.Fragment>
-    );
-  } else {
-    return (
-      <React.Fragment>
-
-         <Icons>
-            <Icon onClick={() => setGridMode(true)}>
-              <FiImage
-              />
-            </Icon>
-            <Icon onClick={() => setGridMode(false)}>
-              <HiOutlineMap
-              />
-            </Icon>
-          </Icons>
-          
+      ) : (
         <>
-          {gridMode ? (
-            <GridList>
-              {post_list.map((p) => {
-                return <Post2 key={p.id} {...p}></Post2>;
-              })}
-            </GridList>
-          ) : (
-            <StoryMap post_list={post_list} marker_icon={marker_icon} />
-          )}
-
-          {/* <Icons>
+          <Icons>
             <Icon onClick={handleClick} active={active === 1} id={1}>
               <FiImage
                 size="30"
@@ -92,13 +63,16 @@ const StoryContent = (props) => {
           </Content>
           <Content active={active === 2}>
             <Grid height="40px" />
-            
-          </Content> */}
+            <StoryMap></StoryMap>
+              {/* <StoryMap active={props.active} post_list={post_list} marker_icon={marker_icon} /> */}
+          
+          </Content>
         </>
-        <Grid height="300px" />
-      </React.Fragment>
-    );
-  }
+      )}
+
+      <Grid height="300px" />
+    </React.Fragment>
+  );
 };
 
 const Warning = styled.div`
@@ -200,7 +174,9 @@ const Box = styled.div`
 `;
 
 const Content = styled.div`
-  /* ${(props) => (props.active ? "" : "display:none")} */
+  ${(props) => (props.active ? "" : "display:none")}
 `;
+
+
 
 export default StoryContent;
