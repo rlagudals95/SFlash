@@ -38,46 +38,12 @@ const Maps = (props) => {
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
   //조건 걸어주기 // 나를 기준으로 몇 km 이내
 
-  // 카테고리 제어하기 : 12가지 + 전체카테고리
-  // const is_category_in_map = useSelector((state) => {
-  //   return state.category_in_map.is_category_in_map
-  // });
-  // console.log("is_category_in_map: " + is_category_in_map);
-  // const is_all = is_category_in_map.length === 0  ? true : false;
-  // console.log(is_all);
-
-  // // is_category_in_map 배열 안에 해당 카테고리가 원소로서 존재 여부를 true, false로 설정한다.
-  // const is_mypost = is_category_in_map.includes("내꺼");
-  // const is_mylike = is_category_in_map.includes("내좋아요");
-
-  // 종류별 데이터는 필터 함수를 이용해 묶어 내고 필요한 부분에 가져다 쓴다.
-  // 전체 마커, 내 마커, 내가 좋아요한 마커
-  // const allData = map_post_list;
-  // const myPostData = map_post_list.filter(
-  //   (map_post_list) => map_post_list.writerName === nickname
-  // );
-  // // const myPostData = map_post_list.filter(
-  // //   (map_post_list) => map_post_list.writerName === nickname
-  // // );
-  // const myLikeData = map_post_list.filter(
-  //   (map_post_list) => map_post_list.like === true
-  // );
-  // console.log("내좋아요 데이터있나??: " + myLikeData);
-
   // 검색시 화면 렌더링을  제어합니다.(타이핑 할 때마다 렌더링 되지 않도록)
   const debounce = _.debounce((e) => {
     setSearch(e.target.value);
   }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
 
   useEffect(() => {
-    // window.alert('');
-
-    if (startlat && startlon) {
-      console.log(
-        "현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon
-      );
-    } // geolocation은 여기까지--------------------------------------------------------------------------
-
     if (!post_list) {
       return;
     } else {

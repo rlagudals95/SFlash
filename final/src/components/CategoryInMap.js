@@ -7,9 +7,9 @@ import { actionCreators as categoryActionsInMap } from "../redux/modules/categor
 import * as BiIcons from "react-icons/bi";
 // import IconAllSpots from "../shared/images/IconAllSpots.png"
 // import IconMyLikes from "../shared/images/IconMyLikes.png"
-import AllBtn from "../shared/images/spotIcons/AllBtn.png"
-import AllMyPostBtn from "../shared/images/spotIcons/AllMyPostBtn.png"
-import AllMyLikeBtn from "../shared/images/spotIcons/AllMyLikeBtn.png"
+import AllBtn from "../shared/images/spotIcons/AllSpotsBtn.png"
+import AllMyPostBtn from "../shared/images/spotIcons/AllMyPostsBtn.png"
+import AllMyLikeBtn from "../shared/images/spotIcons/AllMyLikesBtn.png"
 // import { actionCreators as PostActions } from "../redux/modules/post";
 
 const CategoryInMap = () => {
@@ -539,7 +539,7 @@ const CategoryInMap = () => {
 export default CategoryInMap;
 
 const MiddleBox = styled.div`
-  height: 35px;
+  height: 40px;
 `;
 
 const SpotSelectBox = styled.div`
@@ -557,6 +557,8 @@ const AllSpotsSelected = styled.img`
   cursor: pointer;
   margin: 5px;
   object-fit: cover;
+  background-size: cover;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2);
 `;
 
 const AllSpots = styled.img`
@@ -565,10 +567,12 @@ const AllSpots = styled.img`
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid lightgray;
+  border: none;
   cursor: pointer;
   margin: 5px;
   object-fit: cover;
+  background-size: cover;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2);
 `;
 
 
@@ -581,7 +585,8 @@ const MyPostSpotsSelected = styled.img`
   border: 1px solid rgb(27, 38, 133);
   cursor: pointer;
   margin: 5px;
-  background-size: cover; 
+  background-size: cover;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2); 
 `;
 
 const MyPostSpots = styled.img`
@@ -590,10 +595,11 @@ const MyPostSpots = styled.img`
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid lightgrey;
+  border: none;
   cursor: pointer;
   margin: 5px;
-  background-size: cover; 
+  background-size: cover;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2); 
 `;
 
 const MyLikeSpotsSelected = styled.img`
@@ -605,7 +611,8 @@ const MyLikeSpotsSelected = styled.img`
   border: 1px solid rgb(253, 133, 152);
   cursor: pointer;
   margin: 5px;
-  background-size: cover; 
+  background-size: cover;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2); 
 `;
 
 const MyLikeSpots = styled.img`
@@ -614,10 +621,11 @@ const MyLikeSpots = styled.img`
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid lightgrey;
+  border: none;
   cursor: pointer;
   margin: 5px;
-  background-size: cover; 
+  background-size: cover;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2); 
 `;
 
 
@@ -631,7 +639,7 @@ justify-content: space-between; */
   position: fixed;
   z-index: 300;
   right: 50px;
-  top: 18vh;
+  top: 25vh;
   /* bottom: 50vh; */
   background-color: white;
   padding: 20px;
@@ -642,48 +650,8 @@ justify-content: space-between; */
     z-index: 300;
     position: fixed;
     margin: auto;
-    width: 98%;
-    /* left: 15vw; */
-    /* width: 100%;
-    left: 0;
-    bottom: 0;
-    justify-content: space-around;
-    flex-direction: row;
-    background-color: transparent;
-    box-shadow: none;
-    padding: 0px 4px;
-    padding-top: -50px;
-    padding-bottom: 10px; */
+    /* width: 98%; */
   }
-  /* @media (max-width: 600px) {
-    // 1450밑으로 넓이가 내려가면
-    z-index: 901;
-    width: 100%;
-    position: fixed;
-    left: 0;
-    top: 140px;
-    justify-content: space-around;
-    flex-direction: row;
-    background-color: transparent;
-    box-shadow: none;
-    padding: 0px 4px;
-    padding-top: -50px;
-    padding-bottom: 10px;
-  }
-  /* height: 100px;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: darkgray;
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: lightgrey;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
-  } */ 
 `;
 
 const CategoryInfo = styled.div`
@@ -733,3 +701,4 @@ const SelectedBtn = styled.button`
   color: #3897f0;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
+

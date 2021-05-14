@@ -16,9 +16,6 @@ import UpLoadModal from "./UpLoadModal";
 import CategoryInMap from "../components/CategoryInMap";
 import category_in_map from "../redux/modules/category_in_map";
 import { LeakRemoveOutlined } from "@material-ui/icons";
-import { actionCreators as ModalActions } from "../redux/modules/mapModal";
-import { actionCreators as PostActions } from "../redux/modules/post";
-import MapModal from "./MapModal";
 
 // window 객체로부터 kakao mpa api를 호출하기
 // 이것이 되게 하기 위해서는 index.html(index.js 아님!!!)의 script 태그안의 src에다가
@@ -73,19 +70,8 @@ const Maps = (props) => {
     return state.post.map_post_list;
   });
 
-  // 디테일 모달 관련 상태값
-
-  const [is_detailModal, setDetailModal] = useState();
-
-  const openModal = () => {
-    setDetailModal(true);
-  };
-  const closeDetailModal = () => {
-    setDetailModal(false);
-  };
-
   if (map_post_list) {
-    console.log(map_post_list); // map_post_list처음에 []빈배열로 찍힌다
+    console.log(map_post_list);
   }
 
   // 종류별 데이터는 필터 함수를 이용해 묶어 내고 필요한 부분에 가져다 쓴다.
@@ -145,7 +131,6 @@ const Maps = (props) => {
     // window.alert('');
     // getLocation();
 
-    // dispatch(PostActions.getPostAPI()); // 따로 API받으면 지우자
     // function getLocation() {  // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
     //   if (navigator.geolocation) {  // GeoLocation을 이용해서 접속 위치를 얻어옵니다
     //     navigator.geolocation.getCurrentPosition(
@@ -171,7 +156,7 @@ const Maps = (props) => {
 
     // if (startlat && startlon) {
     //   console.log("현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon);
-    // } // geolocation은 여기까지
+    // } // geolocation은 여기까지 
 
     if (!map_post_list) {
       return;
@@ -278,7 +263,6 @@ const Maps = (props) => {
         // marker.setDraggable(true);
 
         // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
-        // 이거 이용해서 디테일 모달 띄우는 것도 구현 가능하지 않을까?
         kakao.maps.event.addListener(marker, "click", function () {
           setUpLoadModal(true);
         });
@@ -327,7 +311,6 @@ const Maps = (props) => {
         };
 
         // 모달창(커스텀오버레이)에 들어갈 내용
-        // 여길 클릭할 시에 모달이 떠야한다
         var content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${all.imgForOverlay} >` +
@@ -360,23 +343,15 @@ const Maps = (props) => {
         // console.log(customOverlay);
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        // 마커를 클릭 했을 때 디테일 모달이 나오는
-        //mouseover , mouseout
-        kakao.maps.event.addListener(totalMarkers, "mouseover", function () {
+
+        kakao.maps.event.addListener(totalMarkers, "click", function () {
           // 클릭하면 열기
           customOverlay.setMap(map);
         });
 
-        kakao.maps.event.addListener(totalMarkers, "mouseout", function () {
+        kakao.maps.event.addListener(totalMarkers, "rightclick", function () {
           // 우클릭하면 닫기
           customOverlay.setMap(null);
-        });
-
-        kakao.maps.event.addListener(totalMarkers, "click", function () {
-          // 우클릭하면 닫기
-          openModal();
-          dispatch(ModalActions.getModalPost(all.id));
-          // console.log(all.id);
         });
       });
     }
@@ -427,20 +402,13 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
-        kakao.maps.event.addListener(mypostMarkers, "mouseover", function () {
+        kakao.maps.event.addListener(mypostMarkers, "click", function () {
           mypostCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(mypostMarkers, "mouseout", function () {
+        kakao.maps.event.addListener(mypostMarkers, "rightclick", function () {
           mypostCustomOverlay.setMap(null);
-        });
-
-        // 클릭시 모달 디테일 뜨게 하기 테스트
-        kakao.maps.event.addListener(mypostMarkers, "click", function () {
-          // 우클릭하면 닫기
-          console.log(mypost.spotName);
         });
       });
     }
@@ -491,14 +459,12 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
-        //mouseover , mouseout
-        kakao.maps.event.addListener(mylikeMarkers, "mouseover", function () {
+        kakao.maps.event.addListener(mylikeMarkers, "click", function () {
           mylikeCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(mylikeMarkers, "mouseout", function () {
+        kakao.maps.event.addListener(mylikeMarkers, "rightclick", function () {
           mylikeCustomOverlay.setMap(null);
         });
       });
@@ -547,12 +513,12 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(cafeMarkers, "mouseover", function () {
+        kakao.maps.event.addListener(cafeMarkers, "click", function () {
           cafeCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(cafeMarkers, "mouseout", function () {
+        kakao.maps.event.addListener(cafeMarkers, "rightclick", function () {
           cafeCustomOverlay.setMap(null);
         });
       });
@@ -601,12 +567,12 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(nightMarkers, "mouseover", function () {
+        kakao.maps.event.addListener(nightMarkers, "click", function () {
           nightCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(nightMarkers, "mouseout", function () {
+        kakao.maps.event.addListener(nightMarkers, "rightclick", function () {
           nightCustomOverlay.setMap(null);
         });
       });
@@ -655,12 +621,12 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(oceanMarkers, "mouseover", function () {
+        kakao.maps.event.addListener(oceanMarkers, "click", function () {
           oceanCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(oceanMarkers, "mouseout", function () {
+        kakao.maps.event.addListener(oceanMarkers, "rightclick", function () {
           oceanCustomOverlay.setMap(null);
         });
       });
@@ -712,14 +678,18 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(mountainMarkers, "mouseover", function () {
+        kakao.maps.event.addListener(mountainMarkers, "click", function () {
           mountainCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(mountainMarkers, "mouseout", function () {
-          mountainCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          mountainMarkers,
+          "rightclick",
+          function () {
+            mountainCustomOverlay.setMap(null);
+          }
+        );
       });
     }
 
@@ -766,12 +736,12 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(flowerMarkers, "mouseover", function () {
+        kakao.maps.event.addListener(flowerMarkers, "click", function () {
           flowerCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(flowerMarkers, "mouseout", function () {
+        kakao.maps.event.addListener(flowerMarkers, "rightclick", function () {
           flowerCustomOverlay.setMap(null);
         });
       });
@@ -820,12 +790,12 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(aloneMarkers, "mouseover", function () {
+        kakao.maps.event.addListener(aloneMarkers, "click", function () {
           aloneCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(aloneMarkers, "mouseout", function () {
+        kakao.maps.event.addListener(aloneMarkers, "rightclick", function () {
           aloneCustomOverlay.setMap(null);
         });
       });
@@ -874,12 +844,12 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(coupleMarkers, "mouseover", function () {
+        kakao.maps.event.addListener(coupleMarkers, "click", function () {
           coupleCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(coupleMarkers, "mouseout", function () {
+        kakao.maps.event.addListener(coupleMarkers, "rightclick", function () {
           coupleCustomOverlay.setMap(null);
         });
       });
@@ -928,12 +898,12 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(friendMarkers, "mouseover", function () {
+        kakao.maps.event.addListener(friendMarkers, "click", function () {
           friendCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(friendMarkers, "mouseout", function () {
+        kakao.maps.event.addListener(friendMarkers, "rightclick", function () {
           friendCustomOverlay.setMap(null);
         });
       });
@@ -982,12 +952,12 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(petMarkers, "mouseover", function () {
+        kakao.maps.event.addListener(petMarkers, "click", function () {
           petCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(petMarkers, "mouseout", function () {
+        kakao.maps.event.addListener(petMarkers, "rightclick", function () {
           petCustomOverlay.setMap(null);
         });
       });
@@ -1036,12 +1006,12 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(cityMarkers, "mouseover", function () {
+        kakao.maps.event.addListener(cityMarkers, "click", function () {
           cityCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(cityMarkers, "mouseout", function () {
+        kakao.maps.event.addListener(cityMarkers, "rightclick", function () {
           cityCustomOverlay.setMap(null);
         });
       });
@@ -1090,12 +1060,12 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(parkMarkers, "mouseover", function () {
+        kakao.maps.event.addListener(parkMarkers, "click", function () {
           parkCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(parkMarkers, "mouseout", function () {
+        kakao.maps.event.addListener(parkMarkers, "rightclick", function () {
           parkCustomOverlay.setMap(null);
         });
       });
@@ -1167,7 +1137,7 @@ const Maps = (props) => {
     // useEffect의 두번째 인자들에는 검색, 시작 좌표, 카테고리 설정값이 들어간다.
   // }, [search, startlat, startlon,
   // }, [startlat, startlon]);
-  }, [is_mypost, is_mylike, map_post_list,
+  }, [is_mypost, is_mylike,
     is_all, is_cafe, is_night, is_ocean, is_mountain, is_flower,
     is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
 
@@ -1209,14 +1179,6 @@ const Maps = (props) => {
 
   return (
     <React.Fragment>
-      {is_detailModal ? (
-        <MapModal
-          // onClick={openModal}
-          close={closeDetailModal}
-          {...map_post_list}
-        ></MapModal>
-      ) : null}
-
       <SearchBox>
         <SearchInput
           type="text"
@@ -1230,14 +1192,14 @@ const Maps = (props) => {
         {/* 위에서 설정된 getElementById("map")에 의해서 id="map"인 div에 맵이 표시된다 */}
         <div id="map" style={{ width: "100vw", height: "100vh" }}></div>
       </MapBox>
-      {/* { is_total ? 
-        markerdata.forEach((p) => {
-          //...각종 변수들 정의
+      {/* { is_all ? 
+        allData.forEach((p) => {
           <CustomOverlay
-            content={<MyOverlay />}
-            lat={p.latitude}
-            lng={p.longitude}>
-          </CustomOverlay>}) : null} */}
+            content={<MyOverlay p={p} />}
+            latitude={p.latitude}
+            longitude={p.longitude}
+            spotName={p.spotName}
+            {...p}/>) : null} */}
       {is_uploadModal ? (
         <UpLoadModal
           latitude={latitude}
@@ -1293,9 +1255,6 @@ const SearchInput = styled.input`
   padding-left: 15px;
   font-size: 15px;
   border: none;
-  background-image: url('https://i.postimg.cc/P5xKdMqb/71403.png');
-  background-position: top right;
-  background-repeat:no-repeat;
   &:focus {
     /* outline: blue; */
     border-radius: 5px;
