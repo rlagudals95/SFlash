@@ -43,7 +43,7 @@ const initialState = {
             title: _post.title,
             content: _post.content,
 
-            img_url: _post.boardImgReponseDtoList,
+            img_url: _post.boardImgResponseDtoList,
             category: _post.category,
             spotName: _post.spotName,
             latitude: _post.latitude,
@@ -87,7 +87,7 @@ const initialState = {
             title: _post.title,
             content: _post.content,
 
-            img_url: _post.boardImgReponseDtoList,
+            img_url: _post.boardImgResponseDtoList,
             category: _post.category,
             spotName: _post.spotName,
             latitude: _post.latitude,
