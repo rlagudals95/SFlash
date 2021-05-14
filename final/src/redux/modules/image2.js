@@ -5,6 +5,11 @@ import { conforms, result } from "lodash";
 
 const SET_PREVIEW = "SET_PREVIEW";
 const GET_PREVIEW = "GET_PREVIEW";
+
+//게시글 작성중 업로드 모닫을 닫을 시 초기화하는 액션
+
+const RESET_PREVIEW = "RESET_PREVIEW";
+
 const GET_FILE = "GET_FILE";
 const DELETE_PREVIEW = "DELETE_PREVIEW";
 const DELETE_FILE = "DELETE_FILE";
@@ -38,6 +43,11 @@ const RESET_FILE = "RESET_FILE";
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 const getPreview = createAction(GET_PREVIEW, (preview) => ({ preview }));
 const getFile = createAction(GET_FILE, (file) => ({ file }));
+//게시글 작성중 업로드 모닫을 닫을 시 초기화하는 액션
+const resetPreview = createAction(RESET_PREVIEW, (preview, file) => ({
+  preview,
+  file,
+}));
 
 const deleteImageIdx = createAction(DELETE_IMAGE_IDX, (idx) => ({ idx })); // 이건딱히,..,?
 
@@ -237,8 +247,15 @@ export default handleActions(
       produce(state, (draft) => {
         draft.editFile = action.payload.edit;
       }),
-  },
 
+    [RESET_PREVIEW]: (state, action) =>
+      produce(state, (draft) => {
+        console.log("프리뷰 초기화!", action.payload.preview);
+        console.log("파일 초기화!", action.payload.file);
+        draft.preview = action.payload.preview;
+        draft.file = action.payload.file;
+      }),
+  },
   initialState
 );
 
@@ -257,6 +274,7 @@ const actionCreators = {
   deleteFileIdx, //idx로 지우자
   resetEdit,
   resetFile, // 파일만따로
+  resetPreview,
 };
 
 export { actionCreators };
