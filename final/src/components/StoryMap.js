@@ -38,74 +38,12 @@ const Maps = (props) => {
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
   //조건 걸어주기 // 나를 기준으로 몇 km 이내
 
-  // 카테고리 제어하기 : 12가지 + 전체카테고리
-  // const is_category_in_map = useSelector((state) => {
-  //   return state.category_in_map.is_category_in_map
-  // });
-  // console.log("is_category_in_map: " + is_category_in_map);
-  // const is_all = is_category_in_map.length === 0  ? true : false;
-  // console.log(is_all);
-
-  // // is_category_in_map 배열 안에 해당 카테고리가 원소로서 존재 여부를 true, false로 설정한다.
-  // const is_mypost = is_category_in_map.includes("내꺼");
-  // const is_mylike = is_category_in_map.includes("내좋아요");
-
-  // 종류별 데이터는 필터 함수를 이용해 묶어 내고 필요한 부분에 가져다 쓴다.
-  // 전체 마커, 내 마커, 내가 좋아요한 마커
-  // const allData = map_post_list;
-  // const myPostData = map_post_list.filter(
-  //   (map_post_list) => map_post_list.writerName === nickname
-  // );
-  // // const myPostData = map_post_list.filter(
-  // //   (map_post_list) => map_post_list.writerName === nickname
-  // // );
-  // const myLikeData = map_post_list.filter(
-  //   (map_post_list) => map_post_list.like === true
-  // );
-  // console.log("내좋아요 데이터있나??: " + myLikeData);
-
   // 검색시 화면 렌더링을  제어합니다.(타이핑 할 때마다 렌더링 되지 않도록)
   const debounce = _.debounce((e) => {
     setSearch(e.target.value);
   }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
 
   useEffect(() => {
-    // window.alert('');
-    // getLocation();
-
-    // function getLocation() {
-    //   // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-    //   if (navigator.geolocation) {
-    //     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-    //     navigator.geolocation.getCurrentPosition(
-    //       function (position) {
-    //         setStartLat(position.coords.latitude);
-    //         setStartLon(position.coords.longitude);
-    //       },
-    //       function (error) {
-    //         console.error(error);
-    //       },
-    //       {
-    //         enableHighAccuracy: false,
-    //         maximumAge: 0,
-    //         timeout: Infinity,
-    //       }
-    //     );
-    //   } else {
-    //     // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-    //     window.alert(
-    //       "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
-    //     );
-    //   }
-    // }
-
-    if (startlat && startlon) {
-      console.log(
-        "현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon
-      );
-    } // geolocation은 여기까지--------------------------------------------------------------------------
-
-
     if (!post_list) {
       return;
     } else {
@@ -113,8 +51,8 @@ const Maps = (props) => {
       var container = document.getElementById("map"); // 지도를 표시할 div
       var options = {
         //지도를 생성할 때 필요한 기본 옵션
-        center: new kakao.maps.LatLng(startlat, startlon), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
-        level: 3, //지도 확대 레벨
+        center: new kakao.maps.LatLng(35.83819028173818, 127.88227108131916), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
+        level: 13, //지도 확대 레벨
       };
 
       var map = new kakao.maps.Map(container, options); // 지도생성 및 객체 리턴
@@ -187,7 +125,6 @@ const Maps = (props) => {
         });
       });
     }
-
   }, [post_list]);
 
   //useEffect 끝 -----------------------------------------------------------------------------------------------------

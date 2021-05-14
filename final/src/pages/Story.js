@@ -4,6 +4,7 @@ import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 import { actionCreators as storypostActions } from "../redux/modules/storypost";
+import { actionCreators as postActions } from "../redux/modules/post";
 
 import StoryUserProfile from "../components/StoryUserProfile";
 import StoryContent from "../components/StoryContent";
@@ -27,14 +28,17 @@ const Story = (props) => {
 
   React.useEffect(() => {
     dispatch(profileActions.getUserInfoAPI(userId));
-  }, []);
-  React.useEffect(() => {
     dispatch(storypostActions.getUserPostAPI(userId));
-  }, []);
-  React.useEffect(() => {
     dispatch(storypostActions.getUserLikeAPI(userId));
+    dispatch(postActions.getPostAPI());
   }, []);
 
+  // React.useEffect(() => {
+  //   dispatch(storypostActions.getUserPostAPI(userId));
+  // }, []);
+  // React.useEffect(() => {
+  //   dispatch(storypostActions.getUserLikeAPI(userId));
+  // }, []);
 
   // '유저의 게시물/ 유저의 좋아요' 탭 제어하기 : 처음에는 유저의 게시물("myPost") 탭 활성화
   const [active, setActive] = React.useState("myPost");
@@ -46,10 +50,9 @@ const Story = (props) => {
     }
   };
 
-   // Marker Icon
-   const userPostMarkerImgUrl = "https://i.postimg.cc/3w264rbs/2x.png";
-   const userLikeMarkerImgUrl = "https://i.postimg.cc/3rZTf11s/2x.png";
-
+  // Marker Icon
+  const userPostMarkerImgUrl = "https://i.postimg.cc/3w264rbs/2x.png";
+  const userLikeMarkerImgUrl = "https://i.postimg.cc/3rZTf11s/2x.png";
 
   // const user_post_list = useSelector((state) => {
   //   // console.log(state);
@@ -65,7 +68,7 @@ const Story = (props) => {
     <React.Fragment>
       <Wrapper>
         {/* 상단 유저 프로필 부분 컴포넌트 */}
-          <StoryUserProfile user_info={user_info} userId={userId}/>
+        <StoryUserProfile user_info={user_info} userId={userId} />
 
         {/* '내 게시물'과 '좋아요한 게시물'을 나눠주는 탭: active 값을 이용해 제어
     active 의 값에 따라 content 부분의 내용이 바뀐다. 
@@ -85,14 +88,20 @@ const Story = (props) => {
           </Tab>
         </Tabs>
 
-          <Content active={active === "myPost"}>
-            <StoryContent post_list={user_post_list} marker_icon={userPostMarkerImgUrl}/>
-          </Content>
-          <Content active={active === "myLike"}>
-            <StoryContent post_list={user_like_list} marker_icon={userLikeMarkerImgUrl}/>
-          </Content>
+        <Content active={active === "myPost"}>
+          <StoryContent
+            post_list={user_post_list}
+            marker_icon={userPostMarkerImgUrl}
+          />
+        </Content>
+        <Content active={active === "myLike"}>
+          <StoryContent
+            post_list={user_like_list}
+            marker_icon={userLikeMarkerImgUrl}
+          />
+        </Content>
 
-         {/* 
+        {/* 
       <Tabs>
           <Tab onClick={UserPostTab} >
             <b>{user_info.nickname}</b> 님의 게시물
@@ -142,17 +151,15 @@ const Tab = styled.button`
     background-color: ${(props) => (props.active ? "white" : "#eee")};
   }
   @media (min-width: 1280px) {
-      
-    }
-    @media (max-width: 1280px) {
-    
-    }
-    @media (max-width: 960px) {
-      font-size: 1.1rem;
-    }
-    @media (max-width: 400px) {
-      font-size: 1rem;
-    }
+  }
+  @media (max-width: 1280px) {
+  }
+  @media (max-width: 960px) {
+    font-size: 1.1rem;
+  }
+  @media (max-width: 400px) {
+    font-size: 1rem;
+  }
 `;
 
 const TabUnderBar = styled.div`

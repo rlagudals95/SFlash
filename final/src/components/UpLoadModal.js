@@ -224,7 +224,7 @@ const UploadModal = (props) => {
         <ModalHeader>
           <HeaderInner>
             <ExitContainer>
-              <ExitBtn onClick={props.close}>
+              <ExitBtn onClick={resetPreview}>
                 <CloseIcon fontSize="large" />
               </ExitBtn>
             </ExitContainer>
@@ -351,6 +351,7 @@ const UploadModal = (props) => {
                       placeholder={props.title}
                       rows={1}
                       variant="outlined"
+                      width={"100%"}
                       value={title}
                       _onChange={changeTitle}
                     ></Input2>
@@ -361,6 +362,7 @@ const UploadModal = (props) => {
                     placeholder={props.content}
                     rows={6}
                     multiLine
+                    width={"100%"}
                     variant="outlined"
                     value={contents}
                     _onChange={changeContents}
@@ -377,6 +379,7 @@ const UploadModal = (props) => {
                     rows={1}
                     variant="outlined"
                     value={title}
+                    width={"100%"}
                     _onChange={changeTitle}
                   ></Input2>
                 </Title>
@@ -388,6 +391,7 @@ const UploadModal = (props) => {
                   multiLine
                   variant="outlined"
                   value={contents}
+                  width={"100%"}
                   _onChange={changeContents}
                 ></Input>
               </React.Fragment>
@@ -456,7 +460,7 @@ const DeleteImg = styled.div`
   z-index: 4700;
   text-align: center;
   position: relative;
-  background-color: red;
+  /* background-color: red; */
   width: 50px;
   top: 15px;
   right: -15px;
@@ -562,14 +566,14 @@ const Component = styled.div`
 const ModalComponent = styled.div`
   border-radius: 0.5vw;
   position: fixed !important;
-  width: 590px;
+  /* width: 590px; */
+  width: 500px;
   height: 820px;
   max-height: 820px;
   /* overflow: hidden; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
   background-color: green;
   background-color: #fafafc;
   z-index: 1001;
@@ -578,6 +582,7 @@ const ModalComponent = styled.div`
   border: none;
   box-sizing: border-box;
   min-width: 380px;
+  /* overflow-x: hidden; */
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
@@ -690,8 +695,7 @@ const ModalBottomContainer = styled.div`
   margin: 0px auto;
   margin-top: 30px;
   text-align: left;
-
-  width: 550px;
+  width: 450px;
   height: 380px;
   display: flex;
   flex-direction: column;
@@ -764,22 +768,28 @@ const MiddleBox = styled.div`
   display: flex;
   flex-direction: column;
   height: 255px;
+  width: 100%;
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     height: 235px;
     /* background-color: red; */
   }
   /* justify-content: space-between; */
-  /* background-color: red; */
+
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     height: 220px;
   }
 `;
+const InputOutter = styled.div`
+  margin: 0px auto;
+  width: 100%;
+`;
 
 const Title = styled.div`
   margin-bottom: 1vh;
 `;
+
 const CateBtn = styled.div`
   font-size: bold;
   width: 6.5vw;

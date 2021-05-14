@@ -58,7 +58,10 @@ const getComment = (board_id) => {
 
     console.log("이거 가져와", getCommentPost);
 
-    const comment_list = getCommentPost.comment;
+    // const comment_list = getCommentPost.comment;
+
+    const comment_list = [1, 2, 3];
+
     console.log(comment_list); // 여기까진 잘된다./.
     dispatch(getCommentList(comment_list));
   };
