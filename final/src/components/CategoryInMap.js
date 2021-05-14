@@ -556,7 +556,6 @@ const AllSpotsSelected = styled.img`
   border: 1px solid rgb(255, 183, 25);
   cursor: pointer;
   margin: 5px;
-  padding: 5px;
   object-fit: cover;
 `;
 
@@ -569,7 +568,6 @@ const AllSpots = styled.img`
   border: 1px solid lightgray;
   cursor: pointer;
   margin: 5px;
-  padding: 5px;
   object-fit: cover;
 `;
 
@@ -583,7 +581,6 @@ const MyPostSpotsSelected = styled.img`
   border: 1px solid rgb(27, 38, 133);
   cursor: pointer;
   margin: 5px;
-  padding: 5px;
   background-size: cover; 
 `;
 
@@ -596,7 +593,6 @@ const MyPostSpots = styled.img`
   border: 1px solid lightgrey;
   cursor: pointer;
   margin: 5px;
-  padding: 5px;
   background-size: cover; 
 `;
 
@@ -609,7 +605,6 @@ const MyLikeSpotsSelected = styled.img`
   border: 1px solid rgb(253, 133, 152);
   cursor: pointer;
   margin: 5px;
-  padding: 5px;
   background-size: cover; 
 `;
 
@@ -622,7 +617,6 @@ const MyLikeSpots = styled.img`
   border: 1px solid lightgrey;
   cursor: pointer;
   margin: 5px;
-  padding: 5px;
   background-size: cover; 
 `;
 
