@@ -16,8 +16,8 @@ const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 const initialState = {
     user_post_list: [], //내가 올린 게시물 리스트
     user_like_list: [], //내가 좋아요한 게시물 리스트
-    // paging: { start: null, next: null, size: 10 },
     is_loading: false,
+    paging: { start: null, size: 15 },
   };
 
 // 스토리페이지 : 유저가 업로드한 게시물 리스트
@@ -37,13 +37,11 @@ const initialState = {
         res.data.data.forEach((_post) => {
           let post = {
             id: _post.boardId,
-            writerName: _post.writer,
-            profileImg: _post.userImgUrl,    //이건 추가해야할것 같음
-
             title: _post.title,
             content: _post.content,
-
-            img_url: _post.boardImgReponseDtoList,
+            writerName: _post.writer,
+            profileImg: _post.writerImgUrl,   
+            img_url: _post.boardImgResponseDtoList,
             category: _post.category,
             spotName: _post.spotName,
             latitude: _post.latitude,
@@ -81,13 +79,11 @@ const initialState = {
         res.data.data.forEach((_post) => {
           let post = {
             id: _post.boardId,
-            writerName: _post.writer,
-            profileImg: _post.userImgUrl,    //이건 추가해야할것 같음
-
             title: _post.title,
             content: _post.content,
-
-            img_url: _post.boardImgReponseDtoList,
+            writerName: _post.writer,
+            profileImg: _post.writerImgUrl,   
+            img_url: _post.boardImgResponseDtoList,
             category: _post.category,
             spotName: _post.spotName,
             latitude: _post.latitude,

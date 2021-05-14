@@ -2,20 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { CustomOverlay } from "react-kakao-maps";
 // 리덕스를 이용하게 해주는 함수들, 모듈 파일 가져오기
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
-import { actionCreators as userActions } from "../redux/modules/user";
-import { history } from "../redux/configStore";
-import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지url
 
 import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
-
-// component, element 파일들 가져오기
 import "../Css/Map.css";
-import UpLoadModal from "./UpLoadModal";
-import CategoryInMap from "../components/CategoryInMap";
-import category_in_map from "../redux/modules/category_in_map";
-import { LeakRemoveOutlined } from "@material-ui/icons";
+
 
 // window 객체로부터 kakao mpa api를 호출하기
 // 이것이 되게 하기 위해서는 index.html(index.js 아님!!!)의 script 태그안의 src에다가
@@ -23,14 +14,9 @@ import { LeakRemoveOutlined } from "@material-ui/icons";
 const { kakao } = window;
 
 const StoryMap = (props) => {
-
-    const { post_list, marker_icon } = props;
-    console.log(post_list);
-    console.log(marker_icon);
-
-  const dispatch = useDispatch();
-  const is_login = useSelector((state) => state.user.is_login);
-  const nickname = localStorage.getItem("nickname"); // 내가 작성한 게시물을 판별하는 기준 상수
+  const { post_list, marker_icon } = props;
+  console.log(post_list);
+  console.log(marker_icon);
 
   // 사진이 나오는 모달창 제어
   const [is_modal, setModal] = useState(false); // 마커 클릭하면 나오는 작은 모달
@@ -51,15 +37,14 @@ const StoryMap = (props) => {
     setSearch(e.target.value);
   }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
 
- 
-
-  
   useEffect(() => {
     // window.alert('');
-    getLocation();
 
-    function getLocation() {  // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-      if (navigator.geolocation) {  // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+    getLocation(); //--------------------------------------------------------------------------------------------
+    function getLocation() {
+      // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+      if (navigator.geolocation) {
+        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
         navigator.geolocation.getCurrentPosition(
           function (position) {
             setStartLat(position.coords.latitude);
@@ -74,7 +59,8 @@ const StoryMap = (props) => {
             timeout: Infinity,
           }
         );
-      } else {  // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+      } else {
+        // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
         window.alert(
           "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
         );
@@ -82,79 +68,82 @@ const StoryMap = (props) => {
     }
 
     if (startlat && startlon) {
-      console.log("현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon);
-    } // geolocation은 여기까지 
-
+      console.log(
+        "현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon
+      );
+    } // ---------------------------------------------------------------------------------------------
 
       // 페이지가 렌더링 되면 지도 띄우기
-      var container = document.getElementById("map"); // 지도를 표시할 div
-      var options = {
+     const container = document.getElementById("myMap"); // 지도를 표시할 div
+     const options = {
         //지도를 생성할 때 필요한 기본 옵션
-        center: new kakao.maps.LatLng(35.83819028173818, 127.88227108131916), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
-        level: 12, //지도 확대 레벨
+        center: new kakao.maps.LatLng(startlat, startlon), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
+        level: 7, //지도 확대 레벨
       };
 
-      var map = new kakao.maps.Map(container, options); // 지도생성 및 객체 리턴
+      const map = new kakao.maps.Map(container, options); // 지도생성 및 객체 리턴
       // -----------------------------------------------------------------------------------
       // 여기까지는 지도를 가져오기 위한 필수 부분.
-     
+      // 아래부터 우리가 원하는걸 구현하는 코드를 작성한다.
+      // -----------------------------------------------------------------------------------
 
       // useEffect 밖으로 map정보를 가져오기 위해서 useState로 함수를 만든다.
       setMap(map);
-    
-      if (post_list) {
-        post_list.forEach((post) => {
-          // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-          const imageSize = new kakao.maps.Size(30, 40);
-          const markerImage = new kakao.maps.MarkerImage(marker_icon, imageSize);
-          const position = new kakao.maps.LatLng(post.latitude, post.longitude);
-          const postMarkers = new kakao.maps.Marker({
-            map: map,
-            position: position,
-            image: markerImage,
-          });
-  
-          // 모달창(커스텀오버레이)에 들어갈 내용
-          const content =
-            '<div class="modalcontainer">' +
-            `<img class="picbox"  src=${post.img_url[0]} >` +
-            // `<img src=${p.imgUrl} onclick={() => {history}}>` +
-            '<div class="head">' +
-            `<div class="spotname">${post.spotName}</div>` +
-            "</div>" +
-            // '<div class="center"></div>' +
-            '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-            "</div>" +
-            "</div>";
-  
-          // 모달창(커스텀오버레이) 객체를 생성
-          const postCustomOverlay = new kakao.maps.CustomOverlay({
-            // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
-            clickable: true, // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
-            position: position, // 커스텀 오버레이의 좌표
-            content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
-            xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-            yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-            zIndex: 100, //  커스텀 오버레이의 z-index
-            altitude: 10,
-          });
-  
-          // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-          kakao.maps.event.addListener(postMarkers, "click", function () {
-            postCustomOverlay.setMap(map);
-          });
-  
-          //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-          kakao.maps.event.addListener(postMarkers, "rightclick", function () {
-            postCustomOverlay.setMap(null);
-          });
-        });
-      }
-  
-    }, [post_list]);
-  
 
+
+    if (post_list) {
+      post_list.forEach((post) => {
+        // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
+        const imageSize = new kakao.maps.Size(30, 40);
+        const markerImage = new kakao.maps.MarkerImage(marker_icon, imageSize);
+        const position = new kakao.maps.LatLng(post.latitude, post.longitude);
+        const postMarkers = new kakao.maps.Marker({
+          map: map,
+          position: position,
+          image: markerImage,
+        });
+
+        // 모달창(커스텀오버레이)에 들어갈 내용
+        const content =
+          '<div class="modalcontainer">' +
+          `<img class="picbox"  src=${post.img_url[0]} >` +
+          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
+          '<div class="head">' +
+          `<div class="spotname">${post.spotName}</div>` +
+          "</div>" +
+          // '<div class="center"></div>' +
+          '<div class="bottomiconbox">' +
+          '<img class="likeicon" onclick></img>' +
+          "</div>" +
+          "</div>";
+
+        // 모달창(커스텀오버레이) 객체를 생성
+        const postCustomOverlay = new kakao.maps.CustomOverlay({
+          // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
+          clickable: true, // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
+          position: position, // 커스텀 오버레이의 좌표
+          content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
+          xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          zIndex: 100, //  커스텀 오버레이의 z-index
+          altitude: 10,
+        });
+
+        // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
+        kakao.maps.event.addListener(postMarkers, "click", function () {
+          postCustomOverlay.setMap(map);
+        });
+
+        //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
+        kakao.maps.event.addListener(postMarkers, "rightclick", function () {
+          postCustomOverlay.setMap(null);
+        });
+      });
+    }
+
+  }, [post_list]);
+
+  //useEffect 끝 -----------------------------------------------------------------------------------------------------
 
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다
@@ -186,21 +175,19 @@ const StoryMap = (props) => {
     });
   }
 
-
   return (
     <React.Fragment>
-      <SearchBox>
+       <SearchBox>
         <SearchInput
           type="text"
           placeholder="지역으로 검색"
           onChange={debounce}
         />
       </SearchBox>
-      <MapBox>
+      <MapBox id="myMap">
+      <div id="map" style={{ width: "100vw", height: "100vh" }}></div>
         {/* 위에서 설정된 getElementById("map")에 의해서 id="map"인 div에 맵이 표시된다 */}
-        <div id="map" style={{ width: "100%", height: "700px" }}></div>
       </MapBox>
-      
     </React.Fragment>
   );
 };
@@ -209,16 +196,16 @@ export default StoryMap;
 
 const SearchBox = styled.div`
   position: absolute;
-  margin-top: 25px;
-  margin-left: 25px;
+  margin-top: 30px;
+  margin-left: 30px;
   z-index: 10;
-  width: 350px;
+  width: 400px;
 `;
 
 const SearchInput = styled.input`
-  height: 45px;
+  height: 50px;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
   padding-left: 15px;
   font-size: 15px;
   border: none;
@@ -227,13 +214,17 @@ const SearchInput = styled.input`
     border-radius: 5px;
     border-color: blue;
   }
-  opacity: 0.8;
-  
 `;
 
 const MapBox = styled.div`
-  width: 100%;
-  height: 650px;
   position: relative;
-
+  width: 1000px;
+  height: 600px;
+  @media (max-width: 1000px){
+    width: 85%;
+  };
+  @media (max-width: 450px){
+    width: 95%;
+    height: 400px;
+  }
 `;
