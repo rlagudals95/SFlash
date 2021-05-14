@@ -467,7 +467,6 @@ const Btn = styled.button`
   border-radius: 50px;
   box-sizing: border-box;
   border: 1px solid lightgray;
-
   cursor: pointer;
   font-size: 12px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
