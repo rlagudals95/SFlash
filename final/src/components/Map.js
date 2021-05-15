@@ -1308,8 +1308,8 @@ const SearchInput = styled.input`
   font-size: 15px;
   border: none;
   /* background-image: url("https://i.postimg.cc/P5xKdMqb/71403.png"); */
-  background-position: top right;
-  background-repeat: no-repeat;
+  /* background-position: top right;
+  background-repeat: no-repeat; */
   &:focus {
     /* outline: blue; */
     border-radius: 5px;
