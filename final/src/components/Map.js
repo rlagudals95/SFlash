@@ -9,7 +9,7 @@ import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지
 
 import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
-
+import * as BiIcons from "react-icons/bi";
 // component, element 파일들 가져오기
 import "../Css/Map.css";
 import UpLoadModal from "./UpLoadModal";
@@ -369,14 +369,14 @@ const Maps = (props) => {
 
         kakao.maps.event.addListener(totalMarkers, "mouseout", function () {
           // 우클릭하면 닫기
+
           customOverlay.setMap(null);
         });
 
         kakao.maps.event.addListener(totalMarkers, "click", function () {
-          // 우클릭하면 닫기
+          // 클릭하면 모달 오픈하고 동시에 모달정보 받아오기
+          dispatch(ModalActions.getModalPost(all.id)); // 오픈 모달모달보다 먼저 선언되어야 한다  꼭!
           openModal();
-          dispatch(ModalActions.getModalPost(all.id));
-          // console.log(all.id);
         });
       });
     }
@@ -1165,12 +1165,26 @@ const Maps = (props) => {
     // 지도 api 설정은 여기서 끝
     // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
     // useEffect의 두번째 인자들에는 검색, 시작 좌표, 카테고리 설정값이 들어간다.
-  // }, [search, startlat, startlon,
-  // }, [startlat, startlon]);
-  }, [is_mypost, is_mylike, map_post_list,
-    is_all, is_cafe, is_night, is_ocean, is_mountain, is_flower,
-    is_alone, is_couple, is_friend, is_pet, is_city, is_park, is_exhibition]);
-
+    // }, [search, startlat, startlon,
+    // }, [startlat, startlon]);
+  }, [
+    is_mypost,
+    is_mylike,
+    map_post_list,
+    is_all,
+    is_cafe,
+    is_night,
+    is_ocean,
+    is_mountain,
+    is_flower,
+    is_alone,
+    is_couple,
+    is_friend,
+    is_pet,
+    is_city,
+    is_park,
+    is_exhibition,
+  ]);
 
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다
@@ -1213,7 +1227,7 @@ const Maps = (props) => {
         <MapModal
           // onClick={openModal}
           close={closeDetailModal}
-          {...map_post_list}
+          // {...map_post_list}
         ></MapModal>
       ) : null}
 
@@ -1223,6 +1237,10 @@ const Maps = (props) => {
           placeholder="지역으로 검색"
           onChange={debounce}
         />
+
+        <SearchIcon>
+          <BiIcons.BiSearch size="2rem" color="rgb(255, 183, 25)" />
+        </SearchIcon>
       </SearchBox>
       <CategoryInMap />
       {/* <CustomOverlayUseInfo/> */}
@@ -1293,14 +1311,20 @@ const SearchInput = styled.input`
   padding-left: 15px;
   font-size: 15px;
   border: none;
-  background-image: url('https://i.postimg.cc/P5xKdMqb/71403.png');
+  /* background-image: url("https://i.postimg.cc/P5xKdMqb/71403.png"); */
   background-position: top right;
-  background-repeat:no-repeat;
+  background-repeat: no-repeat;
   &:focus {
     /* outline: blue; */
     border-radius: 5px;
     border-color: blue;
   }
+`;
+
+const SearchIcon = styled.div`
+  position: fixed;
+  top: 10px;
+  right: 0;
 `;
 
 const MapBox = styled.div`
