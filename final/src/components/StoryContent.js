@@ -32,7 +32,7 @@ const StoryContent = (props) => {
     );
   }
   // 게시물이 있을 때
-   else {
+  else {
     return (
       <React.Fragment>
         {/* 우측 아이콘 버튼 : gridMode를 제어 합니다.*/}
