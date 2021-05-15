@@ -1348,7 +1348,7 @@ const SearchBox = styled.div`
     top: 80px;
     width: 50%;
     margin: auto;
-    left: 20vw;
+    left: 30vw;
   }
 `;
 
