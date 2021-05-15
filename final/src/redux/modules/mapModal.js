@@ -31,9 +31,9 @@ const getModalPost = (id) => {
   };
 };
 
-const getModalPostAPI = (id) => {
-  return function (dispatch) {};
-};
+// const getModalPostAPI = (id) => {
+//   return function (dispatch) {};
+// };
 
 const initialState = {
   post: null,
@@ -43,6 +43,7 @@ export default handleActions(
   {
     [GET_MODAL]: (state, action) =>
       produce(state, (draft) => {
+        console.log("액션 페이로드!", action.payload.post);
         draft.post = action.payload.post;
       }),
   },

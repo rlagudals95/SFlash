@@ -51,9 +51,7 @@ const StoryMap = (props) => {
     setSearch(e.target.value);
   }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
 
- 
 
-  
   useEffect(() => {
     // window.alert('');
     getLocation();
@@ -97,7 +95,7 @@ const StoryMap = (props) => {
       var map = new kakao.maps.Map(container, options); // 지도생성 및 객체 리턴
       // -----------------------------------------------------------------------------------
       // 여기까지는 지도를 가져오기 위한 필수 부분.
-     
+
 
       // useEffect 밖으로 map정보를 가져오기 위해서 useState로 함수를 만든다.
       setMap(map);
