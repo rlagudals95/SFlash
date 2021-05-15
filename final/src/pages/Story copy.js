@@ -42,26 +42,33 @@ const Story = (props) => {
     dispatch(postActions.getPostAPI());
   }, []);
 
-  const [content, setContent] = React.useState(
-    <StoryContent
-      post_list={user_post_list}
-      marker_icon={userPostMarkerImgUrl}
-    />
-  );
+  
 
   // const [activeTab, setActiveTab] = React.useState(0)
   //   const clickHandler = (id) => {
   //     setActiveTab(id);
   //   }
 
-  const [active, setActive] = React.useState("myPost");
-  // 클릭한 인덱스 활성화
-  const handleClick = (e) => {
-    const id = e.target.id;
-    if (id !== active) {
-      setActive(id);
-    }
-  };
+  // const [content, setContent] = React.useState(
+  //   <StoryContent
+  //     post_list={user_post_list}
+  //     marker_icon={userPostMarkerImgUrl}
+  //   />
+  // );
+
+  // const [active, setActive] = React.useState("myPost");
+  // // 클릭한 인덱스 활성화
+  // const handleClick = (e) => {
+  //   const id = e.target.id;
+  //   if (id !== active) {
+  //     setActive(id);
+  //   }
+  // };
+
+
+  const tab = {
+    
+  }
 
 
   return (
@@ -70,16 +77,24 @@ const Story = (props) => {
         {/* 상단 유저 프로필 부분 컴포넌트 */}
         <StoryUserProfile user_info={user_info} userId={userId} />
 
+
+
+
+
+
+
+
         {/* '내 게시물'과 '좋아요한 게시물'을 나눠주는 탭: active 값을 이용해 제어
     active 의 값에 따라 content 부분의 내용이 바뀐다. 
     (content 내 Story_Content 컴퍼넌트에서는 리스트와 지도로 볼수 있도록 다시 나눠지는데
     active 를 활용해 같은 방법으로 제어해준다.*/}
 
-        <Tabs>
+        {/* <Tabs>
           <Tab
            id={"myPost"}
           active={active === "myPost"}
             onClick={() =>
+              handleClick()
               setContent(
                 <StoryContent
                   post_list={user_post_list}
@@ -111,7 +126,8 @@ const Story = (props) => {
           </Tab>
         </Tabs>
 
-        <Content>{content}</Content>
+        <Content>{content}</Content> */}
+
       </Wrapper>
     </React.Fragment>
   );
