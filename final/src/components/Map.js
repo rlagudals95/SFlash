@@ -70,7 +70,7 @@ const Maps = (props) => {
 
   // 모든 게시물의 데이터들을 받아 온다.
   const map_post_list = useSelector((state) => {
-    return state.post.map_post_list;
+    return state.post.map_post_list; // 비동기 문제 해결
   });
 
   // 디테일 모달 관련 상태값
@@ -142,7 +142,7 @@ const Maps = (props) => {
   }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
 
   useEffect(() => {
-    // getLocation(); 
+    // getLocation();
     // geolocation은 배포시 https:// 환경이 아니어서 적용이 되지 않는 오류가 나서 지도 로드가 보이지 않게 되고,
     // 대한민국 전지역을 보여주면서 시작하는 경우에는 의미가 없어서 없앴습니다.
 
@@ -412,8 +412,9 @@ const Maps = (props) => {
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
         kakao.maps.event.addListener(mypostMarkers, "click", function () {
-          // 우클릭하면 닫기
-          console.log(mypost.spotName);
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(mypost.id));
+          openModal();
         });
       });
     }
@@ -474,6 +475,12 @@ const Maps = (props) => {
         kakao.maps.event.addListener(mylikeMarkers, "mouseout", function () {
           mylikeCustomOverlay.setMap(null);
         });
+
+        kakao.maps.event.addListener(mylikeMarkers, "click", function () {
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(mylike.id));
+          openModal();
+        });
       });
     }
 
@@ -527,6 +534,12 @@ const Maps = (props) => {
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
         kakao.maps.event.addListener(cafeMarkers, "mouseout", function () {
           cafeCustomOverlay.setMap(null);
+        });
+
+        kakao.maps.event.addListener(cafeMarkers, "click", function () {
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(cafe.id));
+          openModal();
         });
       });
     }
@@ -582,6 +595,11 @@ const Maps = (props) => {
         kakao.maps.event.addListener(nightMarkers, "mouseout", function () {
           nightCustomOverlay.setMap(null);
         });
+        kakao.maps.event.addListener(nightMarkers, "click", function () {
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(night.id));
+          openModal();
+        });
       });
     }
 
@@ -635,6 +653,11 @@ const Maps = (props) => {
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
         kakao.maps.event.addListener(oceanMarkers, "mouseout", function () {
           oceanCustomOverlay.setMap(null);
+        });
+        kakao.maps.event.addListener(oceanMarkers, "click", function () {
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(ocean.id));
+          openModal();
         });
       });
     }
@@ -693,6 +716,12 @@ const Maps = (props) => {
         kakao.maps.event.addListener(mountainMarkers, "mouseout", function () {
           mountainCustomOverlay.setMap(null);
         });
+
+        kakao.maps.event.addListener(mountainMarkers, "click", function () {
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(mountain.id));
+          openModal();
+        });
       });
     }
 
@@ -747,6 +776,12 @@ const Maps = (props) => {
         kakao.maps.event.addListener(flowerMarkers, "mouseout", function () {
           flowerCustomOverlay.setMap(null);
         });
+
+        kakao.maps.event.addListener(flowerMarkers, "click", function () {
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(flower.id));
+          openModal();
+        });
       });
     }
 
@@ -800,6 +835,12 @@ const Maps = (props) => {
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
         kakao.maps.event.addListener(aloneMarkers, "mouseout", function () {
           aloneCustomOverlay.setMap(null);
+        });
+
+        kakao.maps.event.addListener(aloneMarkers, "click", function () {
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(alone.id));
+          openModal();
         });
       });
     }
@@ -909,6 +950,11 @@ const Maps = (props) => {
         kakao.maps.event.addListener(friendMarkers, "mouseout", function () {
           friendCustomOverlay.setMap(null);
         });
+        kakao.maps.event.addListener(friendMarkers, "click", function () {
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(friend.id));
+          openModal();
+        });
       });
     }
 
@@ -962,6 +1008,12 @@ const Maps = (props) => {
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
         kakao.maps.event.addListener(petMarkers, "mouseout", function () {
           petCustomOverlay.setMap(null);
+        });
+
+        kakao.maps.event.addListener(petMarkers, "click", function () {
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(pet.id));
+          openModal();
         });
       });
     }
@@ -1017,6 +1069,11 @@ const Maps = (props) => {
         kakao.maps.event.addListener(cityMarkers, "mouseout", function () {
           cityCustomOverlay.setMap(null);
         });
+        kakao.maps.event.addListener(cityMarkers, "click", function () {
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(city.id));
+          openModal();
+        });
       });
     }
 
@@ -1071,6 +1128,12 @@ const Maps = (props) => {
         kakao.maps.event.addListener(parkMarkers, "mouseout", function () {
           parkCustomOverlay.setMap(null);
         });
+
+        kakao.maps.event.addListener(parkMarkers, "click", function () {
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(park.id));
+          openModal();
+        });
       });
     }
 
@@ -1120,14 +1183,22 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(exhibitionMarkers, "mouseover", function () {
-          exhibitionCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          exhibitionMarkers,
+          "mouseover",
+          function () {
+            exhibitionCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(exhibitionMarkers, "mouseout", function () {
-          exhibitionCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          exhibitionMarkers,
+          "mouseout",
+          function () {
+            exhibitionCustomOverlay.setMap(null);
+          }
+        );
       });
     }
 
