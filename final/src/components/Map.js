@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { CustomOverlay } from "react-kakao-maps";
 // 리덕스를 이용하게 해주는 함수들, 모듈 파일 가져오기
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
-import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configStore";
 import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지url
 
@@ -17,7 +15,6 @@ import CategoryInMap from "../components/CategoryInMap";
 import category_in_map from "../redux/modules/category_in_map";
 import { LeakRemoveOutlined } from "@material-ui/icons";
 import { actionCreators as ModalActions } from "../redux/modules/mapModal";
-import { actionCreators as PostActions } from "../redux/modules/post";
 import MapModal from "./MapModal";
 
 // window 객체로부터 kakao mpa api를 호출하기
@@ -349,6 +346,8 @@ const Maps = (props) => {
         kakao.maps.event.addListener(totalMarkers, "click", function () {
           // 클릭하면 모달 오픈하고 동시에 모달정보 받아오기
           dispatch(ModalActions.getModalPost(all.id)); // 오픈 모달모달보다 먼저 선언되어야 한다  꼭!
+
+          // dispatch(ModalActions.getModalPostAPI(all.id)); // 서버랑 연결되면 이걸로 바꾸자
           openModal();
         });
       });
@@ -414,6 +413,7 @@ const Maps = (props) => {
         kakao.maps.event.addListener(mypostMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
           dispatch(ModalActions.getModalPost(mypost.id));
+          // dispatch(ModalActions.getModalPostAPI(mypost.id));
           openModal();
         });
       });
@@ -479,6 +479,7 @@ const Maps = (props) => {
         kakao.maps.event.addListener(mylikeMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
           dispatch(ModalActions.getModalPost(mylike.id));
+          // dispatch(ModalActions.getModalPostAPI(mylike.id));
           openModal();
         });
       });
@@ -539,6 +540,7 @@ const Maps = (props) => {
         kakao.maps.event.addListener(cafeMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
           dispatch(ModalActions.getModalPost(cafe.id));
+          // dispatch(ModalActions.getModalPostAPI(cafe.id));
           openModal();
         });
       });
@@ -598,6 +600,7 @@ const Maps = (props) => {
         kakao.maps.event.addListener(nightMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
           dispatch(ModalActions.getModalPost(night.id));
+          // dispatch(ModalActions.getModalPostAPI(night.id));
           openModal();
         });
       });
@@ -657,6 +660,7 @@ const Maps = (props) => {
         kakao.maps.event.addListener(oceanMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
           dispatch(ModalActions.getModalPost(ocean.id));
+          // dispatch(ModalActions.getModalPostAPI(ocean.id));
           openModal();
         });
       });
@@ -720,6 +724,7 @@ const Maps = (props) => {
         kakao.maps.event.addListener(mountainMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
           dispatch(ModalActions.getModalPost(mountain.id));
+          // dispatch(ModalActions.getModalPostAPI(mountain.id));
           openModal();
         });
       });
@@ -780,6 +785,7 @@ const Maps = (props) => {
         kakao.maps.event.addListener(flowerMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
           dispatch(ModalActions.getModalPost(flower.id));
+          // dispatch(ModalActions.getModalPostAPI(flower.id));
           openModal();
         });
       });
@@ -840,6 +846,7 @@ const Maps = (props) => {
         kakao.maps.event.addListener(aloneMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
           dispatch(ModalActions.getModalPost(alone.id));
+          // dispatch(ModalActions.getModalPostAPI(alone.id));
           openModal();
         });
       });
@@ -895,6 +902,12 @@ const Maps = (props) => {
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
         kakao.maps.event.addListener(coupleMarkers, "mouseout", function () {
           coupleCustomOverlay.setMap(null);
+        });
+        kakao.maps.event.addListener(coupleMarkers, "click", function () {
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(couple.id));
+          // dispatch(ModalActions.getModalPostAPI(couple.id));
+          openModal();
         });
       });
     }
@@ -953,6 +966,7 @@ const Maps = (props) => {
         kakao.maps.event.addListener(friendMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
           dispatch(ModalActions.getModalPost(friend.id));
+          // dispatch(ModalActions.getModalPostAPI(friend.id));
           openModal();
         });
       });
@@ -1013,6 +1027,7 @@ const Maps = (props) => {
         kakao.maps.event.addListener(petMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
           dispatch(ModalActions.getModalPost(pet.id));
+          // dispatch(ModalActions.getModalPostAPI(pet.id));
           openModal();
         });
       });
@@ -1072,6 +1087,7 @@ const Maps = (props) => {
         kakao.maps.event.addListener(cityMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
           dispatch(ModalActions.getModalPost(city.id));
+          // dispatch(ModalActions.getModalPostAPI(city.id));
           openModal();
         });
       });
@@ -1132,6 +1148,7 @@ const Maps = (props) => {
         kakao.maps.event.addListener(parkMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
           dispatch(ModalActions.getModalPost(park.id));
+          // dispatch(ModalActions.getModalPostAPI(park.id));
           openModal();
         });
       });
@@ -1283,19 +1300,10 @@ const Maps = (props) => {
         </SearchIcon>
       </SearchBox>
       <CategoryInMap />
-      {/* <CustomOverlayUseInfo/> */}
       <MapBox>
         {/* 위에서 설정된 getElementById("map")에 의해서 id="map"인 div에 맵이 표시된다 */}
         <div id="map" style={{ width: "100vw", height: "100vh" }}></div>
       </MapBox>
-      {/* { is_total ? 
-        markerdata.forEach((p) => {
-          //...각종 변수들 정의
-          <CustomOverlay
-            content={<MyOverlay />}
-            lat={p.latitude}
-            lng={p.longitude}>
-          </CustomOverlay>}) : null} */}
       {is_uploadModal ? (
         <UpLoadModal
           latitude={latitude}
@@ -1340,7 +1348,7 @@ const SearchBox = styled.div`
     top: 80px;
     width: 50%;
     margin: auto;
-    left: 20vw;
+    left: 30vw;
   }
 `;
 
@@ -1351,13 +1359,10 @@ const SearchInput = styled.input`
   padding-left: 15px;
   font-size: 15px;
   border: none;
-  /* background-image: url("https://i.postimg.cc/P5xKdMqb/71403.png"); */
-  /* background-position: top right;
-  background-repeat: no-repeat; */
   &:focus {
-    /* outline: blue; */
+    outline: blue;
     border-radius: 5px;
-    border-color: blue;
+    /* border-color: blue; */
   }
 `;
 

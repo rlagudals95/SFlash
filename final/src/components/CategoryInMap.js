@@ -615,7 +615,7 @@ justify-content: space-between; */
   position: fixed;
   z-index: 300;
   right: 50px;
-  top: 25vh;
+  top: 21vh;
   /* bottom: 50vh; */
   background-color: white;
   padding: 20px;
@@ -626,7 +626,8 @@ justify-content: space-between; */
     z-index: 300;
     position: fixed;
     margin: auto;
-    /* width: 98%; */
+    left: 10vw;
+    /* width: 150px; */
   }
 `;
 

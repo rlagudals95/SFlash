@@ -264,6 +264,7 @@ const SideMini = styled.div`
     bottom: 0px;
     left: 0;
     background-color: white;
+    padding-bottom: 2vh;
   }
 `;
 

@@ -43,11 +43,11 @@ const getModalPost = (id) => {
   };
 };
 
-// const getModalPostAPI = (id) => {
+// const getModalPostAPI = (boardId) => {
 //   return function (dispatch) {
 //     axios({
 //       method: "GET",
-//       url: `${config.api}/board/${id}`,
+//       url: `${config.api}/board/${boardId}/detail`,
 //       headers: {
 //         "X-AUTH-TOKEN": `${config.jwt}`,
 //       },
