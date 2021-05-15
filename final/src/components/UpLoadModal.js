@@ -430,6 +430,7 @@ const BottomEdit = styled.div`
   @media (max-width: 1440px) {
   }
   @media (max-width: 600px) {
+    margin-bottom: 10vh;
   }
 `;
 const BottomEdit2 = styled.div`
@@ -536,7 +537,7 @@ const ModalImg = styled.div`
     border: none;
     box-sizing: border-box;
     width: 100%;
-    height: 600px;
+    height: 800px;
     max-height: 40vh;
     margin-bottom: 1vh;
     border-top: 2px solid darkgray;
@@ -734,7 +735,7 @@ const ModalBottomContainer = styled.div`
     /* all: unset; */
     text-align: left;
     width: 93vw;
-    height: 50vh; // 이거 올려주니까 댓글창이보인다..!
+    height: 45vh; // 이거 올려주니까 댓글창이보인다..!
     display: flex;
     flex-direction: column;
     padding: 0;

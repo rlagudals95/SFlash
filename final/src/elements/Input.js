@@ -74,6 +74,9 @@ const ElTextarea = styled.textarea`
   padding: 12px 4px;
   box-sizing: border-box;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+  @media (max-width: 600px) {
+    height: 17vh;
+  }
 `;
 
 const ElInput = styled.input`

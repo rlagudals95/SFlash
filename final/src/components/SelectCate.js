@@ -193,6 +193,10 @@ const HoriznalBtn = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+  @media (max-width: 600px) {
+    height: 100px;
+    padding-bottom: 50px;
+  }
 `;
 
 const Btn = styled.button`

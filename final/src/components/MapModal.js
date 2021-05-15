@@ -47,12 +47,7 @@ const ModalDetail = (props) => {
 
   console.log("짜잔~", getData);
 
-  //   console.log(getData[0].id);
-  //   console.log(getData[0].content);
-  //   console.log(getData[0].like);
-  //   console.log(getData[0].likeCount);
-  //   console.log(getData[0].imgUrl);
-
+  // getData[0].imgUrl
   const user_info = useSelector((state) => state.user.user);
 
   // console.log(user_info);
@@ -111,7 +106,7 @@ const ModalDetail = (props) => {
   const comment_List = [1, 2, 3];
   console.log("이포스트의 댓글은??", comment_List);
 
-  const is_comment = comment_List ? true : false;
+  const is_comment = commentData ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
@@ -137,7 +132,7 @@ const ModalDetail = (props) => {
   };
 
   // console.log("댓글 내용", comments);
-  console.log("어떤정보가!??!", props);
+
   const selectComment = (e) => {
     setComments(e.target.value);
   };
@@ -208,18 +203,19 @@ const ModalDetail = (props) => {
           </ModalHeader>
           {/* 이미지 슬라이드 구현 props로 받는 이미지의 개수가 1개를 초과할때  */}
           {/* 그 수만큼 map함수로 출력해준다 */}
-          {getData[0].imgUrl > 1 ? (
+          {getData[0].imgUrl > 1 ? ( // 음.,...
             <Slider {...settings}>
               {images.map((p, idx) => {
                 return (
+                  //getData[0].imgUrl
                   <div>
-                    <ModalImg src={getData[idx].imgUrl} />
+                    <ModalImg src={getData[0].imgUrl[idx].imgUrl} />
                   </div>
                 );
               })}
             </Slider>
           ) : (
-            <ModalImg src={getData[0].imgUrl[0]} />
+            <ModalImg src={getData[0].imgUrl[0].imgUrl} />
           )}
 
           <ModalBottomContainer>
@@ -285,18 +281,18 @@ const ModalDetail = (props) => {
                   </ModalCate>
                 )}
               </InfoBoxInner>
-              <React.Fragment>
+              <InfoOutter>
                 <PostTilte>
                   {getData[0].title}{" "}
                   <PostDate>{timeForToday(getData[0].creatAt)}</PostDate>
                 </PostTilte>
                 <PostContents>{getData[0].content}</PostContents>
                 <PostTime>{getData[0].spotName}</PostTime>
-              </React.Fragment>
+              </InfoOutter>
             </InfoBox>
             <ModalCmtBox>
               {is_comment
-                ? comment_List.map((c, idx) => {
+                ? commentData.map((c, idx) => {
                     //여기서 댓글을 입력하고 map으로 props 값을 돌려서 화면을 띄우게 해줌
                     //댓글이 2개보다 작다면? 1개라면?
                     return (
@@ -419,7 +415,7 @@ const ModalImg = styled.img`
     border: none;
     box-sizing: border-box;
     width: 100%;
-    height: 310px;
+    height: 315px;
     max-height: 42vh;
   }
   @media (max-width: 600px) {
@@ -649,7 +645,7 @@ const InfoBox = styled.div`
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     width: calc(100% - 2vw); //패딩대신... 오,....
-    height: 130px;
+    height: 150px;
     display: flex;
     flex-direction: column;
     margin: 0px auto;
@@ -699,13 +695,23 @@ const ModalEdit = styled.div`
   font-size: 0.8rem;
 `;
 
+const InfoOutter = styled.div`
+  height: 110px;
+  width: 100%;
+  /* background-color: red; */
+`;
 const PostTilte = styled.div`
   font-size: 1.3rem;
   font-weight: bold;
   width: 100%;
   margin-bottom: 10px;
   height: 40px;
-  max-height: 40px; ;
+  max-height: 40px;
+  /* background-color: red; */
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const PostContents = styled.div`
   font-size: 0.9rem;
@@ -714,10 +720,10 @@ const PostContents = styled.div`
   margin-top: 3px;
   /* background-color: red; */
   max-height: 50px;
-  /* overflow-y: scroll;
+  overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
-  } */
+  }
 `;
 
 const PostTime = styled.div`
