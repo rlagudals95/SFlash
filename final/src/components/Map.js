@@ -142,36 +142,9 @@ const Maps = (props) => {
   }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
 
   useEffect(() => {
-    // window.alert('');
-    // getLocation();
-
-    // dispatch(PostActions.getPostAPI()); // 따로 API받으면 지우자
-    // function getLocation() {  // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-    //   if (navigator.geolocation) {  // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-    //     navigator.geolocation.getCurrentPosition(
-    //       function (position) {
-    //         setStartLat(position.coords.latitude);
-    //         setStartLon(position.coords.longitude);
-    //       },
-    //       function (error) {
-    //         console.error(error);
-    //       },
-    //       {
-    //         enableHighAccuracy: false,
-    //         maximumAge: 0,
-    //         timeout: Infinity,
-    //       }
-    //     );
-    //   } else {  // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-    //     window.alert(
-    //       "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
-    //     );
-    //   }
-    // }
-
-    // if (startlat && startlon) {
-    //   console.log("현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon);
-    // } // geolocation은 여기까지
+    // getLocation(); 
+    // geolocation은 배포시 https:// 환경이 아니어서 적용이 되지 않는 오류가 나서 지도 로드가 보이지 않게 되고,
+    // 대한민국 전지역을 보여주면서 시작하는 경우에는 의미가 없어서 없앴습니다.
 
     if (!map_post_list) {
       return;
