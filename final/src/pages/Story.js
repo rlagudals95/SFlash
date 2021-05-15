@@ -39,13 +39,17 @@ const Story = (props) => {
   const userLikeMarkerImgUrl = "https://i.postimg.cc/3rZTf11s/2x.png";
 
   
+  // React.useEffect(() => {
+  //   dispatch(profileActions.getUserInfoAPI(userId));
+  //   dispatch(storypostActions.getUserPostAPI(userId));
+  //   dispatch(storypostActions.getUserLikeAPI(userId));
+  // }, []);
+
+
   React.useEffect(() => {
     dispatch(profileActions.getUserInfoAPI(userId));
     dispatch(storypostActions.getUserPostAPI(userId));
     dispatch(storypostActions.getUserLikeAPI(userId));
-    
-    // setActiveContent(tab_list[0].content);
-
   }, []);
 
   const tab_list = [
