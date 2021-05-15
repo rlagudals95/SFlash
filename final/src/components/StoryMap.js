@@ -2,20 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import { CustomOverlay } from "react-kakao-maps";
 // 리덕스를 이용하게 해주는 함수들, 모듈 파일 가져오기
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
-import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import { history } from "../redux/configStore";
-import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지url
 
 import styled from "styled-components";
+import * as BiIcons from "react-icons/bi";
 import _ from "lodash"; // throttle, debounce 사용
 
 // component, element 파일들 가져오기
 import "../Css/Map.css";
-import UpLoadModal from "./UpLoadModal";
-import CategoryInMap from "../components/CategoryInMap";
-import category_in_map from "../redux/modules/category_in_map";
-import { LeakRemoveOutlined } from "@material-ui/icons";
+import MapModal from "./MapModal";
 
 // window 객체로부터 kakao mpa api를 호출하기
 // 이것이 되게 하기 위해서는 index.html(index.js 아님!!!)의 script 태그안의 src에다가
@@ -46,6 +42,15 @@ const StoryMap = (props) => {
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
   //조건 걸어주기 // 나를 기준으로 몇 km 이내
 
+   // 디테일 모달 관련 상태값
+    const [is_detailModal, setDetailModal] = useState();
+    const openModal = () => {
+      setDetailModal(true);
+    };
+    const closeDetailModal = () => {
+      setDetailModal(false);
+    };
+
   // 검색시 화면 렌더링을  제어합니다.(타이핑 할 때마다 렌더링 되지 않도록)
   const debounce = _.debounce((e) => {
     setSearch(e.target.value);
@@ -54,36 +59,38 @@ const StoryMap = (props) => {
 
   useEffect(() => {
     // window.alert('');
-    getLocation();
+    // getLocation();
 
-    function getLocation() {  // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-      if (navigator.geolocation) {  // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-        navigator.geolocation.getCurrentPosition(
-          function (position) {
-            setStartLat(position.coords.latitude);
-            setStartLon(position.coords.longitude);
-          },
-          function (error) {
-            console.error(error);
-          },
-          {
-            enableHighAccuracy: false,
-            maximumAge: 0,
-            timeout: Infinity,
-          }
-        );
-      } else {  // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-        window.alert(
-          "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
-        );
-      }
-    }
+    // function getLocation() {  // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+    //   if (navigator.geolocation) {  // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+    //     navigator.geolocation.getCurrentPosition(
+    //       function (position) {
+    //         setStartLat(position.coords.latitude);
+    //         setStartLon(position.coords.longitude);
+    //       },
+    //       function (error) {
+    //         console.error(error);
+    //       },
+    //       {
+    //         enableHighAccuracy: false,
+    //         maximumAge: 0,
+    //         timeout: Infinity,
+    //       }
+    //     );
+    //   } else {  // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+    //     window.alert(
+    //       "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
+    //     );
+    //   }
+    // }
 
-    if (startlat && startlon) {
-      console.log("현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon);
-    } // geolocation은 여기까지 
+    // if (startlat && startlon) {
+    //   console.log("현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon);
+    // } // geolocation은 여기까지 
 
-
+    if (!post_list) {
+      return;
+    } else {
       // 페이지가 렌더링 되면 지도 띄우기
       var container = document.getElementById("map"); // 지도를 표시할 div
       var options = {
@@ -99,6 +106,7 @@ const StoryMap = (props) => {
 
       // useEffect 밖으로 map정보를 가져오기 위해서 useState로 함수를 만든다.
       setMap(map);
+    }
     
       if (post_list) {
         post_list.forEach((post) => {
@@ -121,13 +129,13 @@ const StoryMap = (props) => {
             `<div class="spotname">${post.spotName}</div>` +
             "</div>" +
             // '<div class="center"></div>' +
-            '<div class="bottomiconbox">' +
-            '<img class="likeicon" onclick></img>' +
-            "</div>" +
+            // '<div class="bottomiconbox">' +
+            // '<img class="likeicon" onclick></img>' +
+            // "</div>" +
             "</div>";
   
           // 모달창(커스텀오버레이) 객체를 생성
-          const postCustomOverlay = new kakao.maps.CustomOverlay({
+          const customOverlay = new kakao.maps.CustomOverlay({
             // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
             clickable: true, // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
             position: position, // 커스텀 오버레이의 좌표
@@ -137,15 +145,29 @@ const StoryMap = (props) => {
             zIndex: 100, //  커스텀 오버레이의 z-index
             altitude: 10,
           });
-  
+
           // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-          kakao.maps.event.addListener(postMarkers, "click", function () {
-            postCustomOverlay.setMap(map);
-          });
-  
-          //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-          kakao.maps.event.addListener(postMarkers, "rightclick", function () {
-            postCustomOverlay.setMap(null);
+        // 마커를 클릭 했을 때 디테일 모달이 나오는
+        //mouseover , mouseout
+        kakao.maps.event.addListener(postMarkers, "mouseover", function () {
+          // 클릭하면 열기
+          customOverlay.setMap(map);
+        });
+
+        kakao.maps.event.addListener(postMarkers, "mouseout", function () {
+          // 우클릭하면 닫기
+
+          customOverlay.setMap(null);
+        });
+
+        kakao.maps.event.addListener(postMarkers, "click", function () {
+          // 클릭하면 모달 오픈하고 동시에 모달정보 받아오기
+          dispatch(ModalActions.getModalPost(post.id)); // 오픈 모달모달보다 먼저 선언되어야 한다  꼭!
+          openModal();
+
+
+
+
           });
         });
       }
@@ -187,12 +209,24 @@ const StoryMap = (props) => {
 
   return (
     <React.Fragment>
+
+{is_detailModal ? (
+        <MapModal 
+          // onClick={openModal}
+          close={closeDetailModal}
+          // {...map_post_list}
+        ></MapModal>
+      ) : null}
+
       <SearchBox>
         <SearchInput
           type="text"
           placeholder="지역으로 검색"
           onChange={debounce}
         />
+        <SearchIcon>
+          <BiIcons.BiSearch size="2rem" color="rgb(255, 183, 25)" />
+        </SearchIcon>
       </SearchBox>
       <MapBox>
         {/* 위에서 설정된 getElementById("map")에 의해서 id="map"인 div에 맵이 표시된다 */}
@@ -226,7 +260,12 @@ const SearchInput = styled.input`
     border-color: blue;
   }
   opacity: 0.8;
-  
+`;
+
+const SearchIcon = styled.div`
+  position: fixed;
+  top: 10px;
+  right: 0;
 `;
 
 const MapBox = styled.div`

@@ -1319,7 +1319,7 @@ const SearchBox = styled.div`
   z-index: 10;
   @media (min-width: 1280px) {
     width: 600px;
-    top: 150px;
+    top: 80px;
   }
   @media (max-width: 1280px) {
     position: fixed;

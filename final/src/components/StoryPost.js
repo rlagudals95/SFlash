@@ -1,3 +1,4 @@
+// Post2의 사본
 import React, { useState } from "react";
 import { Grid, Text, Button } from "../elements";
 import { history } from "../redux/configStore";
@@ -6,33 +7,31 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
-import Modal from "./Modal";
-import CloudQueueIcon from "@material-ui/icons/CloudQueue";
-import SendIcon from "@material-ui/icons/Send";
-import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import StoryPostDetailModal from "./StoryPostDetailModal";
+
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import { actionCreators as modalActions } from "../redux/modules/modal";
 import { actionCreators as likeActions } from "../redux/modules/like";
-import { actionCreators as PostActions } from "../redux/modules/post";
+
 
 import "../Css/Post.css";
 
 //로그인 후에 이용가능 합니다
-const Post2 = (props) => {
+const StoryPost = (props) => {
+  const dispatch = useDispatch();
+  console.log(props);
+
   const paging = useSelector((state) => state.post.paging);
-
   const like = useSelector((state) => state.like.like);
-
   console.log("좋아요 정보", like);
+
   React.useEffect(() => {
     console.log("시작");
     dispatch(likeActions.getLikePost());
   }, []);
 
-  const dispatch = useDispatch();
-  // console.log(props);
-
+ 
   // 이미지들 반복문으로 뽑아오기
   let image_list = [];
 
@@ -65,6 +64,7 @@ const Post2 = (props) => {
   const addLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    console.log("!!!!!", props.id, props)
 
     dispatch(likeActions.addLikeAPI(props.id, props)); //서버
     // dispatch(PostActions.editLikeP(props.id, props)); // 리덕스
@@ -122,7 +122,7 @@ const Post2 = (props) => {
         </PostBox>
       </Card>
       {is_modal ? (
-        <Modal
+        <StoryPostDetailModal
           close={closeDetailModal}
           {...props} //여기서 모달에 모든 정보를 넘겨주는 구나!
         />
@@ -165,4 +165,4 @@ const CntBox = styled.span`
   margin: 8px 0px 8px 2px;
 `;
 
-export default Post2;
+export default StoryPost;
