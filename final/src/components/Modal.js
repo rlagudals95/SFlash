@@ -160,7 +160,6 @@ const ModalDetail = (props) => {
   return (
     <React.Fragment>
       <Component onClick={props.close} />
-
       <ModalComponent>
         <ModalHeader>
           <ModalLeftHeader>
@@ -270,13 +269,13 @@ const ModalDetail = (props) => {
                 </ModalCate>
               )}
             </InfoBoxInner>
-            <React.Fragment>
+            <InfoOutter>
               <PostTilte>
                 {props.title} <PostDate>{timeForToday(props.creatAt)}</PostDate>
               </PostTilte>
               <PostContents>{props.content}</PostContents>
               <PostTime>{props.spotName}</PostTime>
-            </React.Fragment>
+            </InfoOutter>
           </InfoBox>
           <ModalCmtBox>
             {is_comment
@@ -333,19 +332,22 @@ const ModalDetail = (props) => {
                 })
               : null}
           </ModalCmtBox>
-          <ModalCmtInputBox>
-            <CommentInput
-              type="text"
-              placeholder="댓글달기..."
-              onChange={selectComment}
-              value={comments}
-            />
-            {ok_submit ? (
-              <UploadBtn onClick={addComment}>게시</UploadBtn>
-            ) : (
-              <UploadBtn style={{ opacity: "0.3" }}>게시</UploadBtn>
-            )}
-          </ModalCmtInputBox>
+          <CommentOutter>
+            <ModalCmtInputBox>
+              <CommentInput
+                type="text"
+                placeholder="댓글달기..."
+                onChange={selectComment}
+                value={comments}
+              />
+
+              {ok_submit ? (
+                <UploadBtn onClick={addComment}>게시</UploadBtn>
+              ) : (
+                <UploadBtn style={{ opacity: "0.3" }}>게시</UploadBtn>
+              )}
+            </ModalCmtInputBox>
+          </CommentOutter>
         </ModalBottomContainer>
       </ModalComponent>
       {is_Editmodal ? (
@@ -354,6 +356,7 @@ const ModalDetail = (props) => {
     </React.Fragment>
   );
 };
+
 // background-image: url("${(props) => props.src}");
 //   background-size: cover;
 //   object-fit: cover;
@@ -402,7 +405,7 @@ const ModalImg = styled.img`
     border: none;
     box-sizing: border-box;
     width: 100%;
-    height: 310px;
+    height: 315px;
     max-height: 42vh;
   }
   @media (max-width: 600px) {
@@ -571,7 +574,7 @@ const ModalBottomContainer = styled.div`
     /* all: unset; */
     text-align: left;
     width: 100%;
-    height: 47vh; // 이거 올려주니까 댓글창이보인다..!
+    height: 55vh; // 이거 올려주니까 댓글창이보인다..!
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -632,7 +635,7 @@ const InfoBox = styled.div`
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     width: calc(100% - 2vw); //패딩대신... 오,....
-    height: 130px;
+    height: 150px;
     display: flex;
     flex-direction: column;
     margin: 0px auto;
@@ -640,15 +643,16 @@ const InfoBox = styled.div`
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     width: calc(100% - 7vw); //패딩대신... 오,....
-    height: 18vh;
+    height: 21vh;
     display: flex;
     flex-direction: column;
     margin: 0px auto;
+    /* background-color: red; */
   }
 `;
 
 const InfoBoxInner = styled.div`
-  width: 480px; //요놈 크기 바꿔
+  width: 100%; //요놈 크기 바꿔
   height: 33px;
   margin-top: 10px;
   font-size: 15px;
@@ -659,6 +663,12 @@ const InfoBoxInner = styled.div`
     // 1450밑으로 넓이가 내려가면
     width: 100%;
     height: 15vh;
+    padding: 0px;
+  }
+  @media (max-width: 600px) {
+    // 1450밑으로 넓이가 내려가면
+    width: 100%;
+    height: 50px;
     padding: 0px;
   }
 `;
@@ -681,6 +691,11 @@ const ModalEdit = styled.div`
   opacity: 0.5;
   font-size: 0.8rem;
 `;
+const InfoOutter = styled.div`
+  height: 110px;
+  width: 100%;
+  /* background-color: red; */
+`;
 
 const PostTilte = styled.div`
   font-size: 1.3rem;
@@ -689,12 +704,15 @@ const PostTilte = styled.div`
   margin-bottom: 10px;
   height: 40px;
   max-height: 40px;
-  /* background-color: red; */
+
   /* overflow-y: scroll; */
-  /* overflow-y: scroll;
+  overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
-  } */
+  }
+  @media (max-width: 600px) {
+    font-size: 17px;
+  }
 `;
 const PostContents = styled.div`
   font-size: 0.9rem;
@@ -703,10 +721,13 @@ const PostContents = styled.div`
   margin-top: 3px;
   /* background-color: red; */
   max-height: 50px;
-  /* overflow-y: scroll;
+  overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
-  } */
+  }
+  @media (max-width: 600px) {
+    font-size: 13px;
+  }
 `;
 
 const PostTime = styled.div`
@@ -740,7 +761,7 @@ const ModalCmtInputBox = styled.div`
   }
 
   @media (max-width: 600px) {
-    height: 100px;
+    height: 40px;
     margin-bottom: -7vh;
   }
 `;
@@ -762,6 +783,16 @@ const ModalCmtBox = styled.div`
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     /* flex-direction: column; */
+    /* background-color: red; */
+    padding: 0px 14px;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  @media (max-width: 600px) {
+    // 1450밑으로 넓이가 내려가면
+    /* flex-direction: column; */
+    height: 13vh;
     /* background-color: red; */
     padding: 0px 14px;
     ::-webkit-scrollbar {
@@ -803,6 +834,11 @@ const ReplyImg = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   cursor: pointer;
+
+  @media (max-width: 600px) {
+    height: 20px;
+    width: 20px;
+  }
 `;
 
 const ReplyWriter = styled.div`
@@ -823,11 +859,22 @@ const ReplyContainer = styled.div`
 const Reply = styled.div`
   font-size: 0.8rem;
   opacity: 0.8;
+  @media (max-width: 600px) {
+    /* width: 59vw; */
+    overflow-x: hidden;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `;
 
 const ReplyLeft = styled.div`
   align-items: center;
   display: flex;
+  @media (max-width: 600px) {
+    /* background-color: red; */
+    width: 45vh;
+  }
 `; // space-between 효과 주기위해서 쓴다
 const ReplyRight = styled.div`
   display: flex;
@@ -853,6 +900,16 @@ const CmtDeleteBtn = styled.button`
     opacity: 1;
   }
 `;
+
+const CommentOutter = styled.div`
+  @media (max-width: 600px) {
+    /* display: block;
+    height: 30px;
+    padding: 0px 0px; */
+    /* background-color: red; */
+  }
+`;
+
 const CommentInput = styled.input`
   background: white;
   border: none;
@@ -860,9 +917,14 @@ const CommentInput = styled.input`
   width: 100%;
   padding: auto 0px;
   background-color: white;
+
   @media (max-width: 600px) {
+    /* line-height: 10px;
+    height: 200px; */
+    padding: -50px -50px;
   }
 `;
+
 const UploadBtn = styled.div`
   font-size: 14px;
 
@@ -885,6 +947,10 @@ const UploadBtn = styled.div`
     margin: 10px 5px 0px 0px;
     width: 40px;
   } */
+  @media (max-width: 600px) {
+    /* height: 100px;
+    padding: 0px 0px; */
+  }
 `;
 
 const EditBtn = styled.span`

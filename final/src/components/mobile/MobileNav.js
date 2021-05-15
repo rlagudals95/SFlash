@@ -57,7 +57,7 @@ const Logo = styled.div`
 `;
 
 const NavBox = styled.div`
-  display: none;
+  display: none; // 이건 모바일 헤더
   @media (max-width: 600px) {
     display: flex;
     position: fixed;
@@ -68,7 +68,7 @@ const NavBox = styled.div`
     text-align: center;
     align-items: center;
     box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
-    z-index: 500;
+    z-index: 3000;
     background-color: white;
   }
 `;
