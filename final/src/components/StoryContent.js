@@ -5,7 +5,7 @@ import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as storypostActions } from "../redux/modules/storypost";
 
-import Post2 from "./Post2";
+import StoryPost from "./StoryPost";
 import StoryMap from "./StoryMap";
 
 import { FiImage } from "react-icons/fi";
@@ -62,7 +62,7 @@ const StoryContent = (props) => {
           {gridMode ? (
             <GridList>
               {post_list.map((p) => {
-                return <Post2 key={p.id} {...p}></Post2>;
+                return <StoryPost key={p.id} {...p}></StoryPost>;
               })}
             </GridList>
           ) : (
