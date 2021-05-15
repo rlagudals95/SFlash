@@ -20,19 +20,24 @@ import { history } from "../redux/configStore";
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
   // React.useEffect(() => {}, []);
+  const modalData = useSelector((state) => state.mapmodal.post);
+  const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
 
+  console.log("ㅎㅎㅎㅎ", commentData);
+
+  console.log(modalData.id);
   React.useEffect(() => {
     // console.log("시작");
-    // dispatch(CommnetActions.getComment(props.id));
     // dispatch(ModalActions.getModalPost());
+    console.log(modalData.id); //잘 찍힌다
+    // dispatch(CommnetActions.getComment(modalData.id)); //음 서버에서 가져온 모달디테일 에서 코멘트 따로빼자
   }, []);
 
+  console.log("eeee", props);
   const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
 
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
-
-  const modalData = useSelector((state) => state.mapmodal.post);
 
   console.log("ifjsdghjusdfhgujki", modalData);
   const getData = []; // 모달데이터가 오기도 전에 실행되서 이렇게 조건을 주어 데이터가 온후에 사용할 수 있게 했다
@@ -102,7 +107,7 @@ const ModalDetail = (props) => {
     comment_list.push(props.comment[i]);
   }
 
-  //   const comment_List = useSelector((state) => state.comment.list);
+  // const comment_List = useSelector((state) => state.comment.list);
   const comment_List = [1, 2, 3];
   console.log("이포스트의 댓글은??", comment_List);
 
@@ -282,7 +287,7 @@ const ModalDetail = (props) => {
               </InfoBoxInner>
               <React.Fragment>
                 <PostTilte>
-                  {props.title}{" "}
+                  {getData[0].title}{" "}
                   <PostDate>{timeForToday(getData[0].creatAt)}</PostDate>
                 </PostTilte>
                 <PostContents>{getData[0].content}</PostContents>
@@ -571,7 +576,7 @@ const ModalBottomContainer = styled.div`
     text-align: left;
     width: 450px;
     // 이거 올려주니까 댓글창이보인다..!
-    height: 295px;
+    height: 280px;
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -697,14 +702,18 @@ const ModalEdit = styled.div`
 const PostTilte = styled.div`
   font-size: 1.3rem;
   font-weight: bold;
-  width: 550px;
+  width: 100%;
   margin-bottom: 10px;
+  height: 40px;
+  max-height: 40px; ;
 `;
 const PostContents = styled.div`
   font-size: 0.9rem;
   opacity: 0.6;
-  width: 550px;
+  width: 100%;
   margin-top: 3px;
+  /* background-color: red; */
+  max-height: 50px;
   /* overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;

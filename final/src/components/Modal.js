@@ -559,7 +559,7 @@ const ModalBottomContainer = styled.div`
     text-align: left;
     width: 450px;
     // 이거 올려주니까 댓글창이보인다..!
-    height: 295px;
+    height: 280px;
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -685,14 +685,24 @@ const ModalEdit = styled.div`
 const PostTilte = styled.div`
   font-size: 1.3rem;
   font-weight: bold;
-  width: 550px;
+  width: 100%;
   margin-bottom: 10px;
+  height: 40px;
+  max-height: 40px;
+  /* background-color: red; */
+  /* overflow-y: scroll; */
+  /* overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  } */
 `;
 const PostContents = styled.div`
   font-size: 0.9rem;
   opacity: 0.6;
-  width: 550px;
+  width: 100%;
   margin-top: 3px;
+  /* background-color: red; */
+  max-height: 50px;
   /* overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;

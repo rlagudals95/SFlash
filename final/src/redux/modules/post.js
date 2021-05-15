@@ -150,7 +150,7 @@ const addPostAPI = (post) => {
         //   longitude: one_post.longitude,
         //   spotName: one_post.spotName,
         // };
-        // dispatch(addPost(one_marker_data));  
+        // dispatch(addPost(one_marker_data));
         // history.replace("/"); // 이부분 실행이 잘안되면 imgUrl인식을 못함 변수명 잘지켜주세요! : 민규 - 이건 데이터 변경없이 사이트만 변경해주는걸로 알고 있습니다
         // window.location.replace("/"); // 민규 - 이 명령어는 데이터 변경이 반영되는 새로고침으로 알고 있어요. 게시물 업로드하고 반영된걸 바로 보려고 넣은 명령어에요.
       })
@@ -190,13 +190,13 @@ const getPostAPI = (start = null, size = null) => {
         console.log("!!!!!!!!!", res.data.data);
 
         // 라이크 값이 자꾸 false로 오니까 리스트를 뽑아보자!
-        let like_list = [];
+        // let like_list = [];
 
-        for (let i = 0; i < res.data.data.length; i++) {
-          like_list.push(res.data.data[i].liked);
-        }
+        // for (let i = 0; i < res.data.data.length; i++) {
+        //   like_list.push(res.data.data[i].liked);
+        // }
 
-        console.log("받아오는 라이크 값들", like_list);
+        // console.log("받아오는 라이크 값들", like_list);
 
         let result = res.data.data.slice(start, size); // 서버에서 받아오는 게시물들을 start와 size를 정해서 나눠준다
         // console.log("페이징 갯수", result.length);

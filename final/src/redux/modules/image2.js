@@ -250,8 +250,8 @@ export default handleActions(
 
     [RESET_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
-        console.log("프리뷰 초기화!", action.payload.preview);
-        console.log("파일 초기화!", action.payload.file);
+        // console.log("프리뷰 초기화!", action.payload.preview);
+        // console.log("파일 초기화!", action.payload.file);
         draft.preview = action.payload.preview;
         draft.file = action.payload.file;
       }),
