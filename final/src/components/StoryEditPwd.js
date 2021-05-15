@@ -114,7 +114,7 @@ const StoryEditPwd = () => {
     <React.Fragment>
       <Container>
         <Title>비밀번호 변경하기</Title>
-        <Text>소셜로그인 이용자는 비밀번호 변경이 불가능합니다.</Text>
+        <text>소셜로그인 이용자는 비밀번호 변경이 불가능합니다.</text>
 
         <InputStyle
           placeholder="이전 비밀번호 입력"

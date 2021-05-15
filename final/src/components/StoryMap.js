@@ -232,6 +232,7 @@ const SearchInput = styled.input`
 const MapBox = styled.div`
   width: 100%;
   height: 650px;
+  padding-top: 10px;
   position: relative;
 
 `;
