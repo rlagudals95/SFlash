@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { CustomOverlay } from "react-kakao-maps";
 // 리덕스를 이용하게 해주는 함수들, 모듈 파일 가져오기
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
-import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configStore";
 import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지url
 
@@ -17,7 +15,6 @@ import CategoryInMap from "../components/CategoryInMap";
 import category_in_map from "../redux/modules/category_in_map";
 import { LeakRemoveOutlined } from "@material-ui/icons";
 import { actionCreators as ModalActions } from "../redux/modules/mapModal";
-import { actionCreators as PostActions } from "../redux/modules/post";
 import MapModal from "./MapModal";
 
 // window 객체로부터 kakao mpa api를 호출하기
@@ -1212,19 +1209,10 @@ const Maps = (props) => {
         </SearchIcon>
       </SearchBox>
       <CategoryInMap />
-      {/* <CustomOverlayUseInfo/> */}
       <MapBox>
         {/* 위에서 설정된 getElementById("map")에 의해서 id="map"인 div에 맵이 표시된다 */}
         <div id="map" style={{ width: "100vw", height: "100vh" }}></div>
       </MapBox>
-      {/* { is_total ? 
-        markerdata.forEach((p) => {
-          //...각종 변수들 정의
-          <CustomOverlay
-            content={<MyOverlay />}
-            lat={p.latitude}
-            lng={p.longitude}>
-          </CustomOverlay>}) : null} */}
       {is_uploadModal ? (
         <UpLoadModal
           latitude={latitude}
@@ -1280,13 +1268,10 @@ const SearchInput = styled.input`
   padding-left: 15px;
   font-size: 15px;
   border: none;
-  /* background-image: url("https://i.postimg.cc/P5xKdMqb/71403.png"); */
-  /* background-position: top right;
-  background-repeat: no-repeat; */
   &:focus {
-    /* outline: blue; */
+    outline: blue;
     border-radius: 5px;
-    border-color: blue;
+    /* border-color: blue; */
   }
 `;
 
