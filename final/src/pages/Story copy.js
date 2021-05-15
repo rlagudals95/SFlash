@@ -43,33 +43,32 @@ const Story = (props) => {
   }, []);
 
   
-  const [content, setContent] = React.useState(
-    <StoryContent
-      post_list={user_post_list}
-      marker_icon={userPostMarkerImgUrl}
-    />
-  );
 
-//   const tab_list = [
-//    { 
-//      tabId: 1,
-//      title: `${user_info.nickname} 님의 게시물`,
-//     content: 
-//     <StoryContent
-//     post_list={user_post_list}
-//     marker_icon={userPostMarkerImgUrl}
-// /> 
-// },
-// { 
-//   tabId: 2,
-//   title: `${user_info.nickname} 님의 좋아요`,
-//  content: 
-//  <StoryContent
-//  post_list={user_like_list}
-//  marker_icon={userLikeMarkerImgUrl}
-// />
-// },
-//   ]
+  // const [activeTab, setActiveTab] = React.useState(0)
+  //   const clickHandler = (id) => {
+  //     setActiveTab(id);
+  //   }
+
+  // const [content, setContent] = React.useState(
+  //   <StoryContent
+  //     post_list={user_post_list}
+  //     marker_icon={userPostMarkerImgUrl}
+  //   />
+  // );
+
+  // const [active, setActive] = React.useState("myPost");
+  // // 클릭한 인덱스 활성화
+  // const handleClick = (e) => {
+  //   const id = e.target.id;
+  //   if (id !== active) {
+  //     setActive(id);
+  //   }
+  // };
+
+
+  const tab = {
+    
+  }
 
 
   return (
@@ -78,22 +77,8 @@ const Story = (props) => {
         {/* 상단 유저 프로필 부분 컴포넌트 */}
         <StoryUserProfile user_info={user_info} userId={userId} />
 
-        {/* <List>
-          {category_list.map ((t, idx) => {
-            return (
-              <li 
-              key={idx}
-              id={t.tabId}
-              onClick = {() => {
 
-              }}
-              className={t.tabId === ? 'active' : ''}>
-                <Tab><span>{t.title}</span></Tab>
-              </li>
-            )
-          })}
-        </List>
-          <Content>{t[idx].content}</Content> */}
+
 
 
 
@@ -104,11 +89,12 @@ const Story = (props) => {
     (content 내 Story_Content 컴퍼넌트에서는 리스트와 지도로 볼수 있도록 다시 나눠지는데
     active 를 활용해 같은 방법으로 제어해준다.*/}
 
-        <Tabs>
+        {/* <Tabs>
           <Tab
-          //  id={"myPost"}
-          // active={active === "myPost"}
+           id={"myPost"}
+          active={active === "myPost"}
             onClick={() =>
+              handleClick()
               setContent(
                 <StoryContent
                   post_list={user_post_list}
@@ -124,8 +110,8 @@ const Story = (props) => {
           <VerticalBar></VerticalBar>
 
           <Tab
-          //  id={"myLike"}
-          // active={active === "myLike"}
+           id={"myLike"}
+          active={active === "myLike"}
             onClick={() =>
               setContent(
                 <StoryContent
@@ -140,7 +126,7 @@ const Story = (props) => {
           </Tab>
         </Tabs>
 
-        <Content>{content}</Content>
+        <Content>{content}</Content> */}
 
       </Wrapper>
     </React.Fragment>
@@ -149,64 +135,6 @@ const Story = (props) => {
 
 const Wrapper = styled.div`
   ${(props) => props.theme.responsiveContainer};
-`;
-
-const List = styled.ul`
-  list-style: none;
-  font-size: 19px;
-  margin-top: 25px;
-  letter-spacing: -0.57px;
-  padding: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  @media only screen and (max-width: 1024px) {
-    font-size: 16px;
-    letter-spacing: -0.39px;
-    padding: 0 15px 0 26px;
-    box-sizing: border-box;
-  }
-  & li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 255.37px;
-    height: 49px;
-    padding: 8px 13px;
-    @media only screen and (max-width: 1024px) {
-      width: 149px;
-    }
-    &:hover {
-      background: #ffffff 0% 0% no-repeat padding-box;
-      border-radius: 7px;
-      .arr span::after {
-        content: '';
-        display: flex;
-        width: 8px;
-        height: 8px;
-        border-top: 1px solid #333;
-        border-right: 1px solid #333;
-        transform: rotate(45deg);
-      }
-    }
-  }
-  & span {
-    cursor: pointer;
-  }
-  .active {
-    background: #ffffff 0% 0% no-repeat padding-box;
-    border-radius: 7px;
-    .arr span::after {
-      content: '';
-      display: flex;
-      width: 8px;
-      height: 8px;
-      border-top: 1px solid #333;
-      border-right: 1px solid #333;
-      transform: rotate(45deg);
-    }
-  }
 `;
 
 const Tabs = styled.div`
