@@ -128,7 +128,7 @@ const StoryUserProfile = (props) => {
                 로그아웃
               </MenuItem>
             </Menu>
-       
+
             {/*  현재 닉네임은 로컬스토리지에서 받아온 닉네임으로 설정되어 있지만 api 연결후에는 api에서 받아온 정보로 사용하기 */}
             <Modal
               isOpen={profileModal}
@@ -153,7 +153,7 @@ const StoryUserProfile = (props) => {
               />
             </Modal>
           </>
-           }
+          }
 
         </ProfileContainer>
     </React.Fragment>
