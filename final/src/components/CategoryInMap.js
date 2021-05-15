@@ -5,8 +5,6 @@ import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as categoryActionsInMap } from "../redux/modules/category_in_map";
 import * as BiIcons from "react-icons/bi";
-// import IconAllSpots from "../shared/images/IconAllSpots.png"
-// import IconMyLikes from "../shared/images/IconMyLikes.png"
 import AllBtn from "../shared/images/spotIcons/AllSpotsBtn.png"
 import AllMyPostBtn from "../shared/images/spotIcons/AllMyPostsBtn.png"
 import AllMyLikeBtn from "../shared/images/spotIcons/AllMyLikesBtn.png"
@@ -68,6 +66,45 @@ const CategoryInMap = () => {
             카테고리
           </CateGoryTitle>
         </CategoryInfo>
+
+        {/* 카페 */}
+        {is_all ? (
+          <SelectedBtn
+            onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.resetCategoryInMap());
+            }}
+          >
+            #전체
+          </SelectedBtn>
+        ) : (
+          <Btn
+            onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCafe(false);
+                setNight(false);
+                setOcean(false);
+                setMountain(false);
+                setFlower(false);
+                setAlone(false);
+                setCouple(false);
+                setFreind(false);
+                setPet(false);
+                setExhibition(false);
+                setCity(false);
+                setPark(false);
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.resetCategoryInMap());
+            }}
+          >
+            #전체
+          </Btn>
+        )}
         {/* 카페 */}
         {cafe ? (
           <SelectedBtn
@@ -405,48 +442,6 @@ const CategoryInMap = () => {
 
         {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
         <SpotSelectBox>
-          {/* 전체스팟 찾기 */}
-          {is_all ? (  // is_category_in_map 리스트안에 아무것도 없다면
-            <AllSpotsSelected src={AllBtn}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setShowMine(false);
-                setShowLike(false);
-                dispatch(categoryActionsInMap.resetCategoryInMap());
-              }}
-            />
-            //   <AllSpotsImg src={IconAllSpots}/>
-            //   <AllSpotsImg/>
-            //   <AllSpotsTitle>모든스팟</AllSpotsTitle>
-            // </AllSpotsSelected>
-          ) :  (
-            <AllSpots src={AllBtn}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setCafe(false);
-                setNight(false);
-                setOcean(false);
-                setMountain(false);
-                setFlower(false);
-                setAlone(false);
-                setCouple(false);
-                setFreind(false);
-                setPet(false);
-                setExhibition(false);
-                setCity(false);
-                setPark(false);
-                setShowMine(false);
-                setShowLike(false);
-                dispatch(categoryActionsInMap.resetCategoryInMap());
-              }}
-            />
-            //   <AllSpotsImg src={IconAllSpots}/>
-            //   <AllSpotsImg/>
-            //   <AllSpotsTitle>모든스팟</AllSpotsTitle> 
-            // </AllSpots>
-          )}
           {/* 내스팟 찾기 */}
           {showMine ? (
             <MyPostSpotsSelected src={AllMyPostBtn}
@@ -457,11 +452,7 @@ const CategoryInMap = () => {
               setShowLike(false);
               dispatch(categoryActionsInMap.resetCategoryInMap());
               }}
-            /> 
-            //     <MyPostSpotsImg/>
-            //     <MyPostSpotsTitle>내스팟</MyPostSpotsTitle>
-            // </MyPostSpotsSelected>
-            ) : (
+            /> ) : (
             <MyPostSpots src={AllMyPostBtn}
               onClick={(e) => {
                 e.preventDefault();
@@ -482,12 +473,7 @@ const CategoryInMap = () => {
                 setShowLike(false);
                 dispatch(categoryActionsInMap.getMyPostInMap());
               }}
-            /> 
-            //   <MyPostSpotsImg src={IconAllSpots}/>
-            //   <MyPostSpotsImg/>
-            //   <MyPostSpotsTitle>내스팟</MyPostSpotsTitle> 
-            // </MyPostSpots>
-            )}
+            /> )}
           {/* 내좋아요스팟 찾기 */}
           {showLike ? (
             <MyLikeSpotsSelected src={AllMyLikeBtn}
@@ -498,13 +484,8 @@ const CategoryInMap = () => {
                 setShowLike(false);
                 dispatch(categoryActionsInMap.resetCategoryInMap());
               }}
-            /> 
-              // <MyLikeSpotsImg src={IconMyLikes}/>
-              // <MyLikeSpotsImg/>
-              // <MyLikeSpotsTitle>좋아요스팟</MyLikeSpotsTitle>
-            // </MyLikeSpotsSelected> */}
-            ) : (
-              <MyLikeSpots src={AllMyLikeBtn}
+            />) : 
+            (<MyLikeSpots src={AllMyLikeBtn}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -524,12 +505,7 @@ const CategoryInMap = () => {
                 setShowLike(true);
                 dispatch(categoryActionsInMap.getMyLikeInMap());
               }}
-            />
-              // <MyLikeSpotsImg src={IconMyLikes}/>
-              // <MyLikeSpotsImg/>
-              // <MyLikeSpotsTitle>좋아요스팟</MyLikeSpotsTitle>
-            // </MyLikeSpots> */}
-            )} 
+            />)} 
         </SpotSelectBox>      
       </CategoryBox>
     </React.Fragment>

@@ -1147,18 +1147,14 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(exhibitionMarkers, "click", function () {
+        kakao.maps.event.addListener(exhibitionMarkers, "mouseover", function () {
           exhibitionCustomOverlay.setMap(map);
         });
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(
-          exhibitionMarkers,
-          "rightclick",
-          function () {
-            exhibitionCustomOverlay.setMap(null);
-          }
-        );
+        kakao.maps.event.addListener(exhibitionMarkers, "mouseout", function () {
+          exhibitionCustomOverlay.setMap(null);
+        });
       });
     }
 
@@ -1312,8 +1308,8 @@ const SearchInput = styled.input`
   font-size: 15px;
   border: none;
   /* background-image: url("https://i.postimg.cc/P5xKdMqb/71403.png"); */
-  background-position: top right;
-  background-repeat: no-repeat;
+  /* background-position: top right;
+  background-repeat: no-repeat; */
   &:focus {
     /* outline: blue; */
     border-radius: 5px;
