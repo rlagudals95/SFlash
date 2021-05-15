@@ -15,18 +15,10 @@ const StoryContent = (props) => {
   const { post_list, marker_icon } = props;
   console.log("StoryContents에 props 값으로 받아온 post_list", post_list);
 
-  // 버튼 탭 구현하기
-  // 처음에는 0번째 인덱스 활성화 git
-  // const [active, setActive] = useState(1);
-  // // 클릭한 인덱스 활성화
-  // const handleClick = (e) => {
-  //   const index = parseInt(e.target.id);
-  //   if (index !== active) {
-  //     setActive(index);
-  //   }
-  // };
+  // gridMode 가 true 면 그리드 형태로, false면 맵형태로 보여준다.
   const [gridMode, setGridMode] = React.useState(true);
 
+  // 게시물 갯수가 0 일때 게시물을 등록해달라는 문구가 뜹니다.
   if (post_list === 0) {
     return (
       <React.Fragment>
@@ -38,21 +30,34 @@ const StoryContent = (props) => {
         </Warning>
       </React.Fragment>
     );
-  } else {
+  }
+  // 게시물이 있을 때
+   else {
     return (
       <React.Fragment>
+        {/* 우측 아이콘 버튼 : gridMode를 제어 합니다.*/}
+        <Icons>
+          {gridMode ? (
+            <>
+              <SelectedIcon onClick={() => setGridMode(true)}>
+                <FiImage size="25" />
+              </SelectedIcon>
+              <UnselectedIcon onClick={() => setGridMode(false)}>
+                <HiOutlineMap size="25" />
+              </UnselectedIcon>
+            </>
+          ) : (
+            <>
+              <UnselectedIcon onClick={() => setGridMode(true)}>
+                <FiImage size="25" />
+              </UnselectedIcon>
+              <SelectedIcon onClick={() => setGridMode(false)}>
+                <HiOutlineMap size="25" />
+              </SelectedIcon>
+            </>
+          )}
+        </Icons>
 
-         <Icons>
-            <Icon onClick={() => setGridMode(true)}>
-              <FiImage
-              />
-            </Icon>
-            <Icon onClick={() => setGridMode(false)}>
-              <HiOutlineMap
-              />
-            </Icon>
-          </Icons>
-          
         <>
           {gridMode ? (
             <GridList>
@@ -63,37 +68,6 @@ const StoryContent = (props) => {
           ) : (
             <StoryMap post_list={post_list} marker_icon={marker_icon} />
           )}
-
-          {/* <Icons>
-            <Icon onClick={handleClick} active={active === 1} id={1}>
-              <FiImage
-                size="30"
-                onClick={handleClick}
-                active={active === 1}
-                id={1}
-              />
-            </Icon>
-            <Icon onClick={handleClick} active={active === 2} id={2}>
-              <HiOutlineMap
-                size="30"
-                onClick={handleClick}
-                active={active === 2}
-                id={2}
-              />
-            </Icon>
-          </Icons>
-
-          <Content active={active === 1}>
-            <GridList>
-              {post_list.map((p) => {
-                return <Post2 key={p.id} {...p}></Post2>;
-              })}
-            </GridList>
-          </Content>
-          <Content active={active === 2}>
-            <Grid height="40px" />
-            
-          </Content> */}
         </>
         <Grid height="300px" />
       </React.Fragment>
@@ -138,22 +112,40 @@ const Icons = styled.div`
   z-index: 500;
 `;
 
-const Icon = styled.button`
+const SelectedIcon = styled.button`
   aspect-ratio: 1/1;
   border-radius: 100px;
   margin: 5px;
   padding: 20px;
   border: 2pt solid #eee;
   box-sizing: border-box;
-  color: ${(props) => (props.active ? props.theme.main_color : "grey")};
-  border-color: ${(props) => (props.active ? props.theme.main_color : "")};
-  background-color: ${(props) => (props.active ? "white" : "#eee")};
+  background-color: ${(props) => props.theme.main_color};
+  color: #ffffff;
+  border: 2pt solid ${(props) => props.theme.main_color};
+  transition: background-color 0.5s ease-in-out;
+  /* :hover {
+    cursor: pointer;
+    background-color: #eee;
+    color: grey;
+    border: 2pt solid #eee;
+  } */
+`;
+
+const UnselectedIcon = styled.button`
+  aspect-ratio: 1/1;
+  border-radius: 100px;
+  margin: 5px;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  color:  ${(props) => props.theme.main_color};
+  border: 2pt solid ${(props) => props.theme.main_color};
   transition: background-color 0.5s ease-in-out;
   :hover {
     cursor: pointer;
-    background-color: ${(props) => props.theme.main_color};
-    color: #ffffff;
-    border: lightgrey;
+    background-color: #eee;
+    color: grey;
+    border: 2pt solid #eee;
   }
 `;
 
@@ -164,7 +156,7 @@ const GridList = styled.div`
   grid-gap: 20px;
   margin: auto;
   width: 100%;
-  padding: 50px 0px;
+  padding: 10px 0px;
   flex-wrap: wrap;
   @media (min-width: 1440px) {
     grid-template-columns: 1fr 1fr 1fr;
@@ -191,16 +183,5 @@ const GridList = styled.div`
   }
 `;
 
-const Box = styled.div`
-  text-align: center;
-  margin: auto;
-  width: 100%;
-  height: 700px;
-  background-color: #eee;
-`;
-
-const Content = styled.div`
-  /* ${(props) => (props.active ? "" : "display:none")} */
-`;
 
 export default StoryContent;
