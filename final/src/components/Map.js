@@ -292,7 +292,7 @@ const Maps = (props) => {
     // 6. 서버와 연결되어 데이터 통신이 이뤄지면 if문으로 분기하는 코드를 사용한다.
     // 기본 설정 규칙 설명 끝------------------------------------------------------------------------
 
-    // 2. 내가 작성한 게시물만 : 카페마커 + 커스텀 오버레이
+    // 1. 내가 작성한 게시물만 : 카페마커 + 커스텀 오버레이
     if (is_mypost) {
       myPostData.forEach((mypost) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -316,7 +316,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${mypost.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${mypost.spotName}</div>` +
+          `<div class="spotname">${mypost.spotName }</div>` +
+          // `<div class="spotname">${mypost.spotName}</div>` +
           "</div>" +
           "</div>";
 
@@ -353,7 +354,7 @@ const Maps = (props) => {
       });
     }
 
-    // 3. 내가 좋아요한 게시물만 : 카페마커 + 커스텀 오버레이
+    // 2. 내가 좋아요한 게시물만 : 카페마커 + 커스텀 오버레이
     if (is_mylike) {
       myLikeData.forEach((mylike) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -1199,7 +1200,7 @@ const SearchBox = styled.div`
   top: 40px;
   left: 200px;
   transform: translate(-10%, -90%);
-  z-index: 1000;
+  z-index: 3;
   @media (min-width: 1400px) {
     width: 600px;
     top: 100px;

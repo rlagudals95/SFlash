@@ -258,7 +258,7 @@ const actionCreators = {
   getPreview,
   getFile,
   // deleteImg,
-  getPost,
+  // getPost,
   ChangeEdit,
   deleteImage, //수정중 x 버튼을 누를때 이미지 사라지게 하기
   getDeleteId, //삭제된 이미지 아이디 가져오기
