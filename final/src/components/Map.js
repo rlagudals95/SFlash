@@ -251,7 +251,7 @@ const Maps = (props) => {
 
         // 작성용 마커를 띄우기
         // 작성용 마커를 클릭하면 게시물 작성창이 뜨게 하기 : 로그인 한 사람만 되게 하기
-        var imageSize = new kakao.maps.Size(30, 45);
+        var imageSize = new kakao.maps.Size(42, 63);
         var writeMarkerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.writeMarkerImgUrl}`,
           imageSize
@@ -300,7 +300,7 @@ const Maps = (props) => {
       // console.log(markerdata);
       // markerdata.forEach((p, idx) => { // mockdate를 이용한 테스트. 나중엔 서버에서 가져온다.
       allData.forEach((all, idx) => {
-        var imageSize = new kakao.maps.Size(30, 45);
+        var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.totalMarkerImgUrl}`,
           imageSize
@@ -338,7 +338,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -373,7 +373,7 @@ const Maps = (props) => {
     if (is_mypost) {
       myPostData.forEach((mypost) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-        const imageSize = new kakao.maps.Size(30, 45);
+        const imageSize = new kakao.maps.Size(42, 63);
         const markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.myPostMarkerImgUrl}`,
           imageSize
@@ -404,7 +404,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -434,7 +434,7 @@ const Maps = (props) => {
     if (is_mylike) {
       myLikeData.forEach((mylike) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-        const imageSize = new kakao.maps.Size(30, 45);
+        const imageSize = new kakao.maps.Size(42, 63);
         const markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.myLikeMarkerImgUrl}`,
           imageSize
@@ -465,7 +465,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -495,7 +495,7 @@ const Maps = (props) => {
     // 1. 카페 카테고리 : 카페마커 + 커스텀 오버레이
     if (is_cafe) {
       cafeData.forEach((cafe) => {
-        var imageSize = new kakao.maps.Size(30, 45);
+        var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.cafeMarkerImgUrl}`,
           imageSize
@@ -523,7 +523,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -551,7 +551,7 @@ const Maps = (props) => {
     if (is_night) {
       nightData.forEach((night) => {
         // nightData를 mockdata로 구현가능한지 테스트 할 것!
-        var imageSize = new kakao.maps.Size(30, 45);
+        var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.nightMarkerImgUrl}`,
           imageSize
@@ -579,7 +579,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -606,7 +606,7 @@ const Maps = (props) => {
     if (is_ocean) {
       oceanData.forEach((ocean) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-        var imageSize = new kakao.maps.Size(30, 45);
+        var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.oceanMarkerImgUrl}`,
           imageSize
@@ -634,7 +634,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -661,7 +661,7 @@ const Maps = (props) => {
     if (is_mountain) {
       mountainData.map((mountain, idx) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-        var imageSize = new kakao.maps.Size(30, 45);
+        var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.mountainMarkerImgUrl}`,
           imageSize
@@ -692,7 +692,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -720,7 +720,7 @@ const Maps = (props) => {
     if (is_flower) {
       flowerData.forEach((flower) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-        var imageSize = new kakao.maps.Size(30, 45);
+        var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.flowerMarkerImgUrl}`,
           imageSize
@@ -748,7 +748,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -776,7 +776,7 @@ const Maps = (props) => {
     if (is_alone) {
       aloneData.map((alone, idx) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-        var imageSize = new kakao.maps.Size(30, 45);
+        var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.aloneMarkerImgUrl}`,
           imageSize
@@ -804,7 +804,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -832,7 +832,7 @@ const Maps = (props) => {
     if (is_couple) {
       coupleData.forEach((couple) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-        var imageSize = new kakao.maps.Size(30, 45);
+        var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.coupleMarkerImgUrl}`,
           imageSize
@@ -860,7 +860,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -887,7 +887,7 @@ const Maps = (props) => {
     if (is_friend) {
       friendData.forEach((friend) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-        var imageSize = new kakao.maps.Size(30, 45);
+        var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.friendMarkerImgUrl}`,
           imageSize
@@ -915,7 +915,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -942,7 +942,7 @@ const Maps = (props) => {
     if (is_pet) {
       petData.forEach((pet) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-        var imageSize = new kakao.maps.Size(30, 45);
+        var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.petMarkerImgUrl}`,
           imageSize
@@ -970,7 +970,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -998,7 +998,7 @@ const Maps = (props) => {
     if (is_city) {
       cityData.forEach((city) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-        var imageSize = new kakao.maps.Size(30, 45);
+        var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.cityMarkerImgUrl}`,
           imageSize
@@ -1026,7 +1026,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -1053,7 +1053,7 @@ const Maps = (props) => {
     if (is_park) {
       parkData.forEach((park) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-        var imageSize = new kakao.maps.Size(30, 45);
+        var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.parkMarkerImgUrl}`,
           imageSize
@@ -1081,7 +1081,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -1109,7 +1109,7 @@ const Maps = (props) => {
     if (is_exhibition) {
       exhibitionData.forEach((exhibition) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-        const imageSize = new kakao.maps.Size(30, 45);
+        const imageSize = new kakao.maps.Size(42, 63);
         const markerImage = new kakao.maps.MarkerImage(
           `${markerImgUrls.exhibitionMarkerImgUrl}`,
           imageSize
@@ -1140,7 +1140,7 @@ const Maps = (props) => {
           position: position, // 커스텀 오버레이의 좌표
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.2, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -1286,12 +1286,13 @@ const SearchBox = styled.div`
     /* top: 140px; */
     width: 400px;
     top: 170px;
+    margin: auto;
   }
   @media (max-width: 600px) {
     top: 120px;
     width: 50%;
-    margin: auto;
     left: 25vw;
+    margin: auto;
   }
 `;
 
