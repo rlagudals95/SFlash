@@ -107,11 +107,7 @@ const addCommentAPI = (comment, board_id) => {
     })
       .then((res) => {
         console.log(res);
-        // console.log(res.data.data.user.id); // 댓글 id
-        // let comment_list = { ...comment, id: res.data.data.user.id };
-        // dispatch(setComment(comment_list, board_id));
-        // dispatch(addComment(comment, board_id));
-        // dispatch(postActions.getPostAPI());
+
         const comment_data = res.data.data;
         console.log("댓글정보", comment_data);
         let comment_list = {

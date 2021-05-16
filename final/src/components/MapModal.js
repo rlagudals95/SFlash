@@ -20,37 +20,30 @@ import { history } from "../redux/configStore";
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
   // React.useEffect(() => {}, []);
-  const modalData = useSelector((state) => state.mapmodal.post);
-  const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
 
-  console.log("ㅎㅎㅎㅎ", commentData);
+  // console.log("ㅎㅎㅎㅎ", commentData);
 
-  console.log(modalData.id);
   React.useEffect(() => {
     // console.log("시작");
-    // dispatch(ModalActions.getModalPost());
-    console.log(modalData.id); //잘 찍힌다
+    // dispatch(ModalActions.getModalPostAPI());
+    // console.log("!!!!!!!!!!!", modalData); //잘 찍힌다
     // dispatch(CommnetActions.getComment(modalData.id)); //음 서버에서 가져온 모달디테일 에서 코멘트 따로빼자
   }, []);
 
   console.log("eeee", props);
   const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
-
+  const modalData = useSelector((state) => state.mapmodal.post);
+  const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
-  const [is_Editmodal, setEditModal] = useState();
 
-  console.log("ifjsdghjusdfhgujki", modalData);
-  const getData = []; // 모달데이터가 오기도 전에 실행되서 이렇게 조건을 주어 데이터가 온후에 사용할 수 있게 했다
-  if (modalData) {
-    getData.push(modalData);
+  if (commentData) {
+    console.log("코멘트 데이타", commentData);
   }
 
-  console.log("짜잔~", getData);
+  const [is_Editmodal, setEditModal] = useState();
 
-  // getData[0].imgUrl
-  const user_info = useSelector((state) => state.user.user);
+  console.log("모달 데이타", modalData);
 
-  // console.log(user_info);
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
 
@@ -74,61 +67,57 @@ const ModalDetail = (props) => {
   };
 
   // 받아온 이미지들
-  let image_list = [];
+  // let image_list = [];
 
-  //   for (let i = 0; i < props.img_url.length; i++) {
-  //     image_list.push(props.img_url[i]);
-  //   }
+  // for (let i = 0; i < props.img_url; i++) {
+  //   image_list.push(props.img_url[i]);
+  // }
 
-  for (let i = 0; i < props.img_url; i++) {
-    image_list.push(props.img_url[i]);
-  }
+  // let images = [];
 
-  let images = [];
+  // image_list.forEach((img) => {
+  //   images.push(img.imgUrl);
+  // });
 
-  image_list.forEach((img) => {
-    images.push(img.imgUrl);
-  });
-
-  console.log("이미지들!!", images);
-
-  //   let comment_list = [];
-  //   for (let i = 0; i < props.comment.length; i++) {
-  //     comment_list.push(props.comment[i]);
-  //   }
+  // console.log("이미지들!!", images);
 
   let comment_list = [];
-  for (let i = 0; i < props.comment; i++) {
-    comment_list.push(props.comment[i]);
-  }
+  // for (let i = 0; i < props.comment.length; i++) {
+  //   comment_list.push(props.comment[i]);
+  // }
+
+  // let comment_list = [];
+  // for (let i = 0; i < props.comment; i++) {
+  //   comment_list.push(props.comment[i]);
+  // }
 
   // const comment_List = useSelector((state) => state.comment.list);
-  const comment_List = [1, 2, 3];
-  console.log("이포스트의 댓글은??", comment_List);
+
+  // console.log("이포스트의 댓글은??", comment_List);
 
   const is_comment = commentData ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
   const addLike = () => {
-    dispatch(likeActions.addLikeAPI(props.id, props));
+    dispatch(ModalActions.modalAddLikeAPI(modalData.id, modalData));
     // dispatch(postActions.editLikeP(props.id, props)); // 리덕스
   };
 
   const disLike = () => {
-    dispatch(likeActions.disLikeAPI(props.id, props));
+    dispatch(ModalActions.modalDisLikeAPI(modalData.id, modalData));
     // dispatch(postActions.editLikeD(props.id, props));
   };
 
   const addComment = () => {
     //작성한 댓글 내용서버로 보낸단
-    dispatch(CommnetActions.addCommentAPI(comments, props.id));
+    dispatch(ModalActions.modalAddCommentAPI(comments, modalData.id));
     setComments("");
   };
 
   const deleteComment = (id) => {
     //삭제한 댓글의 내용과 board id를 서버로 보낸다
-    dispatch(CommnetActions.deleteCommentAPI(id, props.id));
+    dispatch(ModalActions.modalDeleteCommentAPI(id));
   };
 
   // console.log("댓글 내용", comments);
@@ -169,201 +158,211 @@ const ModalDetail = (props) => {
 
   return (
     <React.Fragment>
-      <React.Fragment>
-        <Component onClick={props.close} />
-        <ModalComponent>
-          <ModalHeader>
-            <ModalLeftHeader>
-              <React.Fragment>
-                <ProCircle
-                  src={
-                    getData[0].profileImg
-                      ? getData[0].profileImg
-                      : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                  }
-                  onClick={() => {
-                    history.replace(`/story/${getData[0].writerId}`); // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
-                  }}
-                />
-                <ModalAuthor
-                  onClick={() => {
-                    history.replace(`/story/${getData[0].writerId}`); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
-                  }}
-                >
-                  {getData[0].writerName}
-                </ModalAuthor>
-              </React.Fragment>
-              {/* <PostDate>{timeForToday(props.creatAt)}</PostDate> */}
-              <ExitContainer>
-                <ExitBtn onClick={props.close}>
-                  <CloseIcon fontSize="large" />
-                </ExitBtn>
-              </ExitContainer>
-            </ModalLeftHeader>
-          </ModalHeader>
-          {/* 이미지 슬라이드 구현 props로 받는 이미지의 개수가 1개를 초과할때  */}
-          {/* 그 수만큼 map함수로 출력해준다 */}
-          {getData[0].imgUrl > 1 ? ( // 음.,...
-            <Slider {...settings}>
-              {images.map((p, idx) => {
-                return (
-                  //getData[0].imgUrl
-                  <div>
-                    <ModalImg src={getData[0].imgUrl[idx].imgUrl} />
-                  </div>
-                );
-              })}
-            </Slider>
-          ) : (
-            <ModalImg src={getData[0].imgUrl[0].imgUrl} />
-          )}
-
-          <ModalBottomContainer>
-            <InfoBox>
-              <InfoBoxInner>
-                {/*is_like 여부로 하트모양 변경  */}
-
-                {getData[0].like ? (
-                  <LikeBox>
-                    <div style={{ cursor: "pointer" }}>
-                      {/* 좋아요 상태에 따라서 하트 모양의 조건부 렌더 */}
-                      <FavoriteIcon
-                        onClick={disLike}
-                        style={{ color: "rgb(255, 183, 25)", fontSize: 30 }}
-                      />
-                      <LikeCntBox> {getData[0].likeCount}</LikeCntBox>
-                    </div>
-                  </LikeBox>
-                ) : (
-                  <LikeBox>
-                    <div style={{ cursor: "pointer" }}>
-                      <FavoriteBorderIcon
-                        style={{ color: "rgb(255, 183, 25)" }}
-                        style={{ fontSize: 30, color: "rgb(255, 183, 25)" }}
-                        onClick={addLike}
-                      />
-
-                      <LikeCntBox> {getData[0].likeCount}</LikeCntBox>
-                    </div>
-                  </LikeBox>
-                )}
-
-                {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
-                {getData.writerId == user_id ? (
-                  <ModalEdit>
-                    <React.Fragment onClick={props.close}>
-                      <EditBtn
+      {modalData &&
+        commentData && ( //모달데이터가 들어와야 실행!
+          <React.Fragment>
+            <React.Fragment>
+              <Component onClick={props.close} />
+              <ModalComponent>
+                <ModalHeader>
+                  <ModalLeftHeader>
+                    <React.Fragment>
+                      <ProCircle
+                        src={
+                          modalData.profileImg
+                            ? modalData.profileImg
+                            : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                        }
                         onClick={() => {
-                          setEditModal(true);
-
-                          // dispatch(imageActions.getPost(props.id));
+                          history.replace(`/story/${modalData.writerId}`); // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                        }}
+                      />
+                      <ModalAuthor
+                        onClick={() => {
+                          history.replace(`/story/${modalData.writerId}`); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                         }}
                       >
-                        수정
-                      </EditBtn>
+                        {modalData.writerName}
+                      </ModalAuthor>
                     </React.Fragment>
-                    /
-                    <DeleteBtn
-                      onClick={(e) => {
-                        // e.prevent..., e.stopPro.. 이것들로 이벤트 버블링을 막는다
-                        e.preventDefault();
-                        e.stopPropagation();
-                        // 클릭하면 게시물 삭제
-                        dispatch(postActions.deletePostAPI(props.id)); //이거 왜안될까??....
-                      }}
-                    >
-                      삭제
-                    </DeleteBtn>
-                  </ModalEdit>
+                    {/* <PostDate>{timeForToday(props.creatAt)}</PostDate> */}
+                    <ExitContainer>
+                      <ExitBtn onClick={props.close}>
+                        <CloseIcon fontSize="large" />
+                      </ExitBtn>
+                    </ExitContainer>
+                  </ModalLeftHeader>
+                </ModalHeader>
+                {/* 이미지 슬라이드 구현 props로 받는 이미지의 개수가 1개를 초과할때  */}
+                {/* 그 수만큼 map함수로 출력해준다 */}
+                {modalData.img_url.length > 1 ? ( // 음.,...
+                  <Slider {...settings}>
+                    {modalData.img_url.map((p, idx) => {
+                      return (
+                        //modalData[0].imgUrl
+                        <div>
+                          <ModalImg src={modalData.img_url[idx].imgUrl} />
+                        </div>
+                      );
+                    })}
+                  </Slider>
                 ) : (
-                  <ModalCate>
-                    <ModalCateInner>#{getData[0].category}</ModalCateInner>
-                  </ModalCate>
+                  <ModalImg src={modalData.img_url[0].imgUrl} />
                 )}
-              </InfoBoxInner>
-              <InfoOutter>
-                <PostTilte>
-                  {getData[0].title}{" "}
-                  <PostDate>{timeForToday(getData[0].creatAt)}</PostDate>
-                </PostTilte>
-                <PostContents>{getData[0].content}</PostContents>
-                <PostTime>{getData[0].spotName}</PostTime>
-              </InfoOutter>
-            </InfoBox>
-            <ModalCmtBox>
-              {is_comment
-                ? commentData.map((c, idx) => {
-                    //여기서 댓글을 입력하고 map으로 props 값을 돌려서 화면을 띄우게 해줌
-                    //댓글이 2개보다 작다면? 1개라면?
-                    return (
-                      <ReplyBox>
-                        <Replys>
-                          <ReplyLeft>
-                            <React.Fragment>
-                              <ReplyImg
-                                src={
-                                  //댓글 작성자가 아직 프로필 이미지를 등록 안했을 경우엔 기본이미지를 보여주도록 설정
-                                  c.writerImgUrl
-                                    ? c.writerImgUrl
-                                    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                }
-                                onClick={() => {
-                                  history.replace(`/story/${c.userId}`);
-                                }}
-                              ></ReplyImg>
-                              <ReplyWriter
-                                onClick={() => {
-                                  history.replace(`/story/${c.userId}`);
-                                }}
-                              >
-                                {c.writerName}
-                              </ReplyWriter>
-                            </React.Fragment>
-                            <ReplyContainer>
-                              <Reply>{c.content}</Reply>
-                            </ReplyContainer>
-                          </ReplyLeft>
-                          <ReplyRight>
-                            <CmtDate>
-                              {/* 방금 전 */}
-                              {timeForToday(c.modified)}
-                            </CmtDate>
-                            {nickname == c.writerName ? (
-                              <CmtDeleteBtn
-                                onClick={() => {
-                                  deleteComment(c.commentId);
-                                }}
-                              >
-                                {/*  */}
-                                <DeleteForeverIcon />
-                              </CmtDeleteBtn>
-                            ) : null}
-                          </ReplyRight>
-                        </Replys>
-                      </ReplyBox>
-                    );
-                  })
-                : null}
-            </ModalCmtBox>
-            <ModalCmtInputBox>
-              <CommentInput
-                type="text"
-                placeholder="댓글달기..."
-                onChange={selectComment}
-                value={comments}
-              />
-              {ok_submit ? (
-                <UploadBtn onClick={addComment}>게시</UploadBtn>
-              ) : (
-                <UploadBtn style={{ opacity: "0.3" }}>게시</UploadBtn>
-              )}
-            </ModalCmtInputBox>
-          </ModalBottomContainer>
-        </ModalComponent>
-        {is_Editmodal ? (
-          <UploadModal close={closeDetailModal} {...props} />
-        ) : null}
-      </React.Fragment>
+
+                <ModalBottomContainer>
+                  <InfoBox>
+                    <InfoBoxInner>
+                      {/*is_like 여부로 하트모양 변경  */}
+
+                      {modalData.like ? (
+                        <LikeBox>
+                          <div style={{ cursor: "pointer" }}>
+                            {/* 좋아요 상태에 따라서 하트 모양의 조건부 렌더 */}
+                            <FavoriteIcon
+                              onClick={disLike}
+                              style={{
+                                color: "rgb(255, 183, 25)",
+                                fontSize: 30,
+                              }}
+                            />
+                            <LikeCntBox> {modalData.likeCnt}</LikeCntBox>
+                          </div>
+                        </LikeBox>
+                      ) : (
+                        <LikeBox>
+                          <div style={{ cursor: "pointer" }}>
+                            <FavoriteBorderIcon
+                              style={{ color: "rgb(255, 183, 25)" }}
+                              style={{
+                                fontSize: 30,
+                                color: "rgb(255, 183, 25)",
+                              }}
+                              onClick={addLike}
+                            />
+
+                            <LikeCntBox> {modalData.likeCnt}</LikeCntBox>
+                          </div>
+                        </LikeBox>
+                      )}
+
+                      {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
+                      {modalData.writerId == user_id ? (
+                        <ModalEdit>
+                          <React.Fragment onClick={props.close}>
+                            <EditBtn
+                              onClick={() => {
+                                setEditModal(true);
+
+                                // dispatch(imageActions.getPost(props.id));
+                              }}
+                            >
+                              수정
+                            </EditBtn>
+                          </React.Fragment>
+                          /
+                          <DeleteBtn
+                            onClick={(e) => {
+                              // e.prevent..., e.stopPro.. 이것들로 이벤트 버블링을 막는다
+                              e.preventDefault();
+                              e.stopPropagation();
+                              // 클릭하면 게시물 삭제
+                              dispatch(postActions.deletePostAPI(modalData.id)); //이거 왜안될까??....
+                              props.close(); //삭제 바로반영?
+                            }}
+                          >
+                            삭제
+                          </DeleteBtn>
+                        </ModalEdit>
+                      ) : (
+                        <ModalCate>
+                          <ModalCateInner>#</ModalCateInner>
+                        </ModalCate>
+                      )}
+                    </InfoBoxInner>
+                    <InfoOutter>
+                      <PostTilte>
+                        {modalData.title}{" "}
+                        <PostDate>{timeForToday(modalData.creatAt)}</PostDate>
+                      </PostTilte>
+                      <PostContents>{modalData.content}</PostContents>
+                      <PostTime>{modalData.spotName}</PostTime>
+                    </InfoOutter>
+                  </InfoBox>
+                  <ModalCmtBox>
+                    {commentData &&
+                      commentData.map((c, idx) => {
+                        //여기서 댓글을 입력하고 map으로 props 값을 돌려서 화면을 띄우게 해줌
+                        //댓글이 2개보다 작다면? 1개라면?
+                        return (
+                          <ReplyBox>
+                            <Replys>
+                              <ReplyLeft>
+                                <React.Fragment>
+                                  <ReplyImg
+                                    src={
+                                      //댓글 작성자가 아직 프로필 이미지를 등록 안했을 경우엔 기본이미지를 보여주도록 설정
+                                      c.writerImgUrl
+                                        ? c.writerImgUrl
+                                        : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                    }
+                                    onClick={() => {
+                                      history.replace(`/story/${c.userId}`);
+                                    }}
+                                  ></ReplyImg>
+                                  <ReplyWriter
+                                    onClick={() => {
+                                      history.replace(`/story/${c.userId}`);
+                                    }}
+                                  >
+                                    {c.writerName}
+                                  </ReplyWriter>
+                                </React.Fragment>
+                                <ReplyContainer>
+                                  <Reply>{c.content}</Reply>
+                                </ReplyContainer>
+                              </ReplyLeft>
+                              <ReplyRight>
+                                <CmtDate>
+                                  {/* 방금 전 */}
+                                  {timeForToday(c.modified)}
+                                </CmtDate>
+                                {nickname == c.writerName ? (
+                                  <CmtDeleteBtn
+                                    onClick={() => {
+                                      deleteComment(c.commentId);
+                                    }}
+                                  >
+                                    <DeleteForeverIcon />
+                                  </CmtDeleteBtn>
+                                ) : null}
+                              </ReplyRight>
+                            </Replys>
+                          </ReplyBox>
+                        );
+                      })}
+                  </ModalCmtBox>
+                  <ModalCmtInputBox>
+                    <CommentInput
+                      type="text"
+                      placeholder="댓글달기..."
+                      onChange={selectComment}
+                      value={comments}
+                    />
+                    {ok_submit ? (
+                      <UploadBtn onClick={addComment}>게시</UploadBtn>
+                    ) : (
+                      <UploadBtn style={{ opacity: "0.3" }}>게시</UploadBtn>
+                    )}
+                  </ModalCmtInputBox>
+                </ModalBottomContainer>
+              </ModalComponent>
+              {is_Editmodal ? (
+                <UploadModal close={closeDetailModal} {...modalData} />
+              ) : null}
+            </React.Fragment>
+          </React.Fragment>
+        )}
     </React.Fragment>
   );
 };

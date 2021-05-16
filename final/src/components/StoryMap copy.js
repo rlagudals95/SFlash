@@ -166,7 +166,7 @@ const StoryMap = (props) => {
           _map.setBounds(bounds);
         }
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-        window.alert("검색결과가 존재하지 않습니다.");
+        // window.alert("검색결과가 존재하지 않습니다.");
         return;
       } else if (status === kakao.maps.services.Status.ERROR) {
         window.alert("검색 결과 중 오류가 발생했습니다.");

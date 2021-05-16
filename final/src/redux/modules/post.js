@@ -8,6 +8,7 @@ import { config } from "../../shared/config";
 
 import { getCookie } from "../../shared/Cookie";
 import { push } from "react-router-redux";
+import { actionCreators as modalActions } from "./mapModal";
 
 const SET_POST = "SET_POST";
 const SET_MAP_POST = "SET_MAP_POST";
@@ -144,14 +145,14 @@ const addPostAPI = (post) => {
         // let one_post = res.data.data;
         // let one_marker_data = {
         //   id: one_post.boardId,
-        //   title: one_post.title,
-        //   imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,
+        //   category:  one_post.category,
+        //   spotName: one_post.spotName,
         //   latitude: one_post.latitude,
         //   longitude: one_post.longitude,
-        //   spotName: one_post.spotName,
+        //   imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,
         // };
         // dispatch(addPost(one_marker_data));
-        // history.replace("/"); // 이부분 실행이 잘안되면 imgUrl인식을 못함 변수명 잘지켜주세요! : 민규 - 이건 데이터 변경없이 사이트만 변경해주는걸로 알고 있습니다
+        history.replace("/"); // 이부분 실행이 잘안되면 imgUrl인식을 못함 변수명 잘지켜주세요! : 민규 - 이건 데이터 변경없이 사이트만 변경해주는걸로 알고 있습니다
         // window.location.replace("/"); // 민규 - 이 명령어는 데이터 변경이 반영되는 새로고침으로 알고 있어요. 게시물 업로드하고 반영된걸 바로 보려고 넣은 명령어에요.
       })
       .catch((err) => {
@@ -161,7 +162,7 @@ const addPostAPI = (post) => {
   };
 };
 
-//start = null, size = null
+//start = null, size = null //
 const getPostAPI = (start = null, size = null) => {
   return function (dispatch, getState) {
     const board_list = getState().post.list;
@@ -169,7 +170,7 @@ const getPostAPI = (start = null, size = null) => {
 
     let end_board = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
       board_list.length == 0
-        ? Number.MAX_SAFE_INTEGER // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
+        ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
         : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
           board_list[board_list.length - 1].id; // 이제 처음 받은 포스트중 가장 마지막 포스트 id 기준으로 15개씩 게시물을 받아온다
 
@@ -179,8 +180,8 @@ const getPostAPI = (start = null, size = null) => {
       method: "GET",
       url: `${config.api}/board`,
       data: {
-        // size: 15,
-        // lastAriticleId: end_board.id // 처음에는 9000조를 보낸다
+        size: 15,
+        lastAriticleId: end_board.id, // 처음에는 9000조를 보낸다
       },
       headers: {
         "X-AUTH-TOKEN": `${config.jwt}`,
@@ -232,6 +233,7 @@ const getPostAPI = (start = null, size = null) => {
           post_list.unshift(post);
         });
         dispatch(setPost(post_list, paging));
+        // dispatch(modalActions.modalEdit(post_list));
       })
       .catch((err) => {
         window.alert("게시물을 가져오는데 문제가 있어요!");
@@ -440,20 +442,20 @@ const editLikeP = (post_id, post) => {
     console.log(_like, _likeCnt);
 
     let board = {
-      category: post.category,
-      comment: post.comment,
-      content: post.content,
-      creatAt: post.creatAt,
       id: post.id,
-      img_url: post.img_url,
+      title: post.title,
+      content: post.content,
+      writerName: post.writerName,
+      category: post.category,
+      profileImg: post.profileImg,
       like: true,
       likeCnt: post.likeCnt + 1,
-      profileImg: post.profileImg,
-      title: post.title,
-      writerName: post.writerName,
+      comment: post.comment,
+      img_url: post.img_url,
+      creatAt: post.creatAt,
+      writerId: post.writerId,
     };
     console.log("rrr", board);
-
     dispatch(add_Like(post_id, board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
   };
 };
@@ -480,6 +482,7 @@ const editLikeD = (post_id, post) => {
       profileImg: post.profileImg,
       title: post.title,
       writerName: post.writerName,
+      writerId: post.writerId,
     };
     console.log("rrr", board);
 

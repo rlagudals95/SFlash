@@ -13,6 +13,7 @@ import { actionCreators as imageActions } from "../redux/modules/image2";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as CommnetActions } from "../redux/modules/comment";
 import { actionCreators as likeActions } from "../redux/modules/like";
+import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import { forEach } from "lodash";
 import { history } from "../redux/configStore";
 
@@ -20,19 +21,29 @@ const ModalDetail = (props) => {
   const dispatch = useDispatch();
   // React.useEffect(() => {}, []);
 
+  // console.log("ㅎㅎㅎㅎ", commentData);
+
   React.useEffect(() => {
     // console.log("시작");
-    dispatch(CommnetActions.getComment(props.id));
+    // dispatch(ModalActions.getModalPostAPI());
+    // console.log("!!!!!!!!!!!", modalData); //잘 찍힌다
+    // dispatch(CommnetActions.getComment(modalData.id)); //음 서버에서 가져온 모달디테일 에서 코멘트 따로빼자
   }, []);
 
+  console.log("eeee", props);
   const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
-
+  const modalData = useSelector((state) => state.mapmodal.post);
+  const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
+
+  if (commentData) {
+    console.log("코멘트 데이타", commentData);
+  }
+
   const [is_Editmodal, setEditModal] = useState();
 
-  const user_info = useSelector((state) => state.user.user);
+  console.log("모달 데이타", modalData);
 
-  // console.log(user_info);
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
 
@@ -56,30 +67,35 @@ const ModalDetail = (props) => {
   };
 
   // 받아온 이미지들
-  let image_list = [];
+  // let image_list = [];
 
-  for (let i = 0; i < props.img_url.length; i++) {
-    image_list.push(props.img_url[i]);
-  }
+  // for (let i = 0; i < props.img_url; i++) {
+  //   image_list.push(props.img_url[i]);
+  // }
 
-  let images = [];
+  // let images = [];
 
-  image_list.forEach((img) => {
-    images.push(img.imgUrl);
-  });
+  // image_list.forEach((img) => {
+  //   images.push(img.imgUrl);
+  // });
 
-  console.log("이미지들!!", images);
+  // console.log("이미지들!!", images);
 
   let comment_list = [];
-  for (let i = 0; i < props.comment.length; i++) {
-    comment_list.push(props.comment[i]);
-  }
+  // for (let i = 0; i < props.comment.length; i++) {
+  //   comment_list.push(props.comment[i]);
+  // }
 
-  const comment_List = useSelector((state) => state.comment.list);
+  // let comment_list = [];
+  // for (let i = 0; i < props.comment; i++) {
+  //   comment_list.push(props.comment[i]);
+  // }
 
-  console.log("이포스트의 댓글은??", comment_List);
+  // const comment_List = useSelector((state) => state.comment.list);
 
-  const is_comment = comment_List ? true : false;
+  // console.log("이포스트의 댓글은??", comment_List);
+
+  const is_comment = commentData ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
@@ -105,7 +121,7 @@ const ModalDetail = (props) => {
   };
 
   // console.log("댓글 내용", comments);
-  console.log("어떤정보가!??!", props);
+
   const selectComment = (e) => {
     setComments(e.target.value);
   };
@@ -140,223 +156,209 @@ const ModalDetail = (props) => {
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
 
-  // console.log("프로필사진", props.profileImg);
-
-  // 콘텐츠 내용이 너무 길때 더보기로 대체해준다
-  // const Box = () => {
-  //   const contentRef = useRef(null);
-  //   const onClick = (e) => {
-  //     contentRef.current.classList.add("show");
-  //     e.currentTarget.classList.add("hide");
-  //   };
-  //   return (
-  //     <Wrap>
-  //       <Ellipsis ref={contentRef}>{data}</Ellipsis>
-  //       <Button>...더보기</Button>
-  //     </Wrap>
-  //   );
-  // };
-
   return (
     <React.Fragment>
-      <Component onClick={props.close} />
-      <ModalComponent>
-        <ModalHeader>
-          <ModalLeftHeader>
-            <React.Fragment>
-              <ProCircle
-                src={
-                  props.profileImg
-                    ? props.profileImg
-                    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                }
-                onClick={() => {
-                  history.replace(`/story/${props.writerId}`); // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
-                }}
-              />
-              <ModalAuthor
-                onClick={() => {
-                  history.replace(`/story/${props.writerId}`); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
-                }}
-              >
-                {props.writerName}
-              </ModalAuthor>
-            </React.Fragment>
-            {/* <PostDate>{timeForToday(props.creatAt)}</PostDate> */}
-            <ExitContainer>
-              <ExitBtn onClick={props.close}>
-                <CloseIcon fontSize="small" />
-              </ExitBtn>
-            </ExitContainer>
-          </ModalLeftHeader>
-        </ModalHeader>
-        {/* 이미지 슬라이드 구현 props로 받는 이미지의 개수가 1개를 초과할때  */}
-        {/* 그 수만큼 map함수로 출력해준다 */}
-        {images.length > 1 ? (
-          <Slider {...settings}>
-            {images.map((p, idx) => {
-              return (
-                <div>
-                  <ModalImg src={images[idx]} />
-                </div>
-              );
-            })}
-          </Slider>
-        ) : (
-          <ModalImg src={images[0]} />
-        )}
-
-        <ModalBottomContainer>
-          <InfoBox>
-            <InfoBoxInner>
-              {/*is_like 여부로 하트모양 변경  */}
-
-              {props.like ? (
-                <LikeBox>
-                  <div style={{ cursor: "pointer" }}>
-                    {/* 좋아요 상태에 따라서 하트 모양의 조건부 렌더 */}
-                    <FavoriteIcon
-                      onClick={disLike}
-                      style={{ color: "rgb(255, 183, 25)", fontSize: 30 }}
-                    />
-                    <LikeCntBox> {props.likeCnt}</LikeCntBox>
-                  </div>
-                </LikeBox>
-              ) : (
-                <LikeBox>
-                  <div style={{ cursor: "pointer" }}>
-                    <FavoriteBorderIcon
-                      style={{ color: "rgb(255, 183, 25)" }}
-                      style={{ fontSize: 30, color: "rgb(255, 183, 25)" }}
-                      onClick={addLike}
-                    />
-
-                    <LikeCntBox> {props.likeCnt}</LikeCntBox>
-                  </div>
-                </LikeBox>
-              )}
-
-              {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
-              {props.writerId == user_id ? (
-                <ModalEdit>
-                  <React.Fragment onClick={props.close}>
-                    <EditBtn
+      {modalData && ( //모달데이터가 들어와야 실행!
+        <React.Fragment>
+          <React.Fragment>
+            <Component onClick={props.close} />
+            <ModalComponent>
+              <ModalHeader>
+                <ModalLeftHeader>
+                  <React.Fragment>
+                    <ProCircle
+                      src={
+                        modalData.profileImg
+                          ? modalData.profileImg
+                          : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                      }
                       onClick={() => {
-                        setEditModal(true);
-
-                        // dispatch(imageActions.getPost(props.id));
+                        history.replace(`/story/${modalData.writerId}`); // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                      }}
+                    />
+                    <ModalAuthor
+                      onClick={() => {
+                        history.replace(`/story/${modalData.writerId}`); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                       }}
                     >
-                      수정
-                    </EditBtn>
+                      {modalData.writerName}
+                    </ModalAuthor>
                   </React.Fragment>
-                  /
-                  <DeleteBtn
-                    onClick={(e) => {
-                      // e.prevent..., e.stopPro.. 이것들로 이벤트 버블링을 막는다
-                      e.preventDefault();
-                      e.stopPropagation();
-                      // 클릭하면 게시물 삭제
-                      dispatch(postActions.deletePostAPI(props.id)); //이거 왜안될까??....
-                    }}
-                  >
-                    삭제
-                  </DeleteBtn>
-                </ModalEdit>
+                  {/* <PostDate>{timeForToday(props.creatAt)}</PostDate> */}
+                  <ExitContainer>
+                    <ExitBtn onClick={props.close}>
+                      <CloseIcon fontSize="large" />
+                    </ExitBtn>
+                  </ExitContainer>
+                </ModalLeftHeader>
+              </ModalHeader>
+              {/* 이미지 슬라이드 구현 props로 받는 이미지의 개수가 1개를 초과할때  */}
+              {/* 그 수만큼 map함수로 출력해준다 */}
+              {modalData.img_url.length > 1 ? ( // 음.,...
+                <Slider {...settings}>
+                  {modalData.img_url.map((p, idx) => {
+                    return (
+                      //modalData[0].imgUrl
+                      <div>
+                        <ModalImg src={modalData.img_url[idx].imgUrl} />
+                      </div>
+                    );
+                  })}
+                </Slider>
               ) : (
-                <ModalCate>
-                  <ModalCateInner>#{props.category}</ModalCateInner>
-                </ModalCate>
+                <ModalImg src={modalData.img_url[0].imgUrl} />
               )}
-            </InfoBoxInner>
-            <InfoOutter>
-              <PostTilte>
-                {props.title} <PostDate>{timeForToday(props.creatAt)}</PostDate>
-              </PostTilte>
-              <PostContents>{props.content}</PostContents>
-              <PostTime>{props.spotName}</PostTime>
-            </InfoOutter>
-          </InfoBox>
-          <ModalCmtBox>
-            {is_comment
-              ? comment_List.map((c, idx) => {
-                  //여기서 댓글을 입력하고 map으로 props 값을 돌려서 화면을 띄우게 해줌
-                  //댓글이 2개보다 작다면? 1개라면?
-                  return (
-                    <ReplyBox>
-                      <Replys>
-                        <ReplyLeft>
-                          <React.Fragment>
-                            <ReplyImg
-                              src={
-                                //댓글 작성자가 아직 프로필 이미지를 등록 안했을 경우엔 기본이미지를 보여주도록 설정
-                                c.writerImgUrl
-                                  ? c.writerImgUrl
-                                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                              }
-                              onClick={() => {
-                                history.replace(`/story/${c.userId}`);
-                              }}
-                            ></ReplyImg>
-                            <ReplyWriter
-                              onClick={() => {
-                                history.replace(`/story/${c.userId}`);
-                              }}
-                            >
-                              {c.writerName}
-                            </ReplyWriter>
-                          </React.Fragment>
-                          <ReplyContainer>
-                            <Reply>{c.content}</Reply>
-                          </ReplyContainer>
-                        </ReplyLeft>
-                        <ReplyRight>
-                          <CmtDate>
-                            {/* 방금 전 */}
-                            {timeForToday(c.modified)}
-                          </CmtDate>
-                          {nickname == c.writerName ? (
-                            <CmtDeleteBtn
-                              onClick={() => {
-                                deleteComment(c.commentId);
-                              }}
-                            >
-                              {/*  */}
-                              <DeleteForeverIcon />
-                            </CmtDeleteBtn>
-                          ) : null}
-                        </ReplyRight>
-                      </Replys>
-                    </ReplyBox>
-                  );
-                })
-              : null}
-          </ModalCmtBox>
-          <CommentOutter>
-            <ModalCmtInputBox>
-              <CommentInput
-                type="text"
-                placeholder="댓글달기..."
-                onChange={selectComment}
-                value={comments}
-              />
 
-              {ok_submit ? (
-                <UploadBtn onClick={addComment}>게시</UploadBtn>
-              ) : (
-                <UploadBtn style={{ opacity: "0.3" }}>게시</UploadBtn>
-              )}
-            </ModalCmtInputBox>
-          </CommentOutter>
-        </ModalBottomContainer>
-      </ModalComponent>
-      {is_Editmodal ? (
-        <UploadModal close={closeDetailModal} {...props} />
-      ) : null}
+              <ModalBottomContainer>
+                <InfoBox>
+                  <InfoBoxInner>
+                    {/*is_like 여부로 하트모양 변경  */}
+
+                    {modalData.like ? (
+                      <LikeBox>
+                        <div style={{ cursor: "pointer" }}>
+                          {/* 좋아요 상태에 따라서 하트 모양의 조건부 렌더 */}
+                          <FavoriteIcon
+                            onClick={disLike}
+                            style={{ color: "rgb(255, 183, 25)", fontSize: 30 }}
+                          />
+                          <LikeCntBox> {modalData.likeCnt}</LikeCntBox>
+                        </div>
+                      </LikeBox>
+                    ) : (
+                      <LikeBox>
+                        <div style={{ cursor: "pointer" }}>
+                          <FavoriteBorderIcon
+                            style={{ color: "rgb(255, 183, 25)" }}
+                            style={{ fontSize: 30, color: "rgb(255, 183, 25)" }}
+                            onClick={addLike}
+                          />
+
+                          <LikeCntBox> {modalData.likeCnt}</LikeCntBox>
+                        </div>
+                      </LikeBox>
+                    )}
+
+                    {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
+                    {modalData.writerId == user_id ? (
+                      <ModalEdit>
+                        <React.Fragment onClick={props.close}>
+                          <EditBtn
+                            onClick={() => {
+                              setEditModal(true);
+
+                              // dispatch(imageActions.getPost(props.id));
+                            }}
+                          >
+                            수정
+                          </EditBtn>
+                        </React.Fragment>
+                        /
+                        <DeleteBtn
+                          onClick={(e) => {
+                            // e.prevent..., e.stopPro.. 이것들로 이벤트 버블링을 막는다
+                            e.preventDefault();
+                            e.stopPropagation();
+                            // 클릭하면 게시물 삭제
+                            dispatch(postActions.deletePostAPI(props.id)); //이거 왜안될까??....
+                          }}
+                        >
+                          삭제
+                        </DeleteBtn>
+                      </ModalEdit>
+                    ) : (
+                      <ModalCate>
+                        <ModalCateInner>#</ModalCateInner>
+                      </ModalCate>
+                    )}
+                  </InfoBoxInner>
+                  <InfoOutter>
+                    <PostTilte>
+                      {modalData.title}{" "}
+                      <PostDate>{timeForToday(modalData.creatAt)}</PostDate>
+                    </PostTilte>
+                    <PostContents>{modalData.content}</PostContents>
+                    <PostTime>{modalData.spotName}</PostTime>
+                  </InfoOutter>
+                </InfoBox>
+                <ModalCmtBox>
+                  {is_comment
+                    ? commentData.map((c, idx) => {
+                        //여기서 댓글을 입력하고 map으로 props 값을 돌려서 화면을 띄우게 해줌
+                        //댓글이 2개보다 작다면? 1개라면?
+                        return (
+                          <ReplyBox>
+                            <Replys>
+                              <ReplyLeft>
+                                <React.Fragment>
+                                  <ReplyImg
+                                    src={
+                                      //댓글 작성자가 아직 프로필 이미지를 등록 안했을 경우엔 기본이미지를 보여주도록 설정
+                                      c.writerImgUrl
+                                        ? c.writerImgUrl
+                                        : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                    }
+                                    onClick={() => {
+                                      history.replace(`/story/${c.userId}`);
+                                    }}
+                                  ></ReplyImg>
+                                  <ReplyWriter
+                                    onClick={() => {
+                                      history.replace(`/story/${c.userId}`);
+                                    }}
+                                  >
+                                    {c.writerName}
+                                  </ReplyWriter>
+                                </React.Fragment>
+                                <ReplyContainer>
+                                  <Reply>{c.content}</Reply>
+                                </ReplyContainer>
+                              </ReplyLeft>
+                              <ReplyRight>
+                                <CmtDate>
+                                  {/* 방금 전 */}
+                                  {timeForToday(c.modified)}
+                                </CmtDate>
+                                {nickname == c.writerName ? (
+                                  <CmtDeleteBtn
+                                    onClick={() => {
+                                      deleteComment(c.commentId);
+                                    }}
+                                  >
+                                    <DeleteForeverIcon />
+                                  </CmtDeleteBtn>
+                                ) : null}
+                              </ReplyRight>
+                            </Replys>
+                          </ReplyBox>
+                        );
+                      })
+                    : null}
+                </ModalCmtBox>
+                <ModalCmtInputBox>
+                  <CommentInput
+                    type="text"
+                    placeholder="댓글달기..."
+                    onChange={selectComment}
+                    value={comments}
+                  />
+                  {ok_submit ? (
+                    <UploadBtn onClick={addComment}>게시</UploadBtn>
+                  ) : (
+                    <UploadBtn style={{ opacity: "0.3" }}>게시</UploadBtn>
+                  )}
+                </ModalCmtInputBox>
+              </ModalBottomContainer>
+            </ModalComponent>
+            {is_Editmodal ? (
+              <UploadModal close={closeDetailModal} {...props} />
+            ) : null}
+          </React.Fragment>
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };
-
 // background-image: url("${(props) => props.src}");
 //   background-size: cover;
 //   object-fit: cover;
@@ -574,7 +576,7 @@ const ModalBottomContainer = styled.div`
     /* all: unset; */
     text-align: left;
     width: 100%;
-    height: 55vh; // 이거 올려주니까 댓글창이보인다..!
+    height: 47vh; // 이거 올려주니까 댓글창이보인다..!
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -643,16 +645,15 @@ const InfoBox = styled.div`
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     width: calc(100% - 7vw); //패딩대신... 오,....
-    height: 21vh;
+    height: 18vh;
     display: flex;
     flex-direction: column;
     margin: 0px auto;
-    /* background-color: red; */
   }
 `;
 
 const InfoBoxInner = styled.div`
-  width: 100%; //요놈 크기 바꿔
+  width: 480px; //요놈 크기 바꿔
   height: 33px;
   margin-top: 10px;
   font-size: 15px;
@@ -663,12 +664,6 @@ const InfoBoxInner = styled.div`
     // 1450밑으로 넓이가 내려가면
     width: 100%;
     height: 15vh;
-    padding: 0px;
-  }
-  @media (max-width: 600px) {
-    // 1450밑으로 넓이가 내려가면
-    width: 100%;
-    height: 50px;
     padding: 0px;
   }
 `;
@@ -691,12 +686,12 @@ const ModalEdit = styled.div`
   opacity: 0.5;
   font-size: 0.8rem;
 `;
+
 const InfoOutter = styled.div`
   height: 110px;
   width: 100%;
   /* background-color: red; */
 `;
-
 const PostTilte = styled.div`
   font-size: 1.3rem;
   font-weight: bold;
@@ -704,14 +699,10 @@ const PostTilte = styled.div`
   margin-bottom: 10px;
   height: 40px;
   max-height: 40px;
-
-  /* overflow-y: scroll; */
+  /* background-color: red; */
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
-  }
-  @media (max-width: 600px) {
-    font-size: 17px;
   }
 `;
 const PostContents = styled.div`
@@ -725,9 +716,6 @@ const PostContents = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-  @media (max-width: 600px) {
-    font-size: 13px;
-  }
 `;
 
 const PostTime = styled.div`
@@ -739,32 +727,29 @@ const PostTime = styled.div`
 `;
 const ModalCmtInputBox = styled.div`
   align-items: center;
-  margin-bottom: -53px;
+  margin-bottom: -4.5vh;
   width: 100%;
-  height: 37px;
+  height: 8vw;
   padding: 0px;
   display: flex;
   justify-content: space-between;
   /* align-items: center; */
   box-sizing: border-box;
   border: 2px solid #efefef;
-  /* background-color: blue; */
+  background-color: white;
   box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.1);
   /* background-color: red; */
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
-    height: 30px;
-    /* background-color: green; */
-    margin-bottom: -150px;
+    height: 80px;
   }
   @media (max-width: 1100px) {
     // 1450밑으로 넓이가 내려가면
-    height: 35px;
-    /* background-color: pink; */
+    height: 80px;
   }
 
   @media (max-width: 600px) {
-    height: 40px;
+    height: 100px;
     margin-bottom: -7vh;
   }
 `;
@@ -774,6 +759,7 @@ const ModalCmtBox = styled.div`
   display: flex;
   flex-direction: column;
   height: 600px;
+
   /* background-color: red; */
   /* 아래 태그는 댓글이 많으면 
   스크롤로 아래 부분이 위로 올라가게 해서 
@@ -785,16 +771,6 @@ const ModalCmtBox = styled.div`
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     /* flex-direction: column; */
-    /* background-color: red; */
-    padding: 0px 14px;
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  }
-  @media (max-width: 600px) {
-    // 1450밑으로 넓이가 내려가면
-    /* flex-direction: column; */
-    height: 13vh;
     /* background-color: red; */
     padding: 0px 14px;
     ::-webkit-scrollbar {
@@ -836,11 +812,6 @@ const ReplyImg = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   cursor: pointer;
-
-  @media (max-width: 600px) {
-    height: 20px;
-    width: 20px;
-  }
 `;
 
 const ReplyWriter = styled.div`
@@ -861,22 +832,11 @@ const ReplyContainer = styled.div`
 const Reply = styled.div`
   font-size: 0.8rem;
   opacity: 0.8;
-  @media (max-width: 600px) {
-    /* width: 59vw; */
-    overflow-x: hidden;
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  }
 `;
 
 const ReplyLeft = styled.div`
   align-items: center;
   display: flex;
-  @media (max-width: 600px) {
-    /* background-color: red; */
-    width: 45vh;
-  }
 `; // space-between 효과 주기위해서 쓴다
 const ReplyRight = styled.div`
   display: flex;
@@ -886,10 +846,6 @@ const CmtDate = styled.div`
   font-size: 0.2rem;
   margin: auto 0;
   opacity: 0.3;
-  @media (max-width: 600px) {
-    /* background-color: red; */
-    font-size: 3px;
-  }
 `;
 
 const CmtDeleteBtn = styled.button`
@@ -906,16 +862,6 @@ const CmtDeleteBtn = styled.button`
     opacity: 1;
   }
 `;
-
-const CommentOutter = styled.div`
-  @media (max-width: 600px) {
-    /* display: block;
-    height: 30px;
-    padding: 0px 0px; */
-    /* background-color: red; */
-  }
-`;
-
 const CommentInput = styled.input`
   background: white;
   border: none;
@@ -923,14 +869,9 @@ const CommentInput = styled.input`
   width: 100%;
   padding: auto 0px;
   background-color: white;
-
   @media (max-width: 600px) {
-    /* line-height: 10px;
-    height: 200px; */
-    padding: -50px -50px;
   }
 `;
-
 const UploadBtn = styled.div`
   font-size: 14px;
 
@@ -953,10 +894,6 @@ const UploadBtn = styled.div`
     margin: 10px 5px 0px 0px;
     width: 40px;
   } */
-  @media (max-width: 600px) {
-    /* height: 100px;
-    padding: 0px 0px; */
-  }
 `;
 
 const EditBtn = styled.span`

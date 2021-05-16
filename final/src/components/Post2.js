@@ -24,7 +24,7 @@ const Post2 = (props) => {
 
   const like = useSelector((state) => state.like.like);
 
-  console.log("좋아요 정보", like);
+  // console.log("좋아요 정보", like);
   React.useEffect(() => {
     console.log("시작");
     dispatch(likeActions.getLikePost());
