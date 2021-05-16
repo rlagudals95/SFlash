@@ -95,7 +95,7 @@ const getPost = (board_id) => {
 
     //여기서 이미지만 뽑아주면??
 
-    const onlyImg = editPost.img_url;
+    const onlyImg = editPost.img_url; // ???? 커뮤니티 부터 와야한다...그래야 img_url을 인식한다..!
     // dispatch(getEditPost(editPost));
     dispatch(getImage(onlyImg)); // 온리이미지르르..파일에도 넣자?
 
