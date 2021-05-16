@@ -6,7 +6,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
-import StoryPostDetailModal from "./StoryPostDetailModal";
+import PostModal from "./PostModal";
 
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
@@ -121,7 +121,7 @@ const StoryPost = (props) => {
         </PostBox>
       </Card>
       {is_modal ? (
-        <StoryPostDetailModal
+        <PostModal
           close={closeDetailModal}
           {...props} //여기서 모달에 모든 정보를 넘겨주는 구나!
         />
