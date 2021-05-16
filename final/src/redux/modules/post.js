@@ -22,6 +22,8 @@ const DIS_LIKE = "DIS_LIKE";
 // 검색했을때 검색 결과 게시물만 보여주는 액션
 const GET_SEARCH = "GET_SEARCH";
 const SEARCH_POST = "SEARCH_POST";
+// 맵마커 삭세
+const DELETE_MARKER = "DELETE_MARKER";
 
 const setPost = createAction(SET_POST, (post_list, paging) => ({
   post_list,
@@ -58,6 +60,8 @@ const search_Post = createAction(SEARCH_POST, (post_list, paging) => ({
   post_list,
   paging,
 }));
+
+const deleteMarker = createAction(DELETE_MARKER, (id) => ({ id }));
 
 const initialState = {
   // list와 map_post_list에 게시물 데이터가 들어간다.
@@ -590,6 +594,17 @@ export default handleActions(
         draft.list = action.payload.post_list;
         draft.paging = action.payload.paging;
       }),
+
+    [DELETE_MARKER]: (state, action) =>
+      produce(state, (draft) => {
+        draft.map_post_list = draft.map_post_list.filter((r, idx) => {
+          if (r.id !== action.payload.id) {
+            //서버에선 이미 지워져서 오지만 한번 더 중복검사
+            // 현재 리스트에서 받은 포스트 id와 같은게 없다면?
+            return [...draft.list, r]; // 그대로 출력
+          }
+        });
+      }),
   },
   initialState
 );
@@ -608,6 +623,7 @@ const actionCreators = {
   dis_Like,
   editLikeP,
   editLikeD,
+  deleteMarker
 };
 
 export { actionCreators };
