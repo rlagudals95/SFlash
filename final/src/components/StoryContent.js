@@ -66,7 +66,11 @@ const StoryContent = (props) => {
               })}
             </GridList>
           ) : (
+            <>
             <StoryMap post_list={post_list} marker_icon={marker_icon} />
+            <Grid height="30px"/>
+            <Text>* 게시물 등록은 메인페이지(홈)에서 가능합니다.</Text>
+            </>
           )}
         </>
         <Grid height="300px" />

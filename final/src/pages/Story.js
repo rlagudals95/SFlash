@@ -24,26 +24,32 @@ const Story = (props) => {
   const userId = props.match.params.id;
   // console.log("userId:", userId);
 
-  React.useEffect(() => {
-    dispatch(profileActions.getUserInfoAPI(userId));
-    dispatch(storypostActions.getUserPostAPI(userId));
-    dispatch(storypostActions.getUserLikeAPI(userId));
-  }, []);
- 
 
   // 스토리 페이지는 크게 3가지로 나뉩니다.
   // (1) 유저 정보: user_info (2) 유저가 올린 게시물: user_post_list (3)유저가 좋아요한 게시물: user_like_list
   const user_info = useSelector((state) => state.profile.user);
   const user_post_list = useSelector((state) => state.storypost.user_post_list);
   const user_like_list = useSelector((state) => state.storypost.user_like_list);
-  console.log("user_post_list", user_post_list);
-  console.log("user_like_list", user_like_list);
-
   // const user_post_list = useSelector((state) => {
   //   console.log(state);
   //   window.alert('')
   //   return state.storypost.user_post_list
   // });
+  console.log("user_post_list", user_post_list);
+  console.log("user_like_list", user_like_list);
+
+
+
+  React.useEffect(() => {
+    dispatch(profileActions.getUserInfoAPI(userId));
+    dispatch(storypostActions.getUserPostAPI(userId));
+    dispatch(storypostActions.getUserLikeAPI(userId));
+  }, []);
+
+  React.useEffect(() => {
+    
+  }, []);
+ 
 
   // Map Marker Icon
   const userPostMarkerImgUrl = "https://i.postimg.cc/3w264rbs/2x.png";
