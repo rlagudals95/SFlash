@@ -172,7 +172,7 @@ const ProfileContainer = styled.div`
   display: flex;
   margin-top: 70px;
   padding-bottom:40px;
-  background-color:#eee;
+  /* background-color:#eee; */
     @media (max-width: 1280px) {
       padding-bottom:30px;
     }
