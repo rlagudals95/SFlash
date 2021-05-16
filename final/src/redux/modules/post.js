@@ -8,6 +8,7 @@ import { config } from "../../shared/config";
 
 import { getCookie } from "../../shared/Cookie";
 import { push } from "react-router-redux";
+import { actionCreators as modalActions } from "./mapModal";
 
 const SET_POST = "SET_POST";
 const SET_MAP_POST = "SET_MAP_POST";
@@ -161,7 +162,7 @@ const addPostAPI = (post) => {
   };
 };
 
-//start = null, size = null
+//start = null, size = null //
 const getPostAPI = (start = null, size = null) => {
   return function (dispatch, getState) {
     const board_list = getState().post.list;
@@ -169,7 +170,7 @@ const getPostAPI = (start = null, size = null) => {
 
     let end_board = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
       board_list.length == 0
-        ? Number.MAX_SAFE_INTEGER // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
+        ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
         : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
           board_list[board_list.length - 1].id; // 이제 처음 받은 포스트중 가장 마지막 포스트 id 기준으로 15개씩 게시물을 받아온다
 
@@ -179,8 +180,8 @@ const getPostAPI = (start = null, size = null) => {
       method: "GET",
       url: `${config.api}/board`,
       data: {
-        // size: 15,
-        // lastAriticleId: end_board.id // 처음에는 9000조를 보낸다
+        size: 15,
+        lastAriticleId: end_board.id, // 처음에는 9000조를 보낸다
       },
       headers: {
         "X-AUTH-TOKEN": `${config.jwt}`,
@@ -232,6 +233,7 @@ const getPostAPI = (start = null, size = null) => {
           post_list.unshift(post);
         });
         dispatch(setPost(post_list, paging));
+        // dispatch(modalActions.modalEdit(post_list));
       })
       .catch((err) => {
         window.alert("게시물을 가져오는데 문제가 있어요!");
@@ -440,20 +442,20 @@ const editLikeP = (post_id, post) => {
     console.log(_like, _likeCnt);
 
     let board = {
-      category: post.category,
-      comment: post.comment,
-      content: post.content,
-      creatAt: post.creatAt,
       id: post.id,
-      img_url: post.img_url,
+      title: post.title,
+      content: post.content,
+      writerName: post.writerName,
+      category: post.category,
+      profileImg: post.profileImg,
       like: true,
       likeCnt: post.likeCnt + 1,
-      profileImg: post.profileImg,
-      title: post.title,
-      writerName: post.writerName,
+      comment: post.comment,
+      img_url: post.img_url,
+      creatAt: post.creatAt,
+      writerId: post.writerId,
     };
     console.log("rrr", board);
-
     dispatch(add_Like(post_id, board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
   };
 };
@@ -480,6 +482,7 @@ const editLikeD = (post_id, post) => {
       profileImg: post.profileImg,
       title: post.title,
       writerName: post.writerName,
+      writerId: post.writerId,
     };
     console.log("rrr", board);
 

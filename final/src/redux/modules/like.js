@@ -67,6 +67,7 @@ const addLikeAPI = (board_id, board) => {
       .then((res) => {
         console.log("좋아요 완료!", res);
         dispatch(PostActions.editLikeP(board_id, board)); // 리덕스
+
         // dispatch(addLike(true));
         // dispatch(getLike(true));
       })
