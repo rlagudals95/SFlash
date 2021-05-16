@@ -144,14 +144,14 @@ const addPostAPI = (post) => {
         // let one_post = res.data.data;
         // let one_marker_data = {
         //   id: one_post.boardId,
-        //   title: one_post.title,
-        //   imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,
+        //   category:  one_post.category,
+        //   spotName: one_post.spotName,
         //   latitude: one_post.latitude,
         //   longitude: one_post.longitude,
-        //   spotName: one_post.spotName,
+        //   imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,
         // };
         // dispatch(addPost(one_marker_data));
-        // history.replace("/"); // 이부분 실행이 잘안되면 imgUrl인식을 못함 변수명 잘지켜주세요! : 민규 - 이건 데이터 변경없이 사이트만 변경해주는걸로 알고 있습니다
+        history.replace("/"); // 이부분 실행이 잘안되면 imgUrl인식을 못함 변수명 잘지켜주세요! : 민규 - 이건 데이터 변경없이 사이트만 변경해주는걸로 알고 있습니다
         // window.location.replace("/"); // 민규 - 이 명령어는 데이터 변경이 반영되는 새로고침으로 알고 있어요. 게시물 업로드하고 반영된걸 바로 보려고 넣은 명령어에요.
       })
       .catch((err) => {
