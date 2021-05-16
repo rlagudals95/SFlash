@@ -86,11 +86,11 @@ const initialState = {
 //요기서 수정해야하는 board를 찾아서 image에 저장해준다 image를 이용해 프리뷰를 뿌려주고 x 버튼으로 수정 해준다
 const getPost = (board_id) => {
   return function (dispatch, getState) {
-    console.log("hi");
+    console.log("이거아닌데??");
     //여기선 고쳐야할 포스트를 찾아서 edit(draft)로 만들어주자
     const post_list = getState().post.list; // 일단 가져온다
 
-    let idx = post_list.findIndex((p) => p.id === board_id);
+    let idx = post_list.findIndex((p) => p.id === board_id); // 포스트리스트에서 찾는게 아닌... 직접 가져와야한다? 흠...
     const editPost = post_list[idx]; //고쳐야할 포스트
 
     //여기서 이미지만 뽑아주면??
@@ -101,6 +101,23 @@ const getPost = (board_id) => {
 
     // console.log("이미지들길이", onlyImg.length);
     // console.log("이미지들길이", onlyImg[0]);
+    for (let i = 0; i < onlyImg.length; i++) {
+      dispatch(getImgToFile(onlyImg[i]));
+    }
+  };
+};
+
+// 업로드 모달을 또 만들어줘야하나...??? 위에서 보드 id 기준으로 찾ㄱ지말고 그냥 바로 해주자
+// 다 똑같이 하되 보드 id기준으로 idx를 찾아서 게시물을 찾는게 아닌 그냥 가져와서? img_url을?
+// getImage로 해주고 // 똑같이 반복문 돌려서 getImgToFile로 넣어주자
+
+const getModalPost = (board) => {
+  return function (dispatch, getState) {
+    console.log("보드 가져왔니?", board);
+
+    const onlyImg = board.img_url;
+
+    dispatch(getImage(onlyImg));
     for (let i = 0; i < onlyImg.length; i++) {
       dispatch(getImgToFile(onlyImg[i]));
     }
@@ -275,6 +292,7 @@ const actionCreators = {
   resetEdit,
   resetFile, // 파일만따로
   resetPreview,
+  getModalPost,
 };
 
 export { actionCreators };

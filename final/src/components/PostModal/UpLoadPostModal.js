@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { history } from "../redux/configStore";
+import { history } from "../../redux/configStore";
 
 import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
-import { actionCreators as postActions } from "../redux/modules/post";
-import { actionCreators as imageActions } from "../redux/modules/image2";
-import { actionCreators as profileActions } from "../redux/modules/profile";
+import { actionCreators as postActions } from "../../redux/modules/post";
+import { actionCreators as imageActions } from "../../redux/modules/image2";
+import { actionCreators as profileActions } from "../../redux/modules/profile";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Slider from "react-slick";
 
@@ -16,29 +16,20 @@ import { useDispatch, useSelector } from "react-redux";
 import PublishIcon from "@material-ui/icons/Publish";
 import TextField from "@material-ui/core/TextField";
 // 업로드용 파일선택 버튼
-import Upload2 from "../shared/Upload2";
+import Upload2 from "../../shared/Upload2";
 // 수정용 파일선택 버튼
-import UploadEdit from "../shared/UploadEdit";
-import SelectCate from "./SelectCate";
-import Input from "../elements/Input";
-import Input2 from "../elements/Input2";
+import UploadEdit from "../../shared/UploadEdit";
+import SelectCate from "../SelectCate";
+import Input from "../../elements/Input";
+import Input2 from "../../elements/Input2";
 import { CgLogOut } from "react-icons/cg";
 
-const UploadModal = (props) => {
+const UploadPostModal = (props) => {
   const { latitude, longitude, spotName } = props;
   const userId = localStorage.getItem("userId");
 
-  console.log("비교!", props);
   React.useEffect(() => {
-    if (is_madal) {
-      console.log("실행실행!!!!!!!!!!");
-      dispatch(imageActions.getModalPost(props));
-      dispatch(profileActions.getUserInfoAPI(userId));
-      return;
-    }
-
     if (is_edit) {
-      console.log("실행ㄴㄴㄴㄴㄴㄴㄴ");
       // dispatch(imageActions.resetEdit([])); //
       dispatch(imageActions.getPost(props.id));
 
@@ -89,7 +80,6 @@ const UploadModal = (props) => {
   console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
   // const post_id = props.match.params.id;
   const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
-  const is_madal = props.modal ? true : false;
   // console.log("수정 게시물 정보", props);
   // console.log("수정 화면 이미지들", images);
   const nickname = localStorage.getItem("nickname");
@@ -186,6 +176,7 @@ const UploadModal = (props) => {
     };
     dispatch(postActions.editPostAPI(props.id, edit));
     props.close();
+
     dispatch(imageActions.resetEdit([])); //업로드 후 리덕스에 남은 수정 정보 모두 리셋
     //에딧파일 초기화...
   };
@@ -217,6 +208,10 @@ const UploadModal = (props) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
+  // console.log("업로드 프롭스", props);
+
+  //밑에두면 preview값을 바로 받을 수가 없다?
 
   return (
     <React.Fragment>
@@ -804,4 +799,4 @@ const CateBtn = styled.div`
   border-radius: 10px;
 `;
 
-export default UploadModal;
+export default UploadPostModal;
