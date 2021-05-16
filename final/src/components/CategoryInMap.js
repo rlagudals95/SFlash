@@ -516,27 +516,28 @@ export default CategoryInMap;
 
 // 카테고리 박스 정보
 const CategoryBox = styled.div`
-  /* display: flex;
-  justify-content: space-between; */
   width: 240px;
-  /* border-top: 1px solid #efefef;
-  border-bottom: 1px solid #efefef; */
   padding: 8px 0px;
   position: fixed;
   z-index: 300;
   right: 50px;
-  top: 16vh;
-  /* bottom: 50vh; */
+  top: 17vh;
   background-color: white;
   padding: 20px;
   border-radius: 7px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+  @media (max-width: 1400px) {
+    z-index: 300;
+    margin: auto;
+  }
+  @media (max-width: 600px) {
+    z-index: 300;
+    margin: auto;
+  }
   @media (max-width: 400px) {
     z-index: 300;
-    /* position: fixed; */
     margin: auto;
     right: 13vw;
-
   }
 `;
 

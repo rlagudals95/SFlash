@@ -1,8 +1,8 @@
 // 마커이미지 url
 const markerImgUrls = {
-  writeMarkerImgUrl: "https://i.postimg.cc/YqTrpYWL/4x.png",  // 작성용마커
+  writeMarkerImgUrl: "https://i.postimg.cc/3JbxN2wp/2x.png",  // 게시글작성용마커
   totalMarkerImgUrl: "https://i.postimg.cc/xjxj4WjR/4x.png",  // 전체마커
-  myPostMarkerImgUrl: "https://i.postimg.cc/vHKBcCpB/4x.png", // 내게시물마커
+  myPostMarkerImgUrl: "https://i.postimg.cc/zDHr74DL/2x.png", // 내게시물마커
   myLikeMarkerImgUrl: "https://i.postimg.cc/QxzLQD82/4x.png", // 내가 좋아요한 게시물 마커
   cafeMarkerImgUrl: "https://i.postimg.cc/Sx8yjR6T/4x.png", // 카페마커
   nightMarkerImgUrl: "https://i.postimg.cc/cJB0Mz5f/4x.png", // 야경마커
