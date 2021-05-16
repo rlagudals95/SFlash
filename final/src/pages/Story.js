@@ -166,10 +166,10 @@ const SelectedTab = styled.div`
   :hover {
   }
   @media (max-width: 960px) {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
   @media (max-width: 400px) {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 `;
 
@@ -188,15 +188,16 @@ const UnselectedTab = styled.div`
     color: ${(props) => props.theme.main_color};
   }
   @media (max-width: 960px) {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
   @media (max-width: 400px) {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 `;
 
 const TabUnderBar = styled.div`
   width: 55%;
+  min-width: 145px;
   height: 3pt;
   margin: 20px auto -20px auto;
   background-color: ${(props) => props.theme.main_color};
@@ -209,5 +210,6 @@ const VerticalBar = styled.div`
   width: 2px;
   background-color: #eee;
 `;
+
 
 export default Story;

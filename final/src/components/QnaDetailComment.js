@@ -125,7 +125,7 @@ const QnaDetailComment = (props) => {
             <Text weight="600">{me}</Text>
             <InputStyle
               value={comment}
-              placeholder="댓글을 입력해주세요"
+              placeholder="댓글은 관리자만 입력 가능합니다."
               type="type"
               width="60%"
               onChange={changeComment}
@@ -145,7 +145,7 @@ const QnaDetailComment = (props) => {
             <Text weight="600">{me}</Text>
             <InputStyle
               value={comment}
-              placeholder="댓글을 입력해주세요"
+              placeholder="댓글은 관리자만 입력 가능합니다."
               type="type"
               width="60%"
               onChange={changeComment}

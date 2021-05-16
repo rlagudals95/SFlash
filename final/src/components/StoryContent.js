@@ -96,15 +96,15 @@ const Icons = styled.div`
     transform: translate(550px, 40px);
   }
   @media (max-width: 1280px) {
-    bottom: 20px;
+    bottom: 100px;
     right: 70px;
   }
   @media (max-width: 960px) {
-    bottom: 20px;
-    right: 10px;
+    bottom: 100px;
+    right: 20px;
   }
   @media (max-width: 400px) {
-    bottom: 10px;
+    bottom: 100px;
     right: 10px;
   }
   display: flex;
@@ -156,16 +156,8 @@ const GridList = styled.div`
   grid-gap: 20px;
   margin: auto;
   width: 100%;
-  padding: 10px 0px;
+  padding: 20px 0px;
   flex-wrap: wrap;
-  @media (min-width: 1440px) {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 20px;
-  }
-  @media (max-width: 1450px) {
-    // 1450밑으로 넓이가 내려가면
-    margin-top: -5vh;
-  }
   @media (max-width: 1280px) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 10px;
@@ -173,13 +165,12 @@ const GridList = styled.div`
   @media (max-width: 960px) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 5px;
-    margin: auto auto;
-    padding: 0;
+    padding: 10px 0px;
   }
   @media (max-width: 600px) {
-    margin-top: 19vh;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 2px;
+    padding: 0px 0px;
   }
 `;
 

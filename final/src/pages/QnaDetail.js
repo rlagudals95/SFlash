@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/configStore";
 import { actionCreators as qnaActions } from "../redux/modules/qna";
 
-import QnaDetailComment from "./QnaDetailComment"
+import QnaDetailComment from "../components/QnaDetailComment"
 
 const QnaDetail = (props) => {
   const dispatch = useDispatch();
