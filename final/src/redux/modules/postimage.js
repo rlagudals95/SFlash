@@ -85,21 +85,21 @@ const initialState = {
 };
 
 //요기서 수정해야하는 board를 찾아서 image에 저장해준다 image를 이용해 프리뷰를 뿌려주고 x 버튼으로 수정 해준다
-const getPost = (boardId) => {
-  return function (dispatch, getState) {
-    console.log("hi");
-    const post = getState().modalpost.post;
-    const onlyImg = post.img_url;
-    // dispatch(getEditPost(editPost));
-    dispatch(getImage(onlyImg)); // 온리이미지르르..파일에도 넣자?
+// const getPost = (boardId) => {
+//   return function (dispatch, getState) {
+//     console.log("hi");
+//     const post = getState().modalpost.post;
+//     const onlyImg = post.img_url;
+//     // dispatch(getEditPost(editPost));
+//     dispatch(getImage(onlyImg)); // 온리이미지르르..파일에도 넣자?
 
-    // console.log("이미지들길이", onlyImg.length);
-    // console.log("이미지들길이", onlyImg[0]);
-    for (let i = 0; i < onlyImg.length; i++) {
-      dispatch(getImgToFile(onlyImg[i]));
-    }
-  };
-};
+//     // console.log("이미지들길이", onlyImg.length);
+//     // console.log("이미지들길이", onlyImg[0]);
+//     for (let i = 0; i < onlyImg.length; i++) {
+//       dispatch(getImgToFile(onlyImg[i]));
+//     }
+//   };
+// };
 
 //edit을 이미지 url이 변경된 리스트로 바꿔줘야한다! 클릭할때 마다
 
