@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { CustomOverlay } from "react-kakao-maps";
 // 리덕스를 이용하게 해주는 함수들, 모듈 파일 가져오기
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/configStore";
@@ -28,7 +27,6 @@ const Maps = (props) => {
   const nickname = localStorage.getItem("nickname"); // 내가 작성한 게시물을 판별하는 기준 상수
 
   // 사진이 나오는 모달창 제어
-  const [is_modal, setModal] = useState(false); // 마커 클릭하면 나오는 작은 모달
   const [is_uploadModal, setUpLoadModal] = useState(false); // 작은 모달에서 댓글 달기를 누르면 나오는 확장된 모달
 
   // 위도, 경도, 마커, 주소
@@ -36,7 +34,9 @@ const Maps = (props) => {
   const [startlon, setStartLon] = useState(); // 현위치 경도 설정
   const [latitude, setLatitude] = useState(); // 클릭한 위치 위도 설정
   const [longitude, setLongitude] = useState(); // 클릭한 위치 경도 설정
+
   const [spotName, setSpotName] = useState(""); // 클릭한 위치 이름 설정
+
   const [_map, setMap] = useState(); // useEffect 외부에서 map을 쓰기 위한 것.
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
   //조건 걸어주기 // 나를 기준으로 몇 km 이내
@@ -164,12 +164,15 @@ const Maps = (props) => {
       setMap(map);
     }
 
-    // services.Geocoder() 는 주소-좌표간 변환 서비스를 제공한다.
-    var geocoder = new kakao.maps.services.Geocoder();
+    
 
     // 콘솔창에 클릭한 위치의 위도 경도가 표시되는 코드
     // 지도에 클릭 이벤트를 등록합니다 : 클릭하면 위도, 경도, 주소 정보를 받고 작성창이 뜨게 한다
     // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다.
+
+    // services.Geocoder() 는 주소-좌표간 변환 서비스를 제공한다.
+    var geocoder = new kakao.maps.services.Geocoder();
+    
     // ** 주의!!! 구현된것들이 안정적으로 돌아간다고 판단된 이후에는
     // ** 로그인 한 사람만 할 수 있는 클릭이벤트가 되도록
     // ** 아래처럼 if문으로 설정한다.
@@ -204,6 +207,28 @@ const Maps = (props) => {
             console.log(spotName);
             setSpotName(spotName);
           }
+            // //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
+            // // var addressName = result[0].address_name;
+            // var region1 = result[0].region_1depth_name;
+            // var region2 = result[0].region_2depth_name;
+            // var region3 = result[0].region_3depth_name;
+            // var region4 = result[0].region_4depth_name;
+            // let spotName = [region1, region2, region3, region4];
+            // console.log("스팟네임은?:" + spotName);
+            // // setRegionName1(region1);
+            // // setRegionName2(region2);
+            // // setRegionName3(region3);
+            // // setRegionName4(region4);
+
+            
+
+            // // var spotName1 = result[0].region_1depth_name; // 경상남도
+            // // var spotName2 = result[0].region_2depth_name + " " 
+            // //   + result[0].region_3depth_name + " "
+            // //   + result[0].region_4depth_name; //산청군 시천면 내공리
+            // // setSpotName1(spotName1);
+            // // setSpotName2(spotName2);
+            // setSpotName(spotName); // 경상남도 산청군 시천면 내공리
         });
 
         function searchAddrFromCoords(coords, callback) {
@@ -301,19 +326,9 @@ const Maps = (props) => {
         var content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${all.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${all.spotName}</div>` +
-          // `<div class="close" onclick=${closeOverlay()} title="닫기"></div>` +
-          // '<div class="close" onclick={closeOverlay()} title="닫기"></div>' +
-          // `<div class="close" onclick=${() => {closeOverlay()}} title="닫기"></div>` +
-          // `<div class="close" onclick = 'console.log("체크체크")' title="닫기"></div>` +
-          // '<div class="close" onclick="closeOverlay()" title="닫기"></div>' +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -377,14 +392,9 @@ const Maps = (props) => {
         const content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${mypost.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${mypost.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -443,14 +453,9 @@ const Maps = (props) => {
         const content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${mylike.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${mylike.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -506,14 +511,9 @@ const Maps = (props) => {
         var content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${cafe.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${cafe.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -567,14 +567,9 @@ const Maps = (props) => {
         const content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${night.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${night.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -627,14 +622,9 @@ const Maps = (props) => {
         var content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${ocean.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${ocean.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -690,14 +680,9 @@ const Maps = (props) => {
         var content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${mountain.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${mountain.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -751,14 +736,9 @@ const Maps = (props) => {
         var content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${flower.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${flower.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -812,14 +792,9 @@ const Maps = (props) => {
         var content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${alone.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${alone.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -873,14 +848,9 @@ const Maps = (props) => {
         var content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${couple.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${couple.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -933,14 +903,9 @@ const Maps = (props) => {
         var content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${friend.imgUrlOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${friend.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -993,14 +958,9 @@ const Maps = (props) => {
         var content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${pet.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${pet.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -1054,14 +1014,9 @@ const Maps = (props) => {
         var content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${city.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${city.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -1114,14 +1069,9 @@ const Maps = (props) => {
         var content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${park.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${park.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -1178,14 +1128,9 @@ const Maps = (props) => {
         const content =
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${exhibition.imgForOverlay} >` +
-          // `<img src=${p.imgUrl} onclick={() => {history}}>` +
           '<div class="head">' +
           `<div class="spotname">${exhibition.spotName}</div>` +
           "</div>" +
-          // '<div class="center"></div>' +
-          // '<div class="bottomiconbox">' +
-          //   '<img class="likeicon" onclick></img>' +
-          // "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -1217,6 +1162,13 @@ const Maps = (props) => {
             exhibitionCustomOverlay.setMap(null);
           }
         );
+
+        kakao.maps.event.addListener(exhibitionMarkers, "click", function () {
+          // 서버로 해당 마커의 id를 보내고 모달창 오픈
+          dispatch(ModalActions.getModalPost(exhibition.id));
+          // dispatch(ModalActions.getModalPostAPI(park.id));
+          openModal();
+        });
       });
     }
 
@@ -1265,7 +1217,7 @@ const Maps = (props) => {
           _map.setBounds(bounds);
         }
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-        window.alert("검색결과가 존재하지 않습니다.");
+        // window.alert("검색결과가 존재하지 않습니다.");
         return;
       } else if (status === kakao.maps.services.Status.ERROR) {
         window.alert("검색 결과 중 오류가 발생했습니다.");
@@ -1320,36 +1272,26 @@ const Maps = (props) => {
 export default Maps;
 
 const SearchBox = styled.div`
-  position: absolute;
-  /* margin: auto; */
-  top: 0px;
+  position: fixed;
+  top: 40px;
   left: 200px;
-  transform: translate(-10%, -80%);
-  z-index: 10;
-  @media (min-width: 1280px) {
+  transform: translate(-10%, -90%);
+  z-index: 1000;
+  @media (min-width: 1400px) {
     width: 600px;
-    top: 80px;
+    top: 100px;
   }
-  @media (max-width: 1280px) {
+  @media (max-width: 1400px) {
     position: fixed;
     /* top: 140px; */
     width: 400px;
-    top: 150px;
+    top: 170px;
   }
-  @media (max-width: 960px) {
-    /* position: fixed; */
-    top: 150px;
-    /* left: 110px; */
-    margin: auto;
-    width: 350px;
-    left: 100px;
-  }
-  @media (max-width: 400px) {
-    /* position: fixed; */
-    top: 80px;
+  @media (max-width: 600px) {
+    top: 120px;
     width: 50%;
     margin: auto;
-    left: 30vw;
+    left: 25vw;
   }
 `;
 
@@ -1361,9 +1303,8 @@ const SearchInput = styled.input`
   font-size: 15px;
   border: none;
   &:focus {
-    outline: blue;
-    border-radius: 5px;
-    /* border-color: blue; */
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(255, 183, 25);
   }
 `;
 

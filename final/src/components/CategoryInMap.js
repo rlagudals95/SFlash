@@ -514,120 +514,29 @@ const CategoryInMap = () => {
 
 export default CategoryInMap;
 
-const MiddleBox = styled.div`
-  height: 40px;
-`;
-
-const SpotSelectBox = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-`;
-
-const AllSpotsSelected = styled.img`
-  width: 70px;
-  height: 70px;
-  background-color: white;
-  border-radius: 5px;
-  box-sizing: border-box;
-  border: 1px solid rgb(255, 183, 25);
-  cursor: pointer;
-  margin: 5px;
-  object-fit: cover;
-  background-size: cover;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2);
-`;
-
-const AllSpots = styled.img`
-  width: 70px;
-  height: 70px;
-  background-color: white;
-  border-radius: 5px;
-  box-sizing: border-box;
-  border: none;
-  cursor: pointer;
-  margin: 5px;
-  object-fit: cover;
-  background-size: cover;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2);
-`;
-
-
-const MyPostSpotsSelected = styled.img`
-  width: 70px;
-  height: 70px;
-  background-color: white;
-  border-radius: 5px;
-  box-sizing: border-box;
-  border: 1px solid rgb(27, 38, 133);
-  cursor: pointer;
-  margin: 5px;
-  background-size: cover;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2); 
-`;
-
-const MyPostSpots = styled.img`
-  width: 70px;
-  height: 70px;
-  background-color: white;
-  border-radius: 5px;
-  box-sizing: border-box;
-  border: none;
-  cursor: pointer;
-  margin: 5px;
-  background-size: cover;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2); 
-`;
-
-const MyLikeSpotsSelected = styled.img`
-  width: 70px;
-  height: 70px;
-  background-color: white;
-  border-radius: 5px;
-  box-sizing: border-box;
-  border: 1px solid rgb(253, 133, 152);
-  cursor: pointer;
-  margin: 5px;
-  background-size: cover;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2); 
-`;
-
-const MyLikeSpots = styled.img`
-  width: 70px;
-  height: 70px;
-  background-color: white;
-  border-radius: 5px;
-  box-sizing: border-box;
-  border: none;
-  cursor: pointer;
-  margin: 5px;
-  background-size: cover;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2); 
-`;
-
-
+// 카테고리 박스 정보
 const CategoryBox = styled.div`
   /* display: flex;
-justify-content: space-between; */
-  width: 220px;
+  justify-content: space-between; */
+  width: 240px;
   /* border-top: 1px solid #efefef;
   border-bottom: 1px solid #efefef; */
   padding: 8px 0px;
   position: fixed;
   z-index: 300;
   right: 50px;
-  top: 21vh;
+  top: 16vh;
   /* bottom: 50vh; */
   background-color: white;
   padding: 20px;
   border-radius: 7px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
   @media (max-width: 400px) {
-    /* 1450밑으로 넓이가 내려가면 */
     z-index: 300;
-    position: fixed;
+    /* position: fixed; */
     margin: auto;
-    left: 10vw;
-    /* width: 150px; */
+    right: 13vw;
+
   }
 `;
 
@@ -663,6 +572,7 @@ const Btn = styled.button`
   font-size: 12px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
+
 const SelectedBtn = styled.button`
   /* 선택 됐을때 버튼 */
   margin: 2px;
@@ -678,4 +588,95 @@ const SelectedBtn = styled.button`
   color: #3897f0;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
+
+const MiddleBox = styled.div`
+  height: 40px;
+`;
+
+const SpotSelectBox = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const AllSpotsSelected = styled.img`
+  width: 70px;
+  height: 70px;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: 1px solid rgb(255, 183, 25);
+  cursor: pointer;
+  margin: 5px;
+  object-fit: cover;
+  background-size: cover;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2);
+`;
+
+const AllSpots = styled.img`
+  width: 70px;
+  height: 70px;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: none;
+  cursor: pointer;
+  margin: 5px;
+  object-fit: cover;
+  background-size: cover;
+  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
+`;
+
+
+const MyPostSpotsSelected = styled.img`
+  width: 90px;
+  height: 90px;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: 3px solid rgb(27, 38, 133);
+  cursor: pointer;
+  margin: 12px;
+  background-size: cover;
+  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); 
+`;
+
+const MyPostSpots = styled.img`
+  width: 90px;
+  height: 90px;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: none;
+  cursor: pointer;
+  margin: 12px;
+  background-size: cover;
+  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); 
+`;
+
+const MyLikeSpotsSelected = styled.img`
+  width: 90px;
+  height: 90px;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: 3px solid rgb(253, 133, 152);
+  cursor: pointer;
+  margin: 12px;
+  background-size: cover;
+  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
+`;
+
+const MyLikeSpots = styled.img`
+  width: 90px;
+  height: 90px;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: none;
+  cursor: pointer;
+  margin: 12px;
+  background-size: cover;
+  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
+`;
+
 

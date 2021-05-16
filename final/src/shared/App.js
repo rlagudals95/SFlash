@@ -41,7 +41,7 @@ function App() {
       ? ""
       : decodeURIComponent(results[1].replace(/\+/g, " "));
   };
-  const social_jwt = getUrlParameter("token"); // social_jwt: 소셜로그인으로 받아온 토큰
+  const social_jwt = getUrlParameter("accessToken"); // social_jwt: 소셜로그인으로 받아온 토큰
   const social_nickname = getUrlParameter("nickname"); // _nickname: 소셜로그인으로 받아온 닉네임
   const social_userId = getUrlParameter("userId"); // _nickname: 소셜로그인으로 받아온 닉네임
   const error = getUrlParameter("error"); // 에러
