@@ -46,7 +46,7 @@ const Maps = (props) => {
     return state.category_in_map.is_category_in_map;
   });
   console.log("is_category_in_map: " + is_category_in_map);
-  const is_all = is_category_in_map.length === 0 ? true : false;
+  const is_all = is_category_in_map.length === 12 ? true : false;
   console.log(is_all);
 
   // is_category_in_map 배열 안에 해당 카테고리가 원소로서 존재 여부를 true, false로 설정한다.
@@ -164,15 +164,13 @@ const Maps = (props) => {
       setMap(map);
     }
 
-    
-
     // 콘솔창에 클릭한 위치의 위도 경도가 표시되는 코드
     // 지도에 클릭 이벤트를 등록합니다 : 클릭하면 위도, 경도, 주소 정보를 받고 작성창이 뜨게 한다
     // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다.
 
     // services.Geocoder() 는 주소-좌표간 변환 서비스를 제공한다.
     var geocoder = new kakao.maps.services.Geocoder();
-    
+
     // ** 주의!!! 구현된것들이 안정적으로 돌아간다고 판단된 이후에는
     // ** 로그인 한 사람만 할 수 있는 클릭이벤트가 되도록
     // ** 아래처럼 if문으로 설정한다.
@@ -207,28 +205,26 @@ const Maps = (props) => {
             console.log(spotName);
             setSpotName(spotName);
           }
-            // //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
-            // // var addressName = result[0].address_name;
-            // var region1 = result[0].region_1depth_name;
-            // var region2 = result[0].region_2depth_name;
-            // var region3 = result[0].region_3depth_name;
-            // var region4 = result[0].region_4depth_name;
-            // let spotName = [region1, region2, region3, region4];
-            // console.log("스팟네임은?:" + spotName);
-            // // setRegionName1(region1);
-            // // setRegionName2(region2);
-            // // setRegionName3(region3);
-            // // setRegionName4(region4);
+          // //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
+          // // var addressName = result[0].address_name;
+          // var region1 = result[0].region_1depth_name;
+          // var region2 = result[0].region_2depth_name;
+          // var region3 = result[0].region_3depth_name;
+          // var region4 = result[0].region_4depth_name;
+          // let spotName = [region1, region2, region3, region4];
+          // console.log("스팟네임은?:" + spotName);
+          // // setRegionName1(region1);
+          // // setRegionName2(region2);
+          // // setRegionName3(region3);
+          // // setRegionName4(region4);
 
-            
-
-            // // var spotName1 = result[0].region_1depth_name; // 경상남도
-            // // var spotName2 = result[0].region_2depth_name + " " 
-            // //   + result[0].region_3depth_name + " "
-            // //   + result[0].region_4depth_name; //산청군 시천면 내공리
-            // // setSpotName1(spotName1);
-            // // setSpotName2(spotName2);
-            // setSpotName(spotName); // 경상남도 산청군 시천면 내공리
+          // // var spotName1 = result[0].region_1depth_name; // 경상남도
+          // // var spotName2 = result[0].region_2depth_name + " "
+          // //   + result[0].region_3depth_name + " "
+          // //   + result[0].region_4depth_name; //산청군 시천면 내공리
+          // // setSpotName1(spotName1);
+          // // setSpotName2(spotName2);
+          // setSpotName(spotName); // 경상남도 산청군 시천면 내공리
         });
 
         function searchAddrFromCoords(coords, callback) {
@@ -295,79 +291,6 @@ const Maps = (props) => {
     // 5. 서버 연결 전 테스트중에는 MarkerMockData.js 로 하드코딩한 걸 갖고 와서 테스트한다.
     // 6. 서버와 연결되어 데이터 통신이 이뤄지면 if문으로 분기하는 코드를 사용한다.
     // 기본 설정 규칙 설명 끝------------------------------------------------------------------------
-    // 1. 전체마커 보이게 하는 설정 // 서버랑 통신 되면 이걸로 바꾸기 allData
-    if (is_all) {
-      // console.log(markerdata);
-      // markerdata.forEach((p, idx) => { // mockdate를 이용한 테스트. 나중엔 서버에서 가져온다.
-      allData.forEach((all, idx) => {
-        var imageSize = new kakao.maps.Size(42, 63);
-        var markerImage = new kakao.maps.MarkerImage(
-          `${markerImgUrls.totalMarkerImgUrl}`,
-          imageSize
-        );
-        var position = new kakao.maps.LatLng(all.latitude, all.longitude);
-        var totalMarkers = new kakao.maps.Marker({
-          // 마커들을 생성하고, 그것들을 대응되는 좌표에다가 뿌려줍니다.
-          // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
-          map: map,
-          position: position,
-          image: markerImage,
-        });
-
-        // 모달창의 x 를 클릭하면 사라지게 하는 함수
-        // String으로 짠 아래 순수 HTML의 onclick으로 함수가 넘어가지 않는 문제 발생
-        // 리액트 환경이란것이 이 문제의 근본원인인 듯.
-        var closeOverlay = function () {
-          customOverlay.setMap(null);
-        };
-
-        // 모달창(커스텀오버레이)에 들어갈 내용
-        // 여길 클릭할 시에 모달이 떠야한다
-        var content =
-          '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${all.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${all.spotName}</div>` +
-          "</div>" +
-          "</div>";
-
-        // 모달창(커스텀오버레이) 객체를 생성
-        var customOverlay = new kakao.maps.CustomOverlay({
-          // map: map,         // 이거 있으면 렌더링 마커에 클릭등의 이벤트를 하지 않아도 커스텀오버레이가 보인다
-          clickable: true, // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
-          position: position, // 커스텀 오버레이의 좌표
-          content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
-          xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          zIndex: 100, //  커스텀 오버레이의 z-index
-          altitude: 10,
-        });
-        // console.log(customOverlay);
-
-        // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        // 마커를 클릭 했을 때 디테일 모달이 나오는
-        //mouseover , mouseout
-        kakao.maps.event.addListener(totalMarkers, "mouseover", function () {
-          // 클릭하면 열기
-          customOverlay.setMap(map);
-        });
-
-        kakao.maps.event.addListener(totalMarkers, "mouseout", function () {
-          // 우클릭하면 닫기
-
-          customOverlay.setMap(null);
-        });
-
-        kakao.maps.event.addListener(totalMarkers, "click", function () {
-          // 클릭하면 모달 오픈하고 동시에 모달정보 받아오기
-
-          dispatch(ModalActions.getModalPostAPI(all.id)); // 오픈 모달모달보다 먼저 선언되어야 한다  꼭!
-
-          // dispatch(ModalActions.getModalPostAPI(all.id)); // 서버랑 연결되면 이걸로 바꾸자
-          openModal();
-        });
-      });
-    }
 
     // 2. 내가 작성한 게시물만 : 카페마커 + 커스텀 오버레이
     if (is_mypost) {

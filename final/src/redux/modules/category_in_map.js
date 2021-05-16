@@ -1,27 +1,23 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import axios from "axios";
 import { history } from "../configStore";
 import "moment";
 import moment from "moment";
-import { config } from "../../shared/config";
-import { NavigateBeforeRounded } from "@material-ui/icons";
 
 const GET_CATEGORY_IN_MAP = "GET_CATEGORY_IN_MAP";
-const RESET_CATEGORY_IN_MAP = "RESET_CATEGORY_IN_MAP";
+const GET_ALL_CATEGORY_IN_MAP = "GET_ALL_CATEGORY_IN_MAP";
 
 const GET_MYPOST_IN_MAP = "GET_MYPOST_IN_MAP";
 const GET_MYLIKE_IN_MAP = "GET_MYLIKE_IN_MAP";
 
 const RESET_MYPOST_IN_MAP = "RESET_MYPOST_IN_MAP";
 const RESET_MYLIKE_IN_MAP = "RESET_MYLIKE_IN_MAP";
-const SELECT_CATEGORY_IN_MAP = "SELECT_CATEGORY_IN_MAP";
 
 const getCategoryInMap = createAction(GET_CATEGORY_IN_MAP, (category_in_map) => ({
   category_in_map,     // category_in_map은 입력하는 카테고리명이에요
 }));
-const resetCategoryInMap = createAction(RESET_CATEGORY_IN_MAP, (is_category_in_map) => ({
-  is_category_in_map,  // 이건 카테고리가 담긴 배열이에요. 근데 사실 없어도 되는 것. 알고싶으면 500원! 아님 리듀서를 보면 이해가능
+const getAllCategoryInMap = createAction(GET_ALL_CATEGORY_IN_MAP, (is_category_in_map) => ({
+  is_category_in_map,  
 }));
 
 const getMyPostInMap = createAction(GET_MYPOST_IN_MAP, (is_category_in_map) => ({
@@ -70,12 +66,11 @@ export default handleActions(
           }
         }, []);
       }),
-
-    [RESET_CATEGORY_IN_MAP]: (state, action) =>
+    
+    [GET_ALL_CATEGORY_IN_MAP]: (state, action) =>
       produce(state, (draft) => {
-        draft.is_category_in_map = []; // 전체보기 효과를 위해 이렇게 리셋 해준다
-      }),
-
+        draft.is_category_in_map = ["카페", "야경", "바다", "산", "꽃", "나홀로", "연인", "친구", "반려동물", "도심", "공원", "전시"]; // 전체보기 효과를 위해 이렇게 리셋 해준다.
+      }),  
       
     [GET_MYPOST_IN_MAP]: (state, action) =>
       produce(state, (draft) => {
@@ -110,7 +105,7 @@ export default handleActions(
 
 const actionCreators = { 
   getCategoryInMap,
-  resetCategoryInMap,
+  getAllCategoryInMap,
   getMyPostInMap,
   getMyLikeInMap,
   resetMyPostInMap,

@@ -28,8 +28,17 @@ const UploadModal = (props) => {
   const { latitude, longitude, spotName } = props;
   const userId = localStorage.getItem("userId");
 
+  console.log("비교!", props);
   React.useEffect(() => {
+    if (is_madal) {
+      console.log("실행실행!!!!!!!!!!");
+      dispatch(imageActions.getModalPost(props));
+      dispatch(profileActions.getUserInfoAPI(userId));
+      return;
+    }
+
     if (is_edit) {
+      console.log("실행ㄴㄴㄴㄴㄴㄴㄴ");
       // dispatch(imageActions.resetEdit([])); //
       dispatch(imageActions.getPost(props.id));
 
@@ -80,6 +89,7 @@ const UploadModal = (props) => {
   console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
   // const post_id = props.match.params.id;
   const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
+  const is_madal = props.modal ? true : false;
   // console.log("수정 게시물 정보", props);
   // console.log("수정 화면 이미지들", images);
   const nickname = localStorage.getItem("nickname");
@@ -176,7 +186,6 @@ const UploadModal = (props) => {
     };
     dispatch(postActions.editPostAPI(props.id, edit));
     props.close();
-
     dispatch(imageActions.resetEdit([])); //업로드 후 리덕스에 남은 수정 정보 모두 리셋
     //에딧파일 초기화...
   };
@@ -208,10 +217,6 @@ const UploadModal = (props) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-
-  console.log("업로드 프롭스", props);
-
-  //밑에두면 preview값을 바로 받을 수가 없다?
 
   return (
     <React.Fragment>
