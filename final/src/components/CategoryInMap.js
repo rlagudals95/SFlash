@@ -22,14 +22,15 @@ const CategoryInMap = () => {
     return state.post.map_post_list
   });
 
-  const is_all = is_category_in_map.length === 0  ? true : false;        // 모든 게시물 판단 기준
+  const is_all = is_category_in_map.length === 12   ? true : false;        // 모든 게시물 판단 기준
+  console.log("is_category_in_map의 길이: " + is_category_in_map.length)
   const is_mine = map_post_list.writerName === nickname ? true : false;  // 내게시물 판단 기준
   const is_mylike = map_post_list.like === true ? true : false;          // 내가 좋아요 한 게시물 판단 기준.
   console.log(is_all);
 
   // console.log(is_category);
   // console.log("카테고리 배열길이", is_category.length);
-
+  const [allCategory, setAllCategory] = useState(true);
   const [cafe, setCafe] = useState("cafe");
   const [night, setNight] = useState("night");
   const [ocean, setOcean] = useState("ocean");
@@ -66,45 +67,6 @@ const CategoryInMap = () => {
             카테고리
           </CateGoryTitle>
         </CategoryInfo>
-
-        {/* 카페 */}
-        {is_all ? (
-          <SelectedBtn
-            onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setShowMine(false);
-                setShowLike(false);
-                dispatch(categoryActionsInMap.resetCategoryInMap());
-            }}
-          >
-            #전체
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setCafe(false);
-                setNight(false);
-                setOcean(false);
-                setMountain(false);
-                setFlower(false);
-                setAlone(false);
-                setCouple(false);
-                setFreind(false);
-                setPet(false);
-                setExhibition(false);
-                setCity(false);
-                setPark(false);
-                setShowMine(false);
-                setShowLike(false);
-                dispatch(categoryActionsInMap.resetCategoryInMap());
-            }}
-          >
-            #전체
-          </Btn>
-        )}
         {/* 카페 */}
         {cafe ? (
           <SelectedBtn
@@ -442,15 +404,48 @@ const CategoryInMap = () => {
 
         {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
         <SpotSelectBox>
+          {/* 전체스팟 찾기 */}
+          {is_all ? (  // is_category_in_map 리스트 안에 모든 카테고리가 다 들어 있다면
+            <AllSpotsSelected src={AllBtn}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowMine(false);
+                setShowLike(false);
+              }}
+            />
+          ) :  (
+            <AllSpots src={AllBtn}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCafe(true);
+                setNight(true);
+                setOcean(true);
+                setMountain(true);
+                setFlower(true);
+                setAlone(true);
+                setCouple(true);
+                setFreind(true);
+                setPet(true);
+                setExhibition(true);
+                setCity(true);
+                setPark(true);
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getAllCategoryInMap(is_category_in_map));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            />
+          )}
           {/* 내스팟 찾기 */}
           {showMine ? (
             <MyPostSpotsSelected src={AllMyPostBtn}
               onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              setShowMine(false);
               setShowLike(false);
-              dispatch(categoryActionsInMap.resetCategoryInMap());
               }}
             /> ) : (
             <MyPostSpots src={AllMyPostBtn}
@@ -481,8 +476,6 @@ const CategoryInMap = () => {
                 e.preventDefault();
                 e.stopPropagation();
                 setShowMine(false);
-                setShowLike(false);
-                dispatch(categoryActionsInMap.resetCategoryInMap());
               }}
             />) : 
             (<MyLikeSpots src={AllMyLikeBtn}
@@ -553,9 +546,6 @@ const CateGoryTitle = styled.div`
   width: 100%;
   font-size: 17px;
   padding-bottom: 7px;
-  /* @media (max-width: 1450px) {
-    display: none; */
-  /* } */
 `;
 
 const CategoryIcon = styled.div`
@@ -600,82 +590,80 @@ const SpotSelectBox = styled.div`
 `;
 
 const AllSpotsSelected = styled.img`
-  width: 70px;
-  height: 70px;
+  width: 72px;
+  height: 72px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 1px solid rgb(255, 183, 25);
+  border: 3px solid rgb(255, 183, 25);
   cursor: pointer;
-  margin: 5px;
-  object-fit: cover;
+  margin: 6px;
   background-size: cover;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.2);
+  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); 
 `;
 
 const AllSpots = styled.img`
-  width: 70px;
-  height: 70px;
+  width: 72px;
+  height: 72px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   border: none;
   cursor: pointer;
-  margin: 5px;
-  object-fit: cover;
+  margin: 6px;
   background-size: cover;
-  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
+  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); 
 `;
 
 
 const MyPostSpotsSelected = styled.img`
-  width: 90px;
-  height: 90px;
+  width: 72px;
+  height: 72px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   border: 3px solid rgb(27, 38, 133);
   cursor: pointer;
-  margin: 12px;
+  margin: 6px;
   background-size: cover;
   box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); 
 `;
 
 const MyPostSpots = styled.img`
-  width: 90px;
-  height: 90px;
+  width: 72px;
+  height: 72px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   border: none;
   cursor: pointer;
-  margin: 12px;
+  margin: 6px;
   background-size: cover;
   box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); 
 `;
 
 const MyLikeSpotsSelected = styled.img`
-  width: 90px;
-  height: 90px;
+  width: 72px;
+  height: 72px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   border: 3px solid rgb(253, 133, 152);
   cursor: pointer;
-  margin: 12px;
+  margin: 6px;
   background-size: cover;
   box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
 `;
 
 const MyLikeSpots = styled.img`
-  width: 90px;
-  height: 90px;
+  width: 72px;
+  height: 72px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   border: none;
   cursor: pointer;
-  margin: 12px;
+  margin: 6px;
   background-size: cover;
   box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
 `;
