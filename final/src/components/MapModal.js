@@ -51,8 +51,10 @@ const ModalDetail = (props) => {
   // const is_like = props.like 라이크가 있냐 확인?
 
   const openEditModal = () => {
+    // props.closeDetail();
     setEditModal(true);
   };
+
   const closeDetailModal = () => {
     setEditModal(false);
   };
@@ -250,15 +252,7 @@ const ModalDetail = (props) => {
                       {modalData.writerId == user_id ? (
                         <ModalEdit>
                           <React.Fragment onClick={props.close}>
-                            <EditBtn
-                              onClick={() => {
-                                setEditModal(true);
-
-                                // dispatch(imageActions.getPost(props.id));
-                              }}
-                            >
-                              수정
-                            </EditBtn>
+                            <EditBtn onClick={openEditModal}>수정</EditBtn>
                           </React.Fragment>
                           /
                           <DeleteBtn
@@ -359,7 +353,11 @@ const ModalDetail = (props) => {
                 </ModalBottomContainer>
               </ModalComponent>
               {is_Editmodal ? (
-                <UploadModal close={closeDetailModal} {...modalData} />
+                <UploadModal
+                  close={closeDetailModal}
+                  {...modalData}
+                  modal={"modal"}
+                />
               ) : null}
             </React.Fragment>
           </React.Fragment>

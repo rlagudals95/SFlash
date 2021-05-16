@@ -164,15 +164,13 @@ const Maps = (props) => {
       setMap(map);
     }
 
-    
-
     // 콘솔창에 클릭한 위치의 위도 경도가 표시되는 코드
     // 지도에 클릭 이벤트를 등록합니다 : 클릭하면 위도, 경도, 주소 정보를 받고 작성창이 뜨게 한다
     // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다.
 
     // services.Geocoder() 는 주소-좌표간 변환 서비스를 제공한다.
     var geocoder = new kakao.maps.services.Geocoder();
-    
+
     // ** 주의!!! 구현된것들이 안정적으로 돌아간다고 판단된 이후에는
     // ** 로그인 한 사람만 할 수 있는 클릭이벤트가 되도록
     // ** 아래처럼 if문으로 설정한다.
@@ -207,28 +205,26 @@ const Maps = (props) => {
             console.log(spotName);
             setSpotName(spotName);
           }
-            // //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
-            // // var addressName = result[0].address_name;
-            // var region1 = result[0].region_1depth_name;
-            // var region2 = result[0].region_2depth_name;
-            // var region3 = result[0].region_3depth_name;
-            // var region4 = result[0].region_4depth_name;
-            // let spotName = [region1, region2, region3, region4];
-            // console.log("스팟네임은?:" + spotName);
-            // // setRegionName1(region1);
-            // // setRegionName2(region2);
-            // // setRegionName3(region3);
-            // // setRegionName4(region4);
+          // //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
+          // // var addressName = result[0].address_name;
+          // var region1 = result[0].region_1depth_name;
+          // var region2 = result[0].region_2depth_name;
+          // var region3 = result[0].region_3depth_name;
+          // var region4 = result[0].region_4depth_name;
+          // let spotName = [region1, region2, region3, region4];
+          // console.log("스팟네임은?:" + spotName);
+          // // setRegionName1(region1);
+          // // setRegionName2(region2);
+          // // setRegionName3(region3);
+          // // setRegionName4(region4);
 
-            
-
-            // // var spotName1 = result[0].region_1depth_name; // 경상남도
-            // // var spotName2 = result[0].region_2depth_name + " " 
-            // //   + result[0].region_3depth_name + " "
-            // //   + result[0].region_4depth_name; //산청군 시천면 내공리
-            // // setSpotName1(spotName1);
-            // // setSpotName2(spotName2);
-            // setSpotName(spotName); // 경상남도 산청군 시천면 내공리
+          // // var spotName1 = result[0].region_1depth_name; // 경상남도
+          // // var spotName2 = result[0].region_2depth_name + " "
+          // //   + result[0].region_3depth_name + " "
+          // //   + result[0].region_4depth_name; //산청군 시천면 내공리
+          // // setSpotName1(spotName1);
+          // // setSpotName2(spotName2);
+          // setSpotName(spotName); // 경상남도 산청군 시천면 내공리
         });
 
         function searchAddrFromCoords(coords, callback) {

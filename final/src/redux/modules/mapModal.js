@@ -221,7 +221,7 @@ const modalDisLikeAPI = (board_id, board) => {
         // console.log(res);
         // dispatch(disLike(false));
         // dispatch(getLike(false));
-        // dispatch(postActions.getPostAPI(paging.start, paging.size));
+       
       })
       .catch((error) => {
         // window.alert("좋아요를 할 수 없습니다.");

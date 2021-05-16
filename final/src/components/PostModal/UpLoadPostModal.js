@@ -209,7 +209,7 @@ const UploadPostModal = (props) => {
     slidesToScroll: 1,
   };
 
-  console.log("업로드 프롭스", props);
+  // console.log("업로드 프롭스", props);
 
   //밑에두면 preview값을 바로 받을 수가 없다?
 
