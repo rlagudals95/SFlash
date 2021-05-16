@@ -80,7 +80,6 @@ const StoryUserProfile = (props) => {
           />
 
           <Grid>
-            <Grid height="130px" />
             <Nickname>{user_info.nickname}</Nickname>
             <Introduction>{user_info.introduction}</Introduction>
           </Grid>
@@ -171,9 +170,24 @@ StoryUserProfile.defaultProps = {
 
 const ProfileContainer = styled.div`
   display: flex;
-  min-height: 200px;
-  margin: 70px auto;
+  margin-top: 70px;
+  padding-bottom:40px;
+  background-color:#eee;
+    @media (max-width: 1280px) {
+      padding-bottom:30px;
+    }
+    @media (max-width: 520px) {
+      height: 100px;
+      margin-top: 0px;
+      padding-bottom:10px;
+    }
+    @media (max-width: 400px) {
+      height:90px;
+      margin-top: 0px;
+      padding-bottom:0px;
+    }
 `;
+
 const Setting = styled.div`
   position: static;
   float: right;
@@ -183,39 +197,81 @@ const Setting = styled.div`
   align-items: center;
   vertical-align: center;
   padding: 10px;
-  margin: 80px 30px 0px 0px;
+  margin: 70px 30px 0px 0px;
   &:hover {
     cursor: pointer;
     color: grey;
     background-color: #eee;
     transition-duration: 2s;
   }
+
+    @media (max-width: 520px) {
+     width:30px;
+     margin: 40px 10px 0px 0px;
+    }
+    @media (max-width: 400px) {
+      width:20px;
+      margin: 40px 10px 0px 0px;
+    }
 `;
 
 const ProfileImg = styled.img`
-  width: 140px;
-  aspect-ratio: 1/1;
   border-radius: 150px;
   padding: 20px;
-  margin: 10px;
   background-size: cover;
   object-fit: cover;
   cursor: pointer;
+  @media (min-width: 1280px) {
+       width: 160px;
+      height: 160px;
+    }
+    @media (max-width: 1280px) {
+      width: 140px;
+      height: 140px;
+    }
+    @media (max-width: 960px) {
+      width: 120px;
+      height: 120px;
+    }
+    @media (max-width: 400px) {
+      width: 90px;
+      height: 90px;
+    }
   
 `;
 
-const Nickname = styled.text`
+const Nickname = styled.div`
   font-size: 1.8rem;
   font-weight: 600;
-  color: darkslategrey;
+  margin-top: 120px;
+    @media (max-width: 1280px) {
+      margin-top: 100px;
+      font-size: 1.4rem;
+    }
+    @media (max-width: 960px) {
+      margin-top: 100px;
+      font-size: 1.2rem;
+    }
+    @media (max-width: 400px) {
+      margin-top: 80px;
+      font-size: 1.2rem;
+    }
 `;
-const Introduction = styled.text`
-  display: block;
-  font-size: 1.2rem;
+
+const Introduction = styled.div`
+  font-size: 1.1rem;
   font-weight: 400;
   color: grey;
   margin-top: 10px;
-  width: 100%;
+    @media (max-width: 1280px) {
+      font-size: 1.1rem;
+    }
+    @media (max-width: 960px) {
+      font-size: 0.9rem;
+    }
+    @media (max-width: 400px) {
+      font-size: 0.9rem;
+    }
 `;
 
 const modalStyle = {

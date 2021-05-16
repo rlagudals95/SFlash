@@ -1,6 +1,5 @@
 // Post2의 사본
 import React, { useState } from "react";
-import { Grid, Text, Button } from "../elements";
 import { history } from "../redux/configStore";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
@@ -34,7 +33,7 @@ const StoryPost = (props) => {
  
   // 이미지들 반복문으로 뽑아오기
   let image_list = [];
-
+  console.log("프롭스!!!!!",props);
   if (props.img_url) {
     //이거 좀 위태위태한거 같다
     for (let i = 0; i < props.img_url.length; i++) {
