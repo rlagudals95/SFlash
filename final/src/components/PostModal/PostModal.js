@@ -8,14 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Slider from "react-slick";
-import UploadModal from "./UpLoadModal";
-import { actionCreators as imageActions } from "../redux/modules/image2";
-import { actionCreators as postActions } from "../redux/modules/post";
-import { actionCreators as CommnetActions } from "../redux/modules/comment";
-import { actionCreators as likeActions } from "../redux/modules/like";
-import { actionCreators as ModalActions } from "../redux/modules/mapModal";
+import UploadModal from "./UpLoadPostModal";
+import { actionCreators as imageActions } from "../../redux/modules/image2";
+import { actionCreators as postActions } from "../../redux/modules/post";
+import { actionCreators as CommnetActions } from "../../redux/modules/comment";
+import { actionCreators as likeActions } from "../../redux/modules/like";
+import { actionCreators as ModalActions } from "../../redux/modules/mapModal";
 import { forEach } from "lodash";
-import { history } from "../redux/configStore";
+import { history } from "../../redux/configStore";
 
 const PostModal = (props) => {
   const dispatch = useDispatch();

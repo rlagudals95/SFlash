@@ -6,7 +6,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
-import PostModal from "./PostModal";
+import PostModal from "./PostModal/PostModal";
 
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
