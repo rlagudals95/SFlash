@@ -1,4 +1,6 @@
+// GridList에서 보여지는 1개의 Post
 // Post2의 사본
+
 import React, { useState } from "react";
 import { history } from "../redux/configStore";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
@@ -12,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import { actionCreators as modalActions } from "../redux/modules/modal";
 import { actionCreators as likeActions } from "../redux/modules/like";
+import { actionCreators as ModalActions } from "../redux/modules/postmodal";
 
 
 import "../Css/Post.css";
@@ -20,6 +23,7 @@ import "../Css/Post.css";
 const StoryPost = (props) => {
   const dispatch = useDispatch();
   console.log(props);
+  const boardId = props.id ;
 
   const paging = useSelector((state) => state.post.paging);
   const like = useSelector((state) => state.like.like);
@@ -29,7 +33,6 @@ const StoryPost = (props) => {
     console.log("시작");
     dispatch(likeActions.getLikePost());
   }, []);
-
  
   // 이미지들 반복문으로 뽑아오기
   let image_list = [];
@@ -54,6 +57,7 @@ const StoryPost = (props) => {
 
   const openModal = () => {
     setDetailModal(true);
+    dispatch(ModalActions.getModalPostAPI(boardId)); 
   };
   const closeDetailModal = () => {
     setDetailModal(false);
@@ -123,7 +127,7 @@ const StoryPost = (props) => {
       {is_modal ? (
         <PostModal
           close={closeDetailModal}
-          {...props} //여기서 모달에 모든 정보를 넘겨주는 구나!
+          boardId={props.id} //여기서 모달에 모든 정보를 넘겨주는 구나!
         />
       ) : null}
     </React.Fragment> //여기서 댓글 정보랑 모든걸 넘겨주려나?
