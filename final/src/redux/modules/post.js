@@ -123,7 +123,7 @@ const addPostAPI = (post) => {
       .then((res) => {
         console.log("애드포스트 응답", res);
         console.log(res.data);
-        console.log(res.data.data);
+        // console.log(res.data.data);
         // const profile = getState().user.profileImg;
         // const nickname = localStorage.getItem("nickname");
         // const preview = getState().image2.preview;
