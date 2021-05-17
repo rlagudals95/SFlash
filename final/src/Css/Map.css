@@ -33,6 +33,8 @@
 
 .spotname {
   position: absolute;
+  /* display: flex; */
+  /* flex-direction: column; */
   top: 17px;
   left: 17px;
   background-color: transparent;
