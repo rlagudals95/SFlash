@@ -13,6 +13,7 @@ import Email from "./modules/email";
 import Profile from "./modules/profile";
 // import Image from "./modules/image";
 import Like from "./modules/like";
+import StoryLike from "./modules/storylike";
 import Image2 from "./modules/image2";
 import Faq from "./modules/faq";
 import Qna from "./modules/qna";
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
   profile: Profile,
   image2: Image2,
   like: Like,
+  storylike: StoryLike,
   faq: Faq,
   storypost: Storypost,
   qna: Qna,
