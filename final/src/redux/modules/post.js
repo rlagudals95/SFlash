@@ -133,7 +133,7 @@ const addPostAPI = (post) => {
         console.log(res.data);
         console.log(res.data.data);
 
-        // 게시물 올리면 바로 마커 뜨게 하기 api : 백엔드와 시험해보기
+        // 게시물 올리면 바로 마커 뜨게 하는 리덕스 작업
         let one_post = res.data.data;
         let one_marker_data = {
           id: one_post.boardId,
@@ -145,7 +145,18 @@ const addPostAPI = (post) => {
           imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,
         };
         dispatch(addMapPost(one_marker_data));
-        history.replace("/");
+        
+        // 커뮤니티 리덕스에 데이터 추가
+        let CommunityPost = {
+          id: one_post.boardId,
+          spotName: one_post.spotName,
+          img_url: one_post.boardImgReponseDtoList[0],
+          likeCnt: 0,
+          like: false,
+        };
+        dispatch(addPost(CommunityPost));
+      
+        history.replace("/"); 
       })
       .catch((err) => {
         console.log(err);

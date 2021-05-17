@@ -226,7 +226,7 @@ const ModalDetail = (props) => {
                               onClick={disLike}
                               style={{
                                 color: "rgb(255, 183, 25)",
-                                fontSize: 30,
+                                fontSize: 29,
                               }}
                             />
                             <LikeCntBox> {modalData.likeCnt}</LikeCntBox>
@@ -264,32 +264,35 @@ const ModalDetail = (props) => {
                           /
                           <DeleteBtn
                             onClick={(e) => {
-                              // Swal.fire({
-                              //   text: "게시물을 삭제 하시겠습니까?",
-                              //   icon: "question",
-                              //   confirmButtonText: "예",
-                              //   confirmButtonColor: "#ffb719",
-                              //   showCancelButton: true,
-                              //   cancelButtonText: "아니오",
-                              //   cancelButtonColor: "#eee",
-                              // }).then((result) => {
-                              //   if (result.isConfirmed) {
+                              Swal.fire({
+                                text: "게시물을 삭제 하시겠습니까?",
+                                icon: "question",
+                                confirmButtonText: "예",
+                                confirmButtonColor: "#ffb719",
+                                showCancelButton: true,
+                                cancelButtonText: "아니오",
+                                cancelButtonColor: "#eee",
+                              }).then((result) => {
+                                if (result.isConfirmed) {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  // 클릭하면 게시물 삭제
+                                  dispatch(
+                                    postActions.deletePostAPI(modalData.id)
+                                  ); //이거 왜안될까??....
+                                  dispatch(
+                                    postActions.deleteMarker(modalData.id)
+                                  );
+                                  props.close(); //삭제 바로반영?
+                                }
+                              });
+
                               // e.preventDefault();
                               // e.stopPropagation();
                               // // 클릭하면 게시물 삭제
                               // dispatch(postActions.deletePostAPI(modalData.id)); //이거 왜안될까??....
                               // dispatch(postActions.deleteMarker(modalData.id));
                               // props.close(); //삭제 바로반영?
-                              //   }
-                              // });
-                              // handleClose();
-
-                              e.preventDefault();
-                              e.stopPropagation();
-                              // 클릭하면 게시물 삭제
-                              dispatch(postActions.deletePostAPI(modalData.id)); //이거 왜안될까??....
-                              dispatch(postActions.deleteMarker(modalData.id));
-                              props.close(); //삭제 바로반영?
                             }}
                           >
                             삭제
