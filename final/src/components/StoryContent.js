@@ -14,15 +14,9 @@ import { HiOutlineMap } from "react-icons/hi";
 
 const StoryContent = (props) => {
   const { post_list, marker_icon } = props;
-  console.log("StoryContents에 props 값으로 받아온 post_list", post_list);
 
   // gridMode 가 true 면 그리드 형태로, false면 맵형태로 보여준다.
   const [gridMode, setGridMode] = React.useState(true);
-
-  React.useEffect(() => {
-    console.log(post_list.length);
-  }, [post_list]);
-
 
   // 게시물 갯수가 0 일때 게시물을 등록해달라는 문구가 뜹니다.
   if (post_list.length === 0) {

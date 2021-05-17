@@ -12,17 +12,15 @@ const GET_LIKE = "GET_LIKE";
 const ADD_LIKE = "ADD_LIKE";
 const DIS_LIKE = "DIS_LIKE";
 
+const getLike = createAction(GET_LIKE, (like_list) => ({ like_list }));
 const addLike = createAction(ADD_LIKE, (like, likeCnt) => ({
   like,
   likeCnt,
 }));
-
 const disLike = createAction(DIS_LIKE, (like, likeCnt) => ({
   like,
   likeCnt,
 }));
-
-const getLike = createAction(GET_LIKE, (like_list) => ({ like_list }));
 
 // const getLike = createAction(GET_LIST, (like) => ({ like }));
 
@@ -35,17 +33,14 @@ const initialState = {
 
 const getLikePost = () => {
   return function (dispatch, getState) {
-    const post_list = getState().post.list;
-
-    // console.log("!!!!!!!!!!", post_list);
+    const post_list = getState().storypost.user_post_list;
 
     let like_list = [];
 
     for (let i = 0; i < post_list.length; i++) {
       like_list.push(post_list[i].like);
     }
-
-    // console.log(like_list);
+    console.log(like_list);
     dispatch(getLike(like_list));
   };
 };
@@ -53,10 +48,9 @@ const getLikePost = () => {
 const addLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
     const paging = getState().post.paging;
-    console.log("보드아이디", board_id);
-    console.log("보드", board);
-
-    console.log("토큰있나요??", localStorage.getItem("jwt"));
+    // console.log("보드아이디", board_id);
+    // console.log("보드", board);
+    // console.log("토큰있나요??", localStorage.getItem("jwt"));
     axios({
       method: "POST",
       url: `${config.api}/board/${board_id}/like`,
@@ -79,8 +73,8 @@ const addLikeAPI = (board_id, board) => {
 
 const disLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
-    console.log("보드아이디", board_id);
-    console.log("보드", board);
+    // console.log("보드아이디", board_id);
+    // console.log("보드", board);
 
     axios({
       method: "DELETE",
@@ -105,6 +99,10 @@ const disLikeAPI = (board_id, board) => {
 
 export default handleActions(
   {
+    [GET_LIKE]: (state, action) =>
+    produce(state, (draft) => {
+      draft.list = action.payload.like_list;
+    }),
     [ADD_LIKE]: (state, action) =>
       produce(state, (draft) => {
         draft.like = action.payload.like;
@@ -114,10 +112,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.like = action.payload.like;
         draft.likeCnt = draft.likeCnt - 1;
-      }),
-    [GET_LIKE]: (state, action) =>
-      produce(state, (draft) => {
-        draft.list = action.payload.like_list;
       }),
   },
   initialState
