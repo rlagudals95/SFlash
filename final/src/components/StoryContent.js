@@ -13,7 +13,7 @@ import { FiImage } from "react-icons/fi";
 import { HiOutlineMap } from "react-icons/hi";
 
 const StoryContent = (props) => {
-  const { post_list, marker_icon } = props;
+  const { post_list, marker_icon, userPostMode } = props;
 
   // gridMode 가 true 면 그리드 형태로, false면 맵형태로 보여준다.
   const [gridMode, setGridMode] = React.useState(true);
@@ -62,12 +62,12 @@ const StoryContent = (props) => {
           {gridMode ? (
             <GridList>
               {post_list.map((p) => {
-                return <StoryPost key={p.id} {...p}></StoryPost>;
+                return <StoryPost key={p.id} {...p} userPostMode={userPostMode}></StoryPost>;
               })}
             </GridList>
           ) : (
             <>
-            <StoryMap post_list={post_list} marker_icon={marker_icon} />
+            <StoryMap post_list={post_list} marker_icon={marker_icon} userPostMode={userPostMode}/>
             <Grid height="30px"/>
             <Text>* 게시물 등록은 메인페이지(홈)에서 가능합니다.</Text>
             </>
