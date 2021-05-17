@@ -411,11 +411,11 @@ const Maps = (props) => {
         // 모달창(커스텀오버레이)에 들어갈 내용
         var content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${cafe.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${cafe.spotName1}</div>` +
-          `<div class="spotname">${cafe.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox"  src=${cafe.imgForOverlay} >` +
+            '<div class="head">' +
+              `<div class="spotname">${cafe.spotName1}</div>` +
+              `<div class="spotname">${cafe.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성

@@ -158,8 +158,6 @@ const addPostAPI = (post) => {
           content: one_post.content, // 포스트 내용
         };
         dispatch(addPost(CommunityPost));
-
-        // history.replace("/");
       })
       .catch((err) => {
         console.log(err);
@@ -275,21 +273,21 @@ const getMapPostAPI = () => {
         res.data.data.forEach((_post) => {
           let post = {
             id: _post.boardId, // 포스트 id
-            title: _post.title, // 포스트 title
-            content: _post.content, // 포스트 내용
             like: _post.liked,
-            likeCount: _post.likeCount,
             writerName: _post.writerName,
-            writerImgUrl: _post.writerImgUrl,
             latitude: _post.latitude,
             longitude: _post.longitude,
-            spotName: _post.spotName,
             spotName1: _post.spotName.split(" ")[0],
             spotName2: _post.spotName.split(" ").splice(1).join(" "),
             category: _post.category,
-            imgUrl: _post.boardImgReponseDtoList,
             imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
-            comment: _post.boardDetailCommentDtoList,
+            // title: _post.title, // 포스트 title
+            // content: _post.content, // 포스트 내용
+            // likeCount: _post.likeCount,
+            // writerImgUrl: _post.writerImgUrl,        
+            // spotName: _post.spotName,
+            // imgUrl: _post.boardImgReponseDtoList,
+            // comment: _post.boardDetailCommentDtoList,
           };
           map_post_list.unshift(post);
         });
