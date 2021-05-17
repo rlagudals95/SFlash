@@ -53,35 +53,7 @@ const StoryMap = (props) => {
   }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
 
   useEffect(() => {
-    // window.alert('');
-    // getLocation();
-
-    // function getLocation() {  // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-    //   if (navigator.geolocation) {  // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-    //     navigator.geolocation.getCurrentPosition(
-    //       function (position) {
-    //         setStartLat(position.coords.latitude);
-    //         setStartLon(position.coords.longitude);
-    //       },
-    //       function (error) {
-    //         console.error(error);
-    //       },
-    //       {
-    //         enableHighAccuracy: false,
-    //         maximumAge: 0,
-    //         timeout: Infinity,
-    //       }
-    //     );
-    //   } else {  // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-    //     window.alert(
-    //       "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
-    //     );
-    //   }
-    // }
-
-    // if (startlat && startlon) {
-    //   console.log("현위치의 위도 = " + startlat + ", 현위치의 경도 = " + startlon);
-    // } // geolocation은 여기까지
+    // geolocation 제거했습니다.
 
     if (!post_list) {
       return;
@@ -105,7 +77,7 @@ const StoryMap = (props) => {
     if (post_list) {
       post_list.forEach((post) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
-        const imageSize = new kakao.maps.Size(30, 40);
+        const imageSize = new kakao.maps.Size(42, 63);
         const markerImage = new kakao.maps.MarkerImage(marker_icon, imageSize);
         const position = new kakao.maps.LatLng(post.latitude, post.longitude);
         const postMarkers = new kakao.maps.Marker({

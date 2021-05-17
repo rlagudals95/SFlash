@@ -49,10 +49,10 @@ const Story = (props) => {
   React.useEffect(() => {
     
   }, []);
- 
+
 
   // Map Marker Icon
-  const userPostMarkerImgUrl = "https://i.postimg.cc/3w264rbs/2x.png";
+  const userPostMarkerImgUrl = "https://i.postimg.cc/zDHr74DL/2x.png";
   const userLikeMarkerImgUrl = "https://i.postimg.cc/3rZTf11s/2x.png";
 
   

@@ -25,7 +25,7 @@ import Input2 from "../elements/Input2";
 import { CgLogOut } from "react-icons/cg";
 
 const UploadModal = (props) => {
-  const { latitude, longitude, spotName } = props;
+  const { latitude, longitude, spotName, spotNameForCustomOverlay} = props;
   const userId = localStorage.getItem("userId");
 
   console.log("비교!", props);
@@ -146,6 +146,7 @@ const UploadModal = (props) => {
       latitude: props.latitude,
       longitude: props.longitude,
       spotName: props.spotName,
+      spotNameForCustomOverlay: props.spotNameForCustomOverlay,
     };
     // console.log(post);
     if (is_file) {

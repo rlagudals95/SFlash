@@ -105,6 +105,7 @@ const addPostAPI = (post) => {
     formData.append("latitude", post.latitude);
     formData.append("longitude", post.longitude);
     formData.append("spotName", post.spotName);
+    formData.append("spotNameForCustomOverlay", post.spotNameForCustomOverlay);
     // 폼데이터 이미지 파일들은 한개 씩 보내기!
     for (let i = 0; i < _file.length; i++) {
       formData.append("file", _file[i]);
@@ -130,37 +131,15 @@ const addPostAPI = (post) => {
       .then((res) => {
         console.log("애드포스트 응답", res);
         console.log(res.data);
-        // console.log(res.data.data);
-        // const profile = getState().user.profileImg;
-        // const nickname = localStorage.getItem("nickname");
-        // const preview = getState().image2.preview;
-        // for (let i = 0; i < preview.length; i++) {
-        //   let i = preview[i];
-        //   console.log(i);
-        //   return i;
-        // }
-        // console.log("프리뷰!", preview);
-        // let post = {
-        //   title: post.title, // post.title
-        //   content: post.content, // post.content
-        //   writerName: nickname,
-        //   img_url: preview,
-        //   category: _category,
-        //   profileImg: profile,
-        //   like: false,
-        //   likeCnt: 0,
-        //   comment: [],
-        //   creatAt: "방금전",
-        //   spotName: post.spotName,
-        // };
 
         // 게시물 올리면 바로 마커 뜨게 하기 api : 백엔드와 시험해보기
         // let one_post = res.data ? res.data.data?
+        // let one_post = res.data;
         // let one_marker_data = {
         //   id: one_post.boardId,
         //   category:  one_post.category,
-        //   spotName1: one_post.spotName[0].spot1,
-        //   spotName2: one_post.spotName[0].spot2,
+        //   spotName1: one_post.spotName.split(" ")[0],
+        //   spotName2: one_post.spotName.split(" ").splice(1).join(" ");
         //   latitude: one_post.latitude,
         //   longitude: one_post.longitude,
         //   imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,
@@ -284,6 +263,8 @@ const getMapPostAPI = () => {
             latitude: _post.latitude,
             longitude: _post.longitude,
             spotName: _post.spotName,
+            spotName1: _post.spotName.split(" ")[0],
+            spotName2: _post.spotName.split(" ").splice(1).join(" "),
             category: _post.category,
             imgUrl: _post.boardImgReponseDtoList,
             imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
