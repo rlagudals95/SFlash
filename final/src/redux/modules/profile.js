@@ -3,6 +3,7 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
 import { config } from "../../shared/config";
+import Swal from 'sweetalert2'
 
 // Action
 const GET_USER_INFO = "GET_USER_INFO";
@@ -49,7 +50,7 @@ const getUserInfoAPI = (userId) => {
         dispatch(getUserInfo(user));
       })
       .catch((err) => {
-        console.error("게시물을 가져오는데 문제가 있습니다", err);
+        console.error("게시물 로드 에러", err);
       });
   };
 };
@@ -146,7 +147,12 @@ const editNicknameAPI = (newNickname, userId) => {
         // let nickname = res.data.data.nickname;
         dispatch(editNickname(nickname));
         if (res.data.data.nickname === true) {
-          alert("닉네임이 변경되었습니다! :)");
+          Swal.fire({
+            text: '닉네임이 변경 되었습니다.',
+            icon: 'success',
+            confirmButtonText: '확인',
+            confirmButtonColor:  "#ffb719",
+          })
         }
       })
       .catch((err) => {

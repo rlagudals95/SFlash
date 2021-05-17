@@ -172,10 +172,10 @@ const SelectedTab = styled.div`
   :hover {
   }
   @media (max-width: 960px) {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
   @media (max-width: 400px) {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
 `;
 
@@ -197,7 +197,7 @@ const UnselectedTab = styled.div`
     font-size: 0.9rem;
   }
   @media (max-width: 400px) {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
 `;
 
@@ -207,6 +207,12 @@ const TabUnderBar = styled.div`
   height: 3pt;
   margin: 20px auto -20px auto;
   background-color: ${(props) => props.theme.main_color};
+  @media (max-width: 960px) {
+    height: 2pt
+  }
+  @media (max-width: 400px) {
+    height: 2pt
+  }
 `;
 
 const Content = styled.div``;

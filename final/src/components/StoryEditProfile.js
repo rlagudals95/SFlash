@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,8 +19,8 @@ import profileDefault from "../static/profileDefault.svg";
 
 const StoryEditProfile = (props) => {
   const dispatch = useDispatch();
-  
-  const { user_info } = props;        // Story.js 에서 user_info를 props로 받아오기
+
+  const { user_info } = props; // Story.js 에서 user_info를 props로 받아오기
   const userId = localStorage.getItem("userId");
 
   const is_uploading = useSelector((state) => state.profile.is_uploading);
@@ -83,9 +84,17 @@ const StoryEditProfile = (props) => {
       .then((res) => {
         console.log("넥네임중복확인!", res.data);
         if (res.data === false) {
-          alert("이미 등록된 닉네임 입니다!");
+          Swal.fire({
+            text: '이미 등록된 닉네임 입니다!',
+            // icon: 'error',
+            confirmButtonColor: "#ffb719",
+          })
         } else {
-          alert("사용 가능한 닉네임 입니다 :)");
+
+          Swal.fire({
+            text: '사용 가능한 닉네임 입니다!',
+            confirmButtonColor: "#ffb719",
+        })
           setNicknameDup(true);
           const nicknameInfo_dupCheck = document.querySelector(
             "ul.checkNickname li:nth-child(2)"
@@ -107,7 +116,6 @@ const StoryEditProfile = (props) => {
     setOriginalNickMode(true);
   };
 
-  
   // 프로필 사진과 자기소개 수정하기-------------------------------------------------------------------
   // 자기소개 (value를 사용해 기존에 입력한 내용을 띄워준다.)
   const [introduction, setIntroduction] = React.useState(
@@ -129,11 +137,10 @@ const StoryEditProfile = (props) => {
     const reader = new FileReader();
     var img = fileInput.current.files[0];
     if (img === undefined) {
-      dispatch(
-        // profileActions.setPreview(
-        //   "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
-        // )
-      );
+      dispatch();
+      // profileActions.setPreview(
+      //   "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
+      // )
     }
     reader.readAsDataURL(img); // readAsDataURL(읽고 싶은 파일) 메서드를 이용한다.
     reader.onloadend = () => {
@@ -171,10 +178,7 @@ const StoryEditProfile = (props) => {
           {originalNickMode && (
             <div>
               <EditImgBtn for="edit_profile_img">
-                <HiCamera
-                  size="25px"
-                  color="white"
-                />
+                <HiCamera size="25px" color="white" />
               </EditImgBtn>
               <input
                 type="file"
@@ -208,16 +212,16 @@ const StoryEditProfile = (props) => {
           <Grid>
             <NicknameContainer height="60px">
               <div>
-              <Nickname>{user_info.nickname}</Nickname>
-              <EditNicknameBtn
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setOriginalNickMode(false);
-                }}
-              >
-                닉네임 변경
-              </EditNicknameBtn>
+                <Nickname>{user_info.nickname}</Nickname>
+                <EditNicknameBtn
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setOriginalNickMode(false);
+                  }}
+                >
+                  닉네임 변경
+                </EditNicknameBtn>
               </div>
             </NicknameContainer>
             <Grid flex>
@@ -226,18 +230,31 @@ const StoryEditProfile = (props) => {
                 placeholder="자기소개를 입력해주세요."
                 onChange={changeIntroduction}
                 disabled={is_uploading}
+                rows="6"
               />
             </Grid>
 
             <SolidBtn
               width="96%"
               onClick={() => {
-                const result =
-                  window.confirm("변경된 내용을 저장 하시겠습니까?");
-                if (result) {
-                  onEditProfile();
-                  props.closeModal();
-                }
+                Swal.fire({
+                  text: "변경된 내용을 저장 하시겠습니까?",
+                  icon: "question",
+                  confirmButtonText: "예",
+                  confirmButtonColor: "#ffb719",
+                  showCancelButton: true,
+                  cancelButtonText: "아니오",
+                  cancelButtonColor: "#d33",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    Swal.fire({
+                      text: "프로필이 수정되었습니다.",
+                      icon: "success",
+                    });
+                    onEditProfile();
+                    props.closeModal();
+                  }
+                });
               }}
             >
               저장하기
@@ -245,7 +262,7 @@ const StoryEditProfile = (props) => {
           </Grid>
         ) : (
           // 닉네임 변경모드
-          <div>
+          <div style={{ maxWidth: "300px", margin: "auto" }}>
             <Grid height="20px" />
             <NicknameContainer height="50px">
               <InputStyle
@@ -266,9 +283,12 @@ const StoryEditProfile = (props) => {
                 width="100px"
                 onClick={() => {
                   if (!nicknameRegCheck(newNickname)) {
-                    alert(
-                      "아이디는 6자 이상의 영문 혹은 영문과 숫자 조합만 가능합니다."
-                    );
+                    Swal.fire({
+                      text: "아이디는 형식을 확인해 주세요.",
+                      icon: "warning",
+                      confirmButtonText: "확인",
+                      confirmButtonColor: "#ffb719",
+                    });
                     return false;
                   }
                   console.log(newNickname);
@@ -278,23 +298,36 @@ const StoryEditProfile = (props) => {
                 중복확인
               </CheckBtn>
             </NicknameContainer>
-            <InfoUl className="checkNickname" style={{ marginLeft: "90px" }} >
+            <InfoUl className="checkNickname" style={{ marginLeft: "90px" }}>
               <InfoLi>
-                <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+                <GiCheckMark style={{ margin: "5px 5px 0px -120px" }} />
                 6자 이상의 영문 혹은 영문과 숫자를 조합
               </InfoLi>
               <InfoLi>
-                <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+                <GiCheckMark style={{ margin: "5px 5px 0px -120px" }} />
                 아이디 중복확인
               </InfoLi>
             </InfoUl>
             <SolidBtn
-              width="70%"
+              width="100%"
               onClick={() => {
-                const result = window.confirm("닉네임을 변경 하시겠습니까?");
-                if (result) {
-                  onEditNickname();
-                }
+                Swal.fire({
+                  text: "닉네임을 변경 하시겠습니까?",
+                  icon: "question",
+                  confirmButtonText: "예",
+                  confirmButtonColor: "#ffb719",
+                  showCancelButton: true,
+                  cancelButtonText: "아니오",
+                  cancelButtonColor: "#d33",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    Swal.fire({
+                      text: "닉네임이 변경되었습니다.",
+                      icon: "success",
+                    });
+                    onEditNickname();
+                  }
+                });
               }}
             >
               닉네임 변경하기
@@ -310,6 +343,12 @@ const ProfileContainer = styled.div`
   align-items: center;
   margin: auto;
   padding: 35px;
+  @media (max-width: 960px) {
+    padding: 25px;
+  }
+  @media (max-width: 400px) {
+    padding: 15 px;
+  }
 `;
 const ImgContainer = styled.div`
   text-align: center;
@@ -346,6 +385,12 @@ const Nickname = styled.text`
   margin-left: 10px;
   font-size: 1.5rem;
   font-weight: 400;
+  @media (max-width: 960px) {
+    font-size: 1.4rem;
+  }
+  @media (max-width: 400px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const NicknameContainer = styled.div`
@@ -359,7 +404,7 @@ const NicknameContainer = styled.div`
 
 const EditNicknameBtn = styled.button`
   padding: 8px;
-  margin-left: 16px ;
+  margin-left: 16px;
   border-radius: 5px;
   box-sizing: border-box;
   font-size: 0.8rem;
@@ -367,29 +412,37 @@ const EditNicknameBtn = styled.button`
   background-color: #ffffff;
   color: ${(props) => props.theme.main_color};
   outline: none;
-  border: 1.5pt solid ${(props) => props.theme.main_color};
+  border: 1pt solid ${(props) => props.theme.main_color};
   &:hover {
     color: #ffffff;
     background-color: ${(props) => props.theme.main_color};
     cursor: pointer;
     transition: all 0.5s ease-in-out;
   }
+
+  @media (max-width: 960px) {
+    font-size: 0.7rem;
+    border: 1pt solid ${(props) => props.theme.main_color};
+  }
+  @media (max-width: 400px) {
+    font-size: 0.6rem;
+    border: 1pt solid ${(props) => props.theme.main_color};
+  }
 `;
 
 const InputStyle = styled.input`
   border: 1px solid grey;
-  width: 45%;
+  width: 100%;
   height: 38px;
   border: 1px solid grey;
   border-radius: 8px;
   padding: 4px 16px;
   font-size: 1rem;
   font-weight: 500;
-  margin: 0px;
+  margin-left: -10px;
   color: grey;
-  input:focus {
-    outline: none !important;
-    border: 1px solid red;
+  :focus {
+    outline: none;
   }
   cursor: pointer;
 `;
@@ -399,7 +452,6 @@ const TextField = styled.textarea`
   border: 1px solid grey;
   border-radius: 8px;
   width: 95%;
-  aspect-ratio: 1/0.4;
   padding: 16px 16px;
   box-sizing: border-box;
   margin: 10px;
@@ -410,20 +462,22 @@ const TextField = styled.textarea`
 const CheckBtn = styled.button`
   display: block;
   border: none;
-  margin: 10px 15px;
+  margin-left: 10px;
   ${(props) => (props.width ? `width:${props.width};` : "")}
   height: 48px;
+  min-width: 80px;
   border-radius: 8px;
   box-sizing: border-box;
   font-size: 1rem;
-  font-weight: 600;
-  background-color: ${(props) => props.theme.main_color};
-  color: #ffffff;
-  outline: none;
+  font-weight: 00;
+  background-color: #ffffff;
+  color: ${(props) => props.theme.main_color};
+  border: 1pt solid ${(props) => props.theme.main_color};
   &:hover {
-    background-color: #ffffff;
-    color: ${(props) => props.theme.main_color};
-    border: 2pt solid ${(props) => props.theme.main_color};
+    background-color: ${(props) => props.theme.main_color};
+    color: #ffffff;
+    border: 1pt solid ${(props) => props.theme.main_color};
+    outline: none;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
   }
@@ -441,11 +495,12 @@ const SolidBtn = styled.button`
   font-weight: 600;
   background-color: ${(props) => props.theme.main_color};
   color: #ffffff;
+  border: 1pt solid ${(props) => props.theme.main_color};
   outline: none;
   &:hover {
     background-color: #ffffff;
     color: ${(props) => props.theme.main_color};
-    border: 2pt solid ${(props) => props.theme.main_color};
+    border: 1pt solid ${(props) => props.theme.main_color};
     cursor: pointer;
     transition: all 0.5s ease-in-out;
   }

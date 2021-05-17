@@ -10,9 +10,8 @@ import _ from "lodash"; // throttle, debounce 사용
 
 // component, element 파일들 가져오기
 import "../Css/Map.css";
-import MapModal from "./MapModal";
-import PostModal from "./PostModal/PostModal";
-import { actionCreators as ModalActions } from "../redux/modules/postmodal";
+import PostModal from "./StoryPostModal/PostModal";
+import { actionCreators as ModalActions } from "../redux/modules/storypostmodal";
 
 // window 객체로부터 kakao mpa api를 호출하기
 // 이것이 되게 하기 위해서는 index.html(index.js 아님!!!)의 script 태그안의 src에다가

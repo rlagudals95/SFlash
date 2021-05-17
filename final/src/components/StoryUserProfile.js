@@ -16,6 +16,8 @@ import Modal from "react-modal";
 import StoryEditProfile from "../components/StoryEditProfile";
 import StoryEditPwd from "../components/StoryEditPwd";
 
+import Swal from 'sweetalert2'
+
 const StoryUserProfile = (props) => {
   const dispatch = useDispatch();
   const {user_info, userId} = props;
@@ -24,14 +26,17 @@ const StoryUserProfile = (props) => {
 // 메뉴버튼(프로필 편집, 로그아웃 등)을 보여줍니다.
   const local_userId = localStorage.getItem("userId");
   const is_me = (userId === local_userId) ? true : false;
-  console.log("내 스토리 인가요?", is_me);
-
+  
   React.useEffect(() => {
 }, []);
 
   // 이미지 에러
   const ImageError = () => {
-    window.alert("잘못된 이미지 주소 입니다. :(");
+    Swal.fire({
+      text: '잘못된 이미지 주소입니다 :(',
+      icon: 'error',
+      confirmButtonColor: "#ffb719",
+    })
     // dispatch(
     //   profileActions.setPreview(
     //     "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
@@ -116,11 +121,20 @@ const StoryUserProfile = (props) => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  const result = window.confirm("로그아웃 하시겠습니까?");
-                  if (result) {
-                    dispatch(userActions.logOut());
-                    history.replace("/");
-                  }
+                  Swal.fire({
+                    text: '로그아웃 하시겠습니까?',
+                    icon: 'question',
+                    confirmButtonText: '예',
+                    confirmButtonColor: '#ffb719',
+                    showCancelButton: true,
+                    cancelButtonText: '아니오',
+                    cancelButtonColor: '#eee',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        dispatch(userActions.logOut());
+                        history.replace("/");
+                    }
+                  })
                   handleClose();
                 }}
               >
@@ -277,22 +291,25 @@ const Introduction = styled.div`
 const modalStyle = {
   overlay: {
     position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    top: "0",
+    left: "0",
+    right: "0",
+    bottom: "0",
+    alignItems: "center",
+    textAlign: "cetner",
     backgroundColor: "rgba(48, 48, 48, 0.6)",
     transition: "opacity 2000ms ease-in-out",
-    zIndex: 200,
+    zIndex: "1000",
   },
   content: {
-    width: "620px",
-    height: "600px",
+    maxWidth: "620px",
+    width: "80%",
+    maxHeight: "600px",
     margin: "auto",
     padding: "30px",
     border: "none",
     boxShadow: "0 2px 12px 0 rgba(0, 0, 0, 0.1)",
-    zIndex: 250,
+    zIndex: "1000",
   },
 };
 

@@ -8,32 +8,33 @@ import { useDispatch, useSelector } from "react-redux";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Slider from "react-slick";
-import UploadPostModal from "./UpLoadPostModal";
+import UploadPostModal from "./UploadPostModal";
 import { actionCreators as imageActions } from "../../redux/modules/image2";
 import { actionCreators as postActions } from "../../redux/modules/post";
+import { actionCreators as storyPostActions } from "../../redux/modules/storypost";
 import { actionCreators as CommnetActions } from "../../redux/modules/comment";
 import { actionCreators as likeActions } from "../../redux/modules/like";
-import { actionCreators as ModalActions } from "../../redux/modules/postmodal";
+import { actionCreators as ModalActions } from "../../redux/modules/storypostmodal";
 import { forEach } from "lodash";
 import { history } from "../../redux/configStore";
 
-const PostModal = (props) => {
+const ModalDetail = (props) => {
   const dispatch = useDispatch();
-  // const {boardId} = props;
-  // console.log(boardId);
-
   // React.useEffect(() => {}, []);
+
+  // console.log("ㅎㅎㅎㅎ", commentData);
+
   React.useEffect(() => {
-    // dispatch(ModalActions.getModalPostAPI(boardId)); 
     // console.log("시작");
     // dispatch(ModalActions.getModalPostAPI());
     // console.log("!!!!!!!!!!!", modalData); //잘 찍힌다
     // dispatch(CommnetActions.getComment(modalData.id)); //음 서버에서 가져온 모달디테일 에서 코멘트 따로빼자
   }, []);
 
-  const modalData = useSelector((state) => state.postmodal.post);
-  console.log("모달데이터", modalData);
-  const commentData = useSelector((state) => state.postmodal.comment); //코멘트를 가져온다
+  console.log("eeee", props);
+  const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
+  const modalData = useSelector((state) => state.mapmodal.post);
+  const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
 
   if (commentData) {
@@ -42,16 +43,19 @@ const PostModal = (props) => {
 
   const [is_Editmodal, setEditModal] = useState();
 
+  console.log("모달 데이타", modalData);
+
   const nickname = localStorage.getItem("nickname");
-  const userId = localStorage.getItem("userId");
-  
+  const user_id = localStorage.getItem("userId");
 
   // console.log("닉네임", nickname);
   // const is_like = props.like 라이크가 있냐 확인?
 
   const openEditModal = () => {
+    // props.closeDetail();
     setEditModal(true);
   };
+
   const closeDetailModal = () => {
     setEditModal(false);
   };
@@ -163,11 +167,9 @@ const PostModal = (props) => {
             <React.Fragment>
               <Component onClick={props.close} />
               <ModalComponent>
-
-                {/* 헤더 부분 */}
                 <ModalHeader>
                   <ModalLeftHeader>
-                    <>
+                    <React.Fragment>
                       <ProCircle
                         src={
                           modalData.profileImg
@@ -185,7 +187,7 @@ const PostModal = (props) => {
                       >
                         {modalData.writerName}
                       </ModalAuthor>
-                    </>
+                    </React.Fragment>
                     {/* <PostDate>{timeForToday(props.creatAt)}</PostDate> */}
                     <ExitContainer>
                       <ExitBtn onClick={props.close}>
@@ -194,8 +196,6 @@ const PostModal = (props) => {
                     </ExitContainer>
                   </ModalLeftHeader>
                 </ModalHeader>
-
-                {/* 이미지 부분 */}
                 {/* 이미지 슬라이드 구현 props로 받는 이미지의 개수가 1개를 초과할때  */}
                 {/* 그 수만큼 map함수로 출력해준다 */}
                 {modalData.img_url.length > 1 ? ( // 음.,...
@@ -217,6 +217,7 @@ const PostModal = (props) => {
                   <InfoBox>
                     <InfoBoxInner>
                       {/*is_like 여부로 하트모양 변경  */}
+
                       {modalData.like ? (
                         <LikeBox>
                           <div style={{ cursor: "pointer" }}>
@@ -249,14 +250,10 @@ const PostModal = (props) => {
                       )}
 
                       {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
-                      {modalData.writerId === parseInt(userId) ? (
+                      {modalData.writerId == user_id ? (
                         <ModalEdit>
                           <React.Fragment onClick={props.close}>
-                            <EditBtn
-                              onClick={openEditModal}
-                            >
-                              수정
-                            </EditBtn>
+                            <EditBtn onClick={openEditModal}>수정</EditBtn>
                           </React.Fragment>
                           /
                           <DeleteBtn
@@ -265,7 +262,8 @@ const PostModal = (props) => {
                               e.preventDefault();
                               e.stopPropagation();
                               // 클릭하면 게시물 삭제
-                              dispatch(postActions.deletePostAPI(modalData.id)); //이거 왜안될까??....
+                              dispatch(storyPostActions.deleteStoryPostAPI(modalData.id)); //이거 왜안될까??....
+                              dispatch(storyPostActions.deleteStoryMarker(modalData.id));
                               props.close(); //삭제 바로반영?
                             }}
                           >
@@ -325,7 +323,7 @@ const PostModal = (props) => {
                                   {/* 방금 전 */}
                                   {timeForToday(c.modified)}
                                 </CmtDate>
-                                {nickname === c.writerName ? (
+                                {nickname == c.writerName ? (
                                   <CmtDeleteBtn
                                     onClick={() => {
                                       deleteComment(c.commentId);
@@ -356,7 +354,11 @@ const PostModal = (props) => {
                 </ModalBottomContainer>
               </ModalComponent>
               {is_Editmodal ? (
-                <UploadPostModal close={closeDetailModal} {...modalData} />
+                <UploadPostModal
+                  close={closeDetailModal}
+                  {...modalData}
+                  modal={"modal"}
+                />
               ) : null}
             </React.Fragment>
           </React.Fragment>
@@ -910,4 +912,4 @@ const DeleteBtn = styled.span`
   cursor: pointer;
 `;
 
-export default PostModal;
+export default ModalDetail;
