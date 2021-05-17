@@ -88,7 +88,7 @@ function Navbar() {
                   <Link>
                     <Story
                       onClick={() => {
-                        history.push(`/story/${userId}`);
+                        history.replace(`/story/${userId}`);
                       }}
                     ></Story>
                   </Link>

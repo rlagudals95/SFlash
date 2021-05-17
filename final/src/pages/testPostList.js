@@ -62,13 +62,13 @@ const PostList = (props) => {
   const [search, setSearch] = React.useState("");
 
   React.useEffect(() => {
-    dispatch(PostActions.getPostAPI());
+    dispatch(PostActions.getPostAPI(paging.start, paging.size));
     dispatch(likeActions.getLikePost());
   }, []);
 
   const next = () => {
     //스크롤이 바닥에 닿을때 마다 포스트를 정해진 paging 사이즈만큼 가져오는 함수
-    dispatch(PostActions.getPostAPI());
+    dispatch(PostActions.getPostAPI(paging.start, paging.size));
   };
 
   // const like_list = useSelector((state) => state.like.list);
@@ -78,7 +78,6 @@ const PostList = (props) => {
   const searchPost = board_list.filter((val) => {
     // 검색기능(필터링)을 변수로 지정해 놓고 .map앞에 붙혀둔다
     if (search == "") {
-      //search가 한글자라도 있으면 loading = false
       // 검색창의 내용에 따라 보여지는 게시물이 필터링 된다
       return val;
     } else if (val.title.includes(search)) {
@@ -87,8 +86,6 @@ const PostList = (props) => {
     } else if (val.content.includes(search)) {
       // 검색어에 내용이 포함되었는지 판단
       return val;
-    } else if (search !== "") {
-      //스피너 없애기
     }
   });
 

@@ -10,7 +10,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import PostModal from "./StoryPostModal/PostModal";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
-import { actionCreators as likeActions } from "../redux/modules/like";
+import { actionCreators as likeActions } from "../redux/modules/storylike";
 import { actionCreators as ModalActions } from "../redux/modules/storypostmodal";
 
 
@@ -22,34 +22,15 @@ const StoryPost = (props) => {
   console.log(props);
   const boardId = props.id ;
 
-  const paging = useSelector((state) => state.post.paging);
-  const like = useSelector((state) => state.like.like);
-  console.log("좋아요 정보", like);
-
   React.useEffect(() => {
     console.log("시작");
     dispatch(likeActions.getLikePost());
   }, []);
- 
-  // 이미지들 반복문으로 뽑아오기
-  let image_list = [];
-  console.log("프롭스!!!!!",props);
-  if (props.img_url) {
-    //이거 좀 위태위태한거 같다
-    for (let i = 0; i < props.img_url.length; i++) {
-      image_list.push(props.img_url[i]);
-    }
-  }
 
-  // console.log("이미지 리스트!", image_list);
-  // 댓글들 반복문으로 뽑아오기
-  let comment_list = [];
+  const paging = useSelector((state) => state.post.paging);
+  const like = useSelector((state) => state.storylike.like);
+  console.log("좋아요 정보", like);
 
-  if (props.comment) {
-    for (let i = 0; i < props.comment.length; i++) {
-      comment_list.push(props.comment[i]);
-    }
-  }
   const [is_modal, setDetailModal] = useState();
 
   const openModal = () => {
@@ -64,8 +45,7 @@ const StoryPost = (props) => {
   const addLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("!!!!!", props.id, props)
-
+    console.log("ADDLIKE!!!!!", props.id, props)
     dispatch(likeActions.addLikeAPI(props.id, props)); //서버
     // dispatch(PostActions.editLikeP(props.id, props)); // 리덕스
   };
@@ -73,16 +53,11 @@ const StoryPost = (props) => {
   const disLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    console.log("DISLIKE!!!!!", props.id, props)
     dispatch(likeActions.disLikeAPI(props.id, props));
     // dispatch(PostActions.editLikeD(props.id, props));
   };
 
-  // console.log("뭘까......???", image_list[0].imgUrl);
-
-  //스타일 컴포넌트//
-  // const PostImage = image_list[0].imgUrl;
-  // console.log("포스트 프롭스", props);
-  // console.log(props.post_image_url);
   return (
     <React.Fragment>
       <Card>
@@ -90,11 +65,7 @@ const StoryPost = (props) => {
 
         <PostBox
           onClick={openModal}
-          src={
-            image_list[0].imgUrl //썸네일 이미지가 있다면>?
-              ? image_list[0].imgUrl
-              : null
-          }
+          src={props.img_url[0].imgUrl}
         >
           {/* 이거자체가 지금 투명 0 */}
           <div className={"hoverDark"}>

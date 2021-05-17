@@ -5,10 +5,10 @@ import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as categoryActionsInMap } from "../redux/modules/category_in_map";
 import * as BiIcons from "react-icons/bi";
-import AllBtn from "../shared/images/spotIcons/AllSpotsBtn.png";
-import AllMyPostBtn from "../shared/images/spotIcons/AllMyPostsBtn.png";
-import AllMyLikeBtn from "../shared/images/spotIcons/AllMyLikesBtn.png";
-// import { actionCreators as PostActions } from "../redux/modules/post";
+import AllBtn from "../shared/images/spotIcons/AllSpotsBtn.png"
+import AllMyPostBtn from "../shared/images/spotIcons/AllMyPostsBtn.png"
+import AllMyLikeBtn from "../shared/images/spotIcons/AllMyLikesBtn.png"
+import Swal from "sweetalert2"; 
 
 const CategoryInMap = () => {
   const dispatch = useDispatch();
