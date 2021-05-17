@@ -22,8 +22,10 @@ const DIS_LIKE = "DIS_LIKE";
 // 검색했을때 검색 결과 게시물만 보여주는 액션
 const GET_SEARCH = "GET_SEARCH";
 const SEARCH_POST = "SEARCH_POST";
-// 맵마커 삭세
+// 맵마커 삭제
 const DELETE_MARKER = "DELETE_MARKER";
+// 맵마커 수정
+const EDIT_MARKER = "EDIT_MARKER";
 
 const setPost = createAction(SET_POST, (post_list, paging) => ({
   post_list,
@@ -62,6 +64,11 @@ const search_Post = createAction(SEARCH_POST, (post_list, paging) => ({
 }));
 
 const deleteMarker = createAction(DELETE_MARKER, (id) => ({ id }));
+// 게시글 수정시 마커 이미지도 바로 바꿔주기 위해 만듦
+const editMarker = createAction(EDIT_MARKER, (board_id, marker) => ({
+  board_id,
+  marker,
+}));
 
 const initialState = {
   // list와 map_post_list에 게시물 데이터가 들어간다.
@@ -375,7 +382,12 @@ const editPostAPI = (board_id, _edit) => {
       };
       console.log("!??!@12", post);
       // 수정된 게시물정보를 받고싶다
+
+      let markerImg = post.img_url[0];
+
       dispatch(editPost(board_id, post));
+      dispatch(modalActions.modalEdit(post)); //맵 모달도 바로 수정 반영
+      // dispatch(editMarker(board_id, markerImg)); // 맵에서도 수정 바로 반영 이미지만 바꿔줘도 될거같긴한데.. 흠..
       /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌
     });
   };
@@ -608,6 +620,20 @@ export default handleActions(
           }
         });
       }),
+    //게시글 수정시 마커 이미지도 바로 수정하기 위해서 만듦
+    [EDIT_MARKER]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload.post);
+        console.log(action.payload.board_id);
+        let idx = draft.map_post_list.findIndex(
+          (p) => p.id == action.payload.board_id
+        );
+        // 수정한 게시물을 찾기 위해서 findindex
+        draft.map_post_list[idx] = {
+          ...draft.map_post_list[idx],
+          ...action.payload.markerImg,
+        };
+      }),
   },
   initialState
 );
@@ -626,7 +652,7 @@ const actionCreators = {
   dis_Like,
   editLikeP,
   editLikeD,
-  deleteMarker
+  deleteMarker,
 };
 
 export { actionCreators };

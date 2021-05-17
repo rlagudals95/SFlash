@@ -14,7 +14,7 @@ const Main = (props) => {
   const is_login = useSelector((state) => state.user.is_login);
 
   const markers = useSelector((state) => state.post.map_post_list);
-  console.log("래쉬포드", markers);  // 페이지 렌더링이 되면서 모달창에 들어갈 데이터들을 받아온다.
+  console.log("래쉬포드", markers); // 페이지 렌더링이 되면서 모달창에 들어갈 데이터들을 받아온다.
 
   useEffect(() => {
     dispatch(postActions.getMapPostAPI());
