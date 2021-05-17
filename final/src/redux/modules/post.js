@@ -305,10 +305,16 @@ const editPostAPI = (board_id, _edit) => {
   return function (dispatch, getState) {
     const deleteImg = getState().image2.id;
     const addFile = getState().image2.edit_file;
+    const imageNum = getState().image2.image;
+
     //여기서
     // for (let i = 0; i < addFile.length; i++) {
     //   console.log(addFile[i].imgUrl);
     // }
+    if (imageNum.length === 0) {
+      window.alert("이미지는 최소 한장 이상 업로드 해주세요.");
+      return;
+    }
 
     console.log("삭제된 이미지 아이디들", deleteImg);
     console.log("추가될 이미지파일", addFile);
@@ -454,6 +460,7 @@ const editLikeP = (post_id, post) => {
       img_url: post.img_url,
       creatAt: post.creatAt,
       writerId: post.writerId,
+      spotName: post.spotName,
     };
     console.log("rrr", board);
     dispatch(add_Like(post_id, board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
@@ -483,6 +490,7 @@ const editLikeD = (post_id, post) => {
       title: post.title,
       writerName: post.writerName,
       writerId: post.writerId,
+      spotName: post.spotName,
     };
     console.log("rrr", board);
 
