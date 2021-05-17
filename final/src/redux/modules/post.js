@@ -9,7 +9,6 @@ import { config } from "../../shared/config";
 import { getCookie } from "../../shared/Cookie";
 import { push } from "react-router-redux";
 import { actionCreators as modalActions } from "./mapModal";
-import { add } from "lodash";
 
 const SET_POST = "SET_POST";
 const SET_MAP_POST = "SET_MAP_POST";
@@ -132,23 +131,21 @@ const addPostAPI = (post) => {
       .then((res) => {
         console.log("애드포스트 응답", res);
         console.log(res.data);
+        console.log(res.data.data);
 
-        // 게시물 올리면 바로 마커 뜨게 하기 api : 백엔드와 시험해보기
-        // let one_post = res.data ? res.data.data?
-        let one_post = res.data;
-        // let one_marker_data = {
-        //   id: one_post.boardId,
-        //   category:  one_post.category,
-        //   spotName1: one_post.spotName.split(" ")[0],
-        //   spotName2: one_post.spotName.split(" ").splice(1).join(" ");
-        //   latitude: one_post.latitude,
-        //   longitude: one_post.longitude,
-        //   imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,
-        // };
-        // dispatch(addMapPost(one_marker_data));
-        // history.replace("/"); // 이부분 실행이 잘안되면 imgUrl인식을 못함 변수명 잘지켜주세요! : 민규 - 이건 데이터 변경없이 사이트만 변경해주는걸로 알고 있습니다
-        // window.location.replace("/"); // 민규 - 이 명령어는 데이터 변경이 반영되는 새로고침으로 알고 있어요. 게시물 업로드하고 반영된걸 바로 보려고 넣은 명령어에요.
-
+        // 게시물 올리면 바로 마커 뜨게 하는 리덕스 작업
+        let one_post = res.data.data;
+        let one_marker_data = {
+          id: one_post.boardId,
+          category:  one_post.category,
+          spotName1: one_post.spotName.split(" ")[0],
+          spotName2: one_post.spotName.split(" ").splice(1).join(" "),
+          latitude: one_post.latitude,
+          longitude: one_post.longitude,
+          imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,
+        };
+        dispatch(addMapPost(one_marker_data));
+        
         // 커뮤니티 리덕스에 데이터 추가
         let CommunityPost = {
           id: one_post.boardId,
@@ -158,6 +155,8 @@ const addPostAPI = (post) => {
           like: false,
         };
         dispatch(addPost(CommunityPost));
+      
+        history.replace("/"); 
       })
       .catch((err) => {
         console.log(err);
@@ -316,16 +315,10 @@ const editPostAPI = (board_id, _edit) => {
   return function (dispatch, getState) {
     const deleteImg = getState().image2.id;
     const addFile = getState().image2.edit_file;
-    const imageNum = getState().image2.image;
-
     //여기서
     // for (let i = 0; i < addFile.length; i++) {
     //   console.log(addFile[i].imgUrl);
     // }
-    if (imageNum.length === 0) {
-      window.alert("이미지는 최소 한장 이상 업로드 해주세요.");
-      return;
-    }
 
     console.log("삭제된 이미지 아이디들", deleteImg);
     console.log("추가될 이미지파일", addFile);
@@ -471,7 +464,6 @@ const editLikeP = (post_id, post) => {
       img_url: post.img_url,
       creatAt: post.creatAt,
       writerId: post.writerId,
-      spotName: post.spotName,
     };
     console.log("rrr", board);
     dispatch(add_Like(post_id, board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
@@ -501,7 +493,6 @@ const editLikeD = (post_id, post) => {
       title: post.title,
       writerName: post.writerName,
       writerId: post.writerId,
-      spotName: post.spotName,
     };
     console.log("rrr", board);
 
