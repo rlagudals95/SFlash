@@ -41,7 +41,6 @@ const signupAPI = (nickname, email, pwd, rePwd) => {
         console.log("signupAPI(res)", res);
         Swal.fire({
           text: 'SFlash의 회원이 되었습니다. :)',
-          icon: 'success',
           confirmButtonColor: "#ffb719",
         })
         history.push("/login");
@@ -49,7 +48,7 @@ const signupAPI = (nickname, email, pwd, rePwd) => {
       .catch((err) => {
         Swal.fire({
           text: '회원가입 실패 ㅠㅠ',
-          icon: 'error',
+          confirmButtonColor: "#ffb719",
         })
         console.log("회원가입 실패:", err);
       });
@@ -84,7 +83,7 @@ const loginAPI = (email, pwd) => {
       .catch((err) => {
         Swal.fire({
           text: '로그인 실패 ㅠㅠ',
-          icon: 'error',
+          confirmButtonColor: "#ffb719",
         })
         console.log("로그인 실패", err);
       });

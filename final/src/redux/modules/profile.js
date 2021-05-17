@@ -149,8 +149,6 @@ const editNicknameAPI = (newNickname, userId) => {
         if (res.data.data.nickname === true) {
           Swal.fire({
             text: '닉네임이 변경 되었습니다.',
-            icon: 'success',
-            confirmButtonText: '확인',
             confirmButtonColor:  "#ffb719",
           })
         }
