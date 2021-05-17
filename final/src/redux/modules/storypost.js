@@ -55,19 +55,19 @@ const getUserPostAPI = (userId) => {
         res.data.data.forEach((_post) => {
           let post = {
             id: _post.boardId,
-            title: _post.title,
-            content: _post.content,
-            writerName: _post.writer,
-            profileImg: _post.writerImgUrl,   
+            // title: _post.title,
+            // content: _post.content,
+            // writerName: _post.writer,
+            // profileImg: _post.writerImgUrl,   
             img_url: _post.boardImgResponseDtoList,
-            category: _post.category,
+            // category: _post.category,
             spotName: _post.spotName,
             latitude: _post.latitude,
             longitude: _post.longitude,
             like: _post.liked,
             likeCnt: _post.likeCount,
-            creatAt: _post.modified,
-            comment: _post.comments,
+            // creatAt: _post.modified,
+            // comment: _post.comments,
           };
 
           console.log("포스트 리스트1", post_list);
@@ -101,19 +101,19 @@ const getUserLikeAPI = (userId) => {
         res.data.data.forEach((_post) => {
           let post = {
             id: _post.boardId,
-            title: _post.title,
-            content: _post.content,
-            writerName: _post.writer,
-            profileImg: _post.writerImgUrl,   
+            // title: _post.title,
+            // content: _post.content,
+            // writerName: _post.writer,
+            // profileImg: _post.writerImgUrl,   
             img_url: _post.boardImgResponseDtoList,
-            category: _post.category,
+            // category: _post.category,
             spotName: _post.spotName,
             latitude: _post.latitude,
             longitude: _post.longitude,
             like: _post.liked,
             likeCnt: _post.likeCount,
-            creatAt: _post.modified,
-            comment: _post.comments,
+            // creatAt: _post.modified,
+            // comment: _post.comments,
           };
           console.log("포스트 리스트2", post_list);
           post_list.unshift(post);
