@@ -64,10 +64,10 @@ const search_Post = createAction(SEARCH_POST, (post_list, paging) => ({
 }));
 
 const deleteMarker = createAction(DELETE_MARKER, (id) => ({ id }));
-// 게시글 수정시 마커 이미지도 바로 바꿔주기 위해 만듦
-const editMarker = createAction(EDIT_MARKER, (board_id, marker) => ({
+// 게시글 수정시 마커 이미지(썸네일)도 바로 바꿔주기 위해 만듦
+const editMarker = createAction(EDIT_MARKER, (board_id, markerImg) => ({
   board_id,
-  marker,
+  markerImg,
 }));
 
 const initialState = {
@@ -268,9 +268,9 @@ const getMapPostAPI = () => {
       },
     })
       .then((res) => {
-        console.log("서버 응답값", res);
+        // console.log("서버 응답값", res);
         let map_post_list = [];
-        console.log(res.data.data);
+        console.log("서버 응답값", res.data.data);
         console.log(res.data.data[0].boardImgReponseDtoList);
         res.data.data.forEach((_post) => {
           let post = {
@@ -623,13 +623,14 @@ export default handleActions(
     //게시글 수정시 마커 이미지도 바로 수정하기 위해서 만듦
     [EDIT_MARKER]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.post);
+        console.log(action.payload.markerImg);
         console.log(action.payload.board_id);
         let idx = draft.map_post_list.findIndex(
           (p) => p.id == action.payload.board_id
         );
         // 수정한 게시물을 찾기 위해서 findindex
         draft.map_post_list[idx] = {
+          //[idx].imgUrl[0]? == action.payload.markerImg
           ...draft.map_post_list[idx],
           ...action.payload.markerImg,
         };

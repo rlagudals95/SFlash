@@ -90,7 +90,7 @@ const getModalPostAPI = (boardId) => {
           content: result.content, // 포스트 내용
           writerName: result.writerName,
           img_url: result.boardImgReponseDtoList,
-          // category: result.category,
+          category: result.category,
           profileImg: result.writerImgUrl,
           like: result.liked,
           likeCnt: result.likeCount,
@@ -108,7 +108,7 @@ const getModalPostAPI = (boardId) => {
       })
       .catch((err) => {
         console.log(err);
-        window.alert("모달 가져오기 에러.");
+        window.alert("게시물 상세보기 에러.");
       });
   };
 };

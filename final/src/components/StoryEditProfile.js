@@ -87,12 +87,12 @@ const StoryEditProfile = (props) => {
           Swal.fire({
             text: '이미 등록된 닉네임 입니다!',
             confirmButtonColor: "#ffb719",
-          })
+          });
         } else {
           Swal.fire({
-            text: '사용 가능한 닉네임 입니다!',
+            text: "사용 가능한 닉네임 입니다!",
             confirmButtonColor: "#ffb719",
-        })
+          });
           setNicknameDup(true);
           const nicknameInfo_dupCheck = document.querySelector(
             "ul.checkNickname li:nth-child(2)"

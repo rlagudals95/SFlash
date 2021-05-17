@@ -16,6 +16,7 @@ import { actionCreators as likeActions } from "../redux/modules/like";
 import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import { forEach } from "lodash";
 import { history } from "../redux/configStore";
+import Swal from "sweetalert2";
 
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
@@ -263,7 +264,26 @@ const ModalDetail = (props) => {
                           /
                           <DeleteBtn
                             onClick={(e) => {
-                              // e.prevent..., e.stopPro.. 이것들로 이벤트 버블링을 막는다
+                              // Swal.fire({
+                              //   text: "게시물을 삭제 하시겠습니까?",
+                              //   icon: "question",
+                              //   confirmButtonText: "예",
+                              //   confirmButtonColor: "#ffb719",
+                              //   showCancelButton: true,
+                              //   cancelButtonText: "아니오",
+                              //   cancelButtonColor: "#eee",
+                              // }).then((result) => {
+                              //   if (result.isConfirmed) {
+                              // e.preventDefault();
+                              // e.stopPropagation();
+                              // // 클릭하면 게시물 삭제
+                              // dispatch(postActions.deletePostAPI(modalData.id)); //이거 왜안될까??....
+                              // dispatch(postActions.deleteMarker(modalData.id));
+                              // props.close(); //삭제 바로반영?
+                              //   }
+                              // });
+                              // handleClose();
+
                               e.preventDefault();
                               e.stopPropagation();
                               // 클릭하면 게시물 삭제
@@ -277,7 +297,7 @@ const ModalDetail = (props) => {
                         </ModalEdit>
                       ) : (
                         <ModalCate>
-                          <ModalCateInner>#</ModalCateInner>
+                          <ModalCateInner>#{modalData.category}</ModalCateInner>
                         </ModalCate>
                       )}
                     </InfoBoxInner>
