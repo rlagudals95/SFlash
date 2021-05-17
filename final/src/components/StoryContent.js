@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Swal from 'sweetalert2'
 import { Grid, Text } from "../elements/index";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,8 +19,13 @@ const StoryContent = (props) => {
   // gridMode 가 true 면 그리드 형태로, false면 맵형태로 보여준다.
   const [gridMode, setGridMode] = React.useState(true);
 
+  React.useEffect(() => {
+    console.log(post_list.length);
+  }, [post_list]);
+
+
   // 게시물 갯수가 0 일때 게시물을 등록해달라는 문구가 뜹니다.
-  if (post_list === 0) {
+  if (post_list.length === 0) {
     return (
       <React.Fragment>
         <Warning>

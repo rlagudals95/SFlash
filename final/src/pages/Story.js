@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 import { actionCreators as storypostActions } from "../redux/modules/storypost";
 import { actionCreators as postActions } from "../redux/modules/post";
+import axios from "axios";
+import { config } from "../shared/config";
 
 import StoryUserProfile from "../components/StoryUserProfile";
 import StoryContent from "../components/StoryContent";
@@ -24,74 +26,27 @@ const Story = (props) => {
   const userId = props.match.params.id;
   // console.log("userId:", userId);
 
-
-  // 스토리 페이지는 크게 3가지로 나뉩니다.
-  // (1) 유저 정보: user_info (2) 유저가 올린 게시물: user_post_list (3)유저가 좋아요한 게시물: user_like_list
-  const user_info = useSelector((state) => state.profile.user);
-  const user_post_list = useSelector((state) => state.storypost.user_post_list);
-  const user_like_list = useSelector((state) => state.storypost.user_like_list);
-  // const user_post_list = useSelector((state) => {
-  //   console.log(state);
-  //   window.alert('')
-  //   return state.storypost.user_post_list
-  // });
-  console.log("user_post_list", user_post_list);
-  console.log("user_like_list", user_like_list);
-
-
-
   React.useEffect(() => {
     dispatch(profileActions.getUserInfoAPI(userId));
     dispatch(storypostActions.getUserPostAPI(userId));
     dispatch(storypostActions.getUserLikeAPI(userId));
   }, []);
 
-  React.useEffect(() => {
-    
-  }, []);
-
+  // 스토리 페이지는 크게 3가지로 나뉩니다.
+  // (1) 유저 정보: user_info (2) 유저가 올린 게시물: user_post_list (3)유저가 좋아요한 게시물: user_like_list
+  const user_info = useSelector((state) => state.profile.user);
+  const user_post_list = useSelector((state) => state.storypost.user_post_list);
+  const user_like_list = useSelector((state) => state.storypost.user_like_list);
+ 
+  console.log("user_post_list", user_post_list);
+  console.log("user_like_list", user_like_list);
 
   // Map Marker Icon
   const userPostMarkerImgUrl = "https://i.postimg.cc/zDHr74DL/2x.png";
   const userLikeMarkerImgUrl = "https://i.postimg.cc/3rZTf11s/2x.png";
 
-  
-  // React.useEffect(() => {
-  //   dispatch(profileActions.getUserInfoAPI(userId));
-  //   dispatch(storypostActions.getUserPostAPI(userId));
-  //   dispatch(storypostActions.getUserLikeAPI(userId));
-  // }, []);
-
-
- 
-  const tab_list = [
-    {
-      tabId: 0,
-      content: (
-        <StoryContent
-          post_list={user_post_list}
-          marker_icon={userPostMarkerImgUrl}
-        />
-      ),
-    },
-    {
-      tabId: 1,
-      content: (
-        <StoryContent
-          post_list={user_like_list}
-          marker_icon={userLikeMarkerImgUrl}
-        />
-      ),
-    },
-  ];
-  console.log(tab_list);
-
   const [userPostMode, setUserPostMode] = React.useState(true);
-  const [activeContent, setActiveContent] = React.useState(tab_list[0].content);
 
-  // console.log(tab_list[0].content);
-
-  
   return (
     <React.Fragment>
       <Wrapper>
@@ -101,41 +56,51 @@ const Story = (props) => {
           {/* 유저가 올린 게시물 탭 */}
           {userPostMode ? (
             <>
-            <SelectedTab>
-              <b>{user_info.nickname}</b> 님의 게시물
-              <TabUnderBar />
-            </SelectedTab>
-            <VerticalBar/>
-            <UnselectedTab
-            onClick={() => {
-              setUserPostMode(false);
-              setActiveContent(tab_list[1].content);
-            }}
-          >
-            <b>{user_info.nickname}</b> 님의 좋아요
-          </UnselectedTab>
-          </>
+              <SelectedTab>
+                <b>{user_info.nickname}</b> 님의 게시물
+                <TabUnderBar />
+              </SelectedTab>
+              <VerticalBar />
+              <UnselectedTab
+                onClick={() => {
+                  setUserPostMode(false);
+                }}
+              >
+                <b>{user_info.nickname}</b> 님의 좋아요
+              </UnselectedTab>
+            </>
           ) : (
             <>
-            <UnselectedTab
-              onClick={() => {
-                setUserPostMode(true);
-                setActiveContent(tab_list[0].content);
-              }}
-            >
-              <b>{user_info.nickname}</b> 님의 게시물
-            </UnselectedTab>
-            <VerticalBar/>
-             <SelectedTab>
-             <b>{user_info.nickname}</b> 님의 좋아요
-             <TabUnderBar />
-           </SelectedTab>
-           </>
-          )}    
+              <UnselectedTab
+                onClick={() => {
+                  setUserPostMode(true);
+                }}
+              >
+                <b>{user_info.nickname}</b> 님의 게시물
+              </UnselectedTab>
+              <VerticalBar />
+              <SelectedTab>
+                <b>{user_info.nickname}</b> 님의 좋아요
+                <TabUnderBar />
+              </SelectedTab>
+            </>
+          )}
         </Tabs>
-{user_post_list !== 0 ?
-        <Content>{activeContent}</Content> : null}
-        
+
+        <Content>
+          {userPostMode ? (
+            <StoryContent
+              post_list={user_post_list}
+              marker_icon={userPostMarkerImgUrl}
+            />
+          ) : (
+            <StoryContent
+              post_list={user_like_list}
+              marker_icon={userLikeMarkerImgUrl}
+            />
+          )}
+        </Content>
+
       </Wrapper>
     </React.Fragment>
   );
@@ -208,10 +173,10 @@ const TabUnderBar = styled.div`
   margin: 20px auto -20px auto;
   background-color: ${(props) => props.theme.main_color};
   @media (max-width: 960px) {
-    height: 2pt
+    height: 2pt;
   }
   @media (max-width: 400px) {
-    height: 2pt
+    height: 2pt;
   }
 `;
 
@@ -222,6 +187,5 @@ const VerticalBar = styled.div`
   width: 2px;
   background-color: #eee;
 `;
-
 
 export default Story;

@@ -26,11 +26,14 @@ const deleteStoryPost = createAction(DELETE_STORY_POST, (id) => ({ id }));
 const deleteStoryMarker = createAction(DELETE_STORY_MARKER, (id) => ({ id }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
+
 const initialState = {
     user_post_list: [], //내가 올린 게시물 리스트
     user_like_list: [], //내가 좋아요한 게시물 리스트
     is_loading: false,
     paging: { start: null, size: 15 },
+    like: false,
+    likeCnt: 0,
   };
 
 // 스토리페이지 : 유저가 업로드한 게시물 리스트
@@ -207,6 +210,7 @@ const deleteStoryPostAPI = (board_id) => {
       .then((res) => {
         console.log(res);
         dispatch(deleteStoryPost(board_id));
+        dispatch(deleteStoryMarker(board_id));
       })
       .catch((err) => {
         window.alert("게시물 삭제에 문제가 있어요!");

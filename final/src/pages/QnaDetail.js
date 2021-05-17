@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import { Grid } from "../elements/index";
 
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/configStore";
 import { actionCreators as qnaActions } from "../redux/modules/qna";
 
-import QnaDetailComment from "../components/QnaDetailComment"
+import QnaDetailComment from "../components/QnaDetailComment";
 
 const QnaDetail = (props) => {
   const dispatch = useDispatch();
@@ -16,14 +17,13 @@ const QnaDetail = (props) => {
   const qna = useSelector((state) => state.qna.qna);
   // console.log(qna);
   // console.log(qna.qcomments);
- 
+
   React.useEffect(() => {
     if (!qnaId) {
       return false;
     }
     dispatch(qnaActions.getQnaDetailAPI(qnaId));
   }, []);
-
 
   return (
     <React.Fragment>
@@ -43,8 +43,18 @@ const QnaDetail = (props) => {
             </TextBtn>
             <TextBtn
               onClick={() => {
-                window.confirm("게시물을 삭제하시겠습니까") &&
-                  dispatch(qnaActions.deleteQnaAPI(qnaId));
+                Swal.fire({
+                  text: "게시물을 삭제 하시겠습니까?",
+                  confirmButtonText: "예",
+                  confirmButtonColor: "#ffb719",
+                  showCancelButton: true,
+                  cancelButtonText: "아니오",
+                  cancelButtonColor: "#eee",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    dispatch(qnaActions.deleteQnaAPI(qnaId));
+                  }
+                });
               }}
             >
               삭제
@@ -56,7 +66,7 @@ const QnaDetail = (props) => {
           <Text>{qna.content}</Text>
         </ContentContainer>
 
-       <QnaDetailComment qnaId={qnaId}/>
+        <QnaDetailComment qnaId={qnaId} />
 
         <Grid height="600px" />
       </Container>
@@ -141,13 +151,12 @@ const TextBtn = styled.text`
   margin: 5px;
   border-radius: 4px;
   word-break: keep-all;
-  background-color:#eee;
+  background-color: #eee;
   &:hover {
     text-decoration: underline;
     cursor: pointer;
-    background-color:light grey;
+    background-color: light grey;
   }
 `;
-
 
 export default QnaDetail;

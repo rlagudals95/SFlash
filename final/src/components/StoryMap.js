@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import Swal from 'sweetalert2'
 
 // 리덕스를 이용하게 해주는 함수들, 모듈 파일 가져오기
 import { useDispatch, useSelector } from "react-redux";
@@ -156,7 +157,10 @@ const StoryMap = (props) => {
         // window.alert("검색결과가 존재하지 않습니다.");
         return;
       } else if (status === kakao.maps.services.Status.ERROR) {
-        window.alert("검색 결과 중 오류가 발생했습니다.");
+        Swal.fire({
+          text: '검색 결과 중 오류가 발생했습니다.',
+          confirmButtonColor: "#ffb719",
+        })
         return;
       }
     });

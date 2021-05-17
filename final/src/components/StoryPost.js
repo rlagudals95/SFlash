@@ -127,7 +127,7 @@ const StoryPost = (props) => {
           boardId={props.id} //여기서 모달에 모든 정보를 넘겨주는 구나!
         />
       ) : null}
-    </React.Fragment> //여기서 댓글 정보랑 모든걸 넘겨주려나?
+    </React.Fragment> 
   );
 };
 

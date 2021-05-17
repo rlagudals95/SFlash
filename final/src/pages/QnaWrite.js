@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Swal from 'sweetalert2'
 import { Grid } from "../elements/index";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as qnaActions } from "../redux/modules/qna";
@@ -65,7 +66,10 @@ const QnaWrite = (props) => {
 
   const onAddQna = () => {
     if (!title || !content) {
-      window.alert("제목과 내용을 모두 입력해주세요 :(");
+      Swal.fire({
+        text: '제목과 내용을 모두 입력해주세요 :(',
+        confirmButtonColor: "#ffb719",
+      })
     }
     let qna = {
       title: title,
@@ -77,7 +81,10 @@ const QnaWrite = (props) => {
 
   const onEditQna = () => {
     if (!title || !content) {
-      window.alert("제목과 내용을 모두 입력해주세요 :(");
+      Swal.fire({
+        text: '제목과 내용을 모두 입력해주세요 :(',
+        confirmButtonColor: "#ffb719",
+      })
     }
     let qna = {
       title: title,
