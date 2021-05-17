@@ -24,7 +24,7 @@ const PostModal = (props) => {
 
   // React.useEffect(() => {}, []);
   React.useEffect(() => {
-    // dispatch(ModalActions.getModalPostAPI(boardId)); 
+    // dispatch(ModalActions.getModalPostAPI(boardId));
     // console.log("시작");
     // dispatch(ModalActions.getModalPostAPI());
     // console.log("!!!!!!!!!!!", modalData); //잘 찍힌다
@@ -44,7 +44,6 @@ const PostModal = (props) => {
 
   const nickname = localStorage.getItem("nickname");
   const userId = localStorage.getItem("userId");
-  
 
   // console.log("닉네임", nickname);
   // const is_like = props.like 라이크가 있냐 확인?
@@ -163,7 +162,6 @@ const PostModal = (props) => {
             <React.Fragment>
               <Component onClick={props.close} />
               <ModalComponent>
-
                 {/* 헤더 부분 */}
                 <ModalHeader>
                   <ModalLeftHeader>
@@ -252,11 +250,7 @@ const PostModal = (props) => {
                       {modalData.writerId === parseInt(userId) ? (
                         <ModalEdit>
                           <React.Fragment onClick={props.close}>
-                            <EditBtn
-                              onClick={openEditModal}
-                            >
-                              수정
-                            </EditBtn>
+                            <EditBtn onClick={openEditModal}>수정</EditBtn>
                           </React.Fragment>
                           /
                           <DeleteBtn

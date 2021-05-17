@@ -1199,7 +1199,7 @@ const SearchBox = styled.div`
   top: 40px;
   left: 200px;
   transform: translate(-10%, -90%);
-  z-index: 1000;
+  z-index: 998;
   @media (min-width: 1400px) {
     width: 600px;
     top: 100px;

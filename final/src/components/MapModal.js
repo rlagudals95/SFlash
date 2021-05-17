@@ -39,7 +39,7 @@ const ModalDetail = (props) => {
   if (commentData) {
     console.log("코멘트 데이타", commentData);
   }
-
+  //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
 
   console.log("모달 데이타", modalData);
@@ -252,7 +252,13 @@ const ModalDetail = (props) => {
                       {modalData.writerId == user_id ? (
                         <ModalEdit>
                           <React.Fragment onClick={props.close}>
-                            <EditBtn onClick={openEditModal}>수정</EditBtn>
+                            <EditBtn
+                              onClick={() => {
+                                setEditModal(true);
+                              }}
+                            >
+                              수정
+                            </EditBtn>
                           </React.Fragment>
                           /
                           <DeleteBtn
