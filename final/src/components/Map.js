@@ -32,9 +32,7 @@ const Maps = (props) => {
   // 위도, 경도, 마커, 주소
   const [latitude, setLatitude] = useState(); // 클릭한 위치 위도 설정
   const [longitude, setLongitude] = useState(); // 클릭한 위치 경도 설정
-  const [spot2, setSpot2] = useState(""); // 도, 광역시를 제외한 나머지 spotName
   const [spotName, setSpotName] = useState(""); // 클릭한 위치 spotName
-
 
   const [_map, setMap] = useState(); // useEffect 외부에서 map을 쓰기 위한 것.
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
@@ -197,25 +195,10 @@ const Maps = (props) => {
 
         searchAddrFromCoords(mouseEvent.latLng, function (result, status) {
           if (status === kakao.maps.services.Status.OK) {
-            // //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
-            // var addressName = result[0].address_name;
-            var region1 = result[0].region_1depth_name;   // 도, 광역시
-            var region2 = result[0].region_2depth_name;   // 시군구
-            var region3 = result[0].region_3depth_name;   // 읍면 또는 동
-            var region4 = result[0].region_4depth_name;   // 읍면 단위가 있을 경우 동리
-            var spot1 = region1;
-            var spot2 = region2 + " " + region3 + " " + region4;
-            let spotName = []
-            let spotDict = {
-              spot1: spot1,
-              spot2: spot2,
-            }
-            spotName.push(spotDict)
-            console.log("스팟1: " + spot1); 
-            console.log("스팟2: " + spot2);
-            console.log("스팟네임: " + spotName);
-            console.log("스팟네임1: " + spotName[0].spot1);
-            console.log("스팟네임2: " + spotName[0].spot2);
+            //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
+            var spotName = result[0].address_name;
+            console.log(result[0]);
+            console.log(spotName);
             setSpotName(spotName);
           }
         });
@@ -371,7 +354,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${mylike.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${mylike.spotName}</div>` +
+          `<div class="spotname">${mylike.spotName1}</div>` +
+          `<div class="spotname">${mylike.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -429,7 +413,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${cafe.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${cafe.spotName}</div>` +
+          `<div class="spotname">${cafe.spotName1}</div>` +
+          `<div class="spotname">${cafe.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -485,7 +470,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${night.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${night.spotName}</div>` +
+          `<div class="spotname">${night.spotName1}</div>` +
+          `<div class="spotname">${night.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -540,7 +526,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${ocean.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${ocean.spotName}</div>` +
+          `<div class="spotname">${ocean.spotName1}</div>` +
+          `<div class="spotname">${ocean.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -598,7 +585,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${mountain.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${mountain.spotName}</div>` +
+          `<div class="spotname">${mountain.spotName1}</div>` +
+          `<div class="spotname">${mountain.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -654,7 +642,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${flower.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${flower.spotName}</div>` +
+          `<div class="spotname">${flower.spotName1}</div>` +
+          `<div class="spotname">${flower.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -710,7 +699,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${alone.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${alone.spotName}</div>` +
+          `<div class="spotname">${alone.spotName1}</div>` +
+          `<div class="spotname">${alone.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -766,7 +756,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${couple.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${couple.spotName}</div>` +
+          `<div class="spotname">${couple.spotName1}</div>` +
+          `<div class="spotname">${couple.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -821,7 +812,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${friend.imgUrlOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${friend.spotName}</div>` +
+          `<div class="spotname">${friend.spotName1}</div>` +
+          `<div class="spotname">${friend.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -876,7 +868,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${pet.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${pet.spotName}</div>` +
+          `<div class="spotname">${pet.spotName1}</div>` +
+          `<div class="spotname">${pet.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -932,7 +925,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${city.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${city.spotName}</div>` +
+          `<div class="spotname">${city.spotName1}</div>` +
+          `<div class="spotname">${city.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -987,7 +981,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${park.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${park.spotName}</div>` +
+          `<div class="spotname">${park.spotName1}</div>` +
+          `<div class="spotname">${park.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -1046,7 +1041,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${exhibition.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${exhibition.spotName}</div>` +
+          `<div class="spotname">${exhibition.spotName1}</div>` +
+          `<div class="spotname">${exhibition.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -1176,10 +1172,10 @@ const Maps = (props) => {
       </MapBox>
       {is_uploadModal ? (
         <UpLoadModal
+          close={closeUpLoadModal}
           latitude={latitude}
           longitude={longitude}
           spotName={spotName}
-          close={closeUpLoadModal}
         />
       ) : null}
     </React.Fragment>
