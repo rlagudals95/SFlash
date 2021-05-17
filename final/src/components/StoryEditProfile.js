@@ -86,11 +86,9 @@ const StoryEditProfile = (props) => {
         if (res.data === false) {
           Swal.fire({
             text: '이미 등록된 닉네임 입니다!',
-            // icon: 'error',
             confirmButtonColor: "#ffb719",
           })
         } else {
-
           Swal.fire({
             text: '사용 가능한 닉네임 입니다!',
             confirmButtonColor: "#ffb719",
@@ -108,7 +106,10 @@ const StoryEditProfile = (props) => {
   // 저장하기 버튼을 누르면, 닉네임이 변경되고 다시 프로필 편집 창으로 돌아간다.
   const onEditNickname = () => {
     if (nicknameDup === false) {
-      alert("닉네임 중복확인을 해주세요!");
+      Swal.fire({
+        text: '닉네임 중복확인을 해주세요!',
+        confirmButtonColor: "#ffb719",
+      })
       return false;
     }
     console.log(newNickname);
@@ -152,7 +153,10 @@ const StoryEditProfile = (props) => {
 
   // 이미지 에러
   const ImageError = () => {
-    window.alert("잘못된 이미지 주소 입니다. :(");
+    Swal.fire({
+      text: '잘못된 이미지 주소 입니다 :(',
+      confirmButtonColor: "#ffb719",
+    })
     dispatch(
       profileActions.setPreview(
         "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
@@ -239,7 +243,6 @@ const StoryEditProfile = (props) => {
               onClick={() => {
                 Swal.fire({
                   text: "변경된 내용을 저장 하시겠습니까?",
-                  icon: "question",
                   confirmButtonText: "예",
                   confirmButtonColor: "#ffb719",
                   showCancelButton: true,
@@ -247,10 +250,6 @@ const StoryEditProfile = (props) => {
                   cancelButtonColor: "#d33",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    Swal.fire({
-                      text: "프로필이 수정되었습니다.",
-                      icon: "success",
-                    });
                     onEditProfile();
                     props.closeModal();
                   }
@@ -285,8 +284,6 @@ const StoryEditProfile = (props) => {
                   if (!nicknameRegCheck(newNickname)) {
                     Swal.fire({
                       text: "아이디는 형식을 확인해 주세요.",
-                      icon: "warning",
-                      confirmButtonText: "확인",
                       confirmButtonColor: "#ffb719",
                     });
                     return false;
