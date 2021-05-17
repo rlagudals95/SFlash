@@ -62,7 +62,7 @@ const UploadModal = (props) => {
   const preview = useSelector((state) => state.image2.preview);
   // 수정 페이지 이미지
   const onlyImg = useSelector((state) => state.image2.image);
-
+  console.log("수정페이지 이미지는?", onlyImg);
   // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
   const editFile = useSelector((state) => state.image2.edit_file);
 
@@ -281,6 +281,10 @@ const UploadModal = (props) => {
                               );
                               //미리 등록해둔 이미지가 있는 경우엔 imgUrlId값이 있어 그것으로 삭제가능
                               if (onlyImg[idx].imgUrlId) {
+                                console.log(
+                                  "삭제한 이미지 id",
+                                  onlyImg[idx].imgUrlId
+                                );
                                 dispatch(
                                   imageActions.deleteImage(
                                     onlyImg[idx].imgUrlId

@@ -12,10 +12,9 @@ import SendIcon from "@material-ui/icons/Send";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
-import { actionCreators as ModalActions } from "../redux/modules/mapModal";
+import { actionCreators as modalActions } from "../redux/modules/modal";
 import { actionCreators as likeActions } from "../redux/modules/like";
 import { actionCreators as PostActions } from "../redux/modules/post";
-import MapModal from "./MapModal";
 
 import "../Css/Post.css";
 
@@ -32,7 +31,7 @@ const Post2 = (props) => {
   }, []);
 
   const dispatch = useDispatch();
-  // console.log("포스트 하나의 프롭스", props);
+  // console.log(props);
 
   // 이미지들 반복문으로 뽑아오기
   let image_list = [];
@@ -56,10 +55,8 @@ const Post2 = (props) => {
   const [is_modal, setDetailModal] = useState();
 
   const openModal = () => {
-    dispatch(ModalActions.getModalPostAPI(props.id));
     setDetailModal(true);
   };
-
   const closeDetailModal = () => {
     setDetailModal(false);
   };
@@ -125,9 +122,9 @@ const Post2 = (props) => {
         </PostBox>
       </Card>
       {is_modal ? (
-        <MapModal
+        <Modal
           close={closeDetailModal}
-          // {...props} //여기서 모달에 모든 정보를 넘겨주는 구나!
+          {...props} //여기서 모달에 모든 정보를 넘겨주는 구나!
         />
       ) : null}
     </React.Fragment> //여기서 댓글 정보랑 모든걸 넘겨주려나?
