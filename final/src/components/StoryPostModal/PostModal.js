@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-
 import styled from "styled-components";
+import Swal from 'sweetalert2'
+
 import CloseIcon from "@material-ui/icons/Close";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
@@ -262,9 +263,19 @@ const ModalDetail = (props) => {
                               e.preventDefault();
                               e.stopPropagation();
                               // 클릭하면 게시물 삭제
-                              dispatch(storyPostActions.deleteStoryPostAPI(modalData.id)); //이거 왜안될까??....
-                              dispatch(storyPostActions.deleteStoryMarker(modalData.id));
-                              props.close(); //삭제 바로반영?
+                              Swal.fire({
+                                text: "게시물을 삭제 하시겠습니까?",
+                                confirmButtonText: "예",
+                                confirmButtonColor: "#ffb719",
+                                showCancelButton: true,
+                                cancelButtonText: "아니오",
+                                cancelButtonColor: "#eee",
+                              }).then((result) => {
+                                if (result.isConfirmed) {
+                                  dispatch(storyPostActions.deleteStoryPostAPI(modalData.id)); //이거 왜안될까??....
+                                  props.close(); //삭제 바로반영?
+                                }
+                              });
                             }}
                           >
                             삭제
@@ -734,13 +745,10 @@ const PostTime = styled.div`
 `;
 const ModalCmtInputBox = styled.div`
   align-items: center;
-  margin-bottom: -4.5vh;
   width: 100%;
-  height: 8vw;
-  padding: 0px;
+
+  padding: 10px;
   display: flex;
-  justify-content: space-between;
-  /* align-items: center; */
   box-sizing: border-box;
   border: 2px solid #efefef;
   background-color: white;
@@ -888,7 +896,7 @@ const UploadBtn = styled.div`
   opacity: 1;
   font-weight: 600;
   width: 30px;
-  margin-right: 1vw;
+  margin-right: 5px;
   /* margin: 10px 5px 0px 0px; */
   /* padding-bottom: 5px; */
   /* width: 30px;

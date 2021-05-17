@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Swal from 'sweetalert2'
+
 import { Grid } from "../elements/index";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,11 +14,8 @@ import profileDefault from "../static/profileDefault.svg";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Modal from "react-modal";
-
 import StoryEditProfile from "../components/StoryEditProfile";
 import StoryEditPwd from "../components/StoryEditPwd";
-
-import Swal from 'sweetalert2'
 
 const StoryUserProfile = (props) => {
   const dispatch = useDispatch();
@@ -34,7 +33,6 @@ const StoryUserProfile = (props) => {
   const ImageError = () => {
     Swal.fire({
       text: '잘못된 이미지 주소입니다 :(',
-      icon: 'error',
       confirmButtonColor: "#ffb719",
     })
     // dispatch(
@@ -123,7 +121,6 @@ const StoryUserProfile = (props) => {
                 onClick={() => {
                   Swal.fire({
                     text: '로그아웃 하시겠습니까?',
-                    icon: 'question',
                     confirmButtonText: '예',
                     confirmButtonColor: '#ffb719',
                     showCancelButton: true,

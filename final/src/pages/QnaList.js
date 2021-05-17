@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Swal from 'sweetalert2'
 
 import { history } from "../redux/configStore";
 import { Grid } from "../elements/index";
@@ -44,7 +45,10 @@ const QnaList = (props) => {
     if (page < 5) {
       setPage(page + 1);
     } else {
-      window.alert("다음 페이지가 없습니다!");
+      Swal.fire({
+        text: '다음 페이지가 없습니다!',
+        confirmButtonColor: "#ffb719",
+      })
     }
   };
   // 왼쪽 화살표 함수
@@ -52,7 +56,10 @@ const QnaList = (props) => {
     if (page > 1) {
       setPage(page - 1);
     } else {
-      window.alert("이전 페이지가 없습니다.");
+      Swal.fire({
+        text: '이전 페이지가 없습니다.',
+        confirmButtonColor: "#ffb719",
+      })
     }
   };
 
@@ -117,7 +124,10 @@ const QnaList = (props) => {
                   width="70%"
                   onClick={() => {
                     if (q.writer !== me && role !== "ADMIN") {
-                      alert("해당 게시물에 대한 권힌이 없습니다.");
+                      Swal.fire({
+                        text: '해당 게시물에 대한 권힌이 없습니다.',
+                        confirmButtonColor: "#ffb719",
+                      })
                       return;
                     } else {
                       history.push(`/qnadetail/${q.id}`);

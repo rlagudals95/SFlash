@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Swal from 'sweetalert2'
 
 import { 
   Container,
@@ -50,9 +51,15 @@ const FindEmailPwd = () => {
         const is_email = res.data.email;
 
         if (is_email) {
-          alert("등록된 이메일은 " + is_email + " 입니다");
+          Swal.fire({
+            text: '등록된 이메일은 ' + is_email +  ' 입니다',
+            confirmButtonColor: "#ffb719",
+          })
         } else {
-          alert("회원정보가 옳바르지 않습니다 :(");
+          Swal.fire({
+            text: '회원정보가 옳바르지 않습니다 :(',
+            confirmButtonColor: "#ffb719",
+          })
         }
       });
   };
@@ -75,10 +82,16 @@ const FindEmailPwd = () => {
       .then((res) => {
         console.log("인증번호 전송", res.data);
         if(res.data === true){
-            alert("입력하신 이메일로 인증번호가 전송되었습니다.");
+          Swal.fire({
+            text: '입력하신 이메일로 인증번호가 전송되었습니다.',
+            confirmButtonColor: "#ffb719",
+          })
             setActiveAuthInput(true);
         }else{
-            alert("회원정보가 옳바르지 않습니다. :(");
+          Swal.fire({
+            text: '회원정보가 옳바르지 않습니다 :(',
+            confirmButtonColor: "#ffb719",
+          })
         }
       });
   };
@@ -105,7 +118,10 @@ const FindEmailPwd = () => {
         if(res.data === true){
             history.push('editpwd')
         }else{
-            alert('인증번호가 일치하지 않습니다! :(');
+          Swal.fire({
+            text: '인증번호가 일치하지 않습니다 :(',
+            confirmButtonColor: "#ffb719",
+          })
         }
       });
   };

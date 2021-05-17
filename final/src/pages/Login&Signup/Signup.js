@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Swal from 'sweetalert2'
 
 import axios from "axios";
 import { config } from "../../shared/config";
 
 import { Grid } from "../../elements/index";
 import { 
-  Container,
-  Title, 
+  Container, 
   InputStyle, 
   SolidBtn, 
   BorderBtn,
@@ -170,10 +170,16 @@ const Signup = (props) => {
       .then((res) => {
         console.log("넥네임중복확인!", res.data);
         if (res.data === false) {
-          alert("이미 등록된 닉네임 입니다!");
+          Swal.fire({
+            text: '이미 등록된 닉네임 입니다!',
+            confirmButtonColor: "#ffb719",
+          })
           setNicknameDup(false);
         } else {
-          alert("사용 가능한 닉네임 입니다 :)");
+          Swal.fire({
+            text: '사용 가능한 닉네임 입니다 :)',
+            confirmButtonColor: "#ffb719",
+          })
           setNicknameDup(true);
           const nicknameInfo_dupCheck = document.querySelector(
             "ul.checkNickname li:nth-child(2)"
@@ -202,10 +208,16 @@ const Signup = (props) => {
       .then((res) => {
         console.log("인증번호 전송", res.data);
         if (res.data === false) {
-          alert("이미 등록된 이메일 입니다!");
+          Swal.fire({
+            text: '이미 등록된 이메일 입니다!',
+            confirmButtonColor: "#ffb719",
+          })
           setNicknameDup(false);
         }else{
-          alert("입력한 이메일로 인증번호가 발송되었습니다.");
+          Swal.fire({
+            text: '입력한 이메일로 인증번호가 발송되었습니다.',
+            confirmButtonColor: "#ffb719",
+          })
           setActiveAuthInput(true);
         }
       })
@@ -234,7 +246,10 @@ const Signup = (props) => {
         console.log("인증번호 확인", res.data);
 
         if (res.data === true) {
-          alert("인증이 완료되었습니다.");
+          Swal.fire({
+            text: '인증이 완료되었습니다.',
+            confirmButtonColor: "#ffb719",
+          })
           setEmailAuth(true);
           const emailInfo_auth = document.querySelector(
             "ul.checkEmail li:nth-child(2)"
@@ -242,7 +257,10 @@ const Signup = (props) => {
           emailInfo_auth.classList.add("ok");
           emailInfo_auth.classList.remove("error");
         } else {
-          alert("인증번호가 틀렸습니다.");
+          Swal.fire({
+            text: '인증번호를 다시 확인해주세요.',
+            confirmButtonColor: "#ffb719",
+          })
         }
       });
   };
@@ -250,32 +268,51 @@ const Signup = (props) => {
   // 회원가입 버튼
   const onSignup = () => {
     if (nickname === "") {
+      Swal.fire({
+        text: '닉네임을 입력해주세요!',
+        confirmButtonColor: "#ffb719",
+      })
       alert("닉네임을 입력해주세요!");
       return false;
     }
 
     if (!nicknameRegCheck(nickname)) {
-      alert("닉네임 형식을 지켜주세요!");
+      Swal.fire({
+        text: '닉네임 형식을 지켜주세요!',
+        confirmButtonColor: "#ffb719",
+      })
       return false;
     }
 
     if (nicknameDup === false) {
-      alert("닉네임 중복확인을 해주세요!");
+      Swal.fire({
+        text: '닉네임 중복확인을 해주세요!',
+        confirmButtonColor: "#ffb719",
+      })
       return false;
     }
 
     if (email === "") {
-      alert("이메일을 입력해주세요!");
+      Swal.fire({
+        text: '이메일을 입력해주세요!',
+        confirmButtonColor: "#ffb719",
+      })
       return false;
     }
 
     if (emailAuth === false) {
-      alert("이메일 인증을 해주세요!");
+      Swal.fire({
+        text: '이메일 인증이 필요합니다.',
+        confirmButtonColor: "#ffb719",
+      })
       return false;
     }
 
     if (!emailRegCheck(email)) {
-      alert("이메일 형식을 지켜주세요!");
+      Swal.fire({
+        text: '이메일 형식을 지켜주세요.',
+        confirmButtonColor: "#ffb719",
+      })
       return false;
     }
 
@@ -283,15 +320,20 @@ const Signup = (props) => {
       !pwdRegCheck(pwd) ||
       pwdRegContinuousCheck(pwd)
     ) {
-      alert("비밀번호 형식을 확인을 해주세요!");
+      Swal.fire({
+        text: '비밀번호 형식을 확인을 해주세요!',
+        confirmButtonColor: "#ffb719",
+      })
       return false;
     }
 
     if (
       pwd !== rePwd
     ) {
-      alert("비밀번호가 일치하지 않습니다!");
-      return false;
+      Swal.fire({
+        text: '비밀번호가 일치하지 않습니다!',
+        confirmButtonColor: "#ffb719",
+      })
     }
     
     console.log(nickname, email, pwd, rePwd);
@@ -301,7 +343,10 @@ const Signup = (props) => {
   return (
     <React.Fragment>
       <Container>
-        <Title>Signup</Title>
+      <Grid height="10vh"/>
+      <SflashLogo />
+        <Title>회원가입하기</Title>
+        {/* <Title>Signup</Title> */}
 
         <Grid is_flex>
           <InputStyle
@@ -318,9 +363,10 @@ const Signup = (props) => {
           <CheckBtn
             onClick={() => {
               if (!nicknameRegCheck(nickname)) {
-                alert(
-                  "아이디는 6자 이상의 영문 혹은 영문과 숫자 조합만 가능합니다."
-                );
+                Swal.fire({
+                  text: '아이디 형식을 확인해주세요 :(',
+                  confirmButtonColor: "#ffb719",
+                })
                 return false;
               }
               nicknameDupCheckAPI(nickname);
@@ -349,7 +395,10 @@ const Signup = (props) => {
           <CheckBtn
             onClick={(e) => {
               if (!emailRegCheck(email)) {
-                alert("이메일 형식을 지켜주세요!");
+                Swal.fire({
+                  text: '이메일 형식을 지켜주세요 :(',
+                  confirmButtonColor: "#ffb719",
+                })
                 return false;
               }else{onEmailAuth(email)}
             }}
@@ -426,6 +475,14 @@ const Signup = (props) => {
     </React.Fragment>
   );
 };
+const Title = styled.div`
+margin-top: 35px;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  color: #343a40;
+`;
 
 const Auth = styled.div`
   display:flex;
@@ -433,5 +490,13 @@ const Auth = styled.div`
   align-items: center;
   ${(props) => (props.active ? "" : "display:none")}
 `;
+const SflashLogo = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A0.png?alt=media&token=92594323-944a-40d7-8085-b323c23246fe");
+  width: 150px;
+  height: 150px;
+  margin: auto;
+  background-size: cover;
+`;
+
 
 export default Signup;
