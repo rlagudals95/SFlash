@@ -205,6 +205,7 @@ export default handleActions(
     },
     [DELETE_IMAGE]: (state, action) =>
       produce(state, (draft) => {
+        console.log("삭제한 이미지!!!!!!!!", action.payload.imgUrlId);
         draft.image = draft.image.filter((i, idx) => {
           if (i.imgUrlId !== action.payload.imgUrlId) {
             return [...draft.image, i];
