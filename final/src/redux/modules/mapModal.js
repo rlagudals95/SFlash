@@ -243,7 +243,7 @@ const editLikeP = (post) => {
       title: post.title,
       content: post.content,
       writerName: post.writerName,
-      // category: post.category,
+      category: post.category,
       profileImg: post.profileImg,
       like: true,
       likeCnt: post.likeCnt + 1,
@@ -251,6 +251,7 @@ const editLikeP = (post) => {
       img_url: post.img_url,
       creatAt: post.creatAt,
       writerId: post.writerId,
+      spotName: post.spotName,
     };
     console.log("rrr", board);
     dispatch(modalAddLike(board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
@@ -268,7 +269,7 @@ const editLikeD = (post) => {
     console.log(_like, _likeCnt);
 
     let board = {
-      // category: post.category,
+      category: post.category,
       comment: post.comment,
       content: post.content,
       creatAt: post.creatAt,
@@ -280,6 +281,7 @@ const editLikeD = (post) => {
       title: post.title,
       writerName: post.writerName,
       writerId: post.writerId,
+      spotName: post.spotName,
     };
     console.log("rrr", board);
 

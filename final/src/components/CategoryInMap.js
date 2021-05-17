@@ -5,27 +5,27 @@ import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as categoryActionsInMap } from "../redux/modules/category_in_map";
 import * as BiIcons from "react-icons/bi";
-import AllBtn from "../shared/images/spotIcons/AllSpotsBtn.png"
-import AllMyPostBtn from "../shared/images/spotIcons/AllMyPostsBtn.png"
-import AllMyLikeBtn from "../shared/images/spotIcons/AllMyLikesBtn.png"
+import AllBtn from "../shared/images/spotIcons/AllSpotsBtn.png";
+import AllMyPostBtn from "../shared/images/spotIcons/AllMyPostsBtn.png";
+import AllMyLikeBtn from "../shared/images/spotIcons/AllMyLikesBtn.png";
 // import { actionCreators as PostActions } from "../redux/modules/post";
 
 const CategoryInMap = () => {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
   const nickname = localStorage.getItem("nickname");
-  
+
   const is_category_in_map = useSelector((state) => {
-    return state.category_in_map.is_category_in_map
+    return state.category_in_map.is_category_in_map;
   });
   const map_post_list = useSelector((state) => {
-    return state.post.map_post_list
+    return state.post.map_post_list;
   });
 
-  const is_all = is_category_in_map.length === 12   ? true : false;        // 모든 게시물 판단 기준
-  console.log("is_category_in_map의 길이: " + is_category_in_map.length)
-  const is_mine = map_post_list.writerName === nickname ? true : false;  // 내게시물 판단 기준
-  const is_mylike = map_post_list.like === true ? true : false;          // 내가 좋아요 한 게시물 판단 기준.
+  const is_all = is_category_in_map.length === 12 ? true : false; // 모든 게시물 판단 기준
+  console.log("is_category_in_map의 길이: " + is_category_in_map.length);
+  const is_mine = map_post_list.writerName === nickname ? true : false; // 내게시물 판단 기준
+  const is_mylike = map_post_list.like === true ? true : false; // 내가 좋아요 한 게시물 판단 기준.
   console.log(is_all);
 
   // console.log(is_category);
@@ -60,10 +60,10 @@ const CategoryInMap = () => {
         {/* 전체보기 버튼 */}
         <CategoryInfo>
           <CateGoryTitle>
-            <CategoryIcon>
+            {/* <CategoryIcon>
               {" "}
               <BiIcons.BiBookBookmark size="25px" />
-            </CategoryIcon>
+            </CategoryIcon> */}
             카테고리
           </CateGoryTitle>
         </CategoryInfo>
@@ -400,13 +400,13 @@ const CategoryInMap = () => {
             #반려동물
           </Btn>
         )}
-        <MiddleBox/>
-
+        <MiddleBox />
         {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
         <SpotSelectBox>
           {/* 전체스팟 찾기 */}
-          {is_all ? (  // is_category_in_map 리스트 안에 모든 카테고리가 다 들어 있다면
-            <AllSpotsSelected src={AllBtn}
+          {is_all ? ( // is_category_in_map 리스트 안에 모든 카테고리가 다 들어 있다면
+            <AllSpotsSelected
+              src={AllBtn}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -414,8 +414,9 @@ const CategoryInMap = () => {
                 setShowLike(false);
               }}
             />
-          ) :  (
-            <AllSpots src={AllBtn}
+          ) : (
+            <AllSpots
+              src={AllBtn}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -433,7 +434,9 @@ const CategoryInMap = () => {
                 setPark(true);
                 setShowMine(false);
                 setShowLike(false);
-                dispatch(categoryActionsInMap.getAllCategoryInMap(is_category_in_map));
+                dispatch(
+                  categoryActionsInMap.getAllCategoryInMap(is_category_in_map)
+                );
                 dispatch(categoryActionsInMap.resetMyPostInMap());
                 dispatch(categoryActionsInMap.resetMyLikeInMap());
               }}
@@ -441,14 +444,17 @@ const CategoryInMap = () => {
           )}
           {/* 내스팟 찾기 */}
           {showMine ? (
-            <MyPostSpotsSelected src={AllMyPostBtn}
+            <MyPostSpotsSelected
+              src={AllMyPostBtn}
               onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setShowLike(false);
+                e.preventDefault();
+                e.stopPropagation();
+                setShowLike(false);
               }}
-            /> ) : (
-            <MyPostSpots src={AllMyPostBtn}
+            />
+          ) : (
+            <MyPostSpots
+              src={AllMyPostBtn}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -468,17 +474,21 @@ const CategoryInMap = () => {
                 setShowLike(false);
                 dispatch(categoryActionsInMap.getMyPostInMap());
               }}
-            /> )}
+            />
+          )}
           {/* 내좋아요스팟 찾기 */}
           {showLike ? (
-            <MyLikeSpotsSelected src={AllMyLikeBtn}
+            <MyLikeSpotsSelected
+              src={AllMyLikeBtn}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 setShowMine(false);
               }}
-            />) : 
-            (<MyLikeSpots src={AllMyLikeBtn}
+            />
+          ) : (
+            <MyLikeSpots
+              src={AllMyLikeBtn}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -498,8 +508,9 @@ const CategoryInMap = () => {
                 setShowLike(true);
                 dispatch(categoryActionsInMap.getMyLikeInMap());
               }}
-            />)} 
-        </SpotSelectBox>      
+            />
+          )}
+        </SpotSelectBox>
       </CategoryBox>
     </React.Fragment>
   );
@@ -517,8 +528,9 @@ const CategoryBox = styled.div`
   top: 17vh;
   background-color: white;
   padding: 20px;
-  border-radius: 7px;
+  border-radius: 15px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+  /* background-color: #f2f3f7; */
   @media (max-width: 1400px) {
     z-index: 300;
     margin: auto;
@@ -545,7 +557,9 @@ const CateGoryTitle = styled.div`
   border-bottom: 1px solid lightgray;
   width: 100%;
   font-size: 17px;
+  font-weight: bold;
   padding-bottom: 7px;
+  opacity: 0.6;
 `;
 
 const CategoryIcon = styled.div`
@@ -566,7 +580,7 @@ const Btn = styled.button`
 
 const SelectedBtn = styled.button`
   /* 선택 됐을때 버튼 */
-  margin: 2px;
+  margin: 3px;
   padding: 5px 9px;
   /* background-color: #3897f0; */
   background-color: white;
@@ -599,7 +613,7 @@ const AllSpotsSelected = styled.img`
   cursor: pointer;
   margin: 6px;
   background-size: cover;
-  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); 
+  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
 `;
 
 const AllSpots = styled.img`
@@ -612,9 +626,8 @@ const AllSpots = styled.img`
   cursor: pointer;
   margin: 6px;
   background-size: cover;
-  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); 
+  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
 `;
-
 
 const MyPostSpotsSelected = styled.img`
   width: 72px;
@@ -626,7 +639,7 @@ const MyPostSpotsSelected = styled.img`
   cursor: pointer;
   margin: 6px;
   background-size: cover;
-  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); 
+  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
 `;
 
 const MyPostSpots = styled.img`
@@ -639,7 +652,7 @@ const MyPostSpots = styled.img`
   cursor: pointer;
   margin: 6px;
   background-size: cover;
-  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); 
+  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
 `;
 
 const MyLikeSpotsSelected = styled.img`
@@ -667,5 +680,3 @@ const MyLikeSpots = styled.img`
   background-size: cover;
   box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
 `;
-
-
