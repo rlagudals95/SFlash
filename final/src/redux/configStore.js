@@ -20,8 +20,7 @@ import QnaComment from "./modules/qnacomment";
 import Storypost from "./modules/storypost";
 import Comment from "./modules/comment";
 import MapModal from "./modules/mapModal";
-import PostModal from "./modules/postmodal";
-import PostImage from "./modules/postimage";
+import StoryPostModal from "./modules/storypostmodal";
 
 // 스토어에 히스토리를 넣어주기
 export const history = createBrowserHistory();
@@ -42,8 +41,7 @@ const rootReducer = combineReducers({
   qna: Qna,
   qnacomment: QnaComment,
   mapmodal: MapModal,
-  postmodal: PostModal,
-  postimage: PostImage,
+  storypostmodal: StoryPostModal,
   router: connectRouter(history),
 });
 

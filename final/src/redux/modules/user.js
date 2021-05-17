@@ -3,6 +3,7 @@ import { produce } from "immer";
 import { history } from "../configStore";
 import axios from "axios";
 import { config } from "../../shared/config";
+import Swal from 'sweetalert2'
 
 // actions
 const SET_USER = "SET_USER";
@@ -38,11 +39,18 @@ const signupAPI = (nickname, email, pwd, rePwd) => {
       })
       .then((res) => {
         console.log("signupAPI(res)", res);
-        window.alert("회원가입이 되었습니다!");
+        Swal.fire({
+          text: 'SFlash의 회원이 되었습니다. :)',
+          icon: 'success',
+          confirmButtonColor: "#ffb719",
+        })
         history.push("/login");
       })
       .catch((err) => {
-        window.alert("회원가입 실패");
+        Swal.fire({
+          text: '회원가입 실패 ㅠㅠ',
+          icon: 'error',
+        })
         console.log("회원가입 실패:", err);
       });
   };
@@ -74,7 +82,10 @@ const loginAPI = (email, pwd) => {
         history.push("/");
       })
       .catch((err) => {
-        window.alert("로그인 실패", err);
+        Swal.fire({
+          text: '로그인 실패 ㅠㅠ',
+          icon: 'error',
+        })
         console.log("로그인 실패", err);
       });
   };

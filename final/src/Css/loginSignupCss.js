@@ -40,9 +40,8 @@ const InputStyle = styled.input`
   font-size: 0.9rem;
   font-weight: 500;
   color: grey;
-  input:focus {
-    outline: none !important;
-    border: 1px solid red;
+  :focus {
+    outline: none;
   }
   cursor: pointer;
 `;
@@ -64,7 +63,7 @@ const SolidBtn = styled.button`
   &:hover {
     background-color: #ffffff;
     color: ${(props) => props.theme.main_color};
-    border: 2pt solid ${(props) => props.theme.main_color};
+    border: 1pt solid ${(props) => props.theme.main_color};
     cursor: pointer;
     transition: ease-in-out, width .35s ease-in-out;
   }

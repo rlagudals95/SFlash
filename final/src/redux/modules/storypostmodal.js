@@ -1,5 +1,4 @@
-// mapModal 복사본
-import { createAction, handleActions } from "redux-actions";
+import { createAction, createActions, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 import { history } from "../configStore";
@@ -8,62 +7,65 @@ import moment from "moment";
 import { config } from "../../shared/config";
 
 //마커를 누르면 상세모달창이 뜨는 것을 효율적으로 구현하기 위해서 만든 모듈
-const GET_POST = "GET_POST";
-const SET_MODAL = "SET_MODAL";
+const GET_MODAL = "GET_MODAL";
+const GET_MODAL_ID = "GET_MODAL_ID";
+//혹시 모르니 만들어두자..
+const SET_MADAL = "SET_MODAL";
 //마커 클릭시 모달 데이터에서 코멘트만 따로 빼오자
-const GET_POST_COMMENT = "GET_POST_COMMENT";
+const GET_MODAL_COMMENT = "GET_MODAL_COMMENT";
 //
-const ADD_POST_COMMENT = "ADD_POST_COMMENT";
+const MODAL_ADD_COMMENT = "MODAL_ADD_COMMENT";
 //
-const DELETE_POST_COMMENT = "DELETE_POST_COMMENT";
+const MODAL_DELETE_COMMENT = "MODAL_DELETE_COMMENT";
 // 모달 라이크 구현
-const ADD_POST_LIKE = "ADD_POST_LIKE";
+const MODAL_ADD_LIKE = "MODAL_ADD_LIKE";
 
-const DELETE_POST_LIKE = "DELETE_POST_LIKE";
+const MODAL_DIS_LIKE = "MODAL_DIS_LIKE";
 //
-const EDIT_POST = "EDIT_POST";
+const MODAL_EDIT = "MODAL_EDIT";
 
-const getPost = createAction(GET_POST, (post) => ({ post }));
+const getModal = createAction(GET_MODAL, (post) => ({ post }));
+const getModalId = createAction(GET_MODAL_ID, (id) => ({ id }));
 
 ////// 댓글 구현
-const getPostComment = createAction(GET_POST_COMMENT, (comment_list) => ({
+const getModalComment = createAction(GET_MODAL_COMMENT, (comment_list) => ({
   comment_list,
 }));
-const AddPostComment = createAction(ADD_POST_COMMENT, (comment_list) => ({
+const modalAddComment = createAction(MODAL_ADD_COMMENT, (comment_list) => ({
   comment_list,
 }));
-const DeletePostComment = createAction(DELETE_POST_COMMENT, (id) => ({
+const modalDeleteComment = createAction(MODAL_DELETE_COMMENT, (id) => ({
   id,
 }));
 
 ///// 좋아요 구현
-const addPostLike = createAction(ADD_POST_LIKE, (post) => ({ post }));
-const deletePostLike = createAction(DELETE_POST_LIKE, (post) => ({ post }));
+const modalAddLike = createAction(MODAL_ADD_LIKE, (post) => ({ post }));
+const modalDisLike = createAction(MODAL_DIS_LIKE, (post) => ({ post }));
 // 수정 구현
-const editPost = createAction(EDIT_POST, (post) => ({ post }));
+const modalEdit = createAction(MODAL_EDIT, (post) => ({ post }));
 
-// const getModalPost = (id) => {
-//   return function (dispatch, getState) {
-//     const post_list = getState().post.map_post_list;
-//     console.log("가와~~", post_list);
+const getModalPost = (id) => {
+  return function (dispatch, getState) {
+    const post_list = getState().post.map_post_list;
+    console.log("가와~~", post_list);
 
-//     const idx = post_list.findIndex((p) => {
-//       if (p.id === id) {
-//         return p;
-//       }
-//     });
+    const idx = post_list.findIndex((p) => {
+      if (p.id === id) {
+        return p;
+      }
+    });
 
-//     const ModalPost = post_list[idx];
-//     console.log("찾았다!", ModalPost);
-//     //////////////////
-//     const ModalComment = ModalPost.comment;
+    const ModalPost = post_list[idx];
+    console.log("찾았다!", ModalPost);
+    //////////////////
+    const ModalComment = ModalPost.comment;
 
-//     console.log("코멘트!", ModalComment);
+    console.log("코멘트!", ModalComment);
 
-//     dispatch(getModal(ModalPost));
-//     dispatch(getModalComment(ModalComment));
-//   };
-// };
+    dispatch(getModal(ModalPost));
+    dispatch(getModalComment(ModalComment));
+  };
+};
 
 //모달 데이터를 다 가지고 와서 initialState의 post 에저장
 
@@ -101,8 +103,8 @@ const getModalPostAPI = (boardId) => {
         console.log("게시물 요거", post);
         console.log("댓글요거", comment_list);
 
-        dispatch(getPost(post)); // 모달 정보는 > post 에 저장
-        dispatch(getPostComment(comment_list)); //댓글 > comment에 따로 저장
+        dispatch(getModal(post)); // 모달 정보는 > post 에 저장
+        dispatch(getModalComment(comment_list)); //댓글 > comment에 따로 저장
       })
       .catch((err) => {
         console.log(err);
@@ -143,7 +145,7 @@ const modalAddCommentAPI = (comment, board_id) => {
         };
 
         console.log("댓글추가반응", res);
-        dispatch(AddPostComment(comment_list));
+        dispatch(modalAddComment(comment_list));
         // dispatch(getComment(board_id)); //이래 해줘도 되나?
         // dispatch(postActions.addComment(comment, board_id));
         // dispatch(postActions.setPost());
@@ -168,7 +170,7 @@ const modalDeleteCommentAPI = (id) => {
     })
       .then((res) => {
         // dispatch(deleteComment(id, board_id)); //바로 렌더링 시켜줘야 삭제 눌렀을때 반영된다
-        dispatch(DeletePostComment(id));
+        dispatch(modalDeleteComment(id));
       })
       .catch((err) => {
         window.alert("댓글 삭제에 문제가 있어요!");
@@ -219,7 +221,7 @@ const modalDisLikeAPI = (board_id, board) => {
         // console.log(res);
         // dispatch(disLike(false));
         // dispatch(getLike(false));
-        // dispatch(postActions.getPostAPI(paging.start, paging.size));
+       
       })
       .catch((error) => {
         // window.alert("좋아요를 할 수 없습니다.");
@@ -252,7 +254,7 @@ const editLikeP = (post) => {
       writerId: post.writerId,
     };
     console.log("rrr", board);
-    dispatch(addPostLike(board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
+    dispatch(modalAddLike(board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
   };
 };
 
@@ -282,12 +284,12 @@ const editLikeD = (post) => {
     };
     console.log("rrr", board);
 
-    dispatch(deletePostLike(board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
+    dispatch(modalDisLike(board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
   };
 };
 
 const initialState = {
-  post: "",
+  post: null,
   id: null, // Map에서 props로 id를 넘기기 어려워 id값을 따로 모듈에 저장 //id 기준으로 comment를 따로 부르기위해 작성
   //음... 아니면 get요청 해서 받은 모달정보중 id로 comment를 불러 올 수도 있겠다...
   comment: [], //코멘트 어레이
@@ -296,24 +298,27 @@ const initialState = {
 
 export default handleActions(
   {
-    [GET_POST]: (state, action) =>
+    [GET_MODAL]: (state, action) =>
       produce(state, (draft) => {
         console.log("액션 페이로드!", action.payload.post);
         draft.post = action.payload.post;
-        console.log(draft.post);
+      }),
+    [GET_MODAL_ID]: (state, action) =>
+      produce(state, (draft) => {
+        draft.id = action.payload.id;
       }),
     /// 댓글 부분 모듈
-    [GET_POST_COMMENT]: (state, action) =>
+    [GET_MODAL_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         console.log("왜안와?", action.payload.comment_list);
         draft.comment = action.payload.comment_list;
       }),
-    [ADD_POST_COMMENT]: (state, action) =>
+    [MODAL_ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         draft.comment.unshift(action.payload.comment_list);
       }),
 
-    [DELETE_POST_COMMENT]: (state, action) =>
+    [MODAL_DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         //비교해서 제외
         console.log("삭제댓글 아이디", action.payload.id);
@@ -324,15 +329,15 @@ export default handleActions(
         });
       }),
     //////////////////////// 좋아요 구현
-    [ADD_POST_LIKE]: (state, action) =>
+    [MODAL_ADD_LIKE]: (state, action) =>
       produce(state, (draft) => {
         draft.post = action.payload.post;
       }),
-    [DELETE_POST_LIKE]: (state, action) =>
+    [MODAL_DIS_LIKE]: (state, action) =>
       produce(state, (draft) => {
         draft.post = action.payload.post;
       }),
-    [EDIT_POST]: (state, action) =>
+    [MODAL_EDIT]: (state, action) =>
       produce(state, (draft) => {
         draft.post = action.payload.post;
       }),
@@ -342,11 +347,13 @@ export default handleActions(
 
 const actionCreators = {
   getModalPostAPI,
+  getModalPost,
+  getModalId,
   modalAddCommentAPI,
   modalDeleteCommentAPI,
   modalAddLikeAPI,
   modalDisLikeAPI,
-  editPost,
+  modalEdit,
 };
 
 export { actionCreators };
