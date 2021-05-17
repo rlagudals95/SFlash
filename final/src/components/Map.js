@@ -30,12 +30,11 @@ const Maps = (props) => {
   const [is_uploadModal, setUpLoadModal] = useState(false); // 작은 모달에서 댓글 달기를 누르면 나오는 확장된 모달
 
   // 위도, 경도, 마커, 주소
-  const [startlat, setStartLat] = useState(); // 현위치 위도 설정
-  const [startlon, setStartLon] = useState(); // 현위치 경도 설정
   const [latitude, setLatitude] = useState(); // 클릭한 위치 위도 설정
   const [longitude, setLongitude] = useState(); // 클릭한 위치 경도 설정
+  const [spot2, setSpot2] = useState(""); // 도, 광역시를 제외한 나머지 spotName
+  const [spotName, setSpotName] = useState(""); // 클릭한 위치 spotName
 
-  const [spotName, setSpotName] = useState(""); // 클릭한 위치 이름 설정
 
   const [_map, setMap] = useState(); // useEffect 외부에서 map을 쓰기 위한 것.
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
@@ -71,7 +70,6 @@ const Maps = (props) => {
   });
 
   // 디테일 모달 관련 상태값
-
   const [is_detailModal, setDetailModal] = useState();
 
   const openModal = () => {
@@ -199,32 +197,27 @@ const Maps = (props) => {
 
         searchAddrFromCoords(mouseEvent.latLng, function (result, status) {
           if (status === kakao.maps.services.Status.OK) {
-            //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
-            var spotName = result[0].address_name;
-            console.log(result[0]);
-            console.log(spotName);
+            // //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
+            // var addressName = result[0].address_name;
+            var region1 = result[0].region_1depth_name;   // 도, 광역시
+            var region2 = result[0].region_2depth_name;   // 시군구
+            var region3 = result[0].region_3depth_name;   // 읍면 또는 동
+            var region4 = result[0].region_4depth_name;   // 읍면 단위가 있을 경우 동리
+            var spot1 = region1;
+            var spot2 = region2 + " " + region3 + " " + region4;
+            let spotName = []
+            let spotDict = {
+              spot1: spot1,
+              spot2: spot2,
+            }
+            spotName.push(spotDict)
+            console.log("스팟1: " + spot1); 
+            console.log("스팟2: " + spot2);
+            console.log("스팟네임: " + spotName);
+            console.log("스팟네임1: " + spotName[0].spot1);
+            console.log("스팟네임2: " + spotName[0].spot2);
             setSpotName(spotName);
           }
-          // //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
-          // // var addressName = result[0].address_name;
-          // var region1 = result[0].region_1depth_name;
-          // var region2 = result[0].region_2depth_name;
-          // var region3 = result[0].region_3depth_name;
-          // var region4 = result[0].region_4depth_name;
-          // let spotName = [region1, region2, region3, region4];
-          // console.log("스팟네임은?:" + spotName);
-          // // setRegionName1(region1);
-          // // setRegionName2(region2);
-          // // setRegionName3(region3);
-          // // setRegionName4(region4);
-
-          // // var spotName1 = result[0].region_1depth_name; // 경상남도
-          // // var spotName2 = result[0].region_2depth_name + " "
-          // //   + result[0].region_3depth_name + " "
-          // //   + result[0].region_4depth_name; //산청군 시천면 내공리
-          // // setSpotName1(spotName1);
-          // // setSpotName2(spotName2);
-          // setSpotName(spotName); // 경상남도 산청군 시천면 내공리
         });
 
         function searchAddrFromCoords(coords, callback) {
@@ -292,7 +285,7 @@ const Maps = (props) => {
     // 6. 서버와 연결되어 데이터 통신이 이뤄지면 if문으로 분기하는 코드를 사용한다.
     // 기본 설정 규칙 설명 끝------------------------------------------------------------------------
 
-    // 2. 내가 작성한 게시물만 : 카페마커 + 커스텀 오버레이
+    // 1. 내가 작성한 게시물만 : 모든 종류의 마커들 + 커스텀 오버레이
     if (is_mypost) {
       myPostData.forEach((mypost) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -316,7 +309,8 @@ const Maps = (props) => {
           '<div class="modalcontainer">' +
           `<img class="picbox"  src=${mypost.imgForOverlay} >` +
           '<div class="head">' +
-          `<div class="spotname">${mypost.spotName}</div>` +
+          `<div class="spotname">${mypost.spotName1}</div>` +
+          `<div class="spotname">${mypost.spotName2}</div>` +
           "</div>" +
           "</div>";
 
@@ -353,7 +347,7 @@ const Maps = (props) => {
       });
     }
 
-    // 3. 내가 좋아요한 게시물만 : 카페마커 + 커스텀 오버레이
+    // 2. 내가 좋아요한 게시물만 : 좋아요마커 + 커스텀 오버레이
     if (is_mylike) {
       myLikeData.forEach((mylike) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -470,7 +464,7 @@ const Maps = (props) => {
       });
     }
 
-    // 2. 밤카테고리 : 카페마커 + 커스텀 오버레이
+    // 2. 밤카테고리 : 밤마커 + 커스텀 오버레이
     if (is_night) {
       nightData.forEach((night) => {
         // nightData를 mockdata로 구현가능한지 테스트 할 것!
@@ -525,7 +519,7 @@ const Maps = (props) => {
       });
     }
 
-    // 3. 바다카테고리 : 카페마커 + 커스텀 오버레이
+    // 3. 바다카테고리 : 바다마커 + 커스텀 오버레이
     if (is_ocean) {
       oceanData.forEach((ocean) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -580,7 +574,7 @@ const Maps = (props) => {
       });
     }
 
-    // 4. 산카테고리 : 카페마커 + 커스텀 오버레이
+    // 4. 산카테고리 : 산마커 + 커스텀 오버레이
     if (is_mountain) {
       mountainData.map((mountain, idx) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -639,7 +633,7 @@ const Maps = (props) => {
       });
     }
 
-    // 5. 꽃카테고리 : 카페마커 + 커스텀 오버레이
+    // 5. 꽃카테고리 : 꽃마커 + 커스텀 오버레이
     if (is_flower) {
       flowerData.forEach((flower) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -695,7 +689,7 @@ const Maps = (props) => {
       });
     }
 
-    // 6. 나홀로카테고리 : 카페마커 + 커스텀 오버레이
+    // 6. 나홀로카테고리 : 나홀로마커 + 커스텀 오버레이
     if (is_alone) {
       aloneData.map((alone, idx) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -751,7 +745,7 @@ const Maps = (props) => {
       });
     }
 
-    // 7. 커플카테고리 : 카페마커 + 커스텀 오버레이
+    // 7. 커플카테고리 : 커플마커 + 커스텀 오버레이
     if (is_couple) {
       coupleData.forEach((couple) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -861,7 +855,7 @@ const Maps = (props) => {
       });
     }
 
-    // 9. 반려동물카테고리 : 카페마커 + 커스텀 오버레이
+    // 9. 반려동물카테고리 : 반려동물마커 + 커스텀 오버레이
     if (is_pet) {
       petData.forEach((pet) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -917,7 +911,7 @@ const Maps = (props) => {
       });
     }
 
-    // 10. 도심카테고리 : 카페마커 + 커스텀 오버레이
+    // 10. 도심카테고리 : 도심마커 + 커스텀 오버레이
     if (is_city) {
       cityData.forEach((city) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -972,7 +966,7 @@ const Maps = (props) => {
       });
     }
 
-    // 11. 공원카테고리 : 카페마커 + 커스텀 오버레이
+    // 11. 공원카테고리 : 공원마커 + 커스텀 오버레이
     if (is_park) {
       parkData.forEach((park) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -1028,7 +1022,7 @@ const Maps = (props) => {
       });
     }
 
-    // 12. 전시카테고리 : 카페마커 + 커스텀 오버레이
+    // 12. 전시카테고리 : 전시마커 + 커스텀 오버레이
     if (is_exhibition) {
       exhibitionData.forEach((exhibition) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -1097,7 +1091,7 @@ const Maps = (props) => {
 
     // 지도 api 설정은 여기서 끝
     // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
-    // useEffect의 두번째 인자들에는 검색, 시작 좌표, 카테고리 설정값이 들어간다.
+    // useEffect의 dependency에는 카테고리 설정값이 들어간다.
     // }, [search, startlat, startlon,
     // }, [startlat, startlon]);
   }, [
@@ -1199,7 +1193,7 @@ const SearchBox = styled.div`
   top: 40px;
   left: 200px;
   transform: translate(-10%, -90%);
-  z-index: 998;
+  z-index: 3;
   @media (min-width: 1400px) {
     width: 600px;
     top: 100px;
