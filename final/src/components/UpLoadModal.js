@@ -36,9 +36,8 @@ const UploadModal = (props) => {
       dispatch(profileActions.getUserInfoAPI(userId));
       return;
     }
-
     if (is_edit) {
-      console.log("실행ㄴㄴㄴㄴㄴㄴㄴ");
+      console.log("실행ㄴㄴㄴㄴㄴㄴㄴ", props);
       // dispatch(imageActions.resetEdit([])); //
       dispatch(imageActions.getPost(props.id));
 
