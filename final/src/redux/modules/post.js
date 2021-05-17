@@ -150,14 +150,15 @@ const addPostAPI = (post) => {
         // window.location.replace("/"); // 민규 - 이 명령어는 데이터 변경이 반영되는 새로고침으로 알고 있어요. 게시물 업로드하고 반영된걸 바로 보려고 넣은 명령어에요.
 
         // 커뮤니티 리덕스에 데이터 추가
-        let CommunityPost = {
-          id: one_post.boardId,
-          spotName: one_post.spotName,
-          img_url: one_post.boardImgReponseDtoList[0],
-          likeCnt: 0,
-          like: false,
-        };
-        dispatch(addPost(CommunityPost));
+        // let CommunityPost = {
+        //   id: one_post.boardId,
+        //   spotName: one_post.spotName,
+        //   img_url: one_post.boardImgReponseDtoList[0],
+        //   likeCnt: 0,
+        //   like: false,
+        // };
+        // console.log("커뮤니티 애드포스트 실행!!!");
+        // dispatch(addPost(CommunityPost));
       })
       .catch((err) => {
         console.log(err);
