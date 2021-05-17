@@ -25,7 +25,7 @@ import Input2 from "../elements/Input2";
 import { CgLogOut } from "react-icons/cg";
 
 const UploadModal = (props) => {
-  const { latitude, longitude, spotName, spotNameForCustomOverlay} = props;
+  const { latitude, longitude, spotName, spotNameForCustomOverlay } = props;
   const userId = localStorage.getItem("userId");
 
   console.log("비교!", props);
@@ -384,7 +384,9 @@ const UploadModal = (props) => {
                   <Input2
                     id="outlined-multiline-static"
                     // label="📝제목 작성"
-                    placeholder={"제목작성..."}
+                    placeholder={
+                      "정확한 장소명을 적어주시면 다른 사람들에게 도움이 되요😗 "
+                    }
                     rows={1}
                     variant="outlined"
                     value={title}
