@@ -26,10 +26,11 @@ const SEARCH_POST = "SEARCH_POST";
 const DELETE_MARKER = "DELETE_MARKER";
 // 맵마커 수정
 const EDIT_MARKER = "EDIT_MARKER";
+// 페이징처리 카운트
+const PAGING_CNT = "PAGING_CNT";
 
-const setPost = createAction(SET_POST, (post_list, paging) => ({
+const setPost = createAction(SET_POST, (post_list) => ({
   post_list,
-  paging,
 })); //paging은 나중에 넣기
 const setMapPost = createAction(SET_MAP_POST, (map_post_list) => ({
   map_post_list,
@@ -53,14 +54,12 @@ const dis_Like = createAction(DIS_LIKE, (post_id, post) => ({
   post,
 }));
 
-const getSearch = createAction(GET_SEARCH, (post_list, paging) => ({
+const getSearch = createAction(GET_SEARCH, (post_list) => ({
   post_list,
-  paging,
 }));
 
-const search_Post = createAction(SEARCH_POST, (post_list, paging) => ({
+const search_Post = createAction(SEARCH_POST, (post_list) => ({
   post_list,
-  paging,
 }));
 
 const deleteMarker = createAction(DELETE_MARKER, (id) => ({ id }));
@@ -69,6 +68,7 @@ const editMarker = createAction(EDIT_MARKER, (board_id, markerImg) => ({
   board_id,
   markerImg,
 }));
+const pagingCntUp = createAction(PAGING_CNT, () => ({}));
 
 const initialState = {
   // list와 map_post_list에 게시물 데이터가 들어간다.
@@ -76,9 +76,10 @@ const initialState = {
   // 데이터를 사용하는 컴포넌트에서 필터로 카테고리별 데이터를 만들면 된다.
   list: [], //post_list, total과 같은것?
   map_post_list: [], // 지도상에 뜨는 게시물의 데이터들.
-  paging: { start: null, size: 15 },
+  // paging: { start: null, size: 15 },
   is_loading: true, // 페이징 처리할 데이터가 없을때 스피너를 보이지 않게함
   like: false, // 접속유저의 like유무를 파악해 게시물의 하트 모양을 관리함
+  pagingCnt: 0,
 };
 
 const addPostAPI = (post) => {
@@ -137,7 +138,7 @@ const addPostAPI = (post) => {
         let one_post = res.data.data;
         let one_marker_data = {
           id: one_post.boardId,
-          category:  one_post.category,
+          category: one_post.category,
           spotName1: one_post.spotName.split(" ")[0],
           spotName2: one_post.spotName.split(" ").splice(1).join(" "),
           latitude: one_post.latitude,
@@ -145,18 +146,18 @@ const addPostAPI = (post) => {
           imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,
         };
         dispatch(addMapPost(one_marker_data));
-        
-        // 커뮤니티 리덕스에 데이터 추가
-        // let CommunityPost = {
-        //   id: one_post.boardId,
-        //   spotName: one_post.spotName,
-        //   img_url: one_post.boardImgReponseDtoList[0],
-        //   likeCnt: 0,
-        //   like: false,
-        // };
-        // dispatch(addPost(CommunityPost));
-      
-        // history.replace("/"); 
+
+        //커뮤니티 리덕스에 데이터 추가
+        let CommunityPost = {
+          id: one_post.boardId,
+          spotName: one_post.spotName,
+          img_url: one_post.boardImgReponseDtoList[0].imgUrl, //고치자 딕셔너리 말고
+          likeCnt: 0,
+          like: false,
+          title: one_post.title, // 포스트 title
+          content: one_post.content, // 포스트 내용
+        };
+        dispatch(addPost(CommunityPost));
       })
       .catch((err) => {
         console.log(err);
@@ -166,31 +167,39 @@ const addPostAPI = (post) => {
 };
 
 //start = null, size = null //
-const getPostAPI = (start = null, size = null) => {
+const getPostAPI = () => {
   return function (dispatch, getState) {
     const board_list = getState().post.list;
+    const pCnt = getState().post.pagingCnt;
     console.log("잘가지고 왔겠지", board_list);
 
     let end_board = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
       board_list.length == 0
         ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
         : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
-          board_list[board_list.length - 1].id; // 이제 처음 받은 포스트중 가장 마지막 포스트 id 기준으로 15개씩 게시물을 받아온다
+          board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
+    console.log("마지막 포스트 아이디", end_board);
+    ////
 
-    console.log("마지막 포스트 정보", end_board);
-
+    if (board_list.length !== 0) {
+      dispatch(pagingCntUp());
+    }
+    console.log("페이징 카운트", pCnt);
+    let size = 15;
     axios({
       method: "GET",
-      url: `${config.api}/board`,
-      data: {
-        size: 15,
-        lastAriticleId: end_board.id, // 처음에는 9000조를 보낸다
-      },
+      // url: `${config.api}/board`,
+      url: `${config.api}/board/community/scroll?size=${size}&lastBoardId=${end_board}`,
+      // data: {
+      //   size: 15,
+      //   lastAriticleId: end_board.id, // 처음에는 9000조를 보낸다
+      // },
       headers: {
         "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {
+        console.log("스크롤 요청");
         console.log("!!!!!!!!!", res.data.data);
 
         // 라이크 값이 자꾸 false로 오니까 리스트를 뽑아보자!
@@ -202,17 +211,17 @@ const getPostAPI = (start = null, size = null) => {
 
         // console.log("받아오는 라이크 값들", like_list);
 
-        let result = res.data.data.slice(start, size); // 서버에서 받아오는 게시물들을 start와 size를 정해서 나눠준다
+        let result = res.data.data; // 서버에서 받아오는 게시물들을 start와 size를 정해서 나눠준다
         // console.log("페이징 갯수", result.length);
         if (result.length == 0) {
           // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
           dispatch(loading(false));
           return;
         }
-        let paging = {
-          start: start + result.length + 1,
-          size: size + 15,
-        };
+        // let paging = {
+        //   start: start + result.length + 1,
+        //   size: size + 15,
+        // };
 
         console.log("서버 응답값", res);
         let post_list = [];
@@ -222,20 +231,20 @@ const getPostAPI = (start = null, size = null) => {
             id: _post.boardId, // 포스트 id
             title: _post.title, // 포스트 title
             content: _post.content, // 포스트 내용
-            writerName: _post.writerName,
-            img_url: _post.boardImgReponseDtoList,
+            // writerName: _post.writerName,
+            img_url: _post.boardImgUrl,
             category: _post.category,
-            profileImg: _post.writerImgUrl,
+            // profileImg: _post.writerImgUrl,
             like: _post.liked,
             likeCnt: _post.likeCount,
-            comment: _post.boardDetailCommentDtoList,
-            creatAt: _post.modified,
+            // comment: _post.boardDetailCommentDtoList,
+            // creatAt: _post.modified,
             spotName: _post.spotName,
-            writerId: _post.writerId,
+            // writerId: _post.writerId,
           };
           post_list.unshift(post);
         });
-        dispatch(setPost(post_list, paging));
+        dispatch(setPost(post_list));
         // dispatch(modalActions.modalEdit(post_list));
       })
       .catch((err) => {
@@ -409,10 +418,10 @@ const searchPostAPI = (search, start = null, size = null) => {
           dispatch(loading(false));
           return;
         }
-        let paging = {
-          start: start + result.length + 1,
-          size: size + 15,
-        };
+        // let paging = {
+        //   start: start + result.length + 1,
+        //   size: size + 15,
+        // };
 
         let post_list = [];
 
@@ -432,7 +441,7 @@ const searchPostAPI = (search, start = null, size = null) => {
           post_list.unshift(post);
         });
         console.log("포스트 리스트 잘나와?", post_list);
-        dispatch(getSearch(post_list, paging));
+        dispatch(getSearch(post_list));
       })
       .catch((error) => {
         window.alert("검색을 할 수 없습니다.");
@@ -518,7 +527,7 @@ export default handleActions(
         // draft.list = action.payload.post_list;
         // draft.paging = action.payload.paging; // 페이징 처리
         //겹치는 게시물 중복 제거 과정
-        draft.paging = action.payload.paging;
+        // draft.paging = action.payload.paging;
         draft.list = draft.list.reduce((acc, cur) => {
           if (acc.findIndex((a) => a.id === cur.id) === -1) {
             return [...acc, cur]; //같은 id를 가진 게시물이 없다면 기존 포스트들과 새로받은 포스트 리턴
@@ -593,12 +602,12 @@ export default handleActions(
     [SEARCH_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload.list;
-        draft.paging = action.payload.paging;
+        // draft.paging = action.payload.paging;
       }),
     [GET_SEARCH]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload.post_list;
-        draft.paging = action.payload.paging;
+        // draft.paging = action.payload.paging;
       }),
 
     [DELETE_MARKER]: (state, action) =>
@@ -626,6 +635,12 @@ export default handleActions(
           ...action.payload.markerImg,
         };
       }),
+
+    [PAGING_CNT]: (state, action) =>
+      produce(state, (draft) => {
+        console.log("카운트업!");
+        draft.pagingCnt = draft.pagingCnt + 15;
+      }),
   },
   initialState
 );
@@ -645,6 +660,24 @@ const actionCreators = {
   editLikeP,
   editLikeD,
   deleteMarker,
+  loading,
 };
 
 export { actionCreators };
+//  let post = {
+//             id: _post.boardId, // 포스트 id
+//             title: _post.title, // 포스트 title
+//             content: _post.content, // 포스트 내용
+//             writerName: _post.writerName,
+//             img_url: _post.boardImgReponseDtoList,
+//             category: _post.category,
+//             profileImg: _post.writerImgUrl,
+//             like: _post.liked,
+//             likeCnt: _post.likeCount,
+//             comment: _post.boardDetailCommentDtoList,
+//             creatAt: _post.modified,
+//             spotName: _post.spotName,
+//             writerId: _post.writerId,
+//           };
+//           post_list.unshift(post);
+//         });

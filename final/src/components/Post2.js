@@ -91,14 +91,7 @@ const Post2 = (props) => {
       <Card>
         {/* src={props.post_image_url[0]} */}
 
-        <PostBox
-          onClick={openModal}
-          src={
-            image_list[0].imgUrl //썸네일 이미지가 있다면>?
-              ? image_list[0].imgUrl
-              : null
-          }
-        >
+        <PostBox onClick={openModal} src={props.img_url}>
           {/* 이거자체가 지금 투명 0 */}
           <div className={"hoverDark"}>
             {like}
