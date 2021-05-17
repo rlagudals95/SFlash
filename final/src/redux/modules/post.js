@@ -131,22 +131,21 @@ const addPostAPI = (post) => {
       .then((res) => {
         console.log("애드포스트 응답", res);
         console.log(res.data);
+        console.log(res.data.data);
 
         // 게시물 올리면 바로 마커 뜨게 하기 api : 백엔드와 시험해보기
-        // let one_post = res.data ? res.data.data?
-        // let one_post = res.data;
-        // let one_marker_data = {
-        //   id: one_post.boardId,
-        //   category:  one_post.category,
-        //   spotName1: one_post.spotName.split(" ")[0],
-        //   spotName2: one_post.spotName.split(" ").splice(1).join(" ");
-        //   latitude: one_post.latitude,
-        //   longitude: one_post.longitude,
-        //   imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,
-        // };
-        // dispatch(addMapPost(one_marker_data));
-        history.replace("/"); // 이부분 실행이 잘안되면 imgUrl인식을 못함 변수명 잘지켜주세요! : 민규 - 이건 데이터 변경없이 사이트만 변경해주는걸로 알고 있습니다
-        // window.location.replace("/"); // 민규 - 이 명령어는 데이터 변경이 반영되는 새로고침으로 알고 있어요. 게시물 업로드하고 반영된걸 바로 보려고 넣은 명령어에요.
+        let one_post = res.data.data;
+        let one_marker_data = {
+          id: one_post.boardId,
+          category:  one_post.category,
+          spotName1: one_post.spotName.split(" ")[0],
+          spotName2: one_post.spotName.split(" ").splice(1).join(" "),
+          latitude: one_post.latitude,
+          longitude: one_post.longitude,
+          imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,
+        };
+        dispatch(addMapPost(one_marker_data));
+        history.replace("/");
       })
       .catch((err) => {
         console.log(err);
