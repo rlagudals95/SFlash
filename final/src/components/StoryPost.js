@@ -21,10 +21,15 @@ const StoryPost = (props) => {
   const dispatch = useDispatch();
   console.log(props);
   const boardId = props.id ;
+  console.log("userPostMode:", props.userPostMode);
 
   React.useEffect(() => {
     console.log("시작");
-    dispatch(likeActions.getLikePost());
+    // if(props.userPostMode){
+    //   dispatch(likeActions.getUserPostLike());
+    // }else{
+    //   dispatch(likeActions.getUserLikeLike());
+    // }
   }, []);
 
   const paging = useSelector((state) => state.post.paging);
@@ -46,15 +51,26 @@ const StoryPost = (props) => {
     e.preventDefault();
     e.stopPropagation();
     console.log("ADDLIKE!!!!!", props.id, props)
-    dispatch(likeActions.addLikeAPI(props.id, props)); //서버
+    if(props.userPostMode){
+      dispatch(likeActions.addUserPostLikeAPI(props.id, props));
+    }else{
+      // dispatch(likeActions.addUserLikeLikeAPI(props.id, props));
+    }
+  
+  }
     // dispatch(PostActions.editLikeP(props.id, props)); // 리덕스
-  };
+
 
   const disLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
     console.log("DISLIKE!!!!!", props.id, props)
-    dispatch(likeActions.disLikeAPI(props.id, props));
+    if(props.userPostMode){
+      dispatch(likeActions.deleteUserPostLikeAPI(props.id, props));
+    }else{
+      // dispatch(likeActions.deleteUserLikeLikeAPI(props.id, props));
+    }
+    // dispatch(likeActions.disLikeAPI(props.id, props));
     // dispatch(PostActions.editLikeD(props.id, props));
   };
 

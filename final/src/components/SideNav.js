@@ -17,7 +17,11 @@ import styled from "styled-components";
 import user from "../redux/modules/user";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as profileActions } from "../redux/modules/profile";
+import { actionCreators as storypostActions } from "../redux/modules/storypost";
 import { config } from "../shared/config";
+
+import SFlash_logo_darkgrey from "../static/SFlash_logo_darkgrey.svg";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -60,7 +64,7 @@ function Navbar() {
             <LOGO>
               {/* 로고 들어갈자리 */}
               <Link to="/">
-                <SflashLogo></SflashLogo>
+              <SflashLogo src = {SFlash_logo_darkgrey}/>
               </Link>
             </LOGO>
 
@@ -89,6 +93,9 @@ function Navbar() {
                     <Story
                       onClick={() => {
                         history.push(`/story/${userId}`);
+                        dispatch(profileActions.getUserInfoAPI(userId));
+                        dispatch(storypostActions.getUserPostAPI(userId));
+                        dispatch(storypostActions.getUserLikeAPI(userId));
                       }}
                     ></Story>
                   </Link>

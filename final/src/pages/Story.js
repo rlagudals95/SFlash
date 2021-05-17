@@ -92,11 +92,13 @@ const Story = (props) => {
             <StoryContent
               post_list={user_post_list}
               marker_icon={userPostMarkerImgUrl}
+              userPostMode={userPostMode}
             />
           ) : (
             <StoryContent
               post_list={user_like_list}
               marker_icon={userLikeMarkerImgUrl}
+              userPostMode={userPostMode}
             />
           )}
         </Content>
