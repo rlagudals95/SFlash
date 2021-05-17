@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import Swal from 'sweetalert2'
 
 import {
   Container,
-  Title,
   InputStyle,
   SolidBtn,
   SocialBtn,
@@ -31,7 +31,10 @@ const Login = () => {
   // 일반 로그인
   const onLogin = () => {
     if (email === "" || pwd === "") {
-      window.alert("아이디 혹은 비밀번호를 입력하지 않으셨습니다.");
+      Swal.fire({
+        text: '아이디 혹은 비밀번호를 입력하지 않으셨습니다.',
+        confirmButtonColor: "#ffb719",
+      })
       return false;
     }
     dispatch(userActions.loginAPI(email, pwd));
@@ -82,7 +85,9 @@ const Login = () => {
   return (
     <React.Fragment>
       <Container>
-        <Title>Login</Title>
+        <Grid height="10vh"/>
+      <SflashLogo />
+        <Title>로그인하기</Title>
         <InputStyle
           placeholder="이메일 입력"
           type="type"
@@ -151,9 +156,25 @@ const Login = () => {
     </React.Fragment>
   );
 };
+const Title = styled.div`
+margin-top: 35px;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  color: #343a40;
+`;
 
 const SocialIcon = styled.img`
   ${(props) => (props.width ? `color:${props.width};` : "")}
 `;
+const SflashLogo = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A0.png?alt=media&token=92594323-944a-40d7-8085-b323c23246fe");
+  width: 150px;
+  height: 150px;
+  margin: auto;
+  background-size: cover;
+`;
+
 
 export default Login;

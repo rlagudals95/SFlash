@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Grid } from "../elements/index";
+import Swal from 'sweetalert2'
 
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/configStore";
@@ -47,10 +48,16 @@ const QnaDetailComment = (props) => {
   const onAddCommentSubmit = (comment) => {
     console.log(comment);
     if (!comment) {
-      alert("댓글을 입력하지 않으셨습니다.");
+      Swal.fire({
+        text: '댓글을 입력하지 않으셨습니다.',
+        confirmButtonColor: "#ffb719",
+      })
       return;
     } else if (role !== "ADMIN") {
-      alert("댓글 권한이 없습니다.");
+      Swal.fire({
+        text: '댓글 권한이 없습니다.',
+        confirmButtonColor: "#ffb719",
+      })
       return;
     } else {
       dispatch(qnaCommentActions.addQnaCommentAPI(comment, qnaId));
@@ -70,17 +77,32 @@ const QnaDetailComment = (props) => {
     console.log(comment);
     const qcommentId = comment_list[editIdx].id;
     if (!comment) {
-      alert("댓글을 입력하지 않으셨습니다.");
+      Swal.fire({
+        text: '댓글을 입력하지 않으셨습니다.',
+        confirmButtonColor: "#ffb719",
+      })
       return;
     } else if (role !== "ADMIN") {
-      alert("댓글 권한이 없습니다.");
+      Swal.fire({
+        text: '댓글 권한이 없습니다.',
+        confirmButtonColor: "#ffb719",
+      })
       return;
     } else {
-      if (window.confirm("댓글을 수정 하시겠습니까?")) {
+      Swal.fire({
+      text: '댓글을 수정 하시겠습니까?',
+      confirmButtonText: '예',
+      confirmButtonColor: '#ffb719',
+      showCancelButton: true,
+      cancelButtonText: '아니오',
+      cancelButtonColor: '#eee',
+    }).then((result) => {
+      if (result.isConfirmed) {
         dispatch(qnaCommentActions.editQnaCommentAPI(comment, qcommentId, qnaId));
         setComment("");
         setEditCommentMode(false);
       }
+    })
     }
   };
 
@@ -159,17 +181,6 @@ const QnaDetailComment = (props) => {
           </Comment>
         )}
 
-        {/* <Comment>
-            <Text weight="600">{me}</Text>
-            <InputStyle
-              value={comment}
-              placeholder="댓글을 입력해주세요"
-              type="type"
-              width="60%"
-              onChange={changeComment}
-            />
-            <BorderBtn onClick={()=>onAddComment(comment)}>댓글 달기</BorderBtn>
-          </Comment> */}
       </CommentContainer>
     </React.Fragment>
   );

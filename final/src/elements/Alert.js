@@ -22,7 +22,7 @@ Swal.fire({
 
 // confirm 형
   Swal.fire({
-    text: '로그아웃 하시겠습니까?',
+    text: '게시물을 삭제 하시겠습니까?',
     confirmButtonText: '예',
     confirmButtonColor: '#ffb719',
     showCancelButton: true,
