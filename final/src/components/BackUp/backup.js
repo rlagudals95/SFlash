@@ -39,14 +39,6 @@ function Navbar() {
   //   dispatch(userActions.loading(true));
   // }, [is_loading]);
 
-  //하나가 true일때는 다른 상태값은 모두 false로 돌리면된다
-  const [home, selectHome] = useState(true);
-  const [community, selectCommunity] = useState(false);
-  const [story, selectStory] = useState(false);
-  const [about, selectAbout] = useState(false);
-  const [faq, selectFaq] = useState(false);
-  const [qna, selectQna] = useState(false);
-
   React.useEffect(() => {
     console.log(is_login);
   }, [is_login]);
@@ -62,6 +54,12 @@ function Navbar() {
     <>
       {/* 안에 있는 요소들 색통일 */}
       <IconContext.Provider value={{ color: "#000" }}>
+        {/* <div className="navbarBtn">
+          {/* 햄버거 버튼 클릭시 sidebar 값을 !sidebar로 바꿔줌*/}
+        {/* <Link className="menu-bars">
+            <FaIcons.FaBars onClick={showSidebar} />
+          </Link> */}
+        {/* </div> */}
         <SideMini>
           <SideIcon>
             <LOGO>
@@ -73,114 +71,88 @@ function Navbar() {
 
             {/* 홈 지도보기 */}
 
-            {home ? (
-              <SelectedIcon
+            <IconOutter>
+              {/* <Link to="/">
+                <Home></Home>
+              </Link> */}
+              <IconInfo
                 onClick={() => {
                   history.replace("/");
                 }}
               >
                 HOME
-              </SelectedIcon>
-            ) : (
-              <IconOutter>
-                <IconInfo
-                  onClick={() => {
-                    selectHome(true);
-                    selectCommunity(false);
-                    selectStory(false);
-                    selectAbout(false);
-                    selectFaq(false);
-                    selectQna(false);
-                    history.replace("/");
-                  }}
-                >
-                  HOME
-                </IconInfo>
-              </IconOutter>
-            )}
+              </IconInfo>
+            </IconOutter>
 
-            {/* 커뮤니티 */}
+            <IconOutter>
+              {/* <Link to="/postlist">
+                <Community></Community>
+              </Link> */}
 
-            {community ? (
-              <SelectedIcon>COMMUNITY</SelectedIcon>
-            ) : (
-              <IconOutter>
-                <IconInfo
-                  onClick={() => {
-                    selectHome(false);
-                    selectCommunity(true);
-                    selectStory(false);
-                    selectAbout(false);
-                    selectFaq(false);
-                    selectQna(false);
-                    history.replace("/postlist");
-                  }}
-                >
-                  COMMUNITY
-                </IconInfo>
-              </IconOutter>
-            )}
-
+              <IconInfo
+                onClick={() => {
+                  history.replace("/postlist");
+                }}
+              >
+                COMMUNITY
+              </IconInfo>
+            </IconOutter>
             {/* 마이페이지 */}
 
-            {story ? (
-              <IconOutter>
-                {is_login ? (
-                  <React.Fragment>
-                    <IconInfo
+            <IconOutter>
+              {is_login ? (
+                <React.Fragment>
+                  {/* <Link>
+                    <Story
                       onClick={() => {
                         history.push(`/story/${userId}`);
                         dispatch(profileActions.getUserInfoAPI(userId));
                         dispatch(storypostActions.getUserPostAPI(userId));
                         dispatch(storypostActions.getUserLikeAPI(userId));
                       }}
-                    >
-                      MY STORY
-                    </IconInfo>
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    <IconInfo
-                      onClick={() => {
-                        history.replace("/login");
-                      }}
-                    >
-                      LOGIN
-                    </IconInfo>
-                  </React.Fragment>
-                )}
-              </IconOutter>
-            ) : (
-              <IconOutter>
-                {is_login ? (
-                  <React.Fragment>
-                    <IconInfo
-                      onClick={() => {
-                        history.push(`/story/${userId}`);
-                        dispatch(profileActions.getUserInfoAPI(userId));
-                        dispatch(storypostActions.getUserPostAPI(userId));
-                        dispatch(storypostActions.getUserLikeAPI(userId));
-                      }}
-                    >
-                      MY STORY
-                    </IconInfo>
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    <IconInfo
-                      onClick={() => {
-                        history.replace("/login");
-                      }}
-                    >
-                      LOGIN
-                    </IconInfo>
-                  </React.Fragment>
-                )}
-              </IconOutter>
-            )}
+                    ></Story>
+                  </Link> */}
+                  <IconInfo
+                    onClick={() => {
+                      history.push(`/story/${userId}`);
+                      dispatch(profileActions.getUserInfoAPI(userId));
+                      dispatch(storypostActions.getUserPostAPI(userId));
+                      dispatch(storypostActions.getUserLikeAPI(userId));
+                    }}
+                  >
+                    MY STORY
+                  </IconInfo>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {/* <GrIcons.GrLogin
+                  size="1.5rem"
+                  onClick={() => {
+                    history.push("/login");
+                  }}
+                /> */}
+                  {/* <Log
+                    onClick={() => {
+                      history.replace("/login");
+                    }}
+                  ></Log> */}
+                  {/* 로그인 아이콘 */}
+                  <IconInfo
+                    onClick={() => {
+                      history.replace("/login");
+                    }}
+                  >
+                    LOGIN
+                  </IconInfo>
+                </React.Fragment>
+              )}
+            </IconOutter>
 
             {/* About */}
             <IconOutter>
+              {/* <Link to="/about">
+                <About></About>
+              </Link> */}
               <IconInfo
                 onClick={() => {
                   history.replace("/about");
@@ -191,6 +163,9 @@ function Navbar() {
             </IconOutter>
 
             <IconOutter>
+              {/* <Link to="/faq">
+                <FaQ></FaQ>
+              </Link> */}
               <IconInfo
                 onClick={() => {
                   history.replace("/faq");
@@ -200,6 +175,9 @@ function Navbar() {
               </IconInfo>
             </IconOutter>
             <IconOutter>
+              {/* <Link to="/qna">
+                <QnA></QnA>
+              </Link> */}
               <IconInfo
                 onClick={() => {
                   history.replace("/qna");
@@ -209,6 +187,7 @@ function Navbar() {
               </IconInfo>
             </IconOutter>
           </SideIcon>
+          {/* <GrLogout size="1.5rem" /> */}
         </SideMini>
         {/* sidebar값에 따라 클래스 네임을 바꿔준다 */}
         {/* nav-menu.active는 사이드바가 들어간 상태를 의미 */}
@@ -292,7 +271,6 @@ const IconInfo = styled.div`
 `;
 
 const SelectedIcon = styled.div`
-  all: unset;
   font-size: 13px;
   margin: 0px auto;
   text-align: center;
