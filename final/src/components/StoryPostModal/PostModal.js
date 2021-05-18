@@ -274,8 +274,6 @@ const ModalDetail = (props) => {
                                   dispatch(
                                     storyPostActions.deleteStoryPostAPI(modalData.id)
                                   ); //이거 왜안될까??....
-                                  dispatch(storyPostActions.deleteStoryMarker(modalData.id)
-                                  );
                                   props.close(); //삭제 바로반영?
                                 }
                               });

@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import axios from "axios";
 import { config } from "../../shared/config";
 
 import { Grid } from "../../elements/index";
-import { 
-  Container, 
-  InputStyle, 
-  SolidBtn, 
+import {
+  Container,
+  InputStyle,
+  SolidBtn,
   BorderBtn,
-  CheckBtn, 
+  CheckBtn,
   TextBtn,
   InfoUl,
-  InfoLi } from "../../Css/loginSignupCss";
+  InfoLi,
+} from "../../Css/loginSignupCss";
 import RegCheck from "../../Css/RegCheck.css";
 import { GiCheckMark } from "react-icons/gi";
 
@@ -43,8 +44,16 @@ const Signup = (props) => {
   // 닉네임, 이메일 중복체크
   const [nicknameDup, setNicknameDup] = React.useState(false);
   const [emailAuth, setEmailAuth] = React.useState(false);
-  const [activeAuthInput, setActiveAuthInput] =React.useState(false);
+  const [activeAuthInput, setActiveAuthInput] = React.useState(false);
 
+  // 인증번호 전송 로딩 지연 모달
+  const [loadingModal, setLoadingModal] = React.useState(false);
+  const openLoadingModal = () => {
+    setLoadingModal(true);
+  };
+  const closeLoadingModal = () => {
+    setLoadingModal(false);
+  };
   // 조건 충족 여부에 따라  info를 다르게
   // querySelector를 이용하면 ''안에 해당되는 태그가 여러개 일 경우 그 첫번째 것만 선택한다.
   // 따라서 선택하고자 하는 것이 명확하다면 ''안에 몇번째 child 인지까지 정확하게 입력하거나 className 사용하기
@@ -171,15 +180,15 @@ const Signup = (props) => {
         console.log("넥네임중복확인!", res.data);
         if (res.data === false) {
           Swal.fire({
-            text: '이미 등록된 닉네임 입니다!',
+            text: "이미 등록된 닉네임 입니다!",
             confirmButtonColor: "#ffb719",
-          })
+          });
           setNicknameDup(false);
         } else {
           Swal.fire({
-            text: '사용 가능한 닉네임 입니다 :)',
+            text: "사용 가능한 닉네임 입니다 :)",
             confirmButtonColor: "#ffb719",
-          })
+          });
           setNicknameDup(true);
           const nicknameInfo_dupCheck = document.querySelector(
             "ul.checkNickname li:nth-child(2)"
@@ -209,15 +218,15 @@ const Signup = (props) => {
         console.log("인증번호 전송", res.data);
         if (res.data === false) {
           Swal.fire({
-            text: '이미 등록된 이메일 입니다!',
+            text: "이미 등록된 이메일 입니다!",
             confirmButtonColor: "#ffb719",
-          })
+          });
           setNicknameDup(false);
-        }else{
+        } else {
           Swal.fire({
-            text: '입력한 이메일로 인증번호가 발송되었습니다.',
+            text: "입력한 이메일로 인증번호가 발송되었습니다.",
             confirmButtonColor: "#ffb719",
-          })
+          });
           setActiveAuthInput(true);
         }
       })
@@ -247,9 +256,9 @@ const Signup = (props) => {
 
         if (res.data === true) {
           Swal.fire({
-            text: '인증이 완료되었습니다.',
+            text: "인증이 완료되었습니다.",
             confirmButtonColor: "#ffb719",
-          })
+          });
           setEmailAuth(true);
           const emailInfo_auth = document.querySelector(
             "ul.checkEmail li:nth-child(2)"
@@ -258,9 +267,9 @@ const Signup = (props) => {
           emailInfo_auth.classList.remove("error");
         } else {
           Swal.fire({
-            text: '인증번호를 다시 확인해주세요.',
+            text: "인증번호를 다시 확인해주세요.",
             confirmButtonColor: "#ffb719",
-          })
+          });
         }
       });
   };
@@ -269,73 +278,68 @@ const Signup = (props) => {
   const onSignup = () => {
     if (nickname === "") {
       Swal.fire({
-        text: '닉네임을 입력해주세요!',
+        text: "닉네임을 입력해주세요!",
         confirmButtonColor: "#ffb719",
-      })
+      });
       alert("닉네임을 입력해주세요!");
       return false;
     }
 
     if (!nicknameRegCheck(nickname)) {
       Swal.fire({
-        text: '닉네임 형식을 지켜주세요!',
+        text: "닉네임 형식을 지켜주세요!",
         confirmButtonColor: "#ffb719",
-      })
+      });
       return false;
     }
 
     if (nicknameDup === false) {
       Swal.fire({
-        text: '닉네임 중복확인을 해주세요!',
+        text: "닉네임 중복확인을 해주세요!",
         confirmButtonColor: "#ffb719",
-      })
+      });
       return false;
     }
 
     if (email === "") {
       Swal.fire({
-        text: '이메일을 입력해주세요!',
+        text: "이메일을 입력해주세요!",
         confirmButtonColor: "#ffb719",
-      })
+      });
       return false;
     }
 
     if (emailAuth === false) {
       Swal.fire({
-        text: '이메일 인증이 필요합니다.',
+        text: "이메일 인증이 필요합니다.",
         confirmButtonColor: "#ffb719",
-      })
+      });
       return false;
     }
 
     if (!emailRegCheck(email)) {
       Swal.fire({
-        text: '이메일 형식을 지켜주세요.',
+        text: "이메일 형식을 지켜주세요.",
         confirmButtonColor: "#ffb719",
-      })
+      });
       return false;
     }
 
-    if (
-      !pwdRegCheck(pwd) ||
-      pwdRegContinuousCheck(pwd)
-    ) {
+    if (!pwdRegCheck(pwd) || pwdRegContinuousCheck(pwd)) {
       Swal.fire({
-        text: '비밀번호 형식을 확인을 해주세요!',
+        text: "비밀번호 형식을 확인을 해주세요!",
         confirmButtonColor: "#ffb719",
-      })
+      });
       return false;
     }
 
-    if (
-      pwd !== rePwd
-    ) {
+    if (pwd !== rePwd) {
       Swal.fire({
-        text: '비밀번호가 일치하지 않습니다!',
+        text: "비밀번호가 일치하지 않습니다!",
         confirmButtonColor: "#ffb719",
-      })
+      });
     }
-    
+
     console.log(nickname, email, pwd, rePwd);
     dispatch(userActions.signupAPI(nickname, email, pwd, rePwd));
   };
@@ -343,8 +347,8 @@ const Signup = (props) => {
   return (
     <React.Fragment>
       <Container>
-      <Grid height="5vh"/>
-      <SflashLogo />
+        <Grid height="5vh" />
+        <SflashLogo />
         <Title>회원가입하기</Title>
         {/* <Title>Signup</Title> */}
 
@@ -364,9 +368,9 @@ const Signup = (props) => {
             onClick={() => {
               if (!nicknameRegCheck(nickname)) {
                 Swal.fire({
-                  text: '아이디 형식을 확인해주세요 :(',
+                  text: "아이디 형식을 확인해주세요 :(",
                   confirmButtonColor: "#ffb719",
-                })
+                });
                 return false;
               }
               nicknameDupCheckAPI(nickname);
@@ -376,8 +380,14 @@ const Signup = (props) => {
           </CheckBtn>
         </Grid>
         <InfoUl className="checkNickname">
-          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/>6자 이상의 영문 혹은 영문과 숫자를 조합</InfoLi>
-          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/>아이디 중복확인</InfoLi>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+            6자 이상의 영문 혹은 영문과 숫자를 조합
+          </InfoLi>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+            아이디 중복확인
+          </InfoLi>
         </InfoUl>
 
         <Grid is_flex>
@@ -396,21 +406,51 @@ const Signup = (props) => {
             onClick={(e) => {
               if (!emailRegCheck(email)) {
                 Swal.fire({
-                  text: '이메일 형식을 지켜주세요 :(',
+                  text: "이메일 형식을 지켜주세요 :(",
                   confirmButtonColor: "#ffb719",
-                })
+                });
                 return false;
-              }else{onEmailAuth(email)}
+              } else {
+                let timerInterval;
+                Swal.fire({
+                  // title: "Please wait..",
+                  html: "잠시만 기다려주세요",
+                  timer: 3500,
+                  timerProgressBar: true,
+                  didOpen: () => {
+                    Swal.showLoading();
+                    timerInterval = setInterval(() => {
+                      const content = Swal.getHtmlContainer();
+                      if (content) {
+                        const b = content.querySelector("b");
+                        if (b) {
+                          b.textContent = Swal.getTimerLeft();
+                        }
+                      }
+                    }, 100);
+                  },
+                  willClose: () => {
+                    clearInterval(timerInterval);
+                  },
+                });
+                onEmailAuth(email);
+              }
             }}
           >
             인증번호전송
           </CheckBtn>
         </Grid>
         <InfoUl className="checkEmail">
-          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/>이메일 형식을 지켜주세요.(예시: hh99@sflash.com)</InfoLi>
-          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/>이메일 인증 확인</InfoLi>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+            이메일 형식을 지켜주세요.(예시: hh99@sflash.com)
+          </InfoLi>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+            이메일 인증 확인
+          </InfoLi>
         </InfoUl>
-        <Auth active = {activeAuthInput}>
+        <Auth active={activeAuthInput}>
           <InputStyle
             placeholder="인증번호 입력"
             type="type"
@@ -439,9 +479,18 @@ const Signup = (props) => {
           }}
         />
         <InfoUl className="checkPwd">
-          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/> 10글자 이상 입력</InfoLi>
-          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/> 영문/숫자/특수문자(공백 제외)만 허용,2개 이상의 조합</InfoLi>
-          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/> 동일한 숫자 3개 이상 연속 사용 불가</InfoLi>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} /> 10글자 이상
+            입력
+          </InfoLi>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />{" "}
+            영문/숫자/특수문자(공백 제외)만 허용,2개 이상의 조합
+          </InfoLi>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} /> 동일한 숫자
+            3개 이상 연속 사용 불가
+          </InfoLi>
         </InfoUl>
 
         <InputStyle
@@ -456,7 +505,10 @@ const Signup = (props) => {
           }}
         />
         <InfoUl className="reCheckPwd">
-          <InfoLi><GiCheckMark style={{margin:"5px 5px 0px -30px"}}/>동일한 비밀번호를 입력해주세요.</InfoLi>
+          <InfoLi>
+            <GiCheckMark style={{ margin: "5px 5px 0px -30px" }} />
+            동일한 비밀번호를 입력해주세요.
+          </InfoLi>
         </InfoUl>
 
         <SolidBtn
@@ -476,7 +528,7 @@ const Signup = (props) => {
   );
 };
 const Title = styled.div`
-margin-top: 35px;
+  margin-top: 35px;
   margin-bottom: 30px;
   font-size: 1.1rem;
   font-weight: 600;
@@ -485,7 +537,7 @@ margin-top: 35px;
 `;
 
 const Auth = styled.div`
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   ${(props) => (props.active ? "" : "display:none")}

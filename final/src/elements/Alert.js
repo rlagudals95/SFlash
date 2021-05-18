@@ -37,6 +37,26 @@ Swal.fire({
     }
   })
  
+//이미지 삽입형
+  Swal.fire({
+    title: 'Sweet!',
+    text: 'Modal with a custom image.',
+    imageUrl: 'https://unsplash.it/400/200',
+    imageWidth: 400,
+    imageHeight: 200,
+    imageAlt: 'Custom image',
+  })
+  
+// 움직이는 팝업창
+  Swal.fire({
+    title: 'Custom animation with Animate.css',
+    showClass: {
+      popup: 'animate__animated animate__fadeInDown'
+    },
+    hideClass: {
+      popup: 'animate__animated animate__fadeOutUp'
+    }
+  })
 
 //  icon: 'success', 'error', 'warning', 'info', 'question' 디자인 아래 경로에서 참고
 // https://sweetalert2.github.io/#icons

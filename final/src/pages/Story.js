@@ -24,7 +24,7 @@ const Story = (props) => {
 
   //  url에서 userId 불러오기
   const userId = props.match.params.id;
-  // console.log("userId:", userId);
+  console.log("userId:", userId);
 
   React.useEffect(() => {
     dispatch(profileActions.getUserInfoAPI(userId));
@@ -37,7 +37,6 @@ const Story = (props) => {
   const user_info = useSelector((state) => state.profile.user);
   const user_post_list = useSelector((state) => state.storypost.user_post_list);
   const user_like_list = useSelector((state) => state.storypost.user_like_list);
- 
   console.log("user_post_list", user_post_list);
   console.log("user_like_list", user_like_list);
 
@@ -93,12 +92,14 @@ const Story = (props) => {
               post_list={user_post_list}
               marker_icon={userPostMarkerImgUrl}
               userPostMode={userPostMode}
+              userId={userId}
             />
           ) : (
             <StoryContent
               post_list={user_like_list}
               marker_icon={userLikeMarkerImgUrl}
-              
+              userPostMode={userPostMode}
+              userId={userId}
             />
           )}
         </Content>

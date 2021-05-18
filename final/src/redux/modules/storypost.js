@@ -5,6 +5,7 @@ import { history } from "../configStore";
 import "moment";
 import { config } from "../../shared/config";
 import Swal from "sweetalert2";
+import { size } from "lodash";
 
 const SET_STORY_POST = "SET_STORY_POST";
 const SET_STORY_LIKE = "SET_STORY_LIKE";
@@ -12,13 +13,14 @@ const EDIT_STORY_POST = "EDIT_STORY_POST";
 const EDIT_STORY_LIKE = "EDIT_STORY_LIKE";
 const DELETE_STORY_POST = "DELETE_STORY_POST";
 const DELETE_STORY_MARKER = "DELETE_MY_MARKER";
-const LOADING = "LOADING";
+const LOADING = "LOADING"; //is_loading을 true로 바꿔주는 액션
+const PAGING_CNT = "PAGING_CNT";
 
 const setStoryPost = createAction(SET_STORY_POST, (post_list) => ({
-  post_list,
+  post_list
 }));
 const setStoryLike = createAction(SET_STORY_LIKE, (post_list) => ({
-  post_list,
+  post_list
 }));
 const editStoryPost = createAction(EDIT_STORY_POST, (board_id, post) => ({
   board_id,
@@ -31,31 +33,65 @@ const editStoryLike = createAction(EDIT_STORY_LIKE, (board_id, post) => ({
 const deleteStoryPost = createAction(DELETE_STORY_POST, (id) => ({ id }));
 const deleteStoryMarker = createAction(DELETE_STORY_MARKER, (id) => ({ id }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
+const pagingCntUp = createAction(PAGING_CNT, () => ({}));
 
 const initialState = {
   user_post_list: [], //내가 올린 게시물 리스트
   user_like_list: [], //내가 좋아요한 게시물 리스트
-  is_loading: false,
-  paging: { start: null, size: 15 },
+  is_loading:  true, // 페이징 처리할 데이터가 없을때 스피너를 보이지 않게함
+  paging: { start: null, next: null, size: 15 },
   like: false,
   likeCnt: 0,
+  pagingCnt: 0,
 };
 
 // 스토리페이지 / 유저 업로드 게시물 리스트
 // start = null, size = null
 const getUserPostAPI = (userId) => {
   return function (dispatch, getState) {
+    console.log(userId);
+    const board_list = getState().storypost.user_post_list;
+    const pCnt = getState().storypost.pagingCnt;
+    console.log("잘가지고 왔겠지", board_list);
+
+    let lastId = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
+      board_list.length === 0
+        ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
+        : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
+          board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
+    console.log("마지막 포스트 아이디", lastId);
+
+    if (board_list.length !== 0) {
+      dispatch(pagingCntUp());
+    }
+    console.log("페이징 카운트", pCnt);
+    let size = 15;
+
     axios({
       method: "GET",
-      url: `${config.api}/story/${userId}/board`,
+      // url: `${config.api}/story/${userId}/board`,
+      url: `${config.api}/story/${userId}/board?lastId=${lastId}&size=${size}`,
       headers: {
         "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {
         console.log(res.data.data);
-        let post_list = [];
 
+        // let paging = {
+        //   start: res.data.data[0],
+        //   next: res.data.data.length === size +1 ?
+        //   res.data.data[res.data.data.length -1] : null,
+        //   size: size,
+        // }
+
+        if (res.data.data.length === 0) {
+          // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
+          dispatch(loading(false));
+          return;
+        }
+
+        let post_list = [];
         res.data.data.forEach((_post) => {
           let post = {
             id: _post.boardId,
@@ -91,18 +127,42 @@ const getUserPostAPI = (userId) => {
 // 스토리페이지 / 유저 좋아요 게시물 리스트
 const getUserLikeAPI = (userId) => {
   return function (dispatch, getState) {
+    const board_list = getState().storypost.user_like_list;
+    const pCnt = getState().storypost.pagingCnt;
+    console.log("잘가지고 왔겠지", board_list);
+
+    let lastId = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
+      board_list.length === 0
+        ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
+        : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
+          board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
+    console.log("마지막 포스트 아이디", lastId);
+
+    if (board_list.length !== 0) {
+      dispatch(pagingCntUp());
+    }
+    console.log("페이징 카운트", pCnt);
+    let size = 15;
     axios({
       method: "GET",
-      url: `${config.api}/story/${userId}/likeboard`,
+      // url: `${config.api}/story/${userId}/likeboard`,
+      url: `${config.api}/story/${userId}/likeboard?lastId=${lastId}&size=${size}`,
       headers: {
         "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {
-        console.log(res.data.data);
-        console.log(res.data.data);
-        let post_list = [];
+        // console.log(res.data.data);
+        // console.log(res.data.data);
 
+        // let paging = {
+        //   start: res.data.data[0],
+        //   next: res.data.data.length === size +1 ?
+        //   res.data.data[res.data.data.length -1] : null,
+        //   size: size,
+        // }
+
+        let post_list = [];
         res.data.data.forEach((_post) => {
           let post = {
             id: _post.boardId,
@@ -362,14 +422,34 @@ export default handleActions(
     // 내 게시물
     [SET_STORY_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.user_post_list = action.payload.post_list;
+        // draft.user_post_list = action.payload.post_list;
+        // 무한스크롤 시에는 push 방식으로 set 해주기
+        draft.user_post_list.push(...action.payload.post_list);
         // draft.paging = action.payload.paging; // 페이징 처리
+        draft.user_post_list = draft.user_post_list.reduce((acc, cur) => {
+          if (acc.findIndex((a) => a.id === cur.id) === -1) {
+            return [...acc, cur]; //같은 id를 가진 게시물이 없다면 기존 포스트들과 새로받은 포스트 리턴
+          } else {
+            // 중복되는 id가 있다면? 포스트가 중복되서 출력되는 걸 막아줘야함
+            acc[acc.findIndex((a) => a.id === cur.id)] = cur; //기존 리스트에서 새로받은 리스트와 같은 id가 있다면
+            return acc; // 그 게시물은 새로 받은 게시물 => 그러므로 cur은 return 안해준다
+          }
+        }, []);
       }),
     // 내 좋아요 게시물
     [SET_STORY_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        draft.user_like_list = action.payload.post_list;
+        draft.user_like_list.push(...action.payload.post_list);
         // draft.paging = action.payload.paging; // 페이징 처리
+        draft.user_like_list = draft.user_like_list.reduce((acc, cur) => {
+          if (acc.findIndex((a) => a.id === cur.id) === -1) {
+            return [...acc, cur]; //같은 id를 가진 게시물이 없다면 기존 포스트들과 새로받은 포스트 리턴
+          } else {
+            // 중복되는 id가 있다면? 포스트가 중복되서 출력되는 걸 막아줘야함
+            acc[acc.findIndex((a) => a.id === cur.id)] = cur; //기존 리스트에서 새로받은 리스트와 같은 id가 있다면
+            return acc; // 그 게시물은 새로 받은 게시물 => 그러므로 cur은 return 안해준다
+          }
+        }, []);
       }),
 
     // 내 게시물 수정(하트, 포스트 모달 수정 화면 반영)
@@ -425,6 +505,11 @@ export default handleActions(
       produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;
       }),
+      [PAGING_CNT]: (state, action) =>
+      produce(state, (draft) => {
+        console.log("카운트업!");
+        draft.pagingCnt = draft.pagingCnt + 15;
+      }),
   },
   initialState
 );
@@ -436,7 +521,6 @@ const actionCreators = {
   setStoryLike,
   editStoryPostAPI,
   deleteStoryPostAPI,
-
   addUserPostLikeAPI,
   deleteUserPostLikeAPI,
   addUserLikeLikeAPI,
