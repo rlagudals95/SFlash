@@ -28,6 +28,7 @@
 .head {
   height: 40px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
