@@ -15,7 +15,6 @@ import Category from "../components/Category";
 import Input2 from "../elements/Input2";
 import Modal from "../components/Modal";
 import InfiniteScroll from "react-infinite-scroll-component";
-
 import "../Css/Modal.css";
 import modal from "../redux/modules/modal";
 import * as BiIcons from "react-icons/bi";
@@ -80,6 +79,7 @@ const PostList = (props) => {
     if (search == "") {
       //search가 한글자라도 있으면 loading = false
       // 검색창의 내용에 따라 보여지는 게시물이 필터링 된다
+      dispatch(PostActions.loading(true));
       return val;
     } else if (val.title.includes(search)) {
       // 검색어에 제목이 포함되었는지 판단
@@ -88,7 +88,8 @@ const PostList = (props) => {
       // 검색어에 내용이 포함되었는지 판단
       return val;
     } else if (search !== "") {
-      //스피너 없애기
+      //스피너 없애기를 스피너 자체에 조건을주자 리덕스에 상태값 하나 만들어서
+      dispatch(PostActions.loading(false)); //검색시 스피너 생김 방지
     }
   });
 

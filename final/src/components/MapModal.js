@@ -17,6 +17,7 @@ import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import { forEach } from "lodash";
 import { history } from "../redux/configStore";
 import Swal from "sweetalert2";
+import Spinner from "../shared/Spinner";
 
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
@@ -161,7 +162,7 @@ const ModalDetail = (props) => {
 
   return (
     <React.Fragment>
-      {modalData &&
+      {modalData ? (
         commentData && ( //모달데이터가 들어와야 실행!
           <React.Fragment>
             <React.Fragment>
@@ -390,7 +391,10 @@ const ModalDetail = (props) => {
               ) : null}
             </React.Fragment>
           </React.Fragment>
-        )}
+        )
+      ) : (
+        <Spinner />
+      )}
     </React.Fragment>
   );
 };
