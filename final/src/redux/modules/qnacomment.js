@@ -51,7 +51,7 @@ const addQnaCommentAPI = (comment, qnaId) => {
         content: comment,
       },
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
         "Content-Type": "application/json"
       },
     })
@@ -89,7 +89,7 @@ const editQnaCommentAPI = (comment, qcommentId, qnaId) => {
         content: comment,
       },
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
@@ -117,7 +117,7 @@ const deleteQnaCommentAPI = (qcommentId, qnaId) => {
       method: "DELETE",
       url: `${config.api}/qcomment/${qcommentId}/qna/${qnaId}`, //서버에서 지우고
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {

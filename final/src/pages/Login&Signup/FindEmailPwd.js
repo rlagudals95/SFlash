@@ -195,7 +195,7 @@ const FindEmailPwd = () => {
                 Swal.fire({
                   // title: "Please wait..",
                   html: "잠시만 기다려주세요",
-                  timer: 3800,
+                  timer: 4000,
                   timerProgressBar: true,
                   didOpen: () => {
                     Swal.showLoading();

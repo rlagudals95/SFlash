@@ -85,7 +85,7 @@ const Login = () => {
   return (
     <React.Fragment>
       <Container>
-        <Grid height="5vh" />
+        <Grid height="40px" />
         <SflashLogo />
         <Title>로그인하기</Title>
         <InputStyle
@@ -160,7 +160,7 @@ const Title = styled.div`
   margin-top: 35px;
   margin-bottom: 30px;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 400;
   text-align: center;
   color: #343a40;
 `;

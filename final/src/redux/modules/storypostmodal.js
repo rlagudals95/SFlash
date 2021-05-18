@@ -76,7 +76,7 @@ const getModalPostAPI = (boardId) => {
       method: "GET",
       url: `${config.api}/board/${boardId}/detail`,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
@@ -127,7 +127,7 @@ const modalAddCommentAPI = (comment, board_id) => {
       method: "POST",
       data: { content: comment },
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
@@ -165,7 +165,7 @@ const modalDeleteCommentAPI = (id) => {
       method: "DELETE",
       url: `${config.api}/board/comment/${id}`, //서버에서 지우고
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
