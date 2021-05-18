@@ -295,14 +295,6 @@ const getMapPostAPI = () => {
             spotName2: _post.spotName.split(" ").splice(1).join(" "),
             category: _post.category,
             imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
-            // [0].imgUrl
-            // title: _post.title, // 포스트 title
-            // content: _post.content, // 포스트 내용
-            // likeCount: _post.likeCount,
-            // writerImgUrl: _post.writerImgUrl,
-            // spotName: _post.spotName,
-            // imgUrl: _post.boardImgReponseDtoList,
-            // comment: _post.boardDetailCommentDtoList,
           };
           map_post_list.unshift(post);
         });

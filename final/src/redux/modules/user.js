@@ -77,6 +77,7 @@ const loginAPI = (email, pwd) => {
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("jwt", res.data.token);
+        // localStorage.setItem("jwt", res.data.acessToken);
         // localStorage.setItem("refreshjwt", res.data.refreshToken);
         localStorage.setItem("role", res.data.role);
         dispatch(setUser());

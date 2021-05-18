@@ -38,8 +38,8 @@ const SpinnerWrap = styled.div`
   ${(props) =>
     props.is_dim
       ? `
-     background: rgba(0,0,0,0.4); 
-     height: 100vh;
+    background: rgba(0,0,0,0.4); 
+    height: 100vh;
   `
       : ``}
 `;

@@ -8,12 +8,13 @@ import { actionCreators as postActions } from "../redux/modules/post";
 
 // component, element 파일들 가져오기
 import Map from "../components/Map";
+// 스피너
+import Spinner from "../shared/Spinner";
 
 const Main = (props) => {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
-
-  const markers = useSelector((state) => state.post.map_post_list);
+  const map_post_list = useSelector((state) => state.post.map_post_list);
 
   useEffect(() => {
     dispatch(postActions.getMapPostAPI());
@@ -21,7 +22,12 @@ const Main = (props) => {
 
   return (
     <React.Fragment>
-      <Map />
+      {map_post_list ? (
+        <Map />
+        ) : (
+          <Spinner/>
+      )}
+      {/* <Map/> */}
     </React.Fragment>
   );
 };
