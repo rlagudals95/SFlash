@@ -476,7 +476,7 @@ const CategoryInMap = () => {
                     html: "로그인을 하고 이 버튼을 클릭하면 <br>자신이 좋아요한 게시물만 모아서 볼 수 있어요 😍",
                     confirmButtonText: "로그인",
                     confirmButtonColor: "#ffb719",
-                    imageUrl: 'https://i.postimg.cc/QxzLQD82/4x.png',
+                    imageUrl: 'https://i.postimg.cc/50QwmKJJ/2x.png',
                     showCancelButton: true,
                     cancelButtonText: "나중에 할래요",
                     cancelButtonColor: "#eee"

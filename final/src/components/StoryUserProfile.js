@@ -118,9 +118,10 @@ const StoryUserProfile = (props) => {
               <MenuItem
                 onClick={() => {
                   Swal.fire({
-                    text: "로그아웃 하시겠습니까?",
-                    confirmButtonText: "예",
-                    confirmButtonColor: "#ffb719",
+                    imageUrl: 'https://i.postimg.cc/SxmfpG6L/2x.png',
+                    text: '로그아웃 하시겠습니까?',
+                    confirmButtonText: '예',
+                    confirmButtonColor: '#ffb719',
                     showCancelButton: true,
                     cancelButtonText: "아니오",
                     cancelButtonColor: "#eee",
