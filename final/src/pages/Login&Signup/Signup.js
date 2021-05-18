@@ -347,7 +347,7 @@ const Signup = (props) => {
   return (
     <React.Fragment>
       <Container>
-        <Grid height="5vh" />
+        <Grid height="40px" />
         <SflashLogo />
         <Title>회원가입하기</Title>
         {/* <Title>Signup</Title> */}
@@ -415,7 +415,7 @@ const Signup = (props) => {
                 Swal.fire({
                   // title: "Please wait..",
                   html: "잠시만 기다려주세요",
-                  timer: 3500,
+                  timer: 4000,
                   timerProgressBar: true,
                   didOpen: () => {
                     Swal.showLoading();
@@ -531,7 +531,7 @@ const Title = styled.div`
   margin-top: 35px;
   margin-bottom: 30px;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 400;
   text-align: center;
   color: #343a40;
 `;
