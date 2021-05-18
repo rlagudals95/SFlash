@@ -8,7 +8,7 @@ import * as GrIcons from "react-icons/gr";
 import * as MdIcons from "react-icons/md";
 import { GrCircleQuestion } from "react-icons/gr";
 import { Link } from "react-router-dom";
-
+import { SidebarData } from "./SidebarData";
 import "../Css/Navbar.css";
 import { IconContext } from "react-icons";
 import Category from "./Category";
@@ -20,10 +20,8 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 import { actionCreators as storypostActions } from "../redux/modules/storypost";
 import { config } from "../shared/config";
-import { actionCreators as sideActions } from "../redux/modules/side";
 
-import SFlash_logo_darkgrey from "../static/SFlash_logo_darkgrey.svg";
-import SFlashLogoDark from "../static/SFlashLogoDark.png";
+import SFlash_logo from "../static/SFlash_logo.svg";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -36,10 +34,32 @@ function Navbar() {
   const userId = localStorage.getItem("userId"); // 로컬스토리지에 저장된 닉네임 가져오는 방법
   const is_loading = useSelector((state) => state.user.is_loading);
 
-  // page 리덕스 상태값에 의한 사이드바 아이콘 active 효과 구현
-  const page = useSelector((state) => state.side.page);
+  // React.useEffect(() => {
+  //   dispatch(userActions.loading(true));
+  // }, [is_loading]);
 
-  console.log("현재 페이지는", page);
+  //하나가 true일때는 다른 상태값은 모두 false로 돌리면된다
+  const [home, selectHome] = useState(true);
+  const [community, selectCommunity] = useState(false);
+  const [story, selectStory] = useState(false);
+  const [about, selectAbout] = useState(false);
+  const [faq, selectFaq] = useState(false);
+  const [qna, selectQna] = useState(false);
+
+  console.log(
+    "지도",
+    home,
+    "커뮤니티",
+    community,
+    "스토리",
+    story,
+    "어바웃",
+    about,
+    "FAQ",
+    faq,
+    "QNA",
+    qna
+  );
 
   React.useEffect(() => {
     console.log(is_login);
@@ -61,23 +81,12 @@ function Navbar() {
             <LOGO>
               {/* 로고 들어갈자리 */}
               <Link to="/">
-                <SflashLogo
-                  onClick={() => {
-                    dispatch(sideActions.getPage("home"));
-                  }}
-                />
+                <SflashLogo src={SFlash_logo} />
               </Link>
             </LOGO>
-
-            <TabletLogo
-              onClick={() => {
-                dispatch(sideActions.getPage("home"));
-              }}
-            ></TabletLogo>
             {/* 홈 지도보기 */}
-
             <IconOutter>
-              {page == "home" ? (
+              {home ? (
                 <SelectedIcon
                   onClick={() => {
                     history.replace("/");
@@ -88,42 +97,44 @@ function Navbar() {
               ) : (
                 <IconInfo
                   onClick={() => {
+                    selectHome(true);
+                    selectCommunity(false);
+                    selectStory(false);
+                    selectAbout(false);
+                    selectFaq(false);
+                    selectQna(false);
                     history.replace("/");
-                    dispatch(sideActions.getPage("home"));
                   }}
                 >
                   HOME
                 </IconInfo>
               )}
             </IconOutter>
-            {/* 커뮤니티 페이지 */}
+            {/* 커뮤니티 */}
             <IconOutter>
-              {page == "community" ? (
-                <SelectedIcon
-                  onClick={() => {
-                    history.replace("/postlist");
-                  }}
-                >
-                  COMMUNITY
-                </SelectedIcon>
+              {community ? (
+                <SelectedIcon>COMMUNITY</SelectedIcon>
               ) : (
                 <IconInfo
                   onClick={() => {
+                    selectHome(false);
+                    selectCommunity(true);
+                    selectStory(false);
+                    selectAbout(false);
+                    selectFaq(false);
+                    selectQna(false);
                     history.replace("/postlist");
-                    dispatch(sideActions.getPage("community"));
                   }}
                 >
                   COMMUNITY
                 </IconInfo>
               )}
             </IconOutter>
-            {/* 마이페이지 & 로그인 */}
-            {/* && page == "story" ? */}
-
-            {page == "story" ? (
-              <IconOutter>
-                {is_login ? (
-                  <SelectedIcon
+            {/* 마이페이지 */}
+            <IconOutter>
+              {is_login ? (
+                <React.Fragment>
+                  <IconInfo
                     onClick={() => {
                       history.push(`/story/${userId}`);
                       dispatch(profileActions.getUserInfoAPI(userId));
@@ -132,8 +143,10 @@ function Navbar() {
                     }}
                   >
                     MY STORY
-                  </SelectedIcon>
-                ) : (
+                  </IconInfo>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
                   <SelectedIcon
                     onClick={() => {
                       history.replace("/login");
@@ -141,101 +154,85 @@ function Navbar() {
                   >
                     LOGIN
                   </SelectedIcon>
-                )}
-              </IconOutter>
-            ) : (
-              <IconOutter>
-                {is_login ? (
-                  <IconInfo
-                    onClick={() => {
-                      history.push(`/story/${userId}`);
-                      dispatch(profileActions.getUserInfoAPI(userId));
-                      dispatch(storypostActions.getUserPostAPI(userId));
-                      dispatch(storypostActions.getUserLikeAPI(userId));
-                      dispatch(sideActions.getPage("story"));
-                    }}
-                  >
-                    MY STORY
-                  </IconInfo>
-                ) : (
-                  <IconInfo
-                    onClick={() => {
-                      history.replace("/login");
-                      dispatch(sideActions.getPage("story"));
-                    }}
-                  >
-                    LOGIN
-                  </IconInfo>
-                )}
-              </IconOutter>
-            )}
+                </React.Fragment>
+              )}
+            </IconOutter>
 
             {/* About */}
             <IconOutter>
-              {page == "about" ? (
-                <SelectedIcon
-                  onClick={() => {
-                    history.replace("/about");
-                  }}
-                >
-                  ABOUT
-                </SelectedIcon>
-              ) : (
-                <IconInfo
-                  onClick={() => {
-                    history.replace("/about");
-                    dispatch(sideActions.getPage("about"));
-                  }}
-                >
-                  ABOUT
-                </IconInfo>
-              )}
+              <IconInfo
+                onClick={() => {
+                  history.replace("/about");
+                }}
+              >
+                ABOUT
+              </IconInfo>
             </IconOutter>
-            {/* Faq */}
             <IconOutter>
-              {page == "faq" ? (
-                <SelectedIcon
-                  onClick={() => {
-                    history.replace("/faq");
-                  }}
-                >
-                  FAQ
-                </SelectedIcon>
-              ) : (
-                <IconInfo
-                  onClick={() => {
-                    history.replace("/faq");
-                    dispatch(sideActions.getPage("faq"));
-                  }}
-                >
-                  FAQ
-                </IconInfo>
-              )}
+              <IconInfo
+                onClick={() => {
+                  history.replace("/faq");
+                }}
+              >
+                FAQ
+              </IconInfo>
             </IconOutter>
-            {/* Qna */}
             <IconOutter>
-              {page == "qna" ? (
-                <SelectedIcon
-                  onClick={() => {
-                    history.replace("/qna");
-                  }}
-                >
-                  QnA
-                </SelectedIcon>
-              ) : (
-                <IconInfo
-                  onClick={() => {
-                    history.replace("/qna");
-                    dispatch(sideActions.getPage("qna"));
-                  }}
-                >
-                  QnA
-                </IconInfo>
-              )}
+              <IconInfo
+                onClick={() => {
+                  history.replace("/qna");
+                }}
+              >
+                QnA
+              </IconInfo>
             </IconOutter>
           </SideIcon>
-          {/* <GrLogout size="1.5rem" /> */}
         </SideMini>
+        {/* sidebar값에 따라 클래스 네임을 바꿔준다 */}
+        {/* nav-menu.active는 사이드바가 들어간 상태를 의미 */}
+        <nav className={sidebar ? "nav-menu" : "nav-menu "}>
+          <ul className="nav-menu-items" onClick={showSidebar}>
+            <li className="navbar-toggle">
+              <Link className="menu-bars">
+                <AiIcons.AiOutlineClose />
+              </Link>
+            </li>
+            <CategoryInfo>
+              <CategoryIcon>
+                {" "}
+                <BiIcons.BiBookBookmark size="23px" />
+              </CategoryIcon>
+              카테고리
+            </CategoryInfo>
+            {/* <Category></Category> <Category /> */}
+            <Bubble
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+            >
+              {SidebarData.map((item, index) => {
+                //사이드바의 데이터 들을 map으로 돌려준다
+                return (
+                  <li
+                    key={index}
+                    className={item.cName}
+                    onClick={(e) => {
+                      history.push("item.path");
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                  >
+                    <Link to={item.path}>
+                      {item.icon}
+                      <span>{item.title}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </Bubble>
+          </ul>
+        </nav>
       </IconContext.Provider>
     </>
   );
@@ -264,6 +261,7 @@ const IconInfo = styled.div`
   :hover {
     color: ${(props) => props.theme.main_color};
   }
+
   @media (max-width: 1450px) {
     /* 1450밑으로 넓이가 내려가면 */
     margin: 0 auto;
@@ -271,10 +269,12 @@ const IconInfo = styled.div`
 
   @media (max-width: 600px) {
     /* 1450밑으로 넓이가 내려가면 */
+    display: none;
   }
 `;
 
 const SelectedIcon = styled.div`
+  all: unset;
   font-size: 13px;
   margin: 0px auto;
   text-align: center;
@@ -294,7 +294,7 @@ const SelectedIcon = styled.div`
 const LOGO = styled.div`
   margin-bottom: 6vh;
   background-color: transparent;
-  @media (max-width: 1400px) {
+  @media (max-width: 1450px) {
     /* 1450밑으로 넓이가 내려가면 */
     display: none;
   }
@@ -305,46 +305,44 @@ const SideMini = styled.div`
   width: 120px;
   height: 100vh;
   position: fixed;
-  background-color: #343a40;
+  background-color: ${(props) => props.theme.main_grey};
   left: 0;
   top: 0;
   z-index: 20;
   display: flex;
   flex-direction: column;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
-  /* background-color: red; */
   @media (max-width: 1400px) {
     all: unset;
     align-items: center;
     width: 100%;
     height: 8vh;
     position: fixed;
+    background-color: white;
     left: 0;
     top: 0;
-    background-color: #343a40;
     z-index: 500;
     justify-content: space-around;
     display: flex;
     flex-direction: row;
     box-shadow: 2px 2px 3px 2px rgba(0, 0.1, 0.1, 0.03);
   }
+  @media (max-width: 600px) {
+    all: unset;
+    margin: 0px;
+    z-index: 10000;
+    position: fixed;
+    width: 100%;
+    height: 51px;
+    justify-content: space-around;
+    /* flex-direction: row; */
+    bottom: 0px;
+    left: 0;
+    background-color: white;
+    padding-bottom: 2vh;
+    margin: auto;
+  }
 `;
-
-//  @media (max-width: 600px) {
-//     all: unset;
-//     margin: 0px;
-//     z-index: 10000;
-//     position: fixed;
-//     width: 100%;
-//     height: 51px;
-//     justify-content: space-around;
-//     /* flex-direction: row; */
-//     bottom: 0px;
-//     left: 0;
-//     background-color: white;
-//     padding-bottom: 2vh;
-//     margin: auto;
-//   }
 
 const SideIcon = styled.div`
   align-items: center;
@@ -353,7 +351,6 @@ const SideIcon = styled.div`
   justify-content: space-between;
   height: 560px;
   margin-top: 30px;
-
   @media (max-width: 1400px) {
     width: 100%;
     height: 7vh;
@@ -370,7 +367,7 @@ const CategoryInfo = styled.div`
   font-size: 20px;
   @media (max-width: 960px) {
     // 1450밑으로 넓이가 내려가면
-    /* display: none; */
+    display: none;
   }
 `;
 
@@ -399,28 +396,12 @@ const RoundColor = styled.div`
   color: white;
 `;
 
-const TabletLogo = styled.div`
-  display: none;
-  @media (max-width: 1400px) {
-    display: flex;
-    width: 95px;
-    height: 32px;
-    background-size: cover;
-    background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A0%20%EA%B0%80%EB%A1%9C.png?alt=media&token=026904ff-0cbb-447d-8309-86256408d179");
-  }
-`;
-
-const SflashLogo2 = styled.div`
-  width: 90px;
-  height: 90px;
+const SflashLogo = styled.img`
+  /* background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A0.png?alt=media&token=92594323-944a-40d7-8085-b323c23246fe"); */
+  width: 60px;
+  height: 60px;
   background-size: cover;
-  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A0%20%EA%B0%80%EB%A1%9C.png?alt=media&token=026904ff-0cbb-447d-8309-86256408d179s");
-`;
-const SflashLogo = styled.div`
-  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/SFlashLogoDark.png?alt=media&token=f1f6e54f-4058-41ff-9c58-d5c0c62b9711");
-  width: 120px;
-  height: 100px;
-  background-size: cover;
+  z-index: 100;
 `;
 
 const QnA = styled.div`

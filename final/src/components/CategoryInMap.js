@@ -450,8 +450,18 @@ const CategoryInMap = () => {
                   e.preventDefault();
                   e.stopPropagation();
                   Swal.fire({
+                    title: "내 스팟게시물을 작성하려면?",
                     html: "로그인을 하면 지도에서 원하는 위치를 클릭해서 <br>자신의 게시물을 작성할 수 있어요! ✨",
+                    confirmButtonText: "로그인",
                     confirmButtonColor: "#ffb719",
+                    imageUrl: 'https://i.postimg.cc/3JbxN2wp/2x.png',
+                    showCancelButton: true,
+                    cancelButtonText: "나중에 할래요",
+                    cancelButtonColor: "#eee"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      history.push("/login");
+                    }
                   })
                 }}
               />
@@ -462,8 +472,18 @@ const CategoryInMap = () => {
                   e.preventDefault();
                   e.stopPropagation();
                   Swal.fire({
+                    title: "좋아요한 스팟을 보려면?",
                     html: "로그인을 하고 이 버튼을 클릭하면 <br>자신이 좋아요한 게시물만 모아서 볼 수 있어요 😍",
+                    confirmButtonText: "로그인",
                     confirmButtonColor: "#ffb719",
+                    imageUrl: 'https://i.postimg.cc/50QwmKJJ/2x.png',
+                    showCancelButton: true,
+                    cancelButtonText: "나중에 할래요",
+                    cancelButtonColor: "#eee"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      history.push("/login");
+                    }
                   })
                 }}
               />

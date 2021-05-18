@@ -21,16 +21,8 @@ import Spinner from "../shared/Spinner";
 
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
-  // React.useEffect(() => {}, []);
 
-  // console.log("ㅎㅎㅎㅎ", commentData);
-
-  React.useEffect(() => {
-    // console.log("시작");
-    // dispatch(ModalActions.getModalPostAPI());
-    // console.log("!!!!!!!!!!!", modalData); //잘 찍힌다
-    // dispatch(CommnetActions.getComment(modalData.id)); //음 서버에서 가져온 모달디테일 에서 코멘트 따로빼자
-  }, []);
+  React.useEffect(() => {}, []);
 
   console.log("eeee", props);
   const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
@@ -70,47 +62,16 @@ const ModalDetail = (props) => {
     slidesToScroll: 1,
   };
 
-  // 받아온 이미지들
-  // let image_list = [];
-
-  // for (let i = 0; i < props.img_url; i++) {
-  //   image_list.push(props.img_url[i]);
-  // }
-
-  // let images = [];
-
-  // image_list.forEach((img) => {
-  //   images.push(img.imgUrl);
-  // });
-
-  // console.log("이미지들!!", images);
-
-  let comment_list = [];
-  // for (let i = 0; i < props.comment.length; i++) {
-  //   comment_list.push(props.comment[i]);
-  // }
-
-  // let comment_list = [];
-  // for (let i = 0; i < props.comment; i++) {
-  //   comment_list.push(props.comment[i]);
-  // }
-
-  // const comment_List = useSelector((state) => state.comment.list);
-
-  // console.log("이포스트의 댓글은??", comment_List);
-
   const is_comment = commentData ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
   const addLike = () => {
     dispatch(ModalActions.modalAddLikeAPI(modalData.id, modalData));
-    // dispatch(postActions.editLikeP(props.id, props)); // 리덕스
   };
 
   const disLike = () => {
     dispatch(ModalActions.modalDisLikeAPI(modalData.id, modalData));
-    // dispatch(postActions.editLikeD(props.id, props));
   };
 
   const addComment = () => {
@@ -130,9 +91,10 @@ const ModalDetail = (props) => {
     setComments(e.target.value);
   };
 
-  // const goProfile = () => {
-  //   history.replace("/story/hmk1995");
-  // };
+  const closeModal = (e) => {
+    dispatch(ModalActions.resetModal(false));
+    props.close();
+  };
 
   //작성 날짜 설정하기
   const timeForToday = (value) => {
@@ -166,7 +128,7 @@ const ModalDetail = (props) => {
         commentData && ( //모달데이터가 들어와야 실행!
           <React.Fragment>
             <React.Fragment>
-              <Component onClick={props.close} />
+              <Component onClick={closeModal} />
               <ModalComponent>
                 <ModalHeader>
                   <ModalLeftHeader>
@@ -191,7 +153,7 @@ const ModalDetail = (props) => {
                     </React.Fragment>
                     {/* <PostDate>{timeForToday(props.creatAt)}</PostDate> */}
                     <ExitContainer>
-                      <ExitBtn onClick={props.close}>
+                      <ExitBtn onClick={closeModal}>
                         <CloseIcon fontSize="large" />
                       </ExitBtn>
                     </ExitContainer>
@@ -199,19 +161,29 @@ const ModalDetail = (props) => {
                 </ModalHeader>
                 {/* 이미지 슬라이드 구현 props로 받는 이미지의 개수가 1개를 초과할때  */}
                 {/* 그 수만큼 map함수로 출력해준다 */}
-                {modalData.img_url.length > 1 ? ( // 음.,...
+
+                {modalData.img_url[0].imgUrl && modalData.img_url.length > 1 ? ( // 이미지가 없을때 에러뜨는 것을 방지
                   <Slider {...settings}>
                     {modalData.img_url.map((p, idx) => {
                       return (
                         //modalData[0].imgUrl
                         <div>
-                          <ModalImg src={modalData.img_url[idx].imgUrl} />
+                          <ModalImg
+                            src={
+                              modalData.img_url[0].imgUrl &&
+                              modalData.img_url[idx].imgUrl
+                            }
+                          />
                         </div>
                       );
                     })}
                   </Slider>
                 ) : (
-                  <ModalImg src={modalData.img_url[0].imgUrl} />
+                  <ModalImg
+                    src={
+                      modalData.img_url[0].imgUrl && modalData.img_url[0].imgUrl
+                    }
+                  />
                 )}
 
                 <ModalBottomContainer>
@@ -287,13 +259,6 @@ const ModalDetail = (props) => {
                                   props.close(); //삭제 바로반영?
                                 }
                               });
-
-                              // e.preventDefault();
-                              // e.stopPropagation();
-                              // // 클릭하면 게시물 삭제
-                              // dispatch(postActions.deletePostAPI(modalData.id)); //이거 왜안될까??....
-                              // dispatch(postActions.deleteMarker(modalData.id));
-                              // props.close(); //삭제 바로반영?
                             }}
                           >
                             삭제
@@ -398,16 +363,6 @@ const ModalDetail = (props) => {
     </React.Fragment>
   );
 };
-// background-image: url("${(props) => props.src}");
-//   background-size: cover;
-//   object-fit: cover;
-//   background-position: 0px;
-//   background-repeat: no-repeat;
-//   border: none;
-//   box-sizing: border-box;
-//   width: 100%;
-//   height: 400px;
-//   height: 400px;
 
 const LikeBox = styled.div`
   align-items: center;

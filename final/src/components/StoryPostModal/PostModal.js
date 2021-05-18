@@ -21,15 +21,10 @@ import { history } from "../../redux/configStore";
 
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
-  // React.useEffect(() => {}, []);
-
-  // console.log("ㅎㅎㅎㅎ", commentData);
+  
 
   React.useEffect(() => {
-    // console.log("시작");
-    // dispatch(ModalActions.getModalPostAPI());
-    // console.log("!!!!!!!!!!!", modalData); //잘 찍힌다
-    // dispatch(CommnetActions.getComment(modalData.id)); //음 서버에서 가져온 모달디테일 에서 코멘트 따로빼자
+    
   }, []);
 
   console.log("eeee", props);

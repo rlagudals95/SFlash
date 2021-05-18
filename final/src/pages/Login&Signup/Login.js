@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import {
   Container,
@@ -15,6 +15,7 @@ import { Grid } from "../../elements/index";
 import { actionCreators as userActions } from "../../redux/modules/user";
 
 import { history } from "../../redux/configStore";
+import { actionCreators as sideAction } from "../../redux/modules/side";
 import { useDispatch, useSelector } from "react-redux";
 import google from "../../static/google.svg";
 import naver from "../../static/naver.svg";
@@ -30,12 +31,13 @@ const Login = () => {
   const onLogin = () => {
     if (email === "" || pwd === "") {
       Swal.fire({
-        text: '아이디 혹은 비밀번호를 입력하지 않으셨습니다.',
+        text: "아이디 혹은 비밀번호를 입력하지 않으셨습니다.",
         confirmButtonColor: "#ffb719",
-      })
+      });
       return false;
     }
     dispatch(userActions.loginAPI(email, pwd));
+    dispatch(sideAction.getPage("home"));
   };
 
   const onSocialLogin = () => {
@@ -83,8 +85,8 @@ const Login = () => {
   return (
     <React.Fragment>
       <Container>
-        <Grid height="5vh"/>
-      <SflashLogo />
+        <Grid height="5vh" />
+        <SflashLogo />
         <Title>로그인하기</Title>
         <InputStyle
           placeholder="이메일 입력"
@@ -155,7 +157,7 @@ const Login = () => {
   );
 };
 const Title = styled.div`
-margin-top: 35px;
+  margin-top: 35px;
   margin-bottom: 30px;
   font-size: 1.1rem;
   font-weight: 600;
@@ -173,6 +175,5 @@ const SflashLogo = styled.div`
   margin: auto;
   background-size: cover;
 `;
-
 
 export default Login;
