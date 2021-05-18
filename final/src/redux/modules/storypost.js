@@ -39,9 +39,8 @@ const initialState = {
   user_post_list: [], //내가 올린 게시물 리스트
   user_like_list: [], //내가 좋아요한 게시물 리스트
   is_loading:  true, // 페이징 처리할 데이터가 없을때 스피너를 보이지 않게함
-  paging: { start: null, next: null, size: 15 },
+  // paging: { start: null, next: null, size: 15 },
   like: false,
-  likeCnt: 0,
   pagingCnt: 0,
 };
 
@@ -49,7 +48,6 @@ const initialState = {
 // start = null, size = null
 const getUserPostAPI = (userId) => {
   return function (dispatch, getState) {
-    console.log(userId);
     const board_list = getState().storypost.user_post_list;
     const pCnt = getState().storypost.pagingCnt;
     console.log("잘가지고 왔겠지", board_list);
@@ -72,7 +70,7 @@ const getUserPostAPI = (userId) => {
       // url: `${config.api}/story/${userId}/board`,
       url: `${config.api}/story/${userId}/board?lastId=${lastId}&size=${size}`,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
@@ -148,7 +146,7 @@ const getUserLikeAPI = (userId) => {
       // url: `${config.api}/story/${userId}/likeboard`,
       url: `${config.api}/story/${userId}/likeboard?lastId=${lastId}&size=${size}`,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
@@ -229,7 +227,7 @@ const editStoryPostAPI = (board_id, _edit) => {
       url: `${config.api}/board/${board_id}`,
       data: formData,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
         "Content-Type": "multipart/form-data",
       },
     }).then((res) => {
@@ -263,7 +261,7 @@ const deleteStoryPostAPI = (board_id) => {
       method: "DELETE",
       url: `${config.api}/board/${board_id}`,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
@@ -422,7 +420,6 @@ export default handleActions(
     // 내 게시물
     [SET_STORY_POST]: (state, action) =>
       produce(state, (draft) => {
-        // draft.user_post_list = action.payload.post_list;
         // 무한스크롤 시에는 push 방식으로 set 해주기
         draft.user_post_list.push(...action.payload.post_list);
         // draft.paging = action.payload.paging; // 페이징 처리

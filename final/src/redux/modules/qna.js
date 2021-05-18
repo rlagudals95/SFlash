@@ -86,7 +86,7 @@ const addQnaAPI = (qna) => {
       url: `${config.api}/qna`,
       data: qna,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
@@ -109,7 +109,7 @@ const editQnaAPI = (qna, qnaId) => {
       url: `${config.api}/qna/${qnaId}`,
       data: qna,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
@@ -138,7 +138,7 @@ const deleteQnaAPI = (qnaId) => {
       method: "DELETE",
       url: `${config.api}/qna/${qnaId}`,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
