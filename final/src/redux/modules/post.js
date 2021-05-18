@@ -180,7 +180,7 @@ const getPostAPI = () => {
           board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
     console.log("마지막 포스트 아이디", end_board);
     ////
-
+    console.log("처음에 보내주는 토큰", config.jwt);
     if (board_list.length !== 0) {
       dispatch(pagingCntUp());
     }
@@ -190,26 +190,24 @@ const getPostAPI = () => {
       method: "GET",
       // url: `${config.api}/board`,
       url: `${config.api}/board/community/scroll?size=${size}&lastBoardId=${end_board}`,
-      // data: {
-      //   size: 15,
-      //   lastAriticleId: end_board.id, // 처음에는 9000조를 보낸다
-      // },
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        // localStorage.getItem("jwt")
+        // "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
-        console.log("스크롤 요청");
-        console.log("!!!!!!!!!", res.data.data);
+        // console.log("스크롤 요청");
+        // console.log("!!!!!!!!!", res.data.data);
 
         // 라이크 값이 자꾸 false로 오니까 리스트를 뽑아보자!
-        // let like_list = [];
+        let like_list = [];
 
-        // for (let i = 0; i < res.data.data.length; i++) {
-        //   like_list.push(res.data.data[i].liked);
-        // }
+        for (let i = 0; i < res.data.data.length; i++) {
+          like_list.push(res.data.data[i].liked);
+        }
 
-        // console.log("받아오는 라이크 값들", like_list);
+        console.log("받아오는 라이크 값들", like_list);
 
         let result = res.data.data; // 서버에서 받아오는 게시물들을 start와 size를 정해서 나눠준다
         // console.log("페이징 갯수", result.length);
@@ -284,7 +282,7 @@ const getMapPostAPI = () => {
             // title: _post.title, // 포스트 title
             // content: _post.content, // 포스트 내용
             // likeCount: _post.likeCount,
-            // writerImgUrl: _post.writerImgUrl,        
+            // writerImgUrl: _post.writerImgUrl,
             // spotName: _post.spotName,
             // imgUrl: _post.boardImgReponseDtoList,
             // comment: _post.boardDetailCommentDtoList,

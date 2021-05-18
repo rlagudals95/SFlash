@@ -76,11 +76,13 @@ const getModalPost = (id) => {
 const getModalPostAPI = (boardId) => {
   return function (dispatch) {
     console.log("실행되나요 모달 데이터 겟");
+
     axios({
       method: "GET",
       url: `${config.api}/board/${boardId}/detail`,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
+        // "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {

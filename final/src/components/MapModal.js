@@ -106,10 +106,6 @@ const ModalDetail = (props) => {
     props.close();
   };
 
-  // const goProfile = () => {
-  //   history.replace("/story/hmk1995");
-  // };
-
   //작성 날짜 설정하기
   const timeForToday = (value) => {
     const today = new Date();
