@@ -48,472 +48,896 @@ const CategoryInMap = () => {
 
   React.useEffect(() => {}, []);
 
-  return (
-    // 해당 카테고리 클릭시 넘어온 포스트 중에서 카테고리가 일치한 것만 return 해줘야한다!
-    // 한가지 방법은 카테고리마다 페이지를 만들어서 클릭시 다른 페이지 렌더링
-    // 다른 방법은 PostList페이지에서 map을 돌리는 조건을 is_cafe? 로 돌리고 p.category가 cafe인것만 출력되게 돌림
+  if (!is_login) { // 로그인을 하지 않았다면?
+    return (
+      // 해당 카테고리 클릭시 넘어온 포스트 중에서 카테고리가 일치한 것만 return 해줘야한다!
+      // 한가지 방법은 카테고리마다 페이지를 만들어서 클릭시 다른 페이지 렌더링
+      // 다른 방법은 PostList페이지에서 map을 돌리는 조건을 is_cafe? 로 돌리고 p.category가 cafe인것만 출력되게 돌림
 
-    //// 여기선 카테고리를 눌렀을 때 category 모듈에 is_category 안에 상태값이 들어 가도록 설계해야한다
-    <React.Fragment>
-      <CategoryBox>
-        {/*  */}
-        {/* 전체보기 버튼 */}
-        <CategoryInfo>
-          <CateGoryTitle>
-            {/* <CategoryIcon>
-              {" "}
-              <BiIcons.BiBookBookmark size="25px" />
-            </CategoryIcon> */}
-            카테고리
-          </CateGoryTitle>
-        </CategoryInfo>
-        {/* 카페 */}
-        {cafe ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setCafe(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("카페")); // 혹시라도 구현이 힘들땐 그냥 이값을 is_cafe말고 cafe로 보내고 포스트 리스트에서 카테고리가 cafe인 것을 필터해주자
-            }}
-          >
-            #카페
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setCafe("cafe");
-              setShowMine(false);
-              setShowLike(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("카페"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
-            }}
-          >
-            #카페
-          </Btn>
-        )}
-        {/* 야경 */}
-        {night ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setNight(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("야경"));
-            }}
-          >
-            #야경
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setNight("night");
-              setShowMine(false);
-              setShowLike(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("야경"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
-            }}
-          >
-            #야경
-          </Btn>
-        )}{" "}
-        {/* 바다 */}
-        {ocean ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setOcean(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("바다"));
-            }}
-          >
-            #바다
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setOcean("night");
-              setShowMine(false);
-              setShowLike(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("바다"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
-            }}
-          >
-            #바다
-          </Btn>
-        )}
-        {/* 산 */}
-        {mountain ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setMountain(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("산"));
-            }}
-          >
-            #산
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setMountain("mountain");
-              setShowMine(false);
-              setShowLike(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("산"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
-            }}
-          >
-            #산
-          </Btn>
-        )}
-        {/* 도심 */}
-        {city ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setCity(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("도심"));
-            }}
-          >
-            #도심
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setCity("city");
-              setShowMine(false);
-              setShowLike(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("도심"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
-            }}
-          >
-            #도심
-          </Btn>
-        )}
-        {/* 전시 */}
-        {exhibition ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setExhibition(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("전시"));
-            }}
-          >
-            #전시
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setExhibition("exhibitiom");
-              setShowMine(false);
-              setShowLike(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("전시"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
-            }}
-          >
-            #전시
-          </Btn>
-        )}
-        {/* 공원 */}
-        {park ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setPark(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("공원"));
-            }}
-          >
-            #공원
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setPark("park");
-              setShowMine(false);
-              setShowLike(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("공원"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
-            }}
-          >
-            #공원
-          </Btn>
-        )}
-        {/* 꽃 */}
-        {flower ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setFlower(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("꽃"));
-            }}
-          >
-            #꽃
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setFlower("flower");
-              setShowMine(false);
-              setShowLike(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("꽃"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
-            }}
-          >
-            #꽃
-          </Btn>
-        )}
-        {/* 나홀로 */}
-        {alone ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setAlone(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("나홀로"));
-            }}
-          >
-            #나홀로
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setAlone("alone");
-              setShowMine(false);
-              setShowLike(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("나홀로"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
-            }}
-          >
-            #나홀로
-          </Btn>
-        )}
-        {couple ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setCouple(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("연인"));
-            }}
-          >
-            #연인
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setCouple("couple");
-              setShowMine(false);
-              setShowLike(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("연인"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
-            }}
-          >
-            #연인
-          </Btn>
-        )}
-        {friend ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setFreind(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("친구"));
-            }}
-          >
-            #친구
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setFreind("friend");
-              setShowMine(false);
-              setShowLike(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("친구"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
-            }}
-          >
-            #친구
-          </Btn>
-        )}
-        {pet ? (
-          <SelectedBtn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setPet(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("반려동물"));
-            }}
-          >
-            #반려동물
-          </SelectedBtn>
-        ) : (
-          <Btn
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setPet("pet");
-              setShowMine(false);
-              setShowLike(false);
-              dispatch(categoryActionsInMap.getCategoryInMap("반려동물"));
-              dispatch(categoryActionsInMap.resetMyPostInMap());
-              dispatch(categoryActionsInMap.resetMyLikeInMap());
-            }}
-          >
-            #반려동물
-          </Btn>
-        )}
-        <MiddleBox />
-        {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
-        <SpotSelectBox>
-          {/* 전체스팟 찾기 */}
-          {is_all ? ( // is_category_in_map 리스트 안에 모든 카테고리가 다 들어 있다면
-            <AllSpotsSelected
-              src={AllBtn}
+      //// 여기선 카테고리를 눌렀을 때 category 모듈에 is_category 안에 상태값이 들어 가도록 설계해야한다
+      <React.Fragment>
+        <CategoryBox>
+          {/*  */}
+          {/* 전체보기 버튼 */}
+          <CategoryInfo>
+            <CateGoryTitle>
+              {/* <CategoryIcon>
+                {" "}
+                <BiIcons.BiBookBookmark size="25px" />
+              </CategoryIcon> */}
+              카테고리
+            </CateGoryTitle>
+          </CategoryInfo>
+          {/* 카페 */}
+          {cafe ? (
+            <SelectedBtn
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                setShowMine(false);
-                setShowLike(false);
+                setCafe(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("카페")); // 혹시라도 구현이 힘들땐 그냥 이값을 is_cafe말고 cafe로 보내고 포스트 리스트에서 카테고리가 cafe인 것을 필터해주자
               }}
-            />
+            >
+              #카페
+            </SelectedBtn>
           ) : (
-            <AllSpots
-              src={AllBtn}
+            <Btn
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                setCafe(true);
-                setNight(true);
-                setOcean(true);
-                setMountain(true);
-                setFlower(true);
-                setAlone(true);
-                setCouple(true);
-                setFreind(true);
-                setPet(true);
-                setExhibition(true);
-                setCity(true);
-                setPark(true);
+                setCafe("cafe");
                 setShowMine(false);
                 setShowLike(false);
-                dispatch(
-                  categoryActionsInMap.getAllCategoryInMap(is_category_in_map)
-                );
+                dispatch(categoryActionsInMap.getCategoryInMap("카페"));
                 dispatch(categoryActionsInMap.resetMyPostInMap());
                 dispatch(categoryActionsInMap.resetMyLikeInMap());
               }}
-            />
+            >
+              #카페
+            </Btn>
           )}
-          {/* 내스팟 찾기 */}
-          {showMine ? (
-            <MyPostSpotsSelected
-              src={AllMyPostBtn}
+          {/* 야경 */}
+          {night ? (
+            <SelectedBtn
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                setShowLike(false);
+                setNight(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("야경"));
               }}
-            />
+            >
+              #야경
+            </SelectedBtn>
           ) : (
-            <MyPostSpots
-              src={AllMyPostBtn}
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setNight("night");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("야경"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #야경
+            </Btn>
+          )}{" "}
+          {/* 바다 */}
+          {ocean ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setOcean(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("바다"));
+              }}
+            >
+              #바다
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setOcean("night");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("바다"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #바다
+            </Btn>
+          )}
+          {/* 산 */}
+          {mountain ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setMountain(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("산"));
+              }}
+            >
+              #산
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setMountain("mountain");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("산"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #산
+            </Btn>
+          )}
+          {/* 도심 */}
+          {city ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCity(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("도심"));
+              }}
+            >
+              #도심
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCity("city");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("도심"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #도심
+            </Btn>
+          )}
+          {/* 전시 */}
+          {exhibition ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setExhibition(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("전시"));
+              }}
+            >
+              #전시
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setExhibition("exhibitiom");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("전시"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #전시
+            </Btn>
+          )}
+          {/* 공원 */}
+          {park ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setPark(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("공원"));
+              }}
+            >
+              #공원
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setPark("park");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("공원"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #공원
+            </Btn>
+          )}
+          {/* 꽃 */}
+          {flower ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setFlower(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("꽃"));
+              }}
+            >
+              #꽃
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setFlower("flower");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("꽃"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #꽃
+            </Btn>
+          )}
+          {/* 나홀로 */}
+          {alone ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setAlone(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("나홀로"));
+              }}
+            >
+              #나홀로
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setAlone("alone");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("나홀로"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #나홀로
+            </Btn>
+          )}
+          {couple ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCouple(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("연인"));
+              }}
+            >
+              #연인
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCouple("couple");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("연인"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #연인
+            </Btn>
+          )}
+          {friend ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setFreind(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("친구"));
+              }}
+            >
+              #친구
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setFreind("friend");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("친구"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #친구
+            </Btn>
+          )}
+          {pet ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setPet(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("반려동물"));
+              }}
+            >
+              #반려동물
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setPet("pet");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("반려동물"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #반려동물
+            </Btn>
+          )}
+          <MiddleBox />
+          {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
+          <SpotSelectBox>
+            {/* 전체스팟 찾기 */}
+            {is_all ? ( // is_category_in_map 리스트 안에 모든 카테고리가 다 들어 있다면
+              <AllSpotsSelected
+                src={AllBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setShowMine(false);
+                  setShowLike(false);
+                }}
+              />
+            ) : (
+              <AllSpots
+                src={AllBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setCafe(true);
+                  setNight(true);
+                  setOcean(true);
+                  setMountain(true);
+                  setFlower(true);
+                  setAlone(true);
+                  setCouple(true);
+                  setFreind(true);
+                  setPet(true);
+                  setExhibition(true);
+                  setCity(true);
+                  setPark(true);
+                  setShowMine(false);
+                  setShowLike(false);
+                  dispatch(
+                    categoryActionsInMap.getAllCategoryInMap(is_category_in_map)
+                  );
+                  dispatch(categoryActionsInMap.resetMyPostInMap());
+                  dispatch(categoryActionsInMap.resetMyLikeInMap());
+                }}
+              />
+            )}
+            {/* 내스팟 찾기 */}
+              <MyPostSpots
+                src={AllMyPostBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  Swal.fire({
+                    html: "로그인을 하면 지도에서 원하는 위치를 클릭해서 <br>자신의 게시물을 작성할 수 있어요! ✨",
+                    confirmButtonColor: "#ffb719",
+                  })
+                }}
+              />
+            {/* 내좋아요스팟 찾기 */}
+              <MyLikeSpots
+                src={AllMyLikeBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  Swal.fire({
+                    html: "로그인을 하고 이 버튼을 클릭하면 <br>자신이 좋아요한 게시물만 모아서 볼 수 있어요 😍",
+                    confirmButtonColor: "#ffb719",
+                  })
+                }}
+              />
+          </SpotSelectBox>
+        </CategoryBox>
+      </React.Fragment>
+    );
+  } else { // 로그인 한 조건에서 내스팟 내좋아요 버튼을 누르면 sweetalert창 대신 마커가 찍힌다
+      return (
+      // 해당 카테고리 클릭시 넘어온 포스트 중에서 카테고리가 일치한 것만 return 해줘야한다!
+      // 한가지 방법은 카테고리마다 페이지를 만들어서 클릭시 다른 페이지 렌더링
+      // 다른 방법은 PostList페이지에서 map을 돌리는 조건을 is_cafe? 로 돌리고 p.category가 cafe인것만 출력되게 돌림
+      //// 여기선 카테고리를 눌렀을 때 category 모듈에 is_category 안에 상태값이 들어 가도록 설계해야한다
+      <React.Fragment>
+        <CategoryBox>
+          {/*  */}
+          {/* 전체보기 버튼 */}
+          <CategoryInfo>
+            <CateGoryTitle>
+              {/* <CategoryIcon>
+                {" "}
+                <BiIcons.BiBookBookmark size="25px" />
+              </CategoryIcon> */}
+              카테고리
+            </CateGoryTitle>
+          </CategoryInfo>
+          {/* 카페 */}
+          {cafe ? (
+            <SelectedBtn
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 setCafe(false);
-                setNight(false);
-                setOcean(false);
-                setMountain(false);
-                setFlower(false);
-                setAlone(false);
-                setCouple(false);
-                setFreind(false);
-                setPet(false);
-                setExhibition(false);
-                setCity(false);
-                setPark(false);
-                setShowMine(true);
-                setShowLike(false);
-                dispatch(categoryActionsInMap.getMyPostInMap());
+                dispatch(categoryActionsInMap.getCategoryInMap("카페")); // 혹시라도 구현이 힘들땐 그냥 이값을 is_cafe말고 cafe로 보내고 포스트 리스트에서 카테고리가 cafe인 것을 필터해주자
               }}
-            />
-          )}
-          {/* 내좋아요스팟 찾기 */}
-          {showLike ? (
-            <MyLikeSpotsSelected
-              src={AllMyLikeBtn}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setShowMine(false);
-              }}
-            />
+            >
+              #카페
+            </SelectedBtn>
           ) : (
-            <MyLikeSpots
-              src={AllMyLikeBtn}
+            <Btn
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                setCafe(false);
-                setNight(false);
-                setOcean(false);
-                setMountain(false);
-                setFlower(false);
-                setAlone(false);
-                setCouple(false);
-                setFreind(false);
-                setPet(false);
-                setExhibition(false);
-                setCity(false);
-                setPark(false);
+                setCafe("cafe");
                 setShowMine(false);
-                setShowLike(true);
-                dispatch(categoryActionsInMap.getMyLikeInMap());
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("카페"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
               }}
-            />
+            >
+              #카페
+            </Btn>
           )}
-        </SpotSelectBox>
-      </CategoryBox>
-    </React.Fragment>
-  );
+          {/* 야경 */}
+          {night ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setNight(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("야경"));
+              }}
+            >
+              #야경
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setNight("night");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("야경"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #야경
+            </Btn>
+          )}{" "}
+          {/* 바다 */}
+          {ocean ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setOcean(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("바다"));
+              }}
+            >
+              #바다
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setOcean("night");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("바다"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #바다
+            </Btn>
+          )}
+          {/* 산 */}
+          {mountain ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setMountain(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("산"));
+              }}
+            >
+              #산
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setMountain("mountain");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("산"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #산
+            </Btn>
+          )}
+          {/* 도심 */}
+          {city ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCity(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("도심"));
+              }}
+            >
+              #도심
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCity("city");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("도심"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #도심
+            </Btn>
+          )}
+          {/* 전시 */}
+          {exhibition ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setExhibition(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("전시"));
+              }}
+            >
+              #전시
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setExhibition("exhibitiom");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("전시"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #전시
+            </Btn>
+          )}
+          {/* 공원 */}
+          {park ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setPark(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("공원"));
+              }}
+            >
+              #공원
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setPark("park");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("공원"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #공원
+            </Btn>
+          )}
+          {/* 꽃 */}
+          {flower ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setFlower(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("꽃"));
+              }}
+            >
+              #꽃
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setFlower("flower");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("꽃"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #꽃
+            </Btn>
+          )}
+          {/* 나홀로 */}
+          {alone ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setAlone(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("나홀로"));
+              }}
+            >
+              #나홀로
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setAlone("alone");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("나홀로"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #나홀로
+            </Btn>
+          )}
+          {couple ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCouple(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("연인"));
+              }}
+            >
+              #연인
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCouple("couple");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("연인"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #연인
+            </Btn>
+          )}
+          {friend ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setFreind(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("친구"));
+              }}
+            >
+              #친구
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setFreind("friend");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("친구"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #친구
+            </Btn>
+          )}
+          {pet ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setPet(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("반려동물"));
+              }}
+            >
+              #반려동물
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setPet("pet");
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.getCategoryInMap("반려동물"));
+                dispatch(categoryActionsInMap.resetMyPostInMap());
+                dispatch(categoryActionsInMap.resetMyLikeInMap());
+              }}
+            >
+              #반려동물
+            </Btn>
+          )}
+          <MiddleBox />
+          {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
+          <SpotSelectBox>
+            {/* 전체스팟 찾기 */}
+            {is_all ? ( // is_category_in_map 리스트 안에 모든 카테고리가 다 들어 있다면
+              <AllSpotsSelected
+                src={AllBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setShowMine(false);
+                  setShowLike(false);
+                }}
+              />
+            ) : (
+              <AllSpots
+                src={AllBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setCafe(true);
+                  setNight(true);
+                  setOcean(true);
+                  setMountain(true);
+                  setFlower(true);
+                  setAlone(true);
+                  setCouple(true);
+                  setFreind(true);
+                  setPet(true);
+                  setExhibition(true);
+                  setCity(true);
+                  setPark(true);
+                  setShowMine(false);
+                  setShowLike(false);
+                  dispatch(
+                    categoryActionsInMap.getAllCategoryInMap(is_category_in_map)
+                  );
+                  dispatch(categoryActionsInMap.resetMyPostInMap());
+                  dispatch(categoryActionsInMap.resetMyLikeInMap());
+                }}
+              />
+            )}
+            {/* 내스팟 찾기 */}
+            {showMine ? (
+              <MyPostSpotsSelected
+                src={AllMyPostBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setShowLike(false);
+                }}
+              />
+            ) : (
+              <MyPostSpots
+                src={AllMyPostBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setCafe(false);
+                  setNight(false);
+                  setOcean(false);
+                  setMountain(false);
+                  setFlower(false);
+                  setAlone(false);
+                  setCouple(false);
+                  setFreind(false);
+                  setPet(false);
+                  setExhibition(false);
+                  setCity(false);
+                  setPark(false);
+                  setShowMine(true);
+                  setShowLike(false);
+                  dispatch(categoryActionsInMap.getMyPostInMap());
+                }}
+              />
+            )}
+            {/* 내좋아요스팟 찾기 */}
+            {showLike ? (
+              <MyLikeSpotsSelected
+                src={AllMyLikeBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setShowMine(false);
+                }}
+              />
+            ) : (
+              <MyLikeSpots
+                src={AllMyLikeBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setCafe(false);
+                  setNight(false);
+                  setOcean(false);
+                  setMountain(false);
+                  setFlower(false);
+                  setAlone(false);
+                  setCouple(false);
+                  setFreind(false);
+                  setPet(false);
+                  setExhibition(false);
+                  setCity(false);
+                  setPark(false);
+                  setShowMine(false);
+                  setShowLike(true);
+                  dispatch(categoryActionsInMap.getMyLikeInMap());
+                }}
+              />
+            )}
+          </SpotSelectBox>
+        </CategoryBox>
+      </React.Fragment>
+    );
+  }
 };
 
 export default CategoryInMap;
