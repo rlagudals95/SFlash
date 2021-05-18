@@ -138,9 +138,11 @@ const addPostAPI = (post) => {
         let one_post = res.data.data;
         let one_marker_data = {
           id: one_post.boardId,
+          like: one_post.liked,
+          writerName: one_post.writerName,
           category: one_post.category,
-          spotName1: one_post.spotName.split(" ")[0],
-          spotName2: one_post.spotName.split(" ").splice(1).join(" "),
+          spotName1: one_post.spotName.split(" ").splice(0, 2).join(" "),
+          spotName2: one_post.spotName.split(" ").splice(2).join(" "),
           latitude: one_post.latitude,
           longitude: one_post.longitude,
           imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,

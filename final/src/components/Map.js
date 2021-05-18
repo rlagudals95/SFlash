@@ -198,33 +198,24 @@ const Maps = (props) => {
         var coord = new kakao.maps.LatLng(hereLat, hereLng);
         console.log(coord);
 
-        searchAddrFromCoords(mouseEvent.latLng, function (result, status) {
+        // 좌표 => 주소 변환 코드 시작!!!
+        // 좌표 => 법정동 주소(지번주소, 도로명주소 포함)
+        // 위도, 경도 좌표로 행정동 주소 정보를 요청하는 코드 시작!!
+        searchDetailAddrFromCoords(mouseEvent.latLng, function (result, status) {
           if (status === kakao.maps.services.Status.OK) {
             //서버로 보낼 장소 이름(spotName) 데이터를 구한다.
-            var spotName = result[0].address_name;
-            console.log(result[0]);
-            console.log(spotName);
-            setSpotName(spotName);
+            if (result[0].road_address == null) { // 도로명 주소가 없다면 지번 주소로
+              setSpotName(result[0].address.address_name); 
+            } else {
+              setSpotName(result[0].road_address.address_name); // 도로명주소가 있으면 도로명주소로
+            }
           }
         });
-
-        function searchAddrFromCoords(coords, callback) {
-          // 좌표로 행정동 주소 정보를 요청합니다
-          geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
+        // 위도,경도 좌표로 법정동(상세) 주소 정보를 요청하는 함수
+        function searchDetailAddrFromCoords(coords, callback) {
+          geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
         }
-
-        if (latitude && longitude && spotName) {
-          console.log(
-            "위도: " +
-              latitude +
-              " " +
-              ", 경도: " +
-              longitude +
-              " " +
-              ", 장소: " +
-              spotName
-          );
-        }
+        // 좌표 => 주소 변환 코드 끝!!!
 
         // 작성용 마커를 띄우기
         // 작성용 마커를 클릭하면 게시물 작성창이 뜨게 하기 : 로그인 한 사람만 되게 하기
@@ -257,15 +248,13 @@ const Maps = (props) => {
 
         kakao.maps.event.addListener(marker, "rightclick", function () {
           marker.setMap(null);
-          // marker.setVisible(false);
         });
 
         // 게시물 작성용 마커가 있는 상태에서 지도상의 다른 곳을 클릭하면
         // 원래 있던 게시물 작성용 마커는 사라지고, 새로 클릭한 자리에 게시물 작성용 마커가 뜨게 한다.
         kakao.maps.event.addListener(map, "click", function () {
           marker.setMap(null);
-          // marker.setVisible(false);
-        }) 
+        });
         // 클릭이벤트 종료
       });
     }
@@ -1121,6 +1110,11 @@ const Maps = (props) => {
     is_park,
     is_exhibition,
   ]);
+
+  // 업로드모달에 props로 전달되는 데이터
+  if (latitude && longitude && spotName) {
+    console.log("위도: " + latitude + " " + ", 경도: " + longitude + " " + ", 장소: " + spotName);
+  }
 
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다
