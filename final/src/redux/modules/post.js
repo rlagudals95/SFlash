@@ -28,6 +28,8 @@ const DELETE_MARKER = "DELETE_MARKER";
 const EDIT_MARKER = "EDIT_MARKER";
 // 페이징처리 카운트
 const PAGING_CNT = "PAGING_CNT";
+// 모달에서 수정시 커뮤니티 post에 썸네일 변경
+const POST_IMG_EDIT = "POST_IMG_EDIT";
 
 const setPost = createAction(SET_POST, (post_list) => ({
   post_list,
@@ -69,6 +71,11 @@ const editMarker = createAction(EDIT_MARKER, (board_id, markerImg) => ({
   markerImg,
 }));
 const pagingCntUp = createAction(PAGING_CNT, () => ({}));
+// 모달에서 수정시 커뮤니티 포스트의 썸네일 변경
+const postImgEdit = createAction(POST_IMG_EDIT, (board_id, postImg) => ({
+  board_id,
+  postImg,
+}));
 
 const initialState = {
   // list와 map_post_list에 게시물 데이터가 들어간다.
@@ -97,7 +104,7 @@ const addPostAPI = (post) => {
       return;
     }
 
-    console.log("??????", localStorage.getItem("jwt"));
+    // console.log("??????", localStorage.getItem("jwt"));
 
     console.log("파일들", _file);
     const formData = new FormData();
@@ -110,15 +117,15 @@ const addPostAPI = (post) => {
     // 폼데이터 이미지 파일들은 한개 씩 보내기!
     for (let i = 0; i < _file.length; i++) {
       formData.append("file", _file[i]);
-      console.log(_file[i]);
+      // console.log(_file[i]);
     }
 
     console.log("토큰이 넘어 올까요~?", config.jwt);
     //////////
     const _category = getState().category.select_category; //요기 오타가 있었네요!
     formData.append("category", _category);
-    console.log(formData);
-    console.log("폼데이터 형식", Array.from(formData));
+    // console.log(formData);
+    // console.log("폼데이터 형식", Array.from(formData));
 
     axios({
       method: "POST",
@@ -130,10 +137,9 @@ const addPostAPI = (post) => {
       },
     })
       .then((res) => {
-        console.log("애드포스트 응답", res);
-        console.log(res.data);
-        console.log(res.data.data);
-
+        // console.log("애드포스트 응답", res);
+        // console.log(res.data);
+        // console.log(res.data.data);
         // 게시물 올리면 바로 마커 뜨게 하는 리덕스 작업
         let one_post = res.data.data;
         let one_marker_data = {
@@ -171,20 +177,20 @@ const getPostAPI = () => {
   return function (dispatch, getState) {
     const board_list = getState().post.list;
     const pCnt = getState().post.pagingCnt;
-    console.log("잘가지고 왔겠지", board_list);
+    // console.log("잘가지고 왔겠지", board_list);
 
     let end_board = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
       board_list.length == 0
         ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
         : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
           board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
-    console.log("마지막 포스트 아이디", end_board);
+    // console.log("마지막 포스트 아이디", end_board);
     ////
-    console.log("처음에 보내주는 토큰", config.jwt);
+    // console.log("처음에 보내주는 토큰", config.jwt);
     if (board_list.length !== 0) {
       dispatch(pagingCntUp());
     }
-    console.log("페이징 카운트", pCnt);
+    // console.log("페이징 카운트", pCnt);
     let size = 15;
     axios({
       method: "GET",
@@ -207,7 +213,7 @@ const getPostAPI = () => {
           like_list.push(res.data.data[i].liked);
         }
 
-        console.log("받아오는 라이크 값들", like_list);
+        // console.log("받아오는 라이크 값들", like_list);
 
         let result = res.data.data; // 서버에서 받아오는 게시물들을 start와 size를 정해서 나눠준다
         // console.log("페이징 갯수", result.length);
@@ -254,7 +260,7 @@ const getPostAPI = () => {
 
 const getMapPostAPI = () => {
   return function (dispatch, getState) {
-    console.log();
+    // console.log();
 
     axios({
       method: "GET",
@@ -266,8 +272,8 @@ const getMapPostAPI = () => {
       .then((res) => {
         // console.log("서버 응답값", res);
         let map_post_list = [];
-        console.log("서버 응답값", res.data.data);
-        console.log(res.data.data[0].boardImgReponseDtoList);
+        // console.log("서버 응답값", res.data.data);
+        // console.log(res.data.data[0].boardImgReponseDtoList);
         res.data.data.forEach((_post) => {
           let post = {
             id: _post.boardId, // 포스트 id
@@ -279,6 +285,7 @@ const getMapPostAPI = () => {
             spotName2: _post.spotName.split(" ").splice(1).join(" "),
             category: _post.category,
             imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
+            // [0].imgUrl
             // title: _post.title, // 포스트 title
             // content: _post.content, // 포스트 내용
             // likeCount: _post.likeCount,
@@ -304,11 +311,11 @@ const deletePostAPI = (board_id) => {
       method: "DELETE",
       url: `${config.api}/board/${board_id}`,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         dispatch(deletePost(board_id));
       })
       .catch((err) => {
@@ -322,16 +329,21 @@ const editPostAPI = (board_id, _edit) => {
   return function (dispatch, getState) {
     const deleteImg = getState().image2.id;
     const addFile = getState().image2.edit_file;
+    const markerData = getState().post.map_post_list;
+    const postData = getState().post.list;
+
+    console.log("현재 마커데이터", markerData);
+    console.log("현재 포스트 데이터", postData);
     //여기서
     // for (let i = 0; i < addFile.length; i++) {
     //   console.log(addFile[i].imgUrl);
     // }
 
-    console.log("삭제된 이미지 아이디들", deleteImg);
-    console.log("추가될 이미지파일", addFile);
-    console.log("바뀔 게시글", board_id);
-    console.log("바뀔 타이틀", _edit.title);
-    console.log("바뀔 글내용", _edit.contents);
+    // console.log("삭제된 이미지 아이디들", deleteImg);
+    // console.log("추가될 이미지파일", addFile);
+    // console.log("바뀔 게시글", board_id);
+    // console.log("바뀔 타이틀", _edit.title);
+    // console.log("바뀔 글내용", _edit.contents);
     // addFile[i]번째에 imgUrl 이 있을경우 제외 시킨다
     const formData = new FormData();
     formData.append("title", _edit.title);
@@ -358,7 +370,7 @@ const editPostAPI = (board_id, _edit) => {
       url: `${config.api}/board/${board_id}`,
       data: formData,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
         "Content-Type": "multipart/form-data",
       },
     }).then((res) => {
@@ -378,15 +390,22 @@ const editPostAPI = (board_id, _edit) => {
         creatAt: _post.modified,
         spotName: _post.spotName,
       };
-      console.log("!??!@12", post);
-      // 수정된 게시물정보를 받고싶다
 
-      let markerImg = post.img_url[0];
-
-      dispatch(editPost(board_id, post));
+      let markerImg = post.img_url[0].imgUrl; //썸네일
+      console.log("마커이지미는 뭘까?", markerImg);
       dispatch(modalActions.modalEdit(post)); //맵 모달도 바로 수정 반영
-      // dispatch(editMarker(board_id, markerImg)); // 맵에서도 수정 바로 반영 이미지만 바꿔줘도 될거같긴한데.. 흠..
-      /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌
+
+      //여기에 조건을 줘야 에러가 안뜬다 어떤 조건을 줘야할까? 각각 데이터가 리덕스에 저장 되어있을 때만 구동되게 조건을준다
+
+      if (postData.length > 1) {
+        //서로의 데이터 갯수가 1개 이상 즉 존재 할때만 각각 실행
+        dispatch(postImgEdit(board_id, markerImg));
+      } // 커뮤니티 썸네일 수정 // 마커랑 똑같이 썸네일만 수정}
+
+      if (markerData.length > 1) {
+        dispatch(editMarker(board_id, markerImg));
+      } // 맵에서도 수정 바로 반영 이미지만 바꿔줘도 될거같긴한데.. 흠..
+      /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌}
     });
   };
 };
@@ -402,15 +421,15 @@ const searchPostAPI = (search, start = null, size = null) => {
         search
       )}`,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
         "Content-Type": "text/plain; charset=utf-8",
       },
     })
       .then((res) => {
-        console.log("스타트와 사이즈", start, size);
-        console.log("검색결과", res.data.data);
+        // console.log("스타트와 사이즈", start, size);
+        // console.log("검색결과", res.data.data);
         let result = res.data.data.slice(start, size);
-        console.log("슬라이스한 데이터", result);
+        // console.log("슬라이스한 데이터", result);
         if (result.length == 0) {
           // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
           dispatch(loading(false));
@@ -451,8 +470,8 @@ const searchPostAPI = (search, start = null, size = null) => {
 const editLikeP = (post_id, post) => {
   //PLUS
   return function (dispatch, getState) {
-    console.log("dd", post_id); // 포스트 id 잘온다
-    console.log("cc", post); // 포스트도 잘온다
+    // console.log("dd", post_id); // 포스트 id 잘온다
+    // console.log("cc", post); // 포스트도 잘온다
 
     let _like = post.like;
     let _likeCnt = post.likeCnt;
@@ -480,8 +499,8 @@ const editLikeP = (post_id, post) => {
 const editLikeD = (post_id, post) => {
   //PLUS
   return function (dispatch, getState) {
-    console.log("dd", post_id); // 포스트 id 잘온다
-    console.log("cc", post); // 포스트도 잘온다
+    // console.log("dd", post_id); // 포스트 id 잘온다
+    // console.log("cc", post); // 포스트도 잘온다
 
     let _like = post.like;
     let _likeCnt = post.likeCnt;
@@ -501,7 +520,7 @@ const editLikeD = (post_id, post) => {
       writerName: post.writerName,
       writerId: post.writerId,
     };
-    console.log("rrr", board);
+    // console.log("rrr", board);
 
     dispatch(add_Like(post_id, board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
   };
@@ -554,8 +573,8 @@ export default handleActions(
       }),
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.post);
-        console.log(action.payload.board_id); //??
+        // console.log(action.payload.post);
+        // console.log(action.payload.board_id); //??
         let idx = draft.list.findIndex((p) => p.id == action.payload.board_id);
         // 수정한 게시물을 찾기 위해서 findindex
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
@@ -621,23 +640,29 @@ export default handleActions(
     //게시글 수정시 마커 이미지도 바로 수정하기 위해서 만듦
     [EDIT_MARKER]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.markerImg);
-        console.log(action.payload.board_id);
+        console.log("받은 마커 이미지는?", action.payload.markerImg);
+        // console.log(action.payload.board_id);
         let idx = draft.map_post_list.findIndex(
           (p) => p.id == action.payload.board_id
         );
+        draft.map_post_list[idx].imgForOverlay = action.payload.markerImg;
         // 수정한 게시물을 찾기 위해서 findindex
-        draft.map_post_list[idx] = {
-          //[idx].imgUrl[0]? == action.payload.markerImg
-          ...draft.map_post_list[idx],
-          ...action.payload.markerImg,
-        };
+        // draft.map_post_list[idx] = {
+        //   //[idx].imgUrl[0]? == action.payload.markerImg
+        //   ...draft.map_post_list[idx],
+        //   ...action.payload.markerImg,
+        // };
       }),
 
     [PAGING_CNT]: (state, action) =>
       produce(state, (draft) => {
         console.log("카운트업!");
         draft.pagingCnt = draft.pagingCnt + 15;
+      }),
+    [POST_IMG_EDIT]: (state, action) =>
+      produce(state, (draft) => {
+        let idx = draft.list.findIndex((p) => p.id == action.payload.board_id);
+        draft.list[idx].img_url = action.payload.postImg;
       }),
   },
   initialState

@@ -86,7 +86,6 @@ const initialState = {
 //요기서 수정해야하는 board를 찾아서 image에 저장해준다 image를 이용해 프리뷰를 뿌려주고 x 버튼으로 수정 해준다
 const getPost = (board_id) => {
   return function (dispatch, getState) {
-    console.log("이거아닌데??");
     //여기선 고쳐야할 포스트를 찾아서 edit(draft)로 만들어주자
     const post_list = getState().post.list; // 일단 가져온다
 
@@ -113,7 +112,7 @@ const getPost = (board_id) => {
 
 const getModalPost = (board) => {
   return function (dispatch, getState) {
-    console.log("보드 가져왔니?", board);
+    // console.log("보드 가져왔니?", board);
 
     const onlyImg = board.img_url;
 
@@ -136,7 +135,7 @@ const ChangeEdit = (Img_idx) => {
       return selectImg !== p.imgUrlId;
     });
 
-    console.log("??", c);
+    // console.log("??", c);
   };
 };
 
@@ -239,7 +238,7 @@ export default handleActions(
       }),
     [DELETE_FILE_IDX]: (state, action) =>
       produce(state, (draft) => {
-        console.log("파일지워야되", action.payload.idx); //이미지 리더 값이 나온다... 파일이랑 연관짓자
+        // console.log("파일지워야되", action.payload.idx); //이미지 리더 값이 나온다... 파일이랑 연관짓자
         // 처음엔 이미지 파일과 같이 들어있는 배열이온다
         //idx를 받으면 해당 패열에서 idx 받은 곳의 요소 1개를 삭제한다
         draft.edit_file.splice(action.payload.idx, 1);

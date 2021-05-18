@@ -47,7 +47,7 @@ const getComment = (board_id) => {
   return function (dispatch, getState) {
     //여기서 일단 코멘트 리스트를 다 가져와서 list에 넣어주자
     const post_list = getState().post.list;
-    console.log("가져와요!", post_list);
+    // console.log("가져와요!", post_list);
 
     //받은 보드 아이디와 같은 포스트 하나를 찾자
     const idx = post_list.findIndex((p) => {
@@ -56,7 +56,7 @@ const getComment = (board_id) => {
 
     const getCommentPost = post_list[idx];
 
-    console.log("이거 가져와", getCommentPost);
+    // console.log("이거 가져와", getCommentPost);
 
     const comment_list = getCommentPost.comment;
 
@@ -74,7 +74,7 @@ const getCommentAPI = (board_id) => {
       url: `${config.api}/board/{boardId}/comment`,
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         let commnet_list = [];
         res.data.forEach((c) => {
           let comment = {
@@ -95,21 +95,21 @@ const addCommentAPI = (comment, board_id) => {
   return function (dispatch) {
     // console.log("댓글와유?", comment);
     // console.log("아이디와유?", board_id);
-    console.log(config.jwt);
+    // console.log(config.jwt);
 
     axios({
       url: `${config.api}/board/${board_id}/comment`,
       method: "POST",
       data: { content: comment },
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
         console.log(res);
 
         const comment_data = res.data.data;
-        console.log("댓글정보", comment_data);
+        // console.log("댓글정보", comment_data);
         let comment_list = {
           commentId: comment_data.commentId,
           content: comment_data.content,
@@ -119,7 +119,7 @@ const addCommentAPI = (comment, board_id) => {
           writerName: comment_data.nickName,
         };
 
-        console.log("댓글추가반응", res);
+        // console.log("댓글추가반응", res);
         dispatch(addComment(comment_list));
         // dispatch(getComment(board_id)); //이래 해줘도 되나?
         // dispatch(postActions.addComment(comment, board_id));
@@ -140,7 +140,7 @@ const deleteCommentAPI = (id) => {
       method: "DELETE",
       url: `${config.api}/board/comment/${id}`, //서버에서 지우고
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
@@ -160,7 +160,6 @@ export default handleActions(
         //  draft.list[action.payload.post_id] 안에 아무것도 없는 상태이면 배열도 없는 상태여서
         // unshift도 되지 않습니다. 그래서 아무것도 없는 경우일 때를 따로 설정했습니다.
 
-        console.log("?????????", action.payload.comment_list);
         draft.list.unshift(action.payload.comment_list);
 
         // if (!draft.list[action.payload.board_id]) {

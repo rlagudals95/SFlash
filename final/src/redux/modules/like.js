@@ -53,10 +53,10 @@ const getLikePost = () => {
 const addLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
     const paging = getState().post.paging;
-    console.log("보드아이디", board_id);
-    console.log("보드", board);
+    // console.log("보드아이디", board_id);
+    // console.log("보드", board);
 
-    console.log("토큰있나요??", localStorage.getItem("jwt"));
+    // console.log("토큰있나요??", localStorage.getItem("jwt"));
     axios({
       method: "POST",
       url: `${config.api}/board/${board_id}/like`,
@@ -65,22 +65,22 @@ const addLikeAPI = (board_id, board) => {
       },
     })
       .then((res) => {
-        console.log("좋아요 완료!", res);
+        // console.log("좋아요 완료!", res);
         dispatch(PostActions.editLikeP(board_id, board)); // 리덕스
 
         // dispatch(addLike(true));
         // dispatch(getLike(true));
       })
       .catch((error) => {
-        window.alert("좋아요를 할 수 없습니다.");
+        window.alert("로그인 후 이용해 주세요~.");
       });
   };
 };
 
 const disLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
-    console.log("보드아이디", board_id);
-    console.log("보드", board);
+    // console.log("보드아이디", board_id);
+    // console.log("보드", board);
 
     axios({
       method: "DELETE",
@@ -90,7 +90,7 @@ const disLikeAPI = (board_id, board) => {
       },
     })
       .then((res) => {
-        console.log("좋아요 취소!", res);
+        // console.log("좋아요 취소!", res);
         dispatch(PostActions.editLikeD(board_id, board));
         // console.log(res);
         // dispatch(disLike(false));

@@ -36,9 +36,6 @@ const ModalDetail = (props) => {
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
 
-  // console.log("닉네임", nickname);
-  // const is_like = props.like 라이크가 있냐 확인?
-
   const openEditModal = () => {
     setEditModal(true);
   };
@@ -110,9 +107,7 @@ const ModalDetail = (props) => {
     setComments(e.target.value);
   };
 
-  // const goProfile = () => {
-  //   history.replace("/story/hmk1995");
-  // };
+
 
   //작성 날짜 설정하기
   const timeForToday = (value) => {
@@ -140,22 +135,7 @@ const ModalDetail = (props) => {
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
 
-  // console.log("프로필사진", props.profileImg);
 
-  // 콘텐츠 내용이 너무 길때 더보기로 대체해준다
-  // const Box = () => {
-  //   const contentRef = useRef(null);
-  //   const onClick = (e) => {
-  //     contentRef.current.classList.add("show");
-  //     e.currentTarget.classList.add("hide");
-  //   };
-  //   return (
-  //     <Wrap>
-  //       <Ellipsis ref={contentRef}>{data}</Ellipsis>
-  //       <Button>...더보기</Button>
-  //     </Wrap>
-  //   );
-  // };
 
   return (
     <React.Fragment>
@@ -357,16 +337,7 @@ const ModalDetail = (props) => {
   );
 };
 
-// background-image: url("${(props) => props.src}");
-//   background-size: cover;
-//   object-fit: cover;
-//   background-position: 0px;
-//   background-repeat: no-repeat;
-//   border: none;
-//   box-sizing: border-box;
-//   width: 100%;
-//   height: 400px;
-//   height: 400px;
+
 
 const LikeBox = styled.div`
   align-items: center;

@@ -8,7 +8,7 @@ import * as GrIcons from "react-icons/gr";
 import * as MdIcons from "react-icons/md";
 import { GrCircleQuestion } from "react-icons/gr";
 import { Link } from "react-router-dom";
-import { SidebarData } from "./SidebarData";
+
 import "../Css/Navbar.css";
 import { IconContext } from "react-icons";
 import Category from "./Category";
@@ -294,7 +294,7 @@ const SelectedIcon = styled.div`
 const LOGO = styled.div`
   margin-bottom: 6vh;
   background-color: transparent;
-  @media (max-width: 1450px) {
+  @media (max-width: 1400px) {
     /* 1450밑으로 넓이가 내려가면 */
     display: none;
   }
