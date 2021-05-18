@@ -147,7 +147,7 @@ const Maps = (props) => {
       var options = {
         //지도를 생성할 때 필요한 기본 옵션
         center: new kakao.maps.LatLng(35.83819028173818, 127.88227108131916), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
-        level: 12, //지도 확대 레벨
+        level: 11, //지도 확대 레벨
       };
 
       var map = new kakao.maps.Map(container, options); // 지도생성 및 객체 리턴
