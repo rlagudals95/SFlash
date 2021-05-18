@@ -160,6 +160,11 @@ const Maps = (props) => {
       setMap(map);
     }
 
+    // var centerPoint = map.getCenter();
+    // console.log("중심좌표: " + centerPoint);
+    // console.log("중심좌표 위도: " + centerPoint.getLat());
+    // console.log("중심좌표 경도: " + centerPoint.getLng());
+
     // 콘솔창에 클릭한 위치의 위도 경도가 표시되는 코드
     // 지도에 클릭 이벤트를 등록합니다 : 클릭하면 위도, 경도, 주소 정보를 받고 작성창이 뜨게 한다
     // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다.
@@ -237,7 +242,7 @@ const Maps = (props) => {
           position: position,
           image: writeMarkerImage,
           // clickable: true,
-          draggable: true,
+          // draggable: true,
           zIndex: 50,
         });
 
@@ -251,8 +256,16 @@ const Maps = (props) => {
         });
 
         kakao.maps.event.addListener(marker, "rightclick", function () {
-          marker.setVisible(false);
+          marker.setMap(null);
+          // marker.setVisible(false);
         });
+
+        // 게시물 작성용 마커가 있는 상태에서 지도상의 다른 곳을 클릭하면
+        // 원래 있던 게시물 작성용 마커는 사라지고, 새로 클릭한 자리에 게시물 작성용 마커가 뜨게 한다.
+        kakao.maps.event.addListener(map, "click", function () {
+          marker.setMap(null);
+          // marker.setVisible(false);
+        }) 
         // 클릭이벤트 종료
       });
     }
@@ -290,10 +303,10 @@ const Maps = (props) => {
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
           '<div class="modalcontainer">' +
-            `<img class="picbox"  src=${mypost.imgForOverlay} >` +
+            `<img class="picbox" src=${mypost.imgForOverlay} >` +
             '<div class="head">' +
-                `<div class="spotname">${mypost.spotName1}</div>` +
-                `<div class="spotname">${mypost.spotName2}</div>` +
+                `<div class="spotname1">${mypost.spotName1}</div>` +
+                `<div class="spotname2">${mypost.spotName2}</div>` +
             "</div>" +
           "</div>";
 
@@ -352,11 +365,11 @@ const Maps = (props) => {
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${mylike.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${mylike.spotName1}</div>` +
-          `<div class="spotname">${mylike.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox" src=${mylike.imgForOverlay} >` +
+            '<div class="head">' +
+                `<div class="spotname1">${mylike.spotName1}</div>` +
+                `<div class="spotname2">${mylike.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -409,12 +422,12 @@ const Maps = (props) => {
         });
 
         // 모달창(커스텀오버레이)에 들어갈 내용
-        var content =
+        const content =
           '<div class="modalcontainer">' +
-            `<img class="picbox"  src=${cafe.imgForOverlay} >` +
+            `<img class="picbox" src=${cafe.imgForOverlay} >` +
             '<div class="head">' +
-              `<div class="spotname">${cafe.spotName1}</div>` +
-              `<div class="spotname">${cafe.spotName2}</div>` +
+                `<div class="spotname1">${cafe.spotName1}</div>` +
+                `<div class="spotname2">${cafe.spotName2}</div>` +
             "</div>" +
           "</div>";
 
@@ -468,11 +481,11 @@ const Maps = (props) => {
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${night.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${night.spotName1}</div>` +
-          `<div class="spotname">${night.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox" src=${night.imgForOverlay} >` +
+            '<div class="head">' +
+                `<div class="spotname1">${night.spotName1}</div>` +
+                `<div class="spotname2">${night.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -522,13 +535,13 @@ const Maps = (props) => {
         });
 
         // 모달창(커스텀오버레이)에 들어갈 내용
-        var content =
+        const content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${ocean.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${ocean.spotName1}</div>` +
-          `<div class="spotname">${ocean.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox" src=${ocean.imgForOverlay} >` +
+            '<div class="head">' +
+                `<div class="spotname1">${ocean.spotName1}</div>` +
+                `<div class="spotname2">${ocean.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -581,13 +594,13 @@ const Maps = (props) => {
         });
 
         // 모달창(커스텀오버레이)에 들어갈 내용
-        var content =
+        const content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${mountain.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${mountain.spotName1}</div>` +
-          `<div class="spotname">${mountain.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox" src=${mountain.imgForOverlay} >` +
+            '<div class="head">' +
+                `<div class="spotname1">${mountain.spotName1}</div>` +
+                `<div class="spotname2">${mountain.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -638,13 +651,13 @@ const Maps = (props) => {
         });
 
         // 모달창(커스텀오버레이)에 들어갈 내용
-        var content =
+        const content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${flower.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${flower.spotName1}</div>` +
-          `<div class="spotname">${flower.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox" src=${flower.imgForOverlay} >` +
+            '<div class="head">' +
+                `<div class="spotname1">${flower.spotName1}</div>` +
+                `<div class="spotname2">${flower.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -695,13 +708,13 @@ const Maps = (props) => {
         });
 
         // 모달창(커스텀오버레이)에 들어갈 내용
-        var content =
+        const content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${alone.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${alone.spotName1}</div>` +
-          `<div class="spotname">${alone.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox" src=${alone.imgForOverlay} >` +
+            '<div class="head">' +
+                `<div class="spotname1">${alone.spotName1}</div>` +
+                `<div class="spotname2">${alone.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -752,13 +765,13 @@ const Maps = (props) => {
         });
 
         // 모달창(커스텀오버레이)에 들어갈 내용
-        var content =
+        const content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${couple.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${couple.spotName1}</div>` +
-          `<div class="spotname">${couple.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox" src=${couple.imgForOverlay} >` +
+            '<div class="head">' +
+                `<div class="spotname1">${couple.spotName1}</div>` +
+                `<div class="spotname2">${couple.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -808,13 +821,13 @@ const Maps = (props) => {
         });
 
         // 모달창(커스텀오버레이)에 들어갈 내용
-        var content =
+        const content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${friend.imgUrlOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${friend.spotName1}</div>` +
-          `<div class="spotname">${friend.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox" src=${friend.imgForOverlay} >` +
+            '<div class="head">' +
+                `<div class="spotname1">${friend.spotName1}</div>` +
+                `<div class="spotname2">${friend.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -864,13 +877,13 @@ const Maps = (props) => {
         });
 
         // 모달창(커스텀오버레이)에 들어갈 내용
-        var content =
+        const content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${pet.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${pet.spotName1}</div>` +
-          `<div class="spotname">${pet.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox" src=${pet.imgForOverlay} >` +
+            '<div class="head">' +
+                `<div class="spotname1">${pet.spotName1}</div>` +
+                `<div class="spotname2">${pet.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -921,13 +934,13 @@ const Maps = (props) => {
         });
 
         // 모달창(커스텀오버레이)에 들어갈 내용
-        var content =
+        const content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${city.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${city.spotName1}</div>` +
-          `<div class="spotname">${city.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox" src=${city.imgForOverlay} >` +
+            '<div class="head">' +
+                `<div class="spotname1">${city.spotName1}</div>` +
+                `<div class="spotname2">${city.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -977,13 +990,13 @@ const Maps = (props) => {
         });
 
         // 모달창(커스텀오버레이)에 들어갈 내용
-        var content =
+        const content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${park.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${park.spotName1}</div>` +
-          `<div class="spotname">${park.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox" src=${park.imgForOverlay} >` +
+            '<div class="head">' +
+                `<div class="spotname1">${park.spotName1}</div>` +
+                `<div class="spotname2">${park.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -1039,11 +1052,11 @@ const Maps = (props) => {
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${exhibition.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${exhibition.spotName1}</div>` +
-          `<div class="spotname">${exhibition.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox" src=${exhibition.imgForOverlay} >` +
+            '<div class="head">' +
+                `<div class="spotname1">${exhibition.spotName1}</div>` +
+                `<div class="spotname2">${exhibition.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
