@@ -70,35 +70,6 @@ const ModalDetail = (props) => {
     slidesToScroll: 1,
   };
 
-  // 받아온 이미지들
-  // let image_list = [];
-
-  // for (let i = 0; i < props.img_url; i++) {
-  //   image_list.push(props.img_url[i]);
-  // }
-
-  // let images = [];
-
-  // image_list.forEach((img) => {
-  //   images.push(img.imgUrl);
-  // });
-
-  // console.log("이미지들!!", images);
-
-  let comment_list = [];
-  // for (let i = 0; i < props.comment.length; i++) {
-  //   comment_list.push(props.comment[i]);
-  // }
-
-  // let comment_list = [];
-  // for (let i = 0; i < props.comment; i++) {
-  //   comment_list.push(props.comment[i]);
-  // }
-
-  // const comment_List = useSelector((state) => state.comment.list);
-
-  // console.log("이포스트의 댓글은??", comment_List);
-
   const is_comment = commentData ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
@@ -128,6 +99,11 @@ const ModalDetail = (props) => {
 
   const selectComment = (e) => {
     setComments(e.target.value);
+  };
+
+  const closeModal = (e) => {
+    dispatch(ModalActions.resetModal(false));
+    props.close();
   };
 
   // const goProfile = () => {
@@ -166,7 +142,7 @@ const ModalDetail = (props) => {
         commentData && ( //모달데이터가 들어와야 실행!
           <React.Fragment>
             <React.Fragment>
-              <Component onClick={props.close} />
+              <Component onClick={closeModal} />
               <ModalComponent>
                 <ModalHeader>
                   <ModalLeftHeader>
@@ -191,7 +167,7 @@ const ModalDetail = (props) => {
                     </React.Fragment>
                     {/* <PostDate>{timeForToday(props.creatAt)}</PostDate> */}
                     <ExitContainer>
-                      <ExitBtn onClick={props.close}>
+                      <ExitBtn onClick={closeModal}>
                         <CloseIcon fontSize="large" />
                       </ExitBtn>
                     </ExitContainer>
