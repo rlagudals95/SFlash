@@ -23,6 +23,8 @@ const MODAL_ADD_LIKE = "MODAL_ADD_LIKE";
 const MODAL_DIS_LIKE = "MODAL_DIS_LIKE";
 //
 const MODAL_EDIT = "MODAL_EDIT";
+// 모달을 닫고 다른 모달을 클릭시 이전 데이터가 보이는 현상방지하기 위해 데이터를 초기화 해줌
+const RESET_MODAL = "RESET_MODAL";
 
 const getModal = createAction(GET_MODAL, (post) => ({ post }));
 const getModalId = createAction(GET_MODAL_ID, (id) => ({ id }));
@@ -43,6 +45,8 @@ const modalAddLike = createAction(MODAL_ADD_LIKE, (post) => ({ post }));
 const modalDisLike = createAction(MODAL_DIS_LIKE, (post) => ({ post }));
 // 수정 구현
 const modalEdit = createAction(MODAL_EDIT, (post) => ({ post }));
+// 모달을 닫고 다른 모달을 클릭시 이전 데이터가 보이는 현상방지하기 위해 데이터를 초기화 해줌
+const resetModal = createAction(RESET_MODAL, (post) => ({ post }));
 
 const getModalPost = (id) => {
   return function (dispatch, getState) {
@@ -342,6 +346,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.post = action.payload.post;
       }),
+    [RESET_MODAL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.post = action.payload.post;
+      }),
   },
   initialState
 );
@@ -355,6 +363,7 @@ const actionCreators = {
   modalAddLikeAPI,
   modalDisLikeAPI,
   modalEdit,
+  resetModal,
 };
 
 export { actionCreators };
