@@ -290,11 +290,11 @@ const Maps = (props) => {
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${mypost.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${mypost.spotName1}</div>` +
-          `<div class="spotname">${mypost.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox"  src=${mypost.imgForOverlay} >` +
+            '<div class="head">' +
+                `<div class="spotname">${mypost.spotName1}</div>` +
+                `<div class="spotname">${mypost.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
@@ -1215,7 +1215,7 @@ const SearchInput = styled.input`
   border-radius: 10px;
   padding-left: 15px;
   font-size: 15px;
-  border: none;
+  border: 3px solid rgb(255, 183, 25);
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgb(255, 183, 25);
