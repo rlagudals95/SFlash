@@ -1,48 +1,161 @@
 import React from "react";
 import styled from "styled-components";
 import { Grid } from "../elements/index";
-
-import SFlash_logo from "../static/SFlash_logo.svg";
+import Modal from "react-modal";
+import SFlash_logo_darkgrey from "../static/SFlash_logo_darkgrey.svg";
 
 const About = (props) => {
-   
+  const aboutUs = props.aboutUs;
+
+  const [modal, setModal] = React.useState(false);
+  const openModal = () => {
+    setModal(true);
+  };
+  const closeModal = () => {
+    setModal(false);
+  };
+
   return (
     <React.Fragment>
-      <Background>
-      <Container>
-        <Grid height="50px"></Grid>
-        <SflashLogo src = {SFlash_logo}/>
-        <Grid height="50px"></Grid>
-        <Text>인스타, 블로그 남들은 알고 나만 모르는 곳들... 대체 거기가 어디야?</Text>
-        <Text>늘 가던 곳이 아닌 새로운 스팟이 필요하다면? 내 주변에 숨겨진 스팟이 궁금하다면?</Text>
-        <Text>SFlash는 지도와 이미지로 멋진 포토스팟을 찾을 수 있도록 도와주는 서비스 입니다.</Text>
-        <Text>내 스토리에 마음에 드는 스팟을 모으고, 나만의 스팟도 공유하며 스플래쉬(SFlash) 하세요 :) </Text>
-      </Container>
-      </Background>
+      <Wrapper>
+        <Grid height="80px"></Grid>
+        <UpperContainer>
+          <SflashLogo src={SFlash_logo_darkgrey} />
+          <Grid height="20px"></Grid>
+          <Text>We are team SFlash!</Text>
+        </UpperContainer>
+        <Grid height="40px"></Grid>
+        <BottomContainer>
+          {aboutUs.map((a) => {
+            return (
+              <ProfileContainer key={a.id} {...a}>
+                <ProfileImg src={a.img_url} onClick={openModal} />
+                <Name>{a.name}</Name>
+                <Position>{a.position}</Position>
+                <Modal isOpen={modal} close={closeModal} style={modalStyle}>
+                  <CloseButton
+                    src="https://image.flaticon.com/icons/png/512/458/458595.png"
+                    onClick={closeModal}
+                  />
+
+                  <Grid flex>
+                    <ProfileImg2 src={a.img_url} />
+                    <Grid>
+                      <ModalProfileContainer>
+                        <Name style={{ fontSize: "1.8rem" }}>{a.name}</Name>
+                        <Position style={{ fontSize: "1.1rem" }}>
+                          {a.position}
+                        </Position>
+                      </ModalProfileContainer>
+                    </Grid>
+                  </Grid>
+                </Modal>
+              </ProfileContainer>
+            );
+          })}
+          <Grid height="50px"></Grid>
+        </BottomContainer>
+      </Wrapper>
     </React.Fragment>
-  
   );
 };
 
-const Container = styled.div`
-  margin: auto;
-  height: 100%;
+About.defaultProps = {
+  aboutUs: [
+    {
+      id: 0,
+      name: "Hyunjun Jang",
+      position: "Backend Junior",
+      img_url:
+        "https://nomadbiba.com/wp-content/uploads/2017/06/neonbrand-263869-unsplash.jpg",
+    },
+    {
+      id: 1,
+      name: "Hyunjun Jang",
+      position: "Backend Junior",
+      img_url:
+        "https://nomadbiba.com/wp-content/uploads/2017/06/neonbrand-263869-unsplash.jpg",
+    },
+    {
+      id: 2,
+      name: "Hyunjun Jang",
+      position: "Backend Junior",
+      img_url:
+        "https://nomadbiba.com/wp-content/uploads/2017/06/neonbrand-263869-unsplash.jpg",
+    },
+    {
+      id: 3,
+      name: "Hyunjun Jang",
+      position: "Backend Junior",
+      img_url:
+        "https://nomadbiba.com/wp-content/uploads/2017/06/neonbrand-263869-unsplash.jpg",
+    },
+    {
+      id: 4,
+      name: "Hyunjun Jang",
+      position: "Backend Junior",
+      img_url:
+        "https://nomadbiba.com/wp-content/uploads/2017/06/neonbrand-263869-unsplash.jpg",
+    },
+    {
+      id: 5,
+      name: "Hyunjun Jang",
+      position: "Backend Junior",
+      img_url:
+        "https://nomadbiba.com/wp-content/uploads/2017/06/neonbrand-263869-unsplash.jpg",
+    },
+    {
+      id: 6,
+      name: "Hyunjun Jang",
+      position: "Backend Junior",
+      img_url:
+        "https://nomadbiba.com/wp-content/uploads/2017/06/neonbrand-263869-unsplash.jpg",
+    },
+    {
+      id: 7,
+      name: "Hyunjun Jang",
+      position: "Backend Junior",
+      img_url:
+        "https://nomadbiba.com/wp-content/uploads/2017/06/neonbrand-263869-unsplash.jpg",
+    },
+  ],
+};
 
-  margin-top: 12vh;
-  @media (min-width: 1280px) {
-    width: 1024px;
-  }
-  @media (max-width: 1280px) {
-    width: 800px;
-  }
-  @media (max-width: 960px) {
-    width: calc(100% - 5rem);
-    max-width: 800px;
-  }
-  @media (max-width: 400px) {
-    width: calc(100% - 2rem);
-  }
-  /* background-color: red; */
+const Wrapper = styled.div`
+  ${(props) => props.theme.responsiveContainer};
+`;
+const SflashLogo = styled.img`
+  width: 110px;
+  margin: auto;
+  text-align: center;
+`;
+
+const Text = styled.div`
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: grey;
+`;
+
+const UpperContainer = styled.div`
+  text-align: center;
+`;
+
+const BottomContainer = styled.div`
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-gap: 20px;
+  margin: auto;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+`;
+
+const ProfileContainer = styled.div`
+  margin: 10px;
+  text-align: center;
+  margin-bottom: 50px;
 `;
 
 const Title = styled.div`
@@ -51,34 +164,79 @@ const Title = styled.div`
   margin-bottom: 50px;
 `;
 
-const Text = styled.div`
-  font-size: 1.3rem;
-  font-weight: 500;
-  margin-bottom: 10px;
-  color: #ffffff;
-`;
-
-const Background = styled.div`
-position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  width:100%;
-  height:100%;
-  background-color: #1b2685;
-  z-index:-10;
-`;
-
-const SflashLogo = styled.img`
-  width: 150px;
-  height: 150px;
+const ProfileImg = styled.img`
+  width: 180px;
+  height: 180px;
+  margin: 10px;
+  border-radius: 170px;
   background-size: cover;
-  z-index:100;
+  object-fit: cover;
+  :hover {
+    cursor: pointer;
+    opacity: 0.5;
+  }
 `;
 
+const ProfileImg2 = styled.img`
+  width: 360px;
+  height: 100%;
 
+  background-size: cover;
+  object-fit: cover;
+`;
 
+const Name = styled.div`
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: ${(props) => props.theme.main_grey};
+`;
+const Position = styled.div`
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: ${(props) => props.theme.main_grey};
+`;
 
+const modalStyle = {
+  overlay: {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    right: "0",
+    bottom: "0",
+    alignItems: "center",
+    textAlign: "cetner",
+    backgroundColor: "rgba(48, 48, 48, 0.2)",
+    transition: "opacity 2000ms ease-in-out",
+    zIndex: "1000",
+  },
+  content: {
+    width: "800px",
+    height: "600px",
+    margin: "auto",
+    padding: "0px",
+    border: "none",
+    boxShadow: "0 2px 12px 0 rgba(0, 0, 0, 0.1)",
+    zIndex: "1000",
+  },
+};
+
+const ModalProfileContainer = styled.div`
+  margin: 80px 40px;
+`;
+
+const CloseButton = styled.img`
+  width: 15px;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  padding: 10px;
+  border-radius: 20px;
+  &:hover {
+    cursor: pointer;
+    color: grey;
+    background-color: #eee;
+  }
+`;
 
 export default About;

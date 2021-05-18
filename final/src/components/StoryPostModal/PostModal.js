@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import CloseIcon from "@material-ui/icons/Close";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
@@ -45,6 +45,7 @@ const ModalDetail = (props) => {
   const [is_Editmodal, setEditModal] = useState();
 
   console.log("모달 데이타", modalData);
+  // console.log("모달 데이타", modalData.category);
 
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
@@ -53,7 +54,6 @@ const ModalDetail = (props) => {
   // const is_like = props.like 라이크가 있냐 확인?
 
   const openEditModal = () => {
-    // props.closeDetail();
     setEditModal(true);
   };
 
@@ -178,12 +178,16 @@ const ModalDetail = (props) => {
                             : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                         }
                         onClick={() => {
-                          history.replace(`/story/${modalData.writerId}`); // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                          window.location.replace(
+                            `/story/${modalData.writerId}`
+                          ); // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                         }}
                       />
                       <ModalAuthor
                         onClick={() => {
-                          history.replace(`/story/${modalData.writerId}`); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                          window.location.replace(
+                            `/story/${modalData.writerId}`
+                          ); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                         }}
                       >
                         {modalData.writerName}
@@ -272,7 +276,11 @@ const ModalDetail = (props) => {
                                 cancelButtonColor: "#eee",
                               }).then((result) => {
                                 if (result.isConfirmed) {
-                                  dispatch(storyPostActions.deleteStoryPostAPI(modalData.id)); //이거 왜안될까??....
+                                  dispatch(
+                                    storyPostActions.deleteStoryPostAPI(modalData.id)
+                                  ); //이거 왜안될까??....
+                                  dispatch(storyPostActions.deleteStoryMarker(modalData.id)
+                                  );
                                   props.close(); //삭제 바로반영?
                                 }
                               });
@@ -283,13 +291,13 @@ const ModalDetail = (props) => {
                         </ModalEdit>
                       ) : (
                         <ModalCate>
-                          <ModalCateInner>#</ModalCateInner>
+                          <ModalCateInner>#{modalData.category}</ModalCateInner>
                         </ModalCate>
                       )}
                     </InfoBoxInner>
                     <InfoOutter>
                       <PostTilte>
-                        {modalData.title}{" "}
+                        {modalData.title}
                         <PostDate>{timeForToday(modalData.creatAt)}</PostDate>
                       </PostTilte>
                       <PostContents>{modalData.content}</PostContents>

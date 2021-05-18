@@ -25,7 +25,7 @@ const theme = {
 
   main_color: "rgb(255, 183, 25)",
   main_white: "#ffffff",
-  main_bg_color: "#f7f8f9",
+  main_grey: "#343a40",
   gray: "#adb5bd",
   post_bg: "#f1f3f5",
   black: "#343a40",
