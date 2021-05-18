@@ -132,7 +132,7 @@ const addPostAPI = (post) => {
       url: `${config.api}/board/`,
       data: formData,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
         "Content-Type": "multipart/form-data",
       },
     })
@@ -205,6 +205,14 @@ const getPostAPI = () => {
       },
     })
       .then((res) => {
+        // console.log("스피너 지우자~!", res.data.data); //이것의
+
+        console.log("데이터 길이!", res.data.data.length);
+        if (res.data.data.length < 15) {
+          // console.log("로딩멈춰!");
+          dispatch(loading(false));
+        }
+
         // console.log("스크롤 요청");
         // console.log("!!!!!!!!!", res.data.data);
 

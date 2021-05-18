@@ -71,6 +71,7 @@ function Navbar() {
 
             <TabletLogo
               onClick={() => {
+                history.replace("/");
                 dispatch(sideActions.getPage("home"));
               }}
             ></TabletLogo>
