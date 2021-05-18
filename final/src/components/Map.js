@@ -15,6 +15,7 @@ import category_in_map from "../redux/modules/category_in_map";
 import { LeakRemoveOutlined } from "@material-ui/icons";
 import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import MapModal from "./MapModal";
+import Spinner from "../shared/Spinner";
 
 // window 객체로부터 kakao mpa api를 호출하기
 // 이것이 되게 하기 위해서는 index.html(index.js 아님!!!)의 script 태그안의 src에다가
@@ -1172,11 +1173,14 @@ const Maps = (props) => {
           <BiIcons.BiSearch size="2rem" color="rgb(255, 183, 25)" />
         </SearchIcon>
       </SearchBox>
+        
       <CategoryInMap />
+      
       <MapBox>
         {/* 위에서 설정된 getElementById("map")에 의해서 id="map"인 div에 맵이 표시된다 */}
         <div id="map" style={{ width: "100vw", height: "100vh" }}></div>
       </MapBox>
+      
       {is_uploadModal ? (
         <UpLoadModal
           close={closeUpLoadModal}
