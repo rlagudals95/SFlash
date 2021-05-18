@@ -98,7 +98,7 @@ const Story = (props) => {
             <StoryContent
               post_list={user_like_list}
               marker_icon={userLikeMarkerImgUrl}
-              userPostMode={userPostMode}
+              
             />
           )}
         </Content>
@@ -133,7 +133,7 @@ const SelectedTab = styled.div`
   padding: 25px;
   font-size: 1.3rem;
   font-weight: 600;
-  color: ${(props) => props.theme.main_color};
+  color: ${(props) => props.theme.main_grey};
   background-color: #ffffff;
   transition: background-color 0.5s ease-in-out;
   :hover {
@@ -169,11 +169,11 @@ const UnselectedTab = styled.div`
 `;
 
 const TabUnderBar = styled.div`
-  width: 55%;
+  width: 100%;
   min-width: 145px;
   height: 3pt;
   margin: 20px auto -20px auto;
-  background-color: ${(props) => props.theme.main_color};
+  background-color: ${(props) => props.theme.main_grey};
   @media (max-width: 960px) {
     height: 2pt;
   }

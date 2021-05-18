@@ -123,9 +123,9 @@ const SelectedIcon = styled.button`
   padding: 20px;
   border: 2pt solid #eee;
   box-sizing: border-box;
-  background-color: ${(props) => props.theme.main_color};
+  background-color: ${(props) => props.theme.main_grey};
   color: #ffffff;
-  border: 2pt solid ${(props) => props.theme.main_color};
+  border: 2pt solid ${(props) => props.theme.main_grey};
   transition: background-color 0.5s ease-in-out;
   /* :hover {
     cursor: pointer;
@@ -141,8 +141,8 @@ const UnselectedIcon = styled.button`
   margin: 5px;
   padding: 20px;
   box-sizing: border-box;
-  background-color: #ffffff;
-  color:  ${(props) => props.theme.main_color};
+  background-color: ${(props) => props.theme.main_color};
+  color:  #ffffff;
   border: 2pt solid ${(props) => props.theme.main_color};
   transition: background-color 0.5s ease-in-out;
   :hover {

@@ -21,7 +21,7 @@ import { actionCreators as profileActions } from "../redux/modules/profile";
 import { actionCreators as storypostActions } from "../redux/modules/storypost";
 import { config } from "../shared/config";
 
-import SFlash_logo_darkgrey from "../static/SFlash_logo_darkgrey.svg";
+import SFlash_logo from "../static/SFlash_logo.svg";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -64,7 +64,7 @@ function Navbar() {
             <LOGO>
               {/* 로고 들어갈자리 */}
               <Link to="/">
-              <SflashLogo src = {SFlash_logo_darkgrey}/>
+              <SflashLogo src = {SFlash_logo}/>
               </Link>
             </LOGO>
 
@@ -234,10 +234,10 @@ const LOGO = styled.div`
 
 const SideMini = styled.div`
   align-items: center;
-  width: 84px;
+  width: 120px;
   height: 100vh;
   position: fixed;
-  background-color: white;
+  background-color: ${(props) => props.theme.main_grey};
   left: 0;
   top: 0;
   z-index: 20;
@@ -328,11 +328,12 @@ const RoundColor = styled.div`
   color: white;
 `;
 
-const SflashLogo = styled.div`
-  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A0.png?alt=media&token=92594323-944a-40d7-8085-b323c23246fe");
+const SflashLogo = styled.img`
+  /* background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A0.png?alt=media&token=92594323-944a-40d7-8085-b323c23246fe"); */
   width: 60px;
   height: 60px;
   background-size: cover;
+  z-index:100;
 `;
 
 const QnA = styled.div`

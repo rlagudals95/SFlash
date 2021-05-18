@@ -343,7 +343,7 @@ const Signup = (props) => {
   return (
     <React.Fragment>
       <Container>
-      <Grid height="10vh"/>
+      <Grid height="5vh"/>
       <SflashLogo />
         <Title>회원가입하기</Title>
         {/* <Title>Signup</Title> */}
