@@ -42,10 +42,7 @@ const Category = () => {
         {/* 전체보기 버튼 */}
         <CategoryInfo>
           <CateGoryTitle>
-            {/* <CategoryIcon>
-              {" "}
-              <BiIcons.BiBookBookmark size="25px" />
-            </CategoryIcon> */}
+          
             카테고리
           </CateGoryTitle>
         </CategoryInfo>

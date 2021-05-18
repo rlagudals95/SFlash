@@ -46,38 +46,22 @@ const UploadModal = (props) => {
     dispatch(profileActions.getUserInfoAPI(userId));
   }, []);
 
-  // console.log(
-  //   "위도: " +
-  //     latitude +
-  //     " , " +
-  //     "경도: " +
-  //     longitude +
-  //     " , " +
-  //     "장소이름 : " +
-  //     spotName
-  // );
-
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
   const preview = useSelector((state) => state.image2.preview);
   // 수정 페이지 이미지
   const onlyImg = useSelector((state) => state.image2.image);
-  console.log("수정페이지 이미지는?", onlyImg);
+  // console.log("수정페이지 이미지는?", onlyImg);
   // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
   const editFile = useSelector((state) => state.image2.edit_file);
 
   const post_list = useSelector((state) => state.post.list);
   const user_info = useSelector((state) => state.user.user);
   const profile = useSelector((state) => state.profile.user);
-  console.log("유저아이디", userId);
-  console.log("포스트리스트", post_list);
-  console.log("유저정보", user_info);
-  console.log("유저프로필", profile);
-  // console.log("서버로 보내줄 수정파일", editFile[0]);
-  // console.log("서버로 보내줄 수정파일", editFile[1]);
-  // console.log("서버로 보내줄 수정파일", editFile[2]);
-  // console.log("서버로 보내줄 수정파일", editFile[3]);
-  // console.log(preview);
+  // console.log("유저아이디", userId);
+  // console.log("포스트리스트", post_list);
+  // console.log("유저정보", user_info);
+  // console.log("유저프로필", profile);
 
   const [contents, setContents] = React.useState(props.content);
   const [title, setTitle] = React.useState(props.title);
@@ -110,7 +94,7 @@ const UploadModal = (props) => {
   // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
   const ok_submit = contents ? true : false;
 
-  console.log("??????", localStorage.getItem("jwt"));
+  // console.log("??????", localStorage.getItem("jwt"));
   const resetPreview = () => {
     const basicPreview =
       "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36";

@@ -35,14 +35,14 @@ const Post2 = (props) => {
   // console.log("포스트 하나의 프롭스", props);
 
   // 이미지들 반복문으로 뽑아오기
-  let image_list = [];
+  // let image_list = [];
 
-  if (props.img_url) {
-    //이거 좀 위태위태한거 같다
-    for (let i = 0; i < props.img_url.length; i++) {
-      image_list.push(props.img_url[i]);
-    }
-  }
+  // if (props.img_url) {
+  //   //이거 좀 위태위태한거 같다
+  //   for (let i = 0; i < props.img_url.length; i++) {
+  //     image_list.push(props.img_url[i]);
+  //   }
+  // }
 
   // console.log("이미지 리스트!", image_list);
   // 댓글들 반복문으로 뽑아오기
@@ -80,18 +80,12 @@ const Post2 = (props) => {
     // dispatch(PostActions.editLikeD(props.id, props));
   };
 
-  // console.log("뭘까......???", image_list[0].imgUrl);
-
-  //스타일 컴포넌트//
-  // const PostImage = image_list[0].imgUrl;
-  // console.log("포스트 프롭스", props);
-  // console.log(props.post_image_url);
   return (
     <React.Fragment>
       <Card>
         {/* src={props.post_image_url[0]} */}
 
-        <PostBox onClick={openModal} src={props.img_url}>
+        <PostBox onClick={openModal} src={props.img_url && props.img_url}>
           {/* 이거자체가 지금 투명 0 */}
           <div className={"hoverDark"}>
             {like}

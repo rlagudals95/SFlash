@@ -8,7 +8,7 @@ import * as GrIcons from "react-icons/gr";
 import * as MdIcons from "react-icons/md";
 import { GrCircleQuestion } from "react-icons/gr";
 import { Link } from "react-router-dom";
-import { SidebarData } from "./SidebarData";
+
 import "../Css/Navbar.css";
 import { IconContext } from "react-icons";
 import Category from "./Category";
@@ -68,7 +68,14 @@ function Navbar() {
                 />
               </Link>
             </LOGO>
+
+            <TabletLogo
+              onClick={() => {
+                dispatch(sideActions.getPage("home"));
+              }}
+            ></TabletLogo>
             {/* 홈 지도보기 */}
+
             <IconOutter>
               {page == "home" ? (
                 <SelectedIcon
@@ -264,7 +271,6 @@ const IconInfo = styled.div`
 
   @media (max-width: 600px) {
     /* 1450밑으로 넓이가 내려가면 */
-    display: none;
   }
 `;
 
@@ -288,7 +294,7 @@ const SelectedIcon = styled.div`
 const LOGO = styled.div`
   margin-bottom: 6vh;
   background-color: transparent;
-  @media (max-width: 1450px) {
+  @media (max-width: 1400px) {
     /* 1450밑으로 넓이가 내려가면 */
     display: none;
   }
@@ -306,37 +312,39 @@ const SideMini = styled.div`
   display: flex;
   flex-direction: column;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+  /* background-color: red; */
   @media (max-width: 1400px) {
     all: unset;
     align-items: center;
     width: 100%;
     height: 8vh;
     position: fixed;
-    background-color: white;
     left: 0;
     top: 0;
+    background-color: #343a40;
     z-index: 500;
     justify-content: space-around;
     display: flex;
     flex-direction: row;
     box-shadow: 2px 2px 3px 2px rgba(0, 0.1, 0.1, 0.03);
   }
-  @media (max-width: 600px) {
-    all: unset;
-    margin: 0px;
-    z-index: 10000;
-    position: fixed;
-    width: 100%;
-    height: 51px;
-    justify-content: space-around;
-    /* flex-direction: row; */
-    bottom: 0px;
-    left: 0;
-    background-color: white;
-    padding-bottom: 2vh;
-    margin: auto;
-  }
 `;
+
+//  @media (max-width: 600px) {
+//     all: unset;
+//     margin: 0px;
+//     z-index: 10000;
+//     position: fixed;
+//     width: 100%;
+//     height: 51px;
+//     justify-content: space-around;
+//     /* flex-direction: row; */
+//     bottom: 0px;
+//     left: 0;
+//     background-color: white;
+//     padding-bottom: 2vh;
+//     margin: auto;
+//   }
 
 const SideIcon = styled.div`
   align-items: center;
@@ -345,6 +353,7 @@ const SideIcon = styled.div`
   justify-content: space-between;
   height: 560px;
   margin-top: 30px;
+
   @media (max-width: 1400px) {
     width: 100%;
     height: 7vh;
@@ -361,7 +370,7 @@ const CategoryInfo = styled.div`
   font-size: 20px;
   @media (max-width: 960px) {
     // 1450밑으로 넓이가 내려가면
-    display: none;
+    /* display: none; */
   }
 `;
 
@@ -390,10 +399,27 @@ const RoundColor = styled.div`
   color: white;
 `;
 
-const SflashLogo = styled.div`
-  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/SFlashLogoDark.png?alt=media&token=f1f6e54f-4058-41ff-9c58-d5c0c62b9711");
+const TabletLogo = styled.div`
+  display: none;
+  @media (max-width: 1400px) {
+    display: flex;
+    width: 95px;
+    height: 32px;
+    background-size: cover;
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A0%20%EA%B0%80%EB%A1%9C.png?alt=media&token=026904ff-0cbb-447d-8309-86256408d179");
+  }
+`;
+
+const SflashLogo2 = styled.div`
   width: 90px;
   height: 90px;
+  background-size: cover;
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A0%20%EA%B0%80%EB%A1%9C.png?alt=media&token=026904ff-0cbb-447d-8309-86256408d179s");
+`;
+const SflashLogo = styled.div`
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/SFlashLogoDark.png?alt=media&token=f1f6e54f-4058-41ff-9c58-d5c0c62b9711");
+  width: 120px;
+  height: 100px;
   background-size: cover;
 `;
 

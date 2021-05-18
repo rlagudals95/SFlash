@@ -74,6 +74,7 @@ const PostList = (props) => {
 
   // console.log("!!!!!!!!", like_list);
 
+  //여기서 board_list가 바뀌어야 한다
   const searchPost = board_list.filter((val) => {
     // 검색기능(필터링)을 변수로 지정해 놓고 .map앞에 붙혀둔다
     if (search == "") {
@@ -233,7 +234,6 @@ const PostList = (props) => {
         <Category />
       </Web>
       <MobileCate></MobileCate>
-
       <Box></Box>
     </React.Fragment>
   );

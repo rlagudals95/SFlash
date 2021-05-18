@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import { Grid } from "../elements/index";
 import { history } from "../redux/configStore";
@@ -16,25 +16,25 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Modal from "react-modal";
 import StoryEditProfile from "../components/StoryEditProfile";
 import StoryEditPwd from "../components/StoryEditPwd";
+import { actionCreators as sideAction } from "../redux/modules/side";
 
 const StoryUserProfile = (props) => {
   const dispatch = useDispatch();
-  const {user_info, userId} = props;
+  const { user_info, userId } = props;
 
-// is_me: 현재 닉네임과 내 로컬 스토리지의 닉네임이 일치하면 '나의 페이지'로 판단하여
-// 메뉴버튼(프로필 편집, 로그아웃 등)을 보여줍니다.
+  // is_me: 현재 닉네임과 내 로컬 스토리지의 닉네임이 일치하면 '나의 페이지'로 판단하여
+  // 메뉴버튼(프로필 편집, 로그아웃 등)을 보여줍니다.
   const local_userId = localStorage.getItem("userId");
-  const is_me = (userId === local_userId) ? true : false;
-  
-  React.useEffect(() => {
-}, []);
+  const is_me = userId === local_userId ? true : false;
+
+  React.useEffect(() => {}, []);
 
   // 이미지 에러
   const ImageError = () => {
     Swal.fire({
-      text: '잘못된 이미지 주소입니다 :(',
+      text: "잘못된 이미지 주소입니다 :(",
       confirmButtonColor: "#ffb719",
-    })
+    });
     // dispatch(
     //   profileActions.setPreview(
     //     "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
@@ -58,7 +58,7 @@ const StoryUserProfile = (props) => {
   const closeProfileModal = () => {
     setProfileModal(false);
   };
-   // 비밀번호 변경 모달창 제어
+  // 비밀번호 변경 모달창 제어
   const [editPwdModal, setEditPwdModal] = React.useState(false);
   const openEditPwdModal = () => {
     setEditPwdModal(true);
@@ -67,28 +67,26 @@ const StoryUserProfile = (props) => {
     setEditPwdModal(false);
   };
 
-
   return (
     <React.Fragment>
-        <ProfileContainer>
+      <ProfileContainer>
         <ProfileImg
-            src={
-              user_info.profileImgUrl
-                ? user_info.profileImgUrl
-                : 
-                // profileDefault
+          src={
+            user_info.profileImgUrl
+              ? user_info.profileImgUrl
+              : // profileDefault
                 "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
-            }
-            onError={ImageError}
-          />
+          }
+          onError={ImageError}
+        />
 
-          <Grid>
-            <Nickname>{user_info.nickname}</Nickname>
-            <Introduction>{user_info.introduction}</Introduction>
-          </Grid>
+        <Grid>
+          <Nickname>{user_info.nickname}</Nickname>
+          <Introduction>{user_info.introduction}</Introduction>
+        </Grid>
 
         {/* 나의 페이지에서만 보이는 메뉴(프로필 편집, 로그아웃 등) 버튼*/}
-          {is_me &&       
+        {is_me && (
           <>
             <Setting onClick={settingHandleClick}>
               {/* <IconButton > */}
@@ -125,14 +123,15 @@ const StoryUserProfile = (props) => {
                     confirmButtonText: '예',
                     confirmButtonColor: '#ffb719',
                     showCancelButton: true,
-                    cancelButtonText: '아니오',
-                    cancelButtonColor: '#eee',
+                    cancelButtonText: "아니오",
+                    cancelButtonColor: "#eee",
                   }).then((result) => {
                     if (result.isConfirmed) {
-                        dispatch(userActions.logOut());
-                        history.replace("/");
+                      dispatch(userActions.logOut());
+                      dispatch(sideAction.getPage("home"));
+                      history.replace("/");
                     }
-                  })
+                  });
                   handleClose();
                 }}
               >
@@ -146,7 +145,10 @@ const StoryUserProfile = (props) => {
               close={closeProfileModal}
               style={modalStyle}
             >
-              <StoryEditProfile user_info={user_info} closeModal={closeProfileModal}/>
+              <StoryEditProfile
+                user_info={user_info}
+                closeModal={closeProfileModal}
+              />
               <CloseButton
                 src="https://image.flaticon.com/icons/png/512/458/458595.png"
                 onClick={closeProfileModal}
@@ -164,9 +166,8 @@ const StoryUserProfile = (props) => {
               />
             </Modal>
           </>
-          }
-
-        </ProfileContainer>
+        )}
+      </ProfileContainer>
     </React.Fragment>
   );
 };
@@ -183,21 +184,21 @@ StoryUserProfile.defaultProps = {
 const ProfileContainer = styled.div`
   display: flex;
   margin-top: 70px;
-  padding-bottom:40px;
+  padding-bottom: 40px;
   /* background-color:#eee; */
-    @media (max-width: 1280px) {
-      padding-bottom:30px;
-    }
-    @media (max-width: 520px) {
-      height: 100px;
-      margin-top: 0px;
-      padding-bottom:10px;
-    }
-    @media (max-width: 400px) {
-      height:90px;
-      margin-top: 0px;
-      padding-bottom:0px;
-    }
+  @media (max-width: 1280px) {
+    padding-bottom: 30px;
+  }
+  @media (max-width: 520px) {
+    height: 100px;
+    margin-top: 0px;
+    padding-bottom: 10px;
+  }
+  @media (max-width: 400px) {
+    height: 90px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+  }
 `;
 
 const Setting = styled.div`
@@ -217,14 +218,14 @@ const Setting = styled.div`
     transition-duration: 2s;
   }
 
-    @media (max-width: 520px) {
-     width:30px;
-     margin: 40px 10px 0px 0px;
-    }
-    @media (max-width: 400px) {
-      width:20px;
-      margin: 40px 10px 0px 0px;
-    }
+  @media (max-width: 520px) {
+    width: 30px;
+    margin: 40px 10px 0px 0px;
+  }
+  @media (max-width: 400px) {
+    width: 20px;
+    margin: 40px 10px 0px 0px;
+  }
 `;
 
 const ProfileImg = styled.img`
@@ -234,40 +235,39 @@ const ProfileImg = styled.img`
   object-fit: cover;
   cursor: pointer;
   @media (min-width: 1280px) {
-       width: 160px;
-      height: 160px;
-    }
-    @media (max-width: 1280px) {
-      width: 140px;
-      height: 140px;
-    }
-    @media (max-width: 960px) {
-      width: 120px;
-      height: 120px;
-    }
-    @media (max-width: 400px) {
-      width: 90px;
-      height: 90px;
-    }
-  
+    width: 160px;
+    height: 160px;
+  }
+  @media (max-width: 1280px) {
+    width: 140px;
+    height: 140px;
+  }
+  @media (max-width: 960px) {
+    width: 120px;
+    height: 120px;
+  }
+  @media (max-width: 400px) {
+    width: 90px;
+    height: 90px;
+  }
 `;
 
 const Nickname = styled.div`
   font-size: 1.8rem;
   font-weight: 600;
   margin-top: 120px;
-    @media (max-width: 1280px) {
-      margin-top: 100px;
-      font-size: 1.4rem;
-    }
-    @media (max-width: 960px) {
-      margin-top: 100px;
-      font-size: 1.2rem;
-    }
-    @media (max-width: 400px) {
-      margin-top: 80px;
-      font-size: 1.2rem;
-    }
+  @media (max-width: 1280px) {
+    margin-top: 100px;
+    font-size: 1.4rem;
+  }
+  @media (max-width: 960px) {
+    margin-top: 100px;
+    font-size: 1.2rem;
+  }
+  @media (max-width: 400px) {
+    margin-top: 80px;
+    font-size: 1.2rem;
+  }
 `;
 
 const Introduction = styled.div`
@@ -275,15 +275,15 @@ const Introduction = styled.div`
   font-weight: 400;
   color: grey;
   margin-top: 10px;
-    @media (max-width: 1280px) {
-      font-size: 1.1rem;
-    }
-    @media (max-width: 960px) {
-      font-size: 0.9rem;
-    }
-    @media (max-width: 400px) {
-      font-size: 0.9rem;
-    }
+  @media (max-width: 1280px) {
+    font-size: 1.1rem;
+  }
+  @media (max-width: 960px) {
+    font-size: 0.9rem;
+  }
+  @media (max-width: 400px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const modalStyle = {
@@ -316,8 +316,8 @@ const CloseButton = styled.img`
   position: absolute;
   top: 30px;
   right: 30px;
-  padding:10px;
-  border-radius:20px;
+  padding: 10px;
+  border-radius: 20px;
   &:hover {
     cursor: pointer;
     color: grey;

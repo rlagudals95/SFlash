@@ -24,7 +24,7 @@ const Faq = () => {
           <FAQ>
             <FaqLeft>
               Q.
-              <FaqName>투자문의 합니다... 금액은 200억정도...</FaqName>
+              <FaqName>자주하는 질문은?...</FaqName>
             </FaqLeft>
             <FaqRight>
               {slide ? (
@@ -43,7 +43,7 @@ const Faq = () => {
             </FaqRight>
           </FAQ>
           <FaqToggle id={slide ? "slideToggleOpen" : "slideTogglebox"}>
-            굽신굽신....
+            화이팅!
           </FaqToggle>
           <FAQ></FAQ>
           <FAQ></FAQ>

@@ -51,7 +51,7 @@ const resetModal = createAction(RESET_MODAL, (post) => ({ post }));
 const getModalPost = (id) => {
   return function (dispatch, getState) {
     const post_list = getState().post.map_post_list;
-    console.log("가와~~", post_list);
+    // console.log("가와~~", post_list);
 
     const idx = post_list.findIndex((p) => {
       if (p.id === id) {
@@ -60,11 +60,11 @@ const getModalPost = (id) => {
     });
 
     const ModalPost = post_list[idx];
-    console.log("찾았다!", ModalPost);
+    // console.log("찾았다!", ModalPost);
     //////////////////
     const ModalComment = ModalPost.comment;
 
-    console.log("코멘트!", ModalComment);
+    // console.log("코멘트!", ModalComment);
 
     dispatch(getModal(ModalPost));
     dispatch(getModalComment(ModalComment));
@@ -75,19 +75,21 @@ const getModalPost = (id) => {
 
 const getModalPostAPI = (boardId) => {
   return function (dispatch) {
-    console.log("실행되나요 모달 데이터 겟");
+    // console.log("실행되나요 모달 데이터 겟");
+
     axios({
       method: "GET",
       url: `${config.api}/board/${boardId}/detail`,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
+        // "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {
-        console.log("모달정보 가져오자!!!!", res);
+        // console.log("모달정보 가져오자!!!!", res);
 
         let result = res.data.data;
-        console.log("정리된거 맞지?", result, boardId);
+        // console.log("정리된거 맞지?", result, boardId);
         let post = {
           id: result.boardId, // 포스트 id
           title: result.title, // 포스트 title
@@ -122,23 +124,22 @@ const getModalPostAPI = (boardId) => {
 const modalAddCommentAPI = (comment, board_id) => {
   // 댓글 id를 받으면 되겠다!
   return function (dispatch) {
-    console.log("댓글와유?", comment);
-    console.log("아이디와유?", board_id);
-    console.log(config.jwt);
+    // console.log("댓글와유?", comment);
+    // console.log("아이디와유?", board_id);
 
     axios({
       url: `${config.api}/board/${board_id}/comment`,
       method: "POST",
       data: { content: comment },
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
         console.log(res);
 
         const comment_data = res.data.data;
-        console.log("댓글정보", comment_data);
+        // console.log("댓글정보", comment_data);
         let comment_list = {
           commentId: comment_data.commentId,
           content: comment_data.content,
@@ -148,7 +149,7 @@ const modalAddCommentAPI = (comment, board_id) => {
           writerName: comment_data.nickName,
         };
 
-        console.log("댓글추가반응", res);
+        // console.log("댓글추가반응", res);
         dispatch(modalAddComment(comment_list));
         // dispatch(getComment(board_id)); //이래 해줘도 되나?
         // dispatch(postActions.addComment(comment, board_id));
@@ -163,7 +164,7 @@ const modalAddCommentAPI = (comment, board_id) => {
 
 const modalDeleteCommentAPI = (id) => {
   //이 아이디는 코멘트 id
-  console.log("댓글 id", id);
+  // console.log("댓글 id", id);
   return function (dispatch) {
     axios({
       method: "DELETE",
@@ -187,9 +188,8 @@ const modalAddLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
     const paging = getState().post.paging;
     // console.log("보드아이디", board_id);
-    console.log("보드", board);
+    // console.log("보드", board);
 
-    console.log("토큰있나요??", localStorage.getItem("jwt"));
     axios({
       method: "POST",
       url: `${config.api}/board/${board_id}/like`,
@@ -210,7 +210,7 @@ const modalAddLikeAPI = (board_id, board) => {
 const modalDisLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
     // console.log("보드아이디", board_id);
-    console.log("보드", board);
+    // console.log("보드", board);
 
     axios({
       method: "DELETE",
@@ -236,7 +236,7 @@ const editLikeP = (post) => {
   //PLUS
   return function (dispatch, getState) {
     // console.log("dd", post_id); // 포스트 id 잘온다
-    console.log("cc", post); // 포스트도 잘온다
+    // console.log("cc", post); // 포스트도 잘온다
 
     let _like = post.like;
     let _likeCnt = post.likeCnt;
@@ -266,7 +266,7 @@ const editLikeD = (post) => {
   //PLUS
   return function (dispatch, getState) {
     // console.log("dd", post_id); // 포스트 id 잘온다
-    console.log("cc", post); // 포스트도 잘온다
+    // console.log("cc", post); // 포스트도 잘온다
 
     let _like = post.like;
     let _likeCnt = post.likeCnt;
@@ -305,7 +305,7 @@ export default handleActions(
   {
     [GET_MODAL]: (state, action) =>
       produce(state, (draft) => {
-        console.log("액션 페이로드!", action.payload.post);
+        // console.log("액션 페이로드!", action.payload.post);
         draft.post = action.payload.post;
       }),
     [GET_MODAL_ID]: (state, action) =>
@@ -315,7 +315,7 @@ export default handleActions(
     /// 댓글 부분 모듈
     [GET_MODAL_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        console.log("왜안와?", action.payload.comment_list);
+        // console.log("왜안와?", action.payload.comment_list);
         draft.comment = action.payload.comment_list;
       }),
     [MODAL_ADD_COMMENT]: (state, action) =>
@@ -326,7 +326,7 @@ export default handleActions(
     [MODAL_DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         //비교해서 제외
-        console.log("삭제댓글 아이디", action.payload.id);
+        // console.log("삭제댓글 아이디", action.payload.id);
         draft.comment = draft.comment.filter((c, idx) => {
           if (c.commentId !== action.payload.id) {
             return [draft.comment, c];
