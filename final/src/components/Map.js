@@ -147,7 +147,7 @@ const Maps = (props) => {
       var options = {
         //지도를 생성할 때 필요한 기본 옵션
         center: new kakao.maps.LatLng(35.83819028173818, 127.88227108131916), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
-        level: 12, //지도 확대 레벨
+        level: 11, //지도 확대 레벨
       };
 
       var map = new kakao.maps.Map(container, options); // 지도생성 및 객체 리턴
@@ -411,11 +411,11 @@ const Maps = (props) => {
         // 모달창(커스텀오버레이)에 들어갈 내용
         var content =
           '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${cafe.imgForOverlay} >` +
-          '<div class="head">' +
-          `<div class="spotname">${cafe.spotName1}</div>` +
-          `<div class="spotname">${cafe.spotName2}</div>` +
-          "</div>" +
+            `<img class="picbox"  src=${cafe.imgForOverlay} >` +
+            '<div class="head">' +
+              `<div class="spotname">${cafe.spotName1}</div>` +
+              `<div class="spotname">${cafe.spotName2}</div>` +
+            "</div>" +
           "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성

@@ -198,7 +198,8 @@ const modalAddLikeAPI = (board_id, board) => {
         dispatch(editLikeP(board)); // 리덕스
       })
       .catch((error) => {
-        window.alert("좋아요를 할 수 없습니다.");
+        window.alert("로그인을 하면 좋아요를 할 수 있어요!");
+        // window.alert("좋아요를 할 수 없습니다.");
       });
   };
 };
