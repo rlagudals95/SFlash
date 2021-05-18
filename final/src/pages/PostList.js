@@ -53,7 +53,7 @@ const PostList = (props) => {
   const resultPark = is_category.find((item) => item === "공원");
   const resultExhibition = is_category.find((item) => item === "전시");
 
-  // console.log("카페가 들어있다!", resultCafe);
+  console.log("로딩변화", loading);
 
   const board_list = useSelector((state) => state.post.list);
   console.log("잘 가지고 왔나~", board_list);
@@ -80,7 +80,7 @@ const PostList = (props) => {
     if (search == "") {
       //search가 한글자라도 있으면 loading = false
       // 검색창의 내용에 따라 보여지는 게시물이 필터링 된다
-      dispatch(PostActions.loading(true));
+      // dispatch(PostActions.loading(true));
       return val;
     } else if (val.title.includes(search)) {
       // 검색어에 제목이 포함되었는지 판단
@@ -116,7 +116,7 @@ const PostList = (props) => {
         dataLength={searchPost.length}
         next={next}
         hasMore={true}
-        loader={loading && <Spinner />} //상태값이 loading 중 일땐 스피너가 보여서 뒤에 게시물이 더 있을음 알려준다
+        loader={loading ? <Spinner /> : null} //상태값이 loading 중 일땐 스피너가 보여서 뒤에 게시물이 더 있을음 알려준다
       >
         {/* {loading && <Spinner />} */}
         <Container>

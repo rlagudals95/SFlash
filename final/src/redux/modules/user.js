@@ -3,7 +3,7 @@ import { produce } from "immer";
 import { history } from "../configStore";
 import axios from "axios";
 import { config } from "../../shared/config";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 // actions
 const SET_USER = "SET_USER";
@@ -40,16 +40,16 @@ const signupAPI = (nickname, email, pwd, rePwd) => {
       .then((res) => {
         console.log("signupAPI(res)", res);
         Swal.fire({
-          text: 'SFlash의 회원이 되었습니다. :)',
+          text: "SFlash의 회원이 되었습니다. :)",
           confirmButtonColor: "#ffb719",
-        })
+        });
         history.push("/login");
       })
       .catch((err) => {
         Swal.fire({
-          text: '회원가입 실패 ㅠㅠ',
+          text: "회원가입 실패 ㅠㅠ",
           confirmButtonColor: "#ffb719",
-        })
+        });
         console.log("회원가입 실패:", err);
       });
   };
@@ -85,9 +85,9 @@ const loginAPI = (email, pwd) => {
       })
       .catch((err) => {
         Swal.fire({
-          text: '로그인 실패 ㅠㅠ',
+          text: "로그인 실패 ㅠㅠ",
           confirmButtonColor: "#ffb719",
-        })
+        });
         console.log("로그인 실패", err);
       });
   };
@@ -104,8 +104,6 @@ const loginCheck = (jwt) => {
     }
   };
 };
-
-
 
 // reducer: handleActions(immer를 통한 불변성 유지)
 export default handleActions(
@@ -140,7 +138,7 @@ const actionCreators = {
   signupAPI,
   loginAPI,
   loginCheck,
-  loading
+  loading,
 };
 
 export { actionCreators };

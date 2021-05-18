@@ -46,10 +46,10 @@ function App() {
   const social_nickname = getUrlParameter("nickname"); // _nickname: 소셜로그인으로 받아온 닉네임
   const social_userId = getUrlParameter("userId"); // _nickname: 소셜로그인으로 받아온 닉네임
   const error = getUrlParameter("error"); // 에러
-console.log(social_refreshjwt);
-console.log(social_jwt);
-console.log(social_userId);
-console.log(social_nickname);
+  console.log(social_refreshjwt);
+  console.log(social_jwt);
+  console.log(social_userId);
+  console.log(social_nickname);
   // console.log(error);
 
   React.useEffect(() => {

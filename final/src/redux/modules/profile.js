@@ -34,7 +34,7 @@ const getUserInfoAPI = (userId) => {
       method: "GET",
       url: `${config.api}/profile/${userId}`,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
@@ -73,7 +73,7 @@ const editProfileAPI = (profile, userId) => {
         url: `${config.api}/editmyprofile/${userId}`,
         data: formData,
         headers: {
-          "X-AUTH-TOKEN": `${config.jwt}`,
+          "X-AUTH-TOKEN": localStorage.getItem("jwt"),
           "Content-Type": "multipart/form-data",
         },
       })
@@ -102,7 +102,7 @@ const editProfileAPI = (profile, userId) => {
         url: `${config.api}/editmyprofile/${userId}`,
         data: formData,
         headers: {
-          "X-AUTH-TOKEN": `${config.jwt}`,
+          "X-AUTH-TOKEN": localStorage.getItem("jwt"),
           "Content-Type": "multipart/form-data",
         },
       })
@@ -134,7 +134,7 @@ const editNicknameAPI = (newNickname, userId) => {
         },
         {
           headers: {
-            "X-AUTH-TOKEN": `${config.jwt}`,
+            "X-AUTH-TOKEN": localStorage.getItem("jwt"),
           },
         }
       )
