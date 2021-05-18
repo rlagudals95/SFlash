@@ -42,23 +42,28 @@ function App() {
       : decodeURIComponent(results[1].replace(/\+/g, " "));
   };
   const social_jwt = getUrlParameter("accessToken"); // social_jwt: 소셜로그인으로 받아온 토큰
+  const social_refreshjwt = getUrlParameter("refreshToken"); // social_jwt: 소셜로그인으로 받아온 토큰
   const social_nickname = getUrlParameter("nickname"); // _nickname: 소셜로그인으로 받아온 닉네임
   const social_userId = getUrlParameter("userId"); // _nickname: 소셜로그인으로 받아온 닉네임
   const error = getUrlParameter("error"); // 에러
-  // console.log(_jwt);
-  // console.log(_nickname);
+console.log(social_refreshjwt);
+console.log(social_jwt);
+console.log(social_userId);
+console.log(social_nickname);
   // console.log(error);
 
   React.useEffect(() => {
     //  소셜로그인 시 실행
-    if (social_jwt && social_userId) {
+    if (social_jwt) {
       localStorage.setItem("jwt", social_jwt);
+      localStorage.setItem("refreshjwt", social_refreshjwt);
       localStorage.setItem("nickname", social_nickname);
       localStorage.setItem("userId", social_userId);
       dispatch(userActions.loginCheck(social_jwt));
     } else if (social_jwt || jwt) {
       dispatch(userActions.loginCheck(social_jwt || jwt));
     } //렌더링 마다 로그인체크
+   
   }, []);
 
   return (

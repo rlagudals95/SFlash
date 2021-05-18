@@ -90,7 +90,7 @@ const getModalPostAPI = (boardId) => {
           content: result.content, // 포스트 내용
           writerName: result.writerName,
           img_url: result.boardImgReponseDtoList,
-          // category: result.category,
+          category: result.category,
           profileImg: result.writerImgUrl,
           like: result.liked,
           likeCnt: result.likeCount,

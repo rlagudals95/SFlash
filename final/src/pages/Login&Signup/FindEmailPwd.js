@@ -190,7 +190,31 @@ const FindEmailPwd = () => {
                 setEmail(e.target.value);
               }}
             />
-            <CheckBtn onClick={() => onEmailSubmit(email)}>
+            <CheckBtn onClick={() => {
+              let timerInterval;
+                Swal.fire({
+                  // title: "Please wait..",
+                  html: "잠시만 기다려주세요",
+                  timer: 3800,
+                  timerProgressBar: true,
+                  didOpen: () => {
+                    Swal.showLoading();
+                    timerInterval = setInterval(() => {
+                      const content = Swal.getHtmlContainer();
+                      if (content) {
+                        const b = content.querySelector("b");
+                        if (b) {
+                          b.textContent = Swal.getTimerLeft();
+                        }
+                      }
+                    }, 100);
+                  },
+                  willClose: () => {
+                    clearInterval(timerInterval);
+                  },
+                });
+                onEmailSubmit(email)
+              }}>
               인증번호전송
             </CheckBtn>
           </Grid>

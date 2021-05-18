@@ -183,7 +183,7 @@ const StoryMap = (props) => {
           onChange={debounce}
         />
         <SearchIcon>
-          <BiIcons.BiSearch size="2rem" color="rgb(255, 183, 25)" />
+          <BiIcons.BiSearch size="1.7rem" color="#343a40" />
         </SearchIcon>
       </SearchBox>
 
@@ -202,10 +202,11 @@ export default StoryMap;
 
 const SearchBox = styled.div`
   position: absolute;
-  margin-top: 25px;
+  margin-top: 35px;
   margin-left: 25px;
   z-index: 10;
   width: 350px;
+  align-items:center;
 `;
 
 const SearchInput = styled.input`
@@ -218,13 +219,13 @@ const SearchInput = styled.input`
   &:focus {
     /* outline: blue; */
     border-radius: 5px;
-    border-color: blue;
+    border: 1pt solid ${(props) => props.theme.main_grey};
   }
   opacity: 0.8;
 `;
 
 const SearchIcon = styled.div`
-  position: fixed;
+  position: absolute;
   top: 10px;
   right: 0;
 `;

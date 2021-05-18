@@ -16,8 +16,6 @@ import { actionCreators as userActions } from "../../redux/modules/user";
 
 import { history } from "../../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
-import { setCookie } from "../../shared/Cookie";
-import { GolfCourse } from "@material-ui/icons";
 import google from "../../static/google.svg";
 import naver from "../../static/naver.svg";
 import kakao from "../../static/kakao.svg";

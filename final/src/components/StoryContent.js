@@ -1,22 +1,37 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import { Grid, Text } from "../elements/index";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as storypostActions } from "../redux/modules/storypost";
-
+import { actionCreators as storyPostActions } from "../redux/modules/storypost";
+import InfiniteScroll from "react-infinite-scroll-component";
 import StoryPost from "./StoryPost";
 import StoryMap from "./StoryMap";
 
 import { FiImage } from "react-icons/fi";
 import { HiOutlineMap } from "react-icons/hi";
+import Spinner from "../shared/Spinner";
 
 const StoryContent = (props) => {
-  const { post_list, marker_icon, userPostMode } = props;
+  const dispatch = useDispatch();
+  const { post_list, marker_icon, userPostMode, userId } = props;
+  // const user_id = props.match.params.id;
+  console.log(userId);
+  const paging = useSelector((state) => state.storypost.paging);
+  const is_loading = useSelector((state) => state.storypost.is_loading);
 
   // gridMode 가 true 면 그리드 형태로, false면 맵형태로 보여준다.
   const [gridMode, setGridMode] = React.useState(true);
+
+  const next = () => {
+    //스크롤이 바닥에 닿을때 마다 포스트를 정해진 paging 사이즈만큼 가져오는 함수
+    if (userPostMode) {
+      dispatch(storyPostActions.getUserPostAPI(userId));
+    } else {
+      dispatch(storyPostActions.getUserLikeAPI(userId));
+    }
+  };
 
   // 게시물 갯수가 0 일때 게시물을 등록해달라는 문구가 뜹니다.
   if (post_list.length === 0) {
@@ -31,7 +46,7 @@ const StoryContent = (props) => {
       </React.Fragment>
     );
   }
-  // 게시물이 있을 때
+  // 게시물이 있을 때는 게시물을 보여줍니다.
   else {
     return (
       <React.Fragment>
@@ -60,16 +75,35 @@ const StoryContent = (props) => {
 
         <>
           {gridMode ? (
-            <GridList>
-              {post_list.map((p) => {
-                return <StoryPost key={p.id} {...p} userPostMode={userPostMode}></StoryPost>;
-              })}
-            </GridList>
+            <>
+            <InfiniteScroll // 무한스크롤 페이징처리 라이브러리다
+            dataLength={post_list.length}
+            next={next}
+            hasMore={true}
+            loader={is_loading && <Spinner />} //상태값이 loading 중 일땐 스피너가 보여서 뒤에 게시물이 더 있을음 알려준다
+          >
+              <GridList>
+                {post_list.map((p) => {
+                  return (
+                    <StoryPost
+                      key={p.id}
+                      {...p}
+                      userPostMode={userPostMode}
+                    ></StoryPost>
+                  );
+                })}
+              </GridList>
+              </InfiniteScroll>
+            </>
           ) : (
             <>
-            <StoryMap post_list={post_list} marker_icon={marker_icon} userPostMode={userPostMode}/>
-            <Grid height="30px"/>
-            <Text>* 게시물 등록은 메인페이지(홈)에서 가능합니다.</Text>
+              <StoryMap
+                post_list={post_list}
+                marker_icon={marker_icon}
+                userPostMode={userPostMode}
+              />
+              <Grid height="50px" />
+              <Text>* 게시물 등록은 메인페이지(HOME)에서 가능합니다.</Text>
             </>
           )}
         </>
@@ -142,7 +176,7 @@ const UnselectedIcon = styled.button`
   padding: 20px;
   box-sizing: border-box;
   background-color: ${(props) => props.theme.main_color};
-  color:  #ffffff;
+  color: #ffffff;
   border: 2pt solid ${(props) => props.theme.main_color};
   transition: background-color 0.5s ease-in-out;
   :hover {
@@ -177,6 +211,5 @@ const GridList = styled.div`
     padding: 0px 0px;
   }
 `;
-
 
 export default StoryContent;
