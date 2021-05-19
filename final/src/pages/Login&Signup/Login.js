@@ -51,36 +51,20 @@ const Login = () => {
         ? ""
         : decodeURIComponent(results[1].replace(/\+/g, " "));
     };
-    const _jwt = getUrlParameter("token"); // _jwt: 소셜로그인으로 받아온 토큰
-    const _nickname = getUrlParameter("nickname"); // _nickname: 소셜로그인으로 받아온 닉네임
-    const error = getUrlParameter("error"); // 에러
-    console.log(_jwt);
-    console.log(_nickname);
-    console.log(error);
 
-    //  소셜로그인 시 실행
-    //  소셜로그인 시 실행
-    if (_jwt && _nickname) {
-      localStorage.setItem("nickname", _nickname);
-      localStorage.setItem("jwt", _jwt);
+    if (getUrlParameter("error")) {
+      Swal.fire({
+        text: "현재 시스템 문제로 소셜로그인 서비스를 이용하실 수 없습니다.",
+        confirmButtonColor: "#ffb719",
+      });
+    } else {
+      localStorage.setItem("jwt", getUrlParameter("accessToken"));
+      localStorage.setItem("refreshjwt", getUrlParameter("refreshToken"));
+      localStorage.setItem("nickname", getUrlParameter("nickname"));
+      localStorage.setItem("userId", getUrlParameter("userId"));
       dispatch(userActions.setUser());
     }
-  };
-
-  //   $(document).ready( function() {
-
-  //      $('.login-naver').click(function() {
-  //         naverLogin();
-  //     });
-
-  //     $('.login-kakao').click(function() {
-  //         kakaoLogin();
-  //     });
-
-  //     $('.login-google').click(function() {
-  //         googleLogin();
-  //     });
-  // });
+  }
 
   return (
     <React.Fragment>

@@ -4,6 +4,7 @@ import { history } from "../configStore";
 import axios from "axios";
 import { config } from "../../shared/config";
 import Swal from "sweetalert2";
+import jwt_decode from 'jwt-decode';
 
 // actions
 const SET_USER = "SET_USER";
@@ -98,6 +99,9 @@ const loginCheck = (jwt) => {
   console.log(jwt);
   return function (dispatch, getstate, { history }) {
     if (jwt) {
+      // let decoded = jwt_decode(localStorage.getItem("jwt"));
+      // console.log("토큰디코딩!!!", decoded.exp*1000);
+      // console.log(new Date().getTime());
       dispatch(setUser());
     } else {
       dispatch(logOut());

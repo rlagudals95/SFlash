@@ -30,7 +30,6 @@ import Search from "@material-ui/icons/Search";
 function App() {
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt") ? true : false; // 로컬스토리지에 저장되어있는 jwt 토큰 유무판단
-
   // 소셜로그인을 하면 token이 url에 담겨서 오는데,
   // url에서 token을을 추출하는 함수()
   const getUrlParameter = (name) => {
@@ -60,8 +59,8 @@ function App() {
       localStorage.setItem("nickname", social_nickname);
       localStorage.setItem("userId", social_userId);
       dispatch(userActions.loginCheck(social_jwt));
-    } else if (social_jwt || jwt) {
-      dispatch(userActions.loginCheck(social_jwt || jwt));
+    } else if (jwt || social_jwt) {
+      dispatch(userActions.loginCheck(jwt));
     } //렌더링 마다 로그인체크
    
   }, []);

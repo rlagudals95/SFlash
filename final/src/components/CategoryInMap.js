@@ -1046,14 +1046,20 @@ const MiddleBox = styled.div`
 `;
 
 const SpotSelectBox = styled.div`
+position:relative;
   width: 240px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-gap: -20px;
+  /* justify-content: space-around; */
   /* background-color: #F2F3F7; */
-  background-color: red;
+  background-color: yellow;
+  text-align: center;
 `;
 
 const AllSpots = styled.img`
+position:absolute;
   width: 80px;
   height: 80px;
   /* background-image: url('https://i.postimg.cc/q7Qcs4JC/button-01.png'); */
@@ -1067,8 +1073,9 @@ const AllSpots = styled.img`
 `;
 
 const MyPostSpots = styled.img`
-  width: 80px;
-  height: 80px;
+position:absolute;
+  width: 100px;
+  height: 100px;
   /* background-image: url('https://i.postimg.cc/dDMGs0Bg/button-02.png'); */
   background-size: cover;
   /* background-color: #F2F3F7; */
@@ -1076,11 +1083,13 @@ const MyPostSpots = styled.img`
   box-sizing: border-box;
   cursor: pointer;
   object-fit: cover;
+  margin: auto;
 `;
 
 const MyLikeSpots = styled.img`
-  width: 80px;
-  height: 80px;
+position:absolute;
+  width: 100px;
+  height: 100px;
   /* background-image: url('https://i.postimg.cc/wv7W37XB/button-03.png'); */
   background-size: cover;
   /* background-color: #F2F3F7; */
@@ -1091,8 +1100,8 @@ const MyLikeSpots = styled.img`
 `;
 
 const AllSpotsSelected = styled.img`
-  width: 85px;
-  height: 85px;
+  width: 100px;
+  height: 100px;
   /* width: 108px;
   height: 108px; */
   /* background-color: white; */
