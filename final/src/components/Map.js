@@ -1198,7 +1198,7 @@ export default Maps;
 const SearchBox = styled.div`
   position: fixed;
   top: 40px;
-  left: 200px;
+  left: 225px;
   transform: translate(-10%, -90%);
   z-index: 3;
   @media (min-width: 1400px) {
@@ -1209,11 +1209,11 @@ const SearchBox = styled.div`
     position: fixed;
     /* top: 140px; */
     width: 400px;
-    top: 170px;
+    top: 130px;
     margin: auto;
   }
   @media (max-width: 600px) {
-    top: 120px;
+    top: 125px;
     width: 50%;
     left: 25vw;
     margin: auto;

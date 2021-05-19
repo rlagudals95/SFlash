@@ -964,17 +964,17 @@ export default CategoryInMap;
 
 // 카테고리 박스 정보
 const CategoryBox = styled.div`
-  width: 240px;
+  /* width: 240px; */
+  width: 330px;
   padding: 8px 0px;
   position: fixed;
   z-index: 300;
   right: 50px;
-  top: 17vh;
-  background-color: white;
+  top: 19vh;
+  background-color: #F2F3F7;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
-  /* background-color: #f2f3f7; */
   @media (max-width: 1400px) {
     z-index: 300;
     margin: auto;
@@ -1048,79 +1048,97 @@ const SpotSelectBox = styled.div`
 `;
 
 const AllSpotsSelected = styled.img`
-  width: 72px;
-  height: 72px;
-  background-color: white;
+  /* width: 72px;
+  height: 72px; */
+  width: 108px;
+  height: 108px;
+  /* background-color: white; */
+  background-color: #F2F3F7;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 3px solid rgb(255, 183, 25);
+  /* border: 3px solid rgb(255, 183, 25); */
   cursor: pointer;
-  margin: 6px;
-  background-size: cover;
-  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
+  /* margin: 1px; */
+  /* background-size: cover; */
+  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
 const AllSpots = styled.img`
-  width: 72px;
-  height: 72px;
-  background-color: white;
+  /* width: 72px;
+  height: 72px; */
+  width: 108px;
+  height: 108px;
+  /* background-color: white; */
+  background-color: #F2F3F7;
   border-radius: 5px;
   box-sizing: border-box;
-  border: none;
+  /* border: none; */
   cursor: pointer;
-  margin: 6px;
-  background-size: cover;
-  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
+  /* margin: 1px; */
+  /* background-size: cover; */
+  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
 const MyPostSpotsSelected = styled.img`
-  width: 72px;
-  height: 72px;
-  background-color: white;
+  /* width: 72px;
+  height: 72px; */
+  width: 108px;
+  height: 108px;
+  /* background-color: white; */
+  background-color: #F2F3F7;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 3px solid rgb(27, 38, 133);
+  /* border: 3px solid rgb(27, 38, 133); */
   cursor: pointer;
-  margin: 6px;
-  background-size: cover;
-  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
+  /* margin: 1px; */
+  /* background-size: cover; */
+  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
 const MyPostSpots = styled.img`
-  width: 72px;
-  height: 72px;
-  background-color: white;
+  /* width: 72px;
+  height: 72px; */
+  width: 108px;
+  height: 108px;
+  /* background-color: white; */
+  background-color: #F2F3F7;
   border-radius: 5px;
   box-sizing: border-box;
-  border: none;
+  /* border: none; */
   cursor: pointer;
-  margin: 6px;
-  background-size: cover;
-  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
+  /* margin: 1px; */
+  /* background-size: cover; */
+  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
 const MyLikeSpotsSelected = styled.img`
-  width: 72px;
-  height: 72px;
-  background-color: white;
+  /* width: 72px;
+  height: 72px; */
+  width: 108px;
+  height: 108px;
+  /* background-color: white; */
+  background-color: #F2F3F7;
   border-radius: 5px;
   box-sizing: border-box;
-  border: 3px solid rgb(253, 133, 152);
+  /* border: 3px solid rgb(253, 133, 152); */
   cursor: pointer;
-  margin: 6px;
-  background-size: cover;
-  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
+  /* margin: 1px; */
+  /* background-size: cover; */
+  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
 const MyLikeSpots = styled.img`
-  width: 72px;
-  height: 72px;
-  background-color: white;
+  /* width: 72px;
+  height: 72px; */
+  width: 108px;
+  height: 108px;
+  /* background-color: white; */
+  background-color: #F2F3F7;
   border-radius: 5px;
   box-sizing: border-box;
-  border: none;
+  /* border: none; */
   cursor: pointer;
-  margin: 6px;
-  background-size: cover;
-  box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2);
+  /* margin: 1px; */
+  /* background-size: cover; */
+  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
