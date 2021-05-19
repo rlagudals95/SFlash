@@ -33,7 +33,6 @@ const Main = (props) => {
       {openPopUp ? <PopUp close={closePopUp} /> : null}
 
       {map_post_list ? <Map /> : <Spinner />}
-      {/* <Map/> */}
     </React.Fragment>
   );
 };

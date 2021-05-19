@@ -239,20 +239,16 @@ const Maps = (props) => {
           position: writePosition,
           image: writeMarkerImage,
           // clickable: true,
-          // draggable: true,
           zIndex: 50,
         });
 
         writeMarker.setMap(map);
-        // marker.setDraggable(true);
 
         // 작성용 마커를 사용하는 방법을 알려주는 인포윈도우
         // 작성용 마커위에 갖다대면 뜨고(mouseover) 마우스를 떼면(mouseout) 사라진다.
-        var writeGuideContent =
-          '<div style="padding:5px;">마커 우클릭 => 작성창 생성<br>' +
-          "마커 좌클릭 => 마커 사라짐<br>" +
-          "지도의 다른 곳을 클릭하면 => 그곳에 새 마커 생깁니다<br>" +
-          "</div>";
+        // 작성용 마커에 우클릭을 하면 마커가 사라지면서 인포윈도우도 사라진다.
+        var writeGuideContent = 
+          '<div class="writeinfobox"></div>'
 
         // 인포윈도우 생성하기
         var writeGuideWindow = new kakao.maps.InfoWindow({
@@ -262,38 +258,26 @@ const Maps = (props) => {
 
         // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록한다.
         // mouseover : 안내창 생성, mouseout, rightclick: 안내창 닫기
-        kakao.maps.event.addListener(
-          writeMarker,
-          "mouseover",
-          makeOverListener(map, writeMarker, writeGuideWindow)
-        );
-        kakao.maps.event.addListener(
-          writeMarker,
-          "mouseout",
-          makeMouseOutListener(writeGuideWindow)
-        );
-        kakao.maps.event.addListener(
-          writeMarker,
-          "rightclick",
-          makeRightClickOutListener(writeGuideWindow)
-        );
+        kakao.maps.event.addListener(writeMarker, "mouseover", mouseOverListener(map, writeMarker, writeGuideWindow));
+        kakao.maps.event.addListener(writeMarker, "mouseout", mouseOutListener(writeGuideWindow));
+        kakao.maps.event.addListener(writeMarker, "rightclick", mouseRightClickListener(writeGuideWindow));
 
         // 작성용 마커에 안내창을 띄우는 클로저를 만드는 함수 : mouseover
-        function makeOverListener(map, writeMarker, writeGuideWindow) {
+        function mouseOverListener(map, writeMarker, writeGuideWindow) {
           return function () {
             writeGuideWindow.open(map, writeMarker);
           };
         }
 
         // 작성용 마커의 안내창을 닫는 클로저를 만드는 함수 : mouseout
-        function makeMouseOutListener(writeGuideWindow) {
+        function mouseOutListener(writeGuideWindow) {
           return function () {
             writeGuideWindow.close();
           };
         }
 
         // 작성용 마커의 안내창을 닫는 클로저를 만드는 함수 : rightclick
-        function makeRightClickOutListener(writeGuideWindow) {
+        function mouseRightClickListener(writeGuideWindow) {
           return function () {
             writeGuideWindow.close();
           };
@@ -314,7 +298,7 @@ const Maps = (props) => {
         kakao.maps.event.addListener(map, "click", function () {
           writeMarker.setMap(null);
         });
-      }); // 작성용 마커를 지도위에 띄우는 클릭이벤트 종료!!!
+      }); // 작성용 마커를 지도위에 띄우는 지도클릭이벤트 종료!!!
     }
 
     // 전체 마커 + 카테고리별 마커 설정
