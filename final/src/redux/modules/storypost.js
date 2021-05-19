@@ -45,29 +45,51 @@ const initialState = {
   is_loading: true, // 페이징 처리할 데이터가 없을때 스피너를 보이지 않게함
   // paging: { start: null, next: null, size: 15 },
   like: false,
-  pagingCnt: 0,
+  size: 15,
+  check: null,
 };
 
 // 스토리페이지 / 유저 업로드 게시물 리스트
-// start = null, size = null
 const getUserPostAPI = (userId) => {
   return function (dispatch, getState) {
-    const board_list = getState().storypost.user_post_list;
-    const pCnt = getState().storypost.pagingCnt;
-    console.log("잘가지고 왔겠지", board_list);
-
-    let lastId = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
-      board_list.length === 0
-        ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
-        : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
-          board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
-    console.log("마지막 포스트 아이디", lastId);
-
-    if (board_list.length !== 0) {
-      dispatch(pagingCntUp());
-    }
-    console.log("페이징 카운트", pCnt);
+    console.log("fkfkffkffkfffk");
+    const _post_list = getState().storypost.user_post_list;
+    const p_length = _post_list.length
+    let lastId = p_length === 0 ? 999 : _post_list[p_length-1].id;
     let size = 15;
+    console.log("데이터는 잘 넘어가나?", userId, lastId, size);
+    // const board_list = getState().storypost.user_post_list;
+    // const pCnt = getState().storypost.pagingCnt
+
+    // console.log("잘가지고 왔겠지", board_list);
+    // let lastId = board_list.length === 0 ? 999 : board_list[0].id - pCnt; ; // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
+    // let size = getState().storyPost.size;
+    // console.log("데이터는 잘 넘어가나?", userId, lastId, size);
+    //   board_list.length === 0
+    //     ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
+    //     : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
+    //       board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
+    // // console.log("마지막 포스트 아이디", lastId);
+
+    // if (board_list.length !== 0) {
+    //   dispatch(pagingCntUp());
+    // }
+    // console.log("페이징 카운트", pCnt);
+
+
+    // let lastId = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
+    //   board_list.length === 0
+    //     ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
+    //     : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
+    //       board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
+    // // console.log("마지막 포스트 아이디", lastId);
+
+    // if (board_list.length !== 0) {
+    //   dispatch(pagingCntUp());
+    // }
+    // console.log("페이징 카운트", pCnt);
+    // let size = 15;
+
 
     axios({
       method: "GET",
@@ -79,13 +101,7 @@ const getUserPostAPI = (userId) => {
     })
       .then((res) => {
         console.log(res.data.data);
-
-        // let paging = {
-        //   start: res.data.data[0],
-        //   next: res.data.data.length === size +1 ?
-        //   res.data.data[res.data.data.length -1] : null,
-        //   size: size,
-        // }
+        console.log("내 게시물 RESPONSE");
 
         if (res.data.data.length === 0) {
           // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
@@ -105,16 +121,9 @@ const getUserPostAPI = (userId) => {
             longitude: _post.longitude,
             like: _post.liked,
             likeCnt: _post.likeCount,
-            // title: _post.title,
-            // content: _post.content,
-            // writerName: _post.writer,
-            // profileImg: _post.writerImgUrl,
-            // category: _post.category,
-            // creatAt: _post.modified,
-            // comment: _post.comments,
           };
           post_list.push(post);
-          console.log(post_list);
+          // console.log(post_list);
         });
         dispatch(setStoryPost(post_list));
       })
@@ -131,40 +140,36 @@ const getUserPostAPI = (userId) => {
 // 스토리페이지 / 유저 좋아요 게시물 리스트
 const getUserLikeAPI = (userId) => {
   return function (dispatch, getState) {
-    const board_list = getState().storypost.user_like_list;
-    const pCnt = getState().storypost.pagingCnt;
-    console.log("잘가지고 왔겠지", board_list);
-
-    let lastId = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
-      board_list.length === 0
-        ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
-        : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
-          board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
-    console.log("마지막 포스트 아이디", lastId);
-
-    if (board_list.length !== 0) {
-      dispatch(pagingCntUp());
-    }
-    console.log("페이징 카운트", pCnt);
+    const _post_list = getState().storypost.user_like_list;
+    const p_length = _post_list.length
+    let lastId = p_length === 0 ? 999 : _post_list[p_length-1].id;
     let size = 15;
+    console.log("데이터는 잘 넘어가나?", userId, lastId, size);
+    // const pCnt = getState().storypost.pagingCnt;
+    // console.log("잘가지고 왔겠지", board_list);
+    // let lastId = board_list.length === 0 ? 999 : board_list[0].id - pCnt;  // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
+    // let size = getState().storyPost.size;
+    // console.log(board_list[-1]);
+    // let lastId = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
+    //   board_list.length === 0
+    //     ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
+    //     : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
+    //       board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
+    // // console.log("마지막 포스트 아이디", lastId);
+
+    // console.log("페이징 카운트", pCnt);
+   
+
     axios({
       method: "GET",
-      // url: `${config.api}/story/${userId}/likeboard`,
       url: `${config.api}/story/${userId}/likeboard?lastId=${lastId}&size=${size}`,
       headers: {
         "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
-        // console.log(res.data.data);
-        // console.log(res.data.data);
-
-        // let paging = {
-        //   start: res.data.data[0],
-        //   next: res.data.data.length === size +1 ?
-        //   res.data.data[res.data.data.length -1] : null,
-        //   size: size,
-        // }
+        console.log(res.data.data);
+        console.log("좋아요 RESPONSE");
 
         let post_list = [];
         res.data.data.forEach((_post) => {
@@ -180,7 +185,7 @@ const getUserLikeAPI = (userId) => {
             likeCnt: _post.likeCount,
           };
           post_list.push(post);
-          console.log(post_list);
+          // console.log(post_list);
         });
         dispatch(setStoryLike(post_list));
       })
@@ -431,8 +436,19 @@ export default handleActions(
     // 내 게시물
     [SET_STORY_POST]: (state, action) =>
       produce(state, (draft) => {
-        // 무한스크롤 시에는 push 방식으로 set 해주기
-        draft.user_post_list.push(...action.payload.post_list);
+
+        console.log("내 게시물 draft.user_post_list", draft.user_post_list);
+        console.log(
+          "내 게시물 action.payload.post_list",
+          action.payload.post_list
+        );
+
+        if (draft.check === null) {
+          console.log("draft.check", draft.check);
+          draft.user_post_list = action.payload.post_list
+        } else {
+          draft.user_post_list.push(...action.payload.post_list);
+        }
         // draft.paging = action.payload.paging; // 페이징 처리
 
         draft.user_post_list = draft.user_post_list.reduce((acc, cur) => {
@@ -444,11 +460,24 @@ export default handleActions(
             return acc; // 그 게시물은 새로 받은 게시물 => 그러므로 cur은 return 안해준다
           }
         }, []);
+        // // 무한스크롤 시에는 push 방식으로 set 해주기
+        draft.check = draft.check + 1 //check : 1
+        console.log("draft.check +1?????", draft.check);
       }),
     // 내 좋아요 게시물
     [SET_STORY_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        draft.user_like_list.push(...action.payload.post_list);
+        console.log("좋아요 draft.user_like_list", draft.user_like_list);
+        console.log(
+          "좋아요 action.payload.post_list",
+          action.payload.post_list
+        );
+        if (draft.check === null) {   //5
+          draft.user_like_list = action.payload.post_list
+        } else {
+          draft.user_like_list.push(...action.payload.post_list);
+        }
+        // draft.user_like_list.push(...action.payload.post_list);
         // draft.paging = action.payload.paging; // 페이징 처리
         draft.user_like_list = draft.user_like_list.reduce((acc, cur) => {
           if (acc.findIndex((a) => a.id === cur.id) === -1) {
@@ -459,6 +488,7 @@ export default handleActions(
             return acc; // 그 게시물은 새로 받은 게시물 => 그러므로 cur은 return 안해준다
           }
         }, []);
+        draft.check = draft.check + 1 //check : 5
       }),
 
     // 내 게시물 수정(하트, 포스트 모달 수정 화면 반영)
@@ -517,7 +547,12 @@ export default handleActions(
     [PAGING_CNT]: (state, action) =>
       produce(state, (draft) => {
         console.log("카운트업!");
-        draft.pagingCnt = draft.pagingCnt + 15;
+        console.log(draft.size);
+        draft.pagingCnt = draft.pagingCnt + draft.size;
+      }),
+    [PAGING_CNT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.paging = action.payload.paging;
       }),
 
     [RESET_STORY]: (state, action) =>
