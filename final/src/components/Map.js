@@ -89,6 +89,7 @@ const Maps = (props) => {
   const myPostData = map_post_list.filter(
     (map_post_list) => map_post_list.writerName === nickname
   );
+  console.log("내 작성 게시물 왔나??: " + myPostData);
   const myLikeData = map_post_list.filter(
     (map_post_list) => map_post_list.like === true
   );
@@ -247,8 +248,7 @@ const Maps = (props) => {
         // 작성용 마커를 사용하는 방법을 알려주는 인포윈도우
         // 작성용 마커위에 갖다대면 뜨고(mouseover) 마우스를 떼면(mouseout) 사라진다.
         // 작성용 마커에 우클릭을 하면 마커가 사라지면서 인포윈도우도 사라진다.
-        var writeGuideContent = 
-          '<div class="writeinfobox"></div>'
+        var writeGuideContent = '<div class="writeinfobox"></div>';
 
         // 인포윈도우 생성하기
         var writeGuideWindow = new kakao.maps.InfoWindow({
@@ -258,9 +258,21 @@ const Maps = (props) => {
 
         // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록한다.
         // mouseover : 안내창 생성, mouseout, rightclick: 안내창 닫기
-        kakao.maps.event.addListener(writeMarker, "mouseover", mouseOverListener(map, writeMarker, writeGuideWindow));
-        kakao.maps.event.addListener(writeMarker, "mouseout", mouseOutListener(writeGuideWindow));
-        kakao.maps.event.addListener(writeMarker, "rightclick", mouseRightClickListener(writeGuideWindow));
+        kakao.maps.event.addListener(
+          writeMarker,
+          "mouseover",
+          mouseOverListener(map, writeMarker, writeGuideWindow)
+        );
+        kakao.maps.event.addListener(
+          writeMarker,
+          "mouseout",
+          mouseOutListener(writeGuideWindow)
+        );
+        kakao.maps.event.addListener(
+          writeMarker,
+          "rightclick",
+          mouseRightClickListener(writeGuideWindow)
+        );
 
         // 작성용 마커에 안내창을 띄우는 클로저를 만드는 함수 : mouseover
         function mouseOverListener(map, writeMarker, writeGuideWindow) {

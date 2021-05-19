@@ -18,12 +18,12 @@ import { actionCreators as likeActions } from "../../redux/modules/like";
 import { actionCreators as ModalActions } from "../../redux/modules/storypostmodal";
 import { forEach } from "lodash";
 import { history } from "../../redux/configStore";
+import { actionCreators as storyPostActions } from "../../redux/modules/storypost";
 
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-  }, []);
+  React.useEffect(() => {}, []);
 
   console.log("eeee", props);
   const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
@@ -171,16 +171,16 @@ const ModalDetail = (props) => {
                             : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                         }
                         onClick={() => {
-                          window.location.replace(
-                            `/story/${modalData.writerId}`
-                          ); // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                          dispatch(storyPostActions.resetStory([]));
+                          // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                         }}
                       />
                       <ModalAuthor
                         onClick={() => {
-                          window.location.replace(
-                            `/story/${modalData.writerId}`
-                          ); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                          dispatch(storyPostActions.resetStory([]));
+                          // window.location.replace(
+                          //   `/story/${modalData.writerId}`
+                          // ); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                         }}
                       >
                         {modalData.writerName}
@@ -270,7 +270,9 @@ const ModalDetail = (props) => {
                               }).then((result) => {
                                 if (result.isConfirmed) {
                                   dispatch(
-                                    storyPostModalActions.deleteStoryPostAPI(modalData.id)
+                                    storyPostModalActions.deleteStoryPostAPI(
+                                      modalData.id
+                                    )
                                   ); //이거 왜안될까??....
                                   props.close(); //삭제 바로반영?
                                 }
