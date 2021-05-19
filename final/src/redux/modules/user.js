@@ -4,7 +4,7 @@ import { history } from "../configStore";
 import axios from "axios";
 import { config } from "../../shared/config";
 import Swal from "sweetalert2";
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 
 // actions
 const SET_USER = "SET_USER";

@@ -38,7 +38,7 @@ const getUserInfoAPI = (userId) => {
       },
     })
       .then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         let _user = res.data.data;
 
         let user = {

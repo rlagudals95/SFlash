@@ -89,6 +89,7 @@ const Maps = (props) => {
   const myPostData = map_post_list.filter(
     (map_post_list) => map_post_list.writerName === nickname
   );
+  console.log("내 작성 게시물 왔나??: " + myPostData);
   const myLikeData = map_post_list.filter(
     (map_post_list) => map_post_list.like === true
   );
