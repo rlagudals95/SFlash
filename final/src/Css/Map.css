@@ -7,6 +7,24 @@
   align-items: center;
 }
 
+.writeinfobox {
+  width: 320px;
+  height: 144px;
+  border-radius: 5px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+}
+
+.writeinfoimg {
+  width: 320px;
+  height: 144px;
+  border-radius: 5px;
+  background-color: white;
+  object-fit: cover;
+  background-size: cover;
+}
+
 .picbox {
   margin: auto; 
   width: 92%;
@@ -34,7 +52,7 @@
   left: 17px;
   background-color: transparent;
   color: white;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   padding-left: 5px;
 }
 
@@ -44,7 +62,7 @@
   left: 17px;
   background-color: transparent;
   color: white;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   padding-left: 5px;
 }
 

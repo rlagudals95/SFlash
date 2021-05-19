@@ -27,7 +27,6 @@ const Main = (props) => {
         ) : (
           <Spinner/>
       )}
-      {/* <Map/> */}
     </React.Fragment>
   );
 };
