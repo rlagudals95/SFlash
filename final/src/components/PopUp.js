@@ -65,7 +65,7 @@ const PopUp = (props) => {
           <div>
             <PopUpImg
               src={
-                "https://firebasestorage.googleapis.com/v0/b/diction-f1678.appspot.com/o/popup03%402x.png?alt=media&token=72e502fb-2cf9-4c0c-996c-fcb26bcc8856"
+                "https://firebasestorage.googleapis.com/v0/b/diction-f1678.appspot.com/o/%ED%8C%9D%EC%97%853%20%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8.png?alt=media&token=5a8d500d-1896-4bd5-bc14-eac14d783c69"
               }
             >
               <ExitBtn onClick={props.close}>

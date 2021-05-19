@@ -16,6 +16,8 @@ const DELETE_STORY_POST = "DELETE_STORY_POST";
 const DELETE_STORY_MARKER = "DELETE_MY_MARKER";
 const LOADING = "LOADING"; //is_loading을 true로 바꿔주는 액션
 const PAGING_CNT = "PAGING_CNT";
+// 클릭시 스토리 페이지 정보 초기화
+const RESET_STORY = "RESET_STORY";
 
 const setStoryPost = createAction(SET_STORY_POST, (post_list) => ({
   post_list,
@@ -35,6 +37,7 @@ const deleteStoryPost = createAction(DELETE_STORY_POST, (id) => ({ id }));
 const deleteStoryMarker = createAction(DELETE_STORY_MARKER, (id) => ({ id }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 const pagingCntUp = createAction(PAGING_CNT, () => ({}));
+const resetStory = createAction(RESET_STORY, (reset) => ({ reset }));
 
 const initialState = {
   user_post_list: [], //내가 올린 게시물 리스트
@@ -431,6 +434,7 @@ export default handleActions(
         // 무한스크롤 시에는 push 방식으로 set 해주기
         draft.user_post_list.push(...action.payload.post_list);
         // draft.paging = action.payload.paging; // 페이징 처리
+
         draft.user_post_list = draft.user_post_list.reduce((acc, cur) => {
           if (acc.findIndex((a) => a.id === cur.id) === -1) {
             return [...acc, cur]; //같은 id를 가진 게시물이 없다면 기존 포스트들과 새로받은 포스트 리턴
@@ -515,6 +519,12 @@ export default handleActions(
         console.log("카운트업!");
         draft.pagingCnt = draft.pagingCnt + 15;
       }),
+
+    [RESET_STORY]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user_like_list = action.payload.reset;
+        draft.user_post_list = action.payload.reset;
+      }),
   },
   initialState
 );
@@ -531,6 +541,7 @@ const actionCreators = {
   deleteUserPostLikeAPI,
   addUserLikeLikeAPI,
   deleteUserLikeLikeAPI,
+  resetStory,
 };
 
 export { actionCreators };
