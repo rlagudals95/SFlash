@@ -5,6 +5,7 @@ import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { actionCreators as postActions } from "../redux/modules/post";
+import PopUp from "../components/PopUp";
 
 // component, element 파일들 가져오기
 import Map from "../components/Map";
@@ -16,17 +17,22 @@ const Main = (props) => {
   const is_login = useSelector((state) => state.user.is_login);
   const map_post_list = useSelector((state) => state.post.map_post_list);
 
+  const [openPopUp, setPopup] = useState(true);
+
+  const closePopUp = () => {
+    setPopup(false);
+  };
+
   useEffect(() => {
     dispatch(postActions.getMapPostAPI());
   }, []);
 
   return (
     <React.Fragment>
-      {map_post_list ? (
-        <Map />
-        ) : (
-          <Spinner/>
-      )}
+      {/* !is_login 이렇게 로그인 상태가 아닐때만 보여주자 */}
+      {openPopUp ? <PopUp close={closePopUp} /> : null}
+
+      {map_post_list ? <Map /> : <Spinner />}
       {/* <Map/> */}
     </React.Fragment>
   );
