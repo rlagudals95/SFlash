@@ -28,6 +28,7 @@ const Story = (props) => {
 
   React.useEffect(() => {
       dispatch(profileActions.getUserInfoAPI(userId));
+
       dispatch(storypostActions.getUserPostAPI(userId));
       dispatch(storypostActions.getUserLikeAPI(userId));
   }, []);
