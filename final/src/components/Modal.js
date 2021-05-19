@@ -107,8 +107,6 @@ const ModalDetail = (props) => {
     setComments(e.target.value);
   };
 
-
-
   //작성 날짜 설정하기
   const timeForToday = (value) => {
     const today = new Date();
@@ -134,8 +132,6 @@ const ModalDetail = (props) => {
 
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
-
-
 
   return (
     <React.Fragment>
@@ -336,8 +332,6 @@ const ModalDetail = (props) => {
     </React.Fragment>
   );
 };
-
-
 
 const LikeBox = styled.div`
   align-items: center;

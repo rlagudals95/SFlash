@@ -71,7 +71,9 @@ function Navbar() {
 
             <TabletLogo
               onClick={() => {
+                history.replace("/");
                 dispatch(sideActions.getPage("home"));
+                history.replace("/");
               }}
             ></TabletLogo>
             {/* 홈 지도보기 */}

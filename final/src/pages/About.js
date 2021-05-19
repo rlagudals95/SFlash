@@ -40,10 +40,10 @@ const About = (props) => {
 
                   <Grid flex>
                     <ProfileImg2 src={a.img_url} />
-                    <Grid>
+                    <Grid> 
                       <ModalProfileContainer>
                         <Name style={{ fontSize: "1.8rem" }}>{a.name}</Name>
-                        <Position style={{ fontSize: "1.1rem" }}>
+                        <Position style={{ fontSize: "1.1rem" }}> 
                           {a.position}
                         </Position>
                       </ModalProfileContainer>

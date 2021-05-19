@@ -121,7 +121,7 @@ const ModalDetail = (props) => {
 
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
-
+  //새로운 데이터가 들어올땐 어떻게 해야할까...?
   return (
     <React.Fragment>
       {modalData ? (

@@ -15,6 +15,7 @@ import category_in_map from "../redux/modules/category_in_map";
 import { LeakRemoveOutlined } from "@material-ui/icons";
 import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import MapModal from "./MapModal";
+import Spinner from "../shared/Spinner";
 
 // window 객체로부터 kakao mpa api를 호출하기
 // 이것이 되게 하기 위해서는 index.html(index.js 아님!!!)의 script 태그안의 src에다가
@@ -225,38 +226,77 @@ const Maps = (props) => {
           imageSize
         );
 
-        var position = new kakao.maps.LatLng(hereLat, hereLng);
-        var marker = new kakao.maps.Marker({
+        var writePosition = new kakao.maps.LatLng(hereLat, hereLng);
+        var writeMarker = new kakao.maps.Marker({
           // 클릭한 위치에 게시물 작성용 마커를 띄워준다.
           // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
           // map: map,
-          position: position,
+          position: writePosition,
           image: writeMarkerImage,
           // clickable: true,
           // draggable: true,
           zIndex: 50,
         });
 
-        marker.setMap(map);
+        writeMarker.setMap(map);
         // marker.setDraggable(true);
+
+        // 작성용 마커를 사용하는 방법을 알려주는 인포윈도우
+        // 작성용 마커위에 갖다대면 뜨고(mouseover) 마우스를 떼면(mouseout) 사라진다.
+        var writeGuideContent = '<div style="padding:5px;">마커 우클릭 => 작성창 생성<br>'  
+                              + '마커 좌클릭 => 마커 사라짐<br>'
+                              + '지도의 다른 곳을 클릭하면 => 그곳에 새 마커 생깁니다<br>'
+                              + '</div>';
+
+        // 인포윈도우 생성하기
+        var writeGuideWindow = new kakao.maps.InfoWindow({
+          position: writePosition,
+          content: writeGuideContent,
+        });
+
+        // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록한다.
+        // mouseover : 안내창 생성, mouseout, rightclick: 안내창 닫기
+        kakao.maps.event.addListener(writeMarker, "mouseover", makeOverListener(map, writeMarker, writeGuideWindow));
+        kakao.maps.event.addListener(writeMarker, "mouseout", makeMouseOutListener(writeGuideWindow));
+        kakao.maps.event.addListener(writeMarker, "rightclick", makeRightClickOutListener(writeGuideWindow));
+
+        // 작성용 마커에 안내창을 띄우는 클로저를 만드는 함수 : mouseover
+        function makeOverListener(map, writeMarker, writeGuideWindow) {
+          return function () {
+            writeGuideWindow.open(map, writeMarker);
+          }
+        }
+
+        // 작성용 마커의 안내창을 닫는 클로저를 만드는 함수 : mouseout
+        function makeMouseOutListener(writeGuideWindow) {
+          return function () {
+            writeGuideWindow.close();
+          };
+        }
+
+        // 작성용 마커의 안내창을 닫는 클로저를 만드는 함수 : rightclick
+        function makeRightClickOutListener(writeGuideWindow) {
+          return function () {
+            writeGuideWindow.close();
+          };
+        }
 
         // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
         // 이거 이용해서 디테일 모달 띄우는 것도 구현 가능하지 않을까?
-        kakao.maps.event.addListener(marker, "click", function () {
+        kakao.maps.event.addListener(writeMarker, "click", function () {
           setUpLoadModal(true);
         });
 
-        kakao.maps.event.addListener(marker, "rightclick", function () {
-          marker.setMap(null);
+        kakao.maps.event.addListener(writeMarker, "rightclick", function () {
+          writeMarker.setMap(null);
         });
 
         // 게시물 작성용 마커가 있는 상태에서 지도상의 다른 곳을 클릭하면
         // 원래 있던 게시물 작성용 마커는 사라지고, 새로 클릭한 자리에 게시물 작성용 마커가 뜨게 한다.
         kakao.maps.event.addListener(map, "click", function () {
-          marker.setMap(null);
+          writeMarker.setMap(null);
         });
-        // 클릭이벤트 종료
-      });
+      }); // 작성용 마커를 지도위에 띄우는 클릭이벤트 종료!!!
     }
 
     // 전체 마커 + 카테고리별 마커 설정
@@ -375,7 +415,7 @@ const Maps = (props) => {
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
 
-        //mouseover , mouseout
+        // 마커에 마우스를 올리면 커스텀오버레이가 사라지게한다.
         kakao.maps.event.addListener(mylikeMarkers, "mouseover", function () {
           mylikeCustomOverlay.setMap(map);
         });
@@ -428,7 +468,7 @@ const Maps = (props) => {
           content: content, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           yAnchor: 1.27, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          zIndex: 100, //  커스텀 오버레이의 z-index
+          zIndex: 10000, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
 
@@ -1172,11 +1212,14 @@ const Maps = (props) => {
           <BiIcons.BiSearch size="2rem" color="rgb(255, 183, 25)" />
         </SearchIcon>
       </SearchBox>
+        
       <CategoryInMap />
+      
       <MapBox>
         {/* 위에서 설정된 getElementById("map")에 의해서 id="map"인 div에 맵이 표시된다 */}
         <div id="map" style={{ width: "100vw", height: "100vh" }}></div>
       </MapBox>
+      
       {is_uploadModal ? (
         <UpLoadModal
           close={closeUpLoadModal}
@@ -1194,7 +1237,7 @@ export default Maps;
 const SearchBox = styled.div`
   position: fixed;
   top: 40px;
-  left: 200px;
+  left: 225px;
   transform: translate(-10%, -90%);
   z-index: 3;
   @media (min-width: 1400px) {
@@ -1205,11 +1248,11 @@ const SearchBox = styled.div`
     position: fixed;
     /* top: 140px; */
     width: 400px;
-    top: 170px;
+    top: 130px;
     margin: auto;
   }
   @media (max-width: 600px) {
-    top: 120px;
+    top: 125px;
     width: 50%;
     left: 25vw;
     margin: auto;
