@@ -5,9 +5,9 @@ import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as categoryActionsInMap } from "../redux/modules/category_in_map";
 import * as BiIcons from "react-icons/bi";
-import AllBtn from "../shared/images/spotIcons/AllSpotsBtn.png"
-import AllMyPostBtn from "../shared/images/spotIcons/AllMyPostsBtn.png"
-import AllMyLikeBtn from "../shared/images/spotIcons/AllMyLikesBtn.png"
+import AllBtn from "../shared/images/spotIcons/_01_AllSpotsBtn.png"
+import AllMyPostBtn from "../shared/images/spotIcons/_02_AllMyPostsBtn.png"
+import AllMyLikeBtn from "../shared/images/spotIcons/_03_AllMyLikesBtn.png"
 import Swal from "sweetalert2"; 
 
 const CategoryInMap = () => {
@@ -406,7 +406,7 @@ const CategoryInMap = () => {
           <SpotSelectBox>
             {/* 전체스팟 찾기 */}
             {is_all ? ( // is_category_in_map 리스트 안에 모든 카테고리가 다 들어 있다면
-              <AllSpotsSelected
+              <AllSpots
                 src={AllBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -848,7 +848,7 @@ const CategoryInMap = () => {
           <SpotSelectBox>
             {/* 전체스팟 찾기 */}
             {is_all ? ( // is_category_in_map 리스트 안에 모든 카테고리가 다 들어 있다면
-              <AllSpotsSelected
+              <AllSpots
                 src={AllBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -887,7 +887,7 @@ const CategoryInMap = () => {
             )}
             {/* 내스팟 찾기 */}
             {showMine ? (
-              <MyPostSpotsSelected
+              <MyPostSpots
                 src={AllMyPostBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -921,7 +921,7 @@ const CategoryInMap = () => {
             )}
             {/* 내좋아요스팟 찾기 */}
             {showLike ? (
-              <MyLikeSpotsSelected
+              <MyLikeSpots
                 src={AllMyLikeBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -964,14 +964,15 @@ export default CategoryInMap;
 
 // 카테고리 박스 정보
 const CategoryBox = styled.div`
-  /* width: 240px; */
-  width: 330px;
+  width: 240px;
+  /* width: 330px; */
   padding: 8px 0px;
   position: fixed;
   z-index: 300;
   right: 50px;
   top: 19vh;
-  background-color: #F2F3F7;
+  /* background-color: #F2F3F7; */
+  background-color: red;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
@@ -1030,28 +1031,70 @@ const SelectedBtn = styled.button`
   background-color: white;
   border-radius: 50px;
   box-sizing: border-box;
-  border: 1px solid #3897f0;
+  border: 1px solid #ffb719;
   cursor: pointer;
   font-size: 12px;
   font-weight: bold;
-  color: #3897f0;
+  color: #ffb719;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
 
 const MiddleBox = styled.div`
   height: 40px;
+  /* background-color: #F2F3F7; */
+  background-color: #00ff00
 `;
 
 const SpotSelectBox = styled.div`
+  width: 240px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  /* background-color: #F2F3F7; */
+  background-color: red;
+`;
+
+const AllSpots = styled.img`
+  width: 80px;
+  height: 80px;
+  /* background-image: url('https://i.postimg.cc/q7Qcs4JC/button-01.png'); */
+  /* background-size: cover; */
+  /* background-color: #F2F3F7; */
+  background-color: #ff8000;
+  box-sizing: border-box;
+  cursor: pointer;
+  /* padding: 4px; */
+  object-fit: cover;
+`;
+
+const MyPostSpots = styled.img`
+  width: 80px;
+  height: 80px;
+  /* background-image: url('https://i.postimg.cc/dDMGs0Bg/button-02.png'); */
+  background-size: cover;
+  /* background-color: #F2F3F7; */
+  background-color: #0000a0;
+  box-sizing: border-box;
+  cursor: pointer;
+  object-fit: cover;
+`;
+
+const MyLikeSpots = styled.img`
+  width: 80px;
+  height: 80px;
+  /* background-image: url('https://i.postimg.cc/wv7W37XB/button-03.png'); */
+  background-size: cover;
+  /* background-color: #F2F3F7; */
+  background-color: #ff0080;
+  box-sizing: border-box;
+  cursor: pointer;
+  object-fit: cover;
 `;
 
 const AllSpotsSelected = styled.img`
-  /* width: 72px;
-  height: 72px; */
-  width: 108px;
-  height: 108px;
+  width: 85px;
+  height: 85px;
+  /* width: 108px;
+  height: 108px; */
   /* background-color: white; */
   background-color: #F2F3F7;
   border-radius: 5px;
@@ -1063,27 +1106,11 @@ const AllSpotsSelected = styled.img`
   /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
-const AllSpots = styled.img`
-  /* width: 72px;
-  height: 72px; */
-  width: 108px;
-  height: 108px;
-  /* background-color: white; */
-  background-color: #F2F3F7;
-  border-radius: 5px;
-  box-sizing: border-box;
-  /* border: none; */
-  cursor: pointer;
-  /* margin: 1px; */
-  /* background-size: cover; */
-  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
-`;
-
 const MyPostSpotsSelected = styled.img`
-  /* width: 72px;
-  height: 72px; */
-  width: 108px;
-  height: 108px;
+  width: 85px;
+  height: 85px;
+  /* width: 108px;
+  height: 108px; */
   /* background-color: white; */
   background-color: #F2F3F7;
   border-radius: 5px;
@@ -1095,27 +1122,11 @@ const MyPostSpotsSelected = styled.img`
   /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
-const MyPostSpots = styled.img`
-  /* width: 72px;
-  height: 72px; */
-  width: 108px;
-  height: 108px;
-  /* background-color: white; */
-  background-color: #F2F3F7;
-  border-radius: 5px;
-  box-sizing: border-box;
-  /* border: none; */
-  cursor: pointer;
-  /* margin: 1px; */
-  /* background-size: cover; */
-  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
-`;
-
 const MyLikeSpotsSelected = styled.img`
-  /* width: 72px;
-  height: 72px; */
-  width: 108px;
-  height: 108px;
+  width: 85px;
+  height: 85px;
+  /* width: 108px;
+  height: 108px; */
   /* background-color: white; */
   background-color: #F2F3F7;
   border-radius: 5px;
@@ -1127,18 +1138,19 @@ const MyLikeSpotsSelected = styled.img`
   /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
-const MyLikeSpots = styled.img`
-  /* width: 72px;
-  height: 72px; */
-  width: 108px;
-  height: 108px;
+const MyLikeSpotstest = styled.div`
+  width: 90px;
+  height: 90px;
+  background-image: url('https://i.postimg.cc/wv7W37XB/button-03.png');
+  /* width: 108px;
+  height: 108px; */
   /* background-color: white; */
   background-color: #F2F3F7;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   box-sizing: border-box;
   /* border: none; */
   cursor: pointer;
-  /* margin: 1px; */
+  padding: 2px;
   /* background-size: cover; */
   /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
