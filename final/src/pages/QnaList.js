@@ -68,9 +68,9 @@ const QnaList = (props) => {
       <React.Fragment>
         <Container>
           <Title>문의하기</Title>
-          <SolidBtn onClick={() => history.push("/qnawrite")}>
+          <WriteBtn onClick={() => history.push("/qnawrite")}>
             <RiEditFill size="12" /> 글쓰기
-          </SolidBtn>
+          </WriteBtn>
           <Content>
             {/* <Text width="4%">
           <b>NO.</b>
@@ -96,12 +96,12 @@ const QnaList = (props) => {
       <React.Fragment>
         <Container>
           <Title>문의하기</Title>
-          <SolidBtn onClick={() => history.push("/qnawrite")}>
+          <WriteBtn onClick={() => history.push("/qnawrite")}>
             <Icon>
               <RiEditFill size="18" />
             </Icon>{" "}
             글쓰기
-          </SolidBtn>
+          </WriteBtn>
           <Content>
             {/* <Text width="4%">
           <b>NO.</b>
@@ -218,6 +218,7 @@ const Title = styled.div`
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 0px;
+  color: ${(props) => props.theme.main_grey};
 `;
 
 const Content = styled.div`
@@ -225,6 +226,7 @@ const Content = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  color: ${(props) => props.theme.main_grey};
   /* background-color: green; */
 `;
 
@@ -243,6 +245,7 @@ const Text = styled.div`
   width: ${(props) => props.width};
   border: white;
   padding: 10px 12px;
+  color: ${(props) => props.theme.main_grey};
   /* background-color: yellow; */
 `;
 
@@ -252,6 +255,7 @@ const TextBtn = styled.div`
   font-size: 1rem;
   width: ${(props) => props.width};
   border: white;
+  color: ${(props) => props.theme.main_grey};
   padding: 10px 12px;
   &:hover {
     text-decoration: underline;
@@ -266,26 +270,29 @@ const Icon = styled.div`
   /* background-color: green; */
 `;
 
-const SolidBtn = styled.button`
+const WriteBtn = styled.button`
   align-items: center;
   display: flex;
   float: right;
-  border: none;
   padding: 7px 20px 7px 0px;
   margin: 10px 0px;
   ${(props) => (props.width ? `width:${props.width};` : "")}
-  border-radius: 8px;
+  border-radius: 10px;
   box-sizing: border-box;
   font-size: 1rem;
   font-weight: 500;
-  background-color: ${(props) => props.theme.main_color};
+  color: ${(props) => props.theme.main_grey};
+  background-color: #ffffff;
+  
   /* color: #ffffff; */
+  border: 1.5pt solid ${(props) => props.theme.main_color};
   outline: none;
   &:hover {
-    color: grey;
-    background-color: lightgrey;
+    color: #ffffff;
+    background-color:${(props) => props.theme.main_color};
     cursor: pointer;
     transition: all 0.5s ease-in-out;
+    box-shadow: 2px 3px 3px 0px rgba(0, 0, 0, 0.2);
   }
 `;
 const Warning = styled.div`

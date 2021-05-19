@@ -247,7 +247,7 @@ const StoryEditProfile = (props) => {
                   confirmButtonColor: "#ffb719",
                   showCancelButton: true,
                   cancelButtonText: "아니오",
-                  cancelButtonColor: "#d33",
+                  cancelButtonColor: "#eee",
                 }).then((result) => {
                   if (result.isConfirmed) {
                     onEditProfile();
@@ -310,17 +310,16 @@ const StoryEditProfile = (props) => {
               onClick={() => {
                 Swal.fire({
                   text: "닉네임을 변경 하시겠습니까?",
-                  icon: "question",
                   confirmButtonText: "예",
                   confirmButtonColor: "#ffb719",
                   showCancelButton: true,
                   cancelButtonText: "아니오",
-                  cancelButtonColor: "#d33",
+                  cancelButtonColor: "#eee",
                 }).then((result) => {
                   if (result.isConfirmed) {
                     Swal.fire({
                       text: "닉네임이 변경되었습니다.",
-                      icon: "success",
+                      confirmButtonColor: "#ffb719",
                     });
                     onEditNickname();
                   }

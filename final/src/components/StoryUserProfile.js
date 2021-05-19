@@ -88,9 +88,9 @@ const StoryUserProfile = (props) => {
         {/* 나의 페이지에서만 보이는 메뉴(프로필 편집, 로그아웃 등) 버튼*/}
         {is_me && (
           <>
+          {/* 설정 버튼 */}
             <Setting onClick={settingHandleClick}>
-              {/* <IconButton > */}
-              <BiDotsHorizontalRounded size="35" color="grey" />
+              <BiDotsHorizontalRounded size="32" color="grey" />
             </Setting>
             <Menu
               // id="simple-menu"
@@ -139,6 +139,7 @@ const StoryUserProfile = (props) => {
               </MenuItem>
             </Menu>
 
+
             {/*  현재 닉네임은 로컬스토리지에서 받아온 닉네임으로 설정되어 있지만 api 연결후에는 api에서 받아온 정보로 사용하기 */}
             <Modal
               isOpen={profileModal}
@@ -183,29 +184,27 @@ StoryUserProfile.defaultProps = {
 
 const ProfileContainer = styled.div`
   display: flex;
-  margin-top: 70px;
-  padding-bottom: 40px;
+  margin-top: 130px;
+  padding-bottom: 70px;
   /* background-color:#eee; */
   @media (max-width: 1280px) {
     padding-bottom: 30px;
   }
   @media (max-width: 520px) {
-    height: 100px;
-    margin-top: 0px;
     padding-bottom: 10px;
   }
   @media (max-width: 400px) {
-    height: 90px;
     margin-top: 0px;
     padding-bottom: 0px;
   }
+  /* background-color: #eee; */
 `;
 
 const Setting = styled.div`
   position: static;
   float: right;
   width: 40px;
-  height: 40px;
+  height: 30px;
   border-radius: 100px;
   align-items: center;
   vertical-align: center;
@@ -229,18 +228,18 @@ const Setting = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  border-radius: 150px;
-  padding: 20px;
+  border-radius: 160px;
+  padding: 10px;
   background-size: cover;
   object-fit: cover;
   cursor: pointer;
   @media (min-width: 1280px) {
-    width: 160px;
-    height: 160px;
+    width: 170px;
+    height: 170px;
   }
   @media (max-width: 1280px) {
-    width: 140px;
-    height: 140px;
+    width: 160px;
+    height: 160px;
   }
   @media (max-width: 960px) {
     width: 120px;
@@ -256,9 +255,11 @@ const Nickname = styled.div`
   font-size: 1.8rem;
   font-weight: 600;
   margin-top: 120px;
+  margin-left: 20px;
+  color: ${(props) => props.theme.main_grey};
   @media (max-width: 1280px) {
     margin-top: 100px;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
   }
   @media (max-width: 960px) {
     margin-top: 100px;
@@ -275,6 +276,7 @@ const Introduction = styled.div`
   font-weight: 400;
   color: grey;
   margin-top: 10px;
+  margin-left: 20px;
   @media (max-width: 1280px) {
     font-size: 1.1rem;
   }

@@ -89,12 +89,13 @@ const StoryMap = (props) => {
 
         // 모달창(커스텀오버레이)에 들어갈 내용
         const content =
-          '<div class="modalcontainer">' +
-          `<img class="picbox"  src=${post.img_url[0].imgUrl} >` +
-          '<div class="head">' +
-          `<div class="spotname">${post.spotName}</div>` +
-          "</div>" +
-          "</div>";
+        '<div class="modalcontainer">' +
+        `<img class="picbox" src=${post.img_url[0].imgUrl} >` +
+        '<div class="head">' +
+            `<div class="spotname1">${post.spotName1}</div>` +
+            `<div class="spotname2">${post.spotName2}</div>` +
+        "</div>" +
+      "</div>";
 
         // 모달창(커스텀오버레이) 객체를 생성
         const customOverlay = new kakao.maps.CustomOverlay({

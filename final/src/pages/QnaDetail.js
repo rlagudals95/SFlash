@@ -115,6 +115,7 @@ const Title = styled.div`
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 30px;
+  color: ${(props) => props.theme.main_grey};
 `;
 
 const TitleContainer = styled.div`
@@ -142,6 +143,7 @@ const Text = styled.div`
   border: white;
   padding: 10px 10px;
   word-break: keep-all;
+  color: ${(props) => props.theme.main_grey};
   /* background-color: green; */
 `;
 

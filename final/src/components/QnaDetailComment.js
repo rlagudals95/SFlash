@@ -219,6 +219,7 @@ const Text = styled.div`
   border: white;
   padding: 18px 14px;
   word-break: keep-all;
+  color: ${(props) => props.theme.main_grey};
   /* background-color: green; */
 `;
 

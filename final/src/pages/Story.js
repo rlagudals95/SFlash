@@ -65,7 +65,7 @@ const Story = (props) => {
                   setUserPostMode(false);
                 }}
               >
-                <b>{user_info.nickname}</b> 님의 좋아요
+               {user_info.nickname} 님의 좋아요
               </UnselectedTab>
             </>
           ) : (
@@ -75,7 +75,7 @@ const Story = (props) => {
                   setUserPostMode(true);
                 }}
               >
-                <b>{user_info.nickname}</b> 님의 게시물
+                {user_info.nickname} 님의 게시물
               </UnselectedTab>
               <VerticalBar />
               <SelectedTab>
@@ -140,7 +140,7 @@ const SelectedTab = styled.div`
   :hover {
   }
   @media (max-width: 960px) {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
   @media (max-width: 400px) {
     font-size: 0.7rem;
@@ -170,10 +170,10 @@ const UnselectedTab = styled.div`
 `;
 
 const TabUnderBar = styled.div`
-  width: 100%;
+  width: 80%;
   min-width: 145px;
   height: 3pt;
-  margin: 20px auto -20px auto;
+  margin: 20px auto -25px auto;
   background-color: ${(props) => props.theme.main_grey};
   @media (max-width: 960px) {
     height: 2pt;
