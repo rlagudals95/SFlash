@@ -406,7 +406,7 @@ const CategoryInMap = () => {
           <SpotSelectBox>
             {/* 전체스팟 찾기 */}
             {is_all ? ( // is_category_in_map 리스트 안에 모든 카테고리가 다 들어 있다면
-              <AllSpots
+              <Spots
                 src={AllBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -416,7 +416,7 @@ const CategoryInMap = () => {
                 }}
               />
             ) : (
-              <AllSpots
+              <Spots
                 src={AllBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -444,7 +444,7 @@ const CategoryInMap = () => {
               />
             )}
             {/* 내스팟 찾기 */}
-              <MyPostSpots
+              <Spots
                 src={AllMyPostBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -466,7 +466,7 @@ const CategoryInMap = () => {
                 }}
               />
             {/* 내좋아요스팟 찾기 */}
-              <MyLikeSpots
+              <Spots
                 src={AllMyLikeBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -848,7 +848,7 @@ const CategoryInMap = () => {
           <SpotSelectBox>
             {/* 전체스팟 찾기 */}
             {is_all ? ( // is_category_in_map 리스트 안에 모든 카테고리가 다 들어 있다면
-              <AllSpots
+              <Spots
                 src={AllBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -858,7 +858,7 @@ const CategoryInMap = () => {
                 }}
               />
             ) : (
-              <AllSpots
+              <Spots
                 src={AllBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -887,7 +887,7 @@ const CategoryInMap = () => {
             )}
             {/* 내스팟 찾기 */}
             {showMine ? (
-              <MyPostSpots
+              <Spots
                 src={AllMyPostBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -896,7 +896,7 @@ const CategoryInMap = () => {
                 }}
               />
             ) : (
-              <MyPostSpots
+              <Spots
                 src={AllMyPostBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -921,7 +921,7 @@ const CategoryInMap = () => {
             )}
             {/* 내좋아요스팟 찾기 */}
             {showLike ? (
-              <MyLikeSpots
+              <Spots
                 src={AllMyLikeBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -930,7 +930,7 @@ const CategoryInMap = () => {
                 }}
               />
             ) : (
-              <MyLikeSpots
+              <Spots
                 src={AllMyLikeBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -971,8 +971,8 @@ const CategoryBox = styled.div`
   z-index: 300;
   right: 50px;
   top: 19vh;
-  /* background-color: #F2F3F7; */
-  background-color: red;
+  background-color: #F2F3F7;
+  /* background-color: red; */
   padding: 20px;
   border-radius: 15px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
@@ -1040,17 +1040,31 @@ const SelectedBtn = styled.button`
 `;
 
 const MiddleBox = styled.div`
-  height: 40px;
-  /* background-color: #F2F3F7; */
-  background-color: #00ff00
+  height: 38px;
+  background-color: #F2F3F7;
+  /* background-color: #00ff00 */
 `;
 
 const SpotSelectBox = styled.div`
   width: 240px;
   display: flex;
   justify-content: space-between;
-  /* background-color: #F2F3F7; */
-  background-color: red;
+  background-color: #F2F3F7;
+  /* background-color: red; */
+`;
+
+const Spots = styled.img`
+  width: 68px;
+  height: 68px;
+  background-color: #F2F3F7;
+  border-radius: 5px;
+  background-size: cover;
+  object-fit: cover;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin-bottom: 8px;
+  box-shadow: 3px 3px 5px 1px rgba(0.1, 0.2, 0.2, 0.2);
+  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
 const AllSpots = styled.img`
