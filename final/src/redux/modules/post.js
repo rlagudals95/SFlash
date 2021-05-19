@@ -30,6 +30,8 @@ const EDIT_MARKER = "EDIT_MARKER";
 const PAGING_CNT = "PAGING_CNT";
 // 모달에서 수정시 커뮤니티 post에 썸네일 변경
 const POST_IMG_EDIT = "POST_IMG_EDIT";
+// 게시물 수정시 로딩 스피너 달아주기 위해 만든 액션
+const EDIT_LOADING = "EDIT_LOADING";
 
 const setPost = createAction(SET_POST, (post_list) => ({
   post_list,
@@ -76,6 +78,7 @@ const postImgEdit = createAction(POST_IMG_EDIT, (board_id, postImg) => ({
   board_id,
   postImg,
 }));
+const edit_loading = createAction(EDIT_LOADING, (loading) => loading);
 
 const initialState = {
   // list와 map_post_list에 게시물 데이터가 들어간다.
@@ -87,6 +90,7 @@ const initialState = {
   is_loading: true, // 페이징 처리할 데이터가 없을때 스피너를 보이지 않게함
   like: false, // 접속유저의 like유무를 파악해 게시물의 하트 모양을 관리함
   pagingCnt: 0,
+  edit_loading: true,
 };
 
 const addPostAPI = (post) => {
@@ -232,10 +236,6 @@ const getPostAPI = () => {
           dispatch(loading(false));
           return;
         }
-        // let paging = {
-        //   start: start + result.length + 1,
-        //   size: size + 15,
-        // };
 
         console.log("서버 응답값", res);
         let post_list = [];
@@ -256,7 +256,7 @@ const getPostAPI = () => {
             spotName: _post.spotName,
             // writerId: _post.writerId,
           };
-          post_list.unshift(post);
+          post_list.push(post);
         });
         dispatch(setPost(post_list));
         // dispatch(modalActions.modalEdit(post_list));
@@ -376,6 +376,7 @@ const editPostAPI = (board_id, _edit) => {
         "Content-Type": "multipart/form-data",
       },
     }).then((res) => {
+      //응답이 오기전까지 무슨 스피너 조건을 줘야하는데.,..흠..
       console.log("수정반응값!", res);
       let _post = res.data.data;
       let post = {
@@ -666,6 +667,10 @@ export default handleActions(
         let idx = draft.list.findIndex((p) => p.id == action.payload.board_id);
         draft.list[idx].img_url = action.payload.postImg;
       }),
+    [EDIT_LOADING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.edit_loading = action.payload.loading;
+      }),
   },
   initialState
 );
@@ -680,12 +685,13 @@ const actionCreators = {
   searchPostAPI,
   getMapPostAPI,
   deletePostAPI,
-  add_Like, // ㅜ
+  add_Like,
   dis_Like,
   editLikeP,
   editLikeD,
   deleteMarker,
   loading,
+  edit_loading,
 };
 
 export { actionCreators };
