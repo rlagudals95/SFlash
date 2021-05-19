@@ -18,10 +18,10 @@ const LOADING = "LOADING"; //is_loading을 true로 바꿔주는 액션
 const PAGING_CNT = "PAGING_CNT";
 
 const setStoryPost = createAction(SET_STORY_POST, (post_list) => ({
-  post_list
+  post_list,
 }));
 const setStoryLike = createAction(SET_STORY_LIKE, (post_list) => ({
-  post_list
+  post_list,
 }));
 const editStoryPost = createAction(EDIT_STORY_POST, (board_id, post) => ({
   board_id,
@@ -39,7 +39,7 @@ const pagingCntUp = createAction(PAGING_CNT, () => ({}));
 const initialState = {
   user_post_list: [], //내가 올린 게시물 리스트
   user_like_list: [], //내가 좋아요한 게시물 리스트
-  is_loading:  true, // 페이징 처리할 데이터가 없을때 스피너를 보이지 않게함
+  is_loading: true, // 페이징 처리할 데이터가 없을때 스피너를 보이지 않게함
   // paging: { start: null, next: null, size: 15 },
   like: false,
   pagingCnt: 0,
@@ -257,7 +257,7 @@ const getUserLikeAPI = (userId) => {
 //         creatAt: _post.modified,
 //         spotName: _post.spotName,
 //       };
-      
+
 //       dispatch(editStoryPost(board_id, post));
 //       /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌
 //     });
@@ -423,7 +423,6 @@ const deleteUserLikeLikeAPI = (board_id, board) => {
   };
 };
 
-
 export default handleActions(
   {
     // 내 게시물
@@ -511,7 +510,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;
       }),
-      [PAGING_CNT]: (state, action) =>
+    [PAGING_CNT]: (state, action) =>
       produce(state, (draft) => {
         console.log("카운트업!");
         draft.pagingCnt = draft.pagingCnt + 15;

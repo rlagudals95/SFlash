@@ -17,21 +17,35 @@ const Main = (props) => {
   const is_login = useSelector((state) => state.user.is_login);
   const map_post_list = useSelector((state) => state.post.map_post_list);
 
-  const [openPopUp, setPopup] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
-  const closePopUp = () => {
-    setPopup(false);
-  };
+  const HAS_VISITED_BEFORE = localStorage.getItem("hasVisitedBefore");
+
+  useEffect(() => {
+    const handleShowModal = () => {
+      // 토큰이 있고 토큰의 만료일이 안됐으면 팝업이 안열린다
+      if (HAS_VISITED_BEFORE && HAS_VISITED_BEFORE > new Date()) {
+        return;
+      }
+      if (!HAS_VISITED_BEFORE) {
+        // 토큰이 없어야 팝업이 뜬다 >> 만료일이 24시간인 토큰을 로컬에 저장
+        // 오늘안보기 누르면 토큰이 생기게 하기!
+        setShowModal(true);
+      }
+    };
+    window.setTimeout(handleShowModal, 100);
+  }, [HAS_VISITED_BEFORE]);
+
+  const handleClose = () => setShowModal(false);
 
   useEffect(() => {
     dispatch(postActions.getMapPostAPI());
   }, []);
-
+  //클릭했을때 HAS_VISITED_BEFORE
   return (
     <React.Fragment>
-      {/* !is_login 이렇게 로그인 상태가 아닐때만 보여주자 */}
-      {openPopUp ? <PopUp close={closePopUp} /> : null}
-
+      {/* !is_login 이렇게 로그인 상태가 아닐때만 보여주자? */}
+      {showModal && <PopUp close={handleClose} />}
       {map_post_list ? <Map /> : <Spinner />}
     </React.Fragment>
   );

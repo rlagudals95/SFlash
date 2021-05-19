@@ -27,9 +27,9 @@ const Story = (props) => {
   console.log("userId:", userId);
 
   React.useEffect(() => {
-      dispatch(profileActions.getUserInfoAPI(userId));
-      dispatch(storypostActions.getUserPostAPI(userId));
-      dispatch(storypostActions.getUserLikeAPI(userId));
+    dispatch(profileActions.getUserInfoAPI(userId));
+    dispatch(storypostActions.getUserPostAPI(userId));
+    dispatch(storypostActions.getUserLikeAPI(userId));
   }, []);
 
   // 스토리 페이지는 크게 3가지로 나뉩니다.
@@ -65,7 +65,7 @@ const Story = (props) => {
                   setUserPostMode(false);
                 }}
               >
-               {user_info.nickname} 님의 좋아요
+                {user_info.nickname} 님의 좋아요
               </UnselectedTab>
             </>
           ) : (
@@ -103,7 +103,6 @@ const Story = (props) => {
             />
           )}
         </Content>
-
       </Wrapper>
     </React.Fragment>
   );
