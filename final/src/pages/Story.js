@@ -77,7 +77,7 @@ const Story = (props) => {
                   setUserPostMode(false);
                 }}
               >
-               {user_info.nickname} 님의 좋아요
+                {user_info.nickname} 님의 좋아요
               </UnselectedTab>
             </>
           ) : (
@@ -115,7 +115,6 @@ const Story = (props) => {
             />
           )}
         </Content>
-
       </Wrapper>
     </React.Fragment>
   );
