@@ -26,6 +26,7 @@ import MobileNav from "../components/mobile/MobileNav";
 import Spinner from "../shared/Spinner";
 import { actionCreators as PostActions } from "../redux/modules/post";
 import { actionCreators as likeActions } from "../redux/modules/like";
+import PopUp from "../components/PopUp";
 const PostList = (props) => {
   const dispatch = useDispatch();
 
