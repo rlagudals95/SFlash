@@ -5,9 +5,13 @@ export default function withError(WrappedComponent) {
   
       return (
           <>
+          <WrappedComponent {...props} />
+          {errorMessage && (
+              <span className = "error-message">
+              {errorMessage}
+              </span>
+          )}
           </>
-      )
-
-    return <WrappedComponent {...props} />;
-  };
+      );
+  }
 }

@@ -176,7 +176,7 @@ const getUserLikeAPI = (userId) => {
             like: _post.liked,
             likeCnt: _post.likeCount,
           };
-          post_list.unshift(post);
+          post_list.push(post);
           console.log(post_list);
         });
         dispatch(setStoryLike(post_list));
