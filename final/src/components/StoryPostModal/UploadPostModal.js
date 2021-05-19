@@ -7,7 +7,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 import { actionCreators as postActions } from "../../redux/modules/post";
-import { actionCreators as storyPostActions } from "../../redux/modules/storypost";
+import { actionCreators as storyPostModalActions } from "../../redux/modules/storypostmodal";
 import { actionCreators as imageActions } from "../../redux/modules/image2";
 import { actionCreators as profileActions } from "../../redux/modules/profile";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
@@ -185,7 +185,7 @@ const UploadModal = (props) => {
       title: title,
       contents: contents,
     };
-    dispatch(storyPostActions.editStoryPostAPI(props.id, edit));
+    dispatch(storyPostModalActions.editStoryPostAPI(props.id, edit));
     props.close();
     dispatch(imageActions.resetEdit([])); //업로드 후 리덕스에 남은 수정 정보 모두 리셋
     //에딧파일 초기화...

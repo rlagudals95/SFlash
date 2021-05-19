@@ -155,6 +155,7 @@ const Title = styled.div`
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 50px;
+  color: ${(props) => props.theme.main_grey};
 `;
 
 const ContentContainer = styled.div`
@@ -193,15 +194,6 @@ const TextField = styled.textarea`
   line-height: 1.5rem;
 `;
 
-const PreviewImg = styled.div`
-  width: 200px;
-  aspect-ratio: 1/1;
-  border-radius: 150px;
-  padding: 0px;
-  background-size: cover;
-  object-fit: cover;
-`;
-
 const SolidBtn = styled.button`
   display: block;
   border: none;
@@ -213,11 +205,12 @@ const SolidBtn = styled.button`
   font-size: 1rem;
   font-weight: 500;
   background-color: ${(props) => props.theme.main_color};
+  border: 1.5pt solid ${(props) => props.theme.main_color};
   color: #ffffff;
   outline: none;
   &:hover {
-    color: grey;
-    background-color: lightgrey;
+    color: ${(props) => props.theme.main_color};
+    background-color: #ffffff;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
   }

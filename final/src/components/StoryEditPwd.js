@@ -121,7 +121,7 @@ const StoryEditPwd = () => {
     <React.Fragment>
       <Container>
         <Title>비밀번호 변경하기</Title>
-        <text>소셜로그인 이용자는 비밀번호 변경이 불가능합니다.</text>
+        <Text>* 소셜로그인 이용자는 비밀번호 변경이 불가능합니다.</Text>
 
         <InputStyle
           placeholder="이전 비밀번호 입력"
@@ -187,9 +187,12 @@ const StoryEditPwd = () => {
   );
 };
 
-const Text = styled.input`
-  font-size: 1rem;
-  color: ${(props) => props.theme.main_color};
+const Text = styled.text`
+  font-size: 0.8rem;
+  text-align: start;
+  color: grey;
+  margin-left:-80px;
+  padding-bottom: 10px;
 `;
 
 const InputStyle = styled.input`

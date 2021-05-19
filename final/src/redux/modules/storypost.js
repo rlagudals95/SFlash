@@ -1,11 +1,12 @@
+// StoryContent.js 부분을 관리하는 모듈(Grid, Map)
+// 스토리페이지 (나의 게시물, 좋아요 게시물) API 사용
 import { createAction, handleActions } from "redux-actions";
+import { actionCreators as storyPostModalActions } from "../../redux/modules/storypostmodal";
 import { produce } from "immer";
 import axios from "axios";
-import { history } from "../configStore";
 import "moment";
 import { config } from "../../shared/config";
 import Swal from "sweetalert2";
-import { size } from "lodash";
 
 const SET_STORY_POST = "SET_STORY_POST";
 const SET_STORY_LIKE = "SET_STORY_LIKE";
@@ -95,6 +96,8 @@ const getUserPostAPI = (userId) => {
             id: _post.boardId,
             img_url: _post.boardImgResponseDtoList,
             spotName: _post.spotName,
+            spotName1: _post.spotName.split(" ")[0],
+            spotName2: _post.spotName.split(" ").splice(1).join(" "),
             latitude: _post.latitude,
             longitude: _post.longitude,
             like: _post.liked,
@@ -166,6 +169,8 @@ const getUserLikeAPI = (userId) => {
             id: _post.boardId,
             img_url: _post.boardImgResponseDtoList,
             spotName: _post.spotName,
+            spotName1: _post.spotName.split(" ")[0],
+            spotName2: _post.spotName.split(" ").splice(1).join(" "),
             latitude: _post.latitude,
             longitude: _post.longitude,
             like: _post.liked,
@@ -188,96 +193,100 @@ const getUserLikeAPI = (userId) => {
 
 // 모달창 관련-----------------------------------------------------
 
-const editStoryPostAPI = (board_id, _edit) => {
-  return function (dispatch, getState) {
-    const deleteImg = getState().image2.id;
-    const addFile = getState().image2.edit_file;
-    //여기서
-    // for (let i = 0; i < addFile.length; i++) {
-    //   console.log(addFile[i].imgUrl);
-    // }
-    console.log("삭제된 이미지 아이디들", deleteImg);
-    console.log("추가될 이미지파일", addFile);
-    console.log("바뀔 게시글", board_id);
-    console.log("바뀔 타이틀", _edit.title);
-    console.log("바뀔 글내용", _edit.contents);
-    // addFile[i]번째에 imgUrl 이 있을경우 제외 시킨다
-    const formData = new FormData();
-    formData.append("title", _edit.title);
-    formData.append("content", _edit.contents);
-    formData.append("deleteImages", deleteImg);
+// const editStoryPostAPI = (board_id, _edit) => {
+//   return function (dispatch, getState) {
+//     const deleteImg = getState().image2.id;
+//     const addFile = getState().image2.edit_file;
+//     const markerData = getState().post.map_post_list;
+//     const postData = getState().post.list;
+//     console.log("현재 마커데이터", markerData);
+//     console.log("현재 포스트 데이터", postData);
 
-    let _addFile = [];
-    for (let i = 0; i < addFile.length; i++) {
-      //가져온 어레이만큼 반복문을 돌리는데 이때 url형식의 기존 이미지는 제거
-      if (!addFile[i].imgUrl) {
-        _addFile.push(addFile[i]);
-      }
-    }
-    //파일 리스트 중에 기존에 있던 imgUrl이 있는 이미지들을 제외하고 새로추가한 파일형식의 요소만 폼데이터로 수정(추가)요청
+//     //여기서
+//     // for (let i = 0; i < addFile.length; i++) {
+//     //   console.log(addFile[i].imgUrl);
+//     // }
+//     // console.log("삭제된 이미지 아이디들", deleteImg);
+//     // console.log("추가될 이미지파일", addFile);
+//     // console.log("바뀔 게시글", board_id);
+//     // console.log("바뀔 타이틀", _edit.title);
+//     // console.log("바뀔 글내용", _edit.contents);
+//     // addFile[i]번째에 imgUrl 이 있을경우 제외 시킨다
+//     const formData = new FormData();
+//     formData.append("title", _edit.title);
+//     formData.append("content", _edit.contents);
+//     formData.append("deleteImages", deleteImg);
 
-    console.log("최종추가될 이미지", _addFile);
+//     let _addFile = [];
+//     for (let i = 0; i < addFile.length; i++) {
+//       //가져온 어레이만큼 반복문을 돌리는데 이때 url형식의 기존 이미지는 제거
+//       if (!addFile[i].imgUrl) {
+//         _addFile.push(addFile[i]);
+//       }
+//     }
+//     //파일 리스트 중에 기존에 있던 imgUrl이 있는 이미지들을 제외하고 새로추가한 파일형식의 요소만 폼데이터로 수정(추가)요청
 
-    for (let i = 0; i < _addFile.length; i++) {
-      formData.append("file", _addFile[i]);
-    }
+//     console.log("최종추가될 이미지", _addFile);
 
-    axios({
-      method: "PUT",
-      url: `${config.api}/board/${board_id}`,
-      data: formData,
-      headers: {
-        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
-        "Content-Type": "multipart/form-data",
-      },
-    }).then((res) => {
-      console.log("수정반응값!", res);
-      let _post = res.data.data;
-      let post = {
-        id: _post.boardId, // 포스트 id
-        title: _post.title, // 포스트 title
-        content: _post.content, // 포스트 내용
-        writerName: _post.writerName,
-        img_url: _post.boardImgReponseDtoList,
-        category: _post.category,
-        profileImg: _post.writerImgUrl,
-        like: _post.liked,
-        likeCnt: _post.likeCount,
-        comment: _post.boardDetailCommentDtoList,
-        creatAt: _post.modified,
-        spotName: _post.spotName,
-      };
-      console.log("!??!@12", post);
-      // 수정된 게시물정보를 받고싶다
-      dispatch(editStoryPost(board_id, post));
-      /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌
-    });
-  };
-};
+//     for (let i = 0; i < _addFile.length; i++) {
+//       formData.append("file", _addFile[i]);
+//     }
 
-const deleteStoryPostAPI = (board_id) => {
-  return function (dispatch, getState) {
-    axios({
-      method: "DELETE",
-      url: `${config.api}/board/${board_id}`,
-      headers: {
-        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        dispatch(deleteStoryPost(board_id));
-        dispatch(deleteStoryMarker(board_id));
-      })
-      .catch((err) => {
-        Swal.fire({
-          text: "게시물 삭제에 문제가 있어요 :(",
-          confirmButtonColor: "#ffb719",
-        });
-        console.log("게시글 삭제 에러", err);
-      });
-  };
-};
+//     axios({
+//       method: "PUT",
+//       url: `${config.api}/board/${board_id}`,
+//       data: formData,
+//       headers: {
+//         "X-AUTH-TOKEN": localStorage.getItem("jwt"),
+//         "Content-Type": "multipart/form-data",
+//       },
+//     }).then((res) => {
+//       console.log("수정반응값!", res);
+//       let _post = res.data.data;
+//       let post = {
+//         id: _post.boardId, // 포스트 id
+//         title: _post.title, // 포스트 title
+//         content: _post.content, // 포스트 내용
+//         writerName: _post.writerName,
+//         img_url: _post.boardImgReponseDtoList,
+//         category: _post.category,
+//         profileImg: _post.writerImgUrl,
+//         like: _post.liked,
+//         likeCnt: _post.likeCount,
+//         comment: _post.boardDetailCommentDtoList,
+//         creatAt: _post.modified,
+//         spotName: _post.spotName,
+//       };
+      
+//       dispatch(editStoryPost(board_id, post));
+//       /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌
+//     });
+//   };
+// };
+
+// const deleteStoryPostAPI = (board_id) => {
+//   return function (dispatch, getState) {
+//     axios({
+//       method: "DELETE",
+//       url: `${config.api}/board/${board_id}`,
+//       headers: {
+//         "X-AUTH-TOKEN": localStorage.getItem("jwt"),
+//       },
+//     })
+//       .then((res) => {
+//         console.log(res);
+//         dispatch(deleteStoryPost(board_id));
+//         dispatch(deleteStoryMarker(board_id));
+//       })
+//       .catch((err) => {
+//         Swal.fire({
+//           text: "게시물 삭제에 문제가 있어요 :(",
+//           confirmButtonColor: "#ffb719",
+//         });
+//         console.log("게시글 삭제 에러", err);
+//       });
+//   };
+// };
 
 // StoryPost(GridList) 좋아요 수정 관련 -----------------------------------------
 
@@ -516,8 +525,9 @@ const actionCreators = {
   getUserLikeAPI,
   setStoryPost,
   setStoryLike,
-  editStoryPostAPI,
-  deleteStoryPostAPI,
+  editStoryPost,
+  deleteStoryPost,
+  deleteStoryMarker,
   addUserPostLikeAPI,
   deleteUserPostLikeAPI,
   addUserLikeLikeAPI,

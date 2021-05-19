@@ -12,7 +12,7 @@ import Slider from "react-slick";
 import UploadPostModal from "./UploadPostModal";
 import { actionCreators as imageActions } from "../../redux/modules/image2";
 import { actionCreators as postActions } from "../../redux/modules/post";
-import { actionCreators as storyPostActions } from "../../redux/modules/storypost";
+import { actionCreators as storyPostModalActions } from "../../redux/modules/storypostmodal";
 import { actionCreators as CommnetActions } from "../../redux/modules/comment";
 import { actionCreators as likeActions } from "../../redux/modules/like";
 import { actionCreators as ModalActions } from "../../redux/modules/storypostmodal";
@@ -21,10 +21,8 @@ import { history } from "../../redux/configStore";
 
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
-  
 
   React.useEffect(() => {
-    
   }, []);
 
   console.log("eeee", props);
@@ -272,7 +270,7 @@ const ModalDetail = (props) => {
                               }).then((result) => {
                                 if (result.isConfirmed) {
                                   dispatch(
-                                    storyPostActions.deleteStoryPostAPI(modalData.id)
+                                    storyPostModalActions.deleteStoryPostAPI(modalData.id)
                                   ); //이거 왜안될까??....
                                   props.close(); //삭제 바로반영?
                                 }

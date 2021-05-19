@@ -7,24 +7,24 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
-import PostModal from "./StoryPostModal/PostModal";
+
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import { actionCreators as ModalActions } from "../redux/modules/storypostmodal";
+// import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import { actionCreators as storyPostActions } from "../redux/modules/storypost";
-
+import PostModal from "./StoryPostModal/PostModal";
 import "../Css/Post.css";
 
 //로그인 후에 이용가능 합니다
 const StoryPost = (props) => {
   const dispatch = useDispatch();
-  const boardId = props.id ;
   const paging = useSelector((state) => state.post.paging);
 
   const [is_modal, setDetailModal] = useState();
   const openModal = () => {
+    dispatch(ModalActions.getModalPostAPI(props.id)); 
     setDetailModal(true);
-    dispatch(ModalActions.getModalPostAPI(boardId)); 
   };
   const closeDetailModal = () => {
     setDetailModal(false);
@@ -84,7 +84,6 @@ const StoryPost = (props) => {
               {props.spotName}
             </div>
           </div>
-          {/* 투명도 0 */}
         </PostBox>
       </Card>
       {is_modal ? (
