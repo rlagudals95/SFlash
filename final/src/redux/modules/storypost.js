@@ -51,7 +51,8 @@ const getUserPostAPI = (userId) => {
   return function (dispatch, getState) {
     const board_list = getState().storypost.user_post_list;
     const pCnt = getState().storypost.pagingCnt;
-    console.log("잘가지고 왔겠지", board_list);
+    // console.log("잘가지고 왔겠지", board_list);
+    console.log("userId확인해야해 !!!!!!")
 
     let lastId = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
       board_list.length === 0
