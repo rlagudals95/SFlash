@@ -12,6 +12,7 @@ const GET_MYLIKE_IN_MAP = "GET_MYLIKE_IN_MAP";
 
 const RESET_MYPOST_IN_MAP = "RESET_MYPOST_IN_MAP";
 const RESET_MYLIKE_IN_MAP = "RESET_MYLIKE_IN_MAP";
+const RESET_CATEGORY_IN_MAP = "RESET_CATEGORY_IN_MAP";
 
 const getCategoryInMap = createAction(GET_CATEGORY_IN_MAP, (category_in_map) => ({
   category_in_map,     // category_in_map은 입력하는 카테고리명이에요
@@ -31,6 +32,9 @@ const resetMyPostInMap = createAction(RESET_MYPOST_IN_MAP, (is_category_in_map) 
   is_category_in_map,
 }));
 const resetMyLikeInMap = createAction(RESET_MYLIKE_IN_MAP, (is_category_in_map) => ({
+  is_category_in_map,
+}));
+const resetCategoryInMap = createAction(RESET_CATEGORY_IN_MAP, (is_category_in_map) => ({
   is_category_in_map,
 }));
 
@@ -99,6 +103,12 @@ export default handleActions(
           }
         })
       }),
+
+    [RESET_CATEGORY_IN_MAP]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_category_in_map = []
+      }),
+
   },
   initialState
 );
@@ -110,6 +120,7 @@ const actionCreators = {
   getMyLikeInMap,
   resetMyPostInMap,
   resetMyLikeInMap,
+  resetCategoryInMap,
 };
 
 export { actionCreators };

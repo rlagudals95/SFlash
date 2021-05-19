@@ -24,6 +24,8 @@ const CategoryInMap = () => {
 
   const is_all = is_category_in_map.length === 12 ? true : false; // 모든 게시물 판단 기준
   console.log("is_category_in_map의 길이: " + is_category_in_map.length);
+  const is_empty = is_category_in_map.length === 0 ? true : false; // 카테고리 취소 판단 기준
+
   const is_mine = map_post_list.writerName === nickname ? true : false; // 내게시물 판단 기준
   const is_mylike = map_post_list.like === true ? true : false; // 내가 좋아요 한 게시물 판단 기준.
   console.log(is_all);
@@ -401,6 +403,42 @@ const CategoryInMap = () => {
               #반려동물
             </Btn>
           )}
+
+          {is_empty ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+            >
+              #전체취소
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCafe(false);
+                setNight(false);
+                setOcean(false);
+                setMountain(false);
+                setFlower(false);
+                setAlone(false);
+                setCouple(false);
+                setFreind(false);
+                setPet(false);
+                setExhibition(false);
+                setCity(false);
+                setPark(false);
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.resetCategoryInMap());
+              }}
+            >
+              #전체취소
+            </Btn>
+          )}
+
           <MiddleBox />
           {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
           <SpotSelectBox>
@@ -435,9 +473,7 @@ const CategoryInMap = () => {
                   setPark(true);
                   setShowMine(false);
                   setShowLike(false);
-                  dispatch(
-                    categoryActionsInMap.getAllCategoryInMap(is_category_in_map)
-                  );
+                  dispatch(categoryActionsInMap.getAllCategoryInMap(is_category_in_map));
                   dispatch(categoryActionsInMap.resetMyPostInMap());
                   dispatch(categoryActionsInMap.resetMyLikeInMap());
                 }}
@@ -843,6 +879,42 @@ const CategoryInMap = () => {
               #반려동물
             </Btn>
           )}
+
+          {is_empty ? (
+            <SelectedBtn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+            >
+              #전체취소
+            </SelectedBtn>
+          ) : (
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCafe(false);
+                setNight(false);
+                setOcean(false);
+                setMountain(false);
+                setFlower(false);
+                setAlone(false);
+                setCouple(false);
+                setFreind(false);
+                setPet(false);
+                setExhibition(false);
+                setCity(false);
+                setPark(false);
+                setShowMine(false);
+                setShowLike(false);
+                dispatch(categoryActionsInMap.resetCategoryInMap());
+              }}
+            >
+              #전체취소
+            </Btn>
+          )}
+
           <MiddleBox />
           {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
           <SpotSelectBox>
