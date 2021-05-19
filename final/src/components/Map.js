@@ -16,7 +16,7 @@ import { LeakRemoveOutlined } from "@material-ui/icons";
 import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import MapModal from "./MapModal";
 import Spinner from "../shared/Spinner";
-import writeinfo from "../shared/images/writemarkerinfo.jpg";
+// import writeinfo from "../shared/images/writemarkerinfo.png";
 
 // window 객체로부터 kakao mpa api를 호출하기
 // 이것이 되게 하기 위해서는 index.html(index.js 아님!!!)의 script 태그안의 src에다가
@@ -244,9 +244,7 @@ const Maps = (props) => {
         // 작성용 마커위에 갖다대면 뜨고(mouseover) 마우스를 떼면(mouseout) 사라진다.
         // 작성용 마커에 우클릭을 하면 마커가 사라지면서 인포윈도우도 사라진다.
         var writeGuideContent = 
-          '<div class="writeinfo">' +
-            `<img class="writeinfoimg" src=${writeinfo}/>` +
-          '</div>'
+          '<div class="writeinfobox"></div>'
 
         // 인포윈도우 생성하기
         var writeGuideWindow = new kakao.maps.InfoWindow({

@@ -10,17 +10,9 @@
 .writeinfobox {
   width: 320px;
   height: 144px;
-  border-radius: 5px;
-  background-color: white;
-  display: flex;
-  align-items: center;
-}
-
-.writeinfoimg {
-  width: 320px;
-  height: 144px;
-  border-radius: 5px;
-  background-color: white;
+  border-radius: 15px;
+  background-image: url("https://i.postimg.cc/8CYp0kS6/writemarkerinfo.jpg");
+  background-color: transparent;
   object-fit: cover;
   background-size: cover;
 }
