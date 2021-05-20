@@ -13,7 +13,7 @@ const Spinner3 = (props) => {
   );
 };
 
-Spinner.defaultProps = {
+Spinner3.defaultProps = {
   type: "inline", // inline, page
   is_dim: false,
   size: 60,
