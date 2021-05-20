@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Spinner = (props) => {
+const Spinner3 = (props) => {
   const { type, size, is_dim } = props;
 
   return (
@@ -20,6 +20,10 @@ Spinner.defaultProps = {
 };
 
 const SpinnerWrap = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 50000;
   width: 100%;
   display: flex;
@@ -52,4 +56,4 @@ const SpinnerSvg = styled.div`
   background-size: var(--size);
 `;
 
-export default Spinner;
+export default Spinner3;

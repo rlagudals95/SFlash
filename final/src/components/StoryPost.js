@@ -6,7 +6,6 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
-
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import { actionCreators as ModalActions } from "../redux/modules/storypostmodal";
@@ -22,7 +21,7 @@ const StoryPost = (props) => {
 
   const [is_modal, setDetailModal] = useState();
   const openModal = () => {
-    dispatch(ModalActions.getModalPostAPI(props.id)); 
+    dispatch(ModalActions.getModalPostAPI(props.id));
     setDetailModal(true);
   };
   const closeDetailModal = () => {
@@ -33,21 +32,21 @@ const StoryPost = (props) => {
   const addLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("ADDLIKE!!!!!", props.id, props)
-    if(props.userPostMode){
+    console.log("ADDLIKE!!!!!", props.id, props);
+    if (props.userPostMode) {
       dispatch(storyPostActions.addUserPostLikeAPI(props.id, props));
-    }else{
+    } else {
       dispatch(storyPostActions.addUserLikeLikeAPI(props.id, props));
     }
-  }
+  };
 
   const disLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("DISLIKE!!!!!", props.id, props)
-    if(props.userPostMode){
+    console.log("DISLIKE!!!!!", props.id, props);
+    if (props.userPostMode) {
       dispatch(storyPostActions.deleteUserPostLikeAPI(props.id, props));
-    }else{
+    } else {
       dispatch(storyPostActions.deleteUserLikeLikeAPI(props.id, props));
     }
   };
@@ -57,10 +56,7 @@ const StoryPost = (props) => {
       <Card>
         {/* src={props.post_image_url[0]} */}
 
-        <PostBox
-          onClick={openModal}
-          src={props.img_url[0].imgUrl}
-        >
+        <PostBox onClick={openModal} src={props.img_url[0].imgUrl}>
           {/* 이거자체가 지금 투명 0 */}
           <div className={"hoverDark"}>
             {props.like}
@@ -91,7 +87,7 @@ const StoryPost = (props) => {
           boardId={props.id} //여기서 모달에 모든 정보를 넘겨주는 구나!
         />
       ) : null}
-    </React.Fragment> 
+    </React.Fragment>
   );
 };
 

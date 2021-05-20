@@ -127,6 +127,7 @@ function Navbar() {
                 {is_login ? (
                   <SelectedIcon
                   onClick={() => {
+                    dispatch(sideActions.getPage("story"));
                     history.push(`/story/${userId}`); 
                     dispatch(storyPostActions.resetStory([]));
                     dispatch(profileActions.resetProfile([]));
@@ -134,19 +135,14 @@ function Navbar() {
                     dispatch(storyPostActions.getUserPostAPI(userId));
                     dispatch(storyPostActions.getUserLikeAPI(userId));
                   }}
-                    // onClick={() => {
-                    //   window.location.push(
-                    //     `/story/${userId}`
-                    //   );
-                    // }}
                   >
                     MY STORY
                   </SelectedIcon>
                 ) : (
                   <IconInfo
-                  onClick={() => {
-                    history.push("/login"); 
-                  }}
+                    onClick={() => {
+                      history.push("/login");
+                    }}
                   >
                     LOGIN
                   </IconInfo>
@@ -156,27 +152,23 @@ function Navbar() {
               <IconOutter>
                 {is_login ? (
                   <IconInfo
-                  onClick={() => {
-                    history.push(`/story/${userId}`); 
-                    dispatch(storyPostActions.resetStory([]));
-                    dispatch(profileActions.resetProfile([]));
-                    dispatch(profileActions.getUserInfoAPI(userId));
-                    dispatch(storyPostActions.getUserPostAPI(userId));
-                    dispatch(storyPostActions.getUserLikeAPI(userId));
-                  }}
-                  // onClick={() => {
-                  //   window.location.replace(
-                  //     `/story/${userId}`
-                  //   );
-                  // }}
+                    onClick={() => {
+                      dispatch(sideActions.getPage("story"));
+                      history.push(`/story/${userId}`);
+                      dispatch(storyPostActions.resetStory([]));
+                      dispatch(profileActions.resetProfile([]));
+                      dispatch(profileActions.getUserInfoAPI(userId));
+                      dispatch(storyPostActions.getUserPostAPI(userId));
+                      dispatch(storyPostActions.getUserLikeAPI(userId));
+                    }}
                   >
                     MY STORY
                   </IconInfo>
                 ) : (
                   <IconInfo
-                  onClick={() => {
-                    history.replace("/login");
-                  }}
+                    onClick={() => {
+                      history.push("/login");
+                    }}
                   >
                     LOGIN
                   </IconInfo>
