@@ -4,17 +4,15 @@ import { history } from "../configStore";
 import axios from "axios";
 import { config } from "../../shared/config";
 import Swal from "sweetalert2";
-// import jwt_decode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 
 // actions
 const SET_USER = "SET_USER";
-const GET_USER = "GET_USER";
 const LOG_OUT = "LOG_OUT";
 const LOADING = "LOADING";
 
 // actionCreators: createAction
 const setUser = createAction(SET_USER, (user) => ({ user }));
-const getUser = createAction(GET_USER, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
@@ -69,20 +67,15 @@ const loginAPI = (email, pwd) => {
         console.log(res.data);
         console.log(res);
 
-        // let user = {
-        //   id : res.data.userId,
-        //   nickname : res.data.nickname,
-        //   profile : res.data.profileImgUrl,
-        //   role: res.data.role,
-        // }
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("jwt", res.data.token);
-        // localStorage.setItem("jwt", res.data.acessToken);
+        // localStorage.setItem("jwt", res.data.accessToken);
         // localStorage.setItem("refreshjwt", res.data.refreshToken);
         localStorage.setItem("role", res.data.role);
         dispatch(setUser());
-        history.push("/");
+        history.replace("/");
+
       })
       .catch((err) => {
         Swal.fire({

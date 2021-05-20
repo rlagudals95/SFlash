@@ -125,7 +125,7 @@ const QnaList = (props) => {
                   onClick={() => {
                     if (q.writer !== me && role !== "ADMIN") {
                       Swal.fire({
-                        text: '해당 게시물에 대한 권힌이 없습니다.',
+                        text: '해당 게시물에 대한 권한이 없습니다.',
                         confirmButtonColor: "#ffb719",
                       })
                       return;

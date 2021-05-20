@@ -60,3 +60,20 @@ Swal.fire({
 
 //  icon: 'success', 'error', 'warning', 'info', 'question' 디자인 아래 경로에서 참고
 // https://sweetalert2.github.io/#icons
+
+
+// if (res.data.message === "tokenExpired"){
+//   dispatch(userActions.logOut());
+//   Swal.fire({
+//     text: '로그인 기간이 만료되어 재로그인이 필요합니다.',
+//     confirmButtonText: '로그인 하러가기',
+//     confirmButtonColor: '#ffb719',
+//     showCancelButton: true,
+//     cancelButtonText: '취소',
+//     cancelButtonColor: '#eee',
+//   }).then((result) => {
+//     if (result.isConfirmed) {
+//       history.push("/login");
+//     }
+//   })
+// } else {}

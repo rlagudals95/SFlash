@@ -127,10 +127,9 @@ function Navbar() {
                 {is_login ? (
                   <SelectedIcon
                     onClick={() => {
-                      history.push(`/story/${userId}`);
-                      dispatch(profileActions.getUserInfoAPI(userId));
-                      dispatch(storypostActions.getUserPostAPI(userId));
-                      dispatch(storypostActions.getUserLikeAPI(userId));
+                      window.location.replace(
+                        `/story/${userId}`
+                      );
                     }}
                   >
                     MY STORY
