@@ -36,9 +36,9 @@
 ## 개발목표
 
 ## 지도 API : 카카오 지도 API 사용
-
-## 구동사진
 https://apis.map.kakao.com/web/sample/
+## 구동사진
+
 <br>
 위 사이트에서 제공하는 카카오 지도 API를 이용해 사진과 장소를 연결시키는 서비스를 개발했다. 
 ![회원가입 페이지](https://user-images.githubusercontent.com/76252074/118971855-db508c00-b9aa-11eb-8847-57dc7bbaa381.jpg)
