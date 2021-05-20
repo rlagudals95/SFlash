@@ -171,16 +171,19 @@ const ModalDetail = (props) => {
                             : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                         }
                         onClick={() => {
-                          dispatch(storyPostActions.resetStory([]));
+                          window.location.replace(
+                            `/story/${modalData.writerId}`
+                          );
+                          // dispatch(storyPostActions.resetStory([]));
                           // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                         }}
                       />
                       <ModalAuthor
                         onClick={() => {
-                          dispatch(storyPostActions.resetStory([]));
-                          // window.location.replace(
-                          //   `/story/${modalData.writerId}`
-                          // ); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                          // dispatch(storyPostActions.resetStory([]));
+                          window.location.replace(
+                            `/story/${modalData.writerId}`
+                          ); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                         }}
                       >
                         {modalData.writerName}
