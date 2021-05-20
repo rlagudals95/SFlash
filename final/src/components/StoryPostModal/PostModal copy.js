@@ -3,17 +3,22 @@ import styled from "styled-components";
 import Swal from "sweetalert2";
 
 import CloseIcon from "@material-ui/icons/Close";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { useDispatch, useSelector } from "react-redux";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Slider from "react-slick";
 import UploadPostModal from "./UploadPostModal";
-import { actionCreators as storyPostModalActions } from "../../redux/modules/storypostmodal";
+import { actionCreators as imageActions } from "../../redux/modules/image2";
 import { actionCreators as postActions } from "../../redux/modules/post";
+import { actionCreators as storyPostModalActions } from "../../redux/modules/storypostmodal";
+import { actionCreators as CommnetActions } from "../../redux/modules/comment";
+import { actionCreators as likeActions } from "../../redux/modules/like";
 import { actionCreators as ModalActions } from "../../redux/modules/storypostmodal";
+import { forEach } from "lodash";
 import { history } from "../../redux/configStore";
-import Spinner from "../../shared/Spinner";
+import { actionCreators as storyPostActions } from "../../redux/modules/storypost";
 
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
@@ -29,10 +34,11 @@ const ModalDetail = (props) => {
   if (commentData) {
     console.log("코멘트 데이타", commentData);
   }
-  //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
+
   const [is_Editmodal, setEditModal] = useState();
 
   console.log("모달 데이타", modalData);
+  // console.log("모달 데이타", modalData.category);
 
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
@@ -57,16 +63,47 @@ const ModalDetail = (props) => {
     slidesToScroll: 1,
   };
 
+  // 받아온 이미지들
+  // let image_list = [];
+
+  // for (let i = 0; i < props.img_url; i++) {
+  //   image_list.push(props.img_url[i]);
+  // }
+
+  // let images = [];
+
+  // image_list.forEach((img) => {
+  //   images.push(img.imgUrl);
+  // });
+
+  // console.log("이미지들!!", images);
+
+  let comment_list = [];
+  // for (let i = 0; i < props.comment.length; i++) {
+  //   comment_list.push(props.comment[i]);
+  // }
+
+  // let comment_list = [];
+  // for (let i = 0; i < props.comment; i++) {
+  //   comment_list.push(props.comment[i]);
+  // }
+
+  // const comment_List = useSelector((state) => state.comment.list);
+
+  // console.log("이포스트의 댓글은??", comment_List);
+
   const is_comment = commentData ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
   const addLike = () => {
     dispatch(ModalActions.modalAddLikeAPI(modalData.id, modalData));
+    // dispatch(postActions.editLikeP(props.id, props)); // 리덕스
   };
 
   const disLike = () => {
     dispatch(ModalActions.modalDisLikeAPI(modalData.id, modalData));
+    // dispatch(postActions.editLikeD(props.id, props));
   };
 
   const addComment = () => {
@@ -86,10 +123,6 @@ const ModalDetail = (props) => {
     setComments(e.target.value);
   };
 
-  const closeModal = (e) => {
-    dispatch(ModalActions.resetModal(false));
-    props.close();
-  };
 
   //작성 날짜 설정하기
   const timeForToday = (value) => {
@@ -116,14 +149,14 @@ const ModalDetail = (props) => {
 
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
-  //새로운 데이터가 들어올땐 어떻게 해야할까...?
+
   return (
     <React.Fragment>
-      {modalData ? (
+      {modalData &&
         commentData && ( //모달데이터가 들어와야 실행!
           <React.Fragment>
             <React.Fragment>
-              <Component onClick={closeModal} />
+              <Component onClick={props.close} />
               <ModalComponent>
                 <ModalHeader>
                   <ModalLeftHeader>
@@ -135,24 +168,20 @@ const ModalDetail = (props) => {
                             : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                         }
                         onClick={() => {
-                          window.location.replace(
-                              `/story/${modalData.writerId}`
-                            );// 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                          history.replace(`/story/${modalData.writerId}`); // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                         }}
                       />
                       <ModalAuthor
-                       onClick={() => {
-                        window.location.replace(
-                            `/story/${modalData.writerId}`
-                          );// 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
-                      }}
+                        onClick={() => {
+                          history.replace(`/story/${modalData.writerId}`); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                        }}
                       >
                         {modalData.writerName}
                       </ModalAuthor>
                     </React.Fragment>
                     {/* <PostDate>{timeForToday(props.creatAt)}</PostDate> */}
                     <ExitContainer>
-                      <ExitBtn onClick={closeModal}>
+                      <ExitBtn onClick={props.close}>
                         <CloseIcon fontSize="large" />
                       </ExitBtn>
                     </ExitContainer>
@@ -160,29 +189,19 @@ const ModalDetail = (props) => {
                 </ModalHeader>
                 {/* 이미지 슬라이드 구현 props로 받는 이미지의 개수가 1개를 초과할때  */}
                 {/* 그 수만큼 map함수로 출력해준다 */}
-
-                {modalData.img_url[0].imgUrl && modalData.img_url.length > 1 ? ( // 이미지가 없을때 에러뜨는 것을 방지
+                {modalData.img_url.length > 1 ? ( // 음.,...
                   <Slider {...settings}>
                     {modalData.img_url.map((p, idx) => {
                       return (
                         //modalData[0].imgUrl
                         <div>
-                          <ModalImg
-                            src={
-                              modalData.img_url[0].imgUrl &&
-                              modalData.img_url[idx].imgUrl
-                            }
-                          />
+                          <ModalImg src={modalData.img_url[idx].imgUrl} />
                         </div>
                       );
                     })}
                   </Slider>
                 ) : (
-                  <ModalImg
-                    src={
-                      modalData.img_url[0].imgUrl && modalData.img_url[0].imgUrl
-                    }
-                  />
+                  <ModalImg src={modalData.img_url[0].imgUrl} />
                 )}
 
                 <ModalBottomContainer>
@@ -198,7 +217,7 @@ const ModalDetail = (props) => {
                               onClick={disLike}
                               style={{
                                 color: "rgb(255, 183, 25)",
-                                fontSize: 29,
+                                fontSize: 30,
                               }}
                             />
                             <LikeCntBox> {modalData.likeCnt}</LikeCntBox>
@@ -225,18 +244,17 @@ const ModalDetail = (props) => {
                       {modalData.writerId == user_id ? (
                         <ModalEdit>
                           <React.Fragment onClick={props.close}>
-                            <EditBtn
-                              onClick={openEditModal}
-                            >
-                              수정
-                            </EditBtn>
+                            <EditBtn onClick={openEditModal}>수정</EditBtn>
                           </React.Fragment>
                           /
                           <DeleteBtn
                             onClick={(e) => {
+                              // e.prevent..., e.stopPro.. 이것들로 이벤트 버블링을 막는다
+                              e.preventDefault();
+                              e.stopPropagation();
+                              // 클릭하면 게시물 삭제
                               Swal.fire({
                                 text: "게시물을 삭제 하시겠습니까?",
-                                icon: "question",
                                 confirmButtonText: "예",
                                 confirmButtonColor: "#ffb719",
                                 showCancelButton: true,
@@ -244,14 +262,11 @@ const ModalDetail = (props) => {
                                 cancelButtonColor: "#eee",
                               }).then((result) => {
                                 if (result.isConfirmed) {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  // 클릭하면 게시물 삭제
                                   dispatch(
                                     storyPostModalActions.deleteStoryPostAPI(
                                       modalData.id
                                     )
-                                  );
+                                  ); //이거 왜안될까??....
                                   props.close(); //삭제 바로반영?
                                 }
                               });
@@ -268,7 +283,7 @@ const ModalDetail = (props) => {
                     </InfoBoxInner>
                     <InfoOutter>
                       <PostTilte>
-                        {modalData.title}{" "}
+                        {modalData.title}
                         <PostDate>{timeForToday(modalData.creatAt)}</PostDate>
                       </PostTilte>
                       <PostContents>{modalData.content}</PostContents>
@@ -293,14 +308,12 @@ const ModalDetail = (props) => {
                                         : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                     }
                                     onClick={() => {
-                                      window.location.replace(
-                                        `/story/${c.userId}`);
+                                      history.replace(`/story/${c.userId}`);
                                     }}
                                   ></ReplyImg>
                                   <ReplyWriter
                                     onClick={() => {
-                                      window.location.replace(
-                                        `/story/${c.userId}`);
+                                      history.replace(`/story/${c.userId}`);
                                     }}
                                   >
                                     {c.writerName}
@@ -354,13 +367,20 @@ const ModalDetail = (props) => {
               ) : null}
             </React.Fragment>
           </React.Fragment>
-        )
-      ) : (
-        <Spinner />
-      )}
+        )}
     </React.Fragment>
   );
 };
+// background-image: url("${(props) => props.src}");
+//   background-size: cover;
+//   object-fit: cover;
+//   background-position: 0px;
+//   background-repeat: no-repeat;
+//   border: none;
+//   box-sizing: border-box;
+//   width: 100%;
+//   height: 400px;
+//   height: 400px;
 
 const LikeBox = styled.div`
   align-items: center;
@@ -719,13 +739,10 @@ const PostTime = styled.div`
 `;
 const ModalCmtInputBox = styled.div`
   align-items: center;
-  margin-bottom: -4.5vh;
   width: 100%;
-  height: 8vw;
-  padding: 0px;
+
+  padding: 10px;
   display: flex;
-  justify-content: space-between;
-  /* align-items: center; */
   box-sizing: border-box;
   border: 2px solid #efefef;
   background-color: white;
@@ -873,7 +890,7 @@ const UploadBtn = styled.div`
   opacity: 1;
   font-weight: 600;
   width: 30px;
-  margin-right: 1vw;
+  margin-right: 5px;
   /* margin: 10px 5px 0px 0px; */
   /* padding-bottom: 5px; */
   /* width: 30px;

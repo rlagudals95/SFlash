@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as profileActions } from "../redux/modules/profile";
-import { actionCreators as storypostActions } from "../redux/modules/storypost";
+import { actionCreators as storyPostActions } from "../redux/modules/storypost";
 import { actionCreators as postActions } from "../redux/modules/post";
 import axios from "axios";
 import { config } from "../shared/config";
@@ -26,12 +26,16 @@ const Story = (props) => {
   const userId = props.match.params.id;
   console.log("userId:", userId);
 
-  React.useEffect(() => {
-    console.log("userId???:", userId);
+  const initializeApp = async () => {
+    await  dispatch(storyPostActions.resetStory([]));
     dispatch(profileActions.getUserInfoAPI(userId));
-    dispatch(storypostActions.getUserPostAPI(userId));
-    dispatch(storypostActions.getUserLikeAPI(userId));
-  }, [userId]);
+    dispatch(storyPostActions.getUserPostAPI(userId));
+    dispatch(storyPostActions.getUserLikeAPI(userId));
+  }
+
+  React.useEffect(() => {
+    initializeApp();
+  }, []);
 
   // 스토리 페이지는 크게 3가지로 나뉩니다.
   // (1) 유저 정보: user_info (2) 유저가 올린 게시물: user_post_list (3)유저가 좋아요한 게시물: user_like_list

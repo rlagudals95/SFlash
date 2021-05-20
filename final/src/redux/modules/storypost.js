@@ -1,7 +1,8 @@
 // StoryContent.js 부분을 관리하는 모듈(Grid, Map)
 // 스토리페이지 (나의 게시물, 좋아요 게시물) API 사용
 import { createAction, handleActions } from "redux-actions";
-import { actionCreators as storyPostModalActions } from "../../redux/modules/storypostmodal";
+import { actionCreators as storyPostModalActions } from "./storypostmodal";
+import { actionCreators as userActions } from "./user";
 import { produce } from "immer";
 import axios from "axios";
 import "moment";
@@ -310,22 +311,36 @@ const addUserPostLikeAPI = (board_id, board) => {
     })
       .then((res) => {
         console.log("좋아요 완료!", res);
+        console.log(res.data.message);
 
-        let post = {
-          like: true,
-          likeCnt: board.likeCnt + 1,
-        };
-
-        if (res.status === 200) {
+        if (res.data.message === "tokenExpired"){
+            dispatch(userActions.logOut());
+            Swal.fire({
+              text: '로그인 기간이 만료되어 재로그인이 필요합니다.',
+              confirmButtonText: '로그인 하러가기',
+              confirmButtonColor: '#ffb719',
+              showCancelButton: true,
+              cancelButtonText: '취소',
+              cancelButtonColor: '#eee',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                history.push("/login");
+              }
+            })
+        } else {
+          let post = {
+            like: true,
+            likeCnt: board.likeCnt + 1,
+          };
           dispatch(editStoryPost(board_id, post));
         }
-      })
-      .catch((error) => {
+      }).catch((error) => {
+        console.log(error);
         Swal.fire({
           text: "좋아요 실패 :(",
           confirmButtonColor: "#ffb719",
         });
-      });
+    });
   };
 };
 
@@ -354,6 +369,7 @@ const deleteUserPostLikeAPI = (board_id, board) => {
         }
       })
       .catch((error) => {
+        console.log(error);
         Swal.fire({
           text: "좋아요 취소 실패 :(",
           confirmButtonColor: "#ffb719",
@@ -385,6 +401,9 @@ const addUserLikeLikeAPI = (board_id, board) => {
         console.log("!!!!!!!", post);
         if (res.status === 200) {
           dispatch(editStoryLike(board_id, post));
+        }
+        if (res.data.message ==="tokenExpired"){
+          dispatch(userActions.refreshTokenAPI());
         }
       })
       .catch((error) => {
@@ -433,21 +452,11 @@ export default handleActions(
     // 내 게시물
     [SET_STORY_POST]: (state, action) =>
       produce(state, (draft) => {
-        console.log("내 게시물 ", draft.user_post_list);
-        console.log(
-          "내 게시물 action.payload.post_list",
-          action.payload.post_list
-        );
 
-        if (draft.check === null) {
-          console.log("처음 받을때 실행", draft.check);
-          draft.user_post_list = action.payload.post_list;
-        } else {
-          console.log("두번째 받을때 실행", draft.check);
-          draft.user_post_list.push(...action.payload.post_list);
-        }
-        // draft.paging = action.payload.paging; // 페이징 처리
+        console.log("내 게시물 draft.user_post_list", draft.user_post_list);
+        console.log("내 게시물 action.payload.post_list",action.payload.post_list);
 
+        draft.user_post_list.push(...action.payload.post_list);
         draft.user_post_list = draft.user_post_list.reduce((acc, cur) => {
           if (acc.findIndex((a) => a.id === cur.id) === -1) {
             return [...acc, cur]; //같은 id를 가진 게시물이 없다면 기존 포스트들과 새로받은 포스트 리턴
@@ -458,28 +467,14 @@ export default handleActions(
           }
         }, []);
         // // 무한스크롤 시에는 push 방식으로 set 해주기
-        draft.check = draft.check + 1; //check : 1
-        console.log("처음 받을때 실행", draft.check);
       }),
     // 내 좋아요 게시물
     [SET_STORY_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        console.log("좋아요 게시물", draft.user_like_list);
-        console.log(
-          "좋아요 action.payload.post_list",
-          action.payload.post_list
-        );
-        if (draft.check === null) {
-          //5
+        console.log("좋아요 draft.user_like_list", draft.user_like_list);
+        console.log("좋아요 action.payload.post_list",action.payload.post_list);
 
-          console.log("처음 받을때 실행", draft.check);
-          draft.user_like_list = action.payload.post_list;
-        } else {
-          console.log("두번째 받을때 실행", draft.check);
-          draft.user_like_list.push(...action.payload.post_list);
-        }
-        // draft.user_like_list.push(...action.payload.post_list);
-        // draft.paging = action.payload.paging; // 페이징 처리
+        draft.user_like_list.push(...action.payload.post_list);
         draft.user_like_list = draft.user_like_list.reduce((acc, cur) => {
           if (acc.findIndex((a) => a.id === cur.id) === -1) {
             return [...acc, cur]; //같은 id를 가진 게시물이 없다면 기존 포스트들과 새로받은 포스트 리턴
@@ -489,7 +484,6 @@ export default handleActions(
             return acc; // 그 게시물은 새로 받은 게시물 => 그러므로 cur은 return 안해준다
           }
         }, []);
-        draft.check = draft.check + 1; //check : 5
       }),
 
     // 내 게시물 수정(하트, 포스트 모달 수정 화면 반영)
