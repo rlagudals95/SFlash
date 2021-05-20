@@ -126,26 +126,26 @@ function Navbar() {
               <IconOutter>
                 {is_login ? (
                   <SelectedIcon
-                  onClick={() => {
-                    dispatch(sideActions.getPage("story"));
-                    history.push(`/story/${userId}`); 
-                    dispatch(storyPostActions.resetStory([]));
-                    dispatch(profileActions.resetProfile([]));
-                    dispatch(profileActions.getUserInfoAPI(userId));
-                    dispatch(storyPostActions.getUserPostAPI(userId));
-                    dispatch(storyPostActions.getUserLikeAPI(userId));
-                  }}
+                    onClick={() => {
+                      dispatch(sideActions.getPage("story"));
+                      history.push(`/story/${userId}`);
+                      dispatch(storyPostActions.resetStory([]));
+                      dispatch(profileActions.resetProfile([]));
+                      dispatch(profileActions.getUserInfoAPI(userId));
+                      dispatch(storyPostActions.getUserPostAPI(userId));
+                      dispatch(storyPostActions.getUserLikeAPI(userId));
+                    }}
                   >
                     MY STORY
                   </SelectedIcon>
                 ) : (
-                  <IconInfo
+                  <SelectedIcon
                     onClick={() => {
                       history.push("/login");
                     }}
                   >
                     LOGIN
-                  </IconInfo>
+                  </SelectedIcon>
                 )}
               </IconOutter>
             ) : (
@@ -168,6 +168,7 @@ function Navbar() {
                   <IconInfo
                     onClick={() => {
                       history.push("/login");
+                      dispatch(sideActions.getPage("story"));
                     }}
                   >
                     LOGIN

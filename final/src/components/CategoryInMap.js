@@ -5,10 +5,10 @@ import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as categoryActionsInMap } from "../redux/modules/category_in_map";
 import * as BiIcons from "react-icons/bi";
-import AllBtn from "../shared/images/spotIcons/_01_AllSpotsBtn.png"
-import AllMyPostBtn from "../shared/images/spotIcons/_02_AllMyPostsBtn.png"
-import AllMyLikeBtn from "../shared/images/spotIcons/_03_AllMyLikesBtn.png"
-import Swal from "sweetalert2"; 
+import AllBtn from "../shared/images/spotIcons/_01_AllSpotsBtn.png";
+import AllMyPostBtn from "../shared/images/spotIcons/_02_AllMyPostsBtn.png";
+import AllMyLikeBtn from "../shared/images/spotIcons/_03_AllMyLikesBtn.png";
+import Swal from "sweetalert2";
 
 const CategoryInMap = () => {
   const dispatch = useDispatch();
@@ -50,7 +50,8 @@ const CategoryInMap = () => {
 
   React.useEffect(() => {}, []);
 
-  if (!is_login) { // 로그인을 하지 않았다면?
+  if (!is_login) {
+    // 로그인을 하지 않았다면?
     return (
       // 해당 카테고리 클릭시 넘어온 포스트 중에서 카테고리가 일치한 것만 return 해줘야한다!
       // 한가지 방법은 카테고리마다 페이지를 만들어서 클릭시 다른 페이지 렌더링
@@ -403,7 +404,6 @@ const CategoryInMap = () => {
               #반려동물
             </Btn>
           )}
-
           {is_empty ? (
             <SelectedBtn
               onClick={(e) => {
@@ -438,7 +438,6 @@ const CategoryInMap = () => {
               #전체취소
             </Btn>
           )}
-
           <MiddleBox />
           {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
           <SpotSelectBox>
@@ -473,62 +472,65 @@ const CategoryInMap = () => {
                   setPark(true);
                   setShowMine(false);
                   setShowLike(false);
-                  dispatch(categoryActionsInMap.getAllCategoryInMap(is_category_in_map));
+                  dispatch(
+                    categoryActionsInMap.getAllCategoryInMap(is_category_in_map)
+                  );
                   dispatch(categoryActionsInMap.resetMyPostInMap());
                   dispatch(categoryActionsInMap.resetMyLikeInMap());
                 }}
               />
             )}
             {/* 내스팟 찾기 */}
-              <MyPostSpots
-                src={AllMyPostBtn}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  Swal.fire({
-                    title: "내 스팟게시물을 작성하려면?",
-                    html: "로그인을 하면 지도에서 원하는 위치를 클릭해서 <br>자신의 게시물을 작성할 수 있어요! ✨",
-                    confirmButtonText: "로그인",
-                    confirmButtonColor: "#ffb719",
-                    imageUrl: 'https://i.postimg.cc/3JbxN2wp/2x.png',
-                    showCancelButton: true,
-                    cancelButtonText: "나중에 할래요",
-                    cancelButtonColor: "#eee"
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      history.push("/login");
-                    }
-                  })
-                }}
-              />
+            <MyPostSpots
+              src={AllMyPostBtn}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                Swal.fire({
+                  title: "내 스팟게시물을 작성하려면?",
+                  html: "로그인을 하면 지도에서 원하는 위치를 클릭해서 <br>자신의 게시물을 작성할 수 있어요! ✨",
+                  confirmButtonText: "로그인",
+                  confirmButtonColor: "#ffb719",
+                  imageUrl: "https://i.postimg.cc/3JbxN2wp/2x.png",
+                  showCancelButton: true,
+                  cancelButtonText: "나중에 할래요",
+                  cancelButtonColor: "#eee",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    history.push("/login");
+                  }
+                });
+              }}
+            />
             {/* 내좋아요스팟 찾기 */}
-              <MyLikeSpots
-                src={AllMyLikeBtn}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  Swal.fire({
-                    title: "좋아요한 스팟을 보려면?",
-                    html: "로그인을 하고 이 버튼을 클릭하면 <br>자신이 좋아요한 게시물만 모아서 볼 수 있어요 😍",
-                    confirmButtonText: "로그인",
-                    confirmButtonColor: "#ffb719",
-                    imageUrl: 'https://i.postimg.cc/50QwmKJJ/2x.png',
-                    showCancelButton: true,
-                    cancelButtonText: "나중에 할래요",
-                    cancelButtonColor: "#eee"
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      history.push("/login");
-                    }
-                  })
-                }}
-              />
+            <MyLikeSpots
+              src={AllMyLikeBtn}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                Swal.fire({
+                  title: "좋아요한 스팟을 보려면?",
+                  html: "로그인을 하고 이 버튼을 클릭하면 <br>자신이 좋아요한 게시물만 모아서 볼 수 있어요 😍",
+                  confirmButtonText: "로그인",
+                  confirmButtonColor: "#ffb719",
+                  imageUrl: "https://i.postimg.cc/50QwmKJJ/2x.png",
+                  showCancelButton: true,
+                  cancelButtonText: "나중에 할래요",
+                  cancelButtonColor: "#eee",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    history.push("/login");
+                  }
+                });
+              }}
+            />
           </SpotSelectBox>
         </CategoryBox>
       </React.Fragment>
     );
-  } else { // 로그인 한 조건에서 내스팟 내좋아요 버튼을 누르면 sweetalert창 대신 마커가 찍힌다
-      return (
+  } else {
+    // 로그인 한 조건에서 내스팟 내좋아요 버튼을 누르면 sweetalert창 대신 마커가 찍힌다
+    return (
       // 해당 카테고리 클릭시 넘어온 포스트 중에서 카테고리가 일치한 것만 return 해줘야한다!
       // 한가지 방법은 카테고리마다 페이지를 만들어서 클릭시 다른 페이지 렌더링
       // 다른 방법은 PostList페이지에서 map을 돌리는 조건을 is_cafe? 로 돌리고 p.category가 cafe인것만 출력되게 돌림
@@ -879,7 +881,6 @@ const CategoryInMap = () => {
               #반려동물
             </Btn>
           )}
-
           {is_empty ? (
             <SelectedBtn
               onClick={(e) => {
@@ -914,7 +915,6 @@ const CategoryInMap = () => {
               #전체취소
             </Btn>
           )}
-
           <MiddleBox />
           {/* 전체, 내게시물, 좋아요 게시물 선택박스 */}
           <SpotSelectBox>
@@ -1043,7 +1043,7 @@ const CategoryBox = styled.div`
   z-index: 300;
   right: 50px;
   top: 19vh;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   /* background-color: red; */
   padding: 20px;
   border-radius: 15px;
@@ -1113,23 +1113,23 @@ const SelectedBtn = styled.button`
 
 const MiddleBox = styled.div`
   height: 38px;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   /* background-color: #00ff00 */
 `;
 
 const SpotSelectBox = styled.div`
-position:relative;
+  position: relative;
   width: 240px;
   display: flex;
   justify-content: space-between;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   /* background-color: red; */
 `;
 
 const Spots = styled.img`
   width: 68px;
   height: 68px;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   border-radius: 5px;
   background-size: cover;
   object-fit: cover;
@@ -1143,7 +1143,7 @@ const Spots = styled.img`
 const AllSpots = styled.img`
   width: 68px;
   height: 68px;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   border-radius: 5px;
   background-size: cover;
   object-fit: cover;
@@ -1158,7 +1158,7 @@ const AllSpotsSelected = styled.img`
   border: 3px solid #ffb719;
   width: 68px;
   height: 68px;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   border-radius: 5px;
   background-size: cover;
   object-fit: cover;
@@ -1171,7 +1171,7 @@ const AllSpotsSelected = styled.img`
 const MyPostSpots = styled.img`
   width: 68px;
   height: 68px;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   border-radius: 5px;
   background-size: cover;
   object-fit: cover;
@@ -1186,7 +1186,7 @@ const MyPostSpotsSelected = styled.img`
   border: 3px solid #1b2685;
   width: 68px;
   height: 68px;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   border-radius: 5px;
   background-size: cover;
   object-fit: cover;
@@ -1199,7 +1199,7 @@ const MyPostSpotsSelected = styled.img`
 const MyLikeSpots = styled.img`
   width: 68px;
   height: 68px;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   border-radius: 5px;
   background-size: cover;
   object-fit: cover;
@@ -1214,7 +1214,7 @@ const MyLikeSpotsSelected = styled.img`
   border: 3px solid #fd8598;
   width: 68px;
   height: 68px;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   border-radius: 5px;
   background-size: cover;
   object-fit: cover;
