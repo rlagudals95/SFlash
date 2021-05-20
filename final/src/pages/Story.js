@@ -24,7 +24,7 @@ const Story = (props) => {
 
   //  url에서 userId 불러오기
   const userId = props.match.params.id;
-  console.log("userId:", userId);
+  // console.log("userId:", userId);
 
   const initializeApp = async () => {
     await dispatch(profileActions.resetProfile([]));

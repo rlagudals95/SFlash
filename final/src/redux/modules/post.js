@@ -5,7 +5,7 @@ import { history } from "../configStore";
 import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import { getCookie } from "../../shared/Cookie";
 import { push } from "react-router-redux";
@@ -189,19 +189,14 @@ const addPostAPI = (post) => {
             title: one_post.title, // 포스트 title
             content: one_post.content, // 포스트 내용
           };
-<<<<<<< HEAD
           dispatch(addPost(CommunityPost));
           dispatch(spinner(false));
         }
-=======
-          dispatch(addPost(CommunityPost)); 
-        }  
->>>>>>> 1f785e77e45ee8a59509398363aaaf4ff2d0093f
       })
       .catch((err) => {
-      console.log(err);
-      window.alert("게시물을 저장하지 못했습니다.");
-    });
+        console.log(err);
+        window.alert("게시물을 저장하지 못했습니다.");
+      });
   };
 };
 
@@ -240,17 +235,17 @@ const getPostAPI = () => {
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
+          });
         } else {
           // console.log("스피너 지우자~!", res.data.data); //이것의
 
@@ -306,9 +301,9 @@ const getPostAPI = () => {
         }
       })
       .catch((err) => {
-      window.alert("게시물을 가져오는데 문제가 있어요!");
-      console.log("게시물 로드 에러", err);
-    });
+        window.alert("게시물을 가져오는데 문제가 있어요!");
+        console.log("게시물 로드 에러", err);
+      });
   };
 };
 
@@ -324,20 +319,20 @@ const getMapPostAPI = () => {
       },
     })
       .then((res) => {
-        if (res.data.message === "tokenExpired"){
-            dispatch(userActions.logOut());
-            Swal.fire({
-              text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-              confirmButtonText: '로그인 하러가기',
-              confirmButtonColor: '#ffb719',
-              showCancelButton: true,
-              cancelButtonText: '취소',
-              cancelButtonColor: '#eee',
-            }).then((result) => {
-              if (result.isConfirmed) {
-                history.push("/login");
-              }
-            })
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          });
         } else {
           // console.log("서버 응답값", res);
           let map_post_list = [];
@@ -361,9 +356,9 @@ const getMapPostAPI = () => {
         }
       })
       .catch((err) => {
-      window.alert("게시물을 가져오는데 문제가 있어요!");
-      console.log("게시물 로드 에러", err);
-    });
+        window.alert("게시물을 가져오는데 문제가 있어요!");
+        console.log("게시물 로드 에러", err);
+      });
   };
 };
 
@@ -376,29 +371,29 @@ const deletePostAPI = (board_id) => {
         "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
-    .then((res) => {
-      if (res.data.message === "tokenExpired") {
-        dispatch(userActions.logOut());
-        Swal.fire({
-          text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
-          confirmButtonText: "로그인 하러가기",
-          confirmButtonColor: "#ffb719",
-          showCancelButton: true,
-          cancelButtonText: "취소",
-          cancelButtonColor: "#eee",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            history.push("/login");
-          }
-        });
-      } else {
-        dispatch(deletePost(board_id));
-      }
-    })
-    .catch((err) => {
-      window.alert("게시물 삭제에 문제가 있어요!");
-      console.log("게시글 삭제 에러", err);
-    });
+      .then((res) => {
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          });
+        } else {
+          dispatch(deletePost(board_id));
+        }
+      })
+      .catch((err) => {
+        window.alert("게시물 삭제에 문제가 있어요!");
+        console.log("게시글 삭제 에러", err);
+      });
   };
 };
 
@@ -452,15 +447,15 @@ const editPostAPI = (board_id, _edit) => {
       },
     }).then((res) => {
       // 토큰 만료시 재로그인 권유
-      if (res.data.message === "tokenExpired"){
+      if (res.data.message === "tokenExpired") {
         dispatch(userActions.logOut());
         Swal.fire({
-          text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-          confirmButtonText: '로그인 하러가기',
-          confirmButtonColor: '#ffb719',
+          text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+          confirmButtonText: "로그인 하러가기",
+          confirmButtonColor: "#ffb719",
           showCancelButton: true,
-          cancelButtonText: '취소',
-          cancelButtonColor: '#eee',
+          cancelButtonText: "취소",
+          cancelButtonColor: "#eee",
         }).then((result) => {
           if (result.isConfirmed) {
             history.push("/login");
@@ -525,17 +520,17 @@ const searchPostAPI = (search, start = null, size = null) => {
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
+          });
         } else {
           // console.log("스타트와 사이즈", start, size);
           // console.log("검색결과", res.data.data);
@@ -573,9 +568,9 @@ const searchPostAPI = (search, start = null, size = null) => {
         }
       })
       .catch((error) => {
-      window.alert("검색을 할 수 없습니다.");
-      console.log(error);
-    });
+        window.alert("검색을 할 수 없습니다.");
+        console.log(error);
+      });
   };
 };
 
