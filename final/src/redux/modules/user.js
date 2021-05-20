@@ -4,7 +4,7 @@ import { history } from "../configStore";
 import axios from "axios";
 import { config } from "../../shared/config";
 import Swal from "sweetalert2";
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 
 // actions
 const SET_USER = "SET_USER";
@@ -39,9 +39,11 @@ const signupAPI = (nickname, email, pwd, rePwd) => {
       .then((res) => {
         console.log("signupAPI(res)", res);
         Swal.fire({
-          text: "SFlash의 회원이 되었습니다. :)",
-          confirmButtonColor: "#ffb719",
-        });
+          imageUrl: 'https://i.postimg.cc/SxmfpG6L/2x.png',
+          text: 'SFlash의 회원이 되신 걸 환영합니다 :)',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#ffb719',
+        })
         history.push("/login");
       })
       .catch((err) => {
@@ -71,15 +73,13 @@ const loginAPI = (email, pwd) => {
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("jwt", res.data.token);
         // localStorage.setItem("jwt", res.data.accessToken);
-        // localStorage.setItem("refreshjwt", res.data.refreshToken);
         localStorage.setItem("role", res.data.role);
         dispatch(setUser());
         history.replace("/");
-
       })
       .catch((err) => {
         Swal.fire({
-          text: "로그인 실패 ㅠㅠ",
+          text: "로그인 정보를 다시 확인해 주세요.",
           confirmButtonColor: "#ffb719",
         });
         console.log("로그인 실패", err);
@@ -114,7 +114,6 @@ export default handleActions(
       produce(state, (draft) => {
         localStorage.removeItem("nickname");
         localStorage.removeItem("jwt");
-        localStorage.removeItem("refreshjwt");
         localStorage.removeItem("userId");
         localStorage.removeItem("role");
         draft.user = null;
