@@ -10,7 +10,8 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import Slider from "react-slick";
 import UploadPostModal from "./UploadPostModal";
 import { actionCreators as storyPostModalActions } from "../../redux/modules/storypostmodal";
-import { actionCreators as postActions } from "../../redux/modules/post";
+import { actionCreators as storyPostActions } from "../../redux/modules/storypost";
+import { actionCreators as profileActions } from "../../redux/modules/profile";
 import { actionCreators as ModalActions } from "../../redux/modules/storypostmodal";
 import { history } from "../../redux/configStore";
 import Spinner from "../../shared/Spinner";
@@ -135,16 +136,28 @@ const ModalDetail = (props) => {
                             : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                         }
                         onClick={() => {
-                          window.location.replace(
-                              `/story/${modalData.writerId}`
-                            );// 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                          history.push(`/story/${modalData.writerId}`); 
+                          dispatch(storyPostActions.resetStory([]));
+                          dispatch(profileActions.resetProfile([]));
+                          dispatch(profileActions.getUserInfoAPI(modalData.writerId));
+                          dispatch(storyPostActions.getUserPostAPI(modalData.writerId));
+                          dispatch(storyPostActions.getUserLikeAPI(modalData.writerId));
+                          // window.location.replace(
+                          //     `/story/${modalData.writerId}`
+                          //   );// 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                         }}
                       />
                       <ModalAuthor
-                       onClick={() => {
-                        window.location.replace(
-                            `/story/${modalData.writerId}`
-                          );// 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                       onClick={() => { 
+                       history.push(`/story/${modalData.writerId}`); 
+                       dispatch(storyPostActions.resetStory([]));
+                       dispatch(profileActions.resetProfile([]));
+                       dispatch(profileActions.getUserInfoAPI(modalData.writerId));
+                       dispatch(storyPostActions.getUserPostAPI(modalData.writerId));
+                       dispatch(storyPostActions.getUserLikeAPI(modalData.writerId));
+                        // window.location.replace(
+                        //     `/story/${modalData.writerId}`
+                        //   );// 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                       }}
                       >
                         {modalData.writerName}
@@ -292,15 +305,23 @@ const ModalDetail = (props) => {
                                         ? c.writerImgUrl
                                         : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                     }
-                                    onClick={() => {
-                                      window.location.replace(
-                                        `/story/${c.userId}`);
+                                    onClick={() => { 
+                                      history.push(`/story/${c.userId}`); 
+                                      dispatch(storyPostActions.resetStory([]));
+                                      dispatch(profileActions.resetProfile([]));
+                                      dispatch(profileActions.getUserInfoAPI(c.userId));
+                                      dispatch(storyPostActions.getUserPostAPI(c.userId));
+                                      dispatch(storyPostActions.getUserLikeAPI(c.userId));
                                     }}
                                   ></ReplyImg>
                                   <ReplyWriter
-                                    onClick={() => {
-                                      window.location.replace(
-                                        `/story/${c.userId}`);
+                                   onClick={() => { 
+                                    history.push(`/story/${c.userId}`); 
+                                    dispatch(storyPostActions.resetStory([]));
+                                    dispatch(profileActions.resetProfile([]));
+                                    dispatch(profileActions.getUserInfoAPI(c.userId));
+                                    dispatch(storyPostActions.getUserPostAPI(c.userId));
+                                    dispatch(storyPostActions.getUserLikeAPI(c.userId));
                                     }}
                                   >
                                     {c.writerName}
@@ -719,13 +740,9 @@ const PostTime = styled.div`
 `;
 const ModalCmtInputBox = styled.div`
   align-items: center;
-  margin-bottom: -4.5vh;
   width: 100%;
-  height: 8vw;
-  padding: 0px;
+  padding: 10px;
   display: flex;
-  justify-content: space-between;
-  /* align-items: center; */
   box-sizing: border-box;
   border: 2px solid #efefef;
   background-color: white;
@@ -864,28 +881,14 @@ const CommentInput = styled.input`
   @media (max-width: 600px) {
   }
 `;
+
 const UploadBtn = styled.div`
   font-size: 14px;
-
-  /* color: #3897f0; */
   color: ${(props) => props.theme.main_color};
   cursor: pointer;
   opacity: 1;
   font-weight: 600;
   width: 30px;
-  margin-right: 1vw;
-  /* margin: 10px 5px 0px 0px; */
-  /* padding-bottom: 5px; */
-  /* width: 30px;
-  @media (max-width: 1440px) {
-   
-    margin: 5px 5px 0px 0px;
-  }
-  @media (max-width: 600px) {
-    
-    margin: 10px 5px 0px 0px;
-    width: 40px;
-  } */
 `;
 
 const EditBtn = styled.span`

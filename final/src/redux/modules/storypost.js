@@ -16,8 +16,7 @@ const EDIT_STORY_LIKE = "EDIT_STORY_LIKE";
 const DELETE_STORY_POST = "DELETE_STORY_POST";
 const DELETE_STORY_MARKER = "DELETE_MY_MARKER";
 const LOADING = "LOADING"; //is_loading을 true로 바꿔주는 액션
-const PAGING_CNT = "PAGING_CNT";
-// 클릭시 스토리 페이지 정보 초기화
+// 클릭시 스토리 페이지 게시물 정보 초기화
 const RESET_STORY = "RESET_STORY";
 
 const setStoryPost = createAction(SET_STORY_POST, (post_list) => ({
@@ -37,17 +36,14 @@ const editStoryLike = createAction(EDIT_STORY_LIKE, (board_id, post) => ({
 const deleteStoryPost = createAction(DELETE_STORY_POST, (id) => ({ id }));
 const deleteStoryMarker = createAction(DELETE_STORY_MARKER, (id) => ({ id }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
-const pagingCntUp = createAction(PAGING_CNT, () => ({}));
 const resetStory = createAction(RESET_STORY, (reset) => ({ reset }));
 
 const initialState = {
   user_post_list: [], //내가 올린 게시물 리스트
   user_like_list: [], //내가 좋아요한 게시물 리스트
   is_loading: true, // 페이징 처리할 데이터가 없을때 스피너를 보이지 않게함
-  // paging: { start: null, next: null, size: 15 },
   like: false,
   size: 15,
-  check: null,
 };
 
 // 스토리페이지 / 유저 업로드 게시물 리스트
@@ -58,37 +54,7 @@ const getUserPostAPI = (userId) => {
     const p_length = _post_list.length;
     let lastId = p_length === 0 ? 999 : _post_list[p_length - 1].id;
     let size = 15;
-    console.log("데이터는 잘 넘어가나?", userId, lastId, size);
-    // const board_list = getState().storypost.user_post_list;
-    // const pCnt = getState().storypost.pagingCnt
-
-    // console.log("잘가지고 왔겠지", board_list);
-    // let lastId = board_list.length === 0 ? 999 : board_list[0].id - pCnt; ; // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
-    // let size = getState().storyPost.size;
     // console.log("데이터는 잘 넘어가나?", userId, lastId, size);
-    //   board_list.length === 0
-    //     ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
-    //     : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
-    //       board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
-    // // console.log("마지막 포스트 아이디", lastId);
-
-    // if (board_list.length !== 0) {
-    //   dispatch(pagingCntUp());
-    // }
-    // console.log("페이징 카운트", pCnt);
-
-    // let lastId = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
-    //   board_list.length === 0
-    //     ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
-    //     : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
-    //       board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
-    // // console.log("마지막 포스트 아이디", lastId);
-
-    // if (board_list.length !== 0) {
-    //   dispatch(pagingCntUp());
-    // }
-    // console.log("페이징 카운트", pCnt);
-    // let size = 15;
 
     axios({
       method: "GET",
@@ -100,7 +66,6 @@ const getUserPostAPI = (userId) => {
     })
       .then((res) => {
         console.log(res.data.data);
-        console.log("내 게시물 RESPONSE");
 
         if (res.data.data.length === 0) {
           // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
@@ -143,20 +108,7 @@ const getUserLikeAPI = (userId) => {
     const p_length = _post_list.length;
     let lastId = p_length === 0 ? 999 : _post_list[p_length - 1].id;
     let size = 15;
-    console.log("데이터는 잘 넘어가나?", userId, lastId, size);
-    // const pCnt = getState().storypost.pagingCnt;
-    // console.log("잘가지고 왔겠지", board_list);
-    // let lastId = board_list.length === 0 ? 999 : board_list[0].id - pCnt;  // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
-    // let size = getState().storyPost.size;
-    // console.log(board_list[-1]);
-    // let lastId = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
-    //   board_list.length === 0
-    //     ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
-    //     : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
-    //       board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
-    // // console.log("마지막 포스트 아이디", lastId);
-
-    // console.log("페이징 카운트", pCnt);
+    // console.log("데이터는 잘 넘어가나?", userId, lastId, size);
 
     axios({
       method: "GET",
@@ -167,7 +119,6 @@ const getUserLikeAPI = (userId) => {
     })
       .then((res) => {
         console.log(res.data.data);
-        console.log("좋아요 RESPONSE");
 
         let post_list = [];
         res.data.data.forEach((_post) => {
@@ -298,7 +249,6 @@ const getUserLikeAPI = (userId) => {
 
 const addUserPostLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
-    const paging = getState().post.paging;
     // console.log("보드아이디", board_id);
     // console.log("보드", board);
 
@@ -316,7 +266,7 @@ const addUserPostLikeAPI = (board_id, board) => {
         if (res.data.message === "tokenExpired"){
             dispatch(userActions.logOut());
             Swal.fire({
-              text: '로그인 기간이 만료되어 재로그인이 필요합니다.',
+              text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
               confirmButtonText: '로그인 하러가기',
               confirmButtonColor: '#ffb719',
               showCancelButton: true,
@@ -337,7 +287,7 @@ const addUserPostLikeAPI = (board_id, board) => {
       }).catch((error) => {
         console.log(error);
         Swal.fire({
-          text: "좋아요 실패 :(",
+          text: "로그인 후 이용해주세요 :)",
           confirmButtonColor: "#ffb719",
         });
     });
@@ -408,7 +358,7 @@ const addUserLikeLikeAPI = (board_id, board) => {
       })
       .catch((error) => {
         Swal.fire({
-          text: "좋아요 실패 :(",
+          text: "로그인 후 이용해주세요 :)",
           confirmButtonColor: "#ffb719",
         });
       });
@@ -538,16 +488,6 @@ export default handleActions(
     [LOADING]: (state, action) =>
       produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;
-      }),
-    [PAGING_CNT]: (state, action) =>
-      produce(state, (draft) => {
-        console.log("카운트업!");
-        console.log(draft.size);
-        draft.pagingCnt = draft.pagingCnt + draft.size;
-      }),
-    [PAGING_CNT]: (state, action) =>
-      produce(state, (draft) => {
-        draft.paging = action.payload.paging;
       }),
 
     [RESET_STORY]: (state, action) =>

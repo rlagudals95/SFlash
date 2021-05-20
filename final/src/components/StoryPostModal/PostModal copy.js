@@ -740,7 +740,6 @@ const PostTime = styled.div`
 const ModalCmtInputBox = styled.div`
   align-items: center;
   width: 100%;
-
   padding: 10px;
   display: flex;
   box-sizing: border-box;
@@ -890,7 +889,7 @@ const UploadBtn = styled.div`
   opacity: 1;
   font-weight: 600;
   width: 30px;
-  margin-right: 5px;
+  margin-right: 0px;
   /* margin: 10px 5px 0px 0px; */
   /* padding-bottom: 5px; */
   /* width: 30px;

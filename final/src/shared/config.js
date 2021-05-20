@@ -1,5 +1,5 @@
 const config = {
-  api: " http://13.125.97.117",
+  api: "http://13.125.97.117",
   jwt: localStorage.getItem("jwt"),
 };
 
