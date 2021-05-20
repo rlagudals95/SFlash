@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/configStore";
 import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지url
+import writeInfoWindow from "../shared/images/writeInfoWindow/writeMarkerInfo.png"
 
 import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
@@ -11,7 +12,6 @@ import * as BiIcons from "react-icons/bi";
 import "../Css/Map.css";
 import UpLoadModal from "./UpLoadModal";
 import CategoryInMap from "../components/CategoryInMap";
-import category_in_map from "../redux/modules/category_in_map";
 import { LeakRemoveOutlined } from "@material-ui/icons";
 import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import MapModal from "./MapModal";
@@ -248,7 +248,10 @@ const Maps = (props) => {
         // 작성용 마커를 사용하는 방법을 알려주는 인포윈도우
         // 작성용 마커위에 갖다대면 뜨고(mouseover) 마우스를 떼면(mouseout) 사라진다.
         // 작성용 마커에 우클릭을 하면 마커가 사라지면서 인포윈도우도 사라진다.
-        var writeGuideContent = '<div class="writeinfobox"></div>';
+        var writeGuideContent = 
+          '<div class="writeinfobox">' +
+            `<img class="writeinfowindow" src=${writeInfoWindow}>` +
+          '</div>';
 
         // 인포윈도우 생성하기
         var writeGuideWindow = new kakao.maps.InfoWindow({
@@ -324,7 +327,7 @@ const Maps = (props) => {
     // 6. 서버와 연결되어 데이터 통신이 이뤄지면 if문으로 분기하는 코드를 사용한다.
     // 기본 설정 규칙 설명 끝------------------------------------------------------------------------
 
-    // 1. 내가 작성한 게시물만 : 모든 종류의 마커들 + 커스텀 오버레이
+    // 1. 내가 작성한 게시물만, 카테고리별로 데이터 나누기 : 모든 종류의 마커들 + 커스텀 오버레이
     if (is_mypost) {
       // 카테고리별로 데이터분류
       const myPostCafe = myPostData.filter(
@@ -1087,7 +1090,7 @@ const Maps = (props) => {
     // 내가 작성한 게시물만 : 끝!!!!
 
 
-    // 2. 내가 좋아요한 게시물만 : 좋아요마커 + 커스텀 오버레이
+    // 2. 내가 좋아요한 게시물만, 카테고리별로 데이터 나누기 : 좋아요마커 + 커스텀 오버레이
     if (is_mylike) {
       // 카테고리별로 데이터분류
       const myLikeCafe = myLikeData.filter(
@@ -2674,11 +2677,11 @@ const SearchBox = styled.div`
     position: fixed;
     /* top: 140px; */
     width: 400px;
-    top: 130px;
+    top: 140px;
     margin: auto;
   }
   @media (max-width: 600px) {
-    top: 125px;
+    top: 140px;
     width: 50%;
     left: 25vw;
     margin: auto;
