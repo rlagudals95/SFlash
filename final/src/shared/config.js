@@ -1,5 +1,5 @@
 const config = {
-  api: "http://13.125.97.117",
+  api: "http://ec2-3-34-105-227.ap-northeast-2.compute.amazonaws.com",
   jwt: localStorage.getItem("jwt"),
 };
 
