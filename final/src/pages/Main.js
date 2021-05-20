@@ -10,8 +10,8 @@ import PopUp from "../components/PopUp";
 // component, element 파일들 가져오기
 import Map from "../components/Map";
 // 스피너
+import Spinner2 from "../shared/Spinner2";
 import Spinner from "../shared/Spinner";
-
 const Main = (props) => {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
@@ -37,6 +37,7 @@ const Main = (props) => {
   }, [HAS_VISITED_BEFORE]);
 
   const handleClose = () => setShowModal(false);
+  const loading = useSelector((state) => state.post.spinner_loading);
 
   useEffect(() => {
     dispatch(postActions.getMapPostAPI());
@@ -47,6 +48,7 @@ const Main = (props) => {
       {/* !is_login 이렇게 로그인 상태가 아닐때만 보여주자? */}
       {showModal && <PopUp close={handleClose} />}
       {map_post_list ? <Map /> : <Spinner />}
+      {loading ? <Spinner2 /> : null}
     </React.Fragment>
   );
 };
