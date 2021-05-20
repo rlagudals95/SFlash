@@ -7,6 +7,8 @@ import moment from "moment";
 import { config } from "../../shared/config";
 import { getCookie } from "../../shared/Cookie";
 import { actionCreators as postActions } from "./post";
+import { actionCreators as userActions } from "./user";
+import Swal from "sweetalert2";
 
 // 댓글 작성 /board/{boardId}/comment
 // 댓글 수정 board/{boardId}/comment/{commentId}
@@ -108,22 +110,38 @@ const addCommentAPI = (comment, board_id) => {
       .then((res) => {
         console.log(res);
 
-        const comment_data = res.data.data;
-        // console.log("댓글정보", comment_data);
-        let comment_list = {
-          commentId: comment_data.commentId,
-          content: comment_data.content,
-          modified: comment_data.modified, //이거좀 고치자! 현준님이 id랑 날짜주면 !
-          userId: comment_data.userId,
-          writerImgUrl: comment_data.userImgUrl,
-          writerName: comment_data.nickName,
-        };
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          });
+        } else {
+          const comment_data = res.data.data;
+          // console.log("댓글정보", comment_data);
+          let comment_list = {
+            commentId: comment_data.commentId,
+            content: comment_data.content,
+            modified: comment_data.modified, //이거좀 고치자! 현준님이 id랑 날짜주면 !
+            userId: comment_data.userId,
+            writerImgUrl: comment_data.userImgUrl,
+            writerName: comment_data.nickName,
+          };
 
-        // console.log("댓글추가반응", res);
-        dispatch(addComment(comment_list));
-        // dispatch(getComment(board_id)); //이래 해줘도 되나?
-        // dispatch(postActions.addComment(comment, board_id));
-        // dispatch(postActions.setPost());
+          // console.log("댓글추가반응", res);
+          dispatch(addComment(comment_list));
+          // dispatch(getComment(board_id)); //이래 해줘도 되나?
+          // dispatch(postActions.addComment(comment, board_id));
+          // dispatch(postActions.setPost());
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -144,8 +162,24 @@ const deleteCommentAPI = (id) => {
       },
     })
       .then((res) => {
-        // dispatch(deleteComment(id, board_id)); //바로 렌더링 시켜줘야 삭제 눌렀을때 반영된다
-        dispatch(deleteComment(id));
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          });
+        } else {
+          // dispatch(deleteComment(id, board_id)); //바로 렌더링 시켜줘야 삭제 눌렀을때 반영된다
+          dispatch(deleteComment(id));
+        }
       })
       .catch((err) => {
         window.alert("댓글 삭제에 문제가 있어요!");

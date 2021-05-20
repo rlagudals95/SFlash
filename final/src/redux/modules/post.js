@@ -143,24 +143,22 @@ const addPostAPI = (post) => {
       },
     })
       .then((res) => {
-        // console.log("애드포스트 응답", res);
-        // 토큰이 만료 되었다면 재로그인 권유
+        // 토큰이 만료 되었을때 띄워주는 alert
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
+          });
         } else {
-          // 게시물 올리면 바로 마커 뜨게 하는 리덕스 작업
           let one_post = res.data.data;
           let one_marker_data = {
             id: one_post.boardId,
@@ -367,23 +365,21 @@ const deletePostAPI = (board_id) => {
       },
     })
     .then((res) => {
-      // 토큰 만료시 재로그인 권유
-      if (res.data.message === "tokenExpired"){
+      if (res.data.message === "tokenExpired") {
         dispatch(userActions.logOut());
         Swal.fire({
-          text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-          confirmButtonText: '로그인 하러가기',
-          confirmButtonColor: '#ffb719',
+          text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+          confirmButtonText: "로그인 하러가기",
+          confirmButtonColor: "#ffb719",
           showCancelButton: true,
-          cancelButtonText: '취소',
-          cancelButtonColor: '#eee',
+          cancelButtonText: "취소",
+          cancelButtonColor: "#eee",
         }).then((result) => {
           if (result.isConfirmed) {
             history.push("/login");
           }
-        })
+        });
       } else {
-        // console.log(res);
         dispatch(deletePost(board_id));
       }
     })
@@ -457,7 +453,7 @@ const editPostAPI = (board_id, _edit) => {
           if (result.isConfirmed) {
             history.push("/login");
           }
-        })
+        });
       } else {
         //응답이 오기전까지 무슨 스피너 조건을 줘야하는데.,..흠..
         console.log("수정반응값!", res);
