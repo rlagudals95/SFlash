@@ -5,12 +5,12 @@ import { history } from "../configStore";
 import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
+import Swal from 'sweetalert2'
 
 import { getCookie } from "../../shared/Cookie";
 import { push } from "react-router-redux";
 import { actionCreators as modalActions } from "./mapModal";
 import { actionCreators as userActions } from "./user";
-import Swal from "sweetalert2";
 
 const SET_POST = "SET_POST";
 const SET_MAP_POST = "SET_MAP_POST";
@@ -189,14 +189,19 @@ const addPostAPI = (post) => {
             title: one_post.title, // 포스트 title
             content: one_post.content, // 포스트 내용
           };
+<<<<<<< HEAD
           dispatch(addPost(CommunityPost));
           dispatch(spinner(false));
         }
+=======
+          dispatch(addPost(CommunityPost)); 
+        }  
+>>>>>>> 1f785e77e45ee8a59509398363aaaf4ff2d0093f
       })
       .catch((err) => {
-        console.log(err);
-        window.alert("게시물을 저장하지 못했습니다.");
-      });
+      console.log(err);
+      window.alert("게시물을 저장하지 못했습니다.");
+    });
   };
 };
 
@@ -231,62 +236,79 @@ const getPostAPI = () => {
       },
     })
       .then((res) => {
-        // console.log("스피너 지우자~!", res.data.data); //이것의
+        // 토큰이 만료 되었다면 재로그인 권유
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        } else {
+          // console.log("스피너 지우자~!", res.data.data); //이것의
 
-        console.log("데이터 길이!", res.data.data.length);
-        if (res.data.data.length < 15) {
-          // console.log("로딩멈춰!");
-          dispatch(loading(false));
+          console.log("데이터 길이!", res.data.data.length);
+          if (res.data.data.length < 15) {
+            // console.log("로딩멈춰!");
+            dispatch(loading(false));
+          }
+
+          // console.log("스크롤 요청");
+          // console.log("!!!!!!!!!", res.data.data);
+
+          // 라이크 값이 자꾸 false로 오니까 리스트를 뽑아보자!
+          let like_list = [];
+
+          for (let i = 0; i < res.data.data.length; i++) {
+            like_list.push(res.data.data[i].liked);
+          }
+
+          // console.log("받아오는 라이크 값들", like_list);
+
+          let result = res.data.data; // 서버에서 받아오는 게시물들을 start와 size를 정해서 나눠준다
+          // console.log("페이징 갯수", result.length);
+          if (result.length == 0) {
+            // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
+            dispatch(loading(false));
+            return;
+          }
+
+          console.log("서버 응답값", res);
+          let post_list = [];
+          // console.log(res.data.data[0].boardImgReponseDtoList);
+          result.forEach((_post) => {
+            let post = {
+              id: _post.boardId, // 포스트 id
+              title: _post.title, // 포스트 title
+              content: _post.content, // 포스트 내용
+              // writerName: _post.writerName,
+              img_url: _post.boardImgUrl,
+              category: _post.category,
+              // profileImg: _post.writerImgUrl,
+              like: _post.liked,
+              likeCnt: _post.likeCount,
+              // comment: _post.boardDetailCommentDtoList,
+              // creatAt: _post.modified,
+              spotName: _post.spotName,
+              // writerId: _post.writerId,
+            };
+            post_list.push(post);
+          });
+          dispatch(setPost(post_list));
+          // dispatch(modalActions.modalEdit(post_list));
         }
-
-        // console.log("스크롤 요청");
-        // console.log("!!!!!!!!!", res.data.data);
-
-        // 라이크 값이 자꾸 false로 오니까 리스트를 뽑아보자!
-        let like_list = [];
-
-        for (let i = 0; i < res.data.data.length; i++) {
-          like_list.push(res.data.data[i].liked);
-        }
-
-        // console.log("받아오는 라이크 값들", like_list);
-
-        let result = res.data.data; // 서버에서 받아오는 게시물들을 start와 size를 정해서 나눠준다
-        // console.log("페이징 갯수", result.length);
-        if (result.length == 0) {
-          // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
-          dispatch(loading(false));
-          return;
-        }
-
-        console.log("서버 응답값", res);
-        let post_list = [];
-        // console.log(res.data.data[0].boardImgReponseDtoList);
-        result.forEach((_post) => {
-          let post = {
-            id: _post.boardId, // 포스트 id
-            title: _post.title, // 포스트 title
-            content: _post.content, // 포스트 내용
-            // writerName: _post.writerName,
-            img_url: _post.boardImgUrl,
-            category: _post.category,
-            // profileImg: _post.writerImgUrl,
-            like: _post.liked,
-            likeCnt: _post.likeCount,
-            // comment: _post.boardDetailCommentDtoList,
-            // creatAt: _post.modified,
-            spotName: _post.spotName,
-            // writerId: _post.writerId,
-          };
-          post_list.push(post);
-        });
-        dispatch(setPost(post_list));
-        // dispatch(modalActions.modalEdit(post_list));
       })
       .catch((err) => {
-        window.alert("게시물을 가져오는데 문제가 있어요!");
-        console.log("게시물 로드 에러", err);
-      });
+      window.alert("게시물을 가져오는데 문제가 있어요!");
+      console.log("게시물 로드 에러", err);
+    });
   };
 };
 
@@ -302,30 +324,46 @@ const getMapPostAPI = () => {
       },
     })
       .then((res) => {
-        // console.log("서버 응답값", res);
-        let map_post_list = [];
-        // console.log("서버 응답값", res.data.data);
-        // console.log(res.data.data[0].boardImgReponseDtoList);
-        res.data.data.forEach((_post) => {
-          let post = {
-            id: _post.boardId, // 포스트 id
-            like: _post.liked,
-            writerName: _post.writerName,
-            latitude: _post.latitude,
-            longitude: _post.longitude,
-            spotName1: _post.spotName.split(" ").splice(0, 2).join(" "),
-            spotName2: _post.spotName.split(" ").splice(2).join(" "),
-            category: _post.category,
-            imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
-          };
-          map_post_list.unshift(post);
-        });
-        dispatch(setMapPost(map_post_list));
+        if (res.data.message === "tokenExpired"){
+            dispatch(userActions.logOut());
+            Swal.fire({
+              text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+              confirmButtonText: '로그인 하러가기',
+              confirmButtonColor: '#ffb719',
+              showCancelButton: true,
+              cancelButtonText: '취소',
+              cancelButtonColor: '#eee',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                history.push("/login");
+              }
+            })
+        } else {
+          // console.log("서버 응답값", res);
+          let map_post_list = [];
+          // console.log("서버 응답값", res.data.data);
+          // console.log(res.data.data[0].boardImgReponseDtoList);
+          res.data.data.forEach((_post) => {
+            let post = {
+              id: _post.boardId, // 포스트 id
+              like: _post.liked,
+              writerName: _post.writerName,
+              latitude: _post.latitude,
+              longitude: _post.longitude,
+              spotName1: _post.spotName.split(" ").splice(0, 2).join(" "),
+              spotName2: _post.spotName.split(" ").splice(2).join(" "),
+              category: _post.category,
+              imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
+            };
+            map_post_list.unshift(post);
+          });
+          dispatch(setMapPost(map_post_list));
+        }
       })
       .catch((err) => {
-        window.alert("게시물을 가져오는데 문제가 있어요!");
-        console.log("게시물 로드 에러", err);
-      });
+      window.alert("게시물을 가져오는데 문제가 있어요!");
+      console.log("게시물 로드 에러", err);
+    });
   };
 };
 
@@ -338,31 +376,29 @@ const deletePostAPI = (board_id) => {
         "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
-      .then((res) => {
-        // console.log(res);
-
-        if (res.data.message === "tokenExpired") {
-          dispatch(userActions.logOut());
-          Swal.fire({
-            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
-            confirmButtonText: "로그인 하러가기",
-            confirmButtonColor: "#ffb719",
-            showCancelButton: true,
-            cancelButtonText: "취소",
-            cancelButtonColor: "#eee",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              history.push("/login");
-            }
-          });
-        } else {
-          dispatch(deletePost(board_id));
-        }
-      })
-      .catch((err) => {
-        window.alert("게시물 삭제에 문제가 있어요!");
-        console.log("게시글 삭제 에러", err);
-      });
+    .then((res) => {
+      if (res.data.message === "tokenExpired") {
+        dispatch(userActions.logOut());
+        Swal.fire({
+          text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+          confirmButtonText: "로그인 하러가기",
+          confirmButtonColor: "#ffb719",
+          showCancelButton: true,
+          cancelButtonText: "취소",
+          cancelButtonColor: "#eee",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            history.push("/login");
+          }
+        });
+      } else {
+        dispatch(deletePost(board_id));
+      }
+    })
+    .catch((err) => {
+      window.alert("게시물 삭제에 문제가 있어요!");
+      console.log("게시글 삭제 에러", err);
+    });
   };
 };
 
@@ -415,15 +451,16 @@ const editPostAPI = (board_id, _edit) => {
         "Content-Type": "multipart/form-data",
       },
     }).then((res) => {
-      if (res.data.message === "tokenExpired") {
+      // 토큰 만료시 재로그인 권유
+      if (res.data.message === "tokenExpired"){
         dispatch(userActions.logOut());
         Swal.fire({
-          text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
-          confirmButtonText: "로그인 하러가기",
-          confirmButtonColor: "#ffb719",
+          text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+          confirmButtonText: '로그인 하러가기',
+          confirmButtonColor: '#ffb719',
           showCancelButton: true,
-          cancelButtonText: "취소",
-          cancelButtonColor: "#eee",
+          cancelButtonText: '취소',
+          cancelButtonColor: '#eee',
         }).then((result) => {
           if (result.isConfirmed) {
             history.push("/login");
@@ -484,44 +521,61 @@ const searchPostAPI = (search, start = null, size = null) => {
       },
     })
       .then((res) => {
-        // console.log("스타트와 사이즈", start, size);
-        // console.log("검색결과", res.data.data);
-        let result = res.data.data.slice(start, size);
-        // console.log("슬라이스한 데이터", result);
-        if (result.length == 0) {
-          // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
-          dispatch(loading(false));
-          return;
+        // 토큰이 만료 되었다면 재로그인 권유
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        } else {
+          // console.log("스타트와 사이즈", start, size);
+          // console.log("검색결과", res.data.data);
+          let result = res.data.data.slice(start, size);
+          // console.log("슬라이스한 데이터", result);
+          if (result.length == 0) {
+            // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
+            dispatch(loading(false));
+            return;
+          }
+          // let paging = {
+          //   start: start + result.length + 1,
+          //   size: size + 15,
+          // };
+
+          let post_list = [];
+
+          result.forEach((p) => {
+            let post = {
+              id: p.boardId,
+              title: p.title,
+              content: p.content,
+              img_url: p.boardImgReponseDtoList,
+              writerName: p.writerName,
+              profileImg: p.writerImgUrl,
+              like: p.likeCheck,
+              category: p.category,
+              likeCnt: p.likeCount,
+              comment: p.boardDetailCommentDtoList,
+            };
+            post_list.unshift(post);
+          });
+          console.log("포스트 리스트 잘나와?", post_list);
+          dispatch(getSearch(post_list));
         }
-        // let paging = {
-        //   start: start + result.length + 1,
-        //   size: size + 15,
-        // };
-
-        let post_list = [];
-
-        result.forEach((p) => {
-          let post = {
-            id: p.boardId,
-            title: p.title,
-            content: p.content,
-            img_url: p.boardImgReponseDtoList,
-            writerName: p.writerName,
-            profileImg: p.writerImgUrl,
-            like: p.likeCheck,
-            category: p.category,
-            likeCnt: p.likeCount,
-            comment: p.boardDetailCommentDtoList,
-          };
-          post_list.unshift(post);
-        });
-        console.log("포스트 리스트 잘나와?", post_list);
-        dispatch(getSearch(post_list));
       })
       .catch((error) => {
-        window.alert("검색을 할 수 없습니다.");
-        console.log(error);
-      });
+      window.alert("검색을 할 수 없습니다.");
+      console.log(error);
+    });
   };
 };
 

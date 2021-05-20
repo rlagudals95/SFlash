@@ -14,6 +14,7 @@ import "../Css/Map.css";
 import PostModal from "./StoryPostModal/PostModal";
 import { actionCreators as ModalActions } from "../redux/modules/storypostmodal";
 import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지들 모음
+console.log(markerImgUrls.myPostOceanMarkerImgUrl);
 
 // window 객체로부터 kakao mpa api를 호출하기
 // 이것이 되게 하기 위해서는 index.html(index.js 아님!!!)의 script 태그안의 src에다가
@@ -24,12 +25,41 @@ const StoryMap = (props) => {
   const { post_list, marker_icon, userPostMode } = props;
   console.log("StoryMap post_list", post_list);
   console.log("Marker marker_icon", marker_icon);
+  console.log("userPostMode", userPostMode);
+  console.log("마커있나테스트", markerImgUrls.myPostOceanMarkerImgUrl);
+
+  // 1. 내가 작성한 게시물 데이터를 카테고리별로 쪼개서 묶는다.
+  const myPostCafe = post_list.filter((post_list) => post_list.category == "카페");        // 1. 카페
+  const myPostNight = post_list.filter((post_list) => post_list.category == "야경");       // 2. 야경
+  const myPostOcean = post_list.filter((post_list) => post_list.category == "바다");       // 3. 바다
+  const myPostMountain = post_list.filter((post_list) => post_list.category == "산");      // 4. 산
+  const myPostFlower = post_list.filter((post_list) => post_list.category == "꽃");        // 5. 꽃
+  const myPostAlone = post_list.filter((post_list) => post_list.category == "나홀로");     // 6. 나홀로
+  const myPostCouple = post_list.filter((post_list) => post_list.category == "연인");      // 7. 연인
+  const myPostFriend = post_list.filter((post_list) => post_list.category == "친구");      // 8. 친구
+  const myPostPet = post_list.filter((post_list) => post_list.category == "반려동물");     // 9. 반려동물
+  const myPostCity = post_list.filter((post_list) => post_list.category == "도심");        // 10. 도심
+  const myPostPark = post_list.filter((post_list) => post_list.category == "공원");        // 11. 공원
+  const myPostExhibition = post_list.filter((post_list) => post_list.category == "전시");  // 12. 전시
+  console.log("데이터 있나??", myPostMountain);
+
+  // 2. 내가 좋아요 게시물 데이터를 카테고리별로 쪼개서 묶는다.
+  const myLikeCafe = post_list.filter((post_list) => post_list.category == "카페");        // 1. 카페
+  const myLikeNight = post_list.filter((post_list) => post_list.category == "야경");       // 2. 야경
+  const myLikeOcean = post_list.filter((post_list) => post_list.category == "바다");       // 3. 바다
+  const myLikeMountain = post_list.filter((post_list) => post_list.category == "산");      // 4. 산
+  const myLikeFlower = post_list.filter((post_list) => post_list.category == "꽃");        // 5. 꽃
+  const myLikeAlone = post_list.filter((post_list) => post_list.category == "나홀로");     // 6. 나홀로
+  const myLikeCouple = post_list.filter((post_list) => post_list.category == "연인");      // 7. 연인
+  const myLikeFriend = post_list.filter((post_list) => post_list.category == "친구");      // 8. 친구
+  const myLikePet = post_list.filter((post_list) => post_list.category == "반려동물");     // 9. 반려동물
+  const myLikeCity = post_list.filter((post_list) => post_list.category == "도심");        // 10. 도심
+  const myLikePark = post_list.filter((post_list) => post_list.category == "공원");        // 11. 공원
+  const myLikeExhibition = post_list.filter((post_list) => post_list.category == "전시");  // 12. 전시
 
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
   const nickname = localStorage.getItem("nickname"); // 내가 작성한 게시물을 판별하는 기준 상수
-
-  
   // 위도, 경도, 마커, 주소
   const [startlat, setStartLat] = useState(); // 현위치 위도 설정
   const [startlon, setStartLon] = useState(); // 현위치 경도 설정
@@ -77,21 +107,8 @@ const StoryMap = (props) => {
     }
 
     // 1. 내가 작성한 게시물들 카테고리별로 다 보이게 하기 제어 시작!!!
-    if (userPostMode && post_list) { // userPostMode === true 라서 내가 작성한 게시물이 된다.
-      // 1. 내가 작성한 게시물 데이터를 카테고리별로 쪼개서 묶는다.
-      const myPostCafe = post_list.filter((post_list) => post_list.category == "카페");        // 1. 카페
-      const myPostNight = post_list.filter((post_list) => post_list.category == "야경");       // 2. 야경
-      const myPostOcean = post_list.filter((post_list) => post_list.category == "바다");       // 3. 바다
-      const myPostMountain = post_list.filter((post_list) => post_list.category == "산");      // 4. 산
-      const myPostFlower = post_list.filter((post_list) => post_list.category == "꽃");        // 5. 꽃
-      const myPostAlone = post_list.filter((post_list) => post_list.category == "나홀로");     // 6. 나홀로
-      const myPostCouple = post_list.filter((post_list) => post_list.category == "연인");      // 7. 연인
-      const myPostFriend = post_list.filter((post_list) => post_list.category == "친구");      // 8. 친구
-      const myPostPet = post_list.filter((post_list) => post_list.category == "반려동물");     // 9. 반려동물
-      const myPostCity = post_list.filter((post_list) => post_list.category == "도심");        // 10. 도심
-      const myPostPark = post_list.filter((post_list) => post_list.category == "공원");        // 11. 공원
-      const myPostExhibition = post_list.filter((post_list) => post_list.category == "전시");  // 12. 전시
-
+    if (userPostMode) { // userPostMode === true 라서 내가 작성한 게시물이 된다.
+    // 31번-43번줄에 카테고리별로 데이터 묶어 놓음 
       // 1. 내가 작성한 게시물 : 카페
       myPostCafe.forEach((myCafe) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -803,21 +820,8 @@ const StoryMap = (props) => {
     // 1. 내가 작성한 게시물들 카테고리별로 다 보이게 하기 제어 끝!!!
 
     // 2. 내가 좋아요한 게시물 카테고리별로 다 보이게 하기 시작!!! 
-    if (!userPostMode && post_list) { // userPostMode === false 라서 내가 좋아요한 게시물이 된다.
-      // 2. 내가 좋아요 게시물 데이터를 카테고리별로 쪼개서 묶는다.
-      const myLikeCafe = post_list.filter((post_list) => post_list.category == "카페");        // 1. 카페
-      const myLikeNight = post_list.filter((post_list) => post_list.category == "야경");       // 2. 야경
-      const myLikeOcean = post_list.filter((post_list) => post_list.category == "바다");       // 3. 바다
-      const myLikeMountain = post_list.filter((post_list) => post_list.category == "산");      // 4. 산
-      const myLikeFlower = post_list.filter((post_list) => post_list.category == "꽃");        // 5. 꽃
-      const myLikeAlone = post_list.filter((post_list) => post_list.category == "나홀로");     // 6. 나홀로
-      const myLikeCouple = post_list.filter((post_list) => post_list.category == "연인");      // 7. 연인
-      const myLikeFriend = post_list.filter((post_list) => post_list.category == "친구");      // 8. 친구
-      const myLikePet = post_list.filter((post_list) => post_list.category == "반려동물");     // 9. 반려동물
-      const myLikeCity = post_list.filter((post_list) => post_list.category == "도심");        // 10. 도심
-      const myLikePark = post_list.filter((post_list) => post_list.category == "공원");        // 11. 공원
-      const myLikeExhibition = post_list.filter((post_list) => post_list.category == "전시");  // 12. 전시
-
+    if (!userPostMode) { // userPostMode === false 라서 내가 좋아요한 게시물이 된다.
+    // 45-57번줄에 카테고리별로 데이터 묶어놓음
       // 1. 내가 좋아요한 게시물 : 카페
       myLikeCafe.forEach((myCafe) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -1526,7 +1530,7 @@ const StoryMap = (props) => {
         });
       });    
     }
-  }, [post_list]);
+  }, [userPostMode, post_list]);
 
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다
@@ -1610,11 +1614,10 @@ const SearchInput = styled.input`
   border-radius: 10px;
   padding-left: 15px;
   font-size: 15px;
-  border: none;
+  border: 2px solid rgb(255, 183, 25);
   &:focus {
-    /* outline: blue; */
-    border-radius: 5px;
-    border: 1pt solid ${(props) => props.theme.main_grey};
+    outline: none;
+    box-shadow: 0 0 0 1px rgb(255, 183, 25);
   }
   opacity: 0.8;
 `;
