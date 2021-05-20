@@ -34,6 +34,7 @@ const PAGING_CNT = "PAGING_CNT";
 const POST_IMG_EDIT = "POST_IMG_EDIT";
 // 게시물 수정시 로딩 스피너 달아주기 위해 만든 액션
 const EDIT_LOADING = "EDIT_LOADING";
+const SPINNER = "SPINNER";
 
 const setPost = createAction(SET_POST, (post_list) => ({
   post_list,
@@ -81,6 +82,9 @@ const postImgEdit = createAction(POST_IMG_EDIT, (board_id, postImg) => ({
   postImg,
 }));
 const edit_loading = createAction(EDIT_LOADING, (loading) => loading);
+const spinner = createAction(SPINNER, (spinner_loading) => ({
+  spinner_loading,
+}));
 
 const initialState = {
   // list와 map_post_list에 게시물 데이터가 들어간다.
@@ -93,6 +97,7 @@ const initialState = {
   like: false, // 접속유저의 like유무를 파악해 게시물의 하트 모양을 관리함
   pagingCnt: 0,
   edit_loading: true,
+  spinner_loading: false,
 };
 
 const addPostAPI = (post) => {
@@ -112,6 +117,7 @@ const addPostAPI = (post) => {
 
     // console.log("??????", localStorage.getItem("jwt"));
 
+    dispatch(spinner(true));
     console.log("파일들", _file);
     const formData = new FormData();
     formData.append("title", post.title);
@@ -184,6 +190,7 @@ const addPostAPI = (post) => {
             content: one_post.content, // 포스트 내용
           };
           dispatch(addPost(CommunityPost));
+          dispatch(spinner(false));
         }
       })
       .catch((err) => {
@@ -718,6 +725,10 @@ export default handleActions(
     [EDIT_LOADING]: (state, action) =>
       produce(state, (draft) => {
         draft.edit_loading = action.payload.loading;
+      }),
+    [SPINNER]: (state, action) =>
+      produce(state, (draft) => {
+        draft.spinner_loading = action.payload.spinner_loading;
       }),
   },
   initialState
