@@ -102,7 +102,7 @@ const Login = () => {
             color="#ffffff"
             onClick={() => {
               window.location.href =
-                "http://seungwook.shop/oauth2/authorize/naver?redirect_uri=http://sflash.shop/";
+                "https://janghyeonjun.shop/oauth2/authorize/naver?redirect_uri=https://sflash.net/";
               // onSocialLogin();
             }}
           >
@@ -112,7 +112,7 @@ const Login = () => {
             bg="#fee500"
             onClick={() => {
               window.location.href =
-                "http://seungwook.shop/oauth2/authorize/kakao?redirect_uri=http://sflash.shop/";
+                "https://janghyeonjun.shop/oauth2/authorize/kakao?redirect_uri=https://sflash.net/";
               // onSocialLogin();
             }}
           >
@@ -123,7 +123,7 @@ const Login = () => {
             color="#ffffff"
             onClick={() => {
               window.location.href =
-                "http://seungwook.shop/oauth2/authorize/google?redirect_uri=http://sflash.shop/";
+                "https://janghyeonjun.shop/oauth2/authorize/google?redirect_uri=https://sflash.net/";
               // onSocialLogin();
             }}
           >

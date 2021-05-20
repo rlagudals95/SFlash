@@ -10,8 +10,9 @@ import PopUp from "../components/PopUp";
 // component, element 파일들 가져오기
 import Map from "../components/Map";
 // 스피너
-import Spinner2 from "../shared/Spinner2";
 import Spinner from "../shared/Spinner";
+import Spinner2 from "../shared/Spinner2";
+import Spinner3 from "../shared/Spinner3";
 const Main = (props) => {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
@@ -47,7 +48,7 @@ const Main = (props) => {
     <React.Fragment>
       {/* !is_login 이렇게 로그인 상태가 아닐때만 보여주자? */}
       {showModal && <PopUp close={handleClose} />}
-      {map_post_list ? <Map /> : <Spinner />}
+      {map_post_list ? <Map /> : <Spinner3 />}
       {loading ? <Spinner2 /> : null}
     </React.Fragment>
   );

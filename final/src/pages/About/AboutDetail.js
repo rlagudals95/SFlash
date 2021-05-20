@@ -32,11 +32,14 @@ const AboutDetail = (props) => {
         <Grid> 
           <ModalProfileContainer>
             <Name style={{ fontSize: "1.8rem" }}>{props.name}</Name>
-            <Position style={{ fontSize: "1.1rem" }}> 
+            <Position2 style={{ fontSize: "1.1rem" }}> 
               {props.position}
-            </Position>
+            </Position2>
+            <Grid height="5px" />
             <Content>{props.content}</Content>
-            <Grid height="10px"></Grid>
+            <Grid height="0px" />
+            <Skill>{props.skill}</Skill>
+            <Grid height="0px" />
                 <RefLink href={props.github}>{props.github}</RefLink>
                 <RefLink href={props.etc_1}>{props.etc_1}</RefLink>
                 <RefLink href={props.etc_2}>{props.etc_2}</RefLink>
@@ -86,10 +89,24 @@ const Name = styled.div`
 const Position = styled.div`
   font-size: 1.2rem;
   font-weight: 400;
-  color: ${(props) => props.theme.main_grey};
+  color: darkgrey;
 `;
+const Position2 = styled.div`
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: ${(props) => props.theme.main_color};
+`;
+
 const Content = styled.div`
-  margin-top: 30px;
+  margin-top: 15px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: ${(props) => props.theme.main_grey};
+  line-height: 2rem;
+`;
+
+const Skill = styled.div`
+  margin-top: 15px;
   font-size: 1rem;
   font-weight: 400;
   color: ${(props) => props.theme.main_grey};
@@ -98,12 +115,12 @@ const Content = styled.div`
 
 const RefLink = styled.a`
   display: block;
-  margin-top: 30px;
-  font-size: 1rem;
+  margin-top: 20px;
+  font-size: 0.9rem;
   font-weight: 400;
   color: ${(props) => props.theme.main_grey};
   text-decoration: none;
-  margin-bottom: -20px;
+  margin-bottom: -10px;
   :hover {
     cursor: pointer;
     text-decoration: underline;
