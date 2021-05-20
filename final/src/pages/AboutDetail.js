@@ -46,9 +46,10 @@ const AboutDetail = (props) => {
               {props.position}
             </Position>
             <Content>{props.content}</Content>
-                <Content>{props.github}</Content>
-                <Content>{props.etc_1}</Content>
-                <Content>{props.etc_2}</Content>
+            <Grid height="10px"></Grid>
+                <RefLink href={props.github}>{props.github}</RefLink>
+                <RefLink href={props.etc_1}>{props.etc_1}</RefLink>
+                <RefLink href={props.etc_2}>{props.etc_2}</RefLink>
           </ModalProfileContainer>
         </Grid>
       </Grid>
@@ -58,74 +59,10 @@ const AboutDetail = (props) => {
   );
 };
 
-const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  opacity: 0.4;
-  height: 100vh;
-  width: 100vw;
-  background-color: black;
-  z-index: 10;
-`;
-const ModalComponent = styled.div`
-  position: fixed;
-  width: 950px;
-  height: 600px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  z-index: 20;
-  display: flex;
-  @media (max-width: 950px) {
-    width: 350px;
-  }
-  @media (max-width: 350px) {
-    width: 100%;
-  }
-`;
-
-const Wrapper = styled.div`
-  ${(props) => props.theme.responsiveContainer};
-`;
-
-const SflashLogo = styled.img`
-  width: 110px;
-  margin: auto;
-  text-align: center;
-`;
-
-const Text = styled.div`
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: grey;
-`;
-
-const UpperContainer = styled.div`
-  text-align: center;
-`;
-
-const BottomContainer = styled.div`
-  margin: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: auto;
-  grid-gap: 20px;
-  margin: auto;
-  width: 100%;
-  flex-wrap: wrap;
-  align-items: center;
-`;
 
 const ProfileContainer = styled.div`
   margin: 10px;
   text-align: center;
-  margin-bottom: 50px;
-`;
-
-const Title = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
   margin-bottom: 50px;
 `;
 
@@ -169,6 +106,20 @@ const Content = styled.div`
   line-height: 2rem;
 `;
 
+const RefLink = styled.a`
+  display: block;
+  margin-top: 30px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: ${(props) => props.theme.main_grey};
+  text-decoration: none;
+  margin-bottom: -20px;
+  :hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
+
 const modalStyle = {
   overlay: {
     position: "fixed",
@@ -178,7 +129,7 @@ const modalStyle = {
     bottom: "0",
     alignItems: "center",
     textAlign: "cetner",
-    backgroundColor: "rgba(48, 48, 48, 0.7)",
+    backgroundColor: "rgba(48, 48, 48, 0.8)",
     transition: "opacity 2000ms ease-in-out",
     zIndex: "1000",
   },
@@ -194,7 +145,7 @@ const modalStyle = {
 };
 
 const ModalProfileContainer = styled.div`
-  margin: 120px 40px;
+  margin: 120px 50px;
 `;
 
 const CloseButton = styled.img`

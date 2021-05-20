@@ -94,7 +94,7 @@ About.defaultProps = {
       position: "Back-end Developer",
       img: profile_sejeong,
       content:
-        "데이터에 관심이 많은 주니어 백엔드 개발자입니다. \n 기능 구현을 넘어 보다 좋은 코드를 작성하기 위해 고민하고 공부합니다. \n sflash에서 마이페이지와 qna를 구현하였습니다.",
+        "데이터에 관심이 많은 주니어 백엔드 개발자입니다. 기능 구현을 넘어 보다 좋은 코드를 작성하기 위해 고민하고 공부합니다. sflash에서 마이페이지와 qna를 구현하였습니다.",
       github: "https://github.com/meozes",
       etc_1: "",
       etc_2: "",
@@ -104,7 +104,7 @@ About.defaultProps = {
       name: "Minkyu Heo",
       position: "Front-end Developer",
       img: profile_minkyu,
-      content: "",
+      content: "SFlash 프로젝트에서 지도 API를 맡아서 지도 관련해서 마커를 올리고 게시물을 띄우는 기능을 구현했습니다. 기능을 구현하면서 개발이 어렵더라도 사용자들이 유용하고 편하게 쓸 수 있게 구현할 수 있게 고민을 많이 했고, 하나씩 원하게 구현이 될 때마다 크게 기뻐했습니다.",
       github: "https://github.com/heo-mk",
       etc_1: "https://heo-dev-0229.tistory.com/",
       etc_2: "",
@@ -114,7 +114,7 @@ About.defaultProps = {
       name: "Hyeongmin Kim",
       position: "Front-end Developer",
       img: profile_hyeongmin,
-      content: "",
+      content: "커뮤니티 페이지와 게시물 CRUD부분 메인으로 담당했습니다~!",
       github: "https://github.com/rlagudals95",
       etc_1:
         " https://www.notion.so/Kim-hyeong-min-79c0da5ccf924a0292a90c965ad5edf3",
@@ -125,7 +125,7 @@ About.defaultProps = {
       name: "Dayoung Kim",
       position: "Front-end Developer",
       img: profile_dayoung,
-      content: "",
+      content: "디자인 경험을 바탕으로 사람들에게 긍정적인 경험을 줄 수 있는 서비스를 만들고자 고민하는 개발자 입니다. SFlash 프로젝트에서는 로그인/회원가입, 스토리페이지, 문의하기 등 USER 기능을 메인으로 담당했습니다. ",
       github: "https://github.com/dayoung0601?tab=repositories",
       etc_1: "",
       etc_2: "",
@@ -184,100 +184,6 @@ const BottomContainer = styled.div`
   width: 100%;
   flex-wrap: wrap;
   align-items: center;
-`;
-
-const ProfileContainer = styled.div`
-  margin: 10px;
-  text-align: center;
-  margin-bottom: 50px;
-`;
-
-const Title = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 50px;
-`;
-
-const ProfileImg = styled.img`
-  width: 180px;
-  height: 180px;
-  margin: 10px;
-  border-radius: 170px;
-  background-size: cover;
-  object-fit: cover;
-  :hover {
-    cursor: pointer;
-    opacity: 0.5;
-  }
-`;
-
-const ProfileImg2 = styled.img`
-  width: 360px;
-  height: 100%;
-
-  background-size: cover;
-  object-fit: cover;
-`;
-
-const Name = styled.div`
-  font-size: 1.6rem;
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: ${(props) => props.theme.main_grey};
-`;
-const Position = styled.div`
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: ${(props) => props.theme.main_grey};
-`;
-const Content = styled.div`
-  margin-top: 30px;
-  font-size: 1rem;
-  font-weight: 400;
-  color: ${(props) => props.theme.main_grey};
-  line-height: 2rem;
-`;
-
-const modalStyle = {
-  overlay: {
-    position: "fixed",
-    top: "0",
-    left: "0",
-    right: "0",
-    bottom: "0",
-    alignItems: "center",
-    textAlign: "cetner",
-    backgroundColor: "rgba(48, 48, 48, 0.2)",
-    transition: "opacity 2000ms ease-in-out",
-    zIndex: "1000",
-  },
-  content: {
-    width: "800px",
-    height: "600px",
-    margin: "auto",
-    padding: "0px",
-    border: "none",
-    boxShadow: "0 2px 12px 0 rgba(0, 0, 0, 0.1)",
-    zIndex: "1000",
-  },
-};
-
-const ModalProfileContainer = styled.div`
-  margin: 120px 40px;
-`;
-
-const CloseButton = styled.img`
-  width: 15px;
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  padding: 10px;
-  border-radius: 20px;
-  &:hover {
-    cursor: pointer;
-    color: grey;
-    background-color: #eee;
-  }
 `;
 
 export default About;
