@@ -1,0 +1,106 @@
+.modalcontainer {
+  width: 250px;
+  height: 250px;
+  border-radius: 15px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+}
+
+.writeinfobox {
+  width: 320px;
+  height: 144px;
+  border-radius: 15px;
+  background-color: transparent;
+}
+
+.writeinfowindow {
+  width: 320px;
+  height: 144px;
+  border-radius: 15px;
+  background-color: transparent;
+  object-fit: cover;
+}
+
+.picbox {
+  margin: auto; 
+  width: 92%;
+  height: 92%;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  object-fit: cover;
+  background-size : cover;
+}
+
+
+.head {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.spotname1 {
+  position: absolute;
+  top: 20px;
+  left: 17px;
+  background-color: transparent;
+  color: white;
+  font-size: 1.1rem;
+  padding-left: 5px;
+}
+
+.spotname2 {
+  position: absolute;
+  top: 44px;
+  left: 17px;
+  background-color: transparent;
+  color: white;
+  font-size: 1.1rem;
+  padding-left: 5px;
+}
+
+.close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  height: 17px;
+  width: 17px;
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+  object-fit: cover;
+  background-size : cover;
+  background: url('https://i.postimg.cc/sXBKhhbJ/overlay-close.png');
+}
+
+.center {
+  height: 120px
+}
+
+.bottomiconbox {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.likeicon {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+  border: none;
+  object-fit: cover;
+  background-size : cover;
+  background-color: transparent;
+  background: url('https://i.postimg.cc/nhPDQPx6/heart-pink.png');
+}
+
