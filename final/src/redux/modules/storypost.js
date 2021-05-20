@@ -154,6 +154,7 @@ const getUserLikeAPI = (userId) => {
           res.data.data.forEach((_post) => {
             let post = {
               id: _post.boardId,
+              category: _post.category,
               img_url: _post.boardImgResponseDtoList,
               imgForOverlay: _post.boardImgResponseDtoList[0].imgUrl,
               spotName: _post.spotName,
