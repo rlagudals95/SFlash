@@ -1145,7 +1145,6 @@ const AllSpots = styled.img`
   height: 68px;
   background-color: #F2F3F7;
   border-radius: 5px;
-  /* background-image: url("https://i.postimg.cc/1XJmZ6gv/01-All-Spots-Btn.png"); */
   background-size: cover;
   object-fit: cover;
   box-sizing: border-box;
@@ -1161,7 +1160,6 @@ const AllSpotsSelected = styled.img`
   height: 68px;
   background-color: #F2F3F7;
   border-radius: 5px;
-  /* background-image: url("https://i.postimg.cc/1XJmZ6gv/01-All-Spots-Btn.png"); */
   background-size: cover;
   object-fit: cover;
   box-sizing: border-box;
@@ -1175,7 +1173,6 @@ const MyPostSpots = styled.img`
   height: 68px;
   background-color: #F2F3F7;
   border-radius: 5px;
-  /* background-image: url("https://i.postimg.cc/MTFkb8Lp/02-All-My-Posts-Btn.png"); */
   background-size: cover;
   object-fit: cover;
   box-sizing: border-box;
@@ -1191,7 +1188,6 @@ const MyPostSpotsSelected = styled.img`
   height: 68px;
   background-color: #F2F3F7;
   border-radius: 5px;
-  /* background-image: url("https://i.postimg.cc/MTFkb8Lp/02-All-My-Posts-Btn.png"); */
   background-size: cover;
   object-fit: cover;
   box-sizing: border-box;
@@ -1205,7 +1201,6 @@ const MyLikeSpots = styled.img`
   height: 68px;
   background-color: #F2F3F7;
   border-radius: 5px;
-  /* background-image: url("https://i.postimg.cc/zvs96F8m/03-All-My-Likes-Btn.png"); */
   background-size: cover;
   object-fit: cover;
   box-sizing: border-box;
@@ -1221,7 +1216,6 @@ const MyLikeSpotsSelected = styled.img`
   height: 68px;
   background-color: #F2F3F7;
   border-radius: 5px;
-  /* background-image: url("https://i.postimg.cc/zvs96F8m/03-All-My-Likes-Btn.png"); */
   background-size: cover;
   object-fit: cover;
   box-sizing: border-box;
