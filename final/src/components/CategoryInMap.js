@@ -444,8 +444,8 @@ const CategoryInMap = () => {
           <SpotSelectBox>
             {/* 전체스팟 찾기 */}
             {is_all ? ( // is_category_in_map 리스트 안에 모든 카테고리가 다 들어 있다면
-              <Spots
-                src={AllBtn}
+              <AllSpotsSelected
+                // src={AllBtn}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -454,8 +454,8 @@ const CategoryInMap = () => {
                 }}
               />
             ) : (
-              <Spots
-                src={AllBtn}
+              <AllSpots
+                // src={AllBtn}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -480,8 +480,8 @@ const CategoryInMap = () => {
               />
             )}
             {/* 내스팟 찾기 */}
-              <Spots
-                src={AllMyPostBtn}
+              <MyPostSpots
+                // src={AllMyPostBtn}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -502,8 +502,8 @@ const CategoryInMap = () => {
                 }}
               />
             {/* 내좋아요스팟 찾기 */}
-              <Spots
-                src={AllMyLikeBtn}
+              <MyLikeSpots
+                // src={AllMyLikeBtn}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -921,7 +921,7 @@ const CategoryInMap = () => {
             {/* 전체스팟 찾기 */}
             {is_all ? ( // is_category_in_map 리스트 안에 모든 카테고리가 다 들어 있다면
               <AllSpotsSelected
-                src={AllBtn}
+                // src={AllBtn}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -930,8 +930,8 @@ const CategoryInMap = () => {
                 }}
               />
             ) : (
-              <Spots
-                src={AllBtn}
+              <AllSpots
+                // src={AllBtn}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -960,7 +960,7 @@ const CategoryInMap = () => {
             {/* 내스팟 찾기 */}
             {showMine ? (
               <MyPostSpotsSelected
-                src={AllMyPostBtn}
+                // src={AllMyPostBtn}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -968,8 +968,8 @@ const CategoryInMap = () => {
                 }}
               />
             ) : (
-              <Spots
-                src={AllMyPostBtn}
+              <MyPostSpots
+                // src={AllMyPostBtn}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -994,7 +994,7 @@ const CategoryInMap = () => {
             {/* 내좋아요스팟 찾기 */}
             {showLike ? (
               <MyLikeSpotsSelected
-                src={AllMyLikeBtn}
+                // src={AllMyLikeBtn}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -1002,8 +1002,8 @@ const CategoryInMap = () => {
                 }}
               />
             ) : (
-              <Spots
-                src={AllMyLikeBtn}
+              <MyLikeSpots
+                // src={AllMyLikeBtn}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -1140,18 +1140,49 @@ const Spots = styled.img`
   /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
-const AllSpotsSelected = styled.img`
-  border: 3px solid #ffb719;
+const AllSpots = styled.div`
   width: 68px;
   height: 68px;
   background-color: #F2F3F7;
   border-radius: 5px;
+  background-image: url("https://i.postimg.cc/1XJmZ6gv/01-All-Spots-Btn.png");
   background-size: cover;
   object-fit: cover;
   box-sizing: border-box;
   cursor: pointer;
   margin-bottom: 8px;
   box-shadow: 3px 3px 5px 1px rgba(0.1, 0.2, 0.2, 0.2);
+  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
+`;
+
+const AllSpotsSelected = styled.div`
+  border: 3px solid #ffb719;
+  width: 68px;
+  height: 68px;
+  background-color: #F2F3F7;
+  border-radius: 5px;
+  background-image: url("https://i.postimg.cc/1XJmZ6gv/01-All-Spots-Btn.png");
+  background-size: cover;
+  object-fit: cover;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin-bottom: 8px;
+  box-shadow: 3px 3px 5px 1px rgba(0.1, 0.2, 0.2, 0.2);
+`;
+
+const MyPostSpots = styled.div`
+  width: 68px;
+  height: 68px;
+  background-color: #F2F3F7;
+  border-radius: 5px;
+  background-image: url("https://i.postimg.cc/MTFkb8Lp/02-All-My-Posts-Btn.png");
+  background-size: cover;
+  object-fit: cover;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin-bottom: 8px;
+  box-shadow: 3px 3px 5px 1px rgba(0.1, 0.2, 0.2, 0.2);
+  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
 const MyPostSpotsSelected = styled.img`
@@ -1160,12 +1191,28 @@ const MyPostSpotsSelected = styled.img`
   height: 68px;
   background-color: #F2F3F7;
   border-radius: 5px;
+  background-image: url("https://i.postimg.cc/MTFkb8Lp/02-All-My-Posts-Btn.png");
   background-size: cover;
   object-fit: cover;
   box-sizing: border-box;
   cursor: pointer;
   margin-bottom: 8px;
   box-shadow: 3px 3px 5px 1px rgba(0.1, 0.2, 0.2, 0.2);
+`;
+
+const MyLikeSpots = styled.div`
+  width: 68px;
+  height: 68px;
+  background-color: #F2F3F7;
+  border-radius: 5px;
+  background-image: url("https://i.postimg.cc/zvs96F8m/03-All-My-Likes-Btn.png");
+  background-size: cover;
+  object-fit: cover;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin-bottom: 8px;
+  box-shadow: 3px 3px 5px 1px rgba(0.1, 0.2, 0.2, 0.2);
+  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
 const MyLikeSpotsSelected = styled.img`
@@ -1174,6 +1221,7 @@ const MyLikeSpotsSelected = styled.img`
   height: 68px;
   background-color: #F2F3F7;
   border-radius: 5px;
+  background-image: url("https://i.postimg.cc/zvs96F8m/03-All-My-Likes-Btn.png");
   background-size: cover;
   object-fit: cover;
   box-sizing: border-box;
@@ -1182,46 +1230,46 @@ const MyLikeSpotsSelected = styled.img`
   box-shadow: 3px 3px 5px 1px rgba(0.1, 0.2, 0.2, 0.2);
 `;
 
-const AllSpots = styled.img`
-position:absolute;
-  width: 80px;
-  height: 80px;
-  /* background-image: url('https://i.postimg.cc/q7Qcs4JC/button-01.png'); */
-  /* background-size: cover; */
-  /* background-color: #F2F3F7; */
-  background-color: #ff8000;
-  box-sizing: border-box;
-  cursor: pointer;
-  /* padding: 4px; */
-  object-fit: cover;
-`;
+// const AllSpots = styled.img`
+// position:absolute;
+//   width: 80px;
+//   height: 80px;
+//   /* background-image: url('https://i.postimg.cc/q7Qcs4JC/button-01.png'); */
+//   /* background-size: cover; */
+//   /* background-color: #F2F3F7; */
+//   background-color: #ff8000;
+//   box-sizing: border-box;
+//   cursor: pointer;
+//   /* padding: 4px; */
+//   object-fit: cover;
+// `;
 
-const MyPostSpots = styled.img`
-position:absolute;
-  width: 100px;
-  height: 100px;
-  /* background-image: url('https://i.postimg.cc/dDMGs0Bg/button-02.png'); */
-  background-size: cover;
-  /* background-color: #F2F3F7; */
-  background-color: #0000a0;
-  box-sizing: border-box;
-  cursor: pointer;
-  object-fit: cover;
-  margin: auto;
-`;
+// const MyPostSpots = styled.img`
+// position:absolute;
+//   width: 100px;
+//   height: 100px;
+//   /* background-image: url('https://i.postimg.cc/dDMGs0Bg/button-02.png'); */
+//   background-size: cover;
+//   /* background-color: #F2F3F7; */
+//   background-color: #0000a0;
+//   box-sizing: border-box;
+//   cursor: pointer;
+//   object-fit: cover;
+//   margin: auto;
+// `;
 
-const MyLikeSpots = styled.img`
-position:absolute;
-  width: 100px;
-  height: 100px;
-  /* background-image: url('https://i.postimg.cc/wv7W37XB/button-03.png'); */
-  background-size: cover;
-  /* background-color: #F2F3F7; */
-  background-color: #ff0080;
-  box-sizing: border-box;
-  cursor: pointer;
-  object-fit: cover;
-`;
+// const MyLikeSpots = styled.img`
+// position:absolute;
+//   width: 100px;
+//   height: 100px;
+//   /* background-image: url('https://i.postimg.cc/wv7W37XB/button-03.png'); */
+//   background-size: cover;
+//   /* background-color: #F2F3F7; */
+//   background-color: #ff0080;
+//   box-sizing: border-box;
+//   cursor: pointer;
+//   object-fit: cover;
+// `;
 
 // const AllSpotsSelected = styled.img`
 //   width: 100px;

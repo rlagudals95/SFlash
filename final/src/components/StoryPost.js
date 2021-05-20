@@ -1,6 +1,5 @@
 // GridList에서 보여지는 1개의 Post
 // Post2의 사본
-
 import React, { useState } from "react";
 import { history } from "../redux/configStore";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";

@@ -82,7 +82,7 @@ const StoryContent = (props) => {
             next={next}
             hasMore={true}
             loader={is_loading && <Spinner />} //상태값이 loading 중 일땐 스피너가 보여서 뒤에 게시물이 더 있을음 알려준다
-          >
+            >
               <GridList>
                 {post_list.map((p) => {
                   return (
