@@ -1,7 +1,9 @@
 import { createAction, handleActions } from "redux-actions";
-import { actionCreators as storyPostActions } from "../../redux/modules/storypost";
+import { actionCreators as storyPostActions } from "./storypost";
+import { actionCreators as userActions } from "./user";
 import { produce } from "immer";
 import axios from "axios";
+import { history } from "../configStore";
 import "moment";
 import { config } from "../../shared/config";
 import Swal from "sweetalert2";
@@ -80,10 +82,6 @@ const getModalPostAPI = (boardId) => {
     axios({
       method: "GET",
       url: `${config.api}/board/${boardId}/detail`,
-      headers: {
-        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
-        // "X-AUTH-TOKEN": `${config.jwt}`,
-      },
     })
       .then((res) => {
         // console.log("모달정보 가져오자!!!!", res);
@@ -137,26 +135,40 @@ const modalAddCommentAPI = (comment, board_id) => {
       .then((res) => {
         console.log(res);
 
-        const comment_data = res.data.data;
-        // console.log("댓글정보", comment_data);
-        let comment_list = {
-          commentId: comment_data.commentId,
-          content: comment_data.content,
-          modified: comment_data.modified, //이거좀 고치자! 현준님이 id랑 날짜주면 !
-          userId: comment_data.userId,
-          writerImgUrl: comment_data.userImgUrl,
-          writerName: comment_data.nickName,
-        };
-
-        // console.log("댓글추가반응", res);
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          const comment_data = res.data.data;
+          // console.log("댓글정보", comment_data);
+          let comment_list = {
+            commentId: comment_data.commentId,
+            content: comment_data.content,
+            modified: comment_data.modified, //이거좀 고치자! 현준님이 id랑 날짜주면 !
+            userId: comment_data.userId,
+            writerImgUrl: comment_data.userImgUrl,
+            writerName: comment_data.nickName,
+          };  
         dispatch(modalAddComment(comment_list));
-        // dispatch(getComment(board_id)); //이래 해줘도 되나?
-        // dispatch(postActions.addComment(comment, board_id));
-        // dispatch(postActions.setPost());
+      }
       })
       .catch((err) => {
         console.log(err);
-        window.alert("댓글 작성에 문제가 있어요!");
+        Swal.fire({
+          text: "댓글 작성에 문제가 있어요 :(",
+          confirmButtonColor: "#ffb719",
+        });
       });
   };
 };
@@ -173,11 +185,31 @@ const modalDeleteCommentAPI = (id) => {
       },
     })
       .then((res) => {
-        // dispatch(deleteComment(id, board_id)); //바로 렌더링 시켜줘야 삭제 눌렀을때 반영된다
-        dispatch(modalDeleteComment(id));
+
+
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          dispatch(modalDeleteComment(id));
+        }     
       })
       .catch((err) => {
-        window.alert("댓글 삭제에 문제가 있어요!");
+        Swal.fire({
+          text: "댓글 삭제에 문제가 있어요 :(",
+          confirmButtonColor: "#ffb719",
+        });
       });
   };
 };
@@ -197,11 +229,31 @@ const modalAddLikeAPI = (board_id, board) => {
       },
     })
       .then((res) => {
-        console.log("좋아요 완료!", res);
-        dispatch(editLikeP(board)); // 리덕스
+        console.log("좋아요!", res);
+
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          dispatch(editLikeP(board));
+        }
       })
       .catch((error) => {
-        window.alert("로그인을 하면 좋아요를 할 수 있어요!");
+        Swal.fire({
+          text: "로그인 후 이용해주세요 :)",
+          confirmButtonColor: "#ffb719",
+        });
       });
   };
 };
@@ -220,13 +272,31 @@ const modalDisLikeAPI = (board_id, board) => {
     })
       .then((res) => {
         console.log("좋아요 취소!", res);
-        dispatch(editLikeD(board));
-        // console.log(res);
-        // dispatch(disLike(false));
-        // dispatch(getLike(false));
+
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          dispatch(editLikeD(board));
+        }
+
       })
       .catch((error) => {
-        // window.alert("좋아요를 할 수 없습니다.");
+        Swal.fire({
+          text: "로그인 후 이용해주세요 :)",
+          confirmButtonColor: "#ffb719",
+        });
       });
   };
 };
@@ -294,8 +364,8 @@ const editLikeD = (post) => {
 
 const editStoryPostAPI = (board_id, _edit) => {
   return function (dispatch, getState) {
-    const deleteImg = getState().image2.id;
-    const addFile = getState().image2.edit_file;
+    const deleteImg = getState().image2.id; //삭제된 이미지 id
+    const addFile = getState().image2.edit_file; //추가된 이미지 파일
     const markerData = getState().post.map_post_list;
     const postData = getState().post.list;
     console.log("현재 마커데이터", markerData);
@@ -312,9 +382,9 @@ const editStoryPostAPI = (board_id, _edit) => {
     // console.log("바뀔 글내용", _edit.contents);
     // addFile[i]번째에 imgUrl 이 있을경우 제외 시킨다
     const formData = new FormData();
-    formData.append("title", _edit.title);
-    formData.append("content", _edit.contents);
-    formData.append("deleteImages", deleteImg);
+    formData.append("title", _edit.title);  //수정된 제목
+    formData.append("content", _edit.contents);  //수정된 내용
+    formData.append("deleteImages", deleteImg);  
 
     let _addFile = [];
     for (let i = 0; i < addFile.length; i++) {
@@ -324,7 +394,6 @@ const editStoryPostAPI = (board_id, _edit) => {
       }
     }
     //파일 리스트 중에 기존에 있던 imgUrl이 있는 이미지들을 제외하고 새로추가한 파일형식의 요소만 폼데이터로 수정(추가)요청
-
     console.log("최종추가될 이미지", _addFile);
 
     for (let i = 0; i < _addFile.length; i++) {
@@ -341,34 +410,48 @@ const editStoryPostAPI = (board_id, _edit) => {
       },
     }).then((res) => {
       console.log("수정반응값!", res);
-      let _post = res.data.data;
-      let post = {
-        id: _post.boardId, // 포스트 id
-        title: _post.title, // 포스트 title
-        content: _post.content, // 포스트 내용
-        writerName: _post.writerName,
-        img_url: _post.boardImgReponseDtoList,
-        category: _post.category,
-        profileImg: _post.writerImgUrl,
-        like: _post.liked,
-        likeCnt: _post.likeCount,
-        comment: _post.boardDetailCommentDtoList,
-        creatAt: _post.modified,
-        spotName: _post.spotName,
-      };
-      Swal.fire({
-        text: '게시물을 수정 하시겠습니까?',
-        confirmButtonText: '예',
-        confirmButtonColor: '#ffb719',
-        showCancelButton: true,
-        cancelButtonText: '아니오',
-        cancelButtonColor: '#eee',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(getModal(post));
-          dispatch(storyPostActions.editStoryPost(board_id, post));
-        }
-      })
+      if (res.data.message === "tokenExpired"){
+        dispatch(userActions.logOut());
+        Swal.fire({
+          text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+          confirmButtonText: '로그인 하러가기',
+          confirmButtonColor: '#ffb719',
+          showCancelButton: true,
+          cancelButtonText: '취소',
+          cancelButtonColor: '#eee',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            history.push("/login");
+          }
+        })
+      }else{ let _post = res.data.data;
+        let post = {
+          id: _post.boardId, // 포스트 id
+          title: _post.title, // 포스트 title
+          content: _post.content, // 포스트 내용
+          writerName: _post.writerName,
+          img_url: _post.boardImgReponseDtoList,
+          category: _post.category,
+          profileImg: _post.writerImgUrl,
+          like: _post.liked,
+          likeCnt: _post.likeCount,
+          comment: _post.boardDetailCommentDtoList,
+          creatAt: _post.modified,
+          spotName: _post.spotName,
+        };
+        Swal.fire({
+          text: '게시물을 수정 하시겠습니까?',
+          confirmButtonText: '예',
+          confirmButtonColor: '#ffb719',
+          showCancelButton: true,
+          cancelButtonText: '아니오',
+          cancelButtonColor: '#eee',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            dispatch(getModal(post));
+            dispatch(storyPostActions.editStoryPost(board_id, post));
+          }
+        })}
       /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌
     });
   };
@@ -385,8 +468,26 @@ const deleteStoryPostAPI = (board_id) => {
     })
       .then((res) => {
         console.log(res);
-        dispatch(storyPostActions.deleteStoryPost(board_id));
-        dispatch(storyPostActions.deleteStoryMarker(board_id));
+
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          dispatch(storyPostActions.deleteStoryPost(board_id));
+          dispatch(storyPostActions.deleteStoryMarker(board_id));
+        }
+       
       })
       .catch((err) => {
         Swal.fire({

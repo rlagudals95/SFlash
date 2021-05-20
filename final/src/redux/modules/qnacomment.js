@@ -1,9 +1,11 @@
 import { createAction, handleActions } from "redux-actions";
+import { actionCreators as userActions } from "./user";
 import { produce } from "immer";
 import axios from "axios";
 import { history } from "../configStore";
 import { config } from "../../shared/config";
 import _ from "lodash";
+import Swal from 'sweetalert2'
 
 const SET_QNA_COMMENT = "SET_QNA_COMMENT";
 const ADD_QNA_COMMENT = "ADD_QNA_COMMENT";
@@ -36,7 +38,7 @@ const getQnaCommentAPI = (qnaId) => {
         dispatch(setQnaComment(comment_list));
       })
       .catch((err) => {
-        console.error("작성 실패", err);
+        console.error("댓글 업로드 실패", err);
       });
   };
 };
@@ -57,17 +59,38 @@ const addQnaCommentAPI = (comment, qnaId) => {
     })
       .then((res) => {
         console.log(res.data.data);
-        let _qcomment = res.data.data;
-        let qcomment = {
-          id : _qcomment.id,
-          writer : _qcomment.writer,
-          content: _qcomment.content,
-          modified: _qcomment.modified,
+
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          let _qcomment = res.data.data;
+          let qcomment = {
+            id : _qcomment.id,
+            writer : _qcomment.writer,
+            content: _qcomment.content,
+            modified: _qcomment.modified,
+          }
+          dispatch(addQnaComment(qcomment));
         }
-        dispatch(addQnaComment(qcomment));
       })
       .catch((err) => {
-        console.error("작성 실패", err);
+        console.error("댓글 작성 실패", err);
+        Swal.fire({
+          text: '댓글 작성에 문제가 있습니다.',
+          confirmButtonColor: "#ffb719",
+        })
       });
   };
 };
@@ -94,17 +117,38 @@ const editQnaCommentAPI = (comment, qcommentId, qnaId) => {
     })
       .then((res) => {
         console.log(res.data.data);
-        let _qcomment = res.data.data;
-        let qcomment = {
-          id : _qcomment.id,
-          writer : _qcomment.writer,
-          content: _qcomment.content,
-          modified: _qcomment.modified,
+
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          let _qcomment = res.data.data;
+          let qcomment = {
+            id : _qcomment.id,
+            writer : _qcomment.writer,
+            content: _qcomment.content,
+            modified: _qcomment.modified,
+          }
+          dispatch(editQnaComment(qcomment));
         }
-        dispatch(editQnaComment(qcomment));
       })
       .catch((err) => {
-        console.error("작성 실패", err);
+        console.error("댓글 수정 실패", err);
+        Swal.fire({
+          text: '댓글을 수정할 수 없습니다.',
+          confirmButtonColor: "#ffb719",
+        })
       });
   };
 };
@@ -122,10 +166,30 @@ const deleteQnaCommentAPI = (qcommentId, qnaId) => {
     })
       .then((res) => {
         console.log(res);
-        dispatch(deleteQnaComment(qcommentId)); //화면에 반영시키기 위해 바로 렌더링 시켜주기
+
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          dispatch(deleteQnaComment(qcommentId)); //화면에 반영시키기 위해 바로 렌더링 시켜주기
+        }
       })
       .catch((err) => {
-        window.alert("댓글 삭제에 문제가 있어요!");
+        Swal.fire({
+          text: '댓글을 삭제하실 수 없습니다!',
+          confirmButtonColor: "#ffb719",
+        })
       });
   };
 };

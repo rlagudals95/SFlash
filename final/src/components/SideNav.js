@@ -130,9 +130,12 @@ function Navbar() {
                     history.push(`/story/${userId}`); 
                     dispatch(storyPostActions.resetStory([]));
                     dispatch(profileActions.resetProfile([]));
+                    dispatch(profileActions.getUserInfoAPI(userId));
+                    dispatch(storyPostActions.getUserPostAPI(userId));
+                    dispatch(storyPostActions.getUserLikeAPI(userId));
                   }}
                     // onClick={() => {
-                    //   window.location.replace(
+                    //   window.location.push(
                     //     `/story/${userId}`
                     //   );
                     // }}
@@ -172,7 +175,7 @@ function Navbar() {
                 ) : (
                   <IconInfo
                   onClick={() => {
-                    history.push("/login");
+                    history.replace("/login");
                   }}
                   >
                     LOGIN

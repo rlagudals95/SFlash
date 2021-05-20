@@ -8,6 +8,7 @@ import axios from "axios";
 import "moment";
 import { config } from "../../shared/config";
 import Swal from "sweetalert2";
+import { history } from "../configStore";
 
 const SET_STORY_POST = "SET_STORY_POST";
 const SET_STORY_LIKE = "SET_STORY_LIKE";
@@ -67,18 +68,27 @@ const getUserPostAPI = (userId) => {
       .then((res) => {
         console.log(res.data.data);
 
-        if (res.data.data.length === 0) {
-          // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
-          dispatch(loading(false));
-          return;
-        }
-
-        let post_list = [];
-        res.data.data.forEach((_post) => {
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          let post_list = [];
+          res.data.data.forEach((_post) => {
           let post = {
             id: _post.boardId,
             img_url: _post.boardImgResponseDtoList,
-            imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
+            imgForOverlay: _post.boardImgResponseDtoList[0].imgUrl,
             spotName: _post.spotName,
             spotName1: _post.spotName.split(" ").splice(0, 2).join(" "),
             spotName2: _post.spotName.split(" ").splice(2).join(" "),
@@ -91,6 +101,7 @@ const getUserPostAPI = (userId) => {
           // console.log(post_list);
         });
         dispatch(setStoryPost(post_list));
+        }
       })
       .catch((err) => {
         Swal.fire({
@@ -121,24 +132,41 @@ const getUserLikeAPI = (userId) => {
       .then((res) => {
         console.log(res.data.data);
 
-        let post_list = [];
-        res.data.data.forEach((_post) => {
-          let post = {
-            id: _post.boardId,
-            img_url: _post.boardImgResponseDtoList,
-            imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
-            spotName: _post.spotName,
-            spotName1: _post.spotName.split(" ").splice(0, 2).join(" "),
-            spotName2: _post.spotName.split(" ").splice(2).join(" "),
-            latitude: _post.latitude,
-            longitude: _post.longitude,
-            like: _post.liked,
-            likeCnt: _post.likeCount,
-          };
-          post_list.push(post);
-          // console.log(post_list);
-        });
-        dispatch(setStoryLike(post_list));
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          let post_list = [];
+          res.data.data.forEach((_post) => {
+            let post = {
+              id: _post.boardId,
+              img_url: _post.boardImgResponseDtoList,
+              imgForOverlay: _post.boardImgResponseDtoList[0].imgUrl,
+              spotName: _post.spotName,
+              spotName1: _post.spotName.split(" ").splice(0, 2).join(" "),
+              spotName2: _post.spotName.split(" ").splice(2).join(" "),
+              latitude: _post.latitude,
+              longitude: _post.longitude,
+              like: _post.liked,
+              likeCnt: _post.likeCount,
+            };
+            post_list.push(post);
+            // console.log(post_list);
+          });
+          dispatch(setStoryLike(post_list));
+        }
+
       })
       .catch((err) => {
         Swal.fire({
@@ -149,103 +177,6 @@ const getUserLikeAPI = (userId) => {
       });
   };
 };
-
-// 모달창 관련-----------------------------------------------------
-
-// const editStoryPostAPI = (board_id, _edit) => {
-//   return function (dispatch, getState) {
-//     const deleteImg = getState().image2.id;
-//     const addFile = getState().image2.edit_file;
-//     const markerData = getState().post.map_post_list;
-//     const postData = getState().post.list;
-//     console.log("현재 마커데이터", markerData);
-//     console.log("현재 포스트 데이터", postData);
-
-//     //여기서
-//     // for (let i = 0; i < addFile.length; i++) {
-//     //   console.log(addFile[i].imgUrl);
-//     // }
-//     // console.log("삭제된 이미지 아이디들", deleteImg);
-//     // console.log("추가될 이미지파일", addFile);
-//     // console.log("바뀔 게시글", board_id);
-//     // console.log("바뀔 타이틀", _edit.title);
-//     // console.log("바뀔 글내용", _edit.contents);
-//     // addFile[i]번째에 imgUrl 이 있을경우 제외 시킨다
-//     const formData = new FormData();
-//     formData.append("title", _edit.title);
-//     formData.append("content", _edit.contents);
-//     formData.append("deleteImages", deleteImg);
-
-//     let _addFile = [];
-//     for (let i = 0; i < addFile.length; i++) {
-//       //가져온 어레이만큼 반복문을 돌리는데 이때 url형식의 기존 이미지는 제거
-//       if (!addFile[i].imgUrl) {
-//         _addFile.push(addFile[i]);
-//       }
-//     }
-//     //파일 리스트 중에 기존에 있던 imgUrl이 있는 이미지들을 제외하고 새로추가한 파일형식의 요소만 폼데이터로 수정(추가)요청
-
-//     console.log("최종추가될 이미지", _addFile);
-
-//     for (let i = 0; i < _addFile.length; i++) {
-//       formData.append("file", _addFile[i]);
-//     }
-
-//     axios({
-//       method: "PUT",
-//       url: `${config.api}/board/${board_id}`,
-//       data: formData,
-//       headers: {
-//         "X-AUTH-TOKEN": localStorage.getItem("jwt"),
-//         "Content-Type": "multipart/form-data",
-//       },
-//     }).then((res) => {
-//       console.log("수정반응값!", res);
-//       let _post = res.data.data;
-//       let post = {
-//         id: _post.boardId, // 포스트 id
-//         title: _post.title, // 포스트 title
-//         content: _post.content, // 포스트 내용
-//         writerName: _post.writerName,
-//         img_url: _post.boardImgReponseDtoList,
-//         category: _post.category,
-//         profileImg: _post.writerImgUrl,
-//         like: _post.liked,
-//         likeCnt: _post.likeCount,
-//         comment: _post.boardDetailCommentDtoList,
-//         creatAt: _post.modified,
-//         spotName: _post.spotName,
-//       };
-
-//       dispatch(editStoryPost(board_id, post));
-//       /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌
-//     });
-//   };
-// };
-
-// const deleteStoryPostAPI = (board_id) => {
-//   return function (dispatch, getState) {
-//     axios({
-//       method: "DELETE",
-//       url: `${config.api}/board/${board_id}`,
-//       headers: {
-//         "X-AUTH-TOKEN": localStorage.getItem("jwt"),
-//       },
-//     })
-//       .then((res) => {
-//         console.log(res);
-//         dispatch(deleteStoryPost(board_id));
-//         dispatch(deleteStoryMarker(board_id));
-//       })
-//       .catch((err) => {
-//         Swal.fire({
-//           text: "게시물 삭제에 문제가 있어요 :(",
-//           confirmButtonColor: "#ffb719",
-//         });
-//         console.log("게시글 삭제 에러", err);
-//       });
-//   };
-// };
 
 // StoryPost(GridList) 좋아요 수정 관련 -----------------------------------------
 
@@ -311,16 +242,29 @@ const deleteUserPostLikeAPI = (board_id, board) => {
       .then((res) => {
         console.log("좋아요 취소!", res);
 
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+      } else {
         let post = {
           like: false,
           likeCnt: board.likeCnt - 1,
         };
-
-        if (res.status === 200) {
           dispatch(editStoryPost(board_id, post));
-        }
-      })
-      .catch((error) => {
+      }
+
+      }).catch((error) => {
         console.log(error);
         Swal.fire({
           text: "좋아요 취소 실패 :(",
@@ -346,7 +290,22 @@ const addUserLikeLikeAPI = (board_id, board) => {
       .then((res) => {
         console.log("좋아요 완료!", res);
 
-        let post = {
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{ 
+          let post = {
           like: true,
           likeCnt: board.likeCnt + 1,
         };
@@ -356,7 +315,9 @@ const addUserLikeLikeAPI = (board_id, board) => {
         }
         if (res.data.message ==="tokenExpired"){
           dispatch(userActions.refreshTokenAPI());
-        }
+        }}
+
+       
       })
       .catch((error) => {
         Swal.fire({
@@ -381,13 +342,30 @@ const deleteUserLikeLikeAPI = (board_id, board) => {
     })
       .then((res) => {
         console.log("좋아요 취소!", res);
-        let post = {
-          like: false,
-          likeCnt: board.likeCnt - 1,
-        };
-        console.log("!!!!!!!", post);
-        if (res.status === 200) {
-          dispatch(editStoryLike(board_id, post));
+
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          let post = {
+            like: false,
+            likeCnt: board.likeCnt - 1,
+          };
+          console.log("!!!!!!!", post);
+          if (res.status === 200) {
+            dispatch(editStoryLike(board_id, post));
+          }
         }
       })
       .catch((error) => {
