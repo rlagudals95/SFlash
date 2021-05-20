@@ -55,8 +55,8 @@ const getUserPostAPI = (userId) => {
   return function (dispatch, getState) {
     console.log("fkfkffkffkfffk");
     const _post_list = getState().storypost.user_post_list;
-    const p_length = _post_list.length
-    let lastId = p_length === 0 ? 999 : _post_list[p_length-1].id;
+    const p_length = _post_list.length;
+    let lastId = p_length === 0 ? 999 : _post_list[p_length - 1].id;
     let size = 15;
     console.log("데이터는 잘 넘어가나?", userId, lastId, size);
     // const board_list = getState().storypost.user_post_list;
@@ -77,7 +77,6 @@ const getUserPostAPI = (userId) => {
     // }
     // console.log("페이징 카운트", pCnt);
 
-
     // let lastId = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
     //   board_list.length === 0
     //     ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
@@ -90,7 +89,6 @@ const getUserPostAPI = (userId) => {
     // }
     // console.log("페이징 카운트", pCnt);
     // let size = 15;
-
 
     axios({
       method: "GET",
@@ -142,8 +140,8 @@ const getUserPostAPI = (userId) => {
 const getUserLikeAPI = (userId) => {
   return function (dispatch, getState) {
     const _post_list = getState().storypost.user_like_list;
-    const p_length = _post_list.length
-    let lastId = p_length === 0 ? 999 : _post_list[p_length-1].id;
+    const p_length = _post_list.length;
+    let lastId = p_length === 0 ? 999 : _post_list[p_length - 1].id;
     let size = 15;
     console.log("데이터는 잘 넘어가나?", userId, lastId, size);
     // const pCnt = getState().storypost.pagingCnt;
@@ -159,7 +157,6 @@ const getUserLikeAPI = (userId) => {
     // // console.log("마지막 포스트 아이디", lastId);
 
     // console.log("페이징 카운트", pCnt);
-   
 
     axios({
       method: "GET",

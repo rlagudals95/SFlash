@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
 import * as AiIcons from "react-icons/ai";
+import { history } from "../redux/configStore";
 
 const PopUp = (props) => {
   var settings = {
@@ -25,6 +26,11 @@ const PopUp = (props) => {
     let expires = new Date();
     expires = expires.setHours(expires.getHours() + 24);
     localStorage.setItem("hasVisitedBefore", expires);
+  };
+
+  const LoginPage = () => {
+    history.replace("/login");
+    props.close();
   };
 
   return (
@@ -72,7 +78,7 @@ const PopUp = (props) => {
                 <CloseIcon style={{ color: "white", fontSize: 50 }} />
               </ExitBtn>
               <StartBtn>
-                <StartFont onClick={props.close}>SFlash시작하기</StartFont>
+                <StartFont onClick={LoginPage}>SFlash시작하기</StartFont>
               </StartBtn>
             </PopUpImg>
           </div>

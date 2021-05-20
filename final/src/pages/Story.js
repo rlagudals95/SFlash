@@ -40,20 +40,20 @@ const Story = (props) => {
   // 스토리 페이지는 크게 3가지로 나뉩니다.
   // (1) 유저 정보: user_info (2) 유저가 올린 게시물: user_post_list (3)유저가 좋아요한 게시물: user_like_list
   const user_info = useSelector((state) => {
-    return state.profile.user
+    return state.profile.user;
   });
   const user_post_list = useSelector((state) => {
-    return state.storypost.user_post_list
+    return state.storypost.user_post_list;
   });
   const user_like_list = useSelector((state) => {
-    return state.storypost.user_like_list
+    return state.storypost.user_like_list;
   });
 
   if (user_info && user_post_list && user_like_list) {
     console.log("user_info", user_info);
     console.log("user_post_list", user_post_list);
     console.log("user_like_list", user_like_list);
-  };
+  }
 
   // Map Marker Icon
   const userPostMarkerImgUrl = "https://i.postimg.cc/zDHr74DL/2x.png";

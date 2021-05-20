@@ -329,6 +329,22 @@ const SideMini = styled.div`
     flex-direction: row;
     box-shadow: 2px 2px 3px 2px rgba(0, 0.1, 0.1, 0.03);
   }
+  @media (max-width: 600px) {
+    all: unset;
+    align-items: center;
+    margin: 0px;
+    width: 100%;
+    height: 8vh;
+    position: fixed;
+    left: 0;
+    bottom: 0px;
+    background-color: #343a40;
+    z-index: 500;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 2px 2px 3px 2px rgba(0, 0.1, 0.1, 0.03);
+  }
 `;
 
 //  @media (max-width: 600px) {
@@ -408,6 +424,9 @@ const TabletLogo = styled.div`
     height: 32px;
     background-size: cover;
     background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%89%AC%20%EB%A1%9C%EA%B3%A0%20%EA%B0%80%EB%A1%9C.png?alt=media&token=026904ff-0cbb-447d-8309-86256408d179");
+  }
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 
