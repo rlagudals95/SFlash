@@ -1,13 +1,10 @@
 import "../App.css";
 import React from "react";
-import styled from "styled-components";
-import { useMediaQuery } from "react-responsive";
-import { Route, Switch, BrowserRouter } from "react-router-dom";
+import { Route, Switch} from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { setCookie, getCookie } from "./Cookie";
 
 import Signup from "../pages/Login&Signup/Signup";
 import Login from "../pages/Login&Signup/Login";
@@ -20,12 +17,11 @@ import NotFound from "../pages/NotFound";
 import SideNav from "../components/SideNav";
 import ScrollToTop from "./ScrollToTop"; //페이지 넘길때 스크롤 맨위로 초기화(무한 스크롤 때문에 필요함)
 
-import About from "../pages/About";
+import About from "../pages/About/About";
 import Faq from "../pages/Faq";
 import QnaList from "../pages/QnaList";
 import QnaDetail from "../pages/QnaDetail";
 import QnaWrite from "../pages/QnaWrite";
-import Search from "@material-ui/icons/Search";
 
 function App() {
   const dispatch = useDispatch();
