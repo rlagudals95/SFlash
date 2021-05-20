@@ -920,7 +920,7 @@ const CategoryInMap = () => {
           <SpotSelectBox>
             {/* 전체스팟 찾기 */}
             {is_all ? ( // is_category_in_map 리스트 안에 모든 카테고리가 다 들어 있다면
-              <Spots
+              <AllSpotsSelected
                 src={AllBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -959,7 +959,7 @@ const CategoryInMap = () => {
             )}
             {/* 내스팟 찾기 */}
             {showMine ? (
-              <Spots
+              <MyPostSpotsSelected
                 src={AllMyPostBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -993,7 +993,7 @@ const CategoryInMap = () => {
             )}
             {/* 내좋아요스팟 찾기 */}
             {showLike ? (
-              <Spots
+              <MyLikeSpotsSelected
                 src={AllMyLikeBtn}
                 onClick={(e) => {
                   e.preventDefault();
@@ -1140,6 +1140,48 @@ const Spots = styled.img`
   /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
+const AllSpotsSelected = styled.img`
+  border: 3px solid #ffb719;
+  width: 68px;
+  height: 68px;
+  background-color: #F2F3F7;
+  border-radius: 5px;
+  background-size: cover;
+  object-fit: cover;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin-bottom: 8px;
+  box-shadow: 3px 3px 5px 1px rgba(0.1, 0.2, 0.2, 0.2);
+`;
+
+const MyPostSpotsSelected = styled.img`
+  border: 3px solid #1b2685;
+  width: 68px;
+  height: 68px;
+  background-color: #F2F3F7;
+  border-radius: 5px;
+  background-size: cover;
+  object-fit: cover;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin-bottom: 8px;
+  box-shadow: 3px 3px 5px 1px rgba(0.1, 0.2, 0.2, 0.2);
+`;
+
+const MyLikeSpotsSelected = styled.img`
+  border: 3px solid #fd8598;
+  width: 68px;
+  height: 68px;
+  background-color: #F2F3F7;
+  border-radius: 5px;
+  background-size: cover;
+  object-fit: cover;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin-bottom: 8px;
+  box-shadow: 3px 3px 5px 1px rgba(0.1, 0.2, 0.2, 0.2);
+`;
+
 const AllSpots = styled.img`
 position:absolute;
   width: 80px;
@@ -1181,67 +1223,67 @@ position:absolute;
   object-fit: cover;
 `;
 
-const AllSpotsSelected = styled.img`
-  width: 100px;
-  height: 100px;
-  /* width: 108px;
-  height: 108px; */
-  /* background-color: white; */
-  background-color: #F2F3F7;
-  border-radius: 5px;
-  box-sizing: border-box;
-  /* border: 3px solid rgb(255, 183, 25); */
-  cursor: pointer;
-  /* margin: 1px; */
-  /* background-size: cover; */
-  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
-`;
+// const AllSpotsSelected = styled.img`
+//   width: 100px;
+//   height: 100px;
+//   /* width: 108px;
+//   height: 108px; */
+//   /* background-color: white; */
+//   background-color: #F2F3F7;
+//   border-radius: 5px;
+//   box-sizing: border-box;
+//   /* border: 3px solid rgb(255, 183, 25); */
+//   cursor: pointer;
+//   /* margin: 1px; */
+//   /* background-size: cover; */
+//   /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
+// `;
 
-const MyPostSpotsSelected = styled.img`
-  width: 85px;
-  height: 85px;
-  /* width: 108px;
-  height: 108px; */
-  /* background-color: white; */
-  background-color: #F2F3F7;
-  border-radius: 5px;
-  box-sizing: border-box;
-  /* border: 3px solid rgb(27, 38, 133); */
-  cursor: pointer;
-  /* margin: 1px; */
-  /* background-size: cover; */
-  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
-`;
+// const MyPostSpotsSelected = styled.img`
+//   width: 85px;
+//   height: 85px;
+//   /* width: 108px;
+//   height: 108px; */
+//   /* background-color: white; */
+//   background-color: #F2F3F7;
+//   border-radius: 5px;
+//   box-sizing: border-box;
+//   /* border: 3px solid rgb(27, 38, 133); */
+//   cursor: pointer;
+//   /* margin: 1px; */
+//   /* background-size: cover; */
+//   /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
+// `;
 
-const MyLikeSpotsSelected = styled.img`
-  width: 85px;
-  height: 85px;
-  /* width: 108px;
-  height: 108px; */
-  /* background-color: white; */
-  background-color: #F2F3F7;
-  border-radius: 5px;
-  box-sizing: border-box;
-  /* border: 3px solid rgb(253, 133, 152); */
-  cursor: pointer;
-  /* margin: 1px; */
-  /* background-size: cover; */
-  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
-`;
+// const MyLikeSpotsSelected = styled.img`
+//   width: 85px;
+//   height: 85px;
+//   /* width: 108px;
+//   height: 108px; */
+//   /* background-color: white; */
+//   background-color: #F2F3F7;
+//   border-radius: 5px;
+//   box-sizing: border-box;
+//   /* border: 3px solid rgb(253, 133, 152); */
+//   cursor: pointer;
+//   /* margin: 1px; */
+//   /* background-size: cover; */
+//   /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
+// `;
 
-const MyLikeSpotstest = styled.div`
-  width: 90px;
-  height: 90px;
-  background-image: url('https://i.postimg.cc/wv7W37XB/button-03.png');
-  /* width: 108px;
-  height: 108px; */
-  /* background-color: white; */
-  background-color: #F2F3F7;
-  /* border-radius: 5px; */
-  box-sizing: border-box;
-  /* border: none; */
-  cursor: pointer;
-  padding: 2px;
-  /* background-size: cover; */
-  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
-`;
+// const MyLikeSpotstest = styled.div`
+//   width: 90px;
+//   height: 90px;
+//   background-image: url('https://i.postimg.cc/wv7W37XB/button-03.png');
+//   /* width: 108px;
+//   height: 108px; */
+//   /* background-color: white; */
+//   background-color: #F2F3F7;
+//   /* border-radius: 5px; */
+//   box-sizing: border-box;
+//   /* border: none; */
+//   cursor: pointer;
+//   padding: 2px;
+//   /* background-size: cover; */
+//   /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
+// `;
