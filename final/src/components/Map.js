@@ -2682,6 +2682,7 @@ const SearchInput = styled.input`
     outline: none;
     box-shadow: 0 0 0 2px rgb(255, 183, 25);
   }
+  opacity: 0.8;
 `;
 
 const SearchIcon = styled.div`
