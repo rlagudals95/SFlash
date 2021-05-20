@@ -28,11 +28,11 @@ const Story = (props) => {
 
   const initializeApp = async () => {
     await dispatch(profileActions.resetProfile([]));
-    await  dispatch(storyPostActions.resetStory([]));
+    await dispatch(storyPostActions.resetStory([]));
     dispatch(profileActions.getUserInfoAPI(userId));
     dispatch(storyPostActions.getUserPostAPI(userId));
     dispatch(storyPostActions.getUserLikeAPI(userId));
-  }
+  };
 
   React.useEffect(() => {
     initializeApp();
@@ -53,7 +53,7 @@ const Story = (props) => {
   if (user_info && user_post_list && user_like_list) {
     console.log("user_info", user_info);
     console.log("user_post_list", user_post_list);
-    console.log("user_like_list", user_like_list);
+    console.log("user_like_listㅎㅎ", user_like_list);
   }
 
   // Map Marker Icon
