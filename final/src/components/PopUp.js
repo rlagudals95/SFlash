@@ -4,6 +4,7 @@ import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
 import * as AiIcons from "react-icons/ai";
 import { history } from "../redux/configStore";
+import { actionCreators as sideActions } from "../redux/modules/side";
 
 const PopUp = (props) => {
   var settings = {
@@ -29,7 +30,7 @@ const PopUp = (props) => {
   };
 
   const LoginPage = () => {
-    history.replace("/login");
+    // history.replace("/login");
     props.close();
   };
 

@@ -18,6 +18,7 @@ import { forEach } from "lodash";
 import { history } from "../redux/configStore";
 import Swal from "sweetalert2";
 import Spinner from "../shared/Spinner";
+import { actionCreators as sideActions } from "../redux/modules/side";
 
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
@@ -140,11 +141,13 @@ const ModalDetail = (props) => {
                             : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                         }
                         onClick={() => {
+                          dispatch(sideActions.getPage());
                           history.replace(`/story/${modalData.writerId}`); // 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                         }}
                       />
                       <ModalAuthor
                         onClick={() => {
+                          dispatch(sideActions.getPage());
                           history.replace(`/story/${modalData.writerId}`); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                         }}
                       >
@@ -297,11 +300,13 @@ const ModalDetail = (props) => {
                                         : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                     }
                                     onClick={() => {
+                                      dispatch(sideActions.getPage());
                                       history.replace(`/story/${c.userId}`);
                                     }}
                                   ></ReplyImg>
                                   <ReplyWriter
                                     onClick={() => {
+                                      dispatch(sideActions.getPage());
                                       history.replace(`/story/${c.userId}`);
                                     }}
                                   >
