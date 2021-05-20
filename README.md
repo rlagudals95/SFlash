@@ -46,4 +46,6 @@ https://apis.map.kakao.com/web/sample/
 ![3](https://user-images.githubusercontent.com/76252074/118970219-f3bfa700-b9a8-11eb-97fd-3f45feac3361.jpg)
 ![4](https://user-images.githubusercontent.com/76252074/118970245-f9b58800-b9a8-11eb-8aad-2b241cad9092.jpg)
 ![마이페이지 지도](https://user-images.githubusercontent.com/76252074/118970520-4a2ce580-b9a9-11eb-8b78-aa9488f36c25.jpg)
+![마이페이지 좋아요지도](https://user-images.githubusercontent.com/76252074/118970875-b3acf400-b9a9-11eb-8d61-805149adbd7b.jpg)
+
 
