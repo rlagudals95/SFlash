@@ -11,10 +11,15 @@
   width: 320px;
   height: 144px;
   border-radius: 15px;
-  background-image: url("https://i.postimg.cc/8CYp0kS6/writemarkerinfo.jpg");
+  background-color: transparent;
+}
+
+.writeinfowindow {
+  width: 320px;
+  height: 144px;
+  border-radius: 15px;
   background-color: transparent;
   object-fit: cover;
-  background-size: cover;
 }
 
 .picbox {
