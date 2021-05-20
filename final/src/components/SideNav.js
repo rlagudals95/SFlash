@@ -18,7 +18,7 @@ import user from "../redux/modules/user";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as profileActions } from "../redux/modules/profile";
-import { actionCreators as storypostActions } from "../redux/modules/storypost";
+import { actionCreators as storyPostActions } from "../redux/modules/storypost";
 import { config } from "../shared/config";
 import { actionCreators as sideActions } from "../redux/modules/side";
 
@@ -126,44 +126,54 @@ function Navbar() {
               <IconOutter>
                 {is_login ? (
                   <SelectedIcon
-                    onClick={() => {
-                      window.location.replace(
-                        `/story/${userId}`
-                      );
-                    }}
+                  onClick={() => {
+                    history.push(`/story/${userId}`); 
+                    dispatch(storyPostActions.resetStory([]));
+                    dispatch(profileActions.resetProfile([]));
+                  }}
+                    // onClick={() => {
+                    //   window.location.replace(
+                    //     `/story/${userId}`
+                    //   );
+                    // }}
                   >
                     MY STORY
                   </SelectedIcon>
                 ) : (
-                  <SelectedIcon
-                    onClick={() => {
-                      history.replace("/login");
-                    }}
+                  <IconInfo
+                  onClick={() => {
+                    history.push("/login"); 
+                  }}
                   >
                     LOGIN
-                  </SelectedIcon>
+                  </IconInfo>
                 )}
               </IconOutter>
             ) : (
               <IconOutter>
                 {is_login ? (
                   <IconInfo
-                    onClick={() => {
-                      history.push(`/story/${userId}`);
-                      dispatch(profileActions.getUserInfoAPI(userId));
-                      dispatch(storypostActions.getUserPostAPI(userId));
-                      dispatch(storypostActions.getUserLikeAPI(userId));
-                      dispatch(sideActions.getPage("story"));
-                    }}
+                  onClick={() => {
+                    history.push(`/story/${userId}`); 
+                    dispatch(storyPostActions.resetStory([]));
+                    dispatch(profileActions.resetProfile([]));
+                    dispatch(profileActions.getUserInfoAPI(userId));
+                    dispatch(storyPostActions.getUserPostAPI(userId));
+                    dispatch(storyPostActions.getUserLikeAPI(userId));
+                  }}
+                  // onClick={() => {
+                  //   window.location.replace(
+                  //     `/story/${userId}`
+                  //   );
+                  // }}
                   >
                     MY STORY
                   </IconInfo>
                 ) : (
                   <IconInfo
-                    onClick={() => {
-                      history.replace("/login");
-                      dispatch(sideActions.getPage("story"));
-                    }}
+                  onClick={() => {
+                    history.push("/login");
+                  }}
                   >
                     LOGIN
                   </IconInfo>

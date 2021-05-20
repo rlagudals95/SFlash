@@ -11,6 +11,8 @@ const UPLOADING = "UPLOADING"; //업로드 여부
 const SET_PREVIEW = "SET_PREVIEW"; // 사용자 프로필 이미지를 보여주는 액션
 const EDIT_PROFILE = "EDIT_PROFILE";
 const EDIT_NICKNAME = "EDIT_NICKNAME";
+// 클릭시 스토리페이지 프로필 정보 초기화
+const RESET_PROFILE = "RESET_PROFILE";
 
 // Action creators
 const getUserInfo = createAction(GET_USER_INFO, (user) => ({ user }));
@@ -18,6 +20,7 @@ const uploading = createAction(UPLOADING, (uploading) => ({ uploading }));
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 const editProfile = createAction(EDIT_PROFILE, (profile) => ({ profile }));
 const editNickname = createAction(EDIT_NICKNAME, (nickname) => ({ nickname }));
+const resetProfile = createAction(RESET_PROFILE, (reset) => ({ reset }));
 
 // initialState
 // 리덕스에 저장되는 데이터 틀을 설정해놓는 부분
@@ -183,6 +186,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.user = { ...draft.user, ...action.payload.nickname };
       }),
+      [RESET_PROFILE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user = action.payload.reset;
+      }),
   },
   initialState
 );
@@ -197,6 +204,7 @@ const actionCreators = {
   editProfileAPI,
   editNicknameAPI,
   editNickname,
+  resetProfile
 };
 
 // actionCreators로 묶은 함수들을

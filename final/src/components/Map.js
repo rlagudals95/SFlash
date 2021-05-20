@@ -86,14 +86,95 @@ const Maps = (props) => {
   // 종류별 데이터는 필터 함수를 이용해 묶어 내고 필요한 부분에 가져다 쓴다.
   // 전체 마커, 내 마커, 내가 좋아요한 마커
   const allData = map_post_list;
+
+  // 1. 내가 작성한 게시물이 데이터
   const myPostData = map_post_list.filter(
     (map_post_list) => map_post_list.writerName === nickname
   );
   console.log("내 작성 게시물 왔나??: " + myPostData);
+  // 1. 내가 작성한한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!!
+  const myPostCafe = myPostData.filter(
+    (myPostData) => myPostData.category == "카페"    // 1. 카페
+  );
+  const myPostNight = myPostData.filter(
+    (myPostData) => myPostData.category == "야경"    // 2. 야경
+  );
+  const myPostOcean = myPostData.filter(
+    (myPostData) => myPostData.category == "바다"    // 3. 바다
+  );
+  const myPostMountain = myPostData.filter(
+    (myPostData) => myPostData.category == "산"      // 4. 산
+  );
+  const myPostFlower = myPostData.filter(
+    (myPostData) => myPostData.category == "꽃"      // 5. 꽃
+  );
+  const myPostAlone = myPostData.filter(
+    (myPostData) => myPostData.category == "나홀로"  // 6. 나홀로
+  );
+  const myPostCouple = myPostData.filter(
+    (myPostData) => myPostData.category == "연인"    // 7. 연인
+  );
+  const myPostFriend = myPostData.filter(
+    (myPostData) => myPostData.category == "친구"     // 8. 친구
+  );
+  const myPostPet = myPostData.filter(
+    (myPostData) => myPostData.category == "반려동물"  // 9. 반려동물
+  );
+  const myPostCity = myPostData.filter(
+    (myPostData) => myPostData.category == "도심"      // 10. 도심
+  );
+  const myPostPark = myPostData.filter( 
+    (myPostData) => myPostData.category == "공원"      // 11. 공원
+  );
+  const myPostExhibition = myPostData.filter(
+    (myPostData) => myPostData.category == "전시"      // 12. 전시
+  );
+  // 1. 내가 작성한한 게시물 데이터를 다시 카테고리별로 데이터분류 끝!!! 
+
+  // 2. 내가 좋아요한 데이터
   const myLikeData = map_post_list.filter(
     (map_post_list) => map_post_list.like === true
   );
   console.log("내좋아요 데이터있나??: " + myLikeData);
+  // 2. 내가 좋아요한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!! 
+  const myLikeCafe = myLikeData.filter(
+    (myLikeData) => myLikeData.category == "카페"    // 1. 카페
+  );
+  const myLikeNight = myLikeData.filter(
+    (myLikeData) => myLikeData.category == "야경"    // 2. 야경
+  );
+  const myLikeOcean = myLikeData.filter(
+    (myLikeData) => myLikeData.category == "바다"    // 3. 바다
+  );
+  const myLikeMountain = myLikeData.filter(
+    (myLikeData) => myLikeData.category == "산"      // 4. 산
+  );
+  const myLikeFlower = myLikeData.filter(
+    (myLikeData) => myLikeData.category == "꽃"      // 5. 꽃
+  );
+  const myLikeAlone = myLikeData.filter(
+    (myLikeData) => myLikeData.category == "나홀로"  // 6. 나홀로
+  );
+  const myLikeCouple = myLikeData.filter(
+    (myLikeData) => myLikeData.category == "연인"    // 7. 연인
+  );
+  const myLikeFriend = myLikeData.filter(
+    (myLikeData) => myLikeData.category == "친구"     // 8. 친구
+  );
+  const myLikePet = myLikeData.filter(
+    (myLikeData) => myLikeData.category == "반려동물"  // 9. 반려동물
+  );
+  const myLikeCity = myLikeData.filter(
+    (myLikeData) => myLikeData.category == "도심"      // 10. 도심
+  );
+  const myLikePark = myLikeData.filter( 
+    (myLikeData) => myLikeData.category == "공원"      // 11. 공원
+  );
+  const myLikeExhibition = myLikeData.filter(
+    (myLikeData) => myLikeData.category == "전시"      // 12. 전시
+  );
+  // 2. 내가 좋아요한 게시물 데이터를 다시 카테고리별로 데이터분류 끝!!! 
+
   // 각 카테고리별 데이터
   const cafeData = map_post_list.filter(
     (map_post_list) => map_post_list.category === "카페"
@@ -132,7 +213,7 @@ const Maps = (props) => {
     (map_post_list) => map_post_list.category === "전시"
   );
 
-  // 이래야 화면 렌더링이 계속안된다
+  // 검색시 화면 렌더링을  제어합니다.(타이핑 할 때마다 렌더링 되지 않도록)
   const debounce = _.debounce((e) => {
     setSearch(e.target.value);
   }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
@@ -328,45 +409,8 @@ const Maps = (props) => {
     // 기본 설정 규칙 설명 끝------------------------------------------------------------------------
 
     // 1. 내가 작성한 게시물만, 카테고리별로 데이터 나누기 : 모든 종류의 마커들 + 커스텀 오버레이
+    // 93-128번줄에 내가 작성한 게시물 데이터를 카테고리별로 나눠둠. 그것들을 가져와서 아래 코드를 작성한다.
     if (is_mypost) {
-      // 카테고리별로 데이터분류
-      const myPostCafe = myPostData.filter(
-        (myPostData) => myPostData.category == "카페"    // 1. 카페
-      );
-      const myPostNight = myPostData.filter(
-        (myPostData) => myPostData.category == "야경"    // 2. 야경
-      );
-      const myPostOcean = myPostData.filter(
-        (myPostData) => myPostData.category == "바다"    // 3. 바다
-      );
-      const myPostMountain = myPostData.filter(
-        (myPostData) => myPostData.category == "산"      // 4. 산
-      );
-      const myPostFlower = myPostData.filter(
-        (myPostData) => myPostData.category == "꽃"      // 5. 꽃
-      );
-      const myPostAlone = myPostData.filter(
-        (myPostData) => myPostData.category == "나홀로"  // 6. 나홀로
-      );
-      const myPostCouple = myPostData.filter(
-        (myPostData) => myPostData.category == "연인"    // 7. 연인
-      );
-      const myPostFriend = myPostData.filter(
-        (myPostData) => myPostData.category == "친구"     // 8. 친구
-      );
-      const myPostPet = myPostData.filter(
-        (myPostData) => myPostData.category == "반려동물"  // 9. 반려동물
-      );
-      const myPostCity = myPostData.filter(
-        (myPostData) => myPostData.category == "도심"      // 10. 도심
-      );
-      const myPostPark = myPostData.filter( 
-        (myPostData) => myPostData.category == "공원"      // 11. 공원
-      );
-      const myPostExhibition = myPostData.filter(
-        (myPostData) => myPostData.category == "전시"      // 12. 전시
-      );
-
       // 1. 내가 작성한 게시물 : 카페
       myPostCafe.forEach((myCafe) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -408,7 +452,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myCafeMarkers, "mouseover", function () {
           myCafeCustomOverlay.setMap(map);
         });
@@ -468,7 +511,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myNightMarkers, "mouseover", function () {
           myNightCustomOverlay.setMap(map);
         });
@@ -528,7 +570,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myOceanMarkers, "mouseover", function () {
           myOceanCustomOverlay.setMap(map);
         });
@@ -588,7 +629,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myMountainMarkers, "mouseover", function () {
           myMountainCustomOverlay.setMap(map);
         });
@@ -648,7 +688,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myFlowerMarkers, "mouseover", function () {
           myFlowerCustomOverlay.setMap(map);
         });
@@ -708,7 +747,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myAloneMarkers, "mouseover", function () {
           myAloneCustomOverlay.setMap(map);
         });
@@ -768,7 +806,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myCoupleMarkers, "mouseover", function () {
           myCoupleCustomOverlay.setMap(map);
         });
@@ -828,7 +865,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myFriendMarkers, "mouseover", function () {
           myFriendCustomOverlay.setMap(map);
         });
@@ -888,7 +924,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myPetMarkers, "mouseover", function () {
           myPetCustomOverlay.setMap(map);
         });
@@ -948,7 +983,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myCityMarkers, "mouseover", function () {
           myCityCustomOverlay.setMap(map);
         });
@@ -1008,7 +1042,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myParkMarkers, "mouseover", function () {
           myParkCustomOverlay.setMap(map);
         });
@@ -1068,7 +1101,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myExhibitionMarkers, "mouseover", function () {
           myExhibitionCustomOverlay.setMap(map);
         });
@@ -1087,49 +1119,11 @@ const Maps = (props) => {
         });
       });
     }
-    // 내가 작성한 게시물만 : 끝!!!!
-
+    // 내가 작성한 게시물만 : 끝!!!
 
     // 2. 내가 좋아요한 게시물만, 카테고리별로 데이터 나누기 : 좋아요마커 + 커스텀 오버레이
     if (is_mylike) {
-      // 카테고리별로 데이터분류
-      const myLikeCafe = myLikeData.filter(
-        (myLikeData) => myLikeData.category == "카페"    // 1. 카페
-      );
-      const myLikeNight = myLikeData.filter(
-        (myLikeData) => myLikeData.category == "야경"    // 2. 야경
-      );
-      const myLikeOcean = myLikeData.filter(
-        (myLikeData) => myLikeData.category == "바다"    // 3. 바다
-      );
-      const myLikeMountain = myLikeData.filter(
-        (myLikeData) => myLikeData.category == "산"      // 4. 산
-      );
-      const myLikeFlower = myLikeData.filter(
-        (myLikeData) => myLikeData.category == "꽃"      // 5. 꽃
-      );
-      const myLikeAlone = myLikeData.filter(
-        (myLikeData) => myLikeData.category == "나홀로"  // 6. 나홀로
-      );
-      const myLikeCouple = myLikeData.filter(
-        (myLikeData) => myLikeData.category == "연인"    // 7. 연인
-      );
-      const myLikeFriend = myLikeData.filter(
-        (myLikeData) => myLikeData.category == "친구"     // 8. 친구
-      );
-      const myLikePet = myLikeData.filter(
-        (myLikeData) => myLikeData.category == "반려동물"  // 9. 반려동물
-      );
-      const myLikeCity = myLikeData.filter(
-        (myLikeData) => myLikeData.category == "도심"      // 10. 도심
-      );
-      const myLikePark = myLikeData.filter( 
-        (myLikeData) => myLikeData.category == "공원"      // 11. 공원
-      );
-      const myLikeExhibition = myLikeData.filter(
-        (myLikeData) => myLikeData.category == "전시"      // 12. 전시
-      );
-
+    // 134-176번줄에 내가 좋아요한 게시물 데이터 카테고리별로 나눠둠. 그것들을 가져와서 아래 코드를 작성
       // 1. 내가 좋아요한 게시물 : 카페
       myLikeCafe.forEach((myCafe) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -1171,7 +1165,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myLikeCafeMarkers, "mouseover", function () {
           myLikeCafeCustomOverlay.setMap(map);
         });
@@ -1291,7 +1284,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myLikeOceanMarkers, "mouseover", function () {
           myLikeOceanCustomOverlay.setMap(map);
         });
@@ -1351,7 +1343,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myLikeMountainMarkers, "mouseover", function () {
           myLikeMountainCustomOverlay.setMap(map);
         });
@@ -1411,7 +1402,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myLikeFlowerMarkers, "mouseover", function () {
           myLikeFlowerCustomOverlay.setMap(map);
         });
@@ -1471,7 +1461,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myLikeAloneMarkers, "mouseover", function () {
           myLikeAloneCustomOverlay.setMap(map);
         });
@@ -1531,7 +1520,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myLikeCoupleMarkers, "mouseover", function () {
           myLikeCoupleCustomOverlay.setMap(map);
         });
@@ -1591,7 +1579,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myLikeFriendMarkers, "mouseover", function () {
           myLikeFriendCustomOverlay.setMap(map);
         });
@@ -1651,7 +1638,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myLikePetMarkers, "mouseover", function () {
           myLikePetCustomOverlay.setMap(map);
         });
@@ -1711,7 +1697,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myLikeCityMarkers, "mouseover", function () {
           myLikeCityCustomOverlay.setMap(map);
         });
@@ -1771,7 +1756,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myLikeParkMarkers, "mouseover", function () {
           myLikeParkCustomOverlay.setMap(map);
         });
@@ -1831,7 +1815,6 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-
         kakao.maps.event.addListener(myLikeExhibitionMarkers, "mouseover", function () {
           myLikeExhibitionCustomOverlay.setMap(map);
         });

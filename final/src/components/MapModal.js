@@ -726,13 +726,9 @@ const PostTime = styled.div`
 `;
 const ModalCmtInputBox = styled.div`
   align-items: center;
-  margin-bottom: -4.5vh;
   width: 100%;
-  height: 8vw;
-  padding: 0px;
+  padding: 10px;
   display: flex;
-  justify-content: space-between;
-  /* align-items: center; */
   box-sizing: border-box;
   border: 2px solid #efefef;
   background-color: white;
@@ -752,6 +748,7 @@ const ModalCmtInputBox = styled.div`
     margin-bottom: -7vh;
   }
 `;
+
 
 const ModalCmtBox = styled.div`
   padding: 0px 0px;
@@ -871,28 +868,14 @@ const CommentInput = styled.input`
   @media (max-width: 600px) {
   }
 `;
+
 const UploadBtn = styled.div`
   font-size: 14px;
-
-  /* color: #3897f0; */
   color: ${(props) => props.theme.main_color};
   cursor: pointer;
   opacity: 1;
   font-weight: 600;
   width: 30px;
-  margin-right: 1vw;
-  /* margin: 10px 5px 0px 0px; */
-  /* padding-bottom: 5px; */
-  /* width: 30px;
-  @media (max-width: 1440px) {
-   
-    margin: 5px 5px 0px 0px;
-  }
-  @media (max-width: 600px) {
-    
-    margin: 10px 5px 0px 0px;
-    width: 40px;
-  } */
 `;
 
 const EditBtn = styled.span`
