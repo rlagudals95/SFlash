@@ -69,10 +69,12 @@ const ModalDetail = (props) => {
 
   const addLike = () => {
     dispatch(ModalActions.modalAddLikeAPI(modalData.id, modalData));
+    dispatch(postActions.getMapPostAPI());
   };
 
   const disLike = () => {
     dispatch(ModalActions.modalDisLikeAPI(modalData.id, modalData));
+    dispatch(postActions.getMapPostAPI());
   };
 
   const addComment = () => {

@@ -77,8 +77,9 @@ const getUserPostAPI = (userId) => {
         res.data.data.forEach((_post) => {
           let post = {
             id: _post.boardId,
+            category: _post.category,
             img_url: _post.boardImgResponseDtoList,
-            imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
+            imgForOverlay: _post.boardImgResponseDtoList[0].imgUrl,
             spotName: _post.spotName,
             spotName1: _post.spotName.split(" ").splice(0, 2).join(" "),
             spotName2: _post.spotName.split(" ").splice(2).join(" "),
@@ -88,7 +89,7 @@ const getUserPostAPI = (userId) => {
             likeCnt: _post.likeCount,
           };
           post_list.push(post);
-          // console.log(post_list);
+          console.log(post_list);
         });
         dispatch(setStoryPost(post_list));
       })
@@ -125,8 +126,9 @@ const getUserLikeAPI = (userId) => {
         res.data.data.forEach((_post) => {
           let post = {
             id: _post.boardId,
+            category: _post.category,
             img_url: _post.boardImgResponseDtoList,
-            imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
+            imgForOverlay: _post.boardImgResponseDtoList[0].imgUrl,
             spotName: _post.spotName,
             spotName1: _post.spotName.split(" ").splice(0, 2).join(" "),
             spotName2: _post.spotName.split(" ").splice(2).join(" "),
