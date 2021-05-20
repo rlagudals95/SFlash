@@ -126,11 +126,12 @@ function Navbar() {
               <IconOutter>
                 {is_login ? (
                   <SelectedIcon
-                  onClick={() => {
-                    history.push(`/story/${userId}`); 
-                    dispatch(storyPostActions.resetStory([]));
-                    dispatch(profileActions.resetProfile([]));
-                  }}
+                    onClick={() => {
+                      history.push(`/story/${userId}`);
+                      dispatch(sideActions.getPage("story"));
+                      dispatch(storyPostActions.resetStory([]));
+                      dispatch(profileActions.resetProfile([]));
+                    }}
                     // onClick={() => {
                     //   window.location.replace(
                     //     `/story/${userId}`
@@ -141,9 +142,9 @@ function Navbar() {
                   </SelectedIcon>
                 ) : (
                   <IconInfo
-                  onClick={() => {
-                    history.push("/login"); 
-                  }}
+                    onClick={() => {
+                      history.push("/login");
+                    }}
                   >
                     LOGIN
                   </IconInfo>
@@ -153,27 +154,28 @@ function Navbar() {
               <IconOutter>
                 {is_login ? (
                   <IconInfo
-                  onClick={() => {
-                    history.push(`/story/${userId}`); 
-                    dispatch(storyPostActions.resetStory([]));
-                    dispatch(profileActions.resetProfile([]));
-                    dispatch(profileActions.getUserInfoAPI(userId));
-                    dispatch(storyPostActions.getUserPostAPI(userId));
-                    dispatch(storyPostActions.getUserLikeAPI(userId));
-                  }}
-                  // onClick={() => {
-                  //   window.location.replace(
-                  //     `/story/${userId}`
-                  //   );
-                  // }}
+                    onClick={() => {
+                      history.push(`/story/${userId}`);
+                      // dispatch(storyPostActions.resetStory([]));
+                      dispatch(sideActions.getPage("story"));
+                      dispatch(profileActions.resetProfile([]));
+                      dispatch(profileActions.getUserInfoAPI(userId));
+                      dispatch(storyPostActions.getUserPostAPI(userId));
+                      dispatch(storyPostActions.getUserLikeAPI(userId));
+                    }}
+                    // onClick={() => {
+                    //   window.location.replace(
+                    //     `/story/${userId}`
+                    //   );
+                    // }}
                   >
                     MY STORY
                   </IconInfo>
                 ) : (
                   <IconInfo
-                  onClick={() => {
-                    history.push("/login");
-                  }}
+                    onClick={() => {
+                      history.push("/login");
+                    }}
                   >
                     LOGIN
                   </IconInfo>

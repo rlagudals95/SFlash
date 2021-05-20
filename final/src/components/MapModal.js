@@ -69,10 +69,12 @@ const ModalDetail = (props) => {
 
   const addLike = () => {
     dispatch(ModalActions.modalAddLikeAPI(modalData.id, modalData));
+    dispatch(postActions.getMapPostAPI());
   };
 
   const disLike = () => {
     dispatch(ModalActions.modalDisLikeAPI(modalData.id, modalData));
+    dispatch(postActions.getMapPostAPI());
   };
 
   const addComment = () => {
@@ -528,7 +530,7 @@ const ExitBtn = styled.button`
 const ModalBottomContainer = styled.div`
   text-align: left;
   width: 480px;
-  height: 290px;
+  height: 345px;
   display: flex;
   flex-direction: column;
   padding: 0px 12px;
@@ -537,7 +539,7 @@ const ModalBottomContainer = styled.div`
   @media (max-width: 1600px) {
     text-align: left;
     width: 470px;
-    height: 290px;
+    height: 320px;
     display: flex;
     flex-direction: column;
     padding: 0px 12px;
@@ -550,7 +552,7 @@ const ModalBottomContainer = styled.div`
     text-align: left;
     width: 450px;
     // 이거 올려주니까 댓글창이보인다..!
-    height: 260px;
+    height: 340px;
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -563,7 +565,7 @@ const ModalBottomContainer = styled.div`
     text-align: left;
     width: 450px;
     // 이거 올려주니까 댓글창이보인다..!
-    height: 280px;
+    height: 335px;
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -725,6 +727,7 @@ const PostTime = styled.div`
   /* margin: 15px 0px 8px 0px; */
 `;
 const ModalCmtInputBox = styled.div`
+  /* margin-top: 100px; */
   align-items: center;
   width: 100%;
   padding: 10px;
@@ -748,7 +751,6 @@ const ModalCmtInputBox = styled.div`
     margin-bottom: -7vh;
   }
 `;
-
 
 const ModalCmtBox = styled.div`
   padding: 0px 0px;

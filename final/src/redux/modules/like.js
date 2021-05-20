@@ -7,6 +7,8 @@ import moment from "moment";
 import { config } from "../../shared/config";
 import { getCookie } from "../../shared/Cookie";
 import { actionCreators as PostActions } from "./post";
+import { actionCreators as userActions } from "./user";
+import Swal from "sweetalert2";
 
 const GET_LIKE = "GET_LIKE";
 const ADD_LIKE = "ADD_LIKE";
@@ -65,11 +67,27 @@ const addLikeAPI = (board_id, board) => {
       },
     })
       .then((res) => {
-        // console.log("좋아요 완료!", res);
-        dispatch(PostActions.editLikeP(board_id, board)); // 리덕스
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          });
+        } else {
+          // console.log("좋아요 완료!", res);
+          dispatch(PostActions.editLikeP(board_id, board)); // 리덕스
 
-        // dispatch(addLike(true));
-        // dispatch(getLike(true));
+          // dispatch(addLike(true));
+          // dispatch(getLike(true));
+        }
       })
       .catch((error) => {
         window.alert("로그인 후 이용해 주세요~.");
@@ -90,12 +108,28 @@ const disLikeAPI = (board_id, board) => {
       },
     })
       .then((res) => {
-        // console.log("좋아요 취소!", res);
-        dispatch(PostActions.editLikeD(board_id, board));
-        // console.log(res);
-        // dispatch(disLike(false));
-        // dispatch(getLike(false));
-        // dispatch(postActions.getPostAPI(paging.start, paging.size));
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          });
+        } else {
+          // console.log("좋아요 취소!", res);
+          dispatch(PostActions.editLikeD(board_id, board));
+          // console.log(res);
+          // dispatch(disLike(false));
+          // dispatch(getLike(false));
+          // dispatch(postActions.getPostAPI(paging.start, paging.size));
+        }
       })
       .catch((error) => {
         // window.alert("좋아요를 할 수 없습니다.");

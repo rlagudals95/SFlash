@@ -9,6 +9,8 @@ import { config } from "../../shared/config";
 import { getCookie } from "../../shared/Cookie";
 import { push } from "react-router-redux";
 import { actionCreators as modalActions } from "./mapModal";
+import { actionCreators as userActions } from "./user";
+import Swal from "sweetalert2";
 
 const SET_POST = "SET_POST";
 const SET_MAP_POST = "SET_MAP_POST";
@@ -141,35 +143,48 @@ const addPostAPI = (post) => {
       },
     })
       .then((res) => {
-        // console.log("애드포스트 응답", res);
-        // console.log(res.data);
-        // console.log(res.data.data);
-        // 게시물 올리면 바로 마커 뜨게 하는 리덕스 작업
-        let one_post = res.data.data;
-        let one_marker_data = {
-          id: one_post.boardId,
-          like: one_post.liked,
-          writerName: one_post.writerName,
-          category: one_post.category,
-          spotName1: one_post.spotName.split(" ").splice(0, 2).join(" "),
-          spotName2: one_post.spotName.split(" ").splice(2).join(" "),
-          latitude: one_post.latitude,
-          longitude: one_post.longitude,
-          imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,
-        };
-        dispatch(addMapPost(one_marker_data));
+        // 토큰이 만료 되었을때 띄워주는 alert
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          });
+        } else {
+          let one_post = res.data.data;
+          let one_marker_data = {
+            id: one_post.boardId,
+            like: one_post.liked,
+            writerName: one_post.writerName,
+            category: one_post.category,
+            spotName1: one_post.spotName.split(" ").splice(0, 2).join(" "),
+            spotName2: one_post.spotName.split(" ").splice(2).join(" "),
+            latitude: one_post.latitude,
+            longitude: one_post.longitude,
+            imgForOverlay: one_post.boardImgReponseDtoList[0].imgUrl,
+          };
+          dispatch(addMapPost(one_marker_data));
 
-        //커뮤니티 리덕스에 데이터 추가
-        let CommunityPost = {
-          id: one_post.boardId,
-          spotName: one_post.spotName,
-          img_url: one_post.boardImgReponseDtoList[0].imgUrl, //고치자 딕셔너리 말고
-          likeCnt: 0,
-          like: false,
-          title: one_post.title, // 포스트 title
-          content: one_post.content, // 포스트 내용
-        };
-        dispatch(addPost(CommunityPost));
+          //커뮤니티 리덕스에 데이터 추가
+          let CommunityPost = {
+            id: one_post.boardId,
+            spotName: one_post.spotName,
+            img_url: one_post.boardImgReponseDtoList[0].imgUrl, //고치자 딕셔너리 말고
+            likeCnt: 0,
+            like: false,
+            title: one_post.title, // 포스트 title
+            content: one_post.content, // 포스트 내용
+          };
+          dispatch(addPost(CommunityPost));
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -318,7 +333,24 @@ const deletePostAPI = (board_id) => {
     })
       .then((res) => {
         // console.log(res);
-        dispatch(deletePost(board_id));
+
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          });
+        } else {
+          dispatch(deletePost(board_id));
+        }
       })
       .catch((err) => {
         window.alert("게시물 삭제에 문제가 있어요!");
@@ -376,39 +408,55 @@ const editPostAPI = (board_id, _edit) => {
         "Content-Type": "multipart/form-data",
       },
     }).then((res) => {
-      //응답이 오기전까지 무슨 스피너 조건을 줘야하는데.,..흠..
-      console.log("수정반응값!", res);
-      let _post = res.data.data;
-      let post = {
-        id: _post.boardId, // 포스트 id
-        title: _post.title, // 포스트 title
-        content: _post.content, // 포스트 내용
-        writerName: _post.writerName,
-        img_url: _post.boardImgReponseDtoList,
-        category: _post.category,
-        profileImg: _post.writerImgUrl,
-        like: _post.liked,
-        likeCnt: _post.likeCount,
-        comment: _post.boardDetailCommentDtoList,
-        creatAt: _post.modified,
-        spotName: _post.spotName,
-      };
+      if (res.data.message === "tokenExpired") {
+        dispatch(userActions.logOut());
+        Swal.fire({
+          text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+          confirmButtonText: "로그인 하러가기",
+          confirmButtonColor: "#ffb719",
+          showCancelButton: true,
+          cancelButtonText: "취소",
+          cancelButtonColor: "#eee",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            history.push("/login");
+          }
+        });
+      } else {
+        //응답이 오기전까지 무슨 스피너 조건을 줘야하는데.,..흠..
+        console.log("수정반응값!", res);
+        let _post = res.data.data;
+        let post = {
+          id: _post.boardId, // 포스트 id
+          title: _post.title, // 포스트 title
+          content: _post.content, // 포스트 내용
+          writerName: _post.writerName,
+          img_url: _post.boardImgReponseDtoList,
+          category: _post.category,
+          profileImg: _post.writerImgUrl,
+          like: _post.liked,
+          likeCnt: _post.likeCount,
+          comment: _post.boardDetailCommentDtoList,
+          creatAt: _post.modified,
+          spotName: _post.spotName,
+        };
 
-      let markerImg = post.img_url[0].imgUrl; //썸네일
-      console.log("마커이지미는 뭘까?", markerImg);
-      dispatch(modalActions.modalEdit(post)); //맵 모달도 바로 수정 반영
+        let markerImg = post.img_url[0].imgUrl; //썸네일
+        console.log("마커이지미는 뭘까?", markerImg);
+        dispatch(modalActions.modalEdit(post)); //맵 모달도 바로 수정 반영
 
-      //여기에 조건을 줘야 에러가 안뜬다 어떤 조건을 줘야할까? 각각 데이터가 리덕스에 저장 되어있을 때만 구동되게 조건을준다
+        //여기에 조건을 줘야 에러가 안뜬다 어떤 조건을 줘야할까? 각각 데이터가 리덕스에 저장 되어있을 때만 구동되게 조건을준다
 
-      if (postData.length > 1) {
-        //서로의 데이터 갯수가 1개 이상 즉 존재 할때만 각각 실행
-        dispatch(postImgEdit(board_id, markerImg));
-      } // 커뮤니티 썸네일 수정 // 마커랑 똑같이 썸네일만 수정}
+        if (postData.length > 1) {
+          //서로의 데이터 갯수가 1개 이상 즉 존재 할때만 각각 실행
+          dispatch(postImgEdit(board_id, markerImg));
+        } // 커뮤니티 썸네일 수정 // 마커랑 똑같이 썸네일만 수정}
 
-      if (markerData.length > 1) {
-        dispatch(editMarker(board_id, markerImg));
-      } // 맵에서도 수정 바로 반영 이미지만 바꿔줘도 될거같긴한데.. 흠..
-      /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌}
+        if (markerData.length > 1) {
+          dispatch(editMarker(board_id, markerImg));
+        } // 맵에서도 수정 바로 반영 이미지만 바꿔줘도 될거같긴한데.. 흠..
+        /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌}
+      }
     });
   };
 };
