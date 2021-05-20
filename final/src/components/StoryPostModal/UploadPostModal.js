@@ -565,7 +565,6 @@ const Component = styled.div`
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
-
     z-index: 6999;
   }
 `;
@@ -622,7 +621,6 @@ const ModalComponent = styled.div`
     border: none;
     box-sizing: border-box;
   }
-
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
@@ -634,7 +632,6 @@ const ModalComponent = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     /* background-color: white; */
-
     border: none;
     box-sizing: border-box;
     z-index: 7000;
@@ -707,7 +704,6 @@ const ModalBottomContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 12px;
-
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     text-align: left;
@@ -735,7 +731,6 @@ const ModalBottomContainer = styled.div`
     margin: 0px auto;
     margin-top: 5vh;
   }
-
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
@@ -749,7 +744,6 @@ const ModalBottomContainer = styled.div`
     margin-top: 2vh;
   }
   /* justify-content: space-between; */
-
   /* border-left: 1px solid #efefef; */
 `;
 
@@ -782,7 +776,6 @@ const MiddleBox = styled.div`
     /* background-color: red; */
   }
   /* justify-content: space-between; */
-
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     height: 220px;

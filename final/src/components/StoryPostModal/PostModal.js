@@ -400,7 +400,6 @@ const ModalImg = styled.img`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   object-fit: cover;
-
   background-repeat: no-repeat;
   border: none;
   box-sizing: border-box;
@@ -408,7 +407,6 @@ const ModalImg = styled.img`
   height: 400px;
   height: 400px;
   background-position: center;
-
   @media (max-width: 1440px) {
     /* 1450밑으로 넓이가 내려가면 */
     /* all: unset; */
@@ -483,7 +481,6 @@ const ModalComponent = styled.div`
     border: none;
     box-sizing: border-box;
   }
-
   @media (max-width: 1030px) {
   }
   @media (max-width: 600px) {
@@ -557,7 +554,6 @@ const ModalBottomContainer = styled.div`
     padding: 0px 12px;
     margin: 0px auto;
   }
-
   @media (max-width: 1440px) {
     /* background-color: red; */
     // 1450밑으로 넓이가 내려가면
@@ -596,7 +592,6 @@ const ModalBottomContainer = styled.div`
     margin: 0px auto;
   }
   /* justify-content: space-between; */
-
   /* border-left: 1px solid #efefef; */
 `;
 
@@ -624,7 +619,6 @@ const ProCircle = styled.img`
   border-radius: 50%;
   background-size: cover;
   background-image: url("${(props) => props.src}");
-
   cursor: pointer;
 `;
 const ModalAuthor = styled.span`
@@ -672,7 +666,6 @@ const InfoBoxInner = styled.div`
   font-size: 15px;
   display: flex;
   justify-content: space-between;
-
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     width: 100%;
@@ -735,7 +728,6 @@ const PostTime = styled.div`
   font-size: 0.7rem;
   opacity: 0.4;
   margin-top: 13px;
-
   /* margin: 15px 0px 8px 0px; */
 `;
 const ModalCmtInputBox = styled.div`
@@ -756,7 +748,6 @@ const ModalCmtInputBox = styled.div`
     // 1450밑으로 넓이가 내려가면
     height: 80px;
   }
-
   @media (max-width: 600px) {
     height: 100px;
     margin-bottom: -7vh;
@@ -768,7 +759,6 @@ const ModalCmtBox = styled.div`
   display: flex;
   flex-direction: column;
   height: 600px;
-
   /* background-color: red; */
   /* 아래 태그는 댓글이 많으면 
   스크롤로 아래 부분이 위로 올라가게 해서 

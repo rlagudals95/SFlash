@@ -74,6 +74,5 @@ if (res.data.message === "tokenExpired") {
     if (result.isConfirmed) {
       history.push("/login");
     }
-  });
-} else {
-}
+  })
+}else{}

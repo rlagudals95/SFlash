@@ -1,6 +1,8 @@
 import { createAction, handleActions } from "redux-actions";
+import { actionCreators as userActions } from "./user";
 import { produce } from "immer";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { history } from "../configStore";
 import { config } from "../../shared/config";
 import _ from "lodash";
@@ -46,7 +48,7 @@ const getQnaAPI = (page, size) => {
         dispatch(setQna(qna_list));
       })
       .catch((err) => {
-        console.error("작성 실패", err);
+        console.error("문의 리스트 로드 실패", err);
       });
   };
 };
@@ -73,7 +75,7 @@ const getQnaDetailAPI = (qnaId) => {
         dispatch(setQnaDetail(qna));
       })
       .catch((err) => {
-        console.error("작성 실패", err);
+        console.error("문의하기 상세 업로드 실패", err);
       });
   };
 };
@@ -91,9 +93,29 @@ const addQnaAPI = (qna) => {
     })
       .then((res) => {
         console.log(res);
-        if (res.status === 200)
-          window.alert("문의 내용이 정상적으로 등록되었습니다.");
-        history.goBack();
+
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          Swal.fire({
+            text: '문의 내용이 정상적으로 등록되었습니다 :)',
+            confirmButtonColor: "#ffb719",
+          })
+          history.goBack();
+        }
+         
       })
       .catch((err) => {
         console.error("작성 실패", err);
@@ -114,16 +136,28 @@ const editQnaAPI = (qna, qnaId) => {
     })
       .then((res) => {
         console.log(res);
-        // console.log(res.data.data);
-        // let _qna = res.data.data;
-        // let qna = {
-        //   title: _qna.title,
-        //   content: _qna.content,
-        // };
-        // dispatch(editQna(qna, qnaId));
-        if(res.status===200)
-        window.alert("게시물이 수정되었습니다.");
-        history.replace(`/qnadetail/${qnaId}`)
+
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          Swal.fire({
+            text: '게시물이 수정되었습니다 :)',
+            confirmButtonColor: "#ffb719",
+          })
+          history.replace(`/qnadetail/${qnaId}`)
+        }
       })
       .catch((err) => {
         console.error("작성 실패", err);
@@ -143,11 +177,31 @@ const deleteQnaAPI = (qnaId) => {
     })
       .then((res) => {
         console.log(res.data.data);
-        dispatch(deleteQna(qnaId));
-        history.push('/qna');
+
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          dispatch(deleteQna(qnaId));
+          history.replace('/qna');
+        }
       })
       .catch((err) => {
-        console.error("작성 실패", err);
+        Swal.fire({
+          text: '게시물을 삭제할 수 없습니다.',
+          confirmButtonColor: "#ffb719",
+        })
       });
   };
 };
@@ -159,26 +213,10 @@ export default handleActions(
       produce(state, (draft) => {
         console.log("오 이제 나온다");
         draft.list = action.payload.qna_list;
-        // draft.list = draft.list.reduce((acc, cur) => {
-        //   if(acc.findIndex(a => a.id === cur.id) === -1 ){
-        //     return [...acc, cur];
-        //   }else{
-        //     acc[acc.findIndex((a) => a.id === cur.id)] = cur;
-        //     return acc;
-        //   }
-        // }, []);
       }),
     [SET_QNA_DETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.qna = action.payload.qna;
-        // draft.list = draft.list.reduce((acc, cur) => {
-        //   if(acc.findIndex(a => a.id === cur.id) === -1 ){
-        //     return [...acc, cur];
-        //   }else{
-        //     acc[acc.findIndex((a) => a.id === cur.id)] = cur;
-        //     return acc;
-        //   }
-        // }, []);
       }),
     [ADD_QNA]: (state, action) =>
       produce(state, (draft) => {
