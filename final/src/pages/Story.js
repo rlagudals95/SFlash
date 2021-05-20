@@ -27,6 +27,7 @@ const Story = (props) => {
   console.log("userId:", userId);
 
   const initializeApp = async () => {
+    await dispatch(profileActions.resetProfile([]));
     await  dispatch(storyPostActions.resetStory([]));
     dispatch(profileActions.getUserInfoAPI(userId));
     dispatch(storyPostActions.getUserPostAPI(userId));
