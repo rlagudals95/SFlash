@@ -39,8 +39,8 @@
 https://apis.map.kakao.com/web/sample/
 <br>
 위 사이트에서 제공하는 카카오 지도 API를 이용해 사진과 장소를 연결시키는 서비스를 개발했다. 
-
-
+![회원가입 페이지](https://user-images.githubusercontent.com/76252074/118971855-db508c00-b9aa-11eb-8847-57dc7bbaa381.jpg)
+![로그인 페이지](https://user-images.githubusercontent.com/76252074/118971660-a8a69380-b9aa-11eb-9cf4-58ea58e834cf.jpg)
 ![1](https://user-images.githubusercontent.com/76252074/118969984-b1966580-b9a8-11eb-8dde-9efb47a9b162.jpg)
 ![2](https://user-images.githubusercontent.com/76252074/118970005-b6f3b000-b9a8-11eb-9986-e1d24867f5fa.jpg)
 ![5](https://user-images.githubusercontent.com/76252074/118970190-ea363f00-b9a8-11eb-9869-e7d170c2b7d2.jpg)
@@ -48,5 +48,8 @@ https://apis.map.kakao.com/web/sample/
 ![4](https://user-images.githubusercontent.com/76252074/118970245-f9b58800-b9a8-11eb-8aad-2b241cad9092.jpg)
 ![마이페이지 지도](https://user-images.githubusercontent.com/76252074/118970520-4a2ce580-b9a9-11eb-8b78-aa9488f36c25.jpg)
 ![마이페이지 좋아요지도](https://user-images.githubusercontent.com/76252074/118970875-b3acf400-b9a9-11eb-8d61-805149adbd7b.jpg)
+![마이페이지 좋아요 그리드](https://user-images.githubusercontent.com/76252074/118971267-2cac4b80-b9aa-11eb-954d-299b726568a7.jpg)
+
+
 
 
