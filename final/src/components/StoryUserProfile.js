@@ -107,14 +107,14 @@ const StoryUserProfile = (props) => {
               >
                 프로필 편집
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 onClick={() => {
                   openEditPwdModal();
                   handleClose();
                 }}
               >
                 비밀번호 변경
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem
                 onClick={() => {
                   Swal.fire({
