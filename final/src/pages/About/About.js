@@ -1,17 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid } from "../elements/index";
-import Modal from "react-modal";
-import SFlash_logo_darkgrey from "../static/SFlash_logo_darkgrey.svg";
+import { Grid } from "../../elements/index";
 
-import profile_hyunjun from "../static/profile/profile_hyunjun.jpg";
-import profile_seungwook from "../static/profile/profile_seungwook.jpg";
-import profile_sejeong from "../static/profile/profile_sejeong.jpg";
-import profile_minkyu from "../static/profile/profile_minkyu.jpg";
-import profile_hyeongmin from "../static/profile/profile_hyeongmin.jpg";
-import profile_dayoung from "../static/profile/profile_dayoung.jpg";
-import profile_ahyeon from "../static/profile/profile_ahyeon.jpg";
-import profile_eunjeong from "../static/profile/profile_eunjeong.jpg";
+import SFlash_logo_darkgrey from "../../static/SFlash_logo_darkgrey.svg";
+import profile_hyunjun from "./profile/profile_hyunjun.jpg";
+import profile_seungwook from "./profile/profile_seungwook.jpg";
+import profile_sejeong from "./profile/profile_sejeong.jpg";
+import profile_minkyu from "./profile/profile_minkyu.jpg";
+import profile_hyeongmin from "./profile/profile_hyeongmin.jpg";
+import profile_dayoung from "./profile/profile_dayoung.jpg";
+import profile_ahyeon from "./profile/profile_ahyeon.jpg";
+import profile_eunjeong from "./profile/profile_eunjeong.jpg";
 
 import AboutDetail from "./AboutDetail";
 
@@ -22,6 +21,7 @@ const About = (props) => {
   return (
     <React.Fragment>
       <Wrapper>
+        
         <Grid height="80px"></Grid>
         <UpperContainer>
           <SflashLogo src={SFlash_logo_darkgrey} />
@@ -35,29 +35,6 @@ const About = (props) => {
             return <AboutDetail key={a.id} {...a}/>
           })}
         </BottomContainer>
-
-           {/* <Modal isOpen={modal} close={closeModal} style={modalStyle} >
-                  <CloseButton
-                    src="https://image.flaticon.com/icons/png/512/458/458595.png"
-                    onClick={closeModal}
-                  />
-
-                  <Grid flex>
-                    <ProfileImg2 src={a.img} />
-                    <Grid>
-                      <ModalProfileContainer>
-                        <Name style={{ fontSize: "1.8rem" }}>{a.name}</Name>
-                        <Position style={{ fontSize: "1.1rem" }}>
-                          {a.position}
-                        </Position>
-                        <Content>{a.content}</Content>
-                        <Content>{a.github}</Content>
-                        <Content>{a.etc_1}</Content>
-                        <Content>{a.etc_2}</Content>
-                      </ModalProfileContainer>
-                    </Grid>
-                  </Grid>
-                </Modal> */}
 
       </Wrapper>
     </React.Fragment>

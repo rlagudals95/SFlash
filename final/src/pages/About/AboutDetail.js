@@ -1,17 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid } from "../elements/index";
+import { Grid } from "../../elements/index";
 import Modal from "react-modal";
-import SFlash_logo_darkgrey from "../static/SFlash_logo_darkgrey.svg";
-
-import profile_hyunjun from "../static/profile/profile_hyunjun.jpg";
-import profile_seungwook from "../static/profile/profile_seungwook.jpg";
-import profile_sejeong from "../static/profile/profile_sejeong.jpg";
-import profile_minkyu from "../static/profile/profile_minkyu.jpg";
-import profile_hyeongmin from "../static/profile/profile_hyeongmin.jpg";
-import profile_dayoung from "../static/profile/profile_dayoung.jpg";
-import profile_ahyeon from "../static/profile/profile_ahyeon.jpg";
-import profile_eunjeong from "../static/profile/profile_eunjeong.jpg";
 
 const AboutDetail = (props) => {
   console.log(props);
