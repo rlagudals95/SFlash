@@ -1,9 +1,11 @@
 // 이미지 데이터를 관리하는 모듈 파일
 import { createAction, handleActions } from "redux-actions";
+import { actionCreators as userActions } from "./user";
 import produce from "immer";
 import axios from "axios";
+import { history } from "../configStore";
 import { config } from "../../shared/config";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 // Action
 const GET_USER_INFO = "GET_USER_INFO";
@@ -42,15 +44,31 @@ const getUserInfoAPI = (userId) => {
     })
       .then((res) => {
         console.log(res.data.data);
-        let _user = res.data.data;
 
-        let user = {
-          userId: _user.userId,
-          nickname: _user.nickname,
-          profileImgUrl: _user.imgUrl,
-          introduction: _user.introduceMsg,
-        };
-        dispatch(getUserInfo(user));
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          });
+        } else {
+          let _user = res.data.data;
+          let user = {
+            userId: _user.userId,
+            nickname: _user.nickname,
+            profileImgUrl: _user.imgUrl,
+            introduction: _user.introduceMsg,
+          };
+          dispatch(getUserInfo(user));
+        }
       })
       .catch((err) => {
         console.error("게시물 로드 에러", err);
@@ -82,11 +100,28 @@ const editProfileAPI = (profile, userId) => {
       })
         .then((res) => {
           console.log(res.data.data);
-          let _user = res.data.data;
-          let profile = {
-            introduction: _user.introduceMsg,
-          };
-          dispatch(editProfile(profile));
+
+          if (res.data.message === "tokenExpired") {
+            dispatch(userActions.logOut());
+            Swal.fire({
+              text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+              confirmButtonText: "로그인 하러가기",
+              confirmButtonColor: "#ffb719",
+              showCancelButton: true,
+              cancelButtonText: "취소",
+              cancelButtonColor: "#eee",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                history.push("/login");
+              }
+            });
+          } else {
+            let _user = res.data.data;
+            let profile = {
+              introduction: _user.introduceMsg,
+            };
+            dispatch(editProfile(profile));
+          }
         })
         .catch((err) => {
           console.error("작성 실패", err);
@@ -111,12 +146,29 @@ const editProfileAPI = (profile, userId) => {
       })
         .then((res) => {
           console.log(res.data.data);
-          let _user = res.data.data;
+
+          if (res.data.message === "tokenExpired"){
+            dispatch(userActions.logOut());
+            Swal.fire({
+              text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+              confirmButtonText: '로그인 하러가기',
+              confirmButtonColor: '#ffb719',
+              showCancelButton: true,
+              cancelButtonText: '취소',
+              cancelButtonColor: '#eee',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                history.push("/login");
+              }
+            })
+          }else{
+            let _user = res.data.data;
           let profile = {
             profileImgUrl: _user.imgUrl,
             introduction: _user.introduceMsg,
           };
           dispatch(editProfile(profile));
+          }
         })
         .catch((err) => {
           console.error("작성 실패", err);
@@ -143,21 +195,42 @@ const editNicknameAPI = (newNickname, userId) => {
       )
       .then((res) => {
         console.log(res.data.data);
-        let nickname = {
-          nickname: res.data.data.nickname,
-        };
-        console.log("닉네임 수정 정보", nickname);
-        // let nickname = res.data.data.nickname;
-        dispatch(editNickname(nickname));
-        if (res.data.data.nickname === true) {
+
+        if (res.data.message === "tokenExpired"){
+          dispatch(userActions.logOut());
           Swal.fire({
-            text: '닉네임이 변경 되었습니다.',
-            confirmButtonColor:  "#ffb719",
+            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
+            confirmButtonText: '로그인 하러가기',
+            confirmButtonColor: '#ffb719',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: '#eee',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
           })
-        }
+        }else{
+          let nickname = {
+            nickname: res.data.data.nickname,
+          };
+          console.log("닉네임 수정 정보", nickname);
+          // let nickname = res.data.data.nickname;
+          dispatch(editNickname(nickname));
+          if (res.data.data.nickname === true) {
+            Swal.fire({
+              text: "닉네임이 변경 되었습니다.",
+              confirmButtonColor: "#ffb719",
+            });
+          }
+        }        
       })
       .catch((err) => {
         console.error("작성 실패", err);
+        Swal.fire({
+          text: "닉네임을 수정할 수 없습니다.",
+          confirmButtonColor: "#ffb719",
+        });
       });
   };
 };
@@ -186,7 +259,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.user = { ...draft.user, ...action.payload.nickname };
       }),
-      [RESET_PROFILE]: (state, action) =>
+    [RESET_PROFILE]: (state, action) =>
       produce(state, (draft) => {
         draft.user = action.payload.reset;
       }),
@@ -204,7 +277,7 @@ const actionCreators = {
   editProfileAPI,
   editNicknameAPI,
   editNickname,
-  resetProfile
+  resetProfile,
 };
 
 // actionCreators로 묶은 함수들을

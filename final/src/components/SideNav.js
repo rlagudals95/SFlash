@@ -126,17 +126,15 @@ function Navbar() {
               <IconOutter>
                 {is_login ? (
                   <SelectedIcon
-                    onClick={() => {
-                      history.push(`/story/${userId}`);
-                      dispatch(sideActions.getPage("story"));
-                      dispatch(storyPostActions.resetStory([]));
-                      dispatch(profileActions.resetProfile([]));
-                    }}
-                    // onClick={() => {
-                    //   window.location.replace(
-                    //     `/story/${userId}`
-                    //   );
-                    // }}
+                  onClick={() => {
+                    dispatch(sideActions.getPage("story"));
+                    history.push(`/story/${userId}`); 
+                    dispatch(storyPostActions.resetStory([]));
+                    dispatch(profileActions.resetProfile([]));
+                    dispatch(profileActions.getUserInfoAPI(userId));
+                    dispatch(storyPostActions.getUserPostAPI(userId));
+                    dispatch(storyPostActions.getUserLikeAPI(userId));
+                  }}
                   >
                     MY STORY
                   </SelectedIcon>
@@ -155,19 +153,14 @@ function Navbar() {
                 {is_login ? (
                   <IconInfo
                     onClick={() => {
-                      history.push(`/story/${userId}`);
-                      // dispatch(storyPostActions.resetStory([]));
                       dispatch(sideActions.getPage("story"));
+                      history.push(`/story/${userId}`);
+                      dispatch(storyPostActions.resetStory([]));
                       dispatch(profileActions.resetProfile([]));
                       dispatch(profileActions.getUserInfoAPI(userId));
                       dispatch(storyPostActions.getUserPostAPI(userId));
                       dispatch(storyPostActions.getUserLikeAPI(userId));
                     }}
-                    // onClick={() => {
-                    //   window.location.replace(
-                    //     `/story/${userId}`
-                    //   );
-                    // }}
                   >
                     MY STORY
                   </IconInfo>
