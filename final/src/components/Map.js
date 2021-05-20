@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/configStore";
 import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지url
-import writeInfoWindow from "../shared/images/writeInfoWindow/writeMarkerInfo.png"
+import writeInfoWindow from "../shared/images/writeInfoWindow/writeMarkerInfo.png";
 
 import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
@@ -94,86 +94,86 @@ const Maps = (props) => {
   console.log("내 작성 게시물 왔나??: " + myPostData);
   // 1. 내가 작성한한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!!
   const myPostCafe = myPostData.filter(
-    (myPostData) => myPostData.category == "카페"    // 1. 카페
+    (myPostData) => myPostData.category == "카페" // 1. 카페
   );
   const myPostNight = myPostData.filter(
-    (myPostData) => myPostData.category == "야경"    // 2. 야경
+    (myPostData) => myPostData.category == "야경" // 2. 야경
   );
   const myPostOcean = myPostData.filter(
-    (myPostData) => myPostData.category == "바다"    // 3. 바다
+    (myPostData) => myPostData.category == "바다" // 3. 바다
   );
   const myPostMountain = myPostData.filter(
-    (myPostData) => myPostData.category == "산"      // 4. 산
+    (myPostData) => myPostData.category == "산" // 4. 산
   );
   const myPostFlower = myPostData.filter(
-    (myPostData) => myPostData.category == "꽃"      // 5. 꽃
+    (myPostData) => myPostData.category == "꽃" // 5. 꽃
   );
   const myPostAlone = myPostData.filter(
-    (myPostData) => myPostData.category == "나홀로"  // 6. 나홀로
+    (myPostData) => myPostData.category == "나홀로" // 6. 나홀로
   );
   const myPostCouple = myPostData.filter(
-    (myPostData) => myPostData.category == "연인"    // 7. 연인
+    (myPostData) => myPostData.category == "연인" // 7. 연인
   );
   const myPostFriend = myPostData.filter(
-    (myPostData) => myPostData.category == "친구"     // 8. 친구
+    (myPostData) => myPostData.category == "친구" // 8. 친구
   );
   const myPostPet = myPostData.filter(
-    (myPostData) => myPostData.category == "반려동물"  // 9. 반려동물
+    (myPostData) => myPostData.category == "반려동물" // 9. 반려동물
   );
   const myPostCity = myPostData.filter(
-    (myPostData) => myPostData.category == "도심"      // 10. 도심
+    (myPostData) => myPostData.category == "도심" // 10. 도심
   );
-  const myPostPark = myPostData.filter( 
-    (myPostData) => myPostData.category == "공원"      // 11. 공원
+  const myPostPark = myPostData.filter(
+    (myPostData) => myPostData.category == "공원" // 11. 공원
   );
   const myPostExhibition = myPostData.filter(
-    (myPostData) => myPostData.category == "전시"      // 12. 전시
+    (myPostData) => myPostData.category == "전시" // 12. 전시
   );
-  // 1. 내가 작성한한 게시물 데이터를 다시 카테고리별로 데이터분류 끝!!! 
+  // 1. 내가 작성한한 게시물 데이터를 다시 카테고리별로 데이터분류 끝!!!
 
   // 2. 내가 좋아요한 데이터
   const myLikeData = map_post_list.filter(
     (map_post_list) => map_post_list.like === true
   );
   console.log("내좋아요 데이터있나??: " + myLikeData);
-  // 2. 내가 좋아요한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!! 
+  // 2. 내가 좋아요한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!!
   const myLikeCafe = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "카페"    // 1. 카페
+    (myLikeData) => myLikeData.category == "카페" // 1. 카페
   );
   const myLikeNight = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "야경"    // 2. 야경
+    (myLikeData) => myLikeData.category == "야경" // 2. 야경
   );
   const myLikeOcean = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "바다"    // 3. 바다
+    (myLikeData) => myLikeData.category == "바다" // 3. 바다
   );
   const myLikeMountain = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "산"      // 4. 산
+    (myLikeData) => myLikeData.category == "산" // 4. 산
   );
   const myLikeFlower = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "꽃"      // 5. 꽃
+    (myLikeData) => myLikeData.category == "꽃" // 5. 꽃
   );
   const myLikeAlone = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "나홀로"  // 6. 나홀로
+    (myLikeData) => myLikeData.category == "나홀로" // 6. 나홀로
   );
   const myLikeCouple = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "연인"    // 7. 연인
+    (myLikeData) => myLikeData.category == "연인" // 7. 연인
   );
   const myLikeFriend = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "친구"     // 8. 친구
+    (myLikeData) => myLikeData.category == "친구" // 8. 친구
   );
   const myLikePet = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "반려동물"  // 9. 반려동물
+    (myLikeData) => myLikeData.category == "반려동물" // 9. 반려동물
   );
   const myLikeCity = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "도심"      // 10. 도심
+    (myLikeData) => myLikeData.category == "도심" // 10. 도심
   );
-  const myLikePark = myLikeData.filter( 
-    (myLikeData) => myLikeData.category == "공원"      // 11. 공원
+  const myLikePark = myLikeData.filter(
+    (myLikeData) => myLikeData.category == "공원" // 11. 공원
   );
   const myLikeExhibition = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "전시"      // 12. 전시
+    (myLikeData) => myLikeData.category == "전시" // 12. 전시
   );
-  // 2. 내가 좋아요한 게시물 데이터를 다시 카테고리별로 데이터분류 끝!!! 
+  // 2. 내가 좋아요한 게시물 데이터를 다시 카테고리별로 데이터분류 끝!!!
 
   // 각 카테고리별 데이터
   const cafeData = map_post_list.filter(
@@ -329,10 +329,10 @@ const Maps = (props) => {
         // 작성용 마커를 사용하는 방법을 알려주는 인포윈도우
         // 작성용 마커위에 갖다대면 뜨고(mouseover) 마우스를 떼면(mouseout) 사라진다.
         // 작성용 마커에 우클릭을 하면 마커가 사라지면서 인포윈도우도 사라진다.
-        var writeGuideContent = 
+        var writeGuideContent =
           '<div class="writeinfobox">' +
-            `<img class="writeinfowindow" src=${writeInfoWindow}>` +
-          '</div>';
+          `<img class="writeinfowindow" src=${writeInfoWindow}>` +
+          "</div>";
 
         // 인포윈도우 생성하기
         var writeGuideWindow = new kakao.maps.InfoWindow({
@@ -468,7 +468,7 @@ const Maps = (props) => {
           // dispatch(ModalActions.getModalPostAPI(myCafe.id));
           openModal();
         });
-      }); 
+      });
 
       // 2. 내가 작성한 게시물 : 야경
       myPostNight.forEach((myNight) => {
@@ -528,7 +528,7 @@ const Maps = (props) => {
           openModal();
         });
       });
-      
+
       // 3. 내가 작성한 게시물 : 바다
       myPostOcean.forEach((myOcean) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -586,7 +586,7 @@ const Maps = (props) => {
           // dispatch(ModalActions.getModalPostAPI(myOcean.id));
           openModal();
         });
-      }); 
+      });
 
       // 4. 내가 작성한 게시물 : 산
       myPostMountain.forEach((myMountain) => {
@@ -629,14 +629,22 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(myMountainMarkers, "mouseover", function () {
-          myMountainCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myMountainMarkers,
+          "mouseover",
+          function () {
+            myMountainCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(myMountainMarkers, "mouseout", function () {
-          myMountainCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          myMountainMarkers,
+          "mouseout",
+          function () {
+            myMountainCustomOverlay.setMap(null);
+          }
+        );
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
         kakao.maps.event.addListener(myMountainMarkers, "click", function () {
@@ -645,7 +653,7 @@ const Maps = (props) => {
           // dispatch(ModalActions.getModalPostAPI(myMountain.id));
           openModal();
         });
-      }); 
+      });
 
       // 5. 내가 작성한 게시물 : 꽃
       myPostFlower.forEach((myFlower) => {
@@ -704,8 +712,8 @@ const Maps = (props) => {
           // dispatch(ModalActions.getModalPostAPI(myFlower.id));
           openModal();
         });
-      }); 
-      
+      });
+
       // 6. 내가 작성한 게시물 : 나홀로
       myPostAlone.forEach((myAlone) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -764,7 +772,7 @@ const Maps = (props) => {
           openModal();
         });
       });
-      
+
       // 7. 내가 작성한 게시물 : 커플
       myPostCouple.forEach((myCouple) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -891,10 +899,7 @@ const Maps = (props) => {
           `${markerImgUrls.myPostPetMarkerImgUrl}`,
           imageSize
         );
-        const position = new kakao.maps.LatLng(
-          myPet.latitude,
-          myPet.longitude
-        );
+        const position = new kakao.maps.LatLng(myPet.latitude, myPet.longitude);
         const myPetMarkers = new kakao.maps.Marker({
           map: map,
           position: position,
@@ -1101,14 +1106,22 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(myExhibitionMarkers, "mouseover", function () {
-          myExhibitionCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myExhibitionMarkers,
+          "mouseover",
+          function () {
+            myExhibitionCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(myExhibitionMarkers, "mouseout", function () {
-          myExhibitionCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          myExhibitionMarkers,
+          "mouseout",
+          function () {
+            myExhibitionCustomOverlay.setMap(null);
+          }
+        );
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
         kakao.maps.event.addListener(myExhibitionMarkers, "click", function () {
@@ -1123,7 +1136,7 @@ const Maps = (props) => {
 
     // 2. 내가 좋아요한 게시물만, 카테고리별로 데이터 나누기 : 좋아요마커 + 커스텀 오버레이
     if (is_mylike) {
-    // 134-176번줄에 내가 좋아요한 게시물 데이터 카테고리별로 나눠둠. 그것들을 가져와서 아래 코드를 작성
+      // 134-176번줄에 내가 좋아요한 게시물 데이터 카테고리별로 나눠둠. 그것들을 가져와서 아래 코드를 작성
       // 1. 내가 좋아요한 게시물 : 카페
       myLikeCafe.forEach((myCafe) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -1165,14 +1178,22 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(myLikeCafeMarkers, "mouseover", function () {
-          myLikeCafeCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myLikeCafeMarkers,
+          "mouseover",
+          function () {
+            myLikeCafeCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(myLikeCafeMarkers, "mouseout", function () {
-          myLikeCafeCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          myLikeCafeMarkers,
+          "mouseout",
+          function () {
+            myLikeCafeCustomOverlay.setMap(null);
+          }
+        );
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
         kakao.maps.event.addListener(myLikeCafeMarkers, "click", function () {
@@ -1181,7 +1202,7 @@ const Maps = (props) => {
           // dispatch(ModalActions.getModalPostAPI(myCafe.id));
           openModal();
         });
-      }); 
+      });
 
       // 2. 내가 좋아요한 게시물 : 야경
       myLikeNight.forEach((myNight) => {
@@ -1225,14 +1246,22 @@ const Maps = (props) => {
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
 
-        kakao.maps.event.addListener(myLikeNightMarkers, "mouseover", function () {
-          myLikeNightCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myLikeNightMarkers,
+          "mouseover",
+          function () {
+            myLikeNightCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(myLikeNightMarkers, "mouseout", function () {
-          myLikeNightCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          myLikeNightMarkers,
+          "mouseout",
+          function () {
+            myLikeNightCustomOverlay.setMap(null);
+          }
+        );
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
         kakao.maps.event.addListener(myLikeNightMarkers, "click", function () {
@@ -1242,7 +1271,7 @@ const Maps = (props) => {
           openModal();
         });
       });
-      
+
       // 3. 내가 좋아요한 게시물 : 바다
       myLikeOcean.forEach((myOcean) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -1284,14 +1313,22 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(myLikeOceanMarkers, "mouseover", function () {
-          myLikeOceanCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myLikeOceanMarkers,
+          "mouseover",
+          function () {
+            myLikeOceanCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(myLikeOceanMarkers, "mouseout", function () {
-          myLikeOceanCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          myLikeOceanMarkers,
+          "mouseout",
+          function () {
+            myLikeOceanCustomOverlay.setMap(null);
+          }
+        );
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
         kakao.maps.event.addListener(myLikeOceanMarkers, "click", function () {
@@ -1343,22 +1380,34 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(myLikeMountainMarkers, "mouseover", function () {
-          myLikeMountainCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myLikeMountainMarkers,
+          "mouseover",
+          function () {
+            myLikeMountainCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(myLikeMountainMarkers, "mouseout", function () {
-          myLikeMountainCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          myLikeMountainMarkers,
+          "mouseout",
+          function () {
+            myLikeMountainCustomOverlay.setMap(null);
+          }
+        );
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
-        kakao.maps.event.addListener(myLikeMountainMarkers, "click", function () {
-          // 서버로 해당 마커의 id를 보내고 모달창 오픈
-          dispatch(ModalActions.getModalPostAPI(myMountain.id));
-          // dispatch(ModalActions.getModalPostAPI(myMountain.id));
-          openModal();
-        });
+        kakao.maps.event.addListener(
+          myLikeMountainMarkers,
+          "click",
+          function () {
+            // 서버로 해당 마커의 id를 보내고 모달창 오픈
+            dispatch(ModalActions.getModalPostAPI(myMountain.id));
+            // dispatch(ModalActions.getModalPostAPI(myMountain.id));
+            openModal();
+          }
+        );
       });
 
       // 5. 내가 좋아요한 게시물 : 꽃
@@ -1402,14 +1451,22 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(myLikeFlowerMarkers, "mouseover", function () {
-          myLikeFlowerCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myLikeFlowerMarkers,
+          "mouseover",
+          function () {
+            myLikeFlowerCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(myLikeFlowerMarkers, "mouseout", function () {
-          myLikeFlowerCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          myLikeFlowerMarkers,
+          "mouseout",
+          function () {
+            myLikeFlowerCustomOverlay.setMap(null);
+          }
+        );
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
         kakao.maps.event.addListener(myLikeFlowerMarkers, "click", function () {
@@ -1461,14 +1518,22 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(myLikeAloneMarkers, "mouseover", function () {
-          myLikeAloneCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myLikeAloneMarkers,
+          "mouseover",
+          function () {
+            myLikeAloneCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(myLikeAloneMarkers, "mouseout", function () {
-          myLikeAloneCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          myLikeAloneMarkers,
+          "mouseout",
+          function () {
+            myLikeAloneCustomOverlay.setMap(null);
+          }
+        );
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
         kakao.maps.event.addListener(myLikeAloneMarkers, "click", function () {
@@ -1520,14 +1585,22 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(myLikeCoupleMarkers, "mouseover", function () {
-          myLikeCoupleCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myLikeCoupleMarkers,
+          "mouseover",
+          function () {
+            myLikeCoupleCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(myLikeCoupleMarkers, "mouseout", function () {
-          myLikeCoupleCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          myLikeCoupleMarkers,
+          "mouseout",
+          function () {
+            myLikeCoupleCustomOverlay.setMap(null);
+          }
+        );
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
         kakao.maps.event.addListener(myLikeCoupleMarkers, "click", function () {
@@ -1579,14 +1652,22 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(myLikeFriendMarkers, "mouseover", function () {
-          myLikeFriendCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myLikeFriendMarkers,
+          "mouseover",
+          function () {
+            myLikeFriendCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(myLikeFriendMarkers, "mouseout", function () {
-          myLikeFriendCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          myLikeFriendMarkers,
+          "mouseout",
+          function () {
+            myLikeFriendCustomOverlay.setMap(null);
+          }
+        );
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
         kakao.maps.event.addListener(myLikeFriendMarkers, "click", function () {
@@ -1595,8 +1676,8 @@ const Maps = (props) => {
           // dispatch(ModalActions.getModalPostAPI(myFriend.id));
           openModal();
         });
-      }); 
-      
+      });
+
       // 9. 내가 좋아요한 게시물 : 반려동물
       myLikePet.forEach((myPet) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -1605,10 +1686,7 @@ const Maps = (props) => {
           `${markerImgUrls.myLikePetMarkerImgUrl}`,
           imageSize
         );
-        const position = new kakao.maps.LatLng(
-          myPet.latitude,
-          myPet.longitude
-        );
+        const position = new kakao.maps.LatLng(myPet.latitude, myPet.longitude);
         const myLikePetMarkers = new kakao.maps.Marker({
           map: map,
           position: position,
@@ -1638,9 +1716,13 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(myLikePetMarkers, "mouseover", function () {
-          myLikePetCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myLikePetMarkers,
+          "mouseover",
+          function () {
+            myLikePetCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
         kakao.maps.event.addListener(myLikePetMarkers, "mouseout", function () {
@@ -1655,7 +1737,7 @@ const Maps = (props) => {
           openModal();
         });
       });
-      
+
       // 10. 내가 좋아요한 게시물 : 도심
       myLikeCity.forEach((myCity) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
@@ -1697,14 +1779,22 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(myLikeCityMarkers, "mouseover", function () {
-          myLikeCityCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myLikeCityMarkers,
+          "mouseover",
+          function () {
+            myLikeCityCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(myLikeCityMarkers, "mouseout", function () {
-          myLikeCityCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          myLikeCityMarkers,
+          "mouseout",
+          function () {
+            myLikeCityCustomOverlay.setMap(null);
+          }
+        );
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
         kakao.maps.event.addListener(myLikeCityMarkers, "click", function () {
@@ -1756,14 +1846,22 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(myLikeParkMarkers, "mouseover", function () {
-          myLikeParkCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myLikeParkMarkers,
+          "mouseover",
+          function () {
+            myLikeParkCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(myLikeParkMarkers, "mouseout", function () {
-          myLikeParkCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          myLikeParkMarkers,
+          "mouseout",
+          function () {
+            myLikeParkCustomOverlay.setMap(null);
+          }
+        );
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
         kakao.maps.event.addListener(myLikeParkMarkers, "click", function () {
@@ -1815,26 +1913,37 @@ const Maps = (props) => {
         });
 
         // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
-        kakao.maps.event.addListener(myLikeExhibitionMarkers, "mouseover", function () {
-          myLikeExhibitionCustomOverlay.setMap(map);
-        });
+        kakao.maps.event.addListener(
+          myLikeExhibitionMarkers,
+          "mouseover",
+          function () {
+            myLikeExhibitionCustomOverlay.setMap(map);
+          }
+        );
 
         //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
-        kakao.maps.event.addListener(myLikeExhibitionMarkers, "mouseout", function () {
-          myLikeExhibitionCustomOverlay.setMap(null);
-        });
+        kakao.maps.event.addListener(
+          myLikeExhibitionMarkers,
+          "mouseout",
+          function () {
+            myLikeExhibitionCustomOverlay.setMap(null);
+          }
+        );
 
         // 클릭시 모달 디테일 뜨게 하기 테스트
-        kakao.maps.event.addListener(myLikeExhibitionMarkers, "click", function () {
-          // 서버로 해당 마커의 id를 보내고 모달창 오픈
-          dispatch(ModalActions.getModalPostAPI(myExhibition.id));
-          // dispatch(ModalActions.getModalPostAPI(myExhibition.id));
-          openModal();
-        });
-      });      
+        kakao.maps.event.addListener(
+          myLikeExhibitionMarkers,
+          "click",
+          function () {
+            // 서버로 해당 마커의 id를 보내고 모달창 오픈
+            dispatch(ModalActions.getModalPostAPI(myExhibition.id));
+            // dispatch(ModalActions.getModalPostAPI(myExhibition.id));
+            openModal();
+          }
+        );
+      });
     }
     // 내가 좋아요한 게시물만 : 끝!!!!
-
 
     // 카테고리별 마커 + 커스텀오버레이 제어 시작!!
     // 1. 카페 카테고리 : 카페마커 + 커스텀 오버레이

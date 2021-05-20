@@ -10,7 +10,7 @@ import * as BiIcons from "react-icons/bi";
 import _ from "lodash"; // throttle, debounce 사용
 
 // component, element 파일들 가져오기
-import "../Css/Map.css";
+import "../Css/StoryMap.css";
 import PostModal from "./StoryPostModal/PostModal";
 import { actionCreators as ModalActions } from "../redux/modules/storypostmodal";
 import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지들 모음
