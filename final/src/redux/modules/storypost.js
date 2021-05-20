@@ -54,8 +54,8 @@ const getUserPostAPI = (userId) => {
   return function (dispatch, getState) {
     console.log("fkfkffkffkfffk");
     const _post_list = getState().storypost.user_post_list;
-    const p_length = _post_list.length
-    let lastId = p_length === 0 ? 999 : _post_list[p_length-1].id;
+    const p_length = _post_list.length;
+    let lastId = p_length === 0 ? 999 : _post_list[p_length - 1].id;
     let size = 15;
     console.log("데이터는 잘 넘어가나?", userId, lastId, size);
     // const board_list = getState().storypost.user_post_list;
@@ -76,7 +76,6 @@ const getUserPostAPI = (userId) => {
     // }
     // console.log("페이징 카운트", pCnt);
 
-
     // let lastId = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
     //   board_list.length === 0
     //     ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
@@ -89,7 +88,6 @@ const getUserPostAPI = (userId) => {
     // }
     // console.log("페이징 카운트", pCnt);
     // let size = 15;
-
 
     axios({
       method: "GET",
@@ -141,8 +139,8 @@ const getUserPostAPI = (userId) => {
 const getUserLikeAPI = (userId) => {
   return function (dispatch, getState) {
     const _post_list = getState().storypost.user_like_list;
-    const p_length = _post_list.length
-    let lastId = p_length === 0 ? 999 : _post_list[p_length-1].id;
+    const p_length = _post_list.length;
+    let lastId = p_length === 0 ? 999 : _post_list[p_length - 1].id;
     let size = 15;
     console.log("데이터는 잘 넘어가나?", userId, lastId, size);
     // const pCnt = getState().storypost.pagingCnt;
@@ -158,7 +156,6 @@ const getUserLikeAPI = (userId) => {
     // // console.log("마지막 포스트 아이디", lastId);
 
     // console.log("페이징 카운트", pCnt);
-   
 
     axios({
       method: "GET",
@@ -436,17 +433,17 @@ export default handleActions(
     // 내 게시물
     [SET_STORY_POST]: (state, action) =>
       produce(state, (draft) => {
-
-        console.log("내 게시물 draft.user_post_list", draft.user_post_list);
+        console.log("내 게시물 ", draft.user_post_list);
         console.log(
           "내 게시물 action.payload.post_list",
           action.payload.post_list
         );
 
         if (draft.check === null) {
-          console.log("draft.check", draft.check);
-          draft.user_post_list = action.payload.post_list
+          console.log("처음 받을때 실행", draft.check);
+          draft.user_post_list = action.payload.post_list;
         } else {
+          console.log("두번째 받을때 실행", draft.check);
           draft.user_post_list.push(...action.payload.post_list);
         }
         // draft.paging = action.payload.paging; // 페이징 처리
@@ -461,20 +458,24 @@ export default handleActions(
           }
         }, []);
         // // 무한스크롤 시에는 push 방식으로 set 해주기
-        draft.check = draft.check + 1 //check : 1
-        console.log("draft.check +1?????", draft.check);
+        draft.check = draft.check + 1; //check : 1
+        console.log("처음 받을때 실행", draft.check);
       }),
     // 내 좋아요 게시물
     [SET_STORY_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        console.log("좋아요 draft.user_like_list", draft.user_like_list);
+        console.log("좋아요 게시물", draft.user_like_list);
         console.log(
           "좋아요 action.payload.post_list",
           action.payload.post_list
         );
-        if (draft.check === null) {   //5
-          draft.user_like_list = action.payload.post_list
+        if (draft.check === null) {
+          //5
+
+          console.log("처음 받을때 실행", draft.check);
+          draft.user_like_list = action.payload.post_list;
         } else {
+          console.log("두번째 받을때 실행", draft.check);
           draft.user_like_list.push(...action.payload.post_list);
         }
         // draft.user_like_list.push(...action.payload.post_list);
@@ -488,7 +489,7 @@ export default handleActions(
             return acc; // 그 게시물은 새로 받은 게시물 => 그러므로 cur은 return 안해준다
           }
         }, []);
-        draft.check = draft.check + 1 //check : 5
+        draft.check = draft.check + 1; //check : 5
       }),
 
     // 내 게시물 수정(하트, 포스트 모달 수정 화면 반영)
