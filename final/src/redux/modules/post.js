@@ -123,7 +123,7 @@ const addPostAPI = (post) => {
     // console.log("??????", localStorage.getItem("jwt"));
 
     dispatch(spinner(true)); // 게시물 업로드하고 기다릴 동안 스피너를 개시하는 시점
-    console.log("파일들", _file);
+
     const formData = new FormData();
     formData.append("title", post.title);
     formData.append("content", post.content);
@@ -137,8 +137,6 @@ const addPostAPI = (post) => {
       // console.log(_file[i]);
     }
 
-    console.log("토큰이 넘어 올까요~?", config.jwt);
-    //////////
     const _category = getState().category.select_category; //요기 오타가 있었네요!
     formData.append("category", _category);
     // console.log(formData);
@@ -254,7 +252,7 @@ const getPostAPI = () => {
         } else {
           // console.log("스피너 지우자~!", res.data.data); //이것의
 
-          console.log("데이터 길이!", res.data.data.length);
+          // console.log("데이터 길이!", res.data.data.length);
           if (res.data.data.length < 15) {
             // console.log("로딩멈춰!");
             dispatch(loading(false));
@@ -280,7 +278,7 @@ const getPostAPI = () => {
             return;
           }
 
-          console.log("서버 응답값", res);
+          // console.log("서버 응답값", res);
           let post_list = [];
           // console.log(res.data.data[0].boardImgReponseDtoList);
           result.forEach((_post) => {
@@ -504,8 +502,6 @@ const editPostAPI = (board_id, _edit) => {
     });
   };
 };
-
-// `http://localhost:3000/${encodeURIComponent("한글파라미터")}`;
 
 const searchPostAPI = (search, start = null, size = null) => {
   return function (dispatch, getState) {
@@ -757,7 +753,7 @@ export default handleActions(
     //게시글 수정시 마커 이미지도 바로 수정하기 위해서 만듦
     [EDIT_MARKER]: (state, action) =>
       produce(state, (draft) => {
-        console.log("받은 마커 이미지는?", action.payload.markerImg);
+        // console.log("받은 마커 이미지는?", action.payload.markerImg);
         // console.log(action.payload.board_id);
         let idx = draft.map_post_list.findIndex(
           (p) => p.id == action.payload.board_id

@@ -38,6 +38,9 @@ function Navbar() {
 
   console.log("현재 페이지는?ㄴㅇㄹ혼애로내여ㅑㄹ?", pageLocation);
 
+  const is_story = pageLocation.includes("story"); // 스토리 페이지의 pathname은 stroy/id 이기 때문에 story를 포함하는지 여부에 따라 조건을 줌
+
+  // console.log("스토리 상태야?", is_story);
   const is_login = useSelector((state) => state.user.is_login);
   const userId = localStorage.getItem("userId"); // 로컬스토리지에 저장된 닉네임 가져오는 방법
   const is_loading = useSelector((state) => state.user.is_loading);
@@ -126,11 +129,10 @@ function Navbar() {
               )}
             </IconOutter>
             {/* 마이페이지 & 로그인 */}
-            {/* && page == "story" ? */}
-
-            {page == "story" ? (
+            {/*  */}
+            {is_login ? (
               <IconOutter>
-                {is_login ? (
+                {is_story ? (
                   <SelectedIcon
                     onClick={() => {
                       dispatch(sideActions.getPage("story"));
@@ -145,18 +147,6 @@ function Navbar() {
                     MY STORY
                   </SelectedIcon>
                 ) : (
-                  <SelectedIcon
-                    onClick={() => {
-                      history.push("/login");
-                    }}
-                  >
-                    LOGIN
-                  </SelectedIcon>
-                )}
-              </IconOutter>
-            ) : (
-              <IconOutter>
-                {is_login ? (
                   <IconInfo
                     onClick={() => {
                       dispatch(sideActions.getPage("story"));
@@ -170,6 +160,18 @@ function Navbar() {
                   >
                     MY STORY
                   </IconInfo>
+                )}
+              </IconOutter>
+            ) : (
+              <IconOutter>
+                {pageLocation == "/login" ? (
+                  <SelectedIcon
+                    onClick={() => {
+                      history.push("/login");
+                    }}
+                  >
+                    LOGIN
+                  </SelectedIcon>
                 ) : (
                   <IconInfo
                     onClick={() => {
@@ -183,7 +185,6 @@ function Navbar() {
               </IconOutter>
             )}
 
-            {/* About */}
             <IconOutter>
               {pageLocation == "/about" ? (
                 <SelectedIcon
@@ -532,3 +533,7 @@ const Home = styled.div`
 `;
 
 export default Navbar;
+
+{
+  /* && page == "story" ? */
+}

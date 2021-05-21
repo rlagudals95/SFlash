@@ -147,27 +147,27 @@ const editProfileAPI = (profile, userId) => {
         .then((res) => {
           console.log(res.data.data);
 
-          if (res.data.message === "tokenExpired"){
+          if (res.data.message === "tokenExpired") {
             dispatch(userActions.logOut());
             Swal.fire({
-              text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-              confirmButtonText: '로그인 하러가기',
-              confirmButtonColor: '#ffb719',
+              text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+              confirmButtonText: "로그인 하러가기",
+              confirmButtonColor: "#ffb719",
               showCancelButton: true,
-              cancelButtonText: '취소',
-              cancelButtonColor: '#eee',
+              cancelButtonText: "취소",
+              cancelButtonColor: "#eee",
             }).then((result) => {
               if (result.isConfirmed) {
                 history.push("/login");
               }
-            })
-          }else{
+            });
+          } else {
             let _user = res.data.data;
-          let profile = {
-            profileImgUrl: _user.imgUrl,
-            introduction: _user.introduceMsg,
-          };
-          dispatch(editProfile(profile));
+            let profile = {
+              profileImgUrl: _user.imgUrl,
+              introduction: _user.introduceMsg,
+            };
+            dispatch(editProfile(profile));
           }
         })
         .catch((err) => {
@@ -194,23 +194,23 @@ const editNicknameAPI = (newNickname, userId) => {
         }
       )
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
 
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           let nickname = {
             nickname: res.data.data.nickname,
           };
@@ -223,7 +223,7 @@ const editNicknameAPI = (newNickname, userId) => {
               confirmButtonColor: "#ffb719",
             });
           }
-        }        
+        }
       })
       .catch((err) => {
         console.error("작성 실패", err);
