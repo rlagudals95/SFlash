@@ -2758,11 +2758,12 @@ export default Maps;
 const SearchBox = styled.div`
   position: fixed;
   top: 40px;
-  left: 225px;
-  transform: translate(-10%, -90%);
+  left: 50%;
+  height: 72px;
+  transform: translate(-50%, -50%);
   z-index: 3;
   @media (min-width: 1400px) {
-    width: 600px;
+    width: 700px;
     top: 100px;
   }
   @media (max-width: 1400px) {
@@ -2773,10 +2774,10 @@ const SearchBox = styled.div`
     margin: auto;
   }
   @media (max-width: 600px) {
-    top: 140px;
+    top: 5vh;
     width: 50%;
-    left: 25vw;
-    margin: auto;
+    left: 25%;
+    margin: auto 25vw;
   }
 `;
 
@@ -2796,8 +2797,12 @@ const SearchInput = styled.input`
 
 const SearchIcon = styled.div`
   position: fixed;
-  top: 10px;
-  right: 0;
+  top: 13px;
+  right: -18px;
+  width: 43px;
+  height: 43px;
+  background-size: cover;
+  object-fit: cover;
 `;
 
 const MapBox = styled.div`
