@@ -23,9 +23,9 @@
   + 김형민 ([Github Repo](https://github.com/rlagudals95/SFlash)) 
     + 개인상세페이지 제작
 + Backend - Spring boot 
-  + 장현준 
-  + 김승욱 ([Github Repo](https://github.com/rlatmd0829)) <br/>
-  + 이세정
+  + 장현준 ([Github Repo](https://github.com/JangHyeonJun2))
+  + 김승욱 ([Github Repo](https://github.com/rlatmd0829))
+  + 이세정 ([Github Repo](https://github.com/meozes))
 + Design - Adobe Xd, Figma 
   ([UI/UX Wireframe: Figma](https://www.figma.com/file/XjkfeG33ysb5LNcNGhGqgB/%ED%95%AD%ED%95%B499-7%EC%A1%B0---%EB%AA%85%EB%88%84%EC%B0%BE(%EA%B0%80%EC%A0%9C)?node-id=0%3A1)) ([UI/UX Wireframe: AdobeXD](https://xd.adobe.com/view/a37de14d-31ca-4925-a56a-85f1ba0ae57d-f62e/grid/))
   + 임아현
