@@ -28,8 +28,8 @@
   + 김승욱
   + 이세정
 + Design - Adobe Xd, Figma 
-  ([UI/UX Wireframe: Figma](https://www.figma.com/file/XjkfeG33ysb5LNcNGhGqgB/%ED%95%AD%ED%95%B499-7%EC%A1%B0---%EB%AA%85%EB%88%84%EC%B0%BE(%EA%B0%80%EC%A0%9C)?node-id=0%3A1) <br/>
-  ([UI/UX Wireframe: AdobeXD](https://xd.adobe.com/view/a37de14d-31ca-4925-a56a-85f1ba0ae57d-f62e/grid/)
+  ([UI/UX Wireframe: Figma](https://www.figma.com/file/XjkfeG33ysb5LNcNGhGqgB/%ED%95%AD%ED%95%B499-7%EC%A1%B0---%EB%AA%85%EB%88%84%EC%B0%BE(%EA%B0%80%EC%A0%9C)?node-id=0%3A1)) <br/>
+  ([UI/UX Wireframe: AdobeXD](https://xd.adobe.com/view/a37de14d-31ca-4925-a56a-85f1ba0ae57d-f62e/grid/))
   + 임아현
     + 와이어프레임 그리기, 로고 제작, 색상 선택, 마커 제작
   + 송은정
