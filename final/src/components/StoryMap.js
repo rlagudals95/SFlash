@@ -1616,7 +1616,7 @@ const StoryMap = (props) => {
           onChange={debounce}
         />
         <SearchIcon>
-          <BiIcons.BiSearch size="1.7rem" color="#343a40" />
+          <BiIcons.BiSearch size="35" color="#ffb719" />
         </SearchIcon>
       </SearchBox>
 
@@ -1624,8 +1624,6 @@ const StoryMap = (props) => {
         {/* 위에서 설정된 getElementById("map")에 의해서 id="map"인 div에 맵이 표시된다 */}
         <div id="map" style={{ width: "100%", height: "700px" }}></div>
       </MapBox>
-
-  
 
     </React.Fragment>
   );
@@ -1636,10 +1634,13 @@ export default StoryMap;
 const SearchBox = styled.div`
   position: absolute;
   margin-top: 35px;
-  margin-left: 25px;
+  /* margin-left: 25px; */
+  /* top: 30px; */
+  left: 50%;
+  transform: translate(-50%, 0%);
   z-index: 10;
-  width: 350px;
-  align-items:center;
+  width: 500px;
+  align-items: center;
 `;
 
 const SearchInput = styled.input`
@@ -1648,18 +1649,21 @@ const SearchInput = styled.input`
   border-radius: 10px;
   padding-left: 15px;
   font-size: 15px;
-  border: 2px solid rgb(255, 183, 25);
+  border: 5px solid #ffb719;
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 1px rgb(255, 183, 25);
+    /* box-shadow: 0 0 0 1px #ffb719; */
   }
   opacity: 0.8;
 `;
 
 const SearchIcon = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 0;
+  position: fixed;
+  top: 12px;
+  right: -14.5px;
+  /* transform: translate(-25%, 25%); */
+  background-size: cover;
+  object-fit: cover;
 `;
 
 const MapBox = styled.div`

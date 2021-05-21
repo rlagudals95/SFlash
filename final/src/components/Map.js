@@ -8,6 +8,7 @@ import writeInfoWindow from "../shared/images/writeInfoWindow/writeMarkerInfo.pn
 import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
 import * as BiIcons from "react-icons/bi";
+import Swal from 'sweetalert2'
 // component, element 파일들 가져오기
 import "../Css/Map.css";
 import UpLoadModal from "./UpLoadModal";
@@ -2739,7 +2740,10 @@ const Maps = (props) => {
         // window.alert("검색결과가 존재하지 않습니다.");
         return;
       } else if (status === kakao.maps.services.Status.ERROR) {
-        window.alert("검색 결과 중 오류가 발생했습니다.");
+        Swal.fire({
+          text: '검색 결과 중 오류가 발생했습니다.',
+          confirmButtonColor: "#ffb719",
+        })
         return;
       }
     });
@@ -2769,7 +2773,7 @@ const Maps = (props) => {
         />
 
         <SearchIcon>
-          <BiIcons.BiSearch size="2rem" color="rgb(255, 183, 25)" />
+          <BiIcons.BiSearch size="43" color="#ffb719" />
         </SearchIcon>
       </SearchBox>
 
@@ -2796,10 +2800,14 @@ export default Maps;
 
 const SearchBox = styled.div`
   position: fixed;
-  top: 40px;
+  background-color: transparent;
+  border: none;
+  box-sizing: border-box; 
+  border-radius: 10px;
+  top: 30px;
   left: 50%;
   height: 72px;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -70%);
   z-index: 3;
   @media (min-width: 1400px) {
     width: 700px;
@@ -2812,7 +2820,7 @@ const SearchBox = styled.div`
     margin: auto;
   }
   @media (max-width: 600px) {
-    top: 5vh;
+    top: 9vh;
     width: 50%;
     left: 25%;
     margin: auto 25vw;
@@ -2820,25 +2828,25 @@ const SearchBox = styled.div`
 `;
 
 const SearchInput = styled.input`
-  height: 50px;
-  width: 100%;
+  border: 5px solid #ffb719;
+  box-sizing: border-box;
   border-radius: 10px;
-  padding-left: 15px;
-  font-size: 15px;
-  border: 3px solid rgb(255, 183, 25);
+  height: 100%;
+  width: 100%;
+  padding-left: 18px;
+  font-size: 1.2rem;
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgb(255, 183, 25);
+    /* box-shadow: 0 0 0 2px #ffb719; */
   }
   opacity: 0.8;
 `;
 
 const SearchIcon = styled.div`
   position: fixed;
-  top: 13px;
-  right: -18px;
-  width: 43px;
-  height: 43px;
+  top: 14.5px;
+  right: 14.5px;
+  /* transform: translate(-25%, 25%); */
   background-size: cover;
   object-fit: cover;
 `;
