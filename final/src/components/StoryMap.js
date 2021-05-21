@@ -61,11 +61,8 @@ const StoryMap = (props) => {
   const is_login = useSelector((state) => state.user.is_login);
   const nickname = localStorage.getItem("nickname"); // 내가 작성한 게시물을 판별하는 기준 상수
   // 위도, 경도, 마커, 주소
-  const [startlat, setStartLat] = useState(); // 현위치 위도 설정
-  const [startlon, setStartLon] = useState(); // 현위치 경도 설정
-  const [latitude, setLatitude] = useState(); // 클릭한 위치 위도 설정
-  const [longitude, setLongitude] = useState(); // 클릭한 위치 경도 설정
-  const [spotName, setSpotName] = useState(""); // 클릭한 위치 이름 설정
+  const [startLat, setStartLat] = useState(); // 현위치 위도 설정
+  const [startLng, setStartLng] = useState(); // 현위치 경도 설정
   const [_map, setMap] = useState(); // useEffect 외부에서 map을 쓰기 위한 것.
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
   //조건 걸어주기 // 나를 기준으로 몇 km 이내
@@ -84,12 +81,49 @@ const StoryMap = (props) => {
     setSearch(e.target.value);
   }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
 
-  useEffect(() => {
-    // geolocation 제거했습니다.
+// geolocation
+  getLocation();
 
+  function getLocation() {
+    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+    if (navigator.geolocation) {
+      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          console.log(
+            "현위치의 위도 = " +
+              position.coords.latitude +
+              ", 현위치의 경도 = " +
+              position.coords.longitude
+          );
+          setStartLat(position.coords.latitude);
+          setStartLng(position.coords.longitude);
+          // var nowPositionLat = position.coords.latitude
+          // var nowPositionLon = position.coords.longitude
+        },
+        function (error) {
+          console.error(error);
+        },
+        {
+          enableHighAccuracy: false,
+          maximumAge: 0,
+          timeout: Infinity,
+        }
+      );
+    } else {
+      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+      window.alert(
+        "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
+      );
+    }
+  }
+  // geolocation은 여기까지.
+  console.log(startLat, startLng);
+
+  useEffect(() => {
     if (!post_list) {
       return;
-    } else {
+    } else { // 지도 렌더링 코드
       // 페이지가 렌더링 되면 지도 띄우기
       var container = document.getElementById("map"); // 지도를 표시할 div
       var options = {
@@ -1530,7 +1564,7 @@ const StoryMap = (props) => {
         });
       });    
     }
-  }, [userPostMode, post_list]);
+  }, [startLat, startLng, userPostMode, post_list]);
 
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다

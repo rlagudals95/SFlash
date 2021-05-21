@@ -32,6 +32,8 @@ const Maps = (props) => {
   const [is_uploadModal, setUpLoadModal] = useState(false); // 작은 모달에서 댓글 달기를 누르면 나오는 확장된 모달
 
   // 위도, 경도, 마커, 주소
+  const [startLat, setStartLat] = useState(); // 접속한 위치 위도 설정
+  const [startLng, setStartLng] = useState(); // 접속한 위치 경도 설정
   const [latitude, setLatitude] = useState(); // 클릭한 위치 위도 설정
   const [longitude, setLongitude] = useState(); // 클릭한 위치 경도 설정
   const [spotName, setSpotName] = useState(""); // 클릭한 위치 spotName
@@ -218,19 +220,54 @@ const Maps = (props) => {
     setSearch(e.target.value);
   }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
 
-  useEffect(() => {
-    // getLocation();
-    // geolocation은 배포시 https:// 환경이 아니어서 적용이 되지 않는 오류가 나서 지도 로드가 보이지 않게 되고,
-    // 대한민국 전지역을 보여주면서 시작하는 경우에는 의미가 없어서 없앴습니다.
+  // getLocation();
+  getLocation(); 
 
+  function getLocation() {
+    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+    if (navigator.geolocation) {
+      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          console.log(
+            "현위치의 위도 = " +
+              position.coords.latitude +
+              ", 현위치의 경도 = " +
+              position.coords.longitude
+          );
+          setStartLat(position.coords.latitude);
+          setStartLng(position.coords.longitude);
+          // var nowPositionLat = position.coords.latitude
+          // var nowPositionLon = position.coords.longitude
+        },
+        function (error) {
+          console.error(error);
+        },
+        {
+          enableHighAccuracy: false,
+          maximumAge: 0,
+          timeout: Infinity,
+        }
+      );
+    } else {
+      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+      window.alert(
+        "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
+      );
+    }
+  }
+  // geolocation은 여기까지.
+  console.log(startLat, startLng);
+
+  useEffect(() => {
     if (!map_post_list) {
       return;
-    } else {
+    } else { // 지도 렌더링 코드
       // 페이지가 렌더링 되면 지도 띄우기
       var container = document.getElementById("map"); // 지도를 표시할 div
       var options = {
         //지도를 생성할 때 필요한 기본 옵션
-        center: new kakao.maps.LatLng(35.83819028173818, 127.88227108131916), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
+        center: new kakao.maps.LatLng(startLat, startLng), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
         level: 11, //지도 확대 레벨
       };
 
@@ -2644,6 +2681,8 @@ const Maps = (props) => {
     // }, [search, startlat, startlon,
     // }, [startlat, startlon]);
   }, [
+    startLat, 
+    startLng,
     is_mypost,
     is_mylike,
     map_post_list,
@@ -2768,7 +2807,6 @@ const SearchBox = styled.div`
   }
   @media (max-width: 1400px) {
     position: fixed;
-    /* top: 140px; */
     width: 400px;
     top: 140px;
     margin: auto;
