@@ -64,7 +64,7 @@ const Login = () => {
       localStorage.setItem("userId", getUrlParameter("userId"));
       dispatch(userActions.setUser());
     }
-  }
+  };
 
   return (
     <React.Fragment>

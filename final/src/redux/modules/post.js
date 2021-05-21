@@ -19,7 +19,7 @@ const ADD_MAP_POST = "ADD_MAP_POST";
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 const LOADING = "LOADING";
-const MODAL_LOADING = "MODAL_LOADING"
+const MODAL_LOADING = "MODAL_LOADING";
 const ADD_LIKE = "ADD_LIKE";
 const DIS_LIKE = "DIS_LIKE";
 // 검색했을때 검색 결과 게시물만 보여주는 액션
@@ -51,7 +51,9 @@ const editPost = createAction(EDIT_POST, (board_id, post) => ({
 }));
 const deletePost = createAction(DELETE_POST, (id) => ({ id }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
-const modal_loading = createAction(MODAL_LOADING, (modal_loading) => ({modal_loading}));
+const modal_loading = createAction(MODAL_LOADING, (modal_loading) => ({
+  modal_loading,
+}));
 /////////////////
 const add_Like = createAction(ADD_LIKE, (post_id, board) => ({
   post_id,
@@ -726,7 +728,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;
       }),
-    [MODAL_LOADING]: (state, action) => 
+    [MODAL_LOADING]: (state, action) =>
       produce(state, (draft) => {
         draft.modal_loading = action.payload.modal_loading;
       }),

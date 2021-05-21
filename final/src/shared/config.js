@@ -1,5 +1,5 @@
 const config = {
-  api: "janghyeonjun.shop",
+  api: "https://janghyeonjun.shop",
   jwt: localStorage.getItem("jwt"),
 };
 
