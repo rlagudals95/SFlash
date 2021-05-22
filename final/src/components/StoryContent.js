@@ -16,9 +16,9 @@ import Spinner from "../shared/Spinner";
 const StoryContent = (props) => {
   const dispatch = useDispatch();
   const { post_list, marker_icon, userPostMode, userId } = props;
-  console.log(post_list);
+  // console.log(post_list);
   // const user_id = props.match.params.id;
-  console.log(userId);
+  // console.log(userId);
   const paging = useSelector((state) => state.storypost.paging);
   const is_loading = useSelector((state) => state.storypost.is_loading);
 
@@ -77,23 +77,23 @@ const StoryContent = (props) => {
         <>
           {gridMode ? (
             <>
-            <InfiniteScroll // 무한스크롤 페이징처리 라이브러리다
-            dataLength={post_list.length}
-            next={next}
-            hasMore={true}
-            loader={is_loading && <Spinner />} //상태값이 loading 중 일땐 스피너가 보여서 뒤에 게시물이 더 있을음 알려준다
-            >
-              <GridList>
-                {post_list.map((p) => {
-                  return (
-                    <StoryPost
-                      key={p.id}
-                      {...p}
-                      userPostMode={userPostMode}
-                    ></StoryPost>
-                  );
-                })}
-              </GridList>
+              <InfiniteScroll // 무한스크롤 페이징처리 라이브러리다
+                dataLength={post_list.length}
+                next={next}
+                hasMore={true}
+                loader={is_loading && <Spinner />} //상태값이 loading 중 일땐 스피너가 보여서 뒤에 게시물이 더 있을음 알려준다
+              >
+                <GridList>
+                  {post_list.map((p) => {
+                    return (
+                      <StoryPost
+                        key={p.id}
+                        {...p}
+                        userPostMode={userPostMode}
+                      ></StoryPost>
+                    );
+                  })}
+                </GridList>
               </InfiniteScroll>
             </>
           ) : (
@@ -161,7 +161,7 @@ const SelectedIcon = styled.button`
   background-color: ${(props) => props.theme.main_color};
   color: #ffffff;
   border: 2pt solid ${(props) => props.theme.main_color};
- 
+
   transition: background-color 0.5s ease-in-out;
   /* :hover {
     cursor: pointer;

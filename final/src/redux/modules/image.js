@@ -16,8 +16,6 @@ const profilePreview = createAction(PROFILE_PREVIEW, (profile_preview) => ({
   profile_preview,
 }));
 
-// initialState
-// 리덕스에 저장되는 데이터 틀을 설정해놓는 부분
 const initialState = {
   preview: null,
   is_uplaoding: false,
@@ -27,11 +25,8 @@ const initialState = {
 // reducer
 export default handleActions(
   {
-    // SET_PREVIEW : 업로드한 사진을 보여주도록 처리한다.
     [SET_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
-        console.log(action.payload.preview);
         draft.preview = action.payload.preview;
       }),
 
@@ -43,7 +38,6 @@ export default handleActions(
   initialState
 );
 
-// 이 모듈 파일에서 정의된 액션생성함수와 미들웨어 함수들을 한데 모은다.
 const actionCreators = {
   uploadImage,
   uploading,
@@ -51,6 +45,4 @@ const actionCreators = {
   profilePreview,
 };
 
-// actionCreators로 묶은 함수들을
-// 다른 컴포넌트 파일에서 쓸 수 있게 export 해준다.
 export { actionCreators };

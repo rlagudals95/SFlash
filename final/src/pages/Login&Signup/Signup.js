@@ -163,7 +163,7 @@ const Signup = (props) => {
 
   // 닉네임 중복확인
   const nicknameDupCheckAPI = (nickname) => {
-    console.log(nickname);
+    // console.log(nickname);
     axios
       .post(
         `${config.api}/user/signup/nickchk`,
@@ -177,7 +177,7 @@ const Signup = (props) => {
         }
       )
       .then((res) => {
-        console.log("넥네임중복확인!", res.data);
+        // console.log("넥네임중복확인!", res.data);
         if (res.data === false) {
           Swal.fire({
             text: "이미 등록된 닉네임 입니다!",
@@ -201,7 +201,7 @@ const Signup = (props) => {
 
   // 이메일 인증번호 전송 (입력한 이메일은 서버로 보내주고, 인증번호를 입력하는 모달 창을 띄운다.)
   const onEmailAuth = (email) => {
-    console.log(email);
+    // console.log(email);
     axios
       .post(
         `${config.api}/user/signup/emailchk`,
@@ -215,7 +215,7 @@ const Signup = (props) => {
         }
       )
       .then((res) => {
-        console.log("인증번호 전송", res.data);
+        // console.log("인증번호 전송", res.data);
         if (res.data === false) {
           Swal.fire({
             text: "이미 등록된 이메일 입니다!",
@@ -237,7 +237,7 @@ const Signup = (props) => {
 
   // 이메일 인증번호 확인
   const onAuthCodeSubmit = (email, authCode) => {
-    console.log(email, authCode);
+    // console.log(email, authCode);
     axios
       .post(
         `${config.api}/user/signup/authcode`,
@@ -252,7 +252,7 @@ const Signup = (props) => {
         }
       )
       .then((res) => {
-        console.log("인증번호 확인", res.data);
+        // console.log("인증번호 확인", res.data);
 
         if (res.data === true) {
           Swal.fire({
@@ -549,6 +549,5 @@ const SflashLogo = styled.div`
   margin: auto;
   background-size: cover;
 `;
-
 
 export default Signup;

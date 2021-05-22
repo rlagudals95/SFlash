@@ -25,19 +25,19 @@ const ModalDetail = (props) => {
 
   React.useEffect(() => {}, []);
 
-  console.log("eeee", props);
+  // console.log("eeee", props);
   const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
   const modalData = useSelector((state) => state.mapmodal.post);
   const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
 
   if (commentData) {
-    console.log("코멘트 데이타", commentData);
+    // console.log("코멘트 데이타", commentData);
   }
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
 
-  console.log("모달 데이타", modalData);
+  // console.log("모달 데이타", modalData);
 
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
@@ -484,7 +484,7 @@ const ModalComponent = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* background-color: white; */
+    /* background-color: red; */
     z-index: 1000;
     border: none;
     box-sizing: border-box;
@@ -516,6 +516,10 @@ const ExitContainer = styled.div`
   right: 0;
   padding: 5px;
   opacity: 0.7;
+  @media (max-width: 600px) {
+    font-size: 7px;
+    padding: 1px;
+  }
 `;
 
 const ExitBtn = styled.button`
@@ -525,6 +529,9 @@ const ExitBtn = styled.button`
   border: none;
   outline: none;
   font-size: 14px;
+  @media (max-width: 600px) {
+    font-size: 7px;
+  }
 `;
 
 const ModalBottomContainer = styled.div`
@@ -844,6 +851,11 @@ const CmtDate = styled.div`
   font-size: 0.2rem;
   margin: auto 0;
   opacity: 0.3;
+  /* width: 3px; */
+  @media (max-width: 1440px) {
+    /* background-color: red; */
+    display: flex;
+  }
 `;
 
 const CmtDeleteBtn = styled.button`

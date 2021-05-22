@@ -51,7 +51,6 @@ const resetModal = createAction(RESET_MODAL, (post) => ({ post }));
 const getModalPost = (id) => {
   return function (dispatch, getState) {
     const post_list = getState().post.map_post_list;
-    // console.log("가와~~", post_list);
 
     const idx = post_list.findIndex((p) => {
       if (p.id === id) {
@@ -60,11 +59,8 @@ const getModalPost = (id) => {
     });
 
     const ModalPost = post_list[idx];
-    // console.log("찾았다!", ModalPost);
-    //////////////////
-    const ModalComment = ModalPost.comment;
 
-    // console.log("코멘트!", ModalComment);
+    const ModalComment = ModalPost.comment;
 
     dispatch(getModal(ModalPost));
     dispatch(getModalComment(ModalComment));
@@ -75,14 +71,11 @@ const getModalPost = (id) => {
 
 const getModalPostAPI = (boardId) => {
   return function (dispatch) {
-    // console.log("실행되나요 모달 데이터 겟");
-
     axios({
       method: "GET",
       url: `${config.api}/board/${boardId}/detail`,
       headers: {
         "X-AUTH-TOKEN": localStorage.getItem("jwt"),
-        // "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {
@@ -106,8 +99,8 @@ const getModalPostAPI = (boardId) => {
           writerId: result.userId,
         };
         let comment_list = post.comment;
-        console.log("게시물 요거", post);
-        console.log("댓글요거", comment_list);
+
+        // console.log("댓글요거", comment_list);
 
         dispatch(getModal(post)); // 모달 정보는 > post 에 저장 > 수정시 post 에 있는거 바꿔주면된다
         dispatch(getModalComment(comment_list)); //댓글 > comment에 따로 저장
@@ -151,9 +144,6 @@ const modalAddCommentAPI = (comment, board_id) => {
 
         // console.log("댓글추가반응", res);
         dispatch(modalAddComment(comment_list));
-        // dispatch(getComment(board_id)); //이래 해줘도 되나?
-        // dispatch(postActions.addComment(comment, board_id));
-        // dispatch(postActions.setPost());
       })
       .catch((err) => {
         console.log(err);
@@ -187,8 +177,6 @@ const modalDeleteCommentAPI = (id) => {
 const modalAddLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
     const paging = getState().post.paging;
-    // console.log("보드아이디", board_id);
-    // console.log("보드", board);
 
     axios({
       method: "POST",
@@ -209,9 +197,6 @@ const modalAddLikeAPI = (board_id, board) => {
 
 const modalDisLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
-    // console.log("보드아이디", board_id);
-    // console.log("보드", board);
-
     axios({
       method: "DELETE",
       url: `${config.api}/board/${board_id}/like`,
@@ -222,9 +207,6 @@ const modalDisLikeAPI = (board_id, board) => {
       .then((res) => {
         console.log("좋아요 취소!", res);
         dispatch(editLikeD(board));
-        // console.log(res);
-        // dispatch(disLike(false));
-        // dispatch(getLike(false));
       })
       .catch((error) => {
         // window.alert("좋아요를 할 수 없습니다.");

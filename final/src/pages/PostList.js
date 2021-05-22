@@ -54,10 +54,10 @@ const PostList = (props) => {
   const resultPark = is_category.find((item) => item === "공원");
   const resultExhibition = is_category.find((item) => item === "전시");
 
-  console.log("로딩변화", loading);
+  // console.log("로딩변화", loading);
 
   const board_list = useSelector((state) => state.post.list);
-  console.log("잘 가지고 왔나~", board_list);
+  // console.log("잘 가지고 왔나~", board_list);
 
   const [search, setSearch] = React.useState("");
 
@@ -71,11 +71,6 @@ const PostList = (props) => {
     dispatch(PostActions.getPostAPI());
   };
 
-  // const like_list = useSelector((state) => state.like.list);
-
-  // console.log("!!!!!!!!", like_list);
-
-  //여기서 board_list가 바뀌어야 한다
   const searchPost = board_list.filter((val) => {
     // 검색기능(필터링)을 변수로 지정해 놓고 .map앞에 붙혀둔다
     if (search == "") {
@@ -98,19 +93,26 @@ const PostList = (props) => {
   return (
     <React.Fragment>
       <TopBox>
-        <Search>
+        <SearchBox>
           {/* 검색기능  모바일용으로 만들어 놓은 검색창이다! 넓이가 600px 밑으로 가면 기존의 검색창이 사라지고 나타남*/}
-          <Input2
+          {/* <Input2
             value={search}
             placeholder="검색어를 입력해주세요 (●'◡'●)"
             _onChange={(e) => {
               setSearch(e.target.value);
             }}
-          ></Input2>
-          <SearchBtn>
-            <BiIcons.BiSearch size="2rem" color="rgb(255, 183, 25)" />
-          </SearchBtn>
-        </Search>
+          ></Input2> */}
+          <SearchInput
+            value={search}
+            placeholder="검색어를 입력해주세요 (●'◡'●)"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+          <SearchIcon>
+            <BiIcons.BiSearch size="43" color="#ffb719" />
+          </SearchIcon>
+        </SearchBox>
       </TopBox>
       {/* 검색기능 구현 */}
       <InfiniteScroll // 무한스크롤 페이징처리 라이브러리다
@@ -242,14 +244,7 @@ const PostList = (props) => {
 
 export default PostList;
 
-const SearchBtn = styled.div`
-  /* margin-top: 5px; */
-  margin: auto 0px;
-  margin-right: 3px;
-`;
-
 //그리드 속성을 이렇게 줘야 모달창이 잘만들어진다!
-
 const Container = styled.div`
   ${(prop) => prop.theme.responsiveContainer};
   display: grid;
@@ -258,7 +253,7 @@ const Container = styled.div`
   grid-gap: 20px;
   margin: auto;
   width: 100%;
-  padding: 50px 0px;
+  padding: 70px 0px;
   flex-wrap: wrap;
 
   @media (min-width: 1440px) {
@@ -266,18 +261,22 @@ const Container = styled.div`
     grid-gap: 20px;
   }
   @media (max-width: 1450px) {
-    // 1450밑으로 넓이가 내려가면
+    /* 1450밑으로 넓이가 내려가면 */
     margin-top: -5vh;
   }
   @media (max-width: 1280px) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 10px;
+    margin: auto;
+    margin-top: 2vh;
+    padding-top: 0px;
   }
   @media (max-width: 960px) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 5px;
-    margin: auto auto;
-    padding: 0;
+    margin: auto;
+    margin-top: 2vh;
+    padding-top: 0px;
   }
   @media (max-width: 600px) {
     margin-top: 19vh;
@@ -309,11 +308,6 @@ const TextBox = styled.div`
   z-index: 200;
 `;
 
-const TopBox = styled.div`
-  width: 100%;
-  height: 110px;
-`;
-
 const Mobile = styled.div`
   display: none;
   @media (max-width: 600px) {
@@ -327,24 +321,63 @@ const Web = styled.div`
   }
 `;
 
-const Search = styled.div`
-  display: block;
-  margin: auto auto;
-  margin-top: 130px;
-  display: flex;
-  width: 28vw;
-  margin-bottom: 20px;
-  /* box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1); */
+const TopBox = styled.div`
+  width: 100%;
+  height: 150px;
+`;
+
+const SearchBox = styled.div`
+  position: fixed;
+  background-color: transparent;
   border: none;
   box-sizing: border-box;
-  border: 3px solid ${(props) => props.theme.main_color};
-  border-radius: 5px;
-  @media (max-width: 1450px) {
-    // 1450밑으로 넓이가 내려가면
-    width: 35vw;
+  border-radius: 10px;
+  top: 30px;
+  left: 50%;
+  height: 72px;
+  transform: translate(-50%, -70%);
+  z-index: 1000;
+  @media (min-width: 1400px) {
+    width: 700px;
+    top: 100px;
+  }
+  @media (max-width: 1400px) {
+    position: fixed;
+    width: 55%;
+    top: 140px;
+    margin: auto;
   }
   @media (max-width: 600px) {
-    // 1450밑으로 넓이가 내려가면
     display: none;
   }
+`;
+
+const SearchInput = styled.input`
+  border: 5px solid #ffb719;
+  box-sizing: border-box;
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+  padding-left: 18px;
+  font-size: 1.2rem;
+  &:focus {
+    outline: none;
+    /* box-shadow: 0 0 0 2px #ffb719; */
+  }
+  opacity: 0.8;
+`;
+
+const SearchIcon = styled.div`
+  position: fixed;
+  top: 14.5px;
+  right: 14.5px;
+  /* transform: translate(-25%, 25%); */
+  background-size: cover;
+  object-fit: cover;
+`;
+
+const SearchBtn = styled.div`
+  /* margin-top: 5px; */
+  margin: auto 0px;
+  margin-right: 3px;
 `;

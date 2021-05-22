@@ -205,10 +205,6 @@ const PopUpContainer = styled.div`
 `;
 
 const PopUpImg = styled.div`
-  /* position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
   margin: auto auto;
   border-radius: 20px;
   z-index: 10002;

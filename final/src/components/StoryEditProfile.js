@@ -82,10 +82,10 @@ const StoryEditProfile = (props) => {
         }
       )
       .then((res) => {
-        console.log("넥네임중복확인!", res.data);
+        // console.log("넥네임중복확인!", res.data);
         if (res.data === false) {
           Swal.fire({
-            text: '이미 등록된 닉네임 입니다!',
+            text: "이미 등록된 닉네임 입니다!",
             confirmButtonColor: "#ffb719",
           });
         } else {
@@ -107,12 +107,12 @@ const StoryEditProfile = (props) => {
   const onEditNickname = () => {
     if (nicknameDup === false) {
       Swal.fire({
-        text: '닉네임 중복확인을 해주세요!',
+        text: "닉네임 중복확인을 해주세요!",
         confirmButtonColor: "#ffb719",
-      })
+      });
       return false;
     }
-    console.log(newNickname);
+    // console.log(newNickname);
     dispatch(profileActions.editNicknameAPI(newNickname, userId));
     setOriginalNickMode(true);
   };
@@ -154,9 +154,9 @@ const StoryEditProfile = (props) => {
   // 이미지 에러
   const ImageError = () => {
     Swal.fire({
-      text: '잘못된 이미지 주소 입니다 :(',
+      text: "잘못된 이미지 주소 입니다 :(",
       confirmButtonColor: "#ffb719",
-    })
+    });
     dispatch(
       profileActions.setPreview(
         "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
@@ -288,7 +288,7 @@ const StoryEditProfile = (props) => {
                     });
                     return false;
                   }
-                  console.log(newNickname);
+                  // console.log(newNickname);
                   nicknameDupCheckAPI(newNickname);
                 }}
               >

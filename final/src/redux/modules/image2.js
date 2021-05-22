@@ -98,17 +98,11 @@ const getPost = (board_id) => {
     // dispatch(getEditPost(editPost));
     dispatch(getImage(onlyImg)); // 온리이미지르르..파일에도 넣자?
 
-    // console.log("이미지들길이", onlyImg.length);
-    // console.log("이미지들길이", onlyImg[0]);
     for (let i = 0; i < onlyImg.length; i++) {
       dispatch(getImgToFile(onlyImg[i]));
     }
   };
 };
-
-// 업로드 모달을 또 만들어줘야하나...??? 위에서 보드 id 기준으로 찾ㄱ지말고 그냥 바로 해주자
-// 다 똑같이 하되 보드 id기준으로 idx를 찾아서 게시물을 찾는게 아닌 그냥 가져와서? img_url을?
-// getImage로 해주고 // 똑같이 반복문 돌려서 getImgToFile로 넣어주자
 
 const getModalPost = (board) => {
   return function (dispatch, getState) {
@@ -134,8 +128,6 @@ const ChangeEdit = (Img_idx) => {
     const c = currentPost.img_url.filter((p) => {
       return selectImg !== p.imgUrlId;
     });
-
-    // console.log("??", c);
   };
 };
 

@@ -20,7 +20,7 @@ const MobileSelect = () => {
     dispatch(PostActions.searchPostAPI(search, null, 15));
   };
 
-  console.log("검색어", search);
+  // console.log("검색어", search);
 
   const [cafe, setCafe] = useState();
   const [night, setNight] = useState();

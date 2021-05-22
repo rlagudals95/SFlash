@@ -26,20 +26,15 @@ const disLike = createAction(DIS_LIKE, (like, likeCnt) => ({
 
 const getLike = createAction(GET_LIKE, (like_list) => ({ like_list }));
 
-// const getLike = createAction(GET_LIST, (like) => ({ like }));
-
 const initialState = {
   list: [],
   like: false,
   likeCnt: 0,
-  // paging: { start: null, size: 15 },
 };
 
 const getLikePost = () => {
   return function (dispatch, getState) {
     const post_list = getState().post.list;
-
-    // console.log("!!!!!!!!!!", post_list);
 
     let like_list = [];
 
@@ -47,7 +42,6 @@ const getLikePost = () => {
       like_list.push(post_list[i].like);
     }
 
-    // console.log(like_list);
     dispatch(getLike(like_list));
   };
 };
@@ -55,10 +49,7 @@ const getLikePost = () => {
 const addLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
     const paging = getState().post.paging;
-    // console.log("보드아이디", board_id);
-    // console.log("보드", board);
 
-    // console.log("토큰있나요??", localStorage.getItem("jwt"));
     axios({
       method: "POST",
       url: `${config.api}/board/${board_id}/like`,
@@ -82,11 +73,7 @@ const addLikeAPI = (board_id, board) => {
             }
           });
         } else {
-          // console.log("좋아요 완료!", res);
           dispatch(PostActions.editLikeP(board_id, board)); // 리덕스
-
-          // dispatch(addLike(true));
-          // dispatch(getLike(true));
         }
       })
       .catch((error) => {
@@ -97,9 +84,6 @@ const addLikeAPI = (board_id, board) => {
 
 const disLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
-    // console.log("보드아이디", board_id);
-    // console.log("보드", board);
-
     axios({
       method: "DELETE",
       url: `${config.api}/board/${board_id}/like`,
@@ -123,12 +107,7 @@ const disLikeAPI = (board_id, board) => {
             }
           });
         } else {
-          // console.log("좋아요 취소!", res);
           dispatch(PostActions.editLikeD(board_id, board));
-          // console.log(res);
-          // dispatch(disLike(false));
-          // dispatch(getLike(false));
-          // dispatch(postActions.getPostAPI(paging.start, paging.size));
         }
       })
       .catch((error) => {
