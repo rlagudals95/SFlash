@@ -38,7 +38,7 @@ const getQnaAPI = (page, size) => {
       url: `${config.api}/qna?page=${page}&size=${size}`,
     })
       .then((res) => {
-        // console.log(res);
+        console.log(res);
         let qna_list = [];
         res.data.data.forEach((_qna) => {
           let qna = {
@@ -75,7 +75,8 @@ const getQnaDetailAPI = (qnaId) => {
         let qna = {
           id: _qna.id,
           title: _qna.title,
-          content: _qna.content,  // 개행처리 되어야 함
+          // content: _qna.content,
+          content: _qna.content,
           modified: _qna.modified.split("T")[0],
           writer: _qna.writer,
           qcomments: _qna.qcomments,

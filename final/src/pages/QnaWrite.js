@@ -2,12 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import Swal from 'sweetalert2'
 import { Grid } from "../elements/index";
+import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as qnaActions } from "../redux/modules/qna";
 import { actionCreators as imageActions } from "../redux/modules/image";
 
 const QnaWrite = (props) => {
   const dispatch = useDispatch();
+  const is_login = useSelector ((state) => state.user.is_login)
   const qnaId = props.match.params.id;
   console.log(qnaId);
   const is_edit = qnaId ? true : false; //qna_id는 게시물이 존재하므로 수정 가능함
@@ -18,6 +20,13 @@ const QnaWrite = (props) => {
   // const is_uploading = useSelector((state) => state.image.is_uploading);
 
   React.useEffect(() => {
+    if (!is_login){
+      Swal.fire({
+        text: "로그인이 필요한 서비스 입니다.",
+        confirmButtonColor: "#ffb719",
+      }); 
+      history.goBack();
+    }
     if (!qnaId) {
       return false;
     }
@@ -65,7 +74,12 @@ const QnaWrite = (props) => {
   // };
 
   const onAddQna = () => {
-    if (!title || !content) {
+    if(!is_login){
+      Swal.fire({
+        text: "로그인이 필요한 서비스 입니다.",
+        confirmButtonColor: "#ffb719",
+      });
+    }else if (!title || !content) {
       Swal.fire({
         text: '제목과 내용을 모두 입력해주세요 :(',
         confirmButtonColor: "#ffb719",
