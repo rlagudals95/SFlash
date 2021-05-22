@@ -341,7 +341,7 @@ const SearchBox = styled.div`
   left: 50%;
   height: 72px;
   transform: translate(-50%, -70%);
-  z-index: 100;
+  z-index: 5;
   @media (min-width: 1400px) {
     width: 700px;
     top: 100px;
@@ -358,7 +358,7 @@ const SearchBox = styled.div`
 `;
 
 const SearchInput = styled.input`
-  border: 5px solid #ffb719;
+  border: 2.5pt solid #ffb719;
   box-sizing: border-box;
   border-radius: 10px;
   height: 100%;

@@ -431,7 +431,7 @@ const Maps = (props) => {
         // if (spotNameInfo1 && spotNameInfo2) {
           const writeInfoContent =
             '<div class="writeinfocontainer">' + 
-              `<img class="writeinfoimg" src=${writeInfoImg}>` +
+              // `<img class="writeinfoimg" src=${writeInfoImg}>` +
               // '<div class="writeinfohead">' +
                 // `<div class="writeinfospotname1">${spotName}</div>` + 
               // '<div/>' +
@@ -2875,7 +2875,7 @@ const SearchBox = styled.div`
 `;
 
 const SearchInput = styled.input`
-  border: 5px solid #ffb719;
+  border: 2.5pt solid #ffb719;
   box-sizing: border-box;
   border-radius: 10px;
   height: 100%;
