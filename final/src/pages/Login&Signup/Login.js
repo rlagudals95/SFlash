@@ -7,11 +7,11 @@ import {
   InputStyle,
   SolidBtn,
   SocialBtn,
-  BorderBtn,
   TextBtn,
 } from "../../Css/loginSignupCss";
 import "../../Css/SocialLogin.css";
 import { Grid } from "../../elements/index";
+import { NAVER_AUTH_URL, KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from "../../shared/social";
 import { actionCreators as userActions } from "../../redux/modules/user";
 
 import { history } from "../../redux/configStore";
@@ -39,32 +39,6 @@ const Login = () => {
     dispatch(userActions.loginAPI(email, pwd));
     dispatch(sideAction.getPage("home"));
   };
-
-  const onSocialLogin = () => {
-    // 소셜로그인을 하면 token이 url에 담겨서 오는데,
-    // url에서 token을을 추출하는 함수()
-    const getUrlParameter = (name) => {
-      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-      var results = regex.exec(window.location.search);
-      return results === null
-        ? ""
-        : decodeURIComponent(results[1].replace(/\+/g, " "));
-    };
-
-    if (getUrlParameter("error")) {
-      Swal.fire({
-        text: "현재 시스템 문제로 소셜로그인 서비스를 이용하실 수 없습니다.",
-        confirmButtonColor: "#ffb719",
-      });
-    } else {
-      localStorage.setItem("jwt", getUrlParameter("accessToken"));
-      localStorage.setItem("refreshjwt", getUrlParameter("refreshToken"));
-      localStorage.setItem("nickname", getUrlParameter("nickname"));
-      localStorage.setItem("userId", getUrlParameter("userId"));
-      dispatch(userActions.setUser());
-    }
-  }
 
   return (
     <React.Fragment>
@@ -96,14 +70,13 @@ const Login = () => {
 
         <Grid padding="5px"></Grid>
 
+        {/* 소셜 로그인 */}
         <div>
           <SocialBtn
             bg="#1ec800"
             color="#ffffff"
             onClick={() => {
-              window.location.href =
-                "https://janghyeonjun.shop/oauth2/authorize/naver?redirect_uri=https://sflash.net/";
-              // onSocialLogin();
+              window.location.href = NAVER_AUTH_URL
             }}
           >
             <SocialIcon width="45%" src={naver} />
@@ -111,9 +84,7 @@ const Login = () => {
           <SocialBtn
             bg="#fee500"
             onClick={() => {
-              window.location.href =
-                "https://janghyeonjun.shop/oauth2/authorize/kakao?redirect_uri=https://sflash.net/";
-              // onSocialLogin();
+              window.location.href = KAKAO_AUTH_URL
             }}
           >
             <SocialIcon width="52%" src={kakao} />
@@ -122,9 +93,8 @@ const Login = () => {
             bg="#f45a5c"
             color="#ffffff"
             onClick={() => {
-              window.location.href =
-                "https://janghyeonjun.shop/oauth2/authorize/google?redirect_uri=https://sflash.net/";
-              // onSocialLogin();
+              window.location.href = GOOGLE_AUTH_URL
+                
             }}
           >
             <SocialIcon width="50%" src={google} />

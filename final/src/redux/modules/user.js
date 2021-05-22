@@ -66,13 +66,11 @@ const loginAPI = (email, pwd) => {
         password: pwd,
       })
       .then((res) => {
-        console.log(res.data);
         console.log(res);
 
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("jwt", res.data.token);
-        // localStorage.setItem("jwt", res.data.accessToken);
         localStorage.setItem("role", res.data.role);
         dispatch(setUser());
         history.replace("/");
@@ -92,9 +90,6 @@ const loginCheck = (jwt) => {
   console.log(jwt);
   return function (dispatch, getstate, { history }) {
     if (jwt) {
-      // let decoded = jwt_decode(localStorage.getItem("jwt"));
-      // console.log("토큰디코딩!!!", decoded.exp*1000);
-      // console.log(new Date().getTime());
       dispatch(setUser());
     } else {
       dispatch(logOut());
@@ -107,7 +102,6 @@ export default handleActions(
   {
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        // draft.user = action.payload.user;
         draft.is_login = true;
       }),
     [LOG_OUT]: (state, action) =>

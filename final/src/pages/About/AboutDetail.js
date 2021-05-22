@@ -43,6 +43,7 @@ const AboutDetail = (props) => {
                 <RefLink href={props.github}>{props.github}</RefLink>
                 <RefLink href={props.etc_1}>{props.etc_1}</RefLink>
                 <RefLink href={props.etc_2}>{props.etc_2}</RefLink>
+                <RefLink href={props.etc_3}>{props.etc_3}</RefLink>
           </ModalProfileContainer>
         </Grid>
       </Grid>
@@ -60,8 +61,8 @@ const ProfileContainer = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   margin: 10px;
   border-radius: 170px;
   background-size: cover;
@@ -75,7 +76,6 @@ const ProfileImg = styled.img`
 const ProfileImg2 = styled.img`
   width: 360px;
   height: 100%;
-
   background-size: cover;
   object-fit: cover;
 `;

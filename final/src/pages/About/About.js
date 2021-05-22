@@ -24,9 +24,10 @@ const About = (props) => {
         
         <Grid height="80px"></Grid>
         <UpperContainer>
-          <SflashLogo src={SFlash_logo_darkgrey} />
+          <SflashLogo src={SFlash_logo_darkgrey} /> 
           <Grid height="20px"></Grid>
           <Text>We are team SFlash!</Text>
+          <Text>스플레쉬 팀원이 궁금하시다면 사진을 클릭해 보세요 :)</Text>
         </UpperContainer>
         <Grid height="40px"></Grid>
 
@@ -66,6 +67,7 @@ About.defaultProps = {
       github: "https://github.com/rlatmd0829",
       etc_1: "",
       etc_2: "",
+      etc_3: "",
     },
     {
       id: 2,
@@ -78,6 +80,7 @@ About.defaultProps = {
       github: "https://github.com/meozes",
       etc_1: "",
       etc_2: "",
+      etc_3: "",
     },
     {
       id: 3,
@@ -89,6 +92,7 @@ About.defaultProps = {
       github: "https://github.com/heo-mk",
       etc_1: "https://heo-dev-0229.tistory.com/",
       etc_2: "https://www.notion.so/Heo-MinKyu-8c8ea47ff1d94a9b8dab3b06bfbd1a01",
+      etc_3: "",
     },
     {
       id: 4,
@@ -101,6 +105,7 @@ About.defaultProps = {
       etc_1:
         " https://www.notion.so/Kim-hyeong-min-79c0da5ccf924a0292a90c965ad5edf3",
       etc_2: "https://hmk1022.tistory.com/",
+      etc_3: "https://velog.io/@dbfudgudals"
     },
     {
       id: 5,
@@ -109,9 +114,10 @@ About.defaultProps = {
       img: profile_dayoung,
       content: "사람들에게 긍정적인 경험을 줄 수 있는 좋은 서비스를 위해 고민하는 개발자 입니다. SFlash 프로젝트에서 로그인/회원가입, 스토리페이지, 문의하기 등 USER 기능을 메인으로 담당했습니다.",
       skill: "",
-      github:"https://github.com/dayoung0601?tab=repositories",
+      github:"https://github.com/dayoung0601",
       etc_1: "https://www.notion.so/Kim-Dayoung-7c27b43d10a84bbab64ecb5e5c9efe2f",
       etc_2: "",
+      etc_3: "",
     },
     {
       id: 6,
@@ -124,6 +130,7 @@ About.defaultProps = {
       github: "",
       etc_1: "https://www.behance.net/gallery/113037249/_",
       etc_2: "",
+      etc_3: "",
     },
     {
       id: 7,
@@ -136,6 +143,7 @@ About.defaultProps = {
       github: "",
       etc_1: "",
       etc_2: "",
+      etc_3: "",
     },
   ],
 };
@@ -144,13 +152,14 @@ const Wrapper = styled.div`
   ${(props) => props.theme.responsiveContainer};
 `;
 const SflashLogo = styled.img`
-  width: 110px;
+  width: 120px;
   margin: auto;
   text-align: center;
 `;
 
 const Text = styled.div`
   font-size: 1.2rem;
+  height: 35px;
   font-weight: 500;
   color: grey;
 `;

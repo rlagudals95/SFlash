@@ -5,16 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 import { actionCreators as storyPostActions } from "../redux/modules/storypost";
 import { actionCreators as postActions } from "../redux/modules/post";
-import axios from "axios";
-import { config } from "../shared/config";
+
 
 import StoryUserProfile from "../components/StoryUserProfile";
 import StoryContent from "../components/StoryContent";
 
-import { FiImage } from "react-icons/fi";
-import { HiOutlineMap } from "react-icons/hi";
-import lib from "react-kakao-maps";
-import { findIndex } from "lodash";
 
 // 유저가 작성한/좋아요한 게시물들을 모아볼 수 있는 페이지 입니다.
 // 다른 사람들도 유저의 스토리를 열람할 수 있습니다.
@@ -75,7 +70,7 @@ const Story = (props) => {
                 <b>{user_info.nickname}</b> 님의 게시물
                 <TabUnderBar />
               </SelectedTab>
-              <VerticalBar />
+
               <UnselectedTab
                 onClick={() => {
                   setUserPostMode(false);
@@ -93,7 +88,7 @@ const Story = (props) => {
               >
                 {user_info.nickname} 님의 게시물
               </UnselectedTab>
-              <VerticalBar />
+
               <SelectedTab>
                 <b>{user_info.nickname}</b> 님의 좋아요
                 <TabUnderBar />
@@ -199,11 +194,5 @@ const TabUnderBar = styled.div`
 `;
 
 const Content = styled.div``;
-
-const VerticalBar = styled.div`
-  height: 30px;
-  width: 2px;
-  background-color: #eee;
-`;
 
 export default Story;

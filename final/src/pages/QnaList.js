@@ -12,12 +12,13 @@ import { BsFillLockFill } from "react-icons/bs";
 import { RiEditFill } from "react-icons/ri";
 // import Pagination from '@material-ui/lab/Pagination';
 
-import ArrowRightIcon from "@material-ui/icons/ArrowRight";
-import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
+import {IoIosArrowBack} from "react-icons/io";
+import {IoIosArrowForward} from "react-icons/io";
 
 const QnaList = (props) => {
   const dispatch = useDispatch();
   const qna_list = useSelector((state) => state.qna.list);
+  const total_length = useSelector((state) => state.qna.total_length);
   console.log("qna_list:", qna_list);
   const me = localStorage.getItem("nickname");
   const role = localStorage.getItem("role");
@@ -26,10 +27,14 @@ const QnaList = (props) => {
   const [size, setSize] = React.useState(7); //페이지당 post갯수 = 7개씩(고정값) (사실 setSize 안써도 됨)
 
   //pageNumber = [1,2,3,4,5,...]
+
   const pageNumber = [];
-  for (let i = 1; i <= Math.ceil(14 / size); i++) {
+  for (let i = 1; i <= Math.ceil(total_length / size); i++) {
     pageNumber.push(i);
   }
+  console.log(page);
+  console.log(size);
+  console.log(pageNumber);
 
   //paginate : page 바꾸기 setPage로 바꾼다
   const paginate = (PageNumber) => setPage(PageNumber);
@@ -42,7 +47,7 @@ const QnaList = (props) => {
 
   // 오른쪽 화살표 함수
   const forward = () => {
-    if (page < 5) {
+    if (page < pageNumber.length) {
       setPage(page + 1);
     } else {
       Swal.fire({
@@ -69,7 +74,10 @@ const QnaList = (props) => {
         <Container>
           <Title>문의하기</Title>
           <WriteBtn onClick={() => history.push("/qnawrite")}>
-            <RiEditFill size="12" /> 글쓰기
+            <Icon>
+              <RiEditFill size="18" />
+            </Icon>{" "}
+            글쓰기
           </WriteBtn>
           <Content>
             {/* <Text width="4%">
@@ -112,7 +120,7 @@ const QnaList = (props) => {
             <Text width="13%">
               <b>작성자</b>
             </Text>
-            <Text width="10%">
+            <Text width="15%">
               <b>일자</b>
             </Text>
           </Content>
@@ -142,16 +150,16 @@ const QnaList = (props) => {
                   )}
                 </TextBtn>
                 <Text width="13%">{q.writer}</Text>
-                <Text width="10%">{q.modified}</Text>
+                <Text width="15%">{q.modified}</Text>
               </ContentUnit>
             );
           })}
 
-          {/* <Pagination count={10} color="primary" /> */}
-          <PaginationContainer>
+      
+           <PaginationContainer>
             <ul className="pagination">
-              <ArrowLeftIcon
-                style={{ cursor: "pointer", verticalAlign: "-30px" }}
+              <IoIosArrowBack
+                style={{ cursor: "pointer", paddingTop:"20px"}}
                 onClick={backward}
               />
               {pageNumber.map((pageNum) => (
@@ -161,9 +169,14 @@ const QnaList = (props) => {
                   </PageSpan>
                 </li>
               ))}
-              <ArrowRightIcon style={{ cursor: "pointer" }} onClick={forward} />
+              <IoIosArrowForward style={{ cursor: "pointer", paddingTop:"20px" }} onClick={forward} />
             </ul>
           </PaginationContainer>
+
+
+
+
+
         </Container>
       </React.Fragment>
     );
@@ -310,10 +323,10 @@ const SflashLogo = styled.div`
 `;
 
 const PaginationContainer = styled.div`
-  display: flex;
   margin: auto;
   margin-top: 1rem;
-
+  display: flex;
+  justify-content: center;
   ul {
     list-style: none;
     display: flex;
@@ -324,13 +337,12 @@ const PaginationContainer = styled.div`
   svg {
     padding-top: 1rem;
   }
-  margin-left: 350px;
 `;
 
 const PageSpan = styled.div`
   padding: 1rem;
   width: 1rem;
-  border-radius: 10rem;
+  border-radius: 0.5rem;
   text-align: center;
   transition: font-weight 100ms ease-in, background-color 100ms ease-in,
     color 100ms ease-in;
@@ -340,5 +352,8 @@ const PageSpan = styled.div`
     color: #212121;
   }
 `;
+
+
+
 
 export default QnaList;

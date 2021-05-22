@@ -1,18 +1,10 @@
 import styled from "styled-components";
 
 const Container = styled.div`
-  @media (min-width: 1280px) {
-      width: 380px;
-    }
-    @media (max-width: 1280px) {
-      width: 380px;
-    }
-    @media (max-width: 960px) {
-      width: 380px;
-    }
-    @media (max-width: 400px) {
-      width: 300px;
-    }
+  width: 380px;
+  @media (max-width: 400px) {
+    width: 300px;
+  }
   margin: auto;
   padding: 80px 50px;
   border: none;
@@ -21,12 +13,12 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-margin-top: 50px;
+  margin-top: 50px;
   margin-bottom: 15px;
   font-size: 1.5rem;
   font-weight: 600;
   text-align: start;
-  color: #343a40;
+  color: ${(props) => props.theme.main_grey};
 `;
 
 const InputStyle = styled.input`
@@ -39,7 +31,7 @@ const InputStyle = styled.input`
   padding: 4px 12px;
   font-size: 0.9rem;
   font-weight: 500;
-  color: grey;
+  color: ${(props) => props.theme.main_grey};
   :focus {
     outline: none;
   }
@@ -56,7 +48,7 @@ const SolidBtn = styled.button`
   font-size: 0.9rem;
   font-weight: 600;
   color: #ffffff;
-  background-color: ${(props) =>props.theme.main_color};
+  background-color: ${(props) => props.theme.main_color};
   :focus {
     outline: none;
   }
@@ -65,7 +57,7 @@ const SolidBtn = styled.button`
     color: ${(props) => props.theme.main_color};
     border: 1pt solid ${(props) => props.theme.main_color};
     cursor: pointer;
-    transition: ease-in-out, width .35s ease-in-out;
+    transition: ease-in-out, width 0.35s ease-in-out;
   }
 `;
 
@@ -88,22 +80,21 @@ const SocialBtn = styled.button`
     color: grey;
     background-color: lightgrey;
     cursor: pointer;
-    transition: ease-in-out, width .35s ease-in-out;
+    transition: ease-in-out, width 0.35s ease-in-out;
   }
 `;
-
 
 const BorderBtn = styled.button`
   width: 100%;
   min-height: 45px;
   max-height: 70px;
-  border: 1px solid ;
+  border: 1px solid;
   box-sizing: border-box;
   border-radius: 4px;
   margin: 8px auto;
   font-size: 0.9rem;
   font-weight: 500;
-  color: ${(props) =>props.theme.main_color};
+  color: ${(props) => props.theme.main_color};
   background-color: #ffffff;
   :focus {
     outline: none;
@@ -119,14 +110,14 @@ const BorderBtn = styled.button`
 const CheckBtn = styled.button`
   min-width: 25%;
   height: 46px;
-  border: 1px solid ${(props) =>props.theme.main_color};
+  border: 1px solid ${(props) => props.theme.main_color};
   box-sizing: border-box;
   border-radius: 5px;
   margin: 0px auto 0px 8px;
   font-size: 0.9rem;
   font-weight: 600;
   color: #ffffff;
-  background-color: ${(props) =>props.theme.main_color};
+  background-color: ${(props) => props.theme.main_color};
   :focus {
     outline: none;
   }
@@ -144,6 +135,7 @@ const CheckBtn = styled.button`
 const TextBtn = styled.text`
   font-size: 0.9rem;
   margin: 5px 0px;
+  color: ${(props) => props.theme.main_grey};
   &:hover {
     text-decoration: underline;
     cursor: pointer;
@@ -155,23 +147,22 @@ const InfoUl = styled.ul`
   color: #666666;
   font-weight: 400;
   text-align: left;
-  margin-top: px;
+  margin-top: 0px;
 `;
 
 const InfoLi = styled.li`
   list-style: none;
 `;
 
-
-export { 
+export {
   Container,
-  Title, 
-  InputStyle, 
+  Title,
+  InputStyle,
   SolidBtn,
   SocialBtn,
-  BorderBtn, 
+  BorderBtn,
   CheckBtn,
   TextBtn,
   InfoUl,
-  InfoLi
- };
+  InfoLi,
+};
