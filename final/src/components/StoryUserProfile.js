@@ -27,7 +27,15 @@ const StoryUserProfile = (props) => {
   const local_userId = localStorage.getItem("userId");
   const is_me = userId === local_userId ? true : false;
 
-  React.useEffect(() => {}, []);
+  
+  // 자기소개 개행 처리: 자기소개(user_info.introduction)의 typeof는 object이므로 map을 사용할 수 없습니다.
+  // 따라서, 객체를 배열로 바꾼 후 아래서 map을 돌려줍니다.
+  const introduction = [];
+  const _introduction = JSON.stringify(user_info.introduction)
+  console.log(typeof(_introduction));
+  // for(let i = 0; i< _introduction.length; i++){
+  //   introduction.push(_introduction[i]);
+  // }
 
   // 이미지 에러
   const ImageError = () => {
@@ -77,10 +85,9 @@ const StoryUserProfile = (props) => {
 
         <Grid>
           <Nickname>{user_info.nickname}</Nickname>
-          <Introduction>{user_info.introduction}</Introduction>
-          {/* {user_info.introduction.split("\n").map((i) => {
-              return <Introduction>{i}</Introduction>;
-            })} */}
+         {/* {introduction.map((i) => {return <Introduction>{i}</Introduction>
+       })}  */}
+       <Introduction>{user_info.introduction}</Introduction>
         </Grid>
 
         {/* 나의 페이지에서만 보이는 메뉴(프로필 편집, 로그아웃 등) 버튼*/}
@@ -271,7 +278,7 @@ const Introduction = styled.p`
   font-size: 1.1rem;
   font-weight: 400;
   color: grey;
-  line-height: 2rem;
+  line-height: 1.2rem;
   margin-left: 20px;
   @media (max-width: 1280px) {
     font-size: 1.1rem;

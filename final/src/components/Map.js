@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 // 리덕스를 이용하게 해주는 함수들, 모듈 파일 가져오기
 import { useDispatch, useSelector } from "react-redux";
-import { history } from "../redux/configStore";
 import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지url
-import writeInfoImg from "../shared/images/writeInfoCustomOverlay/writeInfoCustomOverlayImg.png";
 
 import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
@@ -13,11 +11,8 @@ import Swal from "sweetalert2";
 import "../Css/Map.css";
 import UpLoadModal from "./UpLoadModal";
 import CategoryInMap from "../components/CategoryInMap";
-import { LeakRemoveOutlined } from "@material-ui/icons";
 import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import MapModal from "./MapModal";
-import Spinner from "../shared/Spinner";
-import PopUp from "../components/PopUp";
 
 // window 객체로부터 kakao mpa api를 호출하기
 // 이것이 되게 하기 위해서는 index.html(index.js 아님!!!)의 script 태그안의 src에다가
@@ -38,10 +33,6 @@ const Maps = (props) => {
   const [latitude, setLatitude] = useState(); // 클릭한 위치 위도 설정
   const [longitude, setLongitude] = useState(); // 클릭한 위치 경도 설정
   const [spotName, setSpotName] = useState(""); // 클릭한 위치 spotName
-  // 작성마커 안내용 주소 분리
-  const [spotNameInfo1, setSpotNameInfo1] = useState("");
-  const [spotNameInfo2, setSpotNameInfo2] = useState("");
-  const [writeInfoContent, setWriteInfoContent] = useState("");
 
   const [_map, setMap] = useState(); // useEffect 외부에서 map을 쓰기 위한 것.
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
@@ -287,6 +278,23 @@ const Maps = (props) => {
       setMap(map);
     }
 
+    // geolocation으로 얻은 접속좌표에다가 현재위치를 표시하는 마커 또는 표식 올리기
+    const currentMarkerSize = new kakao.maps.Size(30, 30);
+    const currentMarkerImage = new kakao.maps.MarkerImage(
+      `${markerImgUrls.currentMarkerImageUrl}`, 
+      currentMarkerSize
+    );
+    const currentPosition = new kakao.maps.LatLng(startLat, startLng);
+
+    const currentMarker = new kakao.maps.Marker({
+      map: map, // 이러면 애초에 현재 위치가 표시된다. 
+      position: currentPosition,
+      image: currentMarkerImage,
+      zIndex: 50,
+    })
+
+    currentMarker.setMap(map);
+
     // var centerPoint = map.getCenter();
     // console.log("중심좌표: " + centerPoint);
     // console.log("중심좌표 위도: " + centerPoint.getLat());
@@ -424,20 +432,13 @@ const Maps = (props) => {
 
         // 게시물 작성법을 안내하는 커스텀오버레이
         // 모달창(커스텀오버레이)에 들어갈 내용
-        const spotNameInfo1 = spotName.split(" ").splice(0, 2).join(" ");
-        const spotNameInfo2 = spotName.split(" ").splice(2).join(" ");
-
-        // console.log("스팟네임: ", spotName);
-
-        // if (spotNameInfo1 && spotNameInfo2) {
         const writeInfoContent =
-          '<div class="writeinfocontainer">' +
-          `<img class="writeinfoimg" src=${writeInfoImg}>` +
-          // '<div class="writeinfohead">' +
-          `<div class="writeinfospotname1">${spotName}</div>` +
-          // '<div/>' +
-          "<div/>";
-        // }
+          '<div class="writeinfocontainer">' + 
+            // `<img class="writeinfoimg" src=${writeInfoImg}>` +
+            // '<div class="writeinfohead">' +
+              // `<div class="writeinfospotname1">${spotName}</div>` + 
+            // '<div/>' +
+          '<div/>'
 
         const writeInfoCustomOverlay = new kakao.maps.CustomOverlay({
           // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
@@ -445,7 +446,7 @@ const Maps = (props) => {
           position: writePosition, // 커스텀 오버레이의 좌표
           content: writeInfoContent, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.55, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.8, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
@@ -2768,7 +2769,7 @@ const Maps = (props) => {
   // 장소 검색 객체를 생성합니다
   var ps = new kakao.maps.services.Places();
   // 키워드로 장소를 검색합니다
-  if (search) {
+  if (search) {  
     //search가 빈 string일때 검색이 되어서 오류가 뜨는 경우를 없애기 위해 if문으로 분기한다.
     ps.keywordSearch(search, (data, status, pagination) => {
       if (status === kakao.maps.services.Status.OK) {
@@ -2844,6 +2845,7 @@ const Maps = (props) => {
   );
 };
 
+
 export default Maps;
 
 const SearchBox = styled.div`
@@ -2876,7 +2878,7 @@ const SearchBox = styled.div`
 `;
 
 const SearchInput = styled.input`
-  border: 5px solid #ffb719;
+  border: 2.5pt solid #ffb719;
   box-sizing: border-box;
   border-radius: 10px;
   height: 100%;
@@ -2894,7 +2896,6 @@ const SearchIcon = styled.div`
   position: fixed;
   top: 14.5px;
   right: 14.5px;
-  /* transform: translate(-25%, 25%); */
   background-size: cover;
   object-fit: cover;
 `;

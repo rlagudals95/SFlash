@@ -66,8 +66,7 @@ const loginAPI = (email, pwd) => {
         password: pwd,
       })
       .then((res) => {
-        // console.log(res);
-
+        console.log(res);
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("jwt", res.data.token);
@@ -106,10 +105,7 @@ export default handleActions(
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        localStorage.removeItem("nickname");
-        localStorage.removeItem("jwt");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("role");
+        localStorage.clear();
         draft.user = null;
         draft.is_login = false;
       }),

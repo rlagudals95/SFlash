@@ -260,22 +260,22 @@ const Container = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 20px;
   }
-  @media (max-width: 1450px) {
-    /* 1450밑으로 넓이가 내려가면 */
-    margin-top: -5vh;
+  @media (max-width: 1440px) {
+    /* 1440밑으로 넓이가 내려가면 */
+    margin-top: 4vh;
   }
   @media (max-width: 1280px) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 10px;
     margin: auto;
-    margin-top: 2vh;
+    margin-top: 4vh;
     padding-top: 0px;
   }
   @media (max-width: 960px) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 5px;
     margin: auto;
-    margin-top: 2vh;
+    margin-top: 4vh;
     padding-top: 0px;
   }
   @media (max-width: 600px) {
@@ -327,7 +327,7 @@ const TopBox = styled.div`
 `;
 
 const SearchBox = styled.div`
-  position: fixed;
+  position: absolute;
   background-color: transparent;
   border: none;
   box-sizing: border-box;
@@ -336,13 +336,13 @@ const SearchBox = styled.div`
   left: 50%;
   height: 72px;
   transform: translate(-50%, -70%);
-  z-index: 1000;
+  z-index: 5;
   @media (min-width: 1400px) {
     width: 700px;
     top: 100px;
   }
   @media (max-width: 1400px) {
-    position: fixed;
+    position: absolute;
     width: 55%;
     top: 140px;
     margin: auto;
@@ -353,7 +353,7 @@ const SearchBox = styled.div`
 `;
 
 const SearchInput = styled.input`
-  border: 5px solid #ffb719;
+  border: 2.5pt solid #ffb719;
   box-sizing: border-box;
   border-radius: 10px;
   height: 100%;

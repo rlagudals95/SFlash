@@ -15,8 +15,14 @@ const QnaDetail = (props) => {
   //  url에서 userId 불러오기
   const qnaId = props.match.params.id;
   const qna = useSelector((state) => state.qna.qna);
-  // console.log(qna);
-
+  // 문의내용 개행 처리: 자기소개(user_info.introduction)의 typeof는 object이므로 map을 사용할 수 없습니다.
+  // 따라서, 객체를 배열로 바꾼 후 아래서 map을 돌려줍니다.
+  // const content = [];
+  // const _content = qna.content.split("\n");
+  // for(let i = 0; i< _content.length; i++){
+  //   content.push(_content[i]);
+  // }
+ 
   // console.log(qna.qcomments);
 
   React.useEffect(() => {
@@ -64,7 +70,8 @@ const QnaDetail = (props) => {
         </TitleContainer>
 
         <ContentContainer>
-          <Text size="1.1rem">{qna.content}</Text>
+       {/* {content.map((c) => { return <Text size="1.1rem">{c}</Text> })}  */}
+       <Text size="1.1rem">{qna.content}</Text>
         </ContentContainer>
 
         <QnaDetailComment qnaId={qnaId} />
