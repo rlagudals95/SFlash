@@ -729,7 +729,7 @@ const PostContents = styled.div`
 const PostTime = styled.div`
   font-size: 0.7rem;
   opacity: 0.4;
-  margin-top: 13px;
+  margin-top: 3.5px;
 
   /* margin: 15px 0px 8px 0px; */
 `;
