@@ -130,7 +130,6 @@ const addPostAPI = (post) => {
     formData.append("latitude", post.latitude);
     formData.append("longitude", post.longitude);
     formData.append("spotName", post.spotName);
-    formData.append("spotNameForCustomOverlay", post.spotNameForCustomOverlay);
     // 폼데이터 이미지 파일들은 한개 씩 보내기!
     for (let i = 0; i < _file.length; i++) {
       formData.append("file", _file[i]);
