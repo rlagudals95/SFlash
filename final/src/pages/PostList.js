@@ -332,7 +332,7 @@ const TopBox = styled.div`
 `;
 
 const SearchBox = styled.div`
-  position: fixed;
+  position: absolute;
   background-color: transparent;
   border: none;
   box-sizing: border-box; 
@@ -347,7 +347,7 @@ const SearchBox = styled.div`
     top: 100px;
   }
   @media (max-width: 1400px) {
-    position: fixed;
+    position: absolute;
     width: 55%;
     top: 140px;
     margin: auto;

@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 // 리덕스를 이용하게 해주는 함수들, 모듈 파일 가져오기
 import { useDispatch, useSelector } from "react-redux";
-import { history } from "../redux/configStore";
 import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지url
-import writeInfoImg from "../shared/images/writeInfoCustomOverlay/writeInfoCustomOverlayImg.png";
 
 import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
@@ -13,11 +11,8 @@ import Swal from 'sweetalert2'
 import "../Css/Map.css";
 import UpLoadModal from "./UpLoadModal";
 import CategoryInMap from "../components/CategoryInMap";
-import { LeakRemoveOutlined } from "@material-ui/icons";
 import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import MapModal from "./MapModal";
-import Spinner from "../shared/Spinner";
-import PopUp from "../components/PopUp";
 
 // window 객체로부터 kakao mpa api를 호출하기
 // 이것이 되게 하기 위해서는 index.html(index.js 아님!!!)의 script 태그안의 src에다가
@@ -38,10 +33,6 @@ const Maps = (props) => {
   const [latitude, setLatitude] = useState(); // 클릭한 위치 위도 설정
   const [longitude, setLongitude] = useState(); // 클릭한 위치 경도 설정
   const [spotName, setSpotName] = useState(""); // 클릭한 위치 spotName
-  // 작성마커 안내용 주소 분리
-  const [spotNameInfo1, setSpotNameInfo1] = useState("");
-  const [spotNameInfo2, setSpotNameInfo2] = useState("");
-  const [writeInfoContent, setWriteInfoContent] = useState("");
 
   const [_map, setMap] = useState(); // useEffect 외부에서 map을 쓰기 위한 것.
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
@@ -2777,7 +2768,7 @@ const Maps = (props) => {
   // 장소 검색 객체를 생성합니다
   var ps = new kakao.maps.services.Places();
   // 키워드로 장소를 검색합니다
-  if (search) {
+  if (search) {  
     //search가 빈 string일때 검색이 되어서 오류가 뜨는 경우를 없애기 위해 if문으로 분기한다.
     ps.keywordSearch(search, (data, status, pagination) => {
       if (status === kakao.maps.services.Status.OK) {
@@ -2852,6 +2843,7 @@ const Maps = (props) => {
     </React.Fragment>
   );
 };
+
 
 export default Maps;
 

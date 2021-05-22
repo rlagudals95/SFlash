@@ -322,7 +322,7 @@ const addUserLikeLikeAPI = (board_id, board) => {
           dispatch(userActions.refreshTokenAPI());
         }}
 
-       
+
       })
       .catch((error) => {
         Swal.fire({
