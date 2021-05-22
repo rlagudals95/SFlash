@@ -623,7 +623,6 @@ const ModalComponent = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     /* background-color: white; */
-
     border: none;
     box-sizing: border-box;
     z-index: 7000;
@@ -729,13 +728,15 @@ const ModalBottomContainer = styled.div`
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
     text-align: left;
-    width: 93vw;
+    width: 100%;
     height: 45vh; // 이거 올려주니까 댓글창이보인다..!
     display: flex;
     flex-direction: column;
+    /* background-color: red; */
     padding: 0;
     margin: 0px auto;
     margin-top: 2vh;
+    /* margin-right: 10px; */
   }
   /* justify-content: space-between; */
 

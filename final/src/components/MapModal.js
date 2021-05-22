@@ -484,7 +484,7 @@ const ModalComponent = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* background-color: white; */
+    /* background-color: red; */
     z-index: 1000;
     border: none;
     box-sizing: border-box;
@@ -516,6 +516,10 @@ const ExitContainer = styled.div`
   right: 0;
   padding: 5px;
   opacity: 0.7;
+  @media (max-width: 600px) {
+    font-size: 7px;
+    padding: 1px;
+  }
 `;
 
 const ExitBtn = styled.button`
@@ -525,6 +529,9 @@ const ExitBtn = styled.button`
   border: none;
   outline: none;
   font-size: 14px;
+  @media (max-width: 600px) {
+    font-size: 7px;
+  }
 `;
 
 const ModalBottomContainer = styled.div`
