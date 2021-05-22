@@ -369,7 +369,9 @@ const ModalDetail = (props) => {
                                   >
                                     <DeleteForeverIcon />
                                   </CmtDeleteBtn>
-                                ) : null}
+                                ) : (
+                                  <CmtDeleteBtn></CmtDeleteBtn>
+                                )}
                               </ReplyRight>
                             </Replys>
                           </ReplyBox>
@@ -766,7 +768,7 @@ const PostContents = styled.div`
 `;
 
 const PostTime = styled.div`
-  font-size: 0.7rem;
+  font-size: 0.5rem;
   opacity: 0.4;
   margin-top: 3.5px;
 

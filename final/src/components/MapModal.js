@@ -331,7 +331,9 @@ const ModalDetail = (props) => {
                                 >
                                   <DeleteForeverIcon />
                                 </CmtDeleteBtn>
-                              ) : null}
+                              ) : (
+                                <CmtDeleteBtn></CmtDeleteBtn>
+                              )}
                             </Replys>
                           </ReplyBox>
                         );
