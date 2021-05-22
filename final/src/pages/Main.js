@@ -20,7 +20,7 @@ const Main = (props) => {
 
   console.log(
     "    --------------------------------------------------\n\
-    < Welcome SFlash!! Come and Expirence our service! >\n\
+    < Welcome to SFlash!! Come and Experience our service! >\n\
     --------------------------------------------------\n\
             /\\__/\\           \n\
            /'    '\\          \n\
