@@ -22,8 +22,8 @@ const QnaDetail = (props) => {
   // for(let i = 0; i< _content.length; i++){
   //   content.push(_content[i]);
   // }
- 
-  // console.log(qna.qcomments);
+  // console.log(Array.from(qna.content));
+
 
   React.useEffect(() => {
     if (!qnaId) {
@@ -71,7 +71,7 @@ const QnaDetail = (props) => {
 
         <ContentContainer>
        {/* {content.map((c) => { return <Text size="1.1rem">{c}</Text> })}  */}
-       <Text size="1.1rem">{qna.content}</Text>
+       <Content size="1.1rem">{qna.content}</Content>
         </ContentContainer>
 
         <QnaDetailComment qnaId={qnaId} />
@@ -142,7 +142,7 @@ const ContentContainer = styled.div`
   padding: 15px;
 `;
 
-const Text = styled.p`
+const Text = styled.text`
   align-items: center;
   display: flex;
   font-size: ${(props) => props.size};
@@ -153,6 +153,19 @@ const Text = styled.p`
   line-height: 1rem;
   color: ${(props) => props.theme.main_grey};
   /* background-color: green; */
+`;
+
+const Content = styled.div`
+  align-items: center;
+  display: flex;
+  font-size: ${(props) => props.size};
+  font-weight: ${(props) => props.weight};
+  width: ${(props) => props.width};
+  border: white;
+  padding: 0px 10px;
+  color: ${(props) => props.theme.main_grey};
+  line-height: 2rem;
+  white-space: pre-line;
 `;
 
 const TextBtn = styled.text`

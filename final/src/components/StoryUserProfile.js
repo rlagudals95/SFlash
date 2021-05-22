@@ -274,12 +274,13 @@ const Nickname = styled.div`
   }
 `;
 
-const Introduction = styled.p`
+const Introduction = styled.div`
   font-size: 1.1rem;
   font-weight: 400;
   color: grey;
-  line-height: 1.2rem;
   margin-left: 20px;
+  line-height: 2rem;
+  white-space: pre-line;
   @media (max-width: 1280px) {
     font-size: 1.1rem;
   }

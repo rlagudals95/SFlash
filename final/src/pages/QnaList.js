@@ -14,9 +14,12 @@ import { RiEditFill } from "react-icons/ri";
 
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
+import { RotateLeftTwoTone } from "@material-ui/icons";
 
 const QnaList = (props) => {
   const dispatch = useDispatch();
+  const is_login = useSelector ((state) => state.user.is_login)
+  console.log(is_login);
   const qna_list = useSelector((state) => state.qna.list);
   const total_length = useSelector((state) => state.qna.total_length);
   // console.log("qna_list:", qna_list);
@@ -32,19 +35,15 @@ const QnaList = (props) => {
   for (let i = 1; i <= Math.ceil(total_length / size); i++) {
     pageNumber.push(i);
   }
-  // console.log(page);
-  // console.log(size);
-  // console.log(pageNumber);
-
   //paginate : page 바꾸기 setPage로 바꾼다
   const paginate = (PageNumber) => setPage(PageNumber);
 
   React.useEffect(() => {
     dispatch(qnaActions.getQnaAPI(page, size));
+    console.log(role);
   }, [page]);
 
   //페이지네이션 화살표 함수
-
   // 오른쪽 화살표 함수
   const forward = () => {
     if (page < pageNumber.length) {
@@ -80,9 +79,6 @@ const QnaList = (props) => {
             글쓰기
           </WriteBtn>
           <Content>
-            {/* <Text width="4%">
-          <b>NO.</b>
-        </Text> */}
             <Text width="70%">
               <b>제목</b>
             </Text>
