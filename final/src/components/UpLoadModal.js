@@ -22,6 +22,7 @@ import UploadEdit from "../shared/UploadEdit";
 import SelectCate from "./SelectCate";
 import Input from "../elements/Input";
 import Input2 from "../elements/Input2";
+import Input3 from "../elements/Input3 ";
 import { CgLogOut } from "react-icons/cg";
 
 const UploadModal = (props) => {
@@ -65,7 +66,7 @@ const UploadModal = (props) => {
 
   const [image_list, setImageList] = React.useState();
   const is_file = useSelector((state) => state.image2.file);
-  console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
+  // console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
   // const post_id = props.match.params.id;
   const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
   const is_madal = props.modal ? true : false;
@@ -76,9 +77,9 @@ const UploadModal = (props) => {
   // const editImage = useSelector((state) => state.image2.image);
 
   const previewSet = useSelector((state) => state.image2.preview);
-  console.log("프리뷰를 알자!", previewSet);
+  // console.log("프리뷰를 알자!", previewSet);
   const file = useSelector((state) => state.image2.file);
-  console.log("업로드 파일들을 알자!", file);
+  // console.log("업로드 파일들을 알자!", file);
 
   const is_category = useSelector((state) => state.category.select_category);
 
@@ -345,7 +346,7 @@ const UploadModal = (props) => {
                       _onChange={changeTitle}
                     ></Input2>
                   </Title>
-                  <Input
+                  <Input3
                     id="outlined-multiline-static"
                     // label="📝제목 작성"
                     placeholder={props.content}
@@ -355,7 +356,7 @@ const UploadModal = (props) => {
                     variant="outlined"
                     value={contents}
                     _onChange={changeContents}
-                  ></Input>
+                  ></Input3>
                 </React.Fragment>
               </EditCommentBox>
             ) : (
@@ -374,11 +375,12 @@ const UploadModal = (props) => {
                     _onChange={changeTitle}
                   ></Input2>
                 </Title>
+
                 <Input
                   id="outlined-multiline-static"
                   // label="📝제목 작성"
                   placeholder={"내용작성..."}
-                  rows={6}
+                  rows={3}
                   multiLine
                   variant="outlined"
                   value={contents}
@@ -391,7 +393,9 @@ const UploadModal = (props) => {
           {/* 카테고리는 수정할 수 없기때문에 게시글 수정 모달에선 가려준다 */}
           {is_edit ? null : <SelectCate></SelectCate>}
           {is_edit ? (
-            <BottomEdit2 onClick={editPost}>수정하기</BottomEdit2>
+            <Edit2Out>
+              <BottomEdit2 onClick={editPost}>수정하기</BottomEdit2>
+            </Edit2Out>
           ) : (
             <BottomEdit onClick={addPost}>게시하기</BottomEdit>
           )}
@@ -400,6 +404,10 @@ const UploadModal = (props) => {
     </React.Fragment>
   );
 };
+
+const InputOut = styled.div`
+  height: 10px;
+`;
 
 const BottomEdit = styled.div`
   color: ${(props) => props.theme.main_color};
@@ -411,8 +419,10 @@ const BottomEdit = styled.div`
   width: 100%;
   text-align: center;
   padding: 12px 0px;
+
   border-radius: 7px;
-  margin: 15px 0px;
+  /* margin: 15px 0px; */
+  margin-top: 20px;
   box-sizing: border-box;
   :hover {
     background-color: ${(props) => props.theme.main_color};
@@ -424,6 +434,11 @@ const BottomEdit = styled.div`
     margin-bottom: 10vh;
   }
 `;
+
+const Edit2Out = styled.div`
+  padding-top: 53px;
+`;
+
 const BottomEdit2 = styled.div`
   color: ${(props) => props.theme.main_color};
   font-weight: bold;
@@ -476,18 +491,17 @@ const ModalImg = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   object-fit: cover;
-  background-position: center;
+  background-position: 0px;
   background-repeat: no-repeat;
   border: none;
   box-sizing: border-box;
   width: 100%;
-  height: 410px;
-  max-height: 350px;
+  height: 320px;
+  max-height: 320px;
+  margin-bottom: -20px;
   border-top: 2px solid darkgray;
   border-bottom: 2px solid darkgray;
-  /* display: table-cell; */
-  /* background-color: red; */
-  @media (max-width: 1440px) {
+  /* @media (max-width: 1440px) {
     background-image: url("${(props) => props.src}");
     background-size: cover;
     object-fit: cover;
@@ -496,8 +510,9 @@ const ModalImg = styled.div`
     border: none;
     box-sizing: border-box;
     width: 100%;
-    height: 630px;
-    max-height: 330px;
+    height: 320px;
+    max-height: 320px;
+
     margin-bottom: -20px;
     border-top: 2px solid darkgray;
     border-bottom: 2px solid darkgray;
@@ -513,12 +528,11 @@ const ModalImg = styled.div`
     width: 100%;
     height: 320px;
     max-height: 320px;
-    /* height: 465px;
-    max-height: 465px; */
+
     margin-bottom: -20px;
     border-top: 2px solid darkgray;
     border-bottom: 2px solid darkgray;
-  }
+  } */
   @media (max-width: 600px) {
     background-image: url("${(props) => props.src}");
     background-size: cover;
@@ -559,8 +573,8 @@ const ModalComponent = styled.div`
   border-radius: 0.5vw;
   position: fixed !important;
   /* width: 590px; */
-  width: 500px;
-  height: 820px;
+  width: 420px;
+  height: 660px;
   max-height: 820px;
   /* overflow: hidden; */
   top: 50%;
@@ -575,38 +589,34 @@ const ModalComponent = styled.div`
   box-sizing: border-box;
   min-width: 380px;
   /* overflow-x: hidden; */
-  @media (max-width: 1440px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
+  /* @media (max-width: 1440px) {
+
     position: fixed;
-    /* width: 35vw; */
+ 
     width: 470px;
     height: 780px;
-    /* overflow: hidden; */
+ 
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* background-color: white; */
+
     z-index: 1000;
     border: none;
     box-sizing: border-box;
   }
   @media (max-width: 1155px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
-    position: fixed;
-    /* width: 35vw; */
-    width: 470px;
+  
+   
     height: 780px;
-    /* overflow: hidden; */
+  
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* background-color: white; */
+    
     z-index: 1000;
     border: none;
     box-sizing: border-box;
-  }
+  } */
 
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
@@ -684,41 +694,34 @@ const ExitBtn = styled.button`
 const ModalBottomContainer = styled.div`
   /* background-color: red; */
   margin: 0px auto;
-  margin-top: 30px;
+  margin-top: 50px;
   text-align: left;
-  width: 450px;
-  height: 380px;
+  width: 397px;
+  height: 280px;
   display: flex;
   flex-direction: column;
   padding: 0px 12px;
 
-  @media (max-width: 1440px) {
-    // 1450밑으로 넓이가 내려가면
+  /* @media (max-width: 1440px) {
     text-align: left;
     width: 450px;
-    // 이거 올려주니까 댓글창이보인다..!
     height: 600px;
     display: flex;
     flex-direction: column;
     padding: 0;
     margin: 0px auto;
     margin-top: 5vh;
-    /* background-color: red; */
   }
   @media (max-width: 1155px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
-    // 1450밑으로 넓이가 내려가면
     text-align: left;
     width: 450px;
-    // 이거 올려주니까 댓글창이보인다..!
     height: 370px;
     display: flex;
     flex-direction: column;
     padding: 0;
     margin: 0px auto;
     margin-top: 5vh;
-  }
+  } */
 
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
@@ -760,11 +763,12 @@ const ModalAuthor = styled.span`
 const MiddleBox = styled.div`
   display: flex;
   flex-direction: column;
-  height: 255px;
+  height: 127px;
+  /* background-color: red; */
+
   width: 100%;
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
-    height: 235px;
     /* background-color: red; */
   }
   /* justify-content: space-between; */

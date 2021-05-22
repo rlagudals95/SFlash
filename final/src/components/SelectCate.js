@@ -188,6 +188,7 @@ const HoriznalBtn = styled.div`
   /* align-items: center;
   text-align: center; */
   width: 100%;
+
   overflow-x: scroll;
   /* overflow-y: scroll; */
   ::-webkit-scrollbar {
