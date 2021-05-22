@@ -31,12 +31,12 @@ function Navbar() {
   const [sidebar, setSidebar] = useState(false);
 
   // history로 사이드 navbar에 조건을주자
-  console.log("히스토리!", history.location.pathname);
+  // console.log("히스토리!", history.location.pathname);
   const showSidebar = () => setSidebar(!sidebar);
 
   const pageLocation = history.location.pathname;
 
-  console.log("현재 페이지는?ㄴㅇㄹ혼애로내여ㅑㄹ?", pageLocation);
+  // console.log("현재 페이지는?ㄴㅇㄹ혼애로내여ㅑㄹ?", pageLocation);
 
   const is_story = pageLocation.includes("story"); // 스토리 페이지의 pathname은 stroy/id 이기 때문에 story를 포함하는지 여부에 따라 조건을 줌
 
@@ -51,7 +51,7 @@ function Navbar() {
   // console.log("현재 페이지는", page);
 
   React.useEffect(() => {
-    console.log(is_login);
+    // console.log(is_login);
   }, [is_login]);
 
   const onLogout = () => {

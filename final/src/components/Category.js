@@ -41,10 +41,7 @@ const Category = () => {
         {/*  */}
         {/* 전체보기 버튼 */}
         <CategoryInfo>
-          <CateGoryTitle>
-          
-            카테고리
-          </CateGoryTitle>
+          <CateGoryTitle>카테고리</CateGoryTitle>
         </CategoryInfo>
         {is_category.length == 0 ? ( // 카테고리가 선택된게 없다? 즉, is_category값이 0이면 전체 게시물을 보여주는 상태값
           <SelectedBtn
@@ -419,20 +416,6 @@ justify-content: space-between; */
     padding-top: -50px;
     padding-bottom: 10px;
   }
-  /* height: 100px;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: darkgray;
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: lightgrey;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
-  } */
 `;
 const CategoryInfo = styled.div`
   display: flex;

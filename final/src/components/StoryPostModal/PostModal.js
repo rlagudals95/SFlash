@@ -21,19 +21,19 @@ const ModalDetail = (props) => {
 
   React.useEffect(() => {}, []);
 
-  console.log("eeee", props);
+  // console.log("eeee", props);
   const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
   const modalData = useSelector((state) => state.mapmodal.post);
   const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
 
   if (commentData) {
-    console.log("코멘트 데이타", commentData);
+    // console.log("코멘트 데이타", commentData);
   }
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
 
-  console.log("모달 데이타", modalData);
+  // console.log("모달 데이타", modalData);
 
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
@@ -136,29 +136,41 @@ const ModalDetail = (props) => {
                             : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                         }
                         onClick={() => {
-                          history.push(`/story/${modalData.writerId}`); 
+                          history.push(`/story/${modalData.writerId}`);
                           dispatch(storyPostActions.resetStory([]));
                           dispatch(profileActions.resetProfile([]));
-                          dispatch(profileActions.getUserInfoAPI(modalData.writerId));
-                          dispatch(storyPostActions.getUserPostAPI(modalData.writerId));
-                          dispatch(storyPostActions.getUserLikeAPI(modalData.writerId));
+                          dispatch(
+                            profileActions.getUserInfoAPI(modalData.writerId)
+                          );
+                          dispatch(
+                            storyPostActions.getUserPostAPI(modalData.writerId)
+                          );
+                          dispatch(
+                            storyPostActions.getUserLikeAPI(modalData.writerId)
+                          );
                           // window.location.replace(
                           //     `/story/${modalData.writerId}`
                           //   );// 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                         }}
                       />
                       <ModalAuthor
-                       onClick={() => { 
-                       history.push(`/story/${modalData.writerId}`); 
-                       dispatch(storyPostActions.resetStory([]));
-                       dispatch(profileActions.resetProfile([]));
-                       dispatch(profileActions.getUserInfoAPI(modalData.writerId));
-                       dispatch(storyPostActions.getUserPostAPI(modalData.writerId));
-                       dispatch(storyPostActions.getUserLikeAPI(modalData.writerId));
-                        // window.location.replace(
-                        //     `/story/${modalData.writerId}`
-                        //   );// 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
-                      }}
+                        onClick={() => {
+                          history.push(`/story/${modalData.writerId}`);
+                          dispatch(storyPostActions.resetStory([]));
+                          dispatch(profileActions.resetProfile([]));
+                          dispatch(
+                            profileActions.getUserInfoAPI(modalData.writerId)
+                          );
+                          dispatch(
+                            storyPostActions.getUserPostAPI(modalData.writerId)
+                          );
+                          dispatch(
+                            storyPostActions.getUserLikeAPI(modalData.writerId)
+                          );
+                          // window.location.replace(
+                          //     `/story/${modalData.writerId}`
+                          //   );// 게시물 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
+                        }}
                       >
                         {modalData.writerName}
                       </ModalAuthor>
@@ -238,11 +250,7 @@ const ModalDetail = (props) => {
                       {modalData.writerId == user_id ? (
                         <ModalEdit>
                           <React.Fragment onClick={props.close}>
-                            <EditBtn
-                              onClick={openEditModal}
-                            >
-                              수정
-                            </EditBtn>
+                            <EditBtn onClick={openEditModal}>수정</EditBtn>
                           </React.Fragment>
                           /
                           <DeleteBtn
@@ -305,23 +313,43 @@ const ModalDetail = (props) => {
                                         ? c.writerImgUrl
                                         : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                     }
-                                    onClick={() => { 
-                                      history.push(`/story/${c.userId}`); 
+                                    onClick={() => {
+                                      history.push(`/story/${c.userId}`);
                                       dispatch(storyPostActions.resetStory([]));
                                       dispatch(profileActions.resetProfile([]));
-                                      dispatch(profileActions.getUserInfoAPI(c.userId));
-                                      dispatch(storyPostActions.getUserPostAPI(c.userId));
-                                      dispatch(storyPostActions.getUserLikeAPI(c.userId));
+                                      dispatch(
+                                        profileActions.getUserInfoAPI(c.userId)
+                                      );
+                                      dispatch(
+                                        storyPostActions.getUserPostAPI(
+                                          c.userId
+                                        )
+                                      );
+                                      dispatch(
+                                        storyPostActions.getUserLikeAPI(
+                                          c.userId
+                                        )
+                                      );
                                     }}
                                   ></ReplyImg>
                                   <ReplyWriter
-                                   onClick={() => { 
-                                    history.push(`/story/${c.userId}`); 
-                                    dispatch(storyPostActions.resetStory([]));
-                                    dispatch(profileActions.resetProfile([]));
-                                    dispatch(profileActions.getUserInfoAPI(c.userId));
-                                    dispatch(storyPostActions.getUserPostAPI(c.userId));
-                                    dispatch(storyPostActions.getUserLikeAPI(c.userId));
+                                    onClick={() => {
+                                      history.push(`/story/${c.userId}`);
+                                      dispatch(storyPostActions.resetStory([]));
+                                      dispatch(profileActions.resetProfile([]));
+                                      dispatch(
+                                        profileActions.getUserInfoAPI(c.userId)
+                                      );
+                                      dispatch(
+                                        storyPostActions.getUserPostAPI(
+                                          c.userId
+                                        )
+                                      );
+                                      dispatch(
+                                        storyPostActions.getUserLikeAPI(
+                                          c.userId
+                                        )
+                                      );
                                     }}
                                   >
                                     {c.writerName}

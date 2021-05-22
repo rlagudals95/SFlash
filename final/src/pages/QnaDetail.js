@@ -15,8 +15,8 @@ const QnaDetail = (props) => {
   //  url에서 userId 불러오기
   const qnaId = props.match.params.id;
   const qna = useSelector((state) => state.qna.qna);
-  console.log(qna);
- 
+  // console.log(qna);
+
   // console.log(qna.qcomments);
 
   React.useEffect(() => {
@@ -64,7 +64,7 @@ const QnaDetail = (props) => {
         </TitleContainer>
 
         <ContentContainer>
-        <Text size="1.1rem">{qna.content}</Text>
+          <Text size="1.1rem">{qna.content}</Text>
         </ContentContainer>
 
         <QnaDetailComment qnaId={qnaId} />

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
-import { 
+import {
   Container,
-  Title, 
-  InputStyle, 
-  SolidBtn, 
+  Title,
+  InputStyle,
+  SolidBtn,
   BorderBtn,
-  CheckBtn, 
-  TextBtn, } from "../../Css/loginSignupCss"
+  CheckBtn,
+  TextBtn,
+} from "../../Css/loginSignupCss";
 import { Grid } from "../../elements/index";
 import { actionCreators as userActions } from "../../redux/modules/user";
 
@@ -27,7 +28,7 @@ const FindEmailPwd = () => {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [authCode, setAuthCode] = useState("");
-  const [activeAuthInput, setActiveAuthInput] =React.useState(false);
+  const [activeAuthInput, setActiveAuthInput] = React.useState(false);
 
   // useEffect(() => {
   //   return () => {};
@@ -52,21 +53,21 @@ const FindEmailPwd = () => {
 
         if (is_email) {
           Swal.fire({
-            text: '등록된 이메일은 ' + is_email +  ' 입니다',
+            text: "등록된 이메일은 " + is_email + " 입니다",
             confirmButtonColor: "#ffb719",
-          })
+          });
         } else {
           Swal.fire({
-            text: '회원정보가 옳바르지 않습니다 :(',
+            text: "회원정보가 옳바르지 않습니다 :(",
             confirmButtonColor: "#ffb719",
-          })
+          });
         }
       });
   };
 
   // 이메일 입력하고 인증번호 전송하기
   const onEmailSubmit = (email) => {
-    console.log(email);
+    // console.log(email);
     axios
       .post(
         `${config.api}/user/findpwd`,
@@ -80,25 +81,25 @@ const FindEmailPwd = () => {
         }
       )
       .then((res) => {
-        console.log("인증번호 전송", res.data);
-        if(res.data === true){
+        // console.log("인증번호 전송", res.data);
+        if (res.data === true) {
           Swal.fire({
-            text: '입력하신 이메일로 인증번호가 전송되었습니다.',
+            text: "입력하신 이메일로 인증번호가 전송되었습니다.",
             confirmButtonColor: "#ffb719",
-          })
-            setActiveAuthInput(true);
-        }else{
+          });
+          setActiveAuthInput(true);
+        } else {
           Swal.fire({
-            text: '회원정보가 옳바르지 않습니다 :(',
+            text: "회원정보가 옳바르지 않습니다 :(",
             confirmButtonColor: "#ffb719",
-          })
+          });
         }
       });
   };
 
   const onFindPwd = (email, authCode) => {
     //  인증번호가 일치하면 비밀번호 변경 페이지로
-    console.log(email, authCode);
+    // console.log(email, authCode);
     axios
       .post(
         `${config.api}/user/findpwd/authcode`,
@@ -113,15 +114,15 @@ const FindEmailPwd = () => {
         }
       )
       .then((res) => {
-        console.log("비밀번호 찾기", res.data);
+        // console.log("비밀번호 찾기", res.data);
         dispatch(emailActions.getEmail(email));
-        if(res.data === true){
-            history.push('editpwd')
-        }else{
+        if (res.data === true) {
+          history.push("editpwd");
+        } else {
           Swal.fire({
-            text: '인증번호가 일치하지 않습니다 :(',
+            text: "인증번호가 일치하지 않습니다 :(",
             confirmButtonColor: "#ffb719",
-          })
+          });
         }
       });
   };
@@ -190,8 +191,9 @@ const FindEmailPwd = () => {
                 setEmail(e.target.value);
               }}
             />
-            <CheckBtn onClick={() => {
-              let timerInterval;
+            <CheckBtn
+              onClick={() => {
+                let timerInterval;
                 Swal.fire({
                   // title: "Please wait..",
                   html: "잠시만 기다려주세요",
@@ -213,23 +215,23 @@ const FindEmailPwd = () => {
                     clearInterval(timerInterval);
                   },
                 });
-                onEmailSubmit(email)
-              }}>
+                onEmailSubmit(email);
+              }}
+            >
               인증번호전송
             </CheckBtn>
           </Grid>
 
-          <Auth active = {activeAuthInput}>
-          <InputStyle
-            placeholder="인증번호 입력"
-            type="type"
-            width="100%"
-            onChange={(e) => {
-              setAuthCode(e.target.value);
-            }}
-          />
-        </Auth>
-
+          <Auth active={activeAuthInput}>
+            <InputStyle
+              placeholder="인증번호 입력"
+              type="type"
+              width="100%"
+              onChange={(e) => {
+                setAuthCode(e.target.value);
+              }}
+            />
+          </Auth>
 
           <SolidBtn
             background-color="grey"
@@ -249,7 +251,6 @@ const FindEmailPwd = () => {
     );
   }
 };
-
 
 const Tab = styled.div`
   display: flex;
@@ -288,7 +289,7 @@ const ClickedTab = styled.button`
 `;
 
 const Auth = styled.div`
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   ${(props) => (props.active ? "" : "display:none")}

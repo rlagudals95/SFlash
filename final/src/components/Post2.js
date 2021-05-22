@@ -27,25 +27,12 @@ const Post2 = (props) => {
 
   // console.log("좋아요 정보", like);
   React.useEffect(() => {
-    console.log("시작");
+    // console.log("시작");
     dispatch(likeActions.getLikePost());
   }, []);
 
   const dispatch = useDispatch();
-  // console.log("포스트 하나의 프롭스", props);
 
-  // 이미지들 반복문으로 뽑아오기
-  // let image_list = [];
-
-  // if (props.img_url) {
-  //   //이거 좀 위태위태한거 같다
-  //   for (let i = 0; i < props.img_url.length; i++) {
-  //     image_list.push(props.img_url[i]);
-  //   }
-  // }
-
-  // console.log("이미지 리스트!", image_list);
-  // 댓글들 반복문으로 뽑아오기
   let comment_list = [];
 
   if (props.comment) {
@@ -131,18 +118,6 @@ const PostBox = styled.div`
 
   background-image: url("${(props) => props.src}");
   cursor: pointer;
-`;
-
-const hoverBox = keyframes`
-  0% {
-    transform: translateY(10px);
-    opacity: 0.3;
-
-  }
-  100% {
-    transform: translateY(0px);
-    opacity: 1;
-  }
 `;
 
 const Card = styled.div`

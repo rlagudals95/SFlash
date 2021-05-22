@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import {
   Container,
@@ -78,7 +78,7 @@ const EditPwd = () => {
 
   const onEditPwd = (pwd, rePwd) => {
     //  인증번호가 일치하면 비밀번호 변경 페이지로
-    console.log(email, pwd, rePwd);
+    // console.log(email, pwd, rePwd);
     axios
       .post(
         `${config.api}/user/findpwd/editpwd`,
@@ -94,20 +94,20 @@ const EditPwd = () => {
         }
       )
       .then((res) => {
-        console.log("비밀번호 변경하기", res.data);
+        // console.log("비밀번호 변경하기", res.data);
         if (res.status === 200) {
           Swal.fire({
-            text: '비밀번호가 변경되었습니다. :)',
+            text: "비밀번호가 변경되었습니다. :)",
             confirmButtonColor: "#ffb719",
-          })
+          });
           history.push("/login");
         }
       })
       .catch((err) => {
         Swal.fire({
-          text: '비밀번호 형식을 다시 확인해주세요. :(',
+          text: "비밀번호 형식을 다시 확인해주세요. :(",
           confirmButtonColor: "#ffb719",
-        })
+        });
         console.log("비밀번호 변경 실패", err);
       });
   };

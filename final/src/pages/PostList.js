@@ -54,10 +54,10 @@ const PostList = (props) => {
   const resultPark = is_category.find((item) => item === "공원");
   const resultExhibition = is_category.find((item) => item === "전시");
 
-  console.log("로딩변화", loading);
+  // console.log("로딩변화", loading);
 
   const board_list = useSelector((state) => state.post.list);
-  console.log("잘 가지고 왔나~", board_list);
+  // console.log("잘 가지고 왔나~", board_list);
 
   const [search, setSearch] = React.useState("");
 
@@ -71,11 +71,6 @@ const PostList = (props) => {
     dispatch(PostActions.getPostAPI());
   };
 
-  // const like_list = useSelector((state) => state.like.list);
-
-  // console.log("!!!!!!!!", like_list);
-
-  //여기서 board_list가 바뀌어야 한다
   const searchPost = board_list.filter((val) => {
     // 검색기능(필터링)을 변수로 지정해 놓고 .map앞에 붙혀둔다
     if (search == "") {
@@ -107,7 +102,7 @@ const PostList = (props) => {
               setSearch(e.target.value);
             }}
           ></Input2> */}
-          <SearchInput 
+          <SearchInput
             value={search}
             placeholder="검색어를 입력해주세요 (●'◡'●)"
             onChange={(e) => {
@@ -335,7 +330,7 @@ const SearchBox = styled.div`
   position: fixed;
   background-color: transparent;
   border: none;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   border-radius: 10px;
   top: 30px;
   left: 50%;

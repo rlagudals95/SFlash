@@ -32,7 +32,7 @@ const StoryPost = (props) => {
   const addLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("ADDLIKE!!!!!", props.id, props);
+    // console.log("ADDLIKE!!!!!", props.id, props);
     if (props.userPostMode) {
       dispatch(storyPostActions.addUserPostLikeAPI(props.id, props));
     } else {
@@ -43,7 +43,7 @@ const StoryPost = (props) => {
   const disLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("DISLIKE!!!!!", props.id, props);
+    // console.log("DISLIKE!!!!!", props.id, props);
     if (props.userPostMode) {
       dispatch(storyPostActions.deleteUserPostLikeAPI(props.id, props));
     } else {

@@ -25,19 +25,19 @@ const ModalDetail = (props) => {
 
   React.useEffect(() => {}, []);
 
-  console.log("eeee", props);
+  // console.log("eeee", props);
   const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
   const modalData = useSelector((state) => state.mapmodal.post);
   const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
 
   if (commentData) {
-    console.log("코멘트 데이타", commentData);
+    // console.log("코멘트 데이타", commentData);
   }
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
 
-  console.log("모달 데이타", modalData);
+  // console.log("모달 데이타", modalData);
 
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");

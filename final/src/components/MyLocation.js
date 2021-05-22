@@ -12,5 +12,5 @@ const MyLocation = (props) => {
   const [lati, setLati] = useState(0);
   const [longi, setLongi] = useState(0);
   const [address, setAddress] = useState("");
-  console.log(address);
+  // console.log(address);
 };

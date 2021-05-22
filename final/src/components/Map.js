@@ -51,9 +51,9 @@ const Maps = (props) => {
   const is_category_in_map = useSelector((state) => {
     return state.category_in_map.is_category_in_map;
   });
-  console.log("is_category_in_map: " + is_category_in_map);
+  // console.log("is_category_in_map: " + is_category_in_map);
   const is_all = is_category_in_map.length === 12 ? true : false;
-  console.log(is_all);
+  // console.log(is_all);
 
   // is_category_in_map 배열 안에 해당 카테고리가 원소로서 존재 여부를 true, false로 설정한다.
   const is_mypost = is_category_in_map.includes("내꺼");
@@ -87,7 +87,7 @@ const Maps = (props) => {
   };
 
   if (map_post_list) {
-    console.log(map_post_list); // map_post_list처음에 []빈배열로 찍힌다
+    // console.log(map_post_list); // map_post_list처음에 []빈배열로 찍힌다
   }
 
   // 종류별 데이터는 필터 함수를 이용해 묶어 내고 필요한 부분에 가져다 쓴다.
@@ -98,7 +98,7 @@ const Maps = (props) => {
   const myPostData = map_post_list.filter(
     (map_post_list) => map_post_list.writerName === nickname
   );
-  console.log("내 작성 게시물 왔나??: " + myPostData);
+  // console.log("내 작성 게시물 왔나??: " + myPostData);
   // 1. 내가 작성한한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!!
   const myPostCafe = myPostData.filter(
     (myPostData) => myPostData.category == "카페" // 1. 카페
@@ -142,7 +142,7 @@ const Maps = (props) => {
   const myLikeData = map_post_list.filter(
     (map_post_list) => map_post_list.like === true
   );
-  console.log("내좋아요 데이터있나??: " + myLikeData);
+  // console.log("내좋아요 데이터있나??: " + myLikeData);
   // 2. 내가 좋아요한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!!
   const myLikeCafe = myLikeData.filter(
     (myLikeData) => myLikeData.category == "카페" // 1. 카페
@@ -234,12 +234,12 @@ const Maps = (props) => {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
         function (position) {
-          console.log(
-            "현위치의 위도 = " +
-              position.coords.latitude +
-              ", 현위치의 경도 = " +
-              position.coords.longitude
-          );
+          // console.log(
+          //   "현위치의 위도 = " +
+          //     position.coords.latitude +
+          //     ", 현위치의 경도 = " +
+          //     position.coords.longitude
+          // );
           setStartLat(position.coords.latitude);
           setStartLng(position.coords.longitude);
           // var nowPositionLat = position.coords.latitude
@@ -262,7 +262,7 @@ const Maps = (props) => {
     }
   }
   // geolocation은 여기까지.
-  console.log(startLat, startLng);
+  // console.log(startLat, startLng);
 
   useEffect(() => {
     if (!map_post_list) {
@@ -315,15 +315,15 @@ const Maps = (props) => {
         var hereLng = latlng.getLng(); // 경도 = latlng.La = latlng.getLng()
         setLatitude(hereLat); // useState() : 위도 latitude 값 전역으로 설정
         setLongitude(hereLng); // useState() : 경도 longitude 값 전역으로 설정
-        console.log(latitude + " " + longitude);
+        // console.log(latitude + " " + longitude);
 
         var message = "클릭한 위치의 위도는 " + hereLat + " 이고, ";
         message += "경도는 " + hereLng + " 입니다";
-        console.log(message);
+        // console.log(message);
 
         // 위도 경도 좌표로 주소 알아내기
         var coord = new kakao.maps.LatLng(hereLat, hereLng);
-        console.log(coord);
+        // console.log(coord);
 
         // 좌표 => 주소 변환 코드 시작!!!
         // 좌표 => 법정동 주소(지번주소, 도로명주소 포함)
@@ -427,7 +427,7 @@ const Maps = (props) => {
         const spotNameInfo1 = spotName.split(" ").splice(0, 2).join(" ");
         const spotNameInfo2 = spotName.split(" ").splice(2).join(" ");
 
-        console.log("스팟네임: ", spotName);
+        // console.log("스팟네임: ", spotName);
 
         // if (spotNameInfo1 && spotNameInfo2) {
         const writeInfoContent =
@@ -2752,16 +2752,16 @@ const Maps = (props) => {
 
   // 업로드모달에 props로 전달되는 데이터
   if (latitude && longitude && spotName) {
-    console.log(
-      "위도: " +
-        latitude +
-        " " +
-        ", 경도: " +
-        longitude +
-        " " +
-        ", 장소: " +
-        spotName
-    );
+    // console.log(
+    //   "위도: " +
+    //     latitude +
+    //     " " +
+    //     ", 경도: " +
+    //     longitude +
+    //     " " +
+    //     ", 장소: " +
+    //     spotName
+    // );
   }
 
   // 키워드로 검색하기!!!!!!
@@ -2774,8 +2774,8 @@ const Maps = (props) => {
       if (status === kakao.maps.services.Status.OK) {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         var bounds = new kakao.maps.LatLngBounds(); // LatLngBounds 객체에 좌표를 추가합니다
-        console.log(data);
-        console.log(bounds);
+        // console.log(data);
+        // console.log(bounds);
 
         for (var i = 0; i < data.length; i++) {
           // displayMarker(data[i], bounds);

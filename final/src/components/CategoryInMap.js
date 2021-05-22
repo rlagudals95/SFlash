@@ -23,12 +23,12 @@ const CategoryInMap = () => {
   });
 
   const is_all = is_category_in_map.length === 12 ? true : false; // 모든 게시물 판단 기준
-  console.log("is_category_in_map의 길이: " + is_category_in_map.length);
+  // console.log("is_category_in_map의 길이: " + is_category_in_map.length);
   const is_empty = is_category_in_map.length === 0 ? true : false; // 카테고리 취소 판단 기준
 
   const is_mine = map_post_list.writerName === nickname ? true : false; // 내게시물 판단 기준
   const is_mylike = map_post_list.like === true ? true : false; // 내가 좋아요 한 게시물 판단 기준.
-  console.log(is_all);
+  // console.log(is_all);
 
   // console.log(is_category);
   // console.log("카테고리 배열길이", is_category.length);

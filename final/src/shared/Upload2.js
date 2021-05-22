@@ -11,17 +11,6 @@ const Upload = (props) => {
   const files = useSelector((state) => state.image2.file);
   // console.log("파일들", files);
   const selectFile = async (e) => {
-    // e.target은 input이죠!
-    // input이 가진 files 객체를 살펴봅시다.
-    // console.log(e.target.files);
-    // 선택한 파일이 어떻게 저장되어 있나 봅시다.
-    // console.log(e.target.files[0]);
-
-    // ref로도 확인해봅시다. :)
-    // console.log(fileInput.current.files[0]);
-    // const reader = await new FileReader();
-
-    // 고르만큼 갯수 추가.... 어케하지?>!?
     const file = fileInput.current.files[0];
     // files의 length 만큼 for문 돌리자
 
@@ -64,7 +53,6 @@ const Upload = (props) => {
           <UploadBtn>
             <IconRound>
               <LabelIcon></LabelIcon>
-              {/* <MdIcons.MdAddToPhotos size="2.5rem" color="#fff" /> */}
             </IconRound>
           </UploadBtn>
         </Label>

@@ -31,17 +31,13 @@ const UploadModal = (props) => {
   console.log("비교!", props);
   React.useEffect(() => {
     if (is_madal) {
-      console.log("실행실행!!!!!!!!!!");
       dispatch(imageActions.getModalPost(props));
       dispatch(profileActions.getUserInfoAPI(userId));
       return;
     }
     if (is_edit) {
-      console.log("실행ㄴㄴㄴㄴㄴㄴㄴ", props);
       // dispatch(imageActions.resetEdit([])); //
       dispatch(imageActions.getPost(props.id));
-
-      console.log("hi");
     }
     dispatch(profileActions.getUserInfoAPI(userId));
   }, []);
@@ -265,10 +261,10 @@ const UploadModal = (props) => {
                               );
                               //미리 등록해둔 이미지가 있는 경우엔 imgUrlId값이 있어 그것으로 삭제가능
                               if (onlyImg[idx].imgUrlId) {
-                                console.log(
-                                  "삭제한 이미지 id",
-                                  onlyImg[idx].imgUrlId
-                                );
+                                // console.log(
+                                //   "삭제한 이미지 id",
+                                //   onlyImg[idx].imgUrlId
+                                // );
                                 dispatch(
                                   imageActions.deleteImage(
                                     onlyImg[idx].imgUrlId
@@ -279,7 +275,7 @@ const UploadModal = (props) => {
                                 // 그러나 수정시 추가한 이미지엔 서버에서 준 이미지id가 따로 없다
                                 dispatch(
                                   //그래서 이미지 idx 기준으로 삭제해준다!
-                                  imageActions.deleteImageIdx(onlyImg[idx]) //asdjuifhuiawefhuiewbhfiubawefbiuewabiuf
+                                  imageActions.deleteImageIdx(onlyImg[idx])
                                 );
                               }
                               // 이미지와 파일이 둘다 삭제되어야 서버에 보내줄때 차질이 없으름로

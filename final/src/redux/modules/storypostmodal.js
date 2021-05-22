@@ -82,12 +82,12 @@ const getModalPostAPI = (boardId) => {
     axios({
       method: "GET",
       url: `${config.api}/board/${boardId}/detail`,
-    
-    headers: {
-      "X-AUTH-TOKEN": localStorage.getItem("jwt"),
-      // "X-AUTH-TOKEN": `${config.jwt}`,
-    },
-  })
+
+      headers: {
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
+        // "X-AUTH-TOKEN": `${config.jwt}`,
+      },
+    })
       .then((res) => {
         // console.log("모달정보 가져오자!!!!", res);
 
@@ -140,21 +140,21 @@ const modalAddCommentAPI = (comment, board_id) => {
       .then((res) => {
         console.log(res);
 
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           const comment_data = res.data.data;
           // console.log("댓글정보", comment_data);
           let comment_list = {
@@ -164,9 +164,9 @@ const modalAddCommentAPI = (comment, board_id) => {
             userId: comment_data.userId,
             writerImgUrl: comment_data.userImgUrl,
             writerName: comment_data.nickName,
-          };  
-        dispatch(modalAddComment(comment_list));
-      }
+          };
+          dispatch(modalAddComment(comment_list));
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -190,25 +190,23 @@ const modalDeleteCommentAPI = (id) => {
       },
     })
       .then((res) => {
-
-
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           dispatch(modalDeleteComment(id));
-        }     
+        }
       })
       .catch((err) => {
         Swal.fire({
@@ -236,21 +234,21 @@ const modalAddLikeAPI = (board_id, board) => {
       .then((res) => {
         console.log("좋아요!", res);
 
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           dispatch(editLikeP(board));
         }
       })
@@ -276,26 +274,25 @@ const modalDisLikeAPI = (board_id, board) => {
       },
     })
       .then((res) => {
-        console.log("좋아요 취소!", res);
+        // console.log("좋아요 취소!", res);
 
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           dispatch(editLikeD(board));
         }
-
       })
       .catch((error) => {
         Swal.fire({
@@ -314,7 +311,7 @@ const editLikeP = (post) => {
 
     let _like = post.like;
     let _likeCnt = post.likeCnt;
-    console.log(_like, _likeCnt);
+    // console.log(_like, _likeCnt);
 
     let board = {
       id: post.id,
@@ -331,7 +328,7 @@ const editLikeP = (post) => {
       writerId: post.writerId,
       spotName: post.spotName,
     };
-    console.log("rrr", board);
+
     dispatch(modalAddLike(board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
   };
 };
@@ -344,7 +341,7 @@ const editLikeD = (post) => {
 
     let _like = post.like;
     let _likeCnt = post.likeCnt;
-    console.log(_like, _likeCnt);
+    // console.log(_like, _likeCnt);
 
     let board = {
       category: post.category,
@@ -361,7 +358,7 @@ const editLikeD = (post) => {
       writerId: post.writerId,
       spotName: post.spotName,
     };
-    console.log("rrr", board);
+    // console.log("rrr", board);
 
     dispatch(modalDisLike(board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
   };
@@ -373,8 +370,8 @@ const editStoryPostAPI = (board_id, _edit) => {
     const addFile = getState().image2.edit_file; //추가된 이미지 파일
     const markerData = getState().post.map_post_list;
     const postData = getState().post.list;
-    console.log("현재 마커데이터", markerData);
-    console.log("현재 포스트 데이터", postData);
+    // console.log("현재 마커데이터", markerData);
+    // console.log("현재 포스트 데이터", postData);
 
     //여기서
     // for (let i = 0; i < addFile.length; i++) {
@@ -387,9 +384,9 @@ const editStoryPostAPI = (board_id, _edit) => {
     // console.log("바뀔 글내용", _edit.contents);
     // addFile[i]번째에 imgUrl 이 있을경우 제외 시킨다
     const formData = new FormData();
-    formData.append("title", _edit.title);  //수정된 제목
-    formData.append("content", _edit.contents);  //수정된 내용
-    formData.append("deleteImages", deleteImg);  
+    formData.append("title", _edit.title); //수정된 제목
+    formData.append("content", _edit.contents); //수정된 내용
+    formData.append("deleteImages", deleteImg);
 
     let _addFile = [];
     for (let i = 0; i < addFile.length; i++) {
@@ -399,7 +396,7 @@ const editStoryPostAPI = (board_id, _edit) => {
       }
     }
     //파일 리스트 중에 기존에 있던 imgUrl이 있는 이미지들을 제외하고 새로추가한 파일형식의 요소만 폼데이터로 수정(추가)요청
-    console.log("최종추가될 이미지", _addFile);
+    // console.log("최종추가될 이미지", _addFile);
 
     for (let i = 0; i < _addFile.length; i++) {
       formData.append("file", _addFile[i]);
@@ -414,22 +411,23 @@ const editStoryPostAPI = (board_id, _edit) => {
         "Content-Type": "multipart/form-data",
       },
     }).then((res) => {
-      console.log("수정반응값!", res);
-      if (res.data.message === "tokenExpired"){
+      // console.log("수정반응값!", res);
+      if (res.data.message === "tokenExpired") {
         dispatch(userActions.logOut());
         Swal.fire({
-          text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-          confirmButtonText: '로그인 하러가기',
-          confirmButtonColor: '#ffb719',
+          text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+          confirmButtonText: "로그인 하러가기",
+          confirmButtonColor: "#ffb719",
           showCancelButton: true,
-          cancelButtonText: '취소',
-          cancelButtonColor: '#eee',
+          cancelButtonText: "취소",
+          cancelButtonColor: "#eee",
         }).then((result) => {
           if (result.isConfirmed) {
             history.push("/login");
           }
-        })
-      }else{ let _post = res.data.data;
+        });
+      } else {
+        let _post = res.data.data;
         let post = {
           id: _post.boardId, // 포스트 id
           title: _post.title, // 포스트 title
@@ -445,18 +443,19 @@ const editStoryPostAPI = (board_id, _edit) => {
           spotName: _post.spotName,
         };
         Swal.fire({
-          text: '게시물을 수정 하시겠습니까?',
-          confirmButtonText: '예',
-          confirmButtonColor: '#ffb719',
+          text: "게시물을 수정 하시겠습니까?",
+          confirmButtonText: "예",
+          confirmButtonColor: "#ffb719",
           showCancelButton: true,
-          cancelButtonText: '아니오',
-          cancelButtonColor: '#eee',
+          cancelButtonText: "아니오",
+          cancelButtonColor: "#eee",
         }).then((result) => {
           if (result.isConfirmed) {
             dispatch(getModal(post));
             dispatch(storyPostActions.editStoryPost(board_id, post));
           }
-        })}
+        });
+      }
       /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌
     });
   };
@@ -472,34 +471,33 @@ const deleteStoryPostAPI = (board_id) => {
       },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
 
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           dispatch(storyPostActions.deleteStoryPost(board_id));
           dispatch(storyPostActions.deleteStoryMarker(board_id));
         }
-       
       })
       .catch((err) => {
         Swal.fire({
           text: "게시물 삭제에 문제가 있어요 :(",
           confirmButtonColor: "#ffb719",
         });
-        console.log("게시글 삭제 에러", err);
+        // console.log("게시글 삭제 에러", err);
       });
   };
 };

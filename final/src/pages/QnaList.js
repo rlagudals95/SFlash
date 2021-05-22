@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import { history } from "../redux/configStore";
 import { Grid } from "../elements/index";
@@ -12,14 +12,14 @@ import { BsFillLockFill } from "react-icons/bs";
 import { RiEditFill } from "react-icons/ri";
 // import Pagination from '@material-ui/lab/Pagination';
 
-import {IoIosArrowBack} from "react-icons/io";
-import {IoIosArrowForward} from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 
 const QnaList = (props) => {
   const dispatch = useDispatch();
   const qna_list = useSelector((state) => state.qna.list);
   const total_length = useSelector((state) => state.qna.total_length);
-  console.log("qna_list:", qna_list);
+  // console.log("qna_list:", qna_list);
   const me = localStorage.getItem("nickname");
   const role = localStorage.getItem("role");
 
@@ -32,9 +32,9 @@ const QnaList = (props) => {
   for (let i = 1; i <= Math.ceil(total_length / size); i++) {
     pageNumber.push(i);
   }
-  console.log(page);
-  console.log(size);
-  console.log(pageNumber);
+  // console.log(page);
+  // console.log(size);
+  // console.log(pageNumber);
 
   //paginate : page 바꾸기 setPage로 바꾼다
   const paginate = (PageNumber) => setPage(PageNumber);
@@ -51,9 +51,9 @@ const QnaList = (props) => {
       setPage(page + 1);
     } else {
       Swal.fire({
-        text: '다음 페이지가 없습니다!',
+        text: "다음 페이지가 없습니다!",
         confirmButtonColor: "#ffb719",
-      })
+      });
     }
   };
   // 왼쪽 화살표 함수
@@ -62,9 +62,9 @@ const QnaList = (props) => {
       setPage(page - 1);
     } else {
       Swal.fire({
-        text: '이전 페이지가 없습니다.',
+        text: "이전 페이지가 없습니다.",
         confirmButtonColor: "#ffb719",
-      })
+      });
     }
   };
 
@@ -133,9 +133,9 @@ const QnaList = (props) => {
                   onClick={() => {
                     if (q.writer !== me && role !== "ADMIN") {
                       Swal.fire({
-                        text: '해당 게시물에 대한 권한이 없습니다.',
+                        text: "해당 게시물에 대한 권한이 없습니다.",
                         confirmButtonColor: "#ffb719",
-                      })
+                      });
                       return;
                     } else {
                       history.push(`/qnadetail/${q.id}`);
@@ -155,11 +155,10 @@ const QnaList = (props) => {
             );
           })}
 
-      
-           <PaginationContainer>
+          <PaginationContainer>
             <ul className="pagination">
               <IoIosArrowBack
-                style={{ cursor: "pointer", paddingTop:"20px"}}
+                style={{ cursor: "pointer", paddingTop: "20px" }}
                 onClick={backward}
               />
               {pageNumber.map((pageNum) => (
@@ -169,14 +168,12 @@ const QnaList = (props) => {
                   </PageSpan>
                 </li>
               ))}
-              <IoIosArrowForward style={{ cursor: "pointer", paddingTop:"20px" }} onClick={forward} />
+              <IoIosArrowForward
+                style={{ cursor: "pointer", paddingTop: "20px" }}
+                onClick={forward}
+              />
             </ul>
           </PaginationContainer>
-
-
-
-
-
         </Container>
       </React.Fragment>
     );
@@ -296,13 +293,13 @@ const WriteBtn = styled.button`
   font-weight: 500;
   color: ${(props) => props.theme.main_grey};
   background-color: #ffffff;
-  
+
   /* color: #ffffff; */
   border: 1.5pt solid ${(props) => props.theme.main_color};
   outline: none;
   &:hover {
     color: #ffffff;
-    background-color:${(props) => props.theme.main_color};
+    background-color: ${(props) => props.theme.main_color};
     cursor: pointer;
     transition: all 0.5s ease-in-out;
     box-shadow: 2px 3px 3px 0px rgba(0, 0, 0, 0.2);
@@ -352,8 +349,5 @@ const PageSpan = styled.div`
     color: #212121;
   }
 `;
-
-
-
 
 export default QnaList;

@@ -12,19 +12,21 @@ const SET_QNA_DETAIL = "SET_QNA_DETAIL";
 const ADD_QNA = "ADD_QNA";
 const EDIT_QNA = "EDIT_QNA";
 const DELETE_QNA = "DELETE_QNA";
-const SET_TOTAL_LENGTH = "SET_TOTAL_LENGTH"
+const SET_TOTAL_LENGTH = "SET_TOTAL_LENGTH";
 
 const setQna = createAction(SET_QNA, (qna_list) => ({ qna_list }));
 const setQnaDetail = createAction(SET_QNA_DETAIL, (qna) => ({ qna }));
 const addQna = createAction(ADD_QNA, (qna) => ({ qna }));
 const editQna = createAction(EDIT_QNA, (qna) => ({ qna }));
 const deleteQna = createAction(DELETE_QNA, (id) => ({ id }));
-const setTotalLength = createAction(SET_TOTAL_LENGTH, (total_length) => ({ total_length }))
+const setTotalLength = createAction(SET_TOTAL_LENGTH, (total_length) => ({
+  total_length,
+}));
 
 const initialState = {
   list: [],
   qna: [],
-  total_length: ""
+  total_length: "",
 };
 
 const getQnaAPI = (page, size) => {
@@ -35,7 +37,7 @@ const getQnaAPI = (page, size) => {
       url: `${config.api}/qna?page=${page}&size=${size}`,
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         let qna_list = [];
         res.data.data.forEach((_qna) => {
           let qna = {
@@ -44,10 +46,10 @@ const getQnaAPI = (page, size) => {
             content: _qna.content,
             writer: _qna.writer,
             modified: _qna.modified.split("T")[0],
-            total_length: _qna.qnaSize
+            total_length: _qna.qnaSize,
           };
           qna_list.push(qna);
-          console.log(qna_list);
+          // console.log(qna_list);
         });
         let total_length = qna_list[0].total_length;
         dispatch(setQna(qna_list));
@@ -60,14 +62,14 @@ const getQnaAPI = (page, size) => {
 };
 
 const getQnaDetailAPI = (qnaId) => {
-  console.log("qnaId:", qnaId);
+  // console.log("qnaId:", qnaId);
   return function (dispatch, getState, { history }) {
     axios({
       method: "GET",
       url: `${config.api}/qna/${qnaId}/detail`,
     })
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         let _qna = res.data.data;
         let qna = {
           id: _qna.id,
@@ -77,9 +79,9 @@ const getQnaDetailAPI = (qnaId) => {
           writer: _qna.writer,
           qcomments: _qna.qcomments,
         };
-        console.log(qna);
-        console.log(qna.content)
-        console.log(typeof(qna.content))
+        // console.log(qna);
+        // console.log(qna.content);
+        // console.log(typeof qna.content);
         dispatch(setQnaDetail(qna));
       })
       .catch((err) => {
@@ -100,30 +102,29 @@ const addQnaAPI = (qna) => {
       },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
 
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           Swal.fire({
-            text: '문의 내용이 정상적으로 등록되었습니다 :)',
+            text: "문의 내용이 정상적으로 등록되었습니다 :)",
             confirmButtonColor: "#ffb719",
-          })
+          });
           history.goBack();
         }
-         
       })
       .catch((err) => {
         console.error("작성 실패", err);
@@ -132,7 +133,7 @@ const addQnaAPI = (qna) => {
 };
 
 const editQnaAPI = (qna, qnaId) => {
-  console.log("editQnaAPI", qna, qnaId);
+  // console.log("editQnaAPI", qna, qnaId);
   return function (dispatch, getState, { history }) {
     axios({
       method: "PUT",
@@ -143,28 +144,28 @@ const editQnaAPI = (qna, qnaId) => {
       },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
 
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           Swal.fire({
-            text: '게시물이 수정되었습니다 :)',
+            text: "게시물이 수정되었습니다 :)",
             confirmButtonColor: "#ffb719",
-          })
-          history.replace(`/qnadetail/${qnaId}`)
+          });
+          history.replace(`/qnadetail/${qnaId}`);
         }
       })
       .catch((err) => {
@@ -174,7 +175,7 @@ const editQnaAPI = (qna, qnaId) => {
 };
 
 const deleteQnaAPI = (qnaId) => {
-  console.log("deleteQnaAPI", qnaId);
+  // console.log("deleteQnaAPI", qnaId);
   return function (dispatch, getState, { history }) {
     axios({
       method: "DELETE",
@@ -184,42 +185,40 @@ const deleteQnaAPI = (qnaId) => {
       },
     })
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
 
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           dispatch(deleteQna(qnaId));
-          history.replace('/qna');
+          history.replace("/qna");
         }
       })
       .catch((err) => {
         Swal.fire({
-          text: '게시물을 삭제할 수 없습니다.',
+          text: "게시물을 삭제할 수 없습니다.",
           confirmButtonColor: "#ffb719",
-        })
+        });
       });
   };
 };
-
 
 export default handleActions(
   {
     [SET_QNA]: (state, action) =>
       produce(state, (draft) => {
-        console.log("오 이제 나온다");
         draft.list = action.payload.qna_list;
       }),
     [SET_QNA_DETAIL]: (state, action) =>
@@ -243,10 +242,10 @@ export default handleActions(
           }
         });
       }),
-      [SET_TOTAL_LENGTH]: (state, action) => 
-        produce(state, (draft) => {
-          draft.total_length = action.payload.total_length ;
-        }),
+    [SET_TOTAL_LENGTH]: (state, action) =>
+      produce(state, (draft) => {
+        draft.total_length = action.payload.total_length;
+      }),
   },
   initialState
 );

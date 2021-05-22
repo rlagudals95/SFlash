@@ -43,7 +43,7 @@ const getUserInfoAPI = (userId) => {
       },
     })
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
 
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
@@ -87,7 +87,7 @@ const editProfileAPI = (profile, userId) => {
     if (_image === _user_info.profileImgUrl) {
       const formData = new FormData();
       formData.append("introduceMsg", profile.introduction);
-      console.log(formData);
+      // console.log(formData);
 
       axios({
         method: "PUT",
@@ -99,7 +99,7 @@ const editProfileAPI = (profile, userId) => {
         },
       })
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
 
           if (res.data.message === "tokenExpired") {
             dispatch(userActions.logOut());
@@ -132,7 +132,7 @@ const editProfileAPI = (profile, userId) => {
       const formData = new FormData();
       formData.append("profileFile", profile.profileImg);
       formData.append("introduceMsg", profile.introduction);
-      console.log(formData);
+      // console.log(formData);
       // const jwt = getCookie("token");
 
       axios({
@@ -145,7 +145,7 @@ const editProfileAPI = (profile, userId) => {
         },
       })
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
 
           if (res.data.message === "tokenExpired") {
             dispatch(userActions.logOut());
@@ -178,7 +178,7 @@ const editProfileAPI = (profile, userId) => {
 };
 
 const editNicknameAPI = (newNickname, userId) => {
-  console.log(newNickname, userId);
+  // console.log(newNickname, userId);
   return function (dispatch, getState, { history }) {
     const API = `${config.api}/editnickname/${userId}`;
     axios
@@ -214,7 +214,7 @@ const editNicknameAPI = (newNickname, userId) => {
           let nickname = {
             nickname: res.data.data.nickname,
           };
-          console.log("닉네임 수정 정보", nickname);
+          // console.log("닉네임 수정 정보", nickname);
           // let nickname = res.data.data.nickname;
           dispatch(editNickname(nickname));
           if (res.data.data.nickname === true) {
