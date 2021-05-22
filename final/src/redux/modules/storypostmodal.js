@@ -82,7 +82,12 @@ const getModalPostAPI = (boardId) => {
     axios({
       method: "GET",
       url: `${config.api}/board/${boardId}/detail`,
-    })
+    
+    headers: {
+      "X-AUTH-TOKEN": localStorage.getItem("jwt"),
+      // "X-AUTH-TOKEN": `${config.jwt}`,
+    },
+  })
       .then((res) => {
         // console.log("모달정보 가져오자!!!!", res);
 

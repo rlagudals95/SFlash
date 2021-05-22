@@ -15,12 +15,13 @@ const QnaDetail = (props) => {
   //  url에서 userId 불러오기
   const qnaId = props.match.params.id;
   const qna = useSelector((state) => state.qna.qna);
-  // console.log(qna);
+  console.log(qna);
+ 
   // console.log(qna.qcomments);
 
   React.useEffect(() => {
     if (!qnaId) {
-      return false;
+      return;
     }
     dispatch(qnaActions.getQnaDetailAPI(qnaId));
   }, []);
@@ -63,7 +64,7 @@ const QnaDetail = (props) => {
         </TitleContainer>
 
         <ContentContainer>
-          <Text>{qna.content}</Text>
+        <Text size="1.1rem">{qna.content}</Text>
         </ContentContainer>
 
         <QnaDetailComment qnaId={qnaId} />
@@ -134,15 +135,15 @@ const ContentContainer = styled.div`
   padding: 15px;
 `;
 
-const Text = styled.div`
+const Text = styled.p`
   align-items: center;
   display: flex;
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.weight};
   width: ${(props) => props.width};
   border: white;
-  padding: 10px 10px;
-  word-break: keep-all;
+  padding: 0px 10px;
+  line-height: 1rem;
   color: ${(props) => props.theme.main_grey};
   /* background-color: green; */
 `;
@@ -157,7 +158,7 @@ const TextBtn = styled.text`
   &:hover {
     text-decoration: underline;
     cursor: pointer;
-    background-color: light grey;
+    background-color: lightgrey;
   }
 `;
 

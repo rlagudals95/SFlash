@@ -10,6 +10,7 @@ import Signup from "../pages/Login&Signup/Signup";
 import Login from "../pages/Login&Signup/Login";
 import FindEmailPwd from "../pages/Login&Signup/FindEmailPwd";
 import EditPwd from "../pages/Login&Signup/EditPwd";
+import OAuth2RedirectHandler from "./OAuth2RedirectHandler";
 import PostList from "../pages/PostList";
 import Main from "../pages/Main";
 import Story from "../pages/Story";
@@ -26,36 +27,12 @@ import QnaWrite from "../pages/QnaWrite";
 function App() {
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt") ? true : false; // 로컬스토리지에 저장되어있는 jwt 토큰 유무판단
-  // 소셜로그인을 하면 token이 url에 담겨서 오는데,
-  // url에서 token을을 추출하는 함수()
-  const getUrlParameter = (name) => {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-    var results = regex.exec(window.location.search);
-    return results === null
-      ? ""
-      : decodeURIComponent(results[1].replace(/\+/g, " "));
-  };
-  const social_jwt = getUrlParameter("token"); // social_jwt: 소셜로그인으로 받아온 토큰
-  const social_nickname = getUrlParameter("nickname"); // _nickname: 소셜로그인으로 받아온 닉네임
-  const social_userId = getUrlParameter("userId"); // _nickname: 소셜로그인으로 받아온 닉네임
-  const error = getUrlParameter("error"); // 에러
-  console.log(social_jwt);
-  console.log(social_userId);
-  console.log(social_nickname);
-  // console.log(error);
+
 
   React.useEffect(() => {
-    //  소셜로그인 시 실행
-    if (social_jwt) {
-      localStorage.setItem("jwt", social_jwt);
-      localStorage.setItem("nickname", social_nickname);
-      localStorage.setItem("userId", social_userId);
-      dispatch(userActions.loginCheck(social_jwt));
-    } else if (jwt || social_jwt) {
+    if (jwt) {
       dispatch(userActions.loginCheck(jwt));
     } //렌더링 마다 로그인체크
-   
   }, []);
 
   return (
@@ -67,6 +44,7 @@ function App() {
             <Route path="/" exact component={Main} />
             <Route path="/signup" exact component={Signup} />
             <Route path="/login" exact component={Login} />
+            <Route path="/oauth2/redirect" component={OAuth2RedirectHandler} />
             <Route path="/findemailpwd" exact component={FindEmailPwd} />
             <Route path="/editpwd" exact component={EditPwd} />
             <Route path="/postlist" exact component={PostList} />

@@ -35,11 +35,6 @@ const StoryUserProfile = (props) => {
       text: "잘못된 이미지 주소입니다 :(",
       confirmButtonColor: "#ffb719",
     });
-    // dispatch(
-    //   profileActions.setPreview(
-    //     "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
-    //   )
-    // );
   };
 
   // 프로필 메뉴 버튼 제어
@@ -83,12 +78,15 @@ const StoryUserProfile = (props) => {
         <Grid>
           <Nickname>{user_info.nickname}</Nickname>
           <Introduction>{user_info.introduction}</Introduction>
+          {/* {user_info.introduction.split("\n").map((i) => {
+              return <Introduction>{i}</Introduction>;
+            })} */}
         </Grid>
 
         {/* 나의 페이지에서만 보이는 메뉴(프로필 편집, 로그아웃 등) 버튼*/}
         {is_me && (
           <>
-          {/* 설정 버튼 */}
+            {/* 설정 버튼 */}
             <Setting onClick={settingHandleClick}>
               <BiDotsHorizontalRounded size="32" color="grey" />
             </Setting>
@@ -118,10 +116,10 @@ const StoryUserProfile = (props) => {
               <MenuItem
                 onClick={() => {
                   Swal.fire({
-                    imageUrl: 'https://i.postimg.cc/SxmfpG6L/2x.png',
-                    text: '로그아웃 하시겠습니까?',
-                    confirmButtonText: '예',
-                    confirmButtonColor: '#ffb719',
+                    imageUrl: "https://i.postimg.cc/SxmfpG6L/2x.png",
+                    text: "로그아웃 하시겠습니까?",
+                    confirmButtonText: "예",
+                    confirmButtonColor: "#ffb719",
                     showCancelButton: true,
                     cancelButtonText: "아니오",
                     cancelButtonColor: "#eee",
@@ -138,7 +136,6 @@ const StoryUserProfile = (props) => {
                 로그아웃
               </MenuItem>
             </Menu>
-
 
             {/*  현재 닉네임은 로컬스토리지에서 받아온 닉네임으로 설정되어 있지만 api 연결후에는 api에서 받아온 정보로 사용하기 */}
             <Modal
@@ -254,8 +251,7 @@ const ProfileImg = styled.img`
 const Nickname = styled.div`
   font-size: 1.8rem;
   font-weight: 600;
-  margin-top: 120px;
-  margin-left: 20px;
+  margin: 120px 20px 20px 20px;
   color: ${(props) => props.theme.main_grey};
   @media (max-width: 1280px) {
     margin-top: 100px;
@@ -271,11 +267,11 @@ const Nickname = styled.div`
   }
 `;
 
-const Introduction = styled.div`
+const Introduction = styled.p`
   font-size: 1.1rem;
   font-weight: 400;
   color: grey;
-  margin-top: 10px;
+  line-height: 2rem;
   margin-left: 20px;
   @media (max-width: 1280px) {
     font-size: 1.1rem;

@@ -12,16 +12,19 @@ const SET_QNA_DETAIL = "SET_QNA_DETAIL";
 const ADD_QNA = "ADD_QNA";
 const EDIT_QNA = "EDIT_QNA";
 const DELETE_QNA = "DELETE_QNA";
+const SET_TOTAL_LENGTH = "SET_TOTAL_LENGTH"
 
 const setQna = createAction(SET_QNA, (qna_list) => ({ qna_list }));
 const setQnaDetail = createAction(SET_QNA_DETAIL, (qna) => ({ qna }));
 const addQna = createAction(ADD_QNA, (qna) => ({ qna }));
 const editQna = createAction(EDIT_QNA, (qna) => ({ qna }));
 const deleteQna = createAction(DELETE_QNA, (id) => ({ id }));
+const setTotalLength = createAction(SET_TOTAL_LENGTH, (total_length) => ({ total_length }))
 
 const initialState = {
   list: [],
   qna: [],
+  total_length: ""
 };
 
 const getQnaAPI = (page, size) => {
@@ -41,11 +44,14 @@ const getQnaAPI = (page, size) => {
             content: _qna.content,
             writer: _qna.writer,
             modified: _qna.modified.split("T")[0],
+            total_length: _qna.qnaSize
           };
           qna_list.push(qna);
           console.log(qna_list);
         });
+        let total_length = qna_list[0].total_length;
         dispatch(setQna(qna_list));
+        dispatch(setTotalLength(total_length));
       })
       .catch((err) => {
         console.error("문의 리스트 로드 실패", err);
@@ -72,6 +78,8 @@ const getQnaDetailAPI = (qnaId) => {
           qcomments: _qna.qcomments,
         };
         console.log(qna);
+        console.log(qna.content)
+        console.log(typeof(qna.content))
         dispatch(setQnaDetail(qna));
       })
       .catch((err) => {
@@ -235,6 +243,10 @@ export default handleActions(
           }
         });
       }),
+      [SET_TOTAL_LENGTH]: (state, action) => 
+        produce(state, (draft) => {
+          draft.total_length = action.payload.total_length ;
+        }),
   },
   initialState
 );
