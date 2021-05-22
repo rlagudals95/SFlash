@@ -317,23 +317,21 @@ const ModalDetail = (props) => {
                                 </React.Fragment>
                                 <ReplyContainer>
                                   <Reply>{c.content}</Reply>
+                                  <CmtD>{timeForToday(c.modified)}</CmtD>
                                 </ReplyContainer>
                               </ReplyLeft>
-                              <ReplyRight>
-                                <CmtDate>
-                                  {/* 방금 전 */}
-                                  {timeForToday(c.modified)}
-                                </CmtDate>
-                                {nickname == c.writerName ? (
-                                  <CmtDeleteBtn
-                                    onClick={() => {
-                                      deleteComment(c.commentId);
-                                    }}
-                                  >
-                                    <DeleteForeverIcon />
-                                  </CmtDeleteBtn>
-                                ) : null}
-                              </ReplyRight>
+
+                              {/* 방금 전 */}
+
+                              {nickname == c.writerName ? (
+                                <CmtDeleteBtn
+                                  onClick={() => {
+                                    deleteComment(c.commentId);
+                                  }}
+                                >
+                                  <DeleteForeverIcon />
+                                </CmtDeleteBtn>
+                              ) : null}
                             </Replys>
                           </ReplyBox>
                         );
@@ -371,6 +369,13 @@ const ModalDetail = (props) => {
   );
 };
 
+const CmtD = styled.div`
+  opacity: 0.3;
+  font-size: 0.6px;
+  margin-top: 3px;
+  margin-left: 8px;
+`;
+
 const LikeBox = styled.div`
   align-items: center;
   display: flex;
@@ -385,16 +390,16 @@ const LikeCntBox = styled.span`
 `;
 
 const ModalImg = styled.img`
+  all: unset;
   background-image: url("${(props) => props.src}");
   background-size: cover;
   object-fit: cover;
-
   background-repeat: no-repeat;
   border: none;
   box-sizing: border-box;
   width: 100%;
-  height: 400px;
-  height: 400px;
+  height: 320px;
+  /* max-width: 350px; */
   background-position: center;
 
   @media (max-width: 1440px) {
@@ -408,8 +413,8 @@ const ModalImg = styled.img`
     border: none;
     box-sizing: border-box;
     width: 100%;
-    height: 315px;
-    max-height: 42vh;
+    height: 325px;
+    /* max-height: 42vh; */
   }
   @media (max-width: 600px) {
     /* 1450밑으로 넓이가 내려가면 */
@@ -443,8 +448,8 @@ const ModalComponent = styled.div`
   border-radius: 0.5vw;
   position: fixed !important;
   /* width: 590px; */
-  width: 500px;
-  height: 810px;
+  width: 390px;
+  height: 650px;
   /* overflow: hidden; */
   top: 50%;
   left: 50%;
@@ -457,23 +462,18 @@ const ModalComponent = styled.div`
   box-sizing: border-box;
   min-width: 380px;
   @media (max-width: 1440px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
     position: fixed;
-    width: 470px;
-    height: 730px;
-    /* overflow: hidden; */
+    width: 390px;
+    height: 660px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* background-color: white; */
+    background-color: white;
     z-index: 1000;
     border: none;
     box-sizing: border-box;
   }
 
-  @media (max-width: 1030px) {
-  }
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
@@ -536,14 +536,14 @@ const ExitBtn = styled.button`
 
 const ModalBottomContainer = styled.div`
   text-align: left;
-  width: 480px;
-  height: 345px;
+  width: 370px;
+  height: 272px;
   display: flex;
   flex-direction: column;
   padding: 0px 12px;
   margin: 0px auto;
   /* background-color: red; */
-  @media (max-width: 1600px) {
+  /* @media (max-width: 1600px) {
     text-align: left;
     width: 470px;
     height: 320px;
@@ -551,34 +551,32 @@ const ModalBottomContainer = styled.div`
     flex-direction: column;
     padding: 0px 12px;
     margin: 0px auto;
-  }
+  } */
 
   @media (max-width: 1440px) {
     /* background-color: red; */
     // 1450밑으로 넓이가 내려가면
     text-align: left;
-    width: 450px;
-    // 이거 올려주니까 댓글창이보인다..!
-    height: 340px;
+    width: 370px;
+    height: 270px;
     display: flex;
     flex-direction: column;
     padding: 0;
     margin: 0px auto;
     margin-top: 1.3vh;
   }
-  @media (max-width: 1080px) {
-    /* background-color: red; */
-    // 1450밑으로 넓이가 내려가면
+  /* @media (max-width: 1080px) {
+ 
     text-align: left;
     width: 450px;
-    // 이거 올려주니까 댓글창이보인다..!
+   
     height: 335px;
     display: flex;
     flex-direction: column;
     padding: 0;
     margin: 0px auto;
     margin-top: 1.3vh;
-  }
+  } */
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
@@ -636,20 +634,21 @@ const PostDate = styled.span`
 `;
 const InfoBox = styled.div`
   width: 100%;
-  height: 480px;
+  height: 290px;
   text-align: left;
   margin: 0px auto;
+  /* background-color: red; */
+  padding-top: 5px;
   border-bottom: 1px solid #efefef;
   /* background-color: blue; */
-  /* background-color: red; */
-  @media (max-width: 1440px) {
-    // 1450밑으로 넓이가 내려가면
-    width: calc(100% - 2vw); //패딩대신... 오,....
-    height: 150px;
+  /* @media (max-width: 1440px) {
+    width: 240px;
+    height: 290px;
     display: flex;
     flex-direction: column;
     margin: 0px auto;
-  }
+    background-color: red;
+  } */
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     width: calc(100% - 7vw); //패딩대신... 오,....
@@ -661,17 +660,18 @@ const InfoBox = styled.div`
 `;
 
 const InfoBoxInner = styled.div`
-  width: 480px; //요놈 크기 바꿔
-  height: 33px;
-  margin-top: 10px;
+  width: 100%; //요놈 크기 바꿔
+  height: 25px;
+  /* margin-top: 10px; */
+
   font-size: 15px;
   display: flex;
+  /* background-color: red; */
   justify-content: space-between;
-
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     width: 100%;
-    height: 15vh;
+    /* height: 15vh; */
     padding: 0px;
   }
 `;
@@ -698,7 +698,7 @@ const ModalEdit = styled.div`
 const InfoOutter = styled.div`
   height: 110px;
   width: 100%;
-  /* background-color: red; */
+  margin-top: 5px;
 `;
 const PostTilte = styled.div`
   font-size: 1.3rem;
@@ -737,21 +737,21 @@ const ModalCmtInputBox = styled.div`
   /* margin-top: 100px; */
   align-items: center;
   width: 100%;
-  padding: 10px;
+  padding: 4px;
   display: flex;
   box-sizing: border-box;
   border: 2px solid #efefef;
   background-color: white;
   box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.1);
   /* background-color: red; */
-  @media (max-width: 1440px) {
+  /* @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     height: 80px;
   }
   @media (max-width: 1100px) {
     // 1450밑으로 넓이가 내려가면
     height: 80px;
-  }
+  } */
 
   @media (max-width: 600px) {
     height: 100px;
@@ -760,11 +760,9 @@ const ModalCmtInputBox = styled.div`
 `;
 
 const ModalCmtBox = styled.div`
-  padding: 0px 0px;
   display: flex;
   flex-direction: column;
   height: 600px;
-
   /* background-color: red; */
   /* 아래 태그는 댓글이 많으면 
   스크롤로 아래 부분이 위로 올라가게 해서 
@@ -789,46 +787,50 @@ const ReplyBox = styled.div`
   align-items: center;
   /* margin-left: -12px; */
   width: 100%;
+
   margin: 0.5vh auto;
+  padding-left: 13px;
   /* background-color: blue; */
 `;
 
 const Replys = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  height: 3vh;
+  justify-content: space-evenly;
+  height: 26px;
   width: 100%;
-  @media (max-width: 1440px) {
-    /* background-color: red; */
+  /* background-color: green; */
+  /* @media (max-width: 1440px) {
+   
     display: flex;
     align-items: center;
     margin-top: 1vh;
     justify-content: space-between;
     height: 3vh;
-  }
+  } */
 `;
 const ReplyImg = styled.div`
   height: 2.2vh;
   width: 2.2vh;
   border-radius: 50%;
   background-size: cover;
-  margin-right: 10px;
+  margin-right: 7px;
   background-image: url("${(props) => props.src}");
-  background-size: cover;
   cursor: pointer;
 `;
 
 const ReplyWriter = styled.div`
   font-size: 1.1vh;
   font-weight: bold;
-  padding-right: 10px;
+  padding-right: 5px;
   cursor: pointer;
 `;
 
 const ReplyContainer = styled.div`
-  width: 270px;
+  width: 250px;
+  margin: 0 auto;
   overflow-y: scroll;
+  display: flex;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -842,15 +844,19 @@ const Reply = styled.div`
 const ReplyLeft = styled.div`
   align-items: center;
   display: flex;
+  /* background-color: green; */
 `; // space-between 효과 주기위해서 쓴다
 const ReplyRight = styled.div`
   display: flex;
+  /* background-color: red; */
+  /* width: 20000px; */
 `;
 
 const CmtDate = styled.div`
-  font-size: 0.2rem;
+  font-size: 1px;
   margin: auto 0;
   opacity: 0.3;
+
   /* width: 3px; */
   @media (max-width: 1440px) {
     /* background-color: red; */
@@ -859,8 +865,8 @@ const CmtDate = styled.div`
 `;
 
 const CmtDeleteBtn = styled.button`
-  height: 0.3vh;
-  width: 0.3vh;
+  height: 2px;
+  width: 2p;
   cursor: pointer;
   background-color: transparent;
   border: none;

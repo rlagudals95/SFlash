@@ -78,18 +78,19 @@ const InputBtn = styled.div`
   width: 50px;
   position: fixed;
   right: 15px;
-  top: 335px;
+  top: 290px;
   cursor: pointer;
-  @media (max-width: 1440px) {
+  /* @media (max-width: 1440px) {
     right: 5px;
     top: 285px;
   }
+  */
   @media (max-width: 1155px) {
     right: 10px;
-    top: 320px;
+    top: 300px;
   }
   @media (max-width: 600px) {
-    top: 250px;
+    top: 310px;
     right: 20px;
   }
 `;
