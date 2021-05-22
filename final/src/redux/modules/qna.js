@@ -70,19 +70,19 @@ const getQnaDetailAPI = (qnaId) => {
       url: `${config.api}/qna/${qnaId}/detail`,
     })
       .then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         let _qna = res.data.data;
         let qna = {
           id: _qna.id,
           title: _qna.title,
-          content: _qna.content,
+          content: _qna.content,  // 개행처리 되어야 함
           modified: _qna.modified.split("T")[0],
           writer: _qna.writer,
           qcomments: _qna.qcomments,
         };
-        // console.log(qna);
-        // console.log(qna.content);
-        // console.log(typeof qna.content);
+        console.log(qna);
+        console.log(qna.content);
+        console.log(typeof qna.content);
         dispatch(setQnaDetail(qna));
       })
       .catch((err) => {

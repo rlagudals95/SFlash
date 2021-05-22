@@ -1099,6 +1099,8 @@ const Btn = styled.button`
   border: 1px solid lightgray;
   cursor: pointer;
   font-size: 12px;
+  font-weight: bold;
+  color: #343a40;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
 

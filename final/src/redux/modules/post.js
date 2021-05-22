@@ -170,7 +170,7 @@ const addPostAPI = (post) => {
           let one_post = res.data.data;
           let one_marker_data = {
             id: one_post.boardId,
-            like: one_post.liked,
+            // like: one_post.liked,
             writerName: one_post.writerName,
             category: one_post.category,
             spotName1: one_post.spotName.split(" ").splice(0, 2).join(" "),
@@ -184,6 +184,8 @@ const addPostAPI = (post) => {
           //커뮤니티 리덕스에 데이터 추가
           let CommunityPost = {
             id: one_post.boardId,
+            like: one_post.liked,
+            writerName: one_post.writerName,
             spotName: one_post.spotName,
             img_url: one_post.boardImgReponseDtoList[0].imgUrl, //고치자 딕셔너리 말고
             likeCnt: 0,

@@ -67,6 +67,8 @@ const Maps = (props) => {
     return state.post.map_post_list; // 비동기 문제 해결
   });
 
+  console.log()
+
   // 디테일 모달 관련 상태값
   const [is_detailModal, setDetailModal] = useState();
 
@@ -78,7 +80,7 @@ const Maps = (props) => {
   };
 
   if (map_post_list) {
-    // console.log(map_post_list); // map_post_list처음에 []빈배열로 찍힌다
+    console.log(map_post_list); 
   }
 
   // 종류별 데이터는 필터 함수를 이용해 묶어 내고 필요한 부분에 가져다 쓴다.
@@ -367,7 +369,6 @@ const Maps = (props) => {
         var writePosition = new kakao.maps.LatLng(hereLat, hereLng);
         var writeMarker = new kakao.maps.Marker({
           // 클릭한 위치에 게시물 작성용 마커를 띄워준다.
-          // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
           // map: map,
           position: writePosition,
           image: writeMarkerImage,
@@ -432,13 +433,7 @@ const Maps = (props) => {
 
         // 게시물 작성법을 안내하는 커스텀오버레이
         // 모달창(커스텀오버레이)에 들어갈 내용
-        const writeInfoContent =
-          '<div class="writeinfocontainer">' + 
-            // `<img class="writeinfoimg" src=${writeInfoImg}>` +
-            // '<div class="writeinfohead">' +
-              // `<div class="writeinfospotname1">${spotName}</div>` + 
-            // '<div/>' +
-          '<div/>'
+        const writeInfoContent = '<div class="writeinfocontainer"><div/>'
 
         const writeInfoCustomOverlay = new kakao.maps.CustomOverlay({
           // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
@@ -461,7 +456,7 @@ const Maps = (props) => {
           writeInfoCustomOverlay.setMap(null);
         });
 
-        //마커에서 좌클릭하면 커스텀오버레이가 사라지게한다.
+        //마커에서 우클릭하면 커스텀오버레이가 사라지게한다.
         kakao.maps.event.addListener(writeMarker, "rightclick", function () {
           writeInfoCustomOverlay.setMap(null);
         });
@@ -2753,16 +2748,16 @@ const Maps = (props) => {
 
   // 업로드모달에 props로 전달되는 데이터
   if (latitude && longitude && spotName) {
-    // console.log(
-    //   "위도: " +
-    //     latitude +
-    //     " " +
-    //     ", 경도: " +
-    //     longitude +
-    //     " " +
-    //     ", 장소: " +
-    //     spotName
-    // );
+    console.log(
+      "위도: " +
+        latitude +
+        " " +
+        ", 경도: " +
+        longitude +
+        " " +
+        ", 장소: " +
+        spotName
+    );
   }
 
   // 키워드로 검색하기!!!!!!
@@ -2870,7 +2865,7 @@ const SearchBox = styled.div`
     margin: auto;
   }
   @media (max-width: 600px) {
-    top: 9vh;
+    top: 7vh;
     width: 50%;
     left: 25%;
     margin: auto 25vw;
