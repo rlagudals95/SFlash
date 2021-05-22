@@ -120,8 +120,6 @@ const addPostAPI = (post) => {
       return;
     }
 
-    // console.log("??????", localStorage.getItem("jwt"));
-
     dispatch(spinner(true)); // 게시물 업로드하고 기다릴 동안 스피너를 개시하는 시점
 
     const formData = new FormData();
@@ -130,6 +128,7 @@ const addPostAPI = (post) => {
     formData.append("latitude", post.latitude);
     formData.append("longitude", post.longitude);
     formData.append("spotName", post.spotName);
+    // formData.append("spotNameForCustomOverlay", post.spotNameForCustomOverlay);
     // 폼데이터 이미지 파일들은 한개 씩 보내기!
     for (let i = 0; i < _file.length; i++) {
       formData.append("file", _file[i]);
@@ -152,6 +151,8 @@ const addPostAPI = (post) => {
     })
       .then((res) => {
         // 토큰이 만료 되었을때 띄워주는 alert
+
+        console.log("게시물 추가정보", res);
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
