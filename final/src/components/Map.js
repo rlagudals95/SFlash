@@ -286,6 +286,23 @@ const Maps = (props) => {
       setMap(map);
     }
 
+    // geolocation으로 얻은 접속좌표에다가 현재위치를 표시하는 마커 또는 표식 올리기
+    const currentMarkerSize = new kakao.maps.Size(30, 30);
+    const currentMarkerImage = new kakao.maps.MarkerImage(
+      `${markerImgUrls.currentMarkerImageUrl}`, 
+      currentMarkerSize
+    );
+    const currentPosition = new kakao.maps.LatLng(startLat, startLng);
+
+    const currentMarker = new kakao.maps.Marker({
+      map: map, // 이러면 애초에 현재 위치가 표시된다. 
+      position: currentPosition,
+      image: currentMarkerImage,
+      zIndex: 50,
+    })
+
+    currentMarker.setMap(map);
+
     // var centerPoint = map.getCenter();
     // console.log("중심좌표: " + centerPoint);
     // console.log("중심좌표 위도: " + centerPoint.getLat());
@@ -423,20 +440,13 @@ const Maps = (props) => {
 
         // 게시물 작성법을 안내하는 커스텀오버레이
         // 모달창(커스텀오버레이)에 들어갈 내용
-        const spotNameInfo1 = spotName.split(" ").splice(0, 2).join(" ");
-        const spotNameInfo2 = spotName.split(" ").splice(2).join(" ");
-
-        console.log("스팟네임: ", spotName)
-
-        // if (spotNameInfo1 && spotNameInfo2) {
-          const writeInfoContent =
-            '<div class="writeinfocontainer">' + 
-              // `<img class="writeinfoimg" src=${writeInfoImg}>` +
-              // '<div class="writeinfohead">' +
-                // `<div class="writeinfospotname1">${spotName}</div>` + 
-              // '<div/>' +
-            '<div/>'
-        // }
+        const writeInfoContent =
+          '<div class="writeinfocontainer">' + 
+            // `<img class="writeinfoimg" src=${writeInfoImg}>` +
+            // '<div class="writeinfohead">' +
+              // `<div class="writeinfospotname1">${spotName}</div>` + 
+            // '<div/>' +
+          '<div/>'
 
         const writeInfoCustomOverlay = new kakao.maps.CustomOverlay({
           // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다

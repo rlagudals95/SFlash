@@ -44,6 +44,8 @@ const markerImgUrls = {
   myLikeCityMarkerImgUrl: "https://i.postimg.cc/VkWGXzyj/4x.png",
   myLikeParkMarkerImgUrl: "https://i.postimg.cc/SN0D5nk6/4x.png",
   myLikeExhibitionMarkerImgUrl: "https://i.postimg.cc/VNNRMMW8/4x.png",
+
+  currentMarkerImageUrl: "https://ssl.pstatic.net/static/maps/m/pin_rd.png",
 }
 
 export { markerImgUrls }
