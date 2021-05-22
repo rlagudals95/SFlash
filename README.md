@@ -21,7 +21,7 @@
     + 회원가입/로그인 페이지 제작
     + 회원가입/로그인용 리덕스 모듈 코드 작성
   + 김형민 ([Github Repo](https://github.com/rlagudals95/SFlash)) 
-    + 개인상세페이지 제작
+    + 커뮤니티 페이지제작, 게시물 CRUD 구현
 + Backend - Spring boot 
   + 장현준 ([Github Repo](https://github.com/JangHyeonJun2))
   + 김승욱 ([Github Repo](https://github.com/rlatmd0829))
