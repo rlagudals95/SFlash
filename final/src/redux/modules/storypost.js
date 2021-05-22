@@ -85,7 +85,7 @@ const getUserPostAPI = (userId) => {
         }else{
           let post_list = [];
           res.data.data.forEach((_post) => {
-       
+
           let post = {
             id: _post.boardId,
             category: _post.category,

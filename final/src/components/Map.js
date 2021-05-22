@@ -2895,7 +2895,6 @@ const SearchIcon = styled.div`
   position: fixed;
   top: 14.5px;
   right: 14.5px;
-  /* transform: translate(-25%, 25%); */
   background-size: cover;
   object-fit: cover;
 `;
