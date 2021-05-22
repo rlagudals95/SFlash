@@ -433,7 +433,7 @@ const ModalImg = styled.img`
 
 const Component = styled.div`
   position: fixed;
-  opacity: 0.4;
+  opacity: 0.8;
   height: 100%;
   width: 100%;
   background-color: black;
