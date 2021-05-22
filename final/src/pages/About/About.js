@@ -25,7 +25,7 @@ const About = (props) => {
           <SflashLogo src={SFlash_logo_darkgrey} />
           <Grid height="20px"></Grid>
           <Text>We are team SFlash!</Text>
-          <Text>Click the photos to see details :)</Text>
+          <Text>Click to see details.</Text>
         </UpperContainer>
         <Grid height="20px"></Grid>
 
