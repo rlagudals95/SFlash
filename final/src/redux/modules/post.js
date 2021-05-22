@@ -143,7 +143,7 @@ const addPostAPI = (post) => {
 
     axios({
       method: "POST",
-      url: `${config.api}/board/`,
+      url: `${config.api}/board`,
       data: formData,
       headers: {
         "X-AUTH-TOKEN": localStorage.getItem("jwt"),
