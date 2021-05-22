@@ -8,7 +8,7 @@ import writeInfoImg from "../shared/images/writeInfoCustomOverlay/writeInfoCusto
 import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
 import * as BiIcons from "react-icons/bi";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 // component, element 파일들 가져오기
 import "../Css/Map.css";
 import UpLoadModal from "./UpLoadModal";
@@ -226,7 +226,7 @@ const Maps = (props) => {
   }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
 
   // getLocation();
-  getLocation(); 
+  getLocation();
 
   function getLocation() {
     // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
@@ -267,7 +267,8 @@ const Maps = (props) => {
   useEffect(() => {
     if (!map_post_list) {
       return;
-    } else { // 지도 렌더링 코드
+    } else {
+      // 지도 렌더링 코드
       // 페이지가 렌더링 되면 지도 띄우기
       var container = document.getElementById("map"); // 지도를 표시할 div
       var options = {
@@ -426,16 +427,16 @@ const Maps = (props) => {
         const spotNameInfo1 = spotName.split(" ").splice(0, 2).join(" ");
         const spotNameInfo2 = spotName.split(" ").splice(2).join(" ");
 
-        console.log("스팟네임: ", spotName)
+        console.log("스팟네임: ", spotName);
 
         // if (spotNameInfo1 && spotNameInfo2) {
-          const writeInfoContent =
-            '<div class="writeinfocontainer">' + 
-              `<img class="writeinfoimg" src=${writeInfoImg}>` +
-              // '<div class="writeinfohead">' +
-                `<div class="writeinfospotname1">${spotName}</div>` + 
-              // '<div/>' +
-            '<div/>'
+        const writeInfoContent =
+          '<div class="writeinfocontainer">' +
+          `<img class="writeinfoimg" src=${writeInfoImg}>` +
+          // '<div class="writeinfohead">' +
+          `<div class="writeinfospotname1">${spotName}</div>` +
+          // '<div/>' +
+          "<div/>";
         // }
 
         const writeInfoCustomOverlay = new kakao.maps.CustomOverlay({
@@ -2729,7 +2730,7 @@ const Maps = (props) => {
     // }, [search, startlat, startlon,
     // }, [startlat, startlon]);
   }, [
-    startLat, 
+    startLat,
     startLng,
     is_mypost,
     is_mylike,
@@ -2788,9 +2789,9 @@ const Maps = (props) => {
         return;
       } else if (status === kakao.maps.services.Status.ERROR) {
         Swal.fire({
-          text: '검색 결과 중 오류가 발생했습니다.',
+          text: "검색 결과 중 오류가 발생했습니다.",
           confirmButtonColor: "#ffb719",
-        })
+        });
         return;
       }
     });
@@ -2849,7 +2850,7 @@ const SearchBox = styled.div`
   position: fixed;
   background-color: transparent;
   border: none;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   border-radius: 10px;
   top: 30px;
   left: 50%;

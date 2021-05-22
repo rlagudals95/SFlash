@@ -331,7 +331,7 @@ const SideMini = styled.div`
     all: unset;
     align-items: center;
     width: 100%;
-    height: 8vh;
+    height: 70px;
     position: fixed;
     left: 0;
     top: 0;

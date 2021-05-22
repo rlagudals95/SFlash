@@ -851,6 +851,11 @@ const CmtDate = styled.div`
   font-size: 0.2rem;
   margin: auto 0;
   opacity: 0.3;
+  /* width: 3px; */
+  @media (max-width: 1440px) {
+    /* background-color: red; */
+    display: flex;
+  }
 `;
 
 const CmtDeleteBtn = styled.button`
