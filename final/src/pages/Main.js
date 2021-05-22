@@ -18,6 +18,23 @@ const Main = (props) => {
   const is_login = useSelector((state) => state.user.is_login);
   const map_post_list = useSelector((state) => state.post.map_post_list);
 
+  console.log(
+    "    --------------------------------------------------\n\
+    < Welcome SFlash!! Come and Expirence our service! >\n\
+    --------------------------------------------------\n\
+            /\\__/\\           \n\
+           /'    '\\          \n\
+         === 0  0 ===       \n\
+           \\  --  /         \n\
+          /        \\        \n\
+         /          \\       \n\
+        |            |      \n\
+         \\  ||  ||  /       \n\
+          \\_oo__oo_/#######o" 
+  );
+
+
+
   const [showModal, setShowModal] = useState(false);
 
   const HAS_VISITED_BEFORE = localStorage.getItem("hasVisitedBefore");
