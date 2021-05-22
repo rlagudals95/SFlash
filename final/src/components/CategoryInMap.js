@@ -1053,13 +1053,20 @@ const CategoryBox = styled.div`
     margin: auto;
   }
   @media (max-width: 600px) {
+    position: relative;
+    top: 10vh;
     z-index: 300;
-    margin: auto;
+    margin: auto 25vw;
   }
   @media (max-width: 400px) {
+    position: relative;
+    top: 10vh;
+    /* left: 50%;
+    height: 72px;
+    transform: translate(-50%, -50%); */
     z-index: 300;
-    margin: auto;
     right: 13vw;
+    margin: auto 20vw;
   }
 `;
 

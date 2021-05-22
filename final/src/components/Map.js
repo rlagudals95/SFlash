@@ -3,11 +3,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/configStore";
 import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지url
-import writeInfoWindow from "../shared/images/writeInfoWindow/writeMarkerInfo.png";
+import writeInfoImg from "../shared/images/writeInfoCustomOverlay/writeInfoCustomOverlayImg.png";
 
 import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
 import * as BiIcons from "react-icons/bi";
+import Swal from 'sweetalert2'
 // component, element 파일들 가져오기
 import "../Css/Map.css";
 import UpLoadModal from "./UpLoadModal";
@@ -32,9 +33,15 @@ const Maps = (props) => {
   const [is_uploadModal, setUpLoadModal] = useState(false); // 작은 모달에서 댓글 달기를 누르면 나오는 확장된 모달
 
   // 위도, 경도, 마커, 주소
+  const [startLat, setStartLat] = useState(); // 접속한 위치 위도 설정
+  const [startLng, setStartLng] = useState(); // 접속한 위치 경도 설정
   const [latitude, setLatitude] = useState(); // 클릭한 위치 위도 설정
   const [longitude, setLongitude] = useState(); // 클릭한 위치 경도 설정
   const [spotName, setSpotName] = useState(""); // 클릭한 위치 spotName
+  // 작성마커 안내용 주소 분리
+  const [spotNameInfo1, setSpotNameInfo1] = useState("");
+  const [spotNameInfo2, setSpotNameInfo2] = useState("");
+  const [writeInfoContent, setWriteInfoContent] = useState("");
 
   const [_map, setMap] = useState(); // useEffect 외부에서 map을 쓰기 위한 것.
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
@@ -218,19 +225,54 @@ const Maps = (props) => {
     setSearch(e.target.value);
   }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
 
-  useEffect(() => {
-    // getLocation();
-    // geolocation은 배포시 https:// 환경이 아니어서 적용이 되지 않는 오류가 나서 지도 로드가 보이지 않게 되고,
-    // 대한민국 전지역을 보여주면서 시작하는 경우에는 의미가 없어서 없앴습니다.
+  // getLocation();
+  getLocation(); 
 
+  function getLocation() {
+    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+    if (navigator.geolocation) {
+      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          console.log(
+            "현위치의 위도 = " +
+              position.coords.latitude +
+              ", 현위치의 경도 = " +
+              position.coords.longitude
+          );
+          setStartLat(position.coords.latitude);
+          setStartLng(position.coords.longitude);
+          // var nowPositionLat = position.coords.latitude
+          // var nowPositionLon = position.coords.longitude
+        },
+        function (error) {
+          console.error(error);
+        },
+        {
+          enableHighAccuracy: false,
+          maximumAge: 0,
+          timeout: Infinity,
+        }
+      );
+    } else {
+      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+      window.alert(
+        "geolocation을 사용할 수 없어 현재 내 위치를 표시 할 수 없습니다"
+      );
+    }
+  }
+  // geolocation은 여기까지.
+  console.log(startLat, startLng);
+
+  useEffect(() => {
     if (!map_post_list) {
       return;
-    } else {
+    } else { // 지도 렌더링 코드
       // 페이지가 렌더링 되면 지도 띄우기
       var container = document.getElementById("map"); // 지도를 표시할 div
       var options = {
         //지도를 생성할 때 필요한 기본 옵션
-        center: new kakao.maps.LatLng(35.83819028173818, 127.88227108131916), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
+        center: new kakao.maps.LatLng(startLat, startLng), //지도 중심(시작) 좌표, LatLng 클래스는 반드시 필요.
         level: 11, //지도 확대 레벨
       };
 
@@ -329,55 +371,98 @@ const Maps = (props) => {
         // 작성용 마커를 사용하는 방법을 알려주는 인포윈도우
         // 작성용 마커위에 갖다대면 뜨고(mouseover) 마우스를 떼면(mouseout) 사라진다.
         // 작성용 마커에 우클릭을 하면 마커가 사라지면서 인포윈도우도 사라진다.
-        var writeGuideContent =
-          '<div class="writeinfobox">' +
-          `<img class="writeinfowindow" src=${writeInfoWindow}>` +
-          "</div>";
+        // var writeGuideContent =
+        //   '<div class="writeinfobox">' +
+        //   `<img class="writeinfowindow" src=${writeInfoWindow}>` +
+        //   "</div>";
 
-        // 인포윈도우 생성하기
-        var writeGuideWindow = new kakao.maps.InfoWindow({
-          position: writePosition,
-          content: writeGuideContent,
+        // // 인포윈도우 생성하기
+        // var writeGuideWindow = new kakao.maps.InfoWindow({
+        //   position: writePosition,
+        //   content: writeGuideContent,
+        // });
+
+        // 마커에 안내용 커스텀오버레이를 제어하는 mouseover 이벤트와 mouseout 이벤트를 등록한다.
+        // mouseover : 안내창 생성, mouseout, rightclick: 안내창 닫기
+        // kakao.maps.event.addListener(
+        //   writeMarker,
+        //   "mouseover",
+        //   mouseOverListener(map, writeMarker, writeGuideWindow)
+        // );
+        // kakao.maps.event.addListener(
+        //   writeMarker,
+        //   "mouseout",
+        //   mouseOutListener(writeGuideWindow)
+        // );
+        // kakao.maps.event.addListener(
+        //   writeMarker,
+        //   "rightclick",
+        //   mouseRightClickListener(writeGuideWindow)
+        // );
+
+        // // 작성용 마커에 안내창을 띄우는 클로저를 만드는 함수 : mouseover
+        // function mouseOverListener(map, writeMarker, writeGuideWindow) {
+        //   return function () {
+        //     writeGuideWindow.open(map, writeMarker);
+        //   };
+        // }
+
+        // // 작성용 마커의 안내창을 닫는 클로저를 만드는 함수 : mouseout
+        // function mouseOutListener(writeGuideWindow) {
+        //   return function () {
+        //     writeGuideWindow.close();
+        //   };
+        // }
+
+        // // 작성용 마커의 안내창을 닫는 클로저를 만드는 함수 : rightclick
+        // function mouseRightClickListener(writeGuideWindow) {
+        //   return function () {
+        //     writeGuideWindow.close();
+        //   };
+        // }
+
+        // 게시물 작성법을 안내하는 커스텀오버레이
+        // 모달창(커스텀오버레이)에 들어갈 내용
+        const spotNameInfo1 = spotName.split(" ").splice(0, 2).join(" ");
+        const spotNameInfo2 = spotName.split(" ").splice(2).join(" ");
+
+        console.log("스팟네임: ", spotName)
+
+        // if (spotNameInfo1 && spotNameInfo2) {
+          const writeInfoContent =
+            '<div class="writeinfocontainer">' + 
+              `<img class="writeinfoimg" src=${writeInfoImg}>` +
+              // '<div class="writeinfohead">' +
+                `<div class="writeinfospotname1">${spotName}</div>` + 
+              // '<div/>' +
+            '<div/>'
+        // }
+
+        const writeInfoCustomOverlay = new kakao.maps.CustomOverlay({
+          // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
+          clickable: true, // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
+          position: writePosition, // 커스텀 오버레이의 좌표
+          content: writeInfoContent, // 엘리먼트 또는 HTML 문자열 형태의 내용
+          xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.55, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          zIndex: 100, //  커스텀 오버레이의 z-index
+          altitude: 10,
         });
 
-        // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록한다.
-        // mouseover : 안내창 생성, mouseout, rightclick: 안내창 닫기
-        kakao.maps.event.addListener(
-          writeMarker,
-          "mouseover",
-          mouseOverListener(map, writeMarker, writeGuideWindow)
-        );
-        kakao.maps.event.addListener(
-          writeMarker,
-          "mouseout",
-          mouseOutListener(writeGuideWindow)
-        );
-        kakao.maps.event.addListener(
-          writeMarker,
-          "rightclick",
-          mouseRightClickListener(writeGuideWindow)
-        );
+        // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
+        kakao.maps.event.addListener(writeMarker, "mouseover", function () {
+          writeInfoCustomOverlay.setMap(map);
+        });
 
-        // 작성용 마커에 안내창을 띄우는 클로저를 만드는 함수 : mouseover
-        function mouseOverListener(map, writeMarker, writeGuideWindow) {
-          return function () {
-            writeGuideWindow.open(map, writeMarker);
-          };
-        }
+        //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
+        kakao.maps.event.addListener(writeMarker, "mouseout", function () {
+          writeInfoCustomOverlay.setMap(null);
+        });
 
-        // 작성용 마커의 안내창을 닫는 클로저를 만드는 함수 : mouseout
-        function mouseOutListener(writeGuideWindow) {
-          return function () {
-            writeGuideWindow.close();
-          };
-        }
-
-        // 작성용 마커의 안내창을 닫는 클로저를 만드는 함수 : rightclick
-        function mouseRightClickListener(writeGuideWindow) {
-          return function () {
-            writeGuideWindow.close();
-          };
-        }
+        //마커에서 좌클릭하면 커스텀오버레이가 사라지게한다.
+        kakao.maps.event.addListener(writeMarker, "rightclick", function () {
+          writeInfoCustomOverlay.setMap(null);
+        });
 
         // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
         // 이거 이용해서 디테일 모달 띄우는 것도 구현 가능하지 않을까?
@@ -2644,6 +2729,8 @@ const Maps = (props) => {
     // }, [search, startlat, startlon,
     // }, [startlat, startlon]);
   }, [
+    startLat, 
+    startLng,
     is_mypost,
     is_mylike,
     map_post_list,
@@ -2700,7 +2787,10 @@ const Maps = (props) => {
         // window.alert("검색결과가 존재하지 않습니다.");
         return;
       } else if (status === kakao.maps.services.Status.ERROR) {
-        window.alert("검색 결과 중 오류가 발생했습니다.");
+        Swal.fire({
+          text: '검색 결과 중 오류가 발생했습니다.',
+          confirmButtonColor: "#ffb719",
+        })
         return;
       }
     });
@@ -2730,7 +2820,7 @@ const Maps = (props) => {
         />
 
         <SearchIcon>
-          <BiIcons.BiSearch size="2rem" color="rgb(255, 183, 25)" />
+          <BiIcons.BiSearch size="43" color="#ffb719" />
         </SearchIcon>
       </SearchBox>
 
@@ -2757,47 +2847,55 @@ export default Maps;
 
 const SearchBox = styled.div`
   position: fixed;
-  top: 40px;
-  left: 225px;
-  transform: translate(-10%, -90%);
+  background-color: transparent;
+  border: none;
+  box-sizing: border-box; 
+  border-radius: 10px;
+  top: 30px;
+  left: 50%;
+  height: 72px;
+  transform: translate(-50%, -70%);
   z-index: 3;
   @media (min-width: 1400px) {
-    width: 600px;
+    width: 700px;
     top: 100px;
   }
   @media (max-width: 1400px) {
     position: fixed;
-    /* top: 140px; */
     width: 400px;
     top: 140px;
     margin: auto;
   }
   @media (max-width: 600px) {
-    top: 140px;
+    top: 9vh;
     width: 50%;
-    left: 25vw;
-    margin: auto;
+    left: 25%;
+    margin: auto 25vw;
   }
 `;
 
 const SearchInput = styled.input`
-  height: 50px;
-  width: 100%;
+  border: 5px solid #ffb719;
+  box-sizing: border-box;
   border-radius: 10px;
-  padding-left: 15px;
-  font-size: 15px;
-  border: 3px solid rgb(255, 183, 25);
+  height: 100%;
+  width: 100%;
+  padding-left: 18px;
+  font-size: 1.2rem;
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgb(255, 183, 25);
+    /* box-shadow: 0 0 0 2px #ffb719; */
   }
   opacity: 0.8;
 `;
 
 const SearchIcon = styled.div`
   position: fixed;
-  top: 10px;
-  right: 0;
+  top: 14.5px;
+  right: 14.5px;
+  /* transform: translate(-25%, 25%); */
+  background-size: cover;
+  object-fit: cover;
 `;
 
 const MapBox = styled.div`
