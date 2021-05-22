@@ -19,7 +19,7 @@ const ADD_MAP_POST = "ADD_MAP_POST";
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 const LOADING = "LOADING";
-const MODAL_LOADING = "MODAL_LOADING"
+const MODAL_LOADING = "MODAL_LOADING";
 const ADD_LIKE = "ADD_LIKE";
 const DIS_LIKE = "DIS_LIKE";
 // 검색했을때 검색 결과 게시물만 보여주는 액션
@@ -51,7 +51,9 @@ const editPost = createAction(EDIT_POST, (board_id, post) => ({
 }));
 const deletePost = createAction(DELETE_POST, (id) => ({ id }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
-const modal_loading = createAction(MODAL_LOADING, (modal_loading) => ({modal_loading}));
+const modal_loading = createAction(MODAL_LOADING, (modal_loading) => ({
+  modal_loading,
+}));
 /////////////////
 const add_Like = createAction(ADD_LIKE, (post_id, board) => ({
   post_id,
@@ -121,7 +123,7 @@ const addPostAPI = (post) => {
     // console.log("??????", localStorage.getItem("jwt"));
 
     dispatch(spinner(true)); // 게시물 업로드하고 기다릴 동안 스피너를 개시하는 시점
-    console.log("파일들", _file);
+
     const formData = new FormData();
     formData.append("title", post.title);
     formData.append("content", post.content);
@@ -135,8 +137,6 @@ const addPostAPI = (post) => {
       // console.log(_file[i]);
     }
 
-    console.log("토큰이 넘어 올까요~?", config.jwt);
-    //////////
     const _category = getState().category.select_category; //요기 오타가 있었네요!
     formData.append("category", _category);
     // console.log(formData);
@@ -252,7 +252,7 @@ const getPostAPI = () => {
         } else {
           // console.log("스피너 지우자~!", res.data.data); //이것의
 
-          console.log("데이터 길이!", res.data.data.length);
+          // console.log("데이터 길이!", res.data.data.length);
           if (res.data.data.length < 15) {
             // console.log("로딩멈춰!");
             dispatch(loading(false));
@@ -278,7 +278,7 @@ const getPostAPI = () => {
             return;
           }
 
-          console.log("서버 응답값", res);
+          // console.log("서버 응답값", res);
           let post_list = [];
           // console.log(res.data.data[0].boardImgReponseDtoList);
           result.forEach((_post) => {
@@ -503,8 +503,6 @@ const editPostAPI = (board_id, _edit) => {
   };
 };
 
-// `http://localhost:3000/${encodeURIComponent("한글파라미터")}`;
-
 const searchPostAPI = (search, start = null, size = null) => {
   return function (dispatch, getState) {
     console.log("검색어 들어오냐~?", search);
@@ -726,7 +724,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;
       }),
-    [MODAL_LOADING]: (state, action) => 
+    [MODAL_LOADING]: (state, action) =>
       produce(state, (draft) => {
         draft.modal_loading = action.payload.modal_loading;
       }),
@@ -755,7 +753,7 @@ export default handleActions(
     //게시글 수정시 마커 이미지도 바로 수정하기 위해서 만듦
     [EDIT_MARKER]: (state, action) =>
       produce(state, (draft) => {
-        console.log("받은 마커 이미지는?", action.payload.markerImg);
+        // console.log("받은 마커 이미지는?", action.payload.markerImg);
         // console.log(action.payload.board_id);
         let idx = draft.map_post_list.findIndex(
           (p) => p.id == action.payload.board_id

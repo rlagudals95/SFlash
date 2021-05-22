@@ -30,8 +30,17 @@ function Navbar() {
   //GrMap
   const [sidebar, setSidebar] = useState(false);
 
+  // history로 사이드 navbar에 조건을주자
+  console.log("히스토리!", history.location.pathname);
   const showSidebar = () => setSidebar(!sidebar);
 
+  const pageLocation = history.location.pathname;
+
+  console.log("현재 페이지는?ㄴㅇㄹ혼애로내여ㅑㄹ?", pageLocation);
+
+  const is_story = pageLocation.includes("story"); // 스토리 페이지의 pathname은 stroy/id 이기 때문에 story를 포함하는지 여부에 따라 조건을 줌
+
+  // console.log("스토리 상태야?", is_story);
   const is_login = useSelector((state) => state.user.is_login);
   const userId = localStorage.getItem("userId"); // 로컬스토리지에 저장된 닉네임 가져오는 방법
   const is_loading = useSelector((state) => state.user.is_loading);
@@ -39,7 +48,7 @@ function Navbar() {
   // page 리덕스 상태값에 의한 사이드바 아이콘 active 효과 구현
   const page = useSelector((state) => state.side.page);
 
-  console.log("현재 페이지는", page);
+  // console.log("현재 페이지는", page);
 
   React.useEffect(() => {
     console.log(is_login);
@@ -79,7 +88,7 @@ function Navbar() {
             {/* 홈 지도보기 */}
 
             <IconOutter>
-              {page == "home" ? (
+              {pageLocation == "/" ? (
                 <SelectedIcon
                   onClick={() => {
                     history.replace("/");
@@ -100,7 +109,7 @@ function Navbar() {
             </IconOutter>
             {/* 커뮤니티 페이지 */}
             <IconOutter>
-              {page == "community" ? (
+              {pageLocation == "/postlist" ? (
                 <SelectedIcon
                   onClick={() => {
                     history.replace("/postlist");
@@ -120,11 +129,10 @@ function Navbar() {
               )}
             </IconOutter>
             {/* 마이페이지 & 로그인 */}
-            {/* && page == "story" ? */}
-
-            {page == "story" ? (
+            {/*  */}
+            {is_login ? (
               <IconOutter>
-                {is_login ? (
+                {is_story ? (
                   <SelectedIcon
                     onClick={() => {
                       dispatch(sideActions.getPage("story"));
@@ -139,18 +147,6 @@ function Navbar() {
                     MY STORY
                   </SelectedIcon>
                 ) : (
-                  <SelectedIcon
-                    onClick={() => {
-                      history.push("/login");
-                    }}
-                  >
-                    LOGIN
-                  </SelectedIcon>
-                )}
-              </IconOutter>
-            ) : (
-              <IconOutter>
-                {is_login ? (
                   <IconInfo
                     onClick={() => {
                       dispatch(sideActions.getPage("story"));
@@ -164,6 +160,18 @@ function Navbar() {
                   >
                     MY STORY
                   </IconInfo>
+                )}
+              </IconOutter>
+            ) : (
+              <IconOutter>
+                {pageLocation == "/login" ? (
+                  <SelectedIcon
+                    onClick={() => {
+                      history.push("/login");
+                    }}
+                  >
+                    LOGIN
+                  </SelectedIcon>
                 ) : (
                   <IconInfo
                     onClick={() => {
@@ -177,9 +185,8 @@ function Navbar() {
               </IconOutter>
             )}
 
-            {/* About */}
             <IconOutter>
-              {page == "about" ? (
+              {pageLocation == "/about" ? (
                 <SelectedIcon
                   onClick={() => {
                     history.replace("/about");
@@ -200,7 +207,7 @@ function Navbar() {
             </IconOutter>
             {/* Faq */}
             <IconOutter>
-              {page == "faq" ? (
+              {pageLocation == "/faq" ? (
                 <SelectedIcon
                   onClick={() => {
                     history.replace("/faq");
@@ -221,7 +228,7 @@ function Navbar() {
             </IconOutter>
             {/* Qna */}
             <IconOutter>
-              {page == "qna" ? (
+              {pageLocation == "/qna" ? (
                 <SelectedIcon
                   onClick={() => {
                     history.replace("/qna");
@@ -526,3 +533,7 @@ const Home = styled.div`
 `;
 
 export default Navbar;
+
+{
+  /* && page == "story" ? */
+}
