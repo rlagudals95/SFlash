@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/configStore";
 import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지url
-import writeInfoWindow from "../shared/images/writeInfoWindow/writeMarkerInfo.png";
+import writeInfoImg from "../shared/images/writeInfoCustomOverlay/writeInfoCustomOverlayImg.png";
 
 import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
@@ -38,6 +38,10 @@ const Maps = (props) => {
   const [latitude, setLatitude] = useState(); // 클릭한 위치 위도 설정
   const [longitude, setLongitude] = useState(); // 클릭한 위치 경도 설정
   const [spotName, setSpotName] = useState(""); // 클릭한 위치 spotName
+  // 작성마커 안내용 주소 분리
+  const [spotNameInfo1, setSpotNameInfo1] = useState("");
+  const [spotNameInfo2, setSpotNameInfo2] = useState("");
+  const [writeInfoContent, setWriteInfoContent] = useState("");
 
   const [_map, setMap] = useState(); // useEffect 외부에서 map을 쓰기 위한 것.
   const [search, setSearch] = useState(""); // search가 변경 될때마다 화면 렌더링되도록 useEffect에 [search]를 넣어준다.
@@ -367,55 +371,98 @@ const Maps = (props) => {
         // 작성용 마커를 사용하는 방법을 알려주는 인포윈도우
         // 작성용 마커위에 갖다대면 뜨고(mouseover) 마우스를 떼면(mouseout) 사라진다.
         // 작성용 마커에 우클릭을 하면 마커가 사라지면서 인포윈도우도 사라진다.
-        var writeGuideContent =
-          '<div class="writeinfobox">' +
-          `<img class="writeinfowindow" src=${writeInfoWindow}>` +
-          "</div>";
+        // var writeGuideContent =
+        //   '<div class="writeinfobox">' +
+        //   `<img class="writeinfowindow" src=${writeInfoWindow}>` +
+        //   "</div>";
 
-        // 인포윈도우 생성하기
-        var writeGuideWindow = new kakao.maps.InfoWindow({
-          position: writePosition,
-          content: writeGuideContent,
+        // // 인포윈도우 생성하기
+        // var writeGuideWindow = new kakao.maps.InfoWindow({
+        //   position: writePosition,
+        //   content: writeGuideContent,
+        // });
+
+        // 마커에 안내용 커스텀오버레이를 제어하는 mouseover 이벤트와 mouseout 이벤트를 등록한다.
+        // mouseover : 안내창 생성, mouseout, rightclick: 안내창 닫기
+        // kakao.maps.event.addListener(
+        //   writeMarker,
+        //   "mouseover",
+        //   mouseOverListener(map, writeMarker, writeGuideWindow)
+        // );
+        // kakao.maps.event.addListener(
+        //   writeMarker,
+        //   "mouseout",
+        //   mouseOutListener(writeGuideWindow)
+        // );
+        // kakao.maps.event.addListener(
+        //   writeMarker,
+        //   "rightclick",
+        //   mouseRightClickListener(writeGuideWindow)
+        // );
+
+        // // 작성용 마커에 안내창을 띄우는 클로저를 만드는 함수 : mouseover
+        // function mouseOverListener(map, writeMarker, writeGuideWindow) {
+        //   return function () {
+        //     writeGuideWindow.open(map, writeMarker);
+        //   };
+        // }
+
+        // // 작성용 마커의 안내창을 닫는 클로저를 만드는 함수 : mouseout
+        // function mouseOutListener(writeGuideWindow) {
+        //   return function () {
+        //     writeGuideWindow.close();
+        //   };
+        // }
+
+        // // 작성용 마커의 안내창을 닫는 클로저를 만드는 함수 : rightclick
+        // function mouseRightClickListener(writeGuideWindow) {
+        //   return function () {
+        //     writeGuideWindow.close();
+        //   };
+        // }
+
+        // 게시물 작성법을 안내하는 커스텀오버레이
+        // 모달창(커스텀오버레이)에 들어갈 내용
+        const spotNameInfo1 = spotName.split(" ").splice(0, 2).join(" ");
+        const spotNameInfo2 = spotName.split(" ").splice(2).join(" ");
+
+        console.log("스팟네임: ", spotName)
+
+        // if (spotNameInfo1 && spotNameInfo2) {
+          const writeInfoContent =
+            '<div class="writeinfocontainer">' + 
+              `<img class="writeinfoimg" src=${writeInfoImg}>` +
+              // '<div class="writeinfohead">' +
+                `<div class="writeinfospotname1">${spotName}</div>` + 
+              // '<div/>' +
+            '<div/>'
+        // }
+
+        const writeInfoCustomOverlay = new kakao.maps.CustomOverlay({
+          // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
+          clickable: true, // true 로 설정하면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다.
+          position: writePosition, // 커스텀 오버레이의 좌표
+          content: writeInfoContent, // 엘리먼트 또는 HTML 문자열 형태의 내용
+          xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.55, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          zIndex: 100, //  커스텀 오버레이의 z-index
+          altitude: 10,
         });
 
-        // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록한다.
-        // mouseover : 안내창 생성, mouseout, rightclick: 안내창 닫기
-        kakao.maps.event.addListener(
-          writeMarker,
-          "mouseover",
-          mouseOverListener(map, writeMarker, writeGuideWindow)
-        );
-        kakao.maps.event.addListener(
-          writeMarker,
-          "mouseout",
-          mouseOutListener(writeGuideWindow)
-        );
-        kakao.maps.event.addListener(
-          writeMarker,
-          "rightclick",
-          mouseRightClickListener(writeGuideWindow)
-        );
+        // 마커를 위한 클릭이벤트 + 닫기 이벤트를 설정한다.
+        kakao.maps.event.addListener(writeMarker, "mouseover", function () {
+          writeInfoCustomOverlay.setMap(map);
+        });
 
-        // 작성용 마커에 안내창을 띄우는 클로저를 만드는 함수 : mouseover
-        function mouseOverListener(map, writeMarker, writeGuideWindow) {
-          return function () {
-            writeGuideWindow.open(map, writeMarker);
-          };
-        }
+        //마커에서 마우스를 떼면 커스텀오버레이가 사라지게한다.
+        kakao.maps.event.addListener(writeMarker, "mouseout", function () {
+          writeInfoCustomOverlay.setMap(null);
+        });
 
-        // 작성용 마커의 안내창을 닫는 클로저를 만드는 함수 : mouseout
-        function mouseOutListener(writeGuideWindow) {
-          return function () {
-            writeGuideWindow.close();
-          };
-        }
-
-        // 작성용 마커의 안내창을 닫는 클로저를 만드는 함수 : rightclick
-        function mouseRightClickListener(writeGuideWindow) {
-          return function () {
-            writeGuideWindow.close();
-          };
-        }
+        //마커에서 좌클릭하면 커스텀오버레이가 사라지게한다.
+        kakao.maps.event.addListener(writeMarker, "rightclick", function () {
+          writeInfoCustomOverlay.setMap(null);
+        });
 
         // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
         // 이거 이용해서 디테일 모달 띄우는 것도 구현 가능하지 않을까?
