@@ -54,7 +54,7 @@ const PostList = (props) => {
   const resultPark = is_category.find((item) => item === "공원");
   const resultExhibition = is_category.find((item) => item === "전시");
 
-  // console.log("로딩변화", loading);
+  console.log("로딩변화", loading);
 
   const board_list = useSelector((state) => state.post.list);
   // console.log("잘 가지고 왔나~", board_list);

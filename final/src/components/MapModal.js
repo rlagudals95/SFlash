@@ -332,7 +332,7 @@ const ModalDetail = (props) => {
                                   <DeleteForeverIcon />
                                 </CmtDeleteBtn>
                               ) : (
-                                <CmtDeleteBtn></CmtDeleteBtn>
+                                <CmtDeleteBtn2>space</CmtDeleteBtn2>
                               )}
                             </Replys>
                           </ReplyBox>
@@ -880,6 +880,19 @@ const CmtDeleteBtn = styled.button`
     opacity: 1;
   }
 `;
+
+const CmtDeleteBtn2 = styled.button`
+  height: 2px;
+  width: 2p;
+
+  background-color: transparent;
+  border: none;
+  outline: none;
+  opacity: 0;
+  margin-right: 1.3vw;
+  margin-bottom: 2.3vh;
+`;
+
 const CommentInput = styled.input`
   background: white;
   border: none;
