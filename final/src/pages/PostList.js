@@ -265,22 +265,22 @@ const Container = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 20px;
   }
-  @media (max-width: 1450px) {
-    /* 1450밑으로 넓이가 내려가면 */
-    margin-top: -5vh;
+  @media (max-width: 1440px) {
+    /* 1440밑으로 넓이가 내려가면 */
+    margin-top: 4vh;
   }
   @media (max-width: 1280px) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 10px;
     margin: auto;
-    margin-top: 2vh;
+    margin-top: 4vh;
     padding-top: 0px;
   }
   @media (max-width: 960px) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 5px;
     margin: auto;
-    margin-top: 2vh;
+    margin-top: 4vh;
     padding-top: 0px;
   }
   @media (max-width: 600px) {
@@ -341,7 +341,7 @@ const SearchBox = styled.div`
   left: 50%;
   height: 72px;
   transform: translate(-50%, -70%);
-  z-index: 1000;
+  z-index: 100;
   @media (min-width: 1400px) {
     width: 700px;
     top: 100px;
