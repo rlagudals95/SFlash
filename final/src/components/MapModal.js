@@ -37,7 +37,7 @@ const ModalDetail = (props) => {
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
 
-  // console.log("모달 데이타", modalData);
+  console.log("모달 데이타", modalData);
 
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");

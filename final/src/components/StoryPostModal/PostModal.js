@@ -81,7 +81,7 @@ const ModalDetail = (props) => {
     dispatch(ModalActions.modalDeleteCommentAPI(id));
   };
 
-  // console.log("댓글 내용", comments);
+  console.log("모달내용", modalData);
 
   const selectComment = (e) => {
     setComments(e.target.value);
@@ -768,7 +768,7 @@ const PostContents = styled.div`
 `;
 
 const PostTime = styled.div`
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   opacity: 0.4;
   margin-top: 3.5px;
 
