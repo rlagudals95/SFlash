@@ -20,7 +20,7 @@ const UploadEdit = (props) => {
     const files = fileInput.current.files;
 
     let images = []; // 이미지 파일들이 들어간 배열
-    console.log("이미지들", images);
+    // console.log("이미지들", images);
     for (let i = 0; i < files.length; i++) {
       images.push(fileInput.current.files[i]);
     }

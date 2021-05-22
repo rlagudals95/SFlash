@@ -17,42 +17,52 @@ const AboutDetail = (props) => {
   return (
     <React.Fragment>
       <ProfileContainer>
-      <ProfileImg src={props.img} onClick={openModal} />
-      <Name>{props.name}</Name>
-      <Position>{props.position}</Position>
-     </ProfileContainer>
+        <ProfileImg src={props.img} onClick={openModal} />
+        <Name>{props.name}</Name>
+        <Position>{props.position}</Position>
+      </ProfileContainer>
 
-    <Modal isOpen={modal} close={closeModal} style={modalStyle}>
-      <CloseButton
-        src="https://image.flaticon.com/icons/png/512/458/458595.png"
-        onClick={closeModal}
-      />
-      <Grid flex>
-        <ProfileImg2 src={props.img} />
-        <Grid> 
-          <ModalProfileContainer>
-            <Name style={{ fontSize: "1.8rem" }}>{props.name}</Name>
-            <Position2 style={{ fontSize: "1.1rem" }}> 
-              {props.position}
-            </Position2>
-            <Grid height="5px" />
-            <Content>{props.content}</Content>
-            <Grid height="0px" />
-            <Skill>{props.skill}</Skill>
-            <Grid height="0px" />
-                <RefLink href={props.github}>{props.github}</RefLink>
-                <RefLink href={props.etc_1}>{props.etc_1}</RefLink>
-                <RefLink href={props.etc_2}>{props.etc_2}</RefLink>
-                <RefLink href={props.etc_3}>{props.etc_3}</RefLink>
-          </ModalProfileContainer>
+      <Modal isOpen={modal} close={closeModal} style={modalStyle}>
+        <CloseButton
+          src="https://image.flaticon.com/icons/png/512/458/458595.png"
+          onClick={closeModal}
+        />
+        <Grid flex>
+          <ProfileImg2 src={props.img} />
+          <Grid>
+            <ModalProfileContainer>
+              <Name style={{ fontSize: "1.8rem" }}>{props.name}</Name>
+              <Position2 style={{ fontSize: "1.1rem" }}>
+                {props.position}
+              </Position2>
+              <Grid height="5px" />
+              <Content>{props.content}</Content>
+              <Skill>{props.skill}</Skill>
+              <Grid flex>
+              {props.github !== null ? (
+                <RefLink href={props.github}>Github</RefLink>
+              ) : null}
+              {props.portfolio !== null ? (
+                <RefLink href={props.portfolio}>Portfolio</RefLink>
+              ) : null}
+              {props.resume !== null ? (
+                <RefLink href={props.resume}>Resume</RefLink>
+              ) : null}
+              {props.etc_1 !== null ? (
+                <RefLink href={props.etc_1}>Blog</RefLink>
+              ) : null}
+              {props.etc_2 !== null ? (
+                <RefLink href={props.etc_2}>Blog</RefLink>
+              ) : null}
+              </Grid>
+            
+            </ModalProfileContainer>
+          </Grid>
         </Grid>
-      </Grid>
-    </Modal>
-
+      </Modal>
     </React.Fragment>
   );
 };
-
 
 const ProfileContainer = styled.div`
   margin: 10px;
@@ -116,14 +126,17 @@ const Skill = styled.div`
 const RefLink = styled.a`
   display: block;
   margin-top: 20px;
+  margin-right: 15px;
   font-size: 0.9rem;
   font-weight: 400;
-  color: ${(props) => props.theme.main_grey};
+  color: ${(props) => props.theme.main_color};
   text-decoration: none;
   margin-bottom: -10px;
+  text-decoration: underline;
   :hover {
     cursor: pointer;
     text-decoration: underline;
+    color: lightgrey;
   }
 `;
 

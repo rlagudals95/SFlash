@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Grid } from "../elements/index";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/configStore";
@@ -31,7 +31,7 @@ const QnaDetailComment = (props) => {
 
   // 해당 게시물의 댓글 리스트 불러오기
   const comment_list = useSelector((state) => state.qnacomment.list);
-  console.log(comment_list);
+  // console.log(comment_list);
   const editIdx = useSelector((state) => state.qnacomment.idx);
 
   //  댓글 등록, 수정
@@ -46,18 +46,18 @@ const QnaDetailComment = (props) => {
   // 댓글 등록 버튼을 누르면 실행되는 함수
   // 내용의 유무를 판단하고 백으로 값을 전달합니다.
   const onAddCommentSubmit = (comment) => {
-    console.log(comment);
+    // console.log(comment);
     if (!comment) {
       Swal.fire({
-        text: '댓글을 입력하지 않으셨습니다.',
+        text: "댓글을 입력하지 않으셨습니다.",
         confirmButtonColor: "#ffb719",
-      })
+      });
       return;
     } else if (role !== "ADMIN") {
       Swal.fire({
-        text: '댓글 권한이 없습니다.',
+        text: "댓글 권한이 없습니다.",
         confirmButtonColor: "#ffb719",
-      })
+      });
       return;
     } else {
       dispatch(qnaCommentActions.addQnaCommentAPI(comment, qnaId));
@@ -68,41 +68,43 @@ const QnaDetailComment = (props) => {
   // 댓글 등록 버튼을 누르면 실행되는 함수
   // 내용의 유무를 판단하고 백으로 값을 전달합니다.
   const onEditCommentMode = (idx) => {
-    console.log(idx);
+    // console.log(idx);
     dispatch(qnaCommentActions.editCommentMode(idx));
     setEditCommentMode(true);
   };
 
   const onEditCommentSubmit = (comment) => {
-    console.log(comment);
+    // console.log(comment);
     const qcommentId = comment_list[editIdx].id;
     if (!comment) {
       Swal.fire({
-        text: '댓글을 입력하지 않으셨습니다.',
+        text: "댓글을 입력하지 않으셨습니다.",
         confirmButtonColor: "#ffb719",
-      })
+      });
       return;
     } else if (role !== "ADMIN") {
       Swal.fire({
-        text: '댓글 권한이 없습니다.',
+        text: "댓글 권한이 없습니다.",
         confirmButtonColor: "#ffb719",
-      })
+      });
       return;
     } else {
       Swal.fire({
-      text: '댓글을 수정 하시겠습니까?',
-      confirmButtonText: '예',
-      confirmButtonColor: '#ffb719',
-      showCancelButton: true,
-      cancelButtonText: '아니오',
-      cancelButtonColor: '#eee',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(qnaCommentActions.editQnaCommentAPI(comment, qcommentId, qnaId));
-        setComment("");
-        setEditCommentMode(false);
-      }
-    })
+        text: "댓글을 수정 하시겠습니까?",
+        confirmButtonText: "예",
+        confirmButtonColor: "#ffb719",
+        showCancelButton: true,
+        cancelButtonText: "아니오",
+        cancelButtonColor: "#eee",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(
+            qnaCommentActions.editQnaCommentAPI(comment, qcommentId, qnaId)
+          );
+          setComment("");
+          setEditCommentMode(false);
+        }
+      });
     }
   };
 
@@ -180,7 +182,6 @@ const QnaDetailComment = (props) => {
             </BorderBtn>
           </Comment>
         )}
-
       </CommentContainer>
     </React.Fragment>
   );

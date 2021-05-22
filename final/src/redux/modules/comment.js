@@ -152,7 +152,7 @@ const addCommentAPI = (comment, board_id) => {
 
 const deleteCommentAPI = (id) => {
   //이 아이디는 코멘트 id
-  console.log("댓글 id", id);
+  // console.log("댓글 id", id);
   return function (dispatch) {
     axios({
       method: "DELETE",

@@ -65,7 +65,7 @@ const ModalDetail = (props) => {
     images.push(img.imgUrl);
   });
 
-  console.log("이미지들!!", images);
+  // console.log("이미지들!!", images);
 
   let comment_list = [];
   for (let i = 0; i < props.comment.length; i++) {
@@ -74,7 +74,7 @@ const ModalDetail = (props) => {
 
   const comment_List = useSelector((state) => state.comment.list);
 
-  console.log("이포스트의 댓글은??", comment_List);
+  // console.log("이포스트의 댓글은??", comment_List);
 
   const is_comment = comment_List ? true : false;
   const [comments, setComments] = useState();

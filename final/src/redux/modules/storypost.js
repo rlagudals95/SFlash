@@ -50,7 +50,7 @@ const initialState = {
 // 스토리페이지 / 유저 업로드 게시물 리스트
 const getUserPostAPI = (userId) => {
   return function (dispatch, getState) {
-    console.log("fkfkffkffkfffk");
+    // console.log("fkfkffkffkfffk");
     const _post_list = getState().storypost.user_post_list;
     const p_length = _post_list.length;
     let lastId = p_length === 0 ? 999 : _post_list[p_length - 1].id;
@@ -66,44 +66,43 @@ const getUserPostAPI = (userId) => {
       },
     })
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
 
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           let post_list = [];
           res.data.data.forEach((_post) => {
+            let post = {
+              id: _post.boardId,
+              category: _post.category,
+              img_url: _post.boardImgResponseDtoList,
+              imgForOverlay: _post.boardImgResponseDtoList[0].imgUrl,
+              spotName: _post.spotName,
+              spotName1: _post.spotName.split(" ").splice(0, 2).join(" "),
+              spotName2: _post.spotName.split(" ").splice(2).join(" "),
+              latitude: _post.latitude,
+              longitude: _post.longitude,
+              like: _post.liked,
+              likeCnt: _post.likeCount,
+            };
+            post_list.push(post);
+            // console.log(post_list);
+          });
 
-          let post = {
-            id: _post.boardId,
-            category: _post.category,
-            img_url: _post.boardImgResponseDtoList,
-            imgForOverlay: _post.boardImgResponseDtoList[0].imgUrl,
-            spotName: _post.spotName,
-            spotName1: _post.spotName.split(" ").splice(0, 2).join(" "),
-            spotName2: _post.spotName.split(" ").splice(2).join(" "),
-            latitude: _post.latitude,
-            longitude: _post.longitude,
-            like: _post.liked,
-            likeCnt: _post.likeCount,
-          };
-          post_list.push(post);
-          console.log(post_list);
-        });
-
-        dispatch(setStoryPost(post_list));
+          dispatch(setStoryPost(post_list));
         }
       })
       .catch((err) => {
@@ -133,23 +132,23 @@ const getUserLikeAPI = (userId) => {
       },
     })
       .then((res) => {
-        console.log("좋아요 누른것!!", res.data.data);
+        // console.log("좋아요 누른것!!", res.data.data);
 
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           let post_list = [];
           res.data.data.forEach((_post) => {
             let post = {
@@ -170,7 +169,6 @@ const getUserLikeAPI = (userId) => {
           });
           dispatch(setStoryLike(post_list));
         }
-
       })
       .catch((err) => {
         Swal.fire({
@@ -197,8 +195,8 @@ const addUserPostLikeAPI = (board_id, board) => {
       },
     })
       .then((res) => {
-        console.log("좋아요 완료!", res);
-        console.log(res.data.message);
+        // console.log("좋아요 완료!", res);
+        // console.log(res.data.message);
 
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
@@ -245,32 +243,32 @@ const deleteUserPostLikeAPI = (board_id, board) => {
       },
     })
       .then((res) => {
-        console.log("좋아요 취소!", res);
+        // console.log("좋아요 취소!", res);
 
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-      } else {
-        let post = {
-          like: false,
-          likeCnt: board.likeCnt - 1,
-        };
+          });
+        } else {
+          let post = {
+            like: false,
+            likeCnt: board.likeCnt - 1,
+          };
           dispatch(editStoryPost(board_id, post));
-      }
-
-      }).catch((error) => {
-        console.log(error);
+        }
+      })
+      .catch((error) => {
+        // console.log(error);
         Swal.fire({
           text: "좋아요 취소 실패 :(",
           confirmButtonColor: "#ffb719",
@@ -295,34 +293,33 @@ const addUserLikeLikeAPI = (board_id, board) => {
       .then((res) => {
         console.log("좋아요 완료!", res);
 
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{ 
+          });
+        } else {
           let post = {
-          like: true,
-          likeCnt: board.likeCnt + 1,
-        };
-        console.log("!!!!!!!", post);
-        if (res.status === 200) {
-          dispatch(editStoryLike(board_id, post));
+            like: true,
+            likeCnt: board.likeCnt + 1,
+          };
+          console.log("!!!!!!!", post);
+          if (res.status === 200) {
+            dispatch(editStoryLike(board_id, post));
+          }
+          if (res.data.message === "tokenExpired") {
+            dispatch(userActions.refreshTokenAPI());
+          }
         }
-        if (res.data.message === "tokenExpired") {
-          dispatch(userActions.refreshTokenAPI());
-        }}
-
-
       })
       .catch((error) => {
         Swal.fire({
@@ -346,28 +343,28 @@ const deleteUserLikeLikeAPI = (board_id, board) => {
       },
     })
       .then((res) => {
-        console.log("좋아요 취소!", res);
+        // console.log("좋아요 취소!", res);
 
-        if (res.data.message === "tokenExpired"){
+        if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
-            text: '로그인 기간이 만료되어 재로그인이 필요합니다 :)',
-            confirmButtonText: '로그인 하러가기',
-            confirmButtonColor: '#ffb719',
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
             showCancelButton: true,
-            cancelButtonText: '취소',
-            cancelButtonColor: '#eee',
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
           }).then((result) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           let post = {
             like: false,
             likeCnt: board.likeCnt - 1,
           };
-          console.log("!!!!!!!", post);
+          // console.log("!!!!!!!", post);
           if (res.status === 200) {
             dispatch(editStoryLike(board_id, post));
           }
@@ -387,11 +384,11 @@ export default handleActions(
     // 내 게시물
     [SET_STORY_POST]: (state, action) =>
       produce(state, (draft) => {
-        console.log("내 게시물 draft.user_post_list", draft.user_post_list);
-        console.log(
-          "내 게시물2 action.payload.post_list",
-          action.payload.post_list
-        );
+        // console.log("내 게시물 draft.user_post_list", draft.user_post_list);
+        // console.log(
+        //   "내 게시물2 action.payload.post_list",
+        //   action.payload.post_list
+        // );
 
         draft.user_post_list.push(...action.payload.post_list);
         draft.user_post_list = draft.user_post_list.reduce((acc, cur) => {
@@ -408,11 +405,11 @@ export default handleActions(
     // 내 좋아요 게시물
     [SET_STORY_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        console.log("좋아요 draft.user_like_list", draft.user_like_list);
-        console.log(
-          "좋아요 action.payload.post_list",
-          action.payload.post_list
-        );
+        // console.log("좋아요 draft.user_like_list", draft.user_like_list);
+        // console.log(
+        //   "좋아요 action.payload.post_list",
+        //   action.payload.post_list
+        // );
 
         draft.user_like_list.push(...action.payload.post_list);
         draft.user_like_list = draft.user_like_list.reduce((acc, cur) => {
@@ -429,8 +426,8 @@ export default handleActions(
     // 내 게시물 수정(하트, 포스트 모달 수정 화면 반영)
     [EDIT_STORY_POST]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.post);
-        console.log(action.payload.board_id);
+        // console.log(action.payload.post);
+        // console.log(action.payload.board_id);
         let idx = draft.user_post_list.findIndex(
           (p) => p.id === action.payload.board_id
         );
@@ -442,8 +439,8 @@ export default handleActions(
     // 좋아요 게시물 수정(하트)
     [EDIT_STORY_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.post);
-        console.log(action.payload.board_id);
+        // console.log(action.payload.post);
+        // console.log(action.payload.board_id);
         let idx = draft.user_like_list.findIndex(
           (p) => p.id === action.payload.board_id
         );

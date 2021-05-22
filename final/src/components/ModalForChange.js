@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 const ModalForCate = (props) => {
   const dispatch = useDispatch();
 
-  console.log(props);
+  // console.log(props);
   return (
     <React.Fragment>
       <Background onClick={props.close} />
@@ -39,7 +39,7 @@ const ModalForCate = (props) => {
             // e.prevent..., e.stopPro.. 이것들로 이벤트 버블링을 막는다
             e.preventDefault();
             e.stopPropagation();
-            console.log(props);
+            // console.log(props);
             // 클릭하면 게시물 삭제
             dispatch(postActions.deletePostAX(props.id));
           }}

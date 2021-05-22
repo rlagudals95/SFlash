@@ -39,11 +39,11 @@ const signupAPI = (nickname, email, pwd, rePwd) => {
       .then((res) => {
         console.log("signupAPI(res)", res);
         Swal.fire({
-          imageUrl: 'https://i.postimg.cc/SxmfpG6L/2x.png',
-          text: 'SFlash의 회원이 되신 걸 환영합니다 :)',
-          confirmButtonText: '확인',
-          confirmButtonColor: '#ffb719',
-        })
+          imageUrl: "https://i.postimg.cc/SxmfpG6L/2x.png",
+          text: "SFlash의 회원이 되신 걸 환영합니다 :)",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#ffb719",
+        });
         history.push("/login");
       })
       .catch((err) => {
@@ -67,7 +67,6 @@ const loginAPI = (email, pwd) => {
       })
       .then((res) => {
         console.log(res);
-
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("jwt", res.data.token);
@@ -87,7 +86,7 @@ const loginAPI = (email, pwd) => {
 
 // 로그인 상태 확인 (페이지가 바뀔 때마다)
 const loginCheck = (jwt) => {
-  console.log(jwt);
+  // console.log(jwt);
   return function (dispatch, getstate, { history }) {
     if (jwt) {
       dispatch(setUser());
@@ -106,10 +105,7 @@ export default handleActions(
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        localStorage.removeItem("nickname");
-        localStorage.removeItem("jwt");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("role");
+        localStorage.clear();
         draft.user = null;
         draft.is_login = false;
       }),

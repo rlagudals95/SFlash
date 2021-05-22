@@ -12,7 +12,7 @@ import * as CgIcons from "react-icons/cg";
 import { useDispatch, useSelector } from "react-redux";
 
 const CustomOverlay = (props) => {
-  console.log(props);
+  // console.log(props);
   const dispatch = useDispatch();
 
   const closeOverlay = function () {

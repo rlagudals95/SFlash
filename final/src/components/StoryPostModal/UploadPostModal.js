@@ -29,21 +29,16 @@ const UploadModal = (props) => {
   const { latitude, longitude, spotName } = props;
   const userId = localStorage.getItem("userId");
 
-  console.log("비교!", props);
   React.useEffect(() => {
     if (is_madal) {
-      console.log("실행실행!!!!!!!!!!");
       dispatch(imageActions.getModalPost(props));
       dispatch(profileActions.getUserInfoAPI(userId));
       return;
     }
 
     if (is_edit) {
-      console.log("실행ㄴㄴㄴㄴㄴㄴㄴ");
       // dispatch(imageActions.resetEdit([])); //
       dispatch(imageActions.getPost(props.id));
-
-      console.log("hi");
     }
     dispatch(profileActions.getUserInfoAPI(userId));
   }, []);
@@ -71,15 +66,10 @@ const UploadModal = (props) => {
   const post_list = useSelector((state) => state.post.list);
   const user_info = useSelector((state) => state.user.user);
   const profile = useSelector((state) => state.profile.user);
-  console.log("유저아이디", userId);
-  console.log("포스트리스트", post_list);
-  console.log("유저정보", user_info);
-  console.log("유저프로필", profile);
-  // console.log("서버로 보내줄 수정파일", editFile[0]);
-  // console.log("서버로 보내줄 수정파일", editFile[1]);
-  // console.log("서버로 보내줄 수정파일", editFile[2]);
-  // console.log("서버로 보내줄 수정파일", editFile[3]);
-  // console.log(preview);
+  // console.log("유저아이디", userId);
+  // console.log("포스트리스트", post_list);
+  // console.log("유저정보", user_info);
+  // console.log("유저프로필", profile);
 
   const [contents, setContents] = React.useState(props.content);
   const [title, setTitle] = React.useState(props.title);
@@ -87,7 +77,7 @@ const UploadModal = (props) => {
 
   const [image_list, setImageList] = React.useState();
   const is_file = useSelector((state) => state.image2.file);
-  console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
+  // console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
   // const post_id = props.match.params.id;
   const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
   const is_madal = props.modal ? true : false;
@@ -98,9 +88,9 @@ const UploadModal = (props) => {
   // const editImage = useSelector((state) => state.image2.image);
 
   const previewSet = useSelector((state) => state.image2.preview);
-  console.log("프리뷰를 알자!", previewSet);
+  // console.log("프리뷰를 알자!", previewSet);
   const file = useSelector((state) => state.image2.file);
-  console.log("업로드 파일들을 알자!", file);
+  // console.log("업로드 파일들을 알자!", file);
 
   const is_category = useSelector((state) => state.category.select_category);
 
@@ -112,7 +102,7 @@ const UploadModal = (props) => {
   // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
   const ok_submit = contents ? true : false;
 
-  console.log("??????", localStorage.getItem("jwt"));
+  // console.log("??????", localStorage.getItem("jwt"));
   const resetPreview = () => {
     const basicPreview =
       "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36";

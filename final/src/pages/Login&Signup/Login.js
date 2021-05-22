@@ -44,7 +44,7 @@ const Login = () => {
   return (
     <React.Fragment>
       <Container>
-        <Grid height="40px" />
+        <Grid height="60px" />
         <SflashLogo />
         <Title>로그인하기</Title>
         <InputStyle
