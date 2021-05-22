@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { history } from "../configStore";
 import { config } from "../../shared/config";
 import _ from "lodash";
+import { SignalCellularConnectedNoInternet0BarRounded } from "@material-ui/icons";
 
 const SET_QNA = "SET_QNA";
 const SET_QNA_DETAIL = "SET_QNA_DETAIL";
