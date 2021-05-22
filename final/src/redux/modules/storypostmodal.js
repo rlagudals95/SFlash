@@ -89,7 +89,7 @@ const getModalPostAPI = (boardId) => {
       },
     })
       .then((res) => {
-        // console.log("모달정보 가져오자!!!!", res);
+        console.log("모달정보 가져오자!!!!", res);
 
         let result = res.data.data;
         // console.log("정리된거 맞지?", result, boardId);
@@ -106,6 +106,7 @@ const getModalPostAPI = (boardId) => {
           comment: result.boardDetailCommentDtoList,
           creatAt: result.modified,
           writerId: result.userId,
+          spotName: result.spotName,
         };
         let comment_list = post.comment;
         console.log("게시물 요거", post);
