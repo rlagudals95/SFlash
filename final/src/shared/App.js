@@ -1,6 +1,7 @@
 import "../App.css";
 import React from "react";
-import { Route, Switch} from "react-router-dom";
+import styled from "styled-components";
+import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
 import { useDispatch } from "react-redux";
@@ -28,7 +29,6 @@ function App() {
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt") ? true : false; // 로컬스토리지에 저장되어있는 jwt 토큰 유무판단
 
-
   React.useEffect(() => {
     if (jwt) {
       dispatch(userActions.loginCheck(jwt));
@@ -39,6 +39,11 @@ function App() {
     <React.Fragment>
       <ConnectedRouter history={history}>
         <SideNav></SideNav>
+        <SurveyButton className="blinking"
+          onClick={() => window.open("https://forms.gle/mttg6DpzWDySixki6")}
+        >
+          기프티콘 이벤트 참여하기
+        </SurveyButton>
         <ScrollToTop>
           <Switch>
             <Route path="/" exact component={Main} />
@@ -63,5 +68,67 @@ function App() {
     </React.Fragment>
   );
 }
+
+const SurveyButton = styled.div`
+  position: fixed;
+  right: 70px;
+  top: 40px;
+  border: none;
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin: 10px auto;
+  padding: 15px 20px;
+  font-size: 1.2rem;
+  font-weight: 400;
+  background-color: #ffffff;
+    color: ${(props) => props.theme.main_color};
+    border: 2pt solid ${(props) => props.theme.main_color};
+  
+  z-index: 500;
+  :focus {
+    outline: none;
+  }
+  &:hover {
+    color: #ffffff;
+    font-weight: 400;
+  background-color: ${(props) => props.theme.main_color};
+    border: 2pt solid ${(props) => props.theme.main_color};
+    cursor: pointer;
+    transition: ease-in-out, width 0.35s ease-in-out;
+    transform: translateY(-8px);
+    transition: all 200ms ease;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px 0px;
+    animation:none;
+  }
+ 
+  -webkit-animation: blink 1s ease-in-out infinite alternate;
+  /* -moz-animation: blink 1s ease-in-out infinite alternate; */
+  animation: blink 1s ease-in-out infinite alternate;
+
+  @-webkit-keyframes blink {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @-moz-keyframes blink {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes blink {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+`;
 
 export default App;

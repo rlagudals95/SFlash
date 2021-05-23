@@ -63,6 +63,9 @@ const ModalDetail = (props) => {
   const deleteComment = (id) => {
     dispatch(ModalActions.modalDeleteCommentAPI(id));
   };
+
+  console.log("모달내용", modalData);
+
   const selectComment = (e) => {
     setComments(e.target.value);
   };
