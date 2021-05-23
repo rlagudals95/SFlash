@@ -40,22 +40,22 @@ const AboutDetail = (props) => {
               <Skill>{props.skill}</Skill>
               <Grid flex>
               {props.github !== null ? (
-                <RefLink href={props.github}>Github</RefLink>
+                <RefLink onClick={()=> window.open(props.github)}>Github</RefLink>
               ) : null}
               {props.portfolio !== null ? (
-                <RefLink href={props.portfolio}>Portfolio</RefLink>
+                <RefLink onClick={()=> window.open(props.portfolio)}>Portfolio</RefLink>
               ) : null}
               {props.resume !== null ? (
-                <RefLink href={props.resume}>Resume</RefLink>
+                <RefLink onClick={()=> window.open(props.resume)}>Resume</RefLink>
               ) : null}
               {props.etc_1 !== null ? (
-                <RefLink href={props.etc_1}>Blog</RefLink>
+                <RefLink onClick={()=> window.open(props.etc_1)}>Blog</RefLink>
               ) : null}
               {props.etc_2 !== null ? (
-                <RefLink href={props.etc_2}>Blog</RefLink>
+                <RefLink onClick={()=> window.open(props.etc_2)}>Blog</RefLink>
               ) : null}
               </Grid>
-            
+              <Grid height="20px"></Grid>
             </ModalProfileContainer>
           </Grid>
         </Grid>
@@ -113,6 +113,7 @@ const Content = styled.div`
   font-weight: 400;
   color: ${(props) => props.theme.main_grey};
   line-height: 2rem;
+  white-space: pre-line;
 `;
 
 const Skill = styled.div`
@@ -123,7 +124,7 @@ const Skill = styled.div`
   line-height: 2rem;
 `;
 
-const RefLink = styled.a`
+const RefLink = styled.div`
   display: block;
   margin-top: 20px;
   margin-right: 15px;
