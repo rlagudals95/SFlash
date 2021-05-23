@@ -202,9 +202,9 @@ const UploadModal = (props) => {
   return (
     <React.Fragment>
       <Component
-        onClick={resetPreview}
+      // onClick={resetPreview}
 
-        // onClick={props.close}
+      // onClick={props.close}
       />
       <ModalComponent>
         <ModalHeader>
