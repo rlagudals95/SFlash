@@ -10,6 +10,8 @@ const Upload = (props) => {
   const fileInput = React.useRef();
   const files = useSelector((state) => state.image2.file);
   // console.log("파일들", files);
+  const preview = useSelector((state) => state.image2.preview);
+  // console.log("프리뷰", preview);
   const selectFile = async (e) => {
     const file = fileInput.current.files[0];
     // files의 length 만큼 for문 돌리자
@@ -17,13 +19,10 @@ const Upload = (props) => {
     const files = fileInput.current.files;
 
     let images = []; // 이미지 파일들이 들어간 배열
-    console.log("이미지들", images);
-    // images 안에 있는 파일들을 formData형식으로 넘겨주자
-    // image2 모듈안에 파일을 저장하는 곳을 따로 만들어 놔야겠다
+    // console.log("이미지들", images);
     for (let i = 0; i < files.length; i++) {
       images.push(fileInput.current.files[i]);
     }
-
     if (file === undefined) {
       dispatch(
         imageActions.setPreview(
@@ -53,6 +52,7 @@ const Upload = (props) => {
           <UploadBtn>
             <IconRound>
               <LabelIcon></LabelIcon>
+              {/* <MdIcons.MdAddToPhotos size="2.5rem" color="#fff" /> */}
             </IconRound>
           </UploadBtn>
         </Label>
@@ -84,13 +84,12 @@ const InputBtn = styled.div`
     right: 5px;
     top: 285px;
   }
-  */
   @media (max-width: 1155px) {
     right: 10px;
-    top: 300px;
-  }
+    top: 320px;
+  } */
   @media (max-width: 600px) {
-    top: 310px;
+    top: 300px;
     right: 20px;
   }
 `;
