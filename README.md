@@ -65,6 +65,16 @@ https://apis.map.kakao.com/web/sample/
 ![마이페이지 좋아요지도](https://user-images.githubusercontent.com/76252074/118970875-b3acf400-b9a9-11eb-8d61-805149adbd7b.jpg)
 ![마이페이지 좋아요 그리드](https://user-images.githubusercontent.com/76252074/118971267-2cac4b80-b9aa-11eb-954d-299b726568a7.jpg)
 
+## 🧠사용 패키지
+
+- react-redux, redux (redux-actions, immer, logger), redux-thunk
+- react-router-dom
+- axios
+- styled-components
+- material-ui, react-icons
+- moment
+- lodash
+- 
 
 
 
