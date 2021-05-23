@@ -63,12 +63,6 @@ const ModalDetail = (props) => {
   const deleteComment = (id) => {
     dispatch(ModalActions.modalDeleteCommentAPI(id));
   };
-<<<<<<< HEAD
-=======
-
-  console.log("모달내용", modalData);
-
->>>>>>> upstream/master
   const selectComment = (e) => {
     setComments(e.target.value);
   };
