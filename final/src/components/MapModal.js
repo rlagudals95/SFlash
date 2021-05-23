@@ -29,6 +29,7 @@ const ModalDetail = (props) => {
   // console.log("eeee", props);
   // const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
   const modalData = useSelector((state) => state.mapmodal.post);
+
   const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
 
@@ -38,7 +39,7 @@ const ModalDetail = (props) => {
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
 
-  console.log("모달 데이타", modalData);
+  // console.log("모달 데이타", modalData);
 
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
@@ -453,7 +454,8 @@ const ModalComponent = styled.div`
   position: fixed !important;
   /* width: 590px; */
   width: 390px;
-  height: 650px;
+  height: 660px;
+
   /* overflow: hidden; */
   top: 50%;
   left: 50%;
@@ -468,7 +470,7 @@ const ModalComponent = styled.div`
   @media (max-width: 1440px) {
     position: fixed;
     width: 390px;
-    height: 660px;
+    height: 670px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -818,16 +820,8 @@ const Replys = styled.div`
   justify-content: space-evenly;
   height: 26px;
   width: 100%;
-  /* background-color: green; */
-  /* @media (max-width: 1440px) {
-   
-    display: flex;
-    align-items: center;
-    margin-top: 1vh;
-    justify-content: space-between;
-    height: 3vh;
-  } */
 `;
+
 const ReplyImg = styled.div`
   height: 2.2vh;
   width: 2.2vh;

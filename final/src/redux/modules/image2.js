@@ -39,9 +39,13 @@ const GET_IMAGE_TO_FILE = "GET_IMAGE_TO_FILE";
 const RESET_EDIT = "RESET_EDIT";
 // 파일만 따로 리셋 해보자
 const RESET_FILE = "RESET_FILE";
+// 파일프리뷰 로딩
+const LOADING = "LOADING";
 
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
-const getPreview = createAction(GET_PREVIEW, (preview) => ({ preview }));
+const getPreview = createAction(GET_PREVIEW, (preview) => ({
+  preview,
+}));
 const getFile = createAction(GET_FILE, (file) => ({ file }));
 //게시글 작성중 업로드 모닫을 닫을 시 초기화하는 액션
 const resetPreview = createAction(RESET_PREVIEW, (preview, file) => ({
@@ -70,6 +74,7 @@ const resetEdit = createAction(RESET_EDIT, (edit) => ({ edit }));
 // 파일만 따로 리셋 해보자
 const resetFile = createAction(RESET_FILE, (edit) => ({ edit }));
 //가져와서 post 에서 리스트 하나 가져와서 edit에 두고
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 const initialState = {
   preview: [
@@ -81,6 +86,7 @@ const initialState = {
   id: [], //삭제한 id가 들어간 배열  // 게시 버튼과 동시에 초기화!
   //이것을 editPost의 img_url로 바꿔주고 setPost 해줘야 한다
   edit_file: [], //여기에 파일이 들어온다! //게시 버튼과 동시에 초기화
+  is_loading: false,
 };
 
 //요기서 수정해야하는 board를 찾아서 image에 저장해준다 image를 이용해 프리뷰를 뿌려주고 x 버튼으로 수정 해준다
@@ -148,7 +154,8 @@ export default handleActions(
     [GET_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
         draft.preview.push(action.payload.preview);
-
+        //여기서 loading을 false로 만들어준다
+        draft.is_loading = false;
         draft.preview = draft.preview.filter((r) => {
           // 프리뷰 이미지를 걸러내주는 작업
           if (
@@ -264,6 +271,10 @@ export default handleActions(
         draft.preview = action.payload.preview;
         draft.file = action.payload.file;
       }),
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_loading = action.payload.is_loading;
+      }),
   },
   initialState
 );
@@ -285,6 +296,7 @@ const actionCreators = {
   resetFile, // 파일만따로
   resetPreview,
   getModalPost,
+  loading,
 };
 
 export { actionCreators };

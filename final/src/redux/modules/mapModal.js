@@ -99,9 +99,7 @@ const getModalPostAPI = (boardId) => {
           writerId: result.userId,
         };
         let comment_list = post.comment;
-
         // console.log("댓글요거", comment_list);
-
         dispatch(getModal(post)); // 모달 정보는 > post 에 저장 > 수정시 post 에 있는거 바꿔주면된다
         dispatch(getModalComment(comment_list)); //댓글 > comment에 따로 저장
       })

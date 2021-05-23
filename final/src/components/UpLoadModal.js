@@ -20,7 +20,9 @@ import SelectCate from "./SelectCate";
 import Input from "../elements/Input";
 import Input2 from "../elements/Input2";
 import Input3 from "../elements/Input3 ";
-// import { CgLogOut } from "react-icons/cg";
+import { CgLogOut } from "react-icons/cg";
+import Spinner2 from "../shared/Spinner2.js";
+//스피너2 임포트
 
 const UploadModal = (props) => {
   // const { latitude, longitude, spotName, spotNameForCustomOverlay } = props;
@@ -40,23 +42,22 @@ const UploadModal = (props) => {
     dispatch(profileActions.getUserInfoAPI(userId));
   }, []);
 
+  console.log("렌더?", props);
+  const loading = useSelector((state) => state.image2.is_loading);
+  // console.log("프리뷰로딩!", loading);
   const dispatch = useDispatch();
   // const is_login = useSelector((state) => state.user.is_login);
+  // 업로드 프리뷰 이미지
   const preview = useSelector((state) => state.image2.preview);
+  // console.log("프리뷰", preview);
   // 수정 페이지 이미지
   const onlyImg = useSelector((state) => state.image2.image);
   // console.log("수정페이지 이미지는?", onlyImg);
   // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
   // const editFile = useSelector((state) => state.image2.edit_file);
-
   // const post_list = useSelector((state) => state.post.list);
   // const user_info = useSelector((state) => state.user.user);
   const profile = useSelector((state) => state.profile.user);
-  // console.log("유저아이디", userId);
-  // console.log("포스트리스트", post_list);
-  // console.log("유저정보", user_info);
-  // console.log("유저프로필", profile);
-
   const [contents, setContents] = React.useState(props.content);
   const [title, setTitle] = React.useState(props.title);
   const [images, setImages] = React.useState(false);
@@ -80,15 +81,8 @@ const UploadModal = (props) => {
 
   const is_category = useSelector((state) => state.category.select_category);
 
-  // console.log("카테고리 선택했니?", is_category);
-  // console.log("삭제된 id", deleteId);
-  // console.log("서버로 보내줄 수정파일(에딧 파일)", editFile); // 수정중 다시 맘에 안들어서 삭제하고 싶다면 여길 수정
-  // console.log("온리이미지~!~!~!!", onlyImg); //
-  // console.log("고치자 ㅜㅜ", editImgList); // 수정하는 포스트리스트가 온다 map으로 이미지 돌리자
-  // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
-  // const ok_submit = contents ? true : false;
+  const ok_submit = contents ? true : false;
 
-  // console.log("??????", localStorage.getItem("jwt"));
   const resetPreview = () => {
     const basicPreview =
       "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36";
@@ -196,11 +190,13 @@ const UploadModal = (props) => {
     slidesToScroll: 1,
   };
 
+  // console.log("프리뷰업로드로딩", loading);
   return (
     <React.Fragment>
+      {/* 프리뷰가 생길때 까지 스피너를 보여준다 */}
+      {loading ? <Spinner2></Spinner2> : null}
       <Component
       // onClick={resetPreview}
-
       // onClick={props.close}
       />
       <ModalComponent>
@@ -363,7 +359,7 @@ const UploadModal = (props) => {
                     id="outlined-multiline-static"
                     // label="📝제목 작성"
                     placeholder={
-                      "정확한 장소명을 적어주시면 다른 사람들에게 도움이 되요😗 "
+                      "정확한 장소명을 적어주시면 다른 사람들에게 도움이 돼요😗 "
                     }
                     rows={1}
                     variant="outlined"
@@ -792,4 +788,4 @@ const Title = styled.div`
 //   border-radius: 10px;
 // `;
 
-export default UploadModal;
+export default React.memo(UploadModal);
