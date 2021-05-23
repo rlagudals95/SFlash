@@ -67,14 +67,16 @@ https://apis.map.kakao.com/web/sample/
 
 ## 🧠사용 패키지
 
-- react-redux, redux (redux-actions, immer, logger), redux-thunk
+- react-redux, redux (redux-actions, immer, logger), redux-thunk, react-router-redux
 - react-router-dom
 - axios
 - styled-components
 - material-ui, react-icons
 - moment
 - lodash
-- 
+- slick-carousel
+- sweetalert2
+- jwt-decode
 
 
 
