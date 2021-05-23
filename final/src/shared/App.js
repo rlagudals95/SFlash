@@ -55,7 +55,7 @@ function App() {
       <ConnectedRouter history={history}>
         <SideNav></SideNav>
         <SurveyButton className="blinking"
-          onClick={() => window.open("https://forms.gle/mttg6DpzWDySixki6")}
+          onClick={() => window.open("https://forms.gle/SuRWZC7xw5qsBZtf6")}
         >
           기프티콘 이벤트 참여하기
         </SurveyButton>

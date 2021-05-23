@@ -1793,8 +1793,6 @@ export default StoryMap;
 const SearchBox = styled.div`
   position: absolute;
   margin-top: 35px;
-  /* margin-left: 25px; */
-  /* top: 30px; */
   left: 50%;
   transform: translate(-50%, 0%);
   z-index: 10;
@@ -1811,7 +1809,6 @@ const SearchInput = styled.input`
   border: 2.5pt solid rgb(255, 183, 25);
   &:focus {
     outline: none;
-    /* box-shadow: 0 0 0 1px #ffb719; */
   }
   opacity: 0.8;
 `;

@@ -18,11 +18,8 @@ import { IoIosArrowForward } from "react-icons/io";
 
 const QnaList = (props) => {
   const dispatch = useDispatch();
-  const is_login = useSelector ((state) => state.user.is_login)
-  console.log(is_login);
   const qna_list = useSelector((state) => state.qna.list);
   const total_length = useSelector((state) => state.qna.total_length);
-  // console.log("qna_list:", qna_list);
   const me = localStorage.getItem("nickname");
   const role = localStorage.getItem("role");
 
@@ -40,7 +37,6 @@ const QnaList = (props) => {
 
   React.useEffect(() => {
     dispatch(qnaActions.getQnaAPI(page, size));
-    console.log(role);
   }, [page]);
 
   //페이지네이션 화살표 함수

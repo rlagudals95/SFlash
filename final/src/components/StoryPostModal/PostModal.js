@@ -537,16 +537,6 @@ const ModalBottomContainer = styled.div`
   flex-direction: column;
   padding: 0px 12px;
   margin: 0px auto;
-  /* @media (max-width: 1600px) {
-    text-align: left;
-    width: 470px;
-    height: 320px;
-    display: flex;
-    flex-direction: column;
-    padding: 0px 12px;
-    margin: 0px auto;
-  } */
-
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     text-align: left;
@@ -558,7 +548,6 @@ const ModalBottomContainer = styled.div`
     margin: 0px auto;
     margin-top: 1.3vh;
   }
-
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
@@ -695,6 +684,7 @@ const PostTime = styled.div`
   opacity: 0.4;
   margin-top: 3.5px;
 `;
+
 const ModalCmtInputBox = styled.div`
   align-items: center;
   width: 100%;
@@ -706,7 +696,7 @@ const ModalCmtInputBox = styled.div`
   box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.1);
   @media (max-width: 600px) {
     height: 100px;
-    margin-bottom: 0vh;
+    margin-bottom: -7vh;
   }
 `;
 
@@ -781,7 +771,8 @@ const Reply = styled.div`
 const ReplyLeft = styled.div`
   align-items: center;
   display: flex;
-`; // space-between 효과 주기위해서 쓴다
+`;
+
 const ReplyRight = styled.div`
   display: flex;
 `;

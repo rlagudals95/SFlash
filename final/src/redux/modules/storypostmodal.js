@@ -305,15 +305,7 @@ const modalDisLikeAPI = (board_id, board) => {
 };
 
 const editLikeP = (post) => {
-  //PLUS
   return function (dispatch, getState) {
-    // console.log("dd", post_id); // 포스트 id 잘온다
-    // console.log("cc", post); // 포스트도 잘온다
-
-    let _like = post.like;
-    let _likeCnt = post.likeCnt;
-    // console.log(_like, _likeCnt);
-
     let board = {
       id: post.id,
       title: post.title,
@@ -335,14 +327,7 @@ const editLikeP = (post) => {
 };
 
 const editLikeD = (post) => {
-  //PLUS
   return function (dispatch, getState) {
-    // console.log("dd", post_id); // 포스트 id 잘온다
-    // console.log("cc", post); // 포스트도 잘온다
-
-    let _like = post.like;
-    let _likeCnt = post.likeCnt;
-    // console.log(_like, _likeCnt);
 
     let board = {
       category: post.category,
@@ -359,7 +344,6 @@ const editLikeD = (post) => {
       writerId: post.writerId,
       spotName: post.spotName,
     };
-    // console.log("rrr", board);
 
     dispatch(modalDisLike(board)); //포스트 아이디 그대로 // 내용은 바꾼 보드로!
   };
@@ -515,7 +499,6 @@ export default handleActions(
   {
     [GET_MODAL]: (state, action) =>
       produce(state, (draft) => {
-        // console.log("액션 페이로드!", action.payload.post);
         draft.post = action.payload.post;
       }),
     [GET_MODAL_ID]: (state, action) =>
@@ -525,7 +508,6 @@ export default handleActions(
     /// 댓글 부분 모듈
     [GET_MODAL_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        // console.log("왜안와?", action.payload.comment_list);
         draft.comment = action.payload.comment_list;
       }),
     [MODAL_ADD_COMMENT]: (state, action) =>

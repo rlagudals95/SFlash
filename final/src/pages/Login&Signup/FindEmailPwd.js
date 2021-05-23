@@ -30,10 +30,6 @@ const FindEmailPwd = () => {
   const [authCode, setAuthCode] = useState("");
   const [activeAuthInput, setActiveAuthInput] = React.useState(false);
 
-  // useEffect(() => {
-  //   return () => {};
-  // }, []);
-
   const onFindEmailAPI = (nickname) => {
     axios
       .post(
@@ -48,7 +44,6 @@ const FindEmailPwd = () => {
         }
       )
       .then((res) => {
-        // console.log('이메일 찾기', res.data)
         const is_email = res.data.email;
 
         if (is_email) {
@@ -67,7 +62,6 @@ const FindEmailPwd = () => {
 
   // 이메일 입력하고 인증번호 전송하기
   const onEmailSubmit = (email) => {
-    // console.log(email);
     axios
       .post(
         `${config.api}/user/findpwd`,
@@ -81,7 +75,6 @@ const FindEmailPwd = () => {
         }
       )
       .then((res) => {
-        // console.log("인증번호 전송", res.data);
         if (res.data === true) {
           Swal.fire({
             text: "입력하신 이메일로 인증번호가 전송되었습니다.",
@@ -99,7 +92,6 @@ const FindEmailPwd = () => {
 
   const onFindPwd = (email, authCode) => {
     //  인증번호가 일치하면 비밀번호 변경 페이지로
-    // console.log(email, authCode);
     axios
       .post(
         `${config.api}/user/findpwd/authcode`,
@@ -114,7 +106,6 @@ const FindEmailPwd = () => {
         }
       )
       .then((res) => {
-        // console.log("비밀번호 찾기", res.data);
         dispatch(emailActions.getEmail(email));
         if (res.data === true) {
           history.push("editpwd");

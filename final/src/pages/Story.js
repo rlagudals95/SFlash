@@ -17,7 +17,6 @@ const Story = (props) => {
 
   //  url에서 userId 불러오기
   const userId = props.match.params.id;
-  // console.log("userId:", userId);
 
   const initializeApp = async () => {
     await dispatch(profileActions.resetProfile([]));
@@ -42,12 +41,6 @@ const Story = (props) => {
   const user_like_list = useSelector((state) => {
     return state.storypost.user_like_list;
   });
-
-  if (user_info && user_post_list && user_like_list) {
-    console.log("user_info", user_info);
-    console.log("user_post_list", user_post_list);
-    console.log("user_like_listㅎㅎ", user_like_list);
-  }
 
   // Map Marker Icon
   const userPostMarkerImgUrl = "https://i.postimg.cc/zDHr74DL/2x.png";
