@@ -229,7 +229,7 @@ const ModalDetail = (props) => {
                       )}
 
                       {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
-                      {modalData.writerId === user_id ? (
+                      {modalData.writerId == user_id ? (
                         <ModalEdit>
                           <React.Fragment onClick={props.close}>
                             <EditBtn

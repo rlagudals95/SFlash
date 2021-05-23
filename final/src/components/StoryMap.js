@@ -22,7 +22,7 @@ const { kakao } = window;
 
 const StoryMap = (props) => {
   const { post_list, userPostMode } = props;
-  // console.log("StoryMap post_list", post_list);
+  console.log("StoryMap post_list", post_list);
   // console.log("Marker marker_icon", marker_icon);
   // console.log("userPostMode", userPostMode);
   // console.log("마커있나테스트", markerImgUrls.myPostOceanMarkerImgUrl);

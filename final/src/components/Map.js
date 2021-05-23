@@ -87,7 +87,7 @@ const Maps = (props) => {
   // 전체 마커, 내 마커, 내가 좋아요한 마커
   // 1. 내가 작성한 게시물이 데이터
   const myPostData = map_post_list.filter(
-    (map_post_list) => map_post_list.writerName === nickname
+    (map_post_list) => map_post_list.writerName == nickname
   );
   // console.log("내 작성 게시물 왔나??: " + myPostData);
   // 1. 내가 작성한한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!!
@@ -131,7 +131,7 @@ const Maps = (props) => {
 
   // 2. 내가 좋아요한 데이터
   const myLikeData = map_post_list.filter(
-    (map_post_list) => map_post_list.like === true
+    (map_post_list) => map_post_list.like == true
   );
   // console.log("내좋아요 데이터있나??: " + myLikeData);
   // 2. 내가 좋아요한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!!
