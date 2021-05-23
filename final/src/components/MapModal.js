@@ -316,8 +316,11 @@ const ModalDetail = (props) => {
                                   </ReplyWriter>
                                 </React.Fragment>
                                 <ReplyContainer>
-                                  <Reply>{c.content}</Reply>
-                                  <CmtD>{timeForToday(c.modified)}</CmtD>
+                                  <Reply>
+                                    {c.content}
+
+                                    <CmtD>{timeForToday(c.modified)}</CmtD>
+                                  </Reply>
                                 </ReplyContainer>
                               </ReplyLeft>
 
@@ -371,11 +374,10 @@ const ModalDetail = (props) => {
   );
 };
 
-const CmtD = styled.div`
-  opacity: 0.3;
-  font-size: 0.6px;
-  margin-top: 3px;
-  margin-left: 8px;
+const CmtD = styled.span`
+  opacity: 0.4;
+  font-size: 0.5px;
+  margin-left: 3px;
 `;
 
 const LikeBox = styled.div`
@@ -706,7 +708,7 @@ const PostTilte = styled.div`
   font-size: 1.3rem;
   font-weight: bold;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 3px;
   height: 40px;
   max-height: 40px;
   /* background-color: red; */
@@ -715,16 +717,31 @@ const PostTilte = styled.div`
     display: none;
   }
 `;
+
 const PostContents = styled.div`
   font-size: 0.9rem;
   opacity: 0.6;
   width: 100%;
-  margin-top: 3px;
+  margin-top: 0px;
   /* background-color: red; */
-  max-height: 50px;
+  max-height: 40px;
   overflow-y: scroll;
+  /* overflow: auto; */
   ::-webkit-scrollbar {
-    display: none;
+    /* display: none; */
+    width: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    width: 8px;
+    background-color: #2f3542;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
   }
 `;
 
@@ -766,29 +783,29 @@ const ModalCmtBox = styled.div`
   flex-direction: column;
   height: 600px;
   /* background-color: red; */
-  /* 아래 태그는 댓글이 많으면 
-  스크롤로 아래 부분이 위로 올라가게 해서 
-  댓글이 보여지게 함 */
+  width: 100%;
+  margin: 0px auto;
+  /* margin-right: 100px; */
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
   }
-  @media (max-width: 1440px) {
-    // 1450밑으로 넓이가 내려가면
-    /* flex-direction: column; */
-    /* background-color: red; */
-    padding: 0px 14px;
+
+  /* @media (max-width: 1440px) {
+
     ::-webkit-scrollbar {
       display: none;
     }
-  }
+
+
+  } */
 `;
 
 const ReplyBox = styled.div`
   /* padding: 5px 25px 0px 0px; */
   align-items: center;
   /* margin-left: -12px; */
-  width: 100%;
+  /* width: 450px; */
 
   margin: 0.5vh auto;
   padding-left: 13px;
@@ -822,7 +839,7 @@ const ReplyImg = styled.div`
 `;
 
 const ReplyWriter = styled.div`
-  font-size: 1.1vh;
+  font-size: 8px;
   font-weight: bold;
   padding-right: 5px;
   cursor: pointer;
@@ -831,11 +848,32 @@ const ReplyWriter = styled.div`
 const ReplyContainer = styled.div`
   width: 250px;
   margin: 0 auto;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   display: flex;
+  height: 21px;
+  height: auto;
+  /* padding-top: 20px; */
+  /* background-color: red; */
+  word-break: break-all;
+  white-space: wrap;
+  line-height: 19px;
+  /* text-overflow: ellipsis; */
+  opacity: 0.7;
   ::-webkit-scrollbar {
     display: none;
   }
+  /* ::-webkit-scrollbar-thumb {
+    width: 8px;
+    background-color: #2f3542;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  } */
 `;
 
 const Reply = styled.div`
