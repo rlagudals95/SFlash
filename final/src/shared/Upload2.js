@@ -62,6 +62,7 @@ const Upload = (props) => {
           ref={fileInput}
           onChange={selectFile}
           multiple
+          // accept="image/jpg, image/jpeg, image/png, image/gif, image/bmp"
           style={{ display: "none" }}
         />
       </InputBtn>
