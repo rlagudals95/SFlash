@@ -29,7 +29,7 @@ const UploadModal = (props) => {
   const { latitude, longitude, spotName, spotNameForCustomOverlay } = props;
   const userId = localStorage.getItem("userId");
 
-  console.log("비교!", props);
+  // console.log("비교!", props);
   React.useEffect(() => {
     if (is_madal) {
       dispatch(imageActions.getModalPost(props));

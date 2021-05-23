@@ -110,7 +110,7 @@ const PostList = (props) => {
             }}
           />
           <SearchIcon>
-            <BiIcons.BiSearch size="43" color="#ffb719" />
+            <BiIcons.BiSearch size="40" color="#ffb719" />
           </SearchIcon>
         </SearchBox>
       </TopBox>
@@ -334,7 +334,7 @@ const SearchBox = styled.div`
   border-radius: 10px;
   top: 30px;
   left: 50%;
-  height: 72px;
+  height: 60px;
   transform: translate(-50%, -70%);
   z-index: 5;
   @media (min-width: 1400px) {
@@ -369,8 +369,8 @@ const SearchInput = styled.input`
 
 const SearchIcon = styled.div`
   position: fixed;
-  top: 14.5px;
-  right: 14.5px;
+  top: 10px;
+  right: 10px;
   /* transform: translate(-25%, 25%); */
   background-size: cover;
   object-fit: cover;
