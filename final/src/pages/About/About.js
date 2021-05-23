@@ -24,8 +24,7 @@ const About = (props) => {
         <UpperContainer>
           <SflashLogo src={SFlash_logo_darkgrey} />
           <Grid height="20px"></Grid>
-          <Text>We are team SFlash!</Text>
-          <Text>Click to see details.</Text>
+          <Text>We are team SFlash! Click to see details.</Text>
         </UpperContainer>
         <Grid height="20px"></Grid>
 
@@ -47,7 +46,7 @@ About.defaultProps = {
       position: "Back-end Developer",
       img: profile_hyunjun,
       content:
-        "이번 프로젝트에서 전체적인 게시물에 관한 CRUD와 인프라를 맡았습니다 :)",
+        "SFlash 프로젝트에서 조장을 맡은 장현준입니다.\n프로젝트를 통해 개발은 힘들지만 재미있다는 걸 다시금 깨달았고, 기획, 설계, 구현, 트러블슈팅을 반복하며 코드리뷰가 얼마나 중요한지 알게 되었습니다.\nSFlash에서는 좋아요, 게시물(CRUD), 댓글(CRUD)와 S3, JPA최적화에 힘썼고 인프라에서 travis, Nginx, ec2, https, elb를 사용해서 무중단 배포를 구현했습니다!",
       skill: null,
       github: "https://github.com/JangHyeonJun2",
       portfolio: null,
@@ -118,12 +117,11 @@ About.defaultProps = {
       position: "Front-end Developer",
       img: profile_dayoung,
       content:
-        "사람들에게 긍정적인 경험을 줄 수 있는 좋은 서비스를 위해 고민하는 개발자 입니다. SFlash 프로젝트에서 로그인/회원가입, 스토리페이지, 문의하기 등 USER 기능을 메인으로 담당했습니다.",
+        "디자인 경험을 바탕으로 사람들에게 긍정적인 경험을 줄 수 있는 좋은 서비스를 위해 고민하는 개발자 입니다. SFlash 프로젝트에서 로그인/회원가입, 스토리페이지, 문의하기 등 USER 기능을 메인으로 담당했습니다.",
       skill: null,
       github: "https://github.com/dayoung0601",
       portfolio: null,
-      resume:
-        "https://www.notion.so/Kim-Dayoung-7c27b43d10a84bbab64ecb5e5c9efe2f",
+      resume: "",
       etc_1: null,
       etc_2: null,
     },
