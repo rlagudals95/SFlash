@@ -63,6 +63,12 @@ const ModalDetail = (props) => {
   const deleteComment = (id) => {
     dispatch(ModalActions.modalDeleteCommentAPI(id));
   };
+<<<<<<< HEAD
+=======
+
+  console.log("모달내용", modalData);
+
+>>>>>>> upstream/master
   const selectComment = (e) => {
     setComments(e.target.value);
   };
@@ -689,7 +695,7 @@ const PostContents = styled.div`
 `;
 
 const PostTime = styled.div`
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   opacity: 0.4;
   margin-top: 3.5px;
 `;

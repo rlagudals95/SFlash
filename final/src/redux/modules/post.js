@@ -252,8 +252,8 @@ const getPostAPI = () => {
         } else {
           // console.log("스피너 지우자~!", res.data.data); //이것의
 
-          // console.log("데이터 길이!", res.data.data.length);
-          if (res.data.data.length < 15) {
+          console.log("데이터 길이!", res.data.data);
+          if (res.data.data.length === 15) {
             // console.log("로딩멈춰!");
             dispatch(loading(false));
           }
