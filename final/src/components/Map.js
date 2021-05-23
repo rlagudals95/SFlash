@@ -281,17 +281,17 @@ const Maps = (props) => {
     // geolocation으로 얻은 접속좌표에다가 현재위치를 표시하는 마커 또는 표식 올리기
     const currentMarkerSize = new kakao.maps.Size(30, 30);
     const currentMarkerImage = new kakao.maps.MarkerImage(
-      `${markerImgUrls.currentMarkerImageUrl}`, 
+      `${markerImgUrls.currentMarkerImageUrl}`,
       currentMarkerSize
     );
     const currentPosition = new kakao.maps.LatLng(startLat, startLng);
 
     const currentMarker = new kakao.maps.Marker({
-      map: map, // 이러면 애초에 현재 위치가 표시된다. 
+      map: map, // 이러면 애초에 현재 위치가 표시된다.
       position: currentPosition,
       image: currentMarkerImage,
       zIndex: 50,
-    })
+    });
 
     currentMarker.setMap(map);
 
@@ -433,12 +433,12 @@ const Maps = (props) => {
         // 게시물 작성법을 안내하는 커스텀오버레이
         // 모달창(커스텀오버레이)에 들어갈 내용
         const writeInfoContent =
-          '<div class="writeinfocontainer">' + 
-            // `<img class="writeinfoimg" src=${writeInfoImg}>` +
-            // '<div class="writeinfohead">' +
-              // `<div class="writeinfospotname1">${spotName}</div>` + 
-            // '<div/>' +
-          '<div/>'
+          '<div class="writeinfocontainer">' +
+          // `<img class="writeinfoimg" src=${writeInfoImg}>` +
+          // '<div class="writeinfohead">' +
+          // `<div class="writeinfospotname1">${spotName}</div>` +
+          // '<div/>' +
+          "<div/>";
 
         const writeInfoCustomOverlay = new kakao.maps.CustomOverlay({
           // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
@@ -2769,7 +2769,7 @@ const Maps = (props) => {
   // 장소 검색 객체를 생성합니다
   var ps = new kakao.maps.services.Places();
   // 키워드로 장소를 검색합니다
-  if (search) {  
+  if (search) {
     //search가 빈 string일때 검색이 되어서 오류가 뜨는 경우를 없애기 위해 if문으로 분기한다.
     ps.keywordSearch(search, (data, status, pagination) => {
       if (status === kakao.maps.services.Status.OK) {
@@ -2844,7 +2844,6 @@ const Maps = (props) => {
     </React.Fragment>
   );
 };
-
 
 export default Maps;
 

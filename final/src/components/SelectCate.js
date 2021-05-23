@@ -188,7 +188,7 @@ const HoriznalBtn = styled.div`
   /* align-items: center;
   text-align: center; */
   width: 100%;
-
+  margin-top: -10px;
   overflow-x: scroll;
   /* overflow-y: scroll; */
   ::-webkit-scrollbar {
@@ -205,19 +205,18 @@ const Btn = styled.button`
   all: unset;
   display: inline-block;
   margin: 5px;
-  margin-top: 15px;
-  padding: 5px 23px;
+  margin-top: 18px;
+  padding: 0px 15px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   border: none;
-
   cursor: pointer;
   word-break: keep-all; // 특수문자 띄워쓰기x 띄워쓰기 기준으로 break 줄바꿈 제어
   width: 200px;
-  height: 38px;
+  height: 30px;
   color: rgba(0, 0, 0, 0.5);
-  /* font-size: 0.8rem; */
+  font-size: 14px;
   /* overflow-y: visible; */
   /* width: 400000000000px; */
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);

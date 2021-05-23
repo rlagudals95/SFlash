@@ -215,7 +215,7 @@ const getPostAPI = () => {
         ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
         : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
           board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
-    console.log("마지막 포스트 아이디", end_board);
+    // console.log("마지막 포스트 아이디", end_board);
     ////
     // console.log("처음에 보내주는 토큰", config.jwt);
     if (board_list.length !== 0) {
@@ -250,9 +250,6 @@ const getPostAPI = () => {
             }
           });
         } else {
-          // console.log("스피너 지우자~!", res.data.data); //이것의
-
-          console.log("데이터 길이!", res.data.data);
           if (res.data.data.length === 15) {
             // console.log("로딩멈춰!");
             dispatch(loading(false));

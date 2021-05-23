@@ -227,7 +227,6 @@ const ModalDetail = (props) => {
                           </div>
                         </LikeBox>
                       )}
-
                       {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
                       {modalData.writerId == user_id ? (
                         <ModalEdit>
@@ -721,7 +720,7 @@ const PostTilte = styled.div`
 `;
 
 const PostContents = styled.div`
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   opacity: 0.6;
   width: 100%;
   margin-top: 0px;

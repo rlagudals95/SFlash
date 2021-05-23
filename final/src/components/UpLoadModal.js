@@ -11,6 +11,7 @@ import { actionCreators as imageActions } from "../redux/modules/image2";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Slider from "react-slick";
+import _ from "lodash";
 
 import { useDispatch, useSelector } from "react-redux";
 import PublishIcon from "@material-ui/icons/Publish";
@@ -52,6 +53,7 @@ const UploadModal = (props) => {
   const is_login = useSelector((state) => state.user.is_login);
   // 업로드 프리뷰 이미지
   const preview = useSelector((state) => state.image2.preview);
+
   // console.log("프리뷰", preview);
   // 수정 페이지 이미지
   const onlyImg = useSelector((state) => state.image2.image);
@@ -165,10 +167,19 @@ const UploadModal = (props) => {
     //에딧파일 초기화...
   };
 
+  //인풋창 입력값이 바뀔 때 마다 재렌더링 횟수를 줄여주기 위해서 디바운스 처리를 해주었다
+  const contentsDebounce = _.debounce((e) => {
+    setContents(e.target.value);
+  }, 500);
+
+  const titleDebounce = _.debounce((e) => {
+    setTitle(e.target.value);
+  }, 500);
+
   const changeContents = (e) => {
     setContents(e.target.value);
   };
-
+  // setTimeout(changeContents(), 3000);
   const changeTitle = (e) => {
     setTitle(e.target.value);
   };
@@ -358,31 +369,25 @@ const UploadModal = (props) => {
             ) : (
               <React.Fragment>
                 <Title>
-                  <Input2
+                  <TitleInput
                     id="outlined-multiline-static"
                     // label="📝제목 작성"
-                    placeholder={
-                      "정확한 장소명을 적어주시면 다른 사람들에게 도움이 돼요😗 "
-                    }
-                    rows={1}
-                    variant="outlined"
-                    value={title}
+                    placeholder={"장소명을 적어주시면 좋아요😗 "}
                     width={"100%"}
-                    _onChange={changeTitle}
-                  ></Input2>
+                    onChange={titleDebounce}
+                  ></TitleInput>
                 </Title>
-
-                <Input
+                <ContentsInput
                   id="outlined-multiline-static"
                   // label="📝제목 작성"
-                  placeholder={"내용작성..."}
-                  rows={3}
+                  placeholder={"내용을 적어주세요😗"}
+                  rows={5}
                   multiLine
                   variant="outlined"
-                  value={contents}
+                  // value={contents}
                   width={"100%"}
-                  _onChange={changeContents}
-                ></Input>
+                  onChange={contentsDebounce}
+                ></ContentsInput>
               </React.Fragment>
             )}
           </MiddleBox>
@@ -405,6 +410,26 @@ const InputOut = styled.div`
   height: 10px;
 `;
 
+const TitleInput = styled.input`
+  border: none;
+  width: 100%;
+  padding: 12px 4px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+`;
+
+const ContentsInput = styled.textarea`
+  border: none;
+  width: 100%;
+  padding: 12px 4px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+`;
+
 const BottomEdit = styled.div`
   color: ${(props) => props.theme.main_color};
   font-weight: bold;
@@ -415,10 +440,9 @@ const BottomEdit = styled.div`
   width: 100%;
   text-align: center;
   padding: 12px 0px;
-
   border-radius: 7px;
   /* margin: 15px 0px; */
-  margin-top: 20px;
+  margin-top: 10px;
   box-sizing: border-box;
   :hover {
     background-color: ${(props) => props.theme.main_color};
@@ -448,13 +472,12 @@ const BottomEdit2 = styled.div`
   border-radius: 7px;
   margin: 15px 0px;
   box-sizing: border-box;
+  margin-top: -21px;
   :hover {
     background-color: ${(props) => props.theme.main_color};
     color: white;
   }
-  @media (max-width: 1440px) {
-    margin: 15px 0px;
-  }
+
   @media (max-width: 600px) {
   }
 `;
@@ -486,17 +509,18 @@ const ImgOutter = styled.div`
 const ModalImg = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
-  object-fit: cover;
+  /* object-fit: cover; */
   background-position: 0px;
   background-repeat: no-repeat;
   border: none;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   width: 100%;
   height: 320px;
   max-height: 320px;
-  margin-bottom: -20px;
+  margin-bottom: -10px;
   border-top: 2px solid darkgray;
   border-bottom: 2px solid darkgray;
+  /* background-color: red; */
   /* @media (max-width: 1440px) {
     background-image: url("${(props) => props.src}");
     background-size: cover;
@@ -690,13 +714,14 @@ const ExitBtn = styled.button`
 const ModalBottomContainer = styled.div`
   /* background-color: red; */
   margin: 0px auto;
-  margin-top: 50px;
+  margin-top: 30px;
   text-align: left;
   width: 397px;
-  height: 280px;
+  height: 290px;
   display: flex;
   flex-direction: column;
   padding: 0px 12px;
+  /* background-color: red; */
 
   /* @media (max-width: 1440px) {
     text-align: left;
@@ -759,8 +784,9 @@ const ModalAuthor = styled.span`
 const MiddleBox = styled.div`
   display: flex;
   flex-direction: column;
-  height: 127px;
-  /* background-color: red; */
+
+  /* height: 10px; */
+  /* background-color: blue; */
 
   width: 100%;
   @media (max-width: 1440px) {
