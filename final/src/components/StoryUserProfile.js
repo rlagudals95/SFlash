@@ -1,22 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
 import { Grid } from "../elements/index";
 import { history } from "../redux/configStore";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { actionCreators as profileActions } from "../redux/modules/profile";
+import { actionCreators as sideAction } from "../redux/modules/side";
 
 import { BiDotsHorizontalRounded } from "react-icons/bi";
-import profileDefault from "../static/profileDefault.svg";
-
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Modal from "react-modal";
 import StoryEditProfile from "../components/StoryEditProfile";
 import StoryEditPwd from "../components/StoryEditPwd";
-import { actionCreators as sideAction } from "../redux/modules/side";
 
 const StoryUserProfile = (props) => {
   const dispatch = useDispatch();
@@ -26,16 +23,6 @@ const StoryUserProfile = (props) => {
   // 메뉴버튼(프로필 편집, 로그아웃 등)을 보여줍니다.
   const local_userId = localStorage.getItem("userId");
   const is_me = userId === local_userId ? true : false;
-
-  
-  // 자기소개 개행 처리: 자기소개(user_info.introduction)의 typeof는 object이므로 map을 사용할 수 없습니다.
-  // 따라서, 객체를 배열로 바꾼 후 아래서 map을 돌려줍니다.
-  const introduction = [];
-  const _introduction = JSON.stringify(user_info.introduction)
-  console.log(typeof(_introduction));
-  // for(let i = 0; i< _introduction.length; i++){
-  //   introduction.push(_introduction[i]);
-  // }
 
   // 이미지 에러
   const ImageError = () => {
@@ -85,9 +72,11 @@ const StoryUserProfile = (props) => {
 
         <Grid>
           <Nickname>{user_info.nickname}</Nickname>
-         {/* {introduction.map((i) => {return <Introduction>{i}</Introduction>
-       })}  */}
-       <Introduction>{user_info.introduction}</Introduction>
+          {user_info.introduction === null ? (
+            ""
+          ) : (
+            <Introduction>{user_info.introduction}</Introduction>
+          )}
         </Grid>
 
         {/* 나의 페이지에서만 보이는 메뉴(프로필 편집, 로그아웃 등) 버튼*/}
@@ -98,7 +87,6 @@ const StoryUserProfile = (props) => {
               <BiDotsHorizontalRounded size="32" color="grey" />
             </Setting>
             <Menu
-              // id="simple-menu"
               anchorEl={anchorEl}
               keepMounted
               open={Boolean(anchorEl)}
@@ -144,7 +132,7 @@ const StoryUserProfile = (props) => {
               </MenuItem>
             </Menu>
 
-            {/*  현재 닉네임은 로컬스토리지에서 받아온 닉네임으로 설정되어 있지만 api 연결후에는 api에서 받아온 정보로 사용하기 */}
+           {/* 설정 메뉴 클릭시 모달창 */}
             <Modal
               isOpen={profileModal}
               close={closeProfileModal}
@@ -201,7 +189,6 @@ const ProfileContainer = styled.div`
     margin-top: 0px;
     padding-bottom: 0px;
   }
-  /* background-color: #eee; */
 `;
 
 const Setting = styled.div`
