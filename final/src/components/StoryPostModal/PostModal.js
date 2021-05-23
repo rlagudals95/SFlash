@@ -707,7 +707,7 @@ const ModalCmtInputBox = styled.div`
   box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.1);
   @media (max-width: 600px) {
     height: 100px;
-    margin-bottom: -7vh;
+    margin-bottom: 0vh;
   }
 `;
 
