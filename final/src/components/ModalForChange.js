@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 const ModalForCate = (props) => {
   const dispatch = useDispatch();
 
-  // console.log(props);
+  // console.log(props)s;
   return (
     <React.Fragment>
       <Background onClick={props.close} />

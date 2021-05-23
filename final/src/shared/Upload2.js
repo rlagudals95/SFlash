@@ -2,13 +2,13 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as imageActions } from "../redux/modules/image2";
 import styled from "styled-components";
-import * as MdIcons from "react-icons/md";
+// import * as MdIcons from "react-icons/md";
 
 const Upload = (props) => {
   const dispatch = useDispatch();
   //   const uploading = useSelector((state) => state.image.uploading);
   const fileInput = React.useRef();
-  const files = useSelector((state) => state.image2.file);
+  // const files = useSelector((state) => state.image2.file);
   // console.log("파일들", files);
   const selectFile = async (e) => {
     const file = fileInput.current.files[0];

@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { history } from "../configStore";
+// import { history } from "../configStore";
 import axios from "axios";
 import { config } from "../../shared/config";
 import Swal from "sweetalert2";

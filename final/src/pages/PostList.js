@@ -1,32 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useMediaQuery } from "react-responsive";
+// import { useMediaQuery } from "react-responsive";
 
 // 컴포넌트 파일들 임포트해오기
-import { Grid, Text, Button, Input } from "../elements/index";
-import { history } from "../redux/configStore";
+// import { Grid, Text, Button, Input } from "../elements/index";
+// import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../components/SideNav";
-import Post from "../components/Post";
-import SearchBar from "../components/SearchBar";
-import LogBtn from "../components/LogBtn";
+// import Post from "../components/Post";
+// import SearchBar from "../components/SearchBar";
+// import LogBtn from "../components/LogBtn";
 import Post2 from "../components/Post2";
 import Category from "../components/Category";
-import Input2 from "../elements/Input2";
-import Modal from "../components/Modal";
+// import Input2 from "../elements/Input2";
+// import Modal from "../components/Modal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import "../Css/Modal.css";
-import modal from "../redux/modules/modal";
+// import modal from "../redux/modules/modal";
 import * as BiIcons from "react-icons/bi";
-import category from "../redux/modules/category";
-import UploadModal from "../components/UpLoadModal";
+// import category from "../redux/modules/category";
+// import UploadModal from "../components/UpLoadModal";
 import MobileCate from "../components/mobile/MobileCate";
-import MobileSelect from "../components/mobile/MobileSelect";
+// import MobileSelect from "../components/mobile/MobileSelect";
 import MobileNav from "../components/mobile/MobileNav";
 import Spinner from "../shared/Spinner";
 import { actionCreators as PostActions } from "../redux/modules/post";
 import { actionCreators as likeActions } from "../redux/modules/like";
-import PopUp from "../components/PopUp";
+// import PopUp from "../components/PopUp";
+
 const PostList = (props) => {
   const dispatch = useDispatch();
 
@@ -35,7 +36,7 @@ const PostList = (props) => {
   }, []);
 
   const is_category = useSelector((state) => state.category.is_category);
-  const paging = useSelector((state) => state.post.paging);
+  // const paging = useSelector((state) => state.post.paging);
   const loading = useSelector((state) => state.post.is_loading);
   // const is_login = useSelector((state) => state.user.is_login);
   // const user_info = useSelector((state) => state.user.user);
@@ -125,7 +126,7 @@ const PostList = (props) => {
         <Container>
           {/* 전체보기 선택 */}
           {searchPost.map((p) => {
-            if (is_category.length == 0) {
+            if (is_category.length === 0) {
               // is_category의 길이가 0이라는 것은 아무 카테고리가 선택되지 않았음을 의미하며 모든 게시물을 보여준다
               return <Post2 key={p.id} {...p}></Post2>;
             }
@@ -133,7 +134,7 @@ const PostList = (props) => {
           {/* {"카페 선택"} */}
           {searchPost.map((p) => {
             if (resultCafe) {
-              if (p.category == "카페") {
+              if (p.category === "카페") {
                 return <Post2 key={p.id} {...p}></Post2>;
               }
             }
@@ -141,7 +142,7 @@ const PostList = (props) => {
           {/* {"야경 선택"} */}
           {searchPost.map((p) => {
             if (resultNight) {
-              if (p.category == "야경") {
+              if (p.category === "야경") {
                 return <Post2 key={p.id} {...p}></Post2>;
               }
             }
@@ -149,7 +150,7 @@ const PostList = (props) => {
           {/* {"바다 선택"} */}
           {searchPost.map((p) => {
             if (resultOcean) {
-              if (p.category == "바다") {
+              if (p.category === "바다") {
                 return <Post2 key={p.id} {...p}></Post2>;
               }
             }
@@ -157,7 +158,7 @@ const PostList = (props) => {
           {/* {"산 선택"} */}
           {searchPost.map((p) => {
             if (resultMountain) {
-              if (p.category == "산") {
+              if (p.category === "산") {
                 return <Post2 key={p.id} {...p}></Post2>;
               }
             }
@@ -165,7 +166,7 @@ const PostList = (props) => {
           {/* {"꽃 선택"} */}
           {searchPost.map((p) => {
             if (resultFlower) {
-              if (p.category == "꽃") {
+              if (p.category === "꽃") {
                 return <Post2 key={p.id} {...p}></Post2>;
               }
             }
@@ -173,7 +174,7 @@ const PostList = (props) => {
           {/* {"나홀로 선택"} */}
           {searchPost.map((p) => {
             if (resultAlone) {
-              if (p.category == "나홀로") {
+              if (p.category === "나홀로") {
                 return <Post2 key={p.id} {...p}></Post2>;
               }
             }
@@ -181,7 +182,7 @@ const PostList = (props) => {
           {/* {"연인 선택"} */}
           {searchPost.map((p) => {
             if (resultCouple) {
-              if (p.category == "연인") {
+              if (p.category === "연인") {
                 return <Post2 key={p.id} {...p}></Post2>;
               }
             }
@@ -189,7 +190,7 @@ const PostList = (props) => {
           {/* {"친구 선택"} */}
           {searchPost.map((p) => {
             if (resultFreind) {
-              if (p.category == "친구") {
+              if (p.category === "친구") {
                 return <Post2 key={p.id} {...p}></Post2>;
               }
             }
@@ -197,7 +198,7 @@ const PostList = (props) => {
           {/* {"반려동물 선택"} */}
           {searchPost.map((p) => {
             if (resultPet) {
-              if (p.category == "반려동물") {
+              if (p.category === "반려동물") {
                 return <Post2 key={p.id} {...p}></Post2>;
               }
             }
@@ -205,7 +206,7 @@ const PostList = (props) => {
           {/* {"도심 선택"} */}
           {searchPost.map((p) => {
             if (resultCity) {
-              if (p.category == "도심") {
+              if (p.category === "도심") {
                 return <Post2 key={p.id} {...p}></Post2>;
               }
             }
@@ -213,7 +214,7 @@ const PostList = (props) => {
           {/* {"공원 선택"} */}
           {searchPost.map((p) => {
             if (resultPark) {
-              if (p.category == "공원") {
+              if (p.category === "공원") {
                 return <Post2 key={p.id} {...p}></Post2>;
               }
             }
@@ -221,7 +222,7 @@ const PostList = (props) => {
           {/* {"전시 선택"} */}
           {searchPost.map((p) => {
             if (resultExhibition) {
-              if (p.category == "전시") {
+              if (p.category === "전시") {
                 return <Post2 key={p.id} {...p}></Post2>;
               }
             }
@@ -285,35 +286,35 @@ const Container = styled.div`
   }
 `;
 
-const Wrapper = styled.div`
-  ${(props) => props.theme.responsiveContainer};
-`;
+// const Wrapper = styled.div`
+//   ${(props) => props.theme.responsiveContainer};
+// `;
 
-const OutBox = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: lightgray;
-`;
+// const OutBox = styled.div`
+//   width: 100vw;
+//   height: 100vh;
+//   background-color: lightgray;
+// `;
 
 const Box = styled.div`
   height: 200px;
 `;
 
-const TextBox = styled.div`
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  top: 15%;
-  z-index: 200;
-`;
+// const TextBox = styled.div`
+//   position: absolute;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   text-align: center;
+//   top: 15%;
+//   z-index: 200;
+// `;
 
-const Mobile = styled.div`
-  display: none;
-  @media (max-width: 600px) {
-    display: flex;
-  }
-`;
+// const Mobile = styled.div`
+//   display: none;
+//   @media (max-width: 600px) {
+//     display: flex;
+//   }
+// `;
 
 const Web = styled.div`
   @media (max-width: 600px) {
@@ -376,8 +377,8 @@ const SearchIcon = styled.div`
   object-fit: cover;
 `;
 
-const SearchBtn = styled.div`
-  /* margin-top: 5px; */
-  margin: auto 0px;
-  margin-right: 3px;
-`;
+// const SearchBtn = styled.div`
+//   /* margin-top: 5px; */
+//   margin: auto 0px;
+//   margin-right: 3px;
+// `;

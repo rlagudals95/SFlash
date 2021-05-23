@@ -26,7 +26,7 @@ const Input2 = (props) => {
     type,
     multiLine,
     value,
-    is_submit,
+    // is_submit,
     onSubmit,
   } = props;
 

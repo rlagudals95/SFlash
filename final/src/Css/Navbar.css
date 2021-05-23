@@ -1,7 +1,7 @@
 .navbarBtn {
   height: 70px;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   position: fixed;
   margin-left: -14px;
@@ -41,7 +41,7 @@
 .nav-text {
   text-align: center;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   padding: 8px 0px;
   list-style: none;
@@ -76,7 +76,7 @@
 
   height: 80px;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
 }
 

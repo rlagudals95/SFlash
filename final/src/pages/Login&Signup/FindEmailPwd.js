@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
@@ -7,15 +7,15 @@ import {
   Title,
   InputStyle,
   SolidBtn,
-  BorderBtn,
+  // BorderBtn,
   CheckBtn,
   TextBtn,
 } from "../../Css/loginSignupCss";
 import { Grid } from "../../elements/index";
-import { actionCreators as userActions } from "../../redux/modules/user";
+// import { actionCreators as userActions } from "../../redux/modules/user";
 
 import { history } from "../../redux/configStore";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actionCreators as emailActions } from "../../redux/modules/email";
 
 import axios from "axios";

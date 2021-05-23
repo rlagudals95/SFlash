@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
 // 리덕스를 이용하게 해주는 함수들, 모듈 파일 가져오기
-import { useDispatch, useSelector } from "react-redux";
-import { history } from "../redux/configStore";
+import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
 import * as BiIcons from "react-icons/bi";
@@ -22,7 +21,7 @@ import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지
 const { kakao } = window;
 
 const StoryMap = (props) => {
-  const { post_list, marker_icon, userPostMode } = props;
+  const { post_list, userPostMode } = props;
   // console.log("StoryMap post_list", post_list);
   // console.log("Marker marker_icon", marker_icon);
   // console.log("userPostMode", userPostMode);
@@ -30,84 +29,84 @@ const StoryMap = (props) => {
 
   // 1. 내가 작성한 게시물 데이터를 카테고리별로 쪼개서 묶는다.
   const myPostCafe = post_list.filter(
-    (post_list) => post_list.category == "카페"
+    (post_list) => post_list.category === "카페"
   ); // 1. 카페
   const myPostNight = post_list.filter(
-    (post_list) => post_list.category == "야경"
+    (post_list) => post_list.category === "야경"
   ); // 2. 야경
   const myPostOcean = post_list.filter(
-    (post_list) => post_list.category == "바다"
+    (post_list) => post_list.category === "바다"
   ); // 3. 바다
   const myPostMountain = post_list.filter(
-    (post_list) => post_list.category == "산"
+    (post_list) => post_list.category === "산"
   ); // 4. 산
   const myPostFlower = post_list.filter(
-    (post_list) => post_list.category == "꽃"
+    (post_list) => post_list.category === "꽃"
   ); // 5. 꽃
   const myPostAlone = post_list.filter(
-    (post_list) => post_list.category == "나홀로"
+    (post_list) => post_list.category === "나홀로"
   ); // 6. 나홀로
   const myPostCouple = post_list.filter(
-    (post_list) => post_list.category == "연인"
+    (post_list) => post_list.category === "연인"
   ); // 7. 연인
   const myPostFriend = post_list.filter(
-    (post_list) => post_list.category == "친구"
+    (post_list) => post_list.category === "친구"
   ); // 8. 친구
   const myPostPet = post_list.filter(
-    (post_list) => post_list.category == "반려동물"
+    (post_list) => post_list.category === "반려동물"
   ); // 9. 반려동물
   const myPostCity = post_list.filter(
-    (post_list) => post_list.category == "도심"
+    (post_list) => post_list.category === "도심"
   ); // 10. 도심
   const myPostPark = post_list.filter(
-    (post_list) => post_list.category == "공원"
+    (post_list) => post_list.category === "공원"
   ); // 11. 공원
   const myPostExhibition = post_list.filter(
-    (post_list) => post_list.category == "전시"
+    (post_list) => post_list.category === "전시"
   ); // 12. 전시
   // console.log("데이터 있나??", myPostMountain);
 
   // 2. 내가 좋아요 게시물 데이터를 카테고리별로 쪼개서 묶는다.
   const myLikeCafe = post_list.filter(
-    (post_list) => post_list.category == "카페"
+    (post_list) => post_list.category === "카페"
   ); // 1. 카페
   const myLikeNight = post_list.filter(
-    (post_list) => post_list.category == "야경"
+    (post_list) => post_list.category === "야경"
   ); // 2. 야경
   const myLikeOcean = post_list.filter(
-    (post_list) => post_list.category == "바다"
+    (post_list) => post_list.category === "바다"
   ); // 3. 바다
   const myLikeMountain = post_list.filter(
-    (post_list) => post_list.category == "산"
+    (post_list) => post_list.category === "산"
   ); // 4. 산
   const myLikeFlower = post_list.filter(
-    (post_list) => post_list.category == "꽃"
+    (post_list) => post_list.category === "꽃"
   ); // 5. 꽃
   const myLikeAlone = post_list.filter(
-    (post_list) => post_list.category == "나홀로"
+    (post_list) => post_list.category === "나홀로"
   ); // 6. 나홀로
   const myLikeCouple = post_list.filter(
-    (post_list) => post_list.category == "연인"
+    (post_list) => post_list.category === "연인"
   ); // 7. 연인
   const myLikeFriend = post_list.filter(
-    (post_list) => post_list.category == "친구"
+    (post_list) => post_list.category === "친구"
   ); // 8. 친구
   const myLikePet = post_list.filter(
-    (post_list) => post_list.category == "반려동물"
+    (post_list) => post_list.category === "반려동물"
   ); // 9. 반려동물
   const myLikeCity = post_list.filter(
-    (post_list) => post_list.category == "도심"
+    (post_list) => post_list.category === "도심"
   ); // 10. 도심
   const myLikePark = post_list.filter(
-    (post_list) => post_list.category == "공원"
+    (post_list) => post_list.category === "공원"
   ); // 11. 공원
   const myLikeExhibition = post_list.filter(
-    (post_list) => post_list.category == "전시"
+    (post_list) => post_list.category === "전시"
   ); // 12. 전시
 
   const dispatch = useDispatch();
-  const is_login = useSelector((state) => state.user.is_login);
-  const nickname = localStorage.getItem("nickname"); // 내가 작성한 게시물을 판별하는 기준 상수
+  // const is_login = useSelector((state) => state.user.is_login);
+  // const nickname = localStorage.getItem("nickname"); // 내가 작성한 게시물을 판별하는 기준 상수
   // 위도, 경도, 마커, 주소
   const [startLat, setStartLat] = useState(); // 현위치 위도 설정
   const [startLng, setStartLng] = useState(); // 현위치 경도 설정

@@ -4,7 +4,7 @@ import { produce } from "immer";
 import axios from "axios";
 import { history } from "../configStore";
 import { config } from "../../shared/config";
-import _ from "lodash";
+// import _ from "lodash";
 import Swal from "sweetalert2";
 
 const SET_QNA_COMMENT = "SET_QNA_COMMENT";

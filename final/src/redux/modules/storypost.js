@@ -1,7 +1,7 @@
 // StoryContent.js 부분을 관리하는 모듈(Grid, Map)
 // 스토리페이지 (나의 게시물, 좋아요 게시물) API 사용
 import { createAction, handleActions } from "redux-actions";
-import { actionCreators as storyPostModalActions } from "./storypostmodal";
+// import { actionCreators as storyPostModalActions } from "./storypostmodal";
 import { actionCreators as userActions } from "./user";
 import { produce } from "immer";
 import axios from "axios";
@@ -453,7 +453,7 @@ export default handleActions(
     // 내 게시물 삭제(포스트 모달 삭제 화면 반영)
     [DELETE_STORY_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.user_post_list = draft.user_post_list.filter((r, idx) => {
+        draft.user_post_list = draft.user_post_list.filter((r) => {
           if (r.id !== action.payload.id) {
             //서버에선 이미 지워져서 오지만 한번 더 중복검사
             // 현재 리스트에서 받은 포스트 id와 같은게 없다면?
@@ -463,7 +463,7 @@ export default handleActions(
       }),
     [DELETE_STORY_MARKER]: (state, action) =>
       produce(state, (draft) => {
-        draft.user_post_list = draft.user_post_list.filter((r, idx) => {
+        draft.user_post_list = draft.user_post_list.filter((r) => {
           if (r.id !== action.payload.id) {
             //서버에선 이미 지워져서 오지만 한번 더 중복검사
             // 현재 리스트에서 받은 포스트 id와 같은게 없다면?

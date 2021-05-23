@@ -45,7 +45,7 @@ const ModalDetail = (props) => {
     slidesToScroll: 1,
   };
 
-  const is_comment = commentData ? true : false;
+  // const is_comment = commentData ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
@@ -206,7 +206,6 @@ const ModalDetail = (props) => {
                         <LikeBox>
                           <div style={{ cursor: "pointer" }}>
                             <FavoriteBorderIcon
-                              style={{ color: "rgb(255, 183, 25)" }}
                               style={{
                                 fontSize: 30,
                                 color: "rgb(255, 183, 25)",
@@ -220,7 +219,7 @@ const ModalDetail = (props) => {
                       )}
 
                       {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
-                      {modalData.writerId == user_id ? (
+                      {modalData.writerId === user_id ? (
                         <ModalEdit>
                           <React.Fragment onClick={props.close}>
                             <EditBtn onClick={openEditModal}>수정</EditBtn>
@@ -334,7 +333,7 @@ const ModalDetail = (props) => {
                                 </ReplyContainer>
                               </ReplyLeft>
                               <ReplyRight>
-                                {nickname == c.writerName ? (
+                                {nickname === c.writerName ? (
                                   <CmtDeleteBtn
                                     onClick={() => {
                                       deleteComment(c.commentId);
@@ -787,14 +786,14 @@ const ReplyRight = styled.div`
   display: flex;
 `;
 
-const CmtDate = styled.div`
-  font-size: 1px;
-  margin: auto 0;
-  opacity: 0.3;
-  @media (max-width: 1440px) {
-    display: flex;
-  }
-`;
+// const CmtDate = styled.div`
+//   font-size: 1px;
+//   margin: auto 0;
+//   opacity: 0.3;
+//   @media (max-width: 1440px) {
+//     display: flex;
+//   }
+// `;
 
 const CmtDeleteBtn = styled.button`
   height: 2px;

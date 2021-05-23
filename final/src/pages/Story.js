@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { history } from "../redux/configStore";
+// import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 import { actionCreators as storyPostActions } from "../redux/modules/storypost";
-import { actionCreators as postActions } from "../redux/modules/post";
-
+// import { actionCreators as postActions } from "../redux/modules/post";
 
 import StoryUserProfile from "../components/StoryUserProfile";
 import StoryContent from "../components/StoryContent";
-
 
 // 유저가 작성한/좋아요한 게시물들을 모아볼 수 있는 페이지 입니다.
 // 다른 사람들도 유저의 스토리를 열람할 수 있습니다.

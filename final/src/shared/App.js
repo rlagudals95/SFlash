@@ -25,6 +25,21 @@ import QnaList from "../pages/QnaList";
 import QnaDetail from "../pages/QnaDetail";
 import QnaWrite from "../pages/QnaWrite";
 
+console.log(  // 소개 고양이 등장!
+  "   ------------------------------------------------------\n\
+  < Welcome to SFlash!! Come and Experience our service! >\n\
+   ------------------------------------------------------\n\
+                  /\\__/\\           \n\
+                 /'    '\\          \n\
+              ===  0  0  ===       \n\
+                \\   --   /        \n\
+                /        \\        \n\
+               /          \\       \n\
+              |            |      \n\
+               \\  ||  ||  /       \n\
+                \\_oo__oo_/#######o" 
+);
+
 function App() {
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt") ? true : false; // 로컬스토리지에 저장되어있는 jwt 토큰 유무판단

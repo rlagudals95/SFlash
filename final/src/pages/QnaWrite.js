@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import Swal from 'sweetalert2'
-import { Grid } from "../elements/index";
+// import { Grid } from "../elements/index";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as qnaActions } from "../redux/modules/qna";
-import { actionCreators as imageActions } from "../redux/modules/image";
+// import { actionCreators as imageActions } from "../redux/modules/image";
 
 const QnaWrite = (props) => {
   const dispatch = useDispatch();

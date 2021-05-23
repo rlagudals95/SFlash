@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Grid, Text, Button, Input } from "../elements/index";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as categoryActionsInMap } from "../redux/modules/category_in_map";
-import * as BiIcons from "react-icons/bi";
 import AllBtn from "../shared/images/spotIcons/_01_AllSpotsBtn.png";
 import AllMyPostBtn from "../shared/images/spotIcons/_02_AllMyPostsBtn.png";
 import AllMyLikeBtn from "../shared/images/spotIcons/_03_AllMyLikesBtn.png";
@@ -13,26 +11,21 @@ import Swal from "sweetalert2";
 const CategoryInMap = () => {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
-  const nickname = localStorage.getItem("nickname");
 
   const is_category_in_map = useSelector((state) => {
     return state.category_in_map.is_category_in_map;
-  });
-  const map_post_list = useSelector((state) => {
-    return state.post.map_post_list;
   });
 
   const is_all = is_category_in_map.length === 12 ? true : false; // 모든 게시물 판단 기준
   // console.log("is_category_in_map의 길이: " + is_category_in_map.length);
   const is_empty = is_category_in_map.length === 0 ? true : false; // 카테고리 취소 판단 기준
 
-  const is_mine = map_post_list.writerName === nickname ? true : false; // 내게시물 판단 기준
-  const is_mylike = map_post_list.like === true ? true : false; // 내가 좋아요 한 게시물 판단 기준.
+  // const is_mine = map_post_list.writerName === nickname ? true : false; // 내게시물 판단 기준
+  // const is_mylike = map_post_list.like === true ? true : false; // 내가 좋아요 한 게시물 판단 기준.
   // console.log(is_all);
 
   // console.log(is_category);
   // console.log("카테고리 배열길이", is_category.length);
-  const [allCategory, setAllCategory] = useState(true);
   const [cafe, setCafe] = useState("cafe");
   const [night, setNight] = useState("night");
   const [ocean, setOcean] = useState("ocean");
@@ -1086,10 +1079,6 @@ const CateGoryTitle = styled.div`
   opacity: 0.6;
 `;
 
-const CategoryIcon = styled.div`
-  margin-right: 12px;
-`;
-
 const Btn = styled.button`
   margin: 3px;
   padding: 5px 9px;
@@ -1133,20 +1122,6 @@ const SpotSelectBox = styled.div`
   justify-content: space-between;
   background-color: #f2f3f7;
   /* background-color: red; */
-`;
-
-const Spots = styled.img`
-  width: 68px;
-  height: 68px;
-  background-color: #f2f3f7;
-  border-radius: 5px;
-  background-size: cover;
-  object-fit: cover;
-  box-sizing: border-box;
-  cursor: pointer;
-  margin-bottom: 8px;
-  box-shadow: 3px 3px 5px 1px rgba(0.1, 0.2, 0.2, 0.2);
-  /* box-shadow: 4px 4px 5px 1px rgba(0.2, 0.2, 0.2, 0.2); */
 `;
 
 const AllSpots = styled.img`

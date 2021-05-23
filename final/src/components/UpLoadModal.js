@@ -1,20 +1,17 @@
-import React, { useState } from "react";
-import { history } from "../redux/configStore";
+import React from "react";
+// import { history } from "../redux/configStore";
 
 import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as imageActions } from "../redux/modules/image2";
 import { actionCreators as profileActions } from "../redux/modules/profile";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Slider from "react-slick";
 
 import { useDispatch, useSelector } from "react-redux";
-import PublishIcon from "@material-ui/icons/Publish";
-import TextField from "@material-ui/core/TextField";
+// import PublishIcon from "@material-ui/icons/Publish";
+// import TextField from "@material-ui/core/TextField";
 // 업로드용 파일선택 버튼
 import Upload2 from "../shared/Upload2";
 // 수정용 파일선택 버튼
@@ -23,10 +20,10 @@ import SelectCate from "./SelectCate";
 import Input from "../elements/Input";
 import Input2 from "../elements/Input2";
 import Input3 from "../elements/Input3 ";
-import { CgLogOut } from "react-icons/cg";
+// import { CgLogOut } from "react-icons/cg";
 
 const UploadModal = (props) => {
-  const { latitude, longitude, spotName, spotNameForCustomOverlay } = props;
+  // const { latitude, longitude, spotName, spotNameForCustomOverlay } = props;
   const userId = localStorage.getItem("userId");
 
   // console.log("비교!", props);
@@ -44,16 +41,16 @@ const UploadModal = (props) => {
   }, []);
 
   const dispatch = useDispatch();
-  const is_login = useSelector((state) => state.user.is_login);
+  // const is_login = useSelector((state) => state.user.is_login);
   const preview = useSelector((state) => state.image2.preview);
   // 수정 페이지 이미지
   const onlyImg = useSelector((state) => state.image2.image);
   // console.log("수정페이지 이미지는?", onlyImg);
   // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
-  const editFile = useSelector((state) => state.image2.edit_file);
+  // const editFile = useSelector((state) => state.image2.edit_file);
 
-  const post_list = useSelector((state) => state.post.list);
-  const user_info = useSelector((state) => state.user.user);
+  // const post_list = useSelector((state) => state.post.list);
+  // const user_info = useSelector((state) => state.user.user);
   const profile = useSelector((state) => state.profile.user);
   // console.log("유저아이디", userId);
   // console.log("포스트리스트", post_list);
@@ -64,7 +61,7 @@ const UploadModal = (props) => {
   const [title, setTitle] = React.useState(props.title);
   const [images, setImages] = React.useState(false);
 
-  const [image_list, setImageList] = React.useState();
+  // const [image_list, setImageList] = React.useState();
   const is_file = useSelector((state) => state.image2.file);
   // console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
   // const post_id = props.match.params.id;
@@ -73,12 +70,12 @@ const UploadModal = (props) => {
   // console.log("수정 게시물 정보", props);
   // console.log("수정 화면 이미지들", images);
   const nickname = localStorage.getItem("nickname");
-  const editImgList = useSelector((state) => state.image2.edit); // 요걸 가져와야해
+  // const editImgList = useSelector((state) => state.image2.edit); // 요걸 가져와야해
   // const editImage = useSelector((state) => state.image2.image);
 
-  const previewSet = useSelector((state) => state.image2.preview);
+  // const previewSet = useSelector((state) => state.image2.preview);
   // console.log("프리뷰를 알자!", previewSet);
-  const file = useSelector((state) => state.image2.file);
+  // const file = useSelector((state) => state.image2.file);
   // console.log("업로드 파일들을 알자!", file);
 
   const is_category = useSelector((state) => state.category.select_category);
@@ -89,7 +86,7 @@ const UploadModal = (props) => {
   // console.log("온리이미지~!~!~!!", onlyImg); //
   // console.log("고치자 ㅜㅜ", editImgList); // 수정하는 포스트리스트가 온다 map으로 이미지 돌리자
   // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
-  const ok_submit = contents ? true : false;
+  // const ok_submit = contents ? true : false;
 
   // console.log("??????", localStorage.getItem("jwt"));
   const resetPreview = () => {
@@ -153,7 +150,7 @@ const UploadModal = (props) => {
       window.alert("😗빈칸을 채워주세요...ㅎㅎ");
       return;
     }
-    if (onlyImg.length == 0) {
+    if (onlyImg.length === 0) {
       window.alert("😗사진을 최소 1장 이상 업로드 해주세요!");
       return;
     }
@@ -179,16 +176,16 @@ const UploadModal = (props) => {
     setTitle(e.target.value);
   };
 
-  if (images.length == 0) {
+  if (images.length === 0) {
     images.push(
       "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
     );
   }
 
-  const _post = {
-    title: title,
-    content: contents,
-  };
+  // const _post = {
+  //   title: title,
+  //   content: contents,
+  // };
 
   //캐러셀 모듈 코드
   var settings = {
@@ -405,9 +402,9 @@ const UploadModal = (props) => {
   );
 };
 
-const InputOut = styled.div`
-  height: 10px;
-`;
+// const InputOut = styled.div`
+//   height: 10px;
+// `;
 
 const BottomEdit = styled.div`
   color: ${(props) => props.theme.main_color};
@@ -482,10 +479,10 @@ const DeleteImg = styled.div`
   cursor: pointer;
 `;
 
-const ImgOutter = styled.div`
-  text-align: center;
-  display: table;
-`;
+// const ImgOutter = styled.div`
+//   text-align: center;
+//   display: table;
+// `;
 
 const ModalImg = styled.div`
   background-image: url("${(props) => props.src}");
@@ -664,13 +661,13 @@ const HeaderInner = styled.div`
   width: 95%;
 `;
 
-const HeaderEdit = styled.div`
-  color: ${(props) => props.theme.main_color};
-  font-weight: bold;
-  background-color: transparent;
-  font-size: 14px;
-  cursor: pointer;
-`;
+// const HeaderEdit = styled.div`
+//   color: ${(props) => props.theme.main_color};
+//   font-weight: bold;
+//   background-color: transparent;
+//   font-size: 14px;
+//   cursor: pointer;
+// `;
 
 const ExitContainer = styled.div`
   z-index: 30;
@@ -778,21 +775,21 @@ const MiddleBox = styled.div`
     height: 220px;
   }
 `;
-const InputOutter = styled.div`
-  margin: 0px auto;
-  width: 100%;
-`;
+// const InputOutter = styled.div`
+//   margin: 0px auto;
+//   width: 100%;
+// `;
 
 const Title = styled.div`
   margin-bottom: 1vh;
 `;
 
-const CateBtn = styled.div`
-  font-size: bold;
-  width: 6.5vw;
-  /* border: 1px solid lightgray; */
-  height: 3.5vh;
-  border-radius: 10px;
-`;
+// const CateBtn = styled.div`
+//   font-size: bold;
+//   width: 6.5vw;
+//   /* border: 1px solid lightgray; */
+//   height: 3.5vh;
+//   border-radius: 10px;
+// `;
 
 export default UploadModal;

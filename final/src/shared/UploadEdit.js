@@ -2,8 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as imageActions } from "../redux/modules/image2";
 import styled from "styled-components";
-import { Grid, Text, Button, Input } from "../elements/index";
-import * as MdIcons from "react-icons/md";
+// import { Grid, Text, Button, Input } from "../elements/index";
+// import * as MdIcons from "react-icons/md";
 //수정페이지 에서 이미지파일 & 이미지 프리뷰를 추가해주기 위한 업로드 버튼
 // image2 모듈의 image안에 프리뷰를 넣어주고 파일은 따로 보관하자
 
