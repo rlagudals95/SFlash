@@ -14,8 +14,6 @@ import { config } from "../shared/config";
 import { getCookie } from "../shared/Cookie";
 
 const StoryEditPwd = () => {
-  // console.log(email);
-  const email = useSelector((state) => state.email.email);
 
   const [originalPwd, setOriginalPwd] = React.useState("");
   const [newPwd, setNewPwd] = React.useState("");
@@ -81,7 +79,6 @@ const StoryEditPwd = () => {
         confirmButtonColor: "#ffb719",
       });
     } else {
-      // console.log(originalPwd, newPwd, rePwd);
       axios
         .put(
           `${config.api}/editpwd`,
@@ -97,7 +94,6 @@ const StoryEditPwd = () => {
           }
         )
         .then((res) => {
-          // console.log("비밀번호 변경하기", res.data);
           if (res.status === 200) {
             Swal.fire({
               text: "비밀번호가 변경되었습니다 :)",
