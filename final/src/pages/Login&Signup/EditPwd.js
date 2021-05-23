@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import Swal from "sweetalert2";
 
 import {
@@ -11,17 +10,14 @@ import {
   InfoLi,
 } from "../../Css/loginSignupCss";
 import { GiCheckMark } from "react-icons/gi";
-import RegCheck from "../../Css/RegCheck.css";
 import { history } from "../../redux/configStore";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { pwdRegCheck, pwdRegContinuousCheck } from "../../shared/common";
 import axios from "axios";
 import { config } from "../../shared/config";
 
 const EditPwd = () => {
-  // console.log(email);
-  const dispatch = useDispatch();
   const email = useSelector((state) => state.email.email);
 
   const [pwd, setPwd] = React.useState("");
@@ -78,7 +74,6 @@ const EditPwd = () => {
 
   const onEditPwd = (pwd, rePwd) => {
     //  인증번호가 일치하면 비밀번호 변경 페이지로
-    // console.log(email, pwd, rePwd);
     axios
       .post(
         `${config.api}/user/findpwd/editpwd`,
@@ -94,7 +89,6 @@ const EditPwd = () => {
         }
       )
       .then((res) => {
-        // console.log("비밀번호 변경하기", res.data);
         if (res.status === 200) {
           Swal.fire({
             text: "비밀번호가 변경되었습니다. :)",

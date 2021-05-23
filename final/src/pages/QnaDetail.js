@@ -15,15 +15,6 @@ const QnaDetail = (props) => {
   //  url에서 userId 불러오기
   const qnaId = props.match.params.id;
   const qna = useSelector((state) => state.qna.qna);
-  // 문의내용 개행 처리: 자기소개(user_info.introduction)의 typeof는 object이므로 map을 사용할 수 없습니다.
-  // 따라서, 객체를 배열로 바꾼 후 아래서 map을 돌려줍니다.
-  // const content = [];
-  // const _content = qna.content.split("\n");
-  // for(let i = 0; i< _content.length; i++){
-  //   content.push(_content[i]);
-  // }
-  // console.log(Array.from(qna.content));
-
 
   React.useEffect(() => {
     if (!qnaId) {
@@ -116,7 +107,6 @@ const Container = styled.div`
   @media (max-width: 400px) {
     width: calc(100% - 2rem);
   }
-  /* background-color: red; */
 `;
 
 const Title = styled.div`
@@ -132,7 +122,6 @@ const TitleContainer = styled.div`
   width: 100%;
   border-bottom: 1pt solid grey;
   height: 70px;
-  /* background-color: yellow; */
 `;
 
 const ContentContainer = styled.div`
@@ -152,7 +141,6 @@ const Text = styled.text`
   padding: 0px 10px;
   line-height: 1rem;
   color: ${(props) => props.theme.main_grey};
-  /* background-color: green; */
 `;
 
 const Content = styled.div`
