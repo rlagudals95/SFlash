@@ -234,7 +234,7 @@ const StoryEditProfile = (props) => {
                 placeholder="자기소개를 입력해주세요."
                 onChange={changeIntroduction}
                 disabled={is_uploading}
-                rows="6"
+                rows={6}
               />
             </Grid>
 

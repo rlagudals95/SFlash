@@ -1,23 +1,20 @@
 // GridList에서 보여지는 1개의 Post
 // Post2의 사본
 import React, { useState } from "react";
-import { history } from "../redux/configStore";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-
-import FavoriteIcon from "@material-ui/icons/Favorite";
+import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import styled, { keyframes } from "styled-components";
 import { actionCreators as ModalActions } from "../redux/modules/storypostmodal";
-// import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import { actionCreators as storyPostActions } from "../redux/modules/storypost";
 import PostModal from "./StoryPostModal/PostModal";
+
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import "../Css/Post.css";
 
 //로그인 후에 이용가능 합니다
 const StoryPost = (props) => {
   const dispatch = useDispatch();
-  const paging = useSelector((state) => state.post.paging);
 
   const [is_modal, setDetailModal] = useState();
   const openModal = () => {
@@ -28,11 +25,10 @@ const StoryPost = (props) => {
     setDetailModal(false);
   };
 
-  // 좋아요 함수
+  // 좋아요 
   const addLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    // console.log("ADDLIKE!!!!!", props.id, props);
     if (props.userPostMode) {
       dispatch(storyPostActions.addUserPostLikeAPI(props.id, props));
     } else {
@@ -40,10 +36,10 @@ const StoryPost = (props) => {
     }
   };
 
+  // 좋아요 취소
   const disLike = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    // console.log("DISLIKE!!!!!", props.id, props);
     if (props.userPostMode) {
       dispatch(storyPostActions.deleteUserPostLikeAPI(props.id, props));
     } else {
@@ -84,7 +80,7 @@ const StoryPost = (props) => {
       {is_modal ? (
         <PostModal
           close={closeDetailModal}
-          boardId={props.id} //여기서 모달에 모든 정보를 넘겨주는 구나!
+          boardId={props.id} //모달에 모든 정보를 넘겨준다.
         />
       ) : null}
     </React.Fragment>

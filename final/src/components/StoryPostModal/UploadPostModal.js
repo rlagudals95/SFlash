@@ -1,21 +1,15 @@
-import React, { useState } from "react";
-import { history } from "../../redux/configStore";
+import React from "react";
 
 import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 import { actionCreators as postActions } from "../../redux/modules/post";
 import { actionCreators as storyPostModalActions } from "../../redux/modules/storypostmodal";
 import { actionCreators as imageActions } from "../../redux/modules/image2";
 import { actionCreators as profileActions } from "../../redux/modules/profile";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Slider from "react-slick";
 
 import { useDispatch, useSelector } from "react-redux";
-import PublishIcon from "@material-ui/icons/Publish";
-import TextField from "@material-ui/core/TextField";
 // 업로드용 파일선택 버튼
 import Upload2 from "../../shared/Upload2";
 // 수정용 파일선택 버튼
@@ -26,7 +20,6 @@ import Input2 from "../../elements/Input2";
 import { CgLogOut } from "react-icons/cg";
 
 const UploadModal = (props) => {
-  const { latitude, longitude, spotName } = props;
   const userId = localStorage.getItem("userId");
 
   React.useEffect(() => {
@@ -37,72 +30,30 @@ const UploadModal = (props) => {
     }
 
     if (is_edit) {
-      // dispatch(imageActions.resetEdit([])); //
       dispatch(imageActions.getPost(props.id));
     }
     dispatch(profileActions.getUserInfoAPI(userId));
   }, []);
 
-  // console.log(
-  //   "위도: " +
-  //     latitude +
-  //     " , " +
-  //     "경도: " +
-  //     longitude +
-  //     " , " +
-  //     "장소이름 : " +
-  //     spotName
-  // );
-
   const dispatch = useDispatch();
-  const is_login = useSelector((state) => state.user.is_login);
   const preview = useSelector((state) => state.image2.preview);
   // 수정 페이지 이미지
   const onlyImg = useSelector((state) => state.image2.image);
 
   // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
   const editFile = useSelector((state) => state.image2.edit_file);
-
-  const post_list = useSelector((state) => state.post.list);
-  const user_info = useSelector((state) => state.user.user);
   const profile = useSelector((state) => state.profile.user);
-  // console.log("유저아이디", userId);
-  // console.log("포스트리스트", post_list);
-  // console.log("유저정보", user_info);
-  // console.log("유저프로필", profile);
 
   const [contents, setContents] = React.useState(props.content);
   const [title, setTitle] = React.useState(props.title);
   const [images, setImages] = React.useState(false);
 
-  const [image_list, setImageList] = React.useState();
   const is_file = useSelector((state) => state.image2.file);
-  // console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
-  // const post_id = props.match.params.id;
   const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
   const is_madal = props.modal ? true : false;
-  // console.log("수정 게시물 정보", props);
-  // console.log("수정 화면 이미지들", images);
   const nickname = localStorage.getItem("nickname");
-  const editImgList = useSelector((state) => state.image2.edit); // 요걸 가져와야해
-  // const editImage = useSelector((state) => state.image2.image);
-
-  const previewSet = useSelector((state) => state.image2.preview);
-  // console.log("프리뷰를 알자!", previewSet);
-  const file = useSelector((state) => state.image2.file);
-  // console.log("업로드 파일들을 알자!", file);
-
   const is_category = useSelector((state) => state.category.select_category);
 
-  // console.log("카테고리 선택했니?", is_category);
-  // console.log("삭제된 id", deleteId);
-  // console.log("서버로 보내줄 수정파일(에딧 파일)", editFile); // 수정중 다시 맘에 안들어서 삭제하고 싶다면 여길 수정
-  // console.log("온리이미지~!~!~!!", onlyImg); //
-  // console.log("고치자 ㅜㅜ", editImgList); // 수정하는 포스트리스트가 온다 map으로 이미지 돌리자
-  // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
-  const ok_submit = contents ? true : false;
-
-  // console.log("??????", localStorage.getItem("jwt"));
   const resetPreview = () => {
     const basicPreview =
       "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36";
@@ -131,7 +82,6 @@ const UploadModal = (props) => {
     }
 
     //카테고리 선택 조건
-
     let post = {
       title: title,
       content: contents,
@@ -139,18 +89,14 @@ const UploadModal = (props) => {
       longitude: props.longitude,
       spotName: props.spotName,
     };
-    // console.log(post);
     if (is_file) {
       dispatch(postActions.addPostAPI(post));
     } else {
       window.alert("😗사진은 최소 1장 이상 업로드 해주세요!");
       return;
     }
-
     props.close();
-
     resetPreview();
-    // history.replace("/");
   };
 
   //게시물 수정 시 조건을 걸어 두었다
@@ -213,8 +159,6 @@ const UploadModal = (props) => {
     <React.Fragment>
       <Component
         onClick={resetPreview}
-
-        // onClick={props.close}
       />
       <ModalComponent>
         <ModalHeader>
