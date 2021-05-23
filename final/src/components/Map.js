@@ -2758,6 +2758,11 @@ const Maps = (props) => {
     );
   }
 
+  // 지도 줌인아웃기능 - 대한민국 전체 보기 
+  const zoomOutKorea = () => {
+    _map.setLevel(_map.getLevel() - 1);
+  }
+
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다
   var ps = new kakao.maps.services.Places();

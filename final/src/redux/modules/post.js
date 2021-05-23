@@ -338,9 +338,9 @@ const getMapPostAPI = () => {
             }
           });
         } else {
-          // console.log("서버 응답값", res);
+          console.log("서버 응답값", res);
           let map_post_list = [];
-          // console.log("서버 응답값", res.data.data);
+          console.log("서버 응답값", res.data.data);
           // console.log(res.data.data[0].boardImgReponseDtoList);
           res.data.data.forEach((_post) => {
             let post = {
@@ -408,8 +408,8 @@ const editPostAPI = (board_id, _edit) => {
     const markerData = getState().post.map_post_list;
     const postData = getState().post.list;
 
-    console.log("현재 마커데이터", markerData);
-    console.log("현재 포스트 데이터", postData);
+    // console.log("현재 마커데이터", markerData);
+    // console.log("현재 포스트 데이터", postData);
     //여기서
     // for (let i = 0; i < addFile.length; i++) {
     //   console.log(addFile[i].imgUrl);
@@ -467,7 +467,7 @@ const editPostAPI = (board_id, _edit) => {
         });
       } else {
         //응답이 오기전까지 무슨 스피너 조건을 줘야하는데.,..흠..
-        console.log("수정반응값!", res);
+        // console.log("수정반응값!", res);
         let _post = res.data.data;
         let post = {
           id: _post.boardId, // 포스트 id
