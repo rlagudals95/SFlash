@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Grid, Text, Button, Input } from "../../elements/index";
-import { history } from "../../redux/configStore";
+// import { Grid, Text, Button, Input } from "../../elements/index";
+// import { history } from "../../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as categoryActions } from "../../redux/modules/category";
 import * as BiIcons from "react-icons/bi";
-import SearchBar from "../SearchBar";
+// import SearchBar from "../SearchBar";
 import Input2 from "../../elements/Input2";
 import { actionCreators as PostActions } from "../../redux/modules/post";
 
 // import { actionCreators as PostActions } from "../redux/modules/post";
 const MobileSelect = () => {
   const dispatch = useDispatch();
-  const paging = useSelector((state) => state.post.paging);
+  // const paging = useSelector((state) => state.post.paging);
   const is_category = useSelector((state) => state.category.is_category); //이걸 가져와서 이제 눌린상탠지 안눌린 상탠지 판단
   const [search, setSearch] = React.useState("");
   // console.log("슬라이스", null, 15);
@@ -71,7 +71,7 @@ const MobileSelect = () => {
             카테고리
           </CateGoryTitle>
         </CategoryInfo>
-        {is_category.length == 0 ? (
+        {is_category.length === 0 ? (
           <SelectedBtn
             onClick={(e) => {
               e.preventDefault();

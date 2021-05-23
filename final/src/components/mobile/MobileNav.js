@@ -2,19 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import { history } from "../../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
-import * as GrIcons from "react-icons/gr";
+// import * as GrIcons from "react-icons/gr";
 import { actionCreators as userActions } from "../../redux/modules/user";
 
 const MobileNav = () => {
   const dispatch = useDispatch();
-  const is_login = useSelector((state) => state.user.is_login);
+  // const is_login = useSelector((state) => state.user.is_login);
 
-  const onLogout = () => {
-    if (window.confirm("로그아웃 하시겠습니까?")) {
-      dispatch(userActions.logOut());
-      history.push("/");
-    }
-  };
+  // const onLogout = () => {
+  //   if (window.confirm("로그아웃 하시겠습니까?")) {
+  //     dispatch(userActions.logOut());
+  //     history.push("/");
+  //   }
+  // };
   return (
     <React.Fragment>
       <NavBox>
@@ -73,11 +73,11 @@ const NavBox = styled.div`
   }
 `;
 
-const HeaderLog = styled.span`
-  position: fixed;
-  right: 3.3vw;
-  top: 2.3vh;
-  opacity: 0.5;
-`;
+// const HeaderLog = styled.span`
+//   position: fixed;
+//   right: 3.3vw;
+//   top: 2.3vh;
+//   opacity: 0.5;
+// `;
 
-const LogoBox = styled.div``;
+// const LogoBox = styled.div``;

@@ -2,18 +2,15 @@ import React, { useState } from "react";
 
 import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { useDispatch, useSelector } from "react-redux";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Slider from "react-slick";
 import UploadModal from "./UpLoadModal";
-import { actionCreators as imageActions } from "../redux/modules/image2";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as CommnetActions } from "../redux/modules/comment";
 import { actionCreators as likeActions } from "../redux/modules/like";
-import { forEach } from "lodash";
 import { history } from "../redux/configStore";
 
 const ModalDetail = (props) => {
@@ -23,22 +20,23 @@ const ModalDetail = (props) => {
   React.useEffect(() => {
     // console.log("시작");
     dispatch(CommnetActions.getComment(props.id));
+  // }, [dispatch, props.id]);
   }, []);
 
-  const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
+  // const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
+  // const user_info = useSelector((state) => state.user.user);
 
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
-
-  const user_info = useSelector((state) => state.user.user);
 
   // console.log(user_info);
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
 
-  const openEditModal = () => {
-    setEditModal(true);
-  };
+  // const openEditModal = () => {
+  //   setEditModal(true);
+  // };
+
   const closeDetailModal = () => {
     setEditModal(false);
   };
@@ -202,7 +200,7 @@ const ModalDetail = (props) => {
                 <LikeBox>
                   <div style={{ cursor: "pointer" }}>
                     <FavoriteBorderIcon
-                      style={{ color: "rgb(255, 183, 25)" }}
+                      // style={{ color: "rgb(255, 183, 25)" }}
                       style={{ fontSize: 30, color: "rgb(255, 183, 25)" }}
                       onClick={addLike}
                     />
@@ -454,22 +452,22 @@ const ModalComponent = styled.div`
   }
 `;
 
-const HeaderInner = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: auto auto;
-  align-items: center;
-  padding: 1.3vh 0px;
-  width: 95%;
-`;
+// const HeaderInner = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   margin: auto auto;
+//   align-items: center;
+//   padding: 1.3vh 0px;
+//   width: 95%;
+// `;
 
-const HeaderEdit = styled.div`
-  color: ${(props) => props.theme.main_color};
-  font-weight: bold;
-  background-color: transparent;
-  font-size: 14px;
-  cursor: pointer;
-`;
+// const HeaderEdit = styled.div`
+//   color: ${(props) => props.theme.main_color};
+//   font-weight: bold;
+//   background-color: transparent;
+//   font-size: 14px;
+//   cursor: pointer;
+// `;
 
 const ExitContainer = styled.div`
   z-index: 30;

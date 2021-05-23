@@ -2,23 +2,24 @@ import React, { useState } from "react";
 
 import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { useDispatch, useSelector } from "react-redux";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Slider from "react-slick";
 import UploadModal from "./UpLoadModal";
-import { actionCreators as imageActions } from "../redux/modules/image2";
 import { actionCreators as postActions } from "../redux/modules/post";
-import { actionCreators as CommnetActions } from "../redux/modules/comment";
-import { actionCreators as likeActions } from "../redux/modules/like";
 import { actionCreators as ModalActions } from "../redux/modules/mapModal";
-import { forEach } from "lodash";
 import { history } from "../redux/configStore";
 import Swal from "sweetalert2";
 import Spinner from "../shared/Spinner";
 import { actionCreators as sideActions } from "../redux/modules/side";
+
+// import { actionCreators as imageActions } from "../redux/modules/image2";
+// import { actionCreators as CommnetActions } from "../redux/modules/comment";
+// import { actionCreators as likeActions } from "../redux/modules/like";
+// import { forEach } from "lodash";
+// import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const ModalDetail = (props) => {
   React.useEffect(() => {}, []);
 
   // console.log("eeee", props);
-  const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
+  // const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
   const modalData = useSelector((state) => state.mapmodal.post);
 
   const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
@@ -46,10 +47,10 @@ const ModalDetail = (props) => {
   // console.log("닉네임", nickname);
   // const is_like = props.like 라이크가 있냐 확인?
 
-  const openEditModal = () => {
-    // props.closeDetail();
-    setEditModal(true);
-  };
+  // const openEditModal = () => {
+  //   // props.closeDetail();
+  //   setEditModal(true);
+  // };
 
   const closeDetailModal = () => {
     setEditModal(false);
@@ -64,7 +65,7 @@ const ModalDetail = (props) => {
     slidesToScroll: 1,
   };
 
-  const is_comment = commentData ? true : false;
+  // const is_comment = commentData ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
@@ -215,7 +216,6 @@ const ModalDetail = (props) => {
                         <LikeBox>
                           <div style={{ cursor: "pointer" }}>
                             <FavoriteBorderIcon
-                              style={{ color: "rgb(255, 183, 25)" }}
                               style={{
                                 fontSize: 30,
                                 color: "rgb(255, 183, 25)",
@@ -229,7 +229,7 @@ const ModalDetail = (props) => {
                       )}
 
                       {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
-                      {modalData.writerId == user_id ? (
+                      {modalData.writerId === user_id ? (
                         <ModalEdit>
                           <React.Fragment onClick={props.close}>
                             <EditBtn
@@ -327,7 +327,7 @@ const ModalDetail = (props) => {
 
                               {/* 방금 전 */}
 
-                              {nickname == c.writerName ? (
+                              {nickname === c.writerName ? (
                                 <CmtDeleteBtn
                                   onClick={() => {
                                     deleteComment(c.commentId);
@@ -498,22 +498,22 @@ const ModalComponent = styled.div`
   }
 `;
 
-const HeaderInner = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: auto auto;
-  align-items: center;
-  padding: 1.3vh 0px;
-  width: 95%;
-`;
+// const HeaderInner = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   margin: auto auto;
+//   align-items: center;
+//   padding: 1.3vh 0px;
+//   width: 95%;
+// `;
 
-const HeaderEdit = styled.div`
-  color: ${(props) => props.theme.main_color};
-  font-weight: bold;
-  background-color: transparent;
-  font-size: 14px;
-  cursor: pointer;
-`;
+// const HeaderEdit = styled.div`
+//   color: ${(props) => props.theme.main_color};
+//   font-weight: bold;
+//   background-color: transparent;
+//   font-size: 14px;
+//   cursor: pointer;
+// `;
 
 const ExitContainer = styled.div`
   z-index: 30;
@@ -880,23 +880,24 @@ const ReplyLeft = styled.div`
   display: flex;
   /* background-color: green; */
 `; // space-between 효과 주기위해서 쓴다
-const ReplyRight = styled.div`
-  display: flex;
-  /* background-color: red; */
-  /* width: 20000px; */
-`;
 
-const CmtDate = styled.div`
-  font-size: 1px;
-  margin: auto 0;
-  opacity: 0.3;
+// const ReplyRight = styled.div`
+//   display: flex;
+//   /* background-color: red; */
+//   /* width: 20000px; */
+// `;
 
-  /* width: 3px; */
-  @media (max-width: 1440px) {
-    /* background-color: red; */
-    display: flex;
-  }
-`;
+// const CmtDate = styled.div`
+//   font-size: 1px;
+//   margin: auto 0;
+//   opacity: 0.3;
+
+//   /* width: 3px; */
+//   @media (max-width: 1440px) {
+//     /* background-color: red; */
+//     display: flex;
+//   }
+// `;
 
 const CmtDeleteBtn = styled.button`
   height: 2px;

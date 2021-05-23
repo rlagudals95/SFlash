@@ -17,7 +17,7 @@ import UploadEdit from "../../shared/UploadEdit";
 import SelectCate from "../SelectCate";
 import Input from "../../elements/Input";
 import Input2 from "../../elements/Input2";
-import { CgLogOut } from "react-icons/cg";
+// import { CgLogOut } from "react-icons/cg";
 
 const UploadModal = (props) => {
   const userId = localStorage.getItem("userId");
@@ -41,7 +41,7 @@ const UploadModal = (props) => {
   const onlyImg = useSelector((state) => state.image2.image);
 
   // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
-  const editFile = useSelector((state) => state.image2.edit_file);
+  // const editFile = useSelector((state) => state.image2.edit_file);
   const profile = useSelector((state) => state.profile.user);
 
   const [contents, setContents] = React.useState(props.content);
@@ -109,7 +109,7 @@ const UploadModal = (props) => {
       window.alert("😗빈칸을 채워주세요...ㅎㅎ");
       return;
     }
-    if (onlyImg.length == 0) {
+    if (onlyImg.length === 0) {
       window.alert("😗사진을 최소 1장 이상 업로드 해주세요!");
       return;
     }
@@ -135,16 +135,16 @@ const UploadModal = (props) => {
     setTitle(e.target.value);
   };
 
-  if (images.length == 0) {
+  if (images.length === 0) {
     images.push(
       "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
     );
   }
 
-  const _post = {
-    title: title,
-    content: contents,
-  };
+  // const _post = {
+  //   title: title,
+  //   content: contents,
+  // };
 
   //캐러셀 모듈 코드
   var settings = {
@@ -416,10 +416,10 @@ const DeleteImg = styled.div`
   cursor: pointer;
 `;
 
-const ImgOutter = styled.div`
-  text-align: center;
-  display: table;
-`;
+// const ImgOutter = styled.div`
+//   text-align: center;
+//   display: table;
+// `;
 
 const ModalImg = styled.div`
   background-image: url("${(props) => props.src}");
@@ -601,13 +601,13 @@ const HeaderInner = styled.div`
   width: 95%;
 `;
 
-const HeaderEdit = styled.div`
-  color: ${(props) => props.theme.main_color};
-  font-weight: bold;
-  background-color: transparent;
-  font-size: 14px;
-  cursor: pointer;
-`;
+// const HeaderEdit = styled.div`
+//   color: ${(props) => props.theme.main_color};
+//   font-weight: bold;
+//   background-color: transparent;
+//   font-size: 14px;
+//   cursor: pointer;
+// `;
 
 const ExitContainer = styled.div`
   z-index: 30;
@@ -715,21 +715,21 @@ const MiddleBox = styled.div`
     height: 220px;
   }
 `;
-const InputOutter = styled.div`
-  margin: 0px auto;
-  width: 100%;
-`;
+// const InputOutter = styled.div`
+//   margin: 0px auto;
+//   width: 100%;
+// `;
 
 const Title = styled.div`
   margin-bottom: 1vh;
 `;
 
-const CateBtn = styled.div`
-  font-size: bold;
-  width: 6.5vw;
-  /* border: 1px solid lightgray; */
-  height: 3.5vh;
-  border-radius: 10px;
-`;
+// const CateBtn = styled.div`
+//   font-size: bold;
+//   width: 6.5vw;
+//   /* border: 1px solid lightgray; */
+//   height: 3.5vh;
+//   border-radius: 10px;
+// `;
 
 export default UploadModal;

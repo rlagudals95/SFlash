@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
-import { actionCreators as PostActions } from "./post";
-import { conforms, result } from "lodash";
+// import { actionCreators as PostActions } from "./post";
+// import { conforms, result } from "lodash";
 
 const SET_PREVIEW = "SET_PREVIEW";
 const GET_PREVIEW = "GET_PREVIEW";

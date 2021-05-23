@@ -6,6 +6,7 @@ import { actionCreators as userActions } from "../redux/modules/user";
 
 const OAuth2RedirectHandler = (props) => {
   const dispatch = useDispatch();
+  // const is_login = useSelector((state) => state.user.is_login);
 
   const getUrlParameter = (name) => {
     name = name.replace(/[[]/, "\\[").replace(/[\]]/, "\\]");

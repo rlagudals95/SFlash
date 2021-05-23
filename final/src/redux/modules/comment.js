@@ -5,8 +5,8 @@ import { history } from "../configStore";
 import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
-import { getCookie } from "../../shared/Cookie";
-import { actionCreators as postActions } from "./post";
+// import { getCookie } from "../../shared/Cookie";
+// import { actionCreators as postActions } from "./post";
 import { actionCreators as userActions } from "./user";
 import Swal from "sweetalert2";
 
@@ -213,7 +213,7 @@ export default handleActions(
       produce(state, (draft) => {
         //여기선 댓글 id를 받는다 draft리스트에 받은 id와 같은게 있는지 찾아서 삭제해준다
         // 댓글 id 서버에서 받을 때 까지 대기
-        draft.list = draft.list.filter((c, idx) => {
+        draft.list = draft.list.filter((c) => {
           if (c.commentId !== action.payload.id) {
             return [draft.list, c];
           }

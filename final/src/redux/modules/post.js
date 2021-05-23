@@ -7,8 +7,8 @@ import moment from "moment";
 import { config } from "../../shared/config";
 import Swal from "sweetalert2";
 
-import { getCookie } from "../../shared/Cookie";
-import { push } from "react-router-redux";
+// import { getCookie } from "../../shared/Cookie";
+// import { push } from "react-router-redux";
 import { actionCreators as modalActions } from "./mapModal";
 import { actionCreators as userActions } from "./user";
 
@@ -171,7 +171,7 @@ const addPostAPI = (post) => {
           let one_post = res.data.data;
           let one_marker_data = {
             id: one_post.boardId,
-            like: one_post.liked,
+            // like: one_post.liked,
             writerName: one_post.writerName,
             category: one_post.category,
             spotName1: one_post.spotName.split(" ").splice(0, 2).join(" "),
@@ -185,6 +185,8 @@ const addPostAPI = (post) => {
           //커뮤니티 리덕스에 데이터 추가
           let CommunityPost = {
             id: one_post.boardId,
+            like: one_post.liked,
+            writerName: one_post.writerName,
             spotName: one_post.spotName,
             img_url: one_post.boardImgReponseDtoList[0].imgUrl, //고치자 딕셔너리 말고
             likeCnt: 0,
@@ -211,7 +213,7 @@ const getPostAPI = () => {
     // console.log("잘가지고 왔겠지", board_list);
 
     let end_board = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
-      board_list.length == 0
+      board_list.length === 0
         ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
         : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
           board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
@@ -272,7 +274,7 @@ const getPostAPI = () => {
 
           let result = res.data.data; // 서버에서 받아오는 게시물들을 start와 size를 정해서 나눠준다
           // console.log("페이징 갯수", result.length);
-          if (result.length == 0) {
+          if (result.length === 0) {
             // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
             dispatch(loading(false));
             return;
@@ -537,7 +539,7 @@ const searchPostAPI = (search, start = null, size = null) => {
           // console.log("검색결과", res.data.data);
           let result = res.data.data.slice(start, size);
           // console.log("슬라이스한 데이터", result);
-          if (result.length == 0) {
+          if (result.length === 0) {
             // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
             dispatch(loading(false));
             return;
@@ -712,7 +714,7 @@ export default handleActions(
 
     [DELETE_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = draft.list.filter((r, idx) => {
+        draft.list = draft.list.filter((r) => {
           if (r.id !== action.payload.id) {
             //서버에선 이미 지워져서 오지만 한번 더 중복검사
             // 현재 리스트에서 받은 포스트 id와 같은게 없다면?
@@ -742,7 +744,7 @@ export default handleActions(
 
     [DELETE_MARKER]: (state, action) =>
       produce(state, (draft) => {
-        draft.map_post_list = draft.map_post_list.filter((r, idx) => {
+        draft.map_post_list = draft.map_post_list.filter((r) => {
           if (r.id !== action.payload.id) {
             //서버에선 이미 지워져서 오지만 한번 더 중복검사
             // 현재 리스트에서 받은 포스트 id와 같은게 없다면?

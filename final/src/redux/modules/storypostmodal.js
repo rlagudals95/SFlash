@@ -353,6 +353,11 @@ const editStoryPostAPI = (board_id, _edit) => {
   return function (dispatch, getState) {
     const deleteImg = getState().image2.id; //삭제된 이미지 id
     const addFile = getState().image2.edit_file; //추가된 이미지 파일
+    // const markerData = getState().post.map_post_list;
+    // const postData = getState().post.list;
+    // console.log("현재 마커데이터", markerData);
+    // console.log("현재 포스트 데이터", postData);
+
     //여기서
     // for (let i = 0; i < addFile.length; i++) {
     //   console.log(addFile[i].imgUrl);
@@ -512,7 +517,9 @@ export default handleActions(
 
     [MODAL_DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        draft.comment = draft.comment.filter((c, idx) => {
+        //비교해서 제외
+        // console.log("삭제댓글 아이디", action.payload.id);
+        draft.comment = draft.comment.filter((c) => {
           if (c.commentId !== action.payload.id) {
             return [draft.comment, c];
           }

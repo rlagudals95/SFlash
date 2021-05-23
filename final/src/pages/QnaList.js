@@ -3,13 +3,18 @@ import styled from "styled-components";
 import Swal from "sweetalert2";
 
 import { history } from "../redux/configStore";
+// import { Grid } from "../elements/index";
 import { useDispatch, useSelector } from "react-redux";
+// import InfiniteScroll from "react-infinite-scroll-component";
 import { actionCreators as qnaActions } from "../redux/modules/qna";
 
 import { BsFillLockFill } from "react-icons/bs";
 import { RiEditFill } from "react-icons/ri";
+// import Pagination from '@material-ui/lab/Pagination';
+
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
+// import { RotateLeftTwoTone } from "@material-ui/icons";
 
 const QnaList = (props) => {
   const dispatch = useDispatch();

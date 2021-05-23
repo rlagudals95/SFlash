@@ -1,10 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import axios from "axios";
-import { history } from "../configStore";
 import "moment";
 import moment from "moment";
-import { config } from "../../shared/config";
 
 const GET_EMAIL = "GET_EMAIL";
 
