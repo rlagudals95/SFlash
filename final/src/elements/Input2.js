@@ -49,7 +49,6 @@ const Input2 = (props) => {
     <React.Fragment>
       <Grid>
         {label && <Text margin="0px">{label}</Text>}
-
         <ElInput
           type={type}
           placeholder={placeholder}
