@@ -430,7 +430,7 @@ const ModalComponent = styled.div`
   box-sizing: border-box;
   min-width: 380px;
   margin: auto;
-  height: 90%;
+  max-height: 90%;
   overflow-y: auto;
     @media (max-width: 1280px) {
       width: 768px;
