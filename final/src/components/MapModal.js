@@ -536,7 +536,7 @@ const PostTilte = styled.div`
   font-size: 1.2rem;
   font-weight: 600;
   width: 100%;
-  margin-bottom: 1vh;
+  margin-bottom: 10px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
@@ -544,21 +544,20 @@ const PostTilte = styled.div`
 `;
 
 const PostDate = styled.span`
-  font-size: 0.9rem;
-  opacity: 0.5;
-  padding-top: 0.35vh;
+ opacity: 0.5;
+  font-size: 1rem;
+  margin-left: 10px;
 `;
 
 const PostContents = styled.div`
   font-size: 1.2rem;
   opacity: 0.6;
   width: 100%;
-  margin-top: 3px;
 `;
 
 const PostTime = styled.div`
   font-size: 1rem;
-  opacity: 0.5;
+  opacity: 0.6;
   margin: 15px 0px;
 `;
 
@@ -595,7 +594,7 @@ const ReplyUnit = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 10px;
+  padding: 8px 0px;
 `;
 
 const ReplyLeft = styled.div`
@@ -615,20 +614,20 @@ const ReplyImg = styled.div`
 const ReplyWriter = styled.div`
   font-size: 1.1rem;
   font-weight: bold;
-  padding: 0vh 1vh;
+  margin-left: 10px;
   cursor: pointer;
 `;
 
 const ReplyContent = styled.div`
   font-size: 1.1rem;
+  margin-left: 10px;
 `;
 
 const ReplyDate = styled.div`
   opacity: 0.5;
   font-size: 1rem;
-  padding: 0vh 1vh;
+  margin-left: 10px;
 `;
-
 const Icon = styled.div`
   margin-left: 0px;
   padding: 5px 9px;
