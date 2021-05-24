@@ -127,10 +127,21 @@ const QnaDetailComment = (props) => {
                 </Icon>
                 <Icon
                   onClick={() => {
-                    window.confirm("댓글을 삭제하시겠습니까") &&
-                      dispatch(
-                        qnaCommentActions.deleteQnaCommentAPI(qcommentId, qnaId)
-                      );
+                    Swal.fire({
+                      text: "댓글을 삭제 하시겠습니까?",
+                      confirmButtonText: "예",
+                      confirmButtonColor: "#ffb719",
+                      showCancelButton: true,
+                      cancelButtonText: "아니오",
+                      cancelButtonColor: "#eee",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        dispatch(
+                          qnaCommentActions.deleteQnaCommentAPI(qcommentId, qnaId)
+                        );
+                      }
+                    });
+                     
                   }}
                 >
                   <RiDeleteBinLine size="18" />
