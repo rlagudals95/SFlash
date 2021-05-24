@@ -6,6 +6,8 @@ import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지
 import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
 import * as BiIcons from "react-icons/bi";
+import { IoMdAdd } from "react-icons/io";
+import { IoMdRemove } from "react-icons/io"
 import Swal from "sweetalert2";
 // component, element 파일들 가져오기
 import "../Css/Map.css";
@@ -277,14 +279,6 @@ const Maps = (props) => {
       // useEffect 밖으로 map정보를 가져오기 위해서 useState로 함수를 만든다.
       setMap(map);
     }
-
-    // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성하기.
-    var mapTypeControl = new kakao.maps.MapTypeControl();
-    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-
-    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성하기.
-    var zoomControl = new kakao.maps.ZoomControl();
-    map.addControl(zoomControl, kakao.maps.ControlPosition.Right);
 
     // geolocation으로 얻은 접속좌표에다가 현재위치를 표시하는 마커 또는 표식 올리기
     const currentMarkerSize = new kakao.maps.Size(30, 30);
@@ -2719,12 +2713,20 @@ const Maps = (props) => {
 
         kakao.maps.event.addListener(exhibitionMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
-          dispatch(ModalActions.getModalPost(exhibition.id));
+          dispatch(ModalActions.getModalPostAPI(exhibition.id));
           // dispatch(ModalActions.getModalPostAPI(park.id));
           openModal();
         });
       });
     }
+
+    // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성하기.
+    var mapTypeControl = new kakao.maps.MapTypeControl();
+    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+  // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성하기.
+  // var zoomControl = new kakao.maps.ZoomControl();
+  // map.addControl(zoomControl, kakao.maps.ControlPosition.Right);
 
     // 지도 api 설정은 여기서 끝
     // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
@@ -2764,24 +2766,7 @@ const Maps = (props) => {
         ", 장소: " +
         spotName
     );
-  }
-
-  // 지도 줌인아웃기능 - 대한민국 전체 보기 
-  const zoomOutKorea = () => {
-    // _map.setLevel(12, {anchor: new kakao.maps.LatLng(startLat, startLng,)});
-    // _map.setLevel(12, {
-    //   animate: {
-    //     duration: 500
-    //   }
-    // });
-    _map.setLevel(13);
-  }
-
-  // 현접속위치 주변으로 이동해서 보기
-  const moveCurrentPosition = () => {
-    const moveToCurrentPosition = new kakao.maps.LatLng(startLat, startLng);
-    _map.panTo(moveToCurrentPosition)
-  }
+  };
 
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다
@@ -2821,6 +2806,39 @@ const Maps = (props) => {
     setUpLoadModal(false);
   };
 
+  // const [mapType, setMapType] = React.useState(true);
+
+  const setMapROADMAP = () => {
+    _map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
+  }
+  const setMapHYBRID = () => {
+    _map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
+  }
+
+  // 지도 줌인아웃기능 - 대한민국 전체 보기 
+  const zoomOutKorea = () => {
+    // _map.setLevel(13, {anchor: new kakao.maps.LatLng(startLat, startLng,)});
+    _map.setLevel(12, 
+      {animate: {duration: 500}},
+      {anchor: new kakao.maps.LatLng(36.23122278638665, 127.55065523494979)},
+    );
+  };
+
+  // 현접속위치 주변으로 이동해서 보기
+  const moveCurrentPosition = () => {
+    const moveToCurrentPosition = new kakao.maps.LatLng(startLat, startLng);
+    _map.panTo(moveToCurrentPosition)
+  };
+
+  // 지도 줌인아웃 기능
+  const zoomIn = () => { 
+    _map.setLevel(_map.getLevel() - 1);
+  };
+
+  const zoomOut = () => {
+    _map.setLevel(_map.getLevel() + 1)
+  };
+
   return (
     <React.Fragment>
       {/* <PopUp /> */}
@@ -2844,11 +2862,18 @@ const Maps = (props) => {
         </SearchIcon>
       </SearchBox>
 
-      {/* <MapTypeControllerContainer>
-        <MapTypeBtn></MapTypeBtn>
-        <MapTypeBtn></MapTypeBtn>
-      </MapTypeControllerContainer> */}
-        
+      {/* <MoveSizeControlContainer>
+        <ZoomControlBox>
+          <ZoomControl onClick={zoomIn}><IoMdAdd size="30" color="#ffb719" /></ZoomControl>
+          <ZoomControl onClick={zoomOut}><IoMdRemove size="30" color="#ffb719" /></ZoomControl>
+        </ZoomControlBox>
+
+        <PanControlBox>
+          <PanControl onClick={zoomOutKorea}>대한민국<br/>전체보기</PanControl>
+          <PanControl onClick={moveCurrentPosition}>접속위치<br/>주변보기</PanControl>
+        </PanControlBox>
+      </MoveSizeControlContainer> */}
+
       <CategoryInMap />
 
       <MapBox>
@@ -2869,6 +2894,63 @@ const Maps = (props) => {
 };
 
 export default Maps;
+
+// const MoveSizeControlContainer = styled.div`
+//   position: absolute;
+//   width: 100px;
+//   height: 100px;
+//   display: flex;
+//   flex-direction: column;
+//   bottom: 350px;
+//   right: 135px;
+//   border-radius: 10px;
+//   box-sizing: border-box;
+//   border: 2pt solid #ffb719;
+//   background-color: #F2F3F7;
+//   z-index: 100;
+// `;
+
+// const ZoomControlBox = styled.div`
+//   width: 100px;
+//   height: 50px;
+//   display: flex;
+//   flex-direction: row;
+//   border: none;  
+// `;
+
+// const ZoomControl = styled.div`
+//   display: flex;
+//   flex-direction: row; 
+//   justify-content: center;
+//   align-items: center;
+//   text-align: center;
+//   cursor: pointer;
+//   padding: 10px 10px 10px 10px;
+//   border: none;
+// `;
+
+// const PanControlBox = styled.div`
+//   width: 100px;
+//   height: 50px;
+//   display: flex;
+//   flex-direction: row;
+//   border: none;    
+// `;
+
+// const PanControl = styled.div`
+//   display: flex;
+//   flex-direction: row; 
+//   justify-content: center;
+//   align-items: center;
+//   text-align: center;
+//   cursor: pointer;
+//   font-size: 0.3rem;
+//   text-align: center;
+//   color: #343a40;
+//   padding: 5px 5px 5px 5px;
+//   font-weight: bold;
+//   border: none;
+// `;
 
 const SearchBox = styled.div`
   position: fixed;
@@ -2929,25 +3011,3 @@ const MapBox = styled.div`
   bottom: 0;
   position: absolute;
 `;
-
-// const MapTypeControllerContainer = styled.div`
-//   width: 200px;
-//   height: 30px;
-//   top: 10px;
-//   right: 10px;
-//   display: flex;
-//   justify-content: flex-start;
-// `;
-
-// const MapTypeBtn = styled.div`
-//   width: 100px;
-//   height: 100%;
-//   background-color: white;
-//   cursor: pointer;
-//   &:hover {
-//     color: #fff;
-//     background-color: #425470;
-//     background-color:linear-gradient(#425470, #5b6d8a);
-//     cursor: pointer;
-//   } 
-// `;
