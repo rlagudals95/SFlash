@@ -2863,6 +2863,15 @@ const Maps = (props) => {
         </SearchIcon>
       </SearchBox>
 
+      <PanControlContainer>
+        <PanControl onClick={zoomOutKorea} style={{borderRight: "2pt solid #ffb719"}}>
+          대한민국<br/>전체보기
+        </PanControl>
+        <PanControl onClick={moveCurrentPosition}>
+          접속위치<br/>주변보기
+        </PanControl>
+      </PanControlContainer>
+
       {/* {roadmap ? (
         <MapTypeControlContainer>
           <RoadMapSelected/>
@@ -2871,23 +2880,19 @@ const Maps = (props) => {
       ) : (
         <MapTypeControlContainer>
           <RoadMap/>
-          <HybridMapSeleted/>
+          <HybridMapS
+          eleted/>
         </MapTypeControlContainer>
       )} */}
 
       <ZoomControlBox>
-        <ZoomControl onClick={zoomIn}><IoMdAdd size="30" color="#ffb719" /></ZoomControl>
-        <ZoomControl onClick={zoomOut}><IoMdRemove size="30" color="#ffb719" /></ZoomControl>
+        <ZoomControl onClick={zoomIn} style={{borderBottom: "2pt solid #ffb719"}}>
+          <IoMdAdd size="30" color="#ffb719"/>
+        </ZoomControl>
+        <ZoomControl onClick={zoomOut}>
+          <IoMdRemove size="30" color="#ffb719" />
+        </ZoomControl>
       </ZoomControlBox>  
-
-      {/* <MoveSizeControlContainer>
-        
-
-        <PanControlBox>
-          <PanControl onClick={zoomOutKorea}>대한민국<br/>전체보기</PanControl>
-          <PanControl onClick={moveCurrentPosition}>접속위치<br/>주변보기</PanControl>
-        </PanControlBox>
-      </MoveSizeControlContainer> */}
 
       <CategoryInMap />
 
@@ -2910,28 +2915,73 @@ const Maps = (props) => {
 
 export default Maps;
 
+const PanControlContainer = styled.div`
+  position: absolute;
+  width: 120px;
+  height: 50px;
+  top: 4px;
+  right: 64px;
+  display: flex;
+  flex-direction: row;
+  background-color: #F2F3F7;
+  border: 2pt solid #ffb719;
+  border-radius: 10px;
+  box-sizing: border-box;
+  z-index: 100;
+`;
+
+const PanControl = styled.div`
+  cursor: pointer;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border: none;
+  font-size: 0.3rem;
+  text-align: center;
+  color: #343a40;
+  font-weight: bold;   
+`;
+
+// const PanControl = styled.div`
+//   display: flex;
+//   flex-direction: row; 
+//   justify-content: center;
+//   align-items: center;
+//   text-align: center;
+//   cursor: pointer;
+//   font-size: 0.3rem;
+//   text-align: center;
+//   color: #343a40;
+//   padding: 5px 5px 5px 5px;
+//   font-weight: bold;
+//   border: none;
+// `;
+
 const ZoomControlBox = styled.div`
   position: absolute;
-  width: 40px;
-  height: 80px;
-  top: 50px;
-  right: 20px;
+  width: 50px;
+  height: 100px;
+  top: 4px;
+  right: 4px;
   display: flex;
   flex-direction: column;
   background-color: #F2F3F7;
   border: 2pt solid #ffb719;
-  border-radius: 5px;
+  border-radius: 10px;
   box-sizing: border-box;
   z-index: 100;
 `;
 
 const ZoomControl = styled.div`
   cursor: pointer;
-  padding: 5px 3px;
+  width: 100%;
+  height: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
+  /* box-sizing: border-box; */
 `;
 
 const MapTypeControlContainer = styled.div`
@@ -2955,45 +3005,6 @@ const HybridMapSeleted = styled.div`
 
 const HybridMap = styled.div`
 `;
-
-// const MoveSizeControlContainer = styled.div`
-//   position: absolute;
-//   width: 100px;
-//   height: 100px;
-//   display: flex;
-//   flex-direction: column;
-//   bottom: 350px;
-//   right: 135px;
-//   border-radius: 10px;
-//   
-//   border: 2pt solid #ffb719;
-//   background-color: #F2F3F7;
-//   z-index: 100;
-// `;
-
-
-// const PanControlBox = styled.div`
-//   width: 100px;
-//   height: 50px;
-//   display: flex;
-//   flex-direction: row;
-//   border: none;    
-// `;
-
-// const PanControl = styled.div`
-//   display: flex;
-//   flex-direction: row; 
-//   justify-content: center;
-//   align-items: center;
-//   text-align: center;
-//   cursor: pointer;
-//   font-size: 0.3rem;
-//   text-align: center;
-//   color: #343a40;
-//   padding: 5px 5px 5px 5px;
-//   font-weight: bold;
-//   border: none;
-// `;
 
 const SearchBox = styled.div`
   position: fixed;
