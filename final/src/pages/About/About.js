@@ -16,7 +16,7 @@ import AboutDetail from "./AboutDetail";
 
 const About = (props) => {
   const about_us = props.about_us;
-  console.log(props.about_us);
+  // console.log(props.about_us);
 
   return (
     <React.Fragment>
