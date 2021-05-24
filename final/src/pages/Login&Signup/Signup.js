@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React  from "react";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
@@ -10,13 +10,13 @@ import {
   Container,
   InputStyle,
   SolidBtn,
-  BorderBtn,
+  // BorderBtn,
   CheckBtn,
   TextBtn,
   InfoUl,
   InfoLi,
 } from "../../Css/loginSignupCss";
-import RegCheck from "../../Css/RegCheck.css";
+// import RegCheck from "../../Css/RegCheck.css";
 import { GiCheckMark } from "react-icons/gi";
 
 import { actionCreators as userActions } from "../../redux/modules/user";
@@ -47,13 +47,13 @@ const Signup = (props) => {
   const [activeAuthInput, setActiveAuthInput] = React.useState(false);
 
   // 인증번호 전송 로딩 지연 모달
-  const [loadingModal, setLoadingModal] = React.useState(false);
-  const openLoadingModal = () => {
-    setLoadingModal(true);
-  };
-  const closeLoadingModal = () => {
-    setLoadingModal(false);
-  };
+  // const [loadingModal, setLoadingModal] = React.useState(false);
+  // const openLoadingModal = () => {
+  //   setLoadingModal(true);
+  // };
+  // const closeLoadingModal = () => {
+  //   setLoadingModal(false);
+  // };
   // 조건 충족 여부에 따라  info를 다르게
   // querySelector를 이용하면 ''안에 해당되는 태그가 여러개 일 경우 그 첫번째 것만 선택한다.
   // 따라서 선택하고자 하는 것이 명확하다면 ''안에 몇번째 child 인지까지 정확하게 입력하거나 className 사용하기
@@ -163,7 +163,6 @@ const Signup = (props) => {
 
   // 닉네임 중복확인
   const nicknameDupCheckAPI = (nickname) => {
-    // console.log(nickname);
     axios
       .post(
         `${config.api}/user/signup/nickchk`,
@@ -177,7 +176,6 @@ const Signup = (props) => {
         }
       )
       .then((res) => {
-        // console.log("넥네임중복확인!", res.data);
         if (res.data === false) {
           Swal.fire({
             text: "이미 등록된 닉네임 입니다!",
@@ -201,7 +199,6 @@ const Signup = (props) => {
 
   // 이메일 인증번호 전송 (입력한 이메일은 서버로 보내주고, 인증번호를 입력하는 모달 창을 띄운다.)
   const onEmailAuth = (email) => {
-    // console.log(email);
     axios
       .post(
         `${config.api}/user/signup/emailchk`,
@@ -215,7 +212,6 @@ const Signup = (props) => {
         }
       )
       .then((res) => {
-        // console.log("인증번호 전송", res.data);
         if (res.data === false) {
           Swal.fire({
             text: "이미 등록된 이메일 입니다!",
@@ -237,7 +233,6 @@ const Signup = (props) => {
 
   // 이메일 인증번호 확인
   const onAuthCodeSubmit = (email, authCode) => {
-    // console.log(email, authCode);
     axios
       .post(
         `${config.api}/user/signup/authcode`,
@@ -252,7 +247,6 @@ const Signup = (props) => {
         }
       )
       .then((res) => {
-        // console.log("인증번호 확인", res.data);
 
         if (res.data === true) {
           Swal.fire({

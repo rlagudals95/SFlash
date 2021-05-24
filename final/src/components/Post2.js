@@ -1,27 +1,27 @@
 import React, { useState } from "react";
-import { Grid, Text, Button } from "../elements";
-import { history } from "../redux/configStore";
+// import { Grid, Text, Button } from "../elements";
+// import { history } from "../redux/configStore";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+// import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
-import Modal from "./Modal";
-import CloudQueueIcon from "@material-ui/icons/CloudQueue";
-import SendIcon from "@material-ui/icons/Send";
-import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+// import Modal from "./Modal";
+// import CloudQueueIcon from "@material-ui/icons/CloudQueue";
+// import SendIcon from "@material-ui/icons/Send";
+// import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { useDispatch, useSelector } from "react-redux";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { actionCreators as ModalActions } from "../redux/modules/mapModal";
 import { actionCreators as likeActions } from "../redux/modules/like";
-import { actionCreators as PostActions } from "../redux/modules/post";
+// import { actionCreators as PostActions } from "../redux/modules/post";
 import MapModal from "./MapModal";
 
 import "../Css/Post.css";
 
 //로그인 후에 이용가능 합니다
 const Post2 = (props) => {
-  const paging = useSelector((state) => state.post.paging);
+  // const paging = useSelector((state) => state.post.paging);
 
   const like = useSelector((state) => state.like.like);
 
@@ -126,8 +126,8 @@ const Card = styled.div`
   height: 100%;
 `;
 
-const CntBox = styled.span`
-  margin: 8px 0px 8px 2px;
-`;
+// const CntBox = styled.span`
+//   margin: 8px 0px 8px 2px;
+// `;
 
 export default Post2;

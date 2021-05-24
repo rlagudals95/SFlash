@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import styled, { keyframes } from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import InfiniteScroll from "react-infinite-scroll-component";
+import styled from "styled-components";
+// import { useDispatch, useSelector } from "react-redux";
+// import InfiniteScroll from "react-infinite-scroll-component";
 import * as RiIcons from "react-icons/ri";
 import "../Css/Faq.css";
 
 const Faq = () => {
   const [slide, setSlide] = useState(false);
-  const [cloeseSlide, setCloseSlide] = useState(false);
+  // const [cloeseSlide, setCloseSlide] = useState(false);
   const slideOpen = () => {
     setSlide(true);
   };

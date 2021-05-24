@@ -70,7 +70,7 @@ const getQnaDetailAPI = (qnaId) => {
       url: `${config.api}/qna/${qnaId}/detail`,
     })
       .then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         let _qna = res.data.data;
         let qna = {
           id: _qna.id,
@@ -81,9 +81,9 @@ const getQnaDetailAPI = (qnaId) => {
           writer: _qna.writer,
           qcomments: _qna.qcomments,
         };
-        // console.log(qna);
-        // console.log(qna.content);
-        // console.log(typeof qna.content);
+        console.log(qna);
+        console.log(qna.content);
+        console.log(typeof qna.content);
         dispatch(setQnaDetail(qna));
       })
       .catch((err) => {

@@ -45,7 +45,7 @@ const ModalDetail = (props) => {
     slidesToScroll: 1,
   };
 
-  const is_comment = commentData ? true : false;
+  // const is_comment = commentData ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
@@ -206,7 +206,6 @@ const ModalDetail = (props) => {
                         <LikeBox>
                           <div style={{ cursor: "pointer" }}>
                             <FavoriteBorderIcon
-                              style={{ color: "rgb(255, 183, 25)" }}
                               style={{
                                 fontSize: 30,
                                 color: "rgb(255, 183, 25)",
@@ -220,7 +219,7 @@ const ModalDetail = (props) => {
                       )}
 
                       {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
-                      {modalData.writerId == user_id ? (
+                      {modalData.writerId === user_id ? (
                         <ModalEdit>
                           <React.Fragment onClick={props.close}>
                             <EditBtn onClick={openEditModal}>수정</EditBtn>
@@ -334,7 +333,7 @@ const ModalDetail = (props) => {
                                 </ReplyContainer>
                               </ReplyLeft>
                               <ReplyRight>
-                                {nickname == c.writerName ? (
+                                {nickname === c.writerName ? (
                                   <CmtDeleteBtn
                                     onClick={() => {
                                       deleteComment(c.commentId);
@@ -538,16 +537,6 @@ const ModalBottomContainer = styled.div`
   flex-direction: column;
   padding: 0px 12px;
   margin: 0px auto;
-  /* @media (max-width: 1600px) {
-    text-align: left;
-    width: 470px;
-    height: 320px;
-    display: flex;
-    flex-direction: column;
-    padding: 0px 12px;
-    margin: 0px auto;
-  } */
-
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
     text-align: left;
@@ -559,7 +548,6 @@ const ModalBottomContainer = styled.div`
     margin: 0px auto;
     margin-top: 1.3vh;
   }
-
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     /* all: unset; */
@@ -696,6 +684,7 @@ const PostTime = styled.div`
   opacity: 0.4;
   margin-top: 3.5px;
 `;
+
 const ModalCmtInputBox = styled.div`
   align-items: center;
   width: 100%;
@@ -707,7 +696,7 @@ const ModalCmtInputBox = styled.div`
   box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.1);
   @media (max-width: 600px) {
     height: 100px;
-    margin-bottom: 0vh;
+    margin-bottom: -7vh;
   }
 `;
 
@@ -782,19 +771,20 @@ const Reply = styled.div`
 const ReplyLeft = styled.div`
   align-items: center;
   display: flex;
-`; // space-between 효과 주기위해서 쓴다
+`;
+
 const ReplyRight = styled.div`
   display: flex;
 `;
 
-const CmtDate = styled.div`
-  font-size: 1px;
-  margin: auto 0;
-  opacity: 0.3;
-  @media (max-width: 1440px) {
-    display: flex;
-  }
-`;
+// const CmtDate = styled.div`
+//   font-size: 1px;
+//   margin: auto 0;
+//   opacity: 0.3;
+//   @media (max-width: 1440px) {
+//     display: flex;
+//   }
+// `;
 
 const CmtDeleteBtn = styled.button`
   height: 2px;

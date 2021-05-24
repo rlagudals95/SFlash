@@ -1,11 +1,11 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import axios from "axios";
-import { history } from "../configStore";
+// import axios from "axios";
+// import { history } from "../configStore";
 import "moment";
 import moment from "moment";
-import { config } from "../../shared/config";
-import { NavigateBeforeRounded } from "@material-ui/icons";
+// import { config } from "../../shared/config";
+// import { NavigateBeforeRounded } from "@material-ui/icons";
 
 const GET_CATEGORY = "GET_CATEGORY";
 const RESET_CATEGORY = "RESET_CATEGORY";

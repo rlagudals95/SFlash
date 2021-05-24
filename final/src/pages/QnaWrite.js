@@ -1,23 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import Swal from 'sweetalert2'
-import { Grid } from "../elements/index";
+// import { Grid } from "../elements/index";
 import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as qnaActions } from "../redux/modules/qna";
-import { actionCreators as imageActions } from "../redux/modules/image";
+// import { actionCreators as imageActions } from "../redux/modules/image";
 
 const QnaWrite = (props) => {
   const dispatch = useDispatch();
   const is_login = useSelector ((state) => state.user.is_login)
   const qnaId = props.match.params.id;
-  console.log(qnaId);
   const is_edit = qnaId ? true : false; //qna_id는 게시물이 존재하므로 수정 가능함
-  console.log(is_edit);
   const qna = useSelector((state) => state.qna.qna);
-  console.log(qna);
-  // const preview = useSelector((state) => state.image.preview);
-  // const is_uploading = useSelector((state) => state.image.is_uploading);
 
   React.useEffect(() => {
     if (!is_login){
@@ -88,7 +83,6 @@ const QnaWrite = (props) => {
     let qna = {
       title: title,
       content: content,
-      // image: fileInput.current.files[0],
     };
     dispatch(qnaActions.addQnaAPI(qna));
   };
@@ -103,7 +97,6 @@ const QnaWrite = (props) => {
     let qna = {
       title: title,
       content: content,
-      // image: fileInput.current.files[0],
     };
     dispatch(qnaActions.editQnaAPI(qna, qnaId));
   };
@@ -162,7 +155,6 @@ const Container = styled.div`
   @media (max-width: 400px) {
     width: calc(100% - 2rem);
   }
-  /* background-color: red; */
 `;
 
 const Title = styled.div`

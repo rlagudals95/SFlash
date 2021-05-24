@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { history } from "../redux/configStore";
+// import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 import { actionCreators as storyPostActions } from "../redux/modules/storypost";
-import { actionCreators as postActions } from "../redux/modules/post";
-
+// import { actionCreators as postActions } from "../redux/modules/post";
 
 import StoryUserProfile from "../components/StoryUserProfile";
 import StoryContent from "../components/StoryContent";
-
 
 // 유저가 작성한/좋아요한 게시물들을 모아볼 수 있는 페이지 입니다.
 // 다른 사람들도 유저의 스토리를 열람할 수 있습니다.
@@ -19,7 +17,6 @@ const Story = (props) => {
 
   //  url에서 userId 불러오기
   const userId = props.match.params.id;
-  // console.log("userId:", userId);
 
   const initializeApp = async () => {
     await dispatch(profileActions.resetProfile([]));
@@ -44,12 +41,6 @@ const Story = (props) => {
   const user_like_list = useSelector((state) => {
     return state.storypost.user_like_list;
   });
-
-  if (user_info && user_post_list && user_like_list) {
-    console.log("user_info", user_info);
-    console.log("user_post_list", user_post_list);
-    console.log("user_like_listㅎㅎ", user_like_list);
-  }
 
   // Map Marker Icon
   const userPostMarkerImgUrl = "https://i.postimg.cc/zDHr74DL/2x.png";

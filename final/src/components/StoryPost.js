@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actionCreators as ModalActions } from "../redux/modules/storypostmodal";
 import { actionCreators as storyPostActions } from "../redux/modules/storypost";
 import PostModal from "./StoryPostModal/PostModal";

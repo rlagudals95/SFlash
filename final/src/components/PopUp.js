@@ -3,8 +3,8 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
 import * as AiIcons from "react-icons/ai";
-import { history } from "../redux/configStore";
-import { actionCreators as sideActions } from "../redux/modules/side";
+// import { history } from "../redux/configStore";
+// import { actionCreators as sideActions } from "../redux/modules/side";
 
 const PopUp = (props) => {
   var settings = {
@@ -15,11 +15,11 @@ const PopUp = (props) => {
     slidesToScroll: 1,
   };
 
-  const images = [
-    "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/popup-01.jpg?alt=media&token=85b4fa77-235d-453b-849a-32543c890738",
-    "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/popup-02.jpg?alt=media&token=1193f358-702f-4c17-99bb-0683ad3633d3",
-    "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/popup-03.jpg?alt=media&token=2094a5ba-92e9-43cb-af6f-c79ccce99e4a",
-  ];
+  // const images = [
+  //   "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/popup-01.jpg?alt=media&token=85b4fa77-235d-453b-849a-32543c890738",
+  //   "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/popup-02.jpg?alt=media&token=1193f358-702f-4c17-99bb-0683ad3633d3",
+  //   "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/popup-03.jpg?alt=media&token=2094a5ba-92e9-43cb-af6f-c79ccce99e4a",
+  // ];
 
   const dayExpires = () => {
     props.close();

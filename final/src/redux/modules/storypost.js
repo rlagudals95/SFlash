@@ -1,7 +1,7 @@
 // StoryContent.js 부분을 관리하는 모듈(Grid, Map)
 // 스토리페이지 (나의 게시물, 좋아요 게시물) API 사용
 import { createAction, handleActions } from "redux-actions";
-import { actionCreators as storyPostModalActions } from "./storypostmodal";
+// import { actionCreators as storyPostModalActions } from "./storypostmodal";
 import { actionCreators as userActions } from "./user";
 import { produce } from "immer";
 import axios from "axios";
@@ -50,16 +50,13 @@ const initialState = {
 // 스토리페이지 / 유저 업로드 게시물 리스트
 const getUserPostAPI = (userId) => {
   return function (dispatch, getState) {
-    // console.log("fkfkffkffkfffk");
     const _post_list = getState().storypost.user_post_list;
     const p_length = _post_list.length;
     let lastId = p_length === 0 ? 999 : _post_list[p_length - 1].id;
     let size = 15;
-    // console.log("데이터는 잘 넘어가나?", userId, lastId, size);
 
     axios({
       method: "GET",
-      // url: `${config.api}/story/${userId}/board`,
       url: `${config.api}/story/${userId}/board?lastId=${lastId}&size=${size}`,
       headers: {
         "X-AUTH-TOKEN": localStorage.getItem("jwt"),
@@ -122,7 +119,6 @@ const getUserLikeAPI = (userId) => {
     const p_length = _post_list.length;
     let lastId = p_length === 0 ? 999 : _post_list[p_length - 1].id;
     let size = 15;
-    // console.log("데이터는 잘 넘어가나?", userId, lastId, size);
 
     axios({
       method: "GET",
@@ -184,8 +180,6 @@ const getUserLikeAPI = (userId) => {
 
 const addUserPostLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
-    // console.log("보드아이디", board_id);
-    // console.log("보드", board);
 
     axios({
       method: "POST",
@@ -196,7 +190,6 @@ const addUserPostLikeAPI = (board_id, board) => {
     })
       .then((res) => {
         // console.log("좋아요 완료!", res);
-        // console.log(res.data.message);
 
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
@@ -223,7 +216,7 @@ const addUserPostLikeAPI = (board_id, board) => {
       .catch((error) => {
         console.log(error);
         Swal.fire({
-          text: "로그인 후 이용해주세요 :)",
+          text: "좋아요 실패",
           confirmButtonColor: "#ffb719",
         });
       });
@@ -232,8 +225,6 @@ const addUserPostLikeAPI = (board_id, board) => {
 
 const deleteUserPostLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
-    // console.log("보드아이디", board_id);
-    // console.log("보드", board);
 
     axios({
       method: "DELETE",
@@ -384,12 +375,6 @@ export default handleActions(
     // 내 게시물
     [SET_STORY_POST]: (state, action) =>
       produce(state, (draft) => {
-        // console.log("내 게시물 draft.user_post_list", draft.user_post_list);
-        // console.log(
-        //   "내 게시물2 action.payload.post_list",
-        //   action.payload.post_list
-        // );
-
         draft.user_post_list.push(...action.payload.post_list);
         draft.user_post_list = draft.user_post_list.reduce((acc, cur) => {
           if (acc.findIndex((a) => a.id === cur.id) === -1) {
@@ -405,12 +390,6 @@ export default handleActions(
     // 내 좋아요 게시물
     [SET_STORY_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        // console.log("좋아요 draft.user_like_list", draft.user_like_list);
-        // console.log(
-        //   "좋아요 action.payload.post_list",
-        //   action.payload.post_list
-        // );
-
         draft.user_like_list.push(...action.payload.post_list);
         draft.user_like_list = draft.user_like_list.reduce((acc, cur) => {
           if (acc.findIndex((a) => a.id === cur.id) === -1) {
@@ -426,8 +405,6 @@ export default handleActions(
     // 내 게시물 수정(하트, 포스트 모달 수정 화면 반영)
     [EDIT_STORY_POST]: (state, action) =>
       produce(state, (draft) => {
-        // console.log(action.payload.post);
-        // console.log(action.payload.board_id);
         let idx = draft.user_post_list.findIndex(
           (p) => p.id === action.payload.board_id
         );
@@ -439,8 +416,6 @@ export default handleActions(
     // 좋아요 게시물 수정(하트)
     [EDIT_STORY_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        // console.log(action.payload.post);
-        // console.log(action.payload.board_id);
         let idx = draft.user_like_list.findIndex(
           (p) => p.id === action.payload.board_id
         );
@@ -453,7 +428,7 @@ export default handleActions(
     // 내 게시물 삭제(포스트 모달 삭제 화면 반영)
     [DELETE_STORY_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.user_post_list = draft.user_post_list.filter((r, idx) => {
+        draft.user_post_list = draft.user_post_list.filter((r) => {
           if (r.id !== action.payload.id) {
             //서버에선 이미 지워져서 오지만 한번 더 중복검사
             // 현재 리스트에서 받은 포스트 id와 같은게 없다면?
@@ -463,7 +438,7 @@ export default handleActions(
       }),
     [DELETE_STORY_MARKER]: (state, action) =>
       produce(state, (draft) => {
-        draft.user_post_list = draft.user_post_list.filter((r, idx) => {
+        draft.user_post_list = draft.user_post_list.filter((r) => {
           if (r.id !== action.payload.id) {
             //서버에선 이미 지워져서 오지만 한번 더 중복검사
             // 현재 리스트에서 받은 포스트 id와 같은게 없다면?

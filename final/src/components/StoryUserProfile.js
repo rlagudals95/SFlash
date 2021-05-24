@@ -50,9 +50,9 @@ const StoryUserProfile = (props) => {
   };
   // 비밀번호 변경 모달창 제어
   const [editPwdModal, setEditPwdModal] = React.useState(false);
-  const openEditPwdModal = () => {
-    setEditPwdModal(true);
-  };
+  // const openEditPwdModal = () => {
+  //   setEditPwdModal(true);
+  // };
   const closeEditPwdModal = () => {
     setEditPwdModal(false);
   };

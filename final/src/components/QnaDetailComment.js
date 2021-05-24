@@ -4,8 +4,8 @@ import { Grid } from "../elements/index";
 import Swal from "sweetalert2";
 
 import { useDispatch, useSelector } from "react-redux";
-import { history } from "../redux/configStore";
-import { actionCreators as qnaActions } from "../redux/modules/qna";
+// import { history } from "../redux/configStore";
+// import { actionCreators as qnaActions } from "../redux/modules/qna";
 import { actionCreators as qnaCommentActions } from "../redux/modules/qnacomment";
 
 import { FiEdit3 } from "react-icons/fi";
@@ -31,7 +31,6 @@ const QnaDetailComment = (props) => {
 
   // 해당 게시물의 댓글 리스트 불러오기
   const comment_list = useSelector((state) => state.qnacomment.list);
-  // console.log(comment_list);
   const editIdx = useSelector((state) => state.qnacomment.idx);
 
   //  댓글 등록, 수정
@@ -46,7 +45,6 @@ const QnaDetailComment = (props) => {
   // 댓글 등록 버튼을 누르면 실행되는 함수
   // 내용의 유무를 판단하고 백으로 값을 전달합니다.
   const onAddCommentSubmit = (comment) => {
-    // console.log(comment);
     if (!comment) {
       Swal.fire({
         text: "댓글을 입력하지 않으셨습니다.",
@@ -68,13 +66,11 @@ const QnaDetailComment = (props) => {
   // 댓글 등록 버튼을 누르면 실행되는 함수
   // 내용의 유무를 판단하고 백으로 값을 전달합니다.
   const onEditCommentMode = (idx) => {
-    // console.log(idx);
     dispatch(qnaCommentActions.editCommentMode(idx));
     setEditCommentMode(true);
   };
 
   const onEditCommentSubmit = (comment) => {
-    // console.log(comment);
     const qcommentId = comment_list[editIdx].id;
     if (!comment) {
       Swal.fire({

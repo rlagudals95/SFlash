@@ -25,6 +25,21 @@ import QnaList from "../pages/QnaList";
 import QnaDetail from "../pages/QnaDetail";
 import QnaWrite from "../pages/QnaWrite";
 
+console.log(  // 소개 고양이 등장!
+  "   ------------------------------------------------------\n\
+  < Welcome to SFlash!! Come and Experience our service! >\n\
+   ------------------------------------------------------\n\
+                  /\\__/\\           \n\
+                 /'    '\\          \n\
+              ===  0  0  ===       \n\
+                \\   --   /        \n\
+                /        \\        \n\
+               /          \\       \n\
+              |            |      \n\
+               \\  ||  ||  /       \n\
+                \\_oo__oo_/#######o" 
+);
+
 function App() {
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt") ? true : false; // 로컬스토리지에 저장되어있는 jwt 토큰 유무판단
@@ -40,7 +55,7 @@ function App() {
       <ConnectedRouter history={history}>
         <SideNav></SideNav>
         <SurveyButton className="blinking"
-          onClick={() => window.open("https://forms.gle/mttg6DpzWDySixki6")}
+          onClick={() => window.open("https://forms.gle/SuRWZC7xw5qsBZtf6")}
         >
           기프티콘 이벤트 참여하기
         </SurveyButton>
@@ -72,7 +87,7 @@ function App() {
 const SurveyButton = styled.div`
   position: fixed;
   right: 70px;
-  top: 40px;
+  top: 48px;
   border: none;
   border-radius: 10px;
   box-sizing: border-box;

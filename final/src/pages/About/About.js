@@ -9,7 +9,7 @@ import profile_sejeong from "./profile/profile_sejeong.jpg";
 import profile_minkyu from "./profile/profile_minkyu.jpg";
 import profile_hyeongmin from "./profile/profile_hyeongmin.jpg";
 import profile_dayoung from "./profile/profile_dayoung.jpg";
-import profile_ahyeon from "./profile/profile_ahyeon.jpg";
+import profile_ahhyun from "./profile/profile_ahhyun.jpg";
 import profile_eunjeong from "./profile/profile_eunjeong.jpg";
 
 import AboutDetail from "./AboutDetail";
@@ -121,15 +121,15 @@ About.defaultProps = {
       skill: null,
       github: "https://github.com/dayoung0601",
       portfolio: null,
-      resume: "",
+      resume: null,
       etc_1: null,
       etc_2: null,
     },
     {
       id: 6,
-      name: "Ahyeon Im",
+      name: "Ahhyun Lim",
       position: "UX/UI Designer",
-      img: profile_ahyeon,
+      img: profile_ahhyun,
       content:
         "SFlash 디자이너로 참여해 UI/UX 부분 디자인을 진행한 임아현입니다. 평소 배우던 서비스디자인에 관한 내용을 바탕으로 사용자 입장에서 어떻게하면 유용하게 서비스를 이용할 수 있을까 고민했고 SFlash UI/UX를 구성에 반영보았습니다.",
       skill: null,

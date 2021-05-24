@@ -103,73 +103,73 @@ const SelectCate = () => {
         ref={scrollRef}
       >
         {/*  */}
-        {category == "카페" ? (
+        {category === "카페" ? (
           <SelectBtn>카페</SelectBtn>
         ) : (
           <Btn onClick={cafe}>카페</Btn>
         )}
         {/*  */}
-        {category == "야경" ? (
+        {category === "야경" ? (
           <SelectBtn>야경</SelectBtn>
         ) : (
           <Btn onClick={night}>야경</Btn>
         )}
         {/*  */}
-        {category == "바다" ? (
+        {category === "바다" ? (
           <SelectBtn>바다</SelectBtn>
         ) : (
           <Btn onClick={ocean}>바다</Btn>
         )}
         {/*  */}
-        {category == "산" ? (
+        {category === "산" ? (
           <SelectBtn>산</SelectBtn>
         ) : (
           <Btn onClick={mountain}>산</Btn>
         )}
         {/*  */}
-        {category == "도심" ? (
+        {category === "도심" ? (
           <SelectBtn>도심</SelectBtn>
         ) : (
           <Btn onClick={city}>도심</Btn>
         )}
         {/*  */}
-        {category == "전시" ? (
+        {category === "전시" ? (
           <SelectBtn>전시</SelectBtn>
         ) : (
           <Btn onClick={exhibition}>전시</Btn>
         )}
         {/*  */}
-        {category == "공원" ? (
+        {category === "공원" ? (
           <SelectBtn>공원</SelectBtn>
         ) : (
           <Btn onClick={park}>공원</Btn>
         )}
         {/*  */}
-        {category == "꽃" ? (
+        {category === "꽃" ? (
           <SelectBtn>꽃</SelectBtn>
         ) : (
           <Btn onClick={flower}>꽃</Btn>
         )}
         {/*  */}
-        {category == "나홀로" ? (
+        {category === "나홀로" ? (
           <SelectBtn>나홀로</SelectBtn>
         ) : (
           <Btn onClick={alone}>나홀로</Btn>
         )}
         {/*  */}
-        {category == "연인" ? (
+        {category === "연인" ? (
           <SelectBtn>연인</SelectBtn>
         ) : (
           <Btn onClick={couple}>연인</Btn>
         )}
         {/*  */}
-        {category == "친구" ? (
+        {category === "친구" ? (
           <SelectBtn>친구</SelectBtn>
         ) : (
           <Btn onClick={freind}>친구</Btn>
         )}
         {/*  */}
-        {category == "반려동물" ? (
+        {category === "반려동물" ? (
           <SelectBtn>반려동물</SelectBtn>
         ) : (
           <Btn onClick={pet}>반려동물</Btn>

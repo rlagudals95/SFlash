@@ -3,9 +3,9 @@ import styled from "styled-components";
 import Swal from "sweetalert2";
 
 import { history } from "../redux/configStore";
-import { Grid } from "../elements/index";
+// import { Grid } from "../elements/index";
 import { useDispatch, useSelector } from "react-redux";
-import InfiniteScroll from "react-infinite-scroll-component";
+// import InfiniteScroll from "react-infinite-scroll-component";
 import { actionCreators as qnaActions } from "../redux/modules/qna";
 
 import { BsFillLockFill } from "react-icons/bs";
@@ -14,15 +14,12 @@ import { RiEditFill } from "react-icons/ri";
 
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
-import { RotateLeftTwoTone } from "@material-ui/icons";
+// import { RotateLeftTwoTone } from "@material-ui/icons";
 
 const QnaList = (props) => {
   const dispatch = useDispatch();
-  const is_login = useSelector ((state) => state.user.is_login)
-  console.log(is_login);
   const qna_list = useSelector((state) => state.qna.list);
   const total_length = useSelector((state) => state.qna.total_length);
-  // console.log("qna_list:", qna_list);
   const me = localStorage.getItem("nickname");
   const role = localStorage.getItem("role");
 
@@ -40,7 +37,6 @@ const QnaList = (props) => {
 
   React.useEffect(() => {
     dispatch(qnaActions.getQnaAPI(page, size));
-    console.log(role);
   }, [page]);
 
   //페이지네이션 화살표 함수
