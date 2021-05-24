@@ -115,7 +115,6 @@ const PostBox = styled.div`
   aspect-ratio: 1/1;
   background-size: cover;
   background-repeat: no-repeat;
-
   background-image: url("${(props) => props.src}");
   cursor: pointer;
 `;

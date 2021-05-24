@@ -45,7 +45,7 @@ const ModalDetail = (props) => {
   const user_id = localStorage.getItem("userId");
 
   const closeDetailModal = () => {
-    setEditModal(false);
+    setEditModal(true);
   };
 
   //캐러셀 모듈 코드
@@ -217,8 +217,8 @@ const ModalDetail = (props) => {
                     {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
                     {modalData.writerId == user_id ? (
                       <ModalEdit>
-                        <React.Fragment onClick={props.close}>
-                          <EditBtn onClick={setEditModal(true)}>수정</EditBtn>
+                        <React.Fragment onClick={() => props.close}>
+                          <EditBtn onClick={closeDetailModal}>수정</EditBtn>
                         </React.Fragment>
                         /
                         <DeleteBtn
@@ -318,7 +318,7 @@ const ModalDetail = (props) => {
                                   });
                                 }}
                               >
-                                <RiDeleteBinLine size="20" />
+                                <RiDeleteBinLine size="18" />
                               </Icon>
                             ) : null}
                           </ReplyUnit>
@@ -400,6 +400,16 @@ const ModalComponent = styled.div`
   margin: auto;
   max-height: 90%;
   overflow-y: auto;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: lightgray;
+  }
   @media (max-width: 1280px) {
     width: 768px;
   }
@@ -536,7 +546,7 @@ const PostTilte = styled.div`
   font-size: 1.2rem;
   font-weight: 600;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 1vh;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
@@ -544,20 +554,21 @@ const PostTilte = styled.div`
 `;
 
 const PostDate = styled.span`
- opacity: 0.5;
-  font-size: 1rem;
-  margin-left: 10px;
+  font-size: 0.9rem;
+  opacity: 0.5;
+  padding-top: 0.35vh;
 `;
 
 const PostContents = styled.div`
   font-size: 1.2rem;
   opacity: 0.6;
   width: 100%;
+  margin-top: 3px;
 `;
 
 const PostTime = styled.div`
   font-size: 1rem;
-  opacity: 0.6;
+  opacity: 0.5;
   margin: 15px 0px;
 `;
 
@@ -594,7 +605,7 @@ const ReplyUnit = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 8px 0px;
+  padding: 10px;
 `;
 
 const ReplyLeft = styled.div`
@@ -614,20 +625,20 @@ const ReplyImg = styled.div`
 const ReplyWriter = styled.div`
   font-size: 1.1rem;
   font-weight: bold;
-  margin-left: 10px;
+  padding: 0vh 1vh;
   cursor: pointer;
 `;
 
 const ReplyContent = styled.div`
   font-size: 1.1rem;
-  margin-left: 10px;
 `;
 
 const ReplyDate = styled.div`
   opacity: 0.5;
   font-size: 1rem;
-  margin-left: 10px;
+  padding: 0vh 1vh;
 `;
+
 const Icon = styled.div`
   margin-left: 0px;
   padding: 5px 9px;
