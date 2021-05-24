@@ -410,7 +410,7 @@ const ModalImg = styled.img`
     /* 1450밑으로 넓이가 내려가면 */
     /* all: unset; */
     background-image: url("${(props) => props.src}");
-    background-size: cover;
+
     object-fit: cover;
     background-position: 0px;
     background-repeat: no-repeat;

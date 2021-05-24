@@ -211,18 +211,20 @@ const getPostAPI = () => {
     const pCnt = getState().post.pagingCnt;
     // console.log("잘가지고 왔겠지", board_list);
 
+    // board_list[board_list.length - 1].id;
     let end_board = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
       board_list.length == 0
         ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
         : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
-          board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
-    // console.log("마지막 포스트 아이디", end_board);
+          board_list[board_list.length - 1].id; //여기에 -15를 계속 해주자.. >> -15,-30,-45
+
     ////
     // console.log("처음에 보내주는 토큰", config.jwt);
     if (board_list.length !== 0) {
       dispatch(pagingCntUp());
     }
-    // console.log("페이징 카운트", pCnt);
+    console.log("마지막 포스트 아이디", end_board);
+    console.log("페이징 카운트", pCnt);
     let size = 15;
     axios({
       method: "GET",
@@ -257,7 +259,7 @@ const getPostAPI = () => {
           }
 
           // console.log("스크롤 요청");
-          // console.log("!!!!!!!!!", res.data.data);
+          console.log("!!!!!!!!!", res.data.data);
 
           // 라이크 값이 자꾸 false로 오니까 리스트를 뽑아보자!
           let like_list = [];
