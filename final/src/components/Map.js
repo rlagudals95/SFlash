@@ -2873,13 +2873,15 @@ const Maps = (props) => {
           <RoadMap/>
           <HybridMapSeleted/>
         </MapTypeControlContainer>
-      )}   */}
+      )} */}
+
+      <ZoomControlBox>
+        <ZoomControl onClick={zoomIn}><IoMdAdd size="30" color="#ffb719" /></ZoomControl>
+        <ZoomControl onClick={zoomOut}><IoMdRemove size="30" color="#ffb719" /></ZoomControl>
+      </ZoomControlBox>  
 
       {/* <MoveSizeControlContainer>
-        <ZoomControlBox>
-          <ZoomControl onClick={zoomIn}><IoMdAdd size="30" color="#ffb719" /></ZoomControl>
-          <ZoomControl onClick={zoomOut}><IoMdRemove size="30" color="#ffb719" /></ZoomControl>
-        </ZoomControlBox>
+        
 
         <PanControlBox>
           <PanControl onClick={zoomOutKorea}>대한민국<br/>전체보기</PanControl>
@@ -2907,6 +2909,30 @@ const Maps = (props) => {
 };
 
 export default Maps;
+
+const ZoomControlBox = styled.div`
+  position: absolute;
+  width: 40px;
+  height: 80px;
+  top: 50px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #F2F3F7;
+  border: 2pt solid #ffb719;
+  border-radius: 5px;
+  box-sizing: border-box;
+  z-index: 100;
+`;
+
+const ZoomControl = styled.div`
+  cursor: pointer;
+  padding: 5px 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+`;
 
 const MapTypeControlContainer = styled.div`
   width: 100px;
@@ -2939,30 +2965,12 @@ const HybridMap = styled.div`
 //   bottom: 350px;
 //   right: 135px;
 //   border-radius: 10px;
-//   box-sizing: border-box;
+//   
 //   border: 2pt solid #ffb719;
 //   background-color: #F2F3F7;
 //   z-index: 100;
 // `;
 
-// const ZoomControlBox = styled.div`
-//   width: 100px;
-//   height: 50px;
-//   display: flex;
-//   flex-direction: row;
-//   border: none;  
-// `;
-
-// const ZoomControl = styled.div`
-//   display: flex;
-//   flex-direction: row; 
-//   justify-content: center;
-//   align-items: center;
-//   text-align: center;
-//   cursor: pointer;
-//   padding: 10px 10px 10px 10px;
-//   border: none;
-// `;
 
 // const PanControlBox = styled.div`
 //   width: 100px;
