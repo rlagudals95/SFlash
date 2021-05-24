@@ -1,11 +1,11 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
-import { history } from "../configStore";
+// import { history } from "../configStore";
 import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
-import { getCookie } from "../../shared/Cookie";
+// import { getCookie } from "../../shared/Cookie";
 import { actionCreators as PostActions } from "./post";
 import { actionCreators as userActions } from "./user";
 import Swal from "sweetalert2";

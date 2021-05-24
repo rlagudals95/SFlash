@@ -26,7 +26,7 @@ const Input2 = (props) => {
     type,
     multiLine,
     value,
-    is_submit,
+    // is_submit,
     onSubmit,
   } = props;
 
@@ -49,7 +49,6 @@ const Input2 = (props) => {
     <React.Fragment>
       <Grid>
         {label && <Text margin="0px">{label}</Text>}
-
         <ElInput
           type={type}
           placeholder={placeholder}

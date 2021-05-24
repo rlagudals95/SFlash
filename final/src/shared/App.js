@@ -26,6 +26,22 @@ import QnaDetail from "../pages/QnaDetail";
 import QnaWrite from "../pages/QnaWrite";
 import Swal from "sweetalert2";
 
+console.log(
+  // 소개 고양이 등장!
+  "   ------------------------------------------------------\n\
+  < Welcome to SFlash!! Come and Experience our service! >\n\
+   ------------------------------------------------------\n\
+                  /\\__/\\           \n\
+                 /'    '\\          \n\
+              ===  0  0  ===       \n\
+                \\   --   /        \n\
+                /        \\        \n\
+               /          \\       \n\
+              |            |      \n\
+               \\  ||  ||  /       \n\
+                \\_oo__oo_/#######o"
+);
+
 function App() {
   const dispatch = useDispatch();
   const is_login = useSelector((state) => state.user.is_login);
@@ -56,11 +72,32 @@ function App() {
     } //렌더링 마다 로그인체크
   }, []);
 
+  //모바일로 접속시 페이지 이동
+  var mobileKeyWords = new Array(
+    "iPhone",
+    "iPod",
+    "BlackBerry",
+    "Android",
+    "Windows CE",
+    "LG",
+    "MOT",
+    "SAMSUNG",
+    "SonyEricsson"
+  );
+  for (var word in mobileKeyWords) {
+    if (navigator.userAgent.match(mobileKeyWords[word]) != null) {
+      // window.location.href = "모바일 홈페이지 주소/실행화일";
+      history.push("/login");
+      break;
+    }
+  }
+
   return (
     <React.Fragment>
       <ConnectedRouter history={history}>
         <SideNav></SideNav>
-        <SurveyButton className="blinking"
+        <SurveyButton
+          className="blinking"
           onClick={() => window.open("https://forms.gle/SuRWZC7xw5qsBZtf6")}
         >
           기프티콘 이벤트 참여하기
@@ -93,7 +130,7 @@ function App() {
 const SurveyButton = styled.div`
   position: fixed;
   right: 70px;
-  top: 40px;
+  top: 48px;
   border: none;
   border-radius: 10px;
   box-sizing: border-box;
@@ -118,9 +155,9 @@ const SurveyButton = styled.div`
     transform: translateY(-8px);
     transition: all 200ms ease;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px 0px;
-    animation:none;
+    animation: none;
   }
- 
+
   -webkit-animation: blink 1s ease-in-out infinite alternate;
   /* -moz-animation: blink 1s ease-in-out infinite alternate; */
   animation: blink 1s ease-in-out infinite alternate;

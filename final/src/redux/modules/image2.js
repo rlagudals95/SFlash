@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
-import { actionCreators as PostActions } from "./post";
-import { conforms, result } from "lodash";
+// import { actionCreators as PostActions } from "./post";
+// import { conforms, result } from "lodash";
 
 const SET_PREVIEW = "SET_PREVIEW";
 const GET_PREVIEW = "GET_PREVIEW";
@@ -100,9 +100,9 @@ const getPost = (board_id) => {
 
     //여기서 이미지만 뽑아주면??
 
-    const onlyImg = editPost.img_url; // ???? 커뮤니티 부터 와야한다...그래야 img_url을 인식한다..!
+    const onlyImg = editPost.img_url; // 커뮤니티 부터 와야한다...그래야 img_url을 인식한다..!
     // dispatch(getEditPost(editPost));
-    dispatch(getImage(onlyImg)); // 온리이미지르르..파일에도 넣자?
+    dispatch(getImage(onlyImg)); // 온리이미지를..파일에도 넣자
 
     for (let i = 0; i < onlyImg.length; i++) {
       dispatch(getImgToFile(onlyImg[i]));
@@ -112,10 +112,7 @@ const getPost = (board_id) => {
 
 const getModalPost = (board) => {
   return function (dispatch, getState) {
-    // console.log("보드 가져왔니?", board);
-
     const onlyImg = board.img_url;
-
     dispatch(getImage(onlyImg));
     for (let i = 0; i < onlyImg.length; i++) {
       dispatch(getImgToFile(onlyImg[i]));
@@ -237,8 +234,6 @@ export default handleActions(
       }),
     [DELETE_FILE_IDX]: (state, action) =>
       produce(state, (draft) => {
-        // console.log("파일지워야되", action.payload.idx); //이미지 리더 값이 나온다... 파일이랑 연관짓자
-        // 처음엔 이미지 파일과 같이 들어있는 배열이온다
         //idx를 받으면 해당 패열에서 idx 받은 곳의 요소 1개를 삭제한다
         draft.edit_file.splice(action.payload.idx, 1);
       }),

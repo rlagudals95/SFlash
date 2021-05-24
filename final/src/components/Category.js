@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Grid, Text, Button, Input } from "../elements/index";
-import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as categoryActions } from "../redux/modules/category";
-import * as BiIcons from "react-icons/bi";
+// import { Grid, Text, Button, Input } from "../elements/index";
+// import { history } from "../redux/configStore";
+// import * as BiIcons from "react-icons/bi";
 // import { actionCreators as PostActions } from "../redux/modules/post";
 
 const Category = () => {
@@ -43,7 +43,7 @@ const Category = () => {
         <CategoryInfo>
           <CateGoryTitle>카테고리</CateGoryTitle>
         </CategoryInfo>
-        {is_category.length == 0 ? ( // 카테고리가 선택된게 없다? 즉, is_category값이 0이면 전체 게시물을 보여주는 상태값
+        {is_category.length === 0 ? ( // 카테고리가 선택된게 없다? 즉, is_category값이 0이면 전체 게시물을 보여주는 상태값
           <SelectedBtn
             onClick={(e) => {
               e.preventDefault();
@@ -436,9 +436,9 @@ const CateGoryTitle = styled.div`
   }
 `;
 
-const CategoryIcon = styled.div`
-  margin-right: 12px;
-`;
+// const CategoryIcon = styled.div`
+//   margin-right: 12px;
+// `;
 
 const Btn = styled.button`
   margin: 3px;

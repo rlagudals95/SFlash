@@ -4,8 +4,8 @@ import { Grid } from "../elements/index";
 import Swal from "sweetalert2";
 
 import { useDispatch, useSelector } from "react-redux";
-import { history } from "../redux/configStore";
-import { actionCreators as qnaActions } from "../redux/modules/qna";
+// import { history } from "../redux/configStore";
+// import { actionCreators as qnaActions } from "../redux/modules/qna";
 import { actionCreators as qnaCommentActions } from "../redux/modules/qnacomment";
 
 import { FiEdit3 } from "react-icons/fi";

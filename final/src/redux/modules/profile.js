@@ -3,7 +3,7 @@ import { createAction, handleActions } from "redux-actions";
 import { actionCreators as userActions } from "./user";
 import produce from "immer";
 import axios from "axios";
-import { history } from "../configStore";
+// import { history } from "../configStore";
 import { config } from "../../shared/config";
 import Swal from "sweetalert2";
 

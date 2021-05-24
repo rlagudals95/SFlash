@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
-import { history } from "../redux/configStore";
+// import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as userActions } from "../redux/modules/user";
+// import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 import { nicknameRegCheck } from "../shared/common";
 import axios from "axios";
@@ -13,8 +13,8 @@ import { Grid } from "../elements/index";
 import { InfoUl, InfoLi } from "../Css/loginSignupCss";
 import { HiCamera } from "react-icons/hi";
 import { GiCheckMark } from "react-icons/gi";
-import { ClosedCaption } from "@material-ui/icons";
-import profileDefault from "../static/profileDefault.svg";
+// import { ClosedCaption } from "@material-ui/icons";
+// import profileDefault from "../static/profileDefault.svg";
 // import { set } from "immer/dist/internal";
 
 const StoryEditProfile = (props) => {

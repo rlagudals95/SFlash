@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 // 리덕스를 이용하게 해주는 함수들, 모듈 파일 가져오기
 import { useDispatch, useSelector } from "react-redux";
 import { markerImgUrls } from "../shared/configMarkerImgUrl"; // 마커이미지url
@@ -67,6 +67,8 @@ const Maps = (props) => {
     return state.post.map_post_list; // 비동기 문제 해결
   });
 
+  console.log();
+
   // 디테일 모달 관련 상태값
   const [is_detailModal, setDetailModal] = useState();
 
@@ -77,14 +79,12 @@ const Maps = (props) => {
     setDetailModal(false);
   };
 
-  if (map_post_list) {
-    // console.log(map_post_list); // map_post_list처음에 []빈배열로 찍힌다
-  }
+  // if (map_post_list) {
+  //   console.log(map_post_list);
+  // }
 
   // 종류별 데이터는 필터 함수를 이용해 묶어 내고 필요한 부분에 가져다 쓴다.
   // 전체 마커, 내 마커, 내가 좋아요한 마커
-  const allData = map_post_list;
-
   // 1. 내가 작성한 게시물이 데이터
   const myPostData = map_post_list.filter(
     (map_post_list) => map_post_list.writerName === nickname
@@ -92,40 +92,40 @@ const Maps = (props) => {
   // console.log("내 작성 게시물 왔나??: " + myPostData);
   // 1. 내가 작성한한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!!
   const myPostCafe = myPostData.filter(
-    (myPostData) => myPostData.category == "카페" // 1. 카페
+    (myPostData) => myPostData.category === "카페" // 1. 카페
   );
   const myPostNight = myPostData.filter(
-    (myPostData) => myPostData.category == "야경" // 2. 야경
+    (myPostData) => myPostData.category === "야경" // 2. 야경
   );
   const myPostOcean = myPostData.filter(
-    (myPostData) => myPostData.category == "바다" // 3. 바다
+    (myPostData) => myPostData.category === "바다" // 3. 바다
   );
   const myPostMountain = myPostData.filter(
-    (myPostData) => myPostData.category == "산" // 4. 산
+    (myPostData) => myPostData.category === "산" // 4. 산
   );
   const myPostFlower = myPostData.filter(
-    (myPostData) => myPostData.category == "꽃" // 5. 꽃
+    (myPostData) => myPostData.category === "꽃" // 5. 꽃
   );
   const myPostAlone = myPostData.filter(
-    (myPostData) => myPostData.category == "나홀로" // 6. 나홀로
+    (myPostData) => myPostData.category === "나홀로" // 6. 나홀로
   );
   const myPostCouple = myPostData.filter(
-    (myPostData) => myPostData.category == "연인" // 7. 연인
+    (myPostData) => myPostData.category === "연인" // 7. 연인
   );
   const myPostFriend = myPostData.filter(
-    (myPostData) => myPostData.category == "친구" // 8. 친구
+    (myPostData) => myPostData.category === "친구" // 8. 친구
   );
   const myPostPet = myPostData.filter(
-    (myPostData) => myPostData.category == "반려동물" // 9. 반려동물
+    (myPostData) => myPostData.category === "반려동물" // 9. 반려동물
   );
   const myPostCity = myPostData.filter(
-    (myPostData) => myPostData.category == "도심" // 10. 도심
+    (myPostData) => myPostData.category === "도심" // 10. 도심
   );
   const myPostPark = myPostData.filter(
-    (myPostData) => myPostData.category == "공원" // 11. 공원
+    (myPostData) => myPostData.category === "공원" // 11. 공원
   );
   const myPostExhibition = myPostData.filter(
-    (myPostData) => myPostData.category == "전시" // 12. 전시
+    (myPostData) => myPostData.category === "전시" // 12. 전시
   );
   // 1. 내가 작성한한 게시물 데이터를 다시 카테고리별로 데이터분류 끝!!!
 
@@ -136,40 +136,40 @@ const Maps = (props) => {
   // console.log("내좋아요 데이터있나??: " + myLikeData);
   // 2. 내가 좋아요한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!!
   const myLikeCafe = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "카페" // 1. 카페
+    (myLikeData) => myLikeData.category === "카페" // 1. 카페
   );
   const myLikeNight = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "야경" // 2. 야경
+    (myLikeData) => myLikeData.category === "야경" // 2. 야경
   );
   const myLikeOcean = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "바다" // 3. 바다
+    (myLikeData) => myLikeData.category === "바다" // 3. 바다
   );
   const myLikeMountain = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "산" // 4. 산
+    (myLikeData) => myLikeData.category === "산" // 4. 산
   );
   const myLikeFlower = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "꽃" // 5. 꽃
+    (myLikeData) => myLikeData.category === "꽃" // 5. 꽃
   );
   const myLikeAlone = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "나홀로" // 6. 나홀로
+    (myLikeData) => myLikeData.category === "나홀로" // 6. 나홀로
   );
   const myLikeCouple = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "연인" // 7. 연인
+    (myLikeData) => myLikeData.category === "연인" // 7. 연인
   );
   const myLikeFriend = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "친구" // 8. 친구
+    (myLikeData) => myLikeData.category === "친구" // 8. 친구
   );
   const myLikePet = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "반려동물" // 9. 반려동물
+    (myLikeData) => myLikeData.category === "반려동물" // 9. 반려동물
   );
   const myLikeCity = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "도심" // 10. 도심
+    (myLikeData) => myLikeData.category === "도심" // 10. 도심
   );
   const myLikePark = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "공원" // 11. 공원
+    (myLikeData) => myLikeData.category === "공원" // 11. 공원
   );
   const myLikeExhibition = myLikeData.filter(
-    (myLikeData) => myLikeData.category == "전시" // 12. 전시
+    (myLikeData) => myLikeData.category === "전시" // 12. 전시
   );
   // 2. 내가 좋아요한 게시물 데이터를 다시 카테고리별로 데이터분류 끝!!!
 
@@ -281,17 +281,17 @@ const Maps = (props) => {
     // geolocation으로 얻은 접속좌표에다가 현재위치를 표시하는 마커 또는 표식 올리기
     const currentMarkerSize = new kakao.maps.Size(30, 30);
     const currentMarkerImage = new kakao.maps.MarkerImage(
-      `${markerImgUrls.currentMarkerImageUrl}`, 
+      `${markerImgUrls.currentMarkerImageUrl}`,
       currentMarkerSize
     );
     const currentPosition = new kakao.maps.LatLng(startLat, startLng);
 
     const currentMarker = new kakao.maps.Marker({
-      map: map, // 이러면 애초에 현재 위치가 표시된다. 
+      map: map, // 이러면 애초에 현재 위치가 표시된다.
       position: currentPosition,
       image: currentMarkerImage,
       zIndex: 50,
-    })
+    });
 
     currentMarker.setMap(map);
 
@@ -325,12 +325,12 @@ const Maps = (props) => {
         setLongitude(hereLng); // useState() : 경도 longitude 값 전역으로 설정
         // console.log(latitude + " " + longitude);
 
-        var message = "클릭한 위치의 위도는 " + hereLat + " 이고, ";
-        message += "경도는 " + hereLng + " 입니다";
-        // console.log(message);
+        // var message = "클릭한 위치의 위도는 " + hereLat + " 이고, ";
+        // message += "경도는 " + hereLng + " 입니다";
+        // // console.log(message);
 
-        // 위도 경도 좌표로 주소 알아내기
-        var coord = new kakao.maps.LatLng(hereLat, hereLng);
+        // // 위도 경도 좌표로 주소 알아내기
+        // var coord = new kakao.maps.LatLng(hereLat, hereLng);
         // console.log(coord);
 
         // 좌표 => 주소 변환 코드 시작!!!
@@ -367,7 +367,6 @@ const Maps = (props) => {
         var writePosition = new kakao.maps.LatLng(hereLat, hereLng);
         var writeMarker = new kakao.maps.Marker({
           // 클릭한 위치에 게시물 작성용 마커를 띄워준다.
-          // 렌더링 되면서 마커만 나오므로, 데이터는 좌표와 마커이미지만 필요.
           // map: map,
           position: writePosition,
           image: writeMarkerImage,
@@ -432,13 +431,7 @@ const Maps = (props) => {
 
         // 게시물 작성법을 안내하는 커스텀오버레이
         // 모달창(커스텀오버레이)에 들어갈 내용
-        const writeInfoContent =
-          '<div class="writeinfocontainer">' + 
-            // `<img class="writeinfoimg" src=${writeInfoImg}>` +
-            // '<div class="writeinfohead">' +
-              // `<div class="writeinfospotname1">${spotName}</div>` + 
-            // '<div/>' +
-          '<div/>'
+        const writeInfoContent = '<div class="writeinfocontainer"><div/>';
 
         const writeInfoCustomOverlay = new kakao.maps.CustomOverlay({
           // map: map,        // 이거 있으면 처음부터 커스텀오버레이가 보인다
@@ -461,7 +454,7 @@ const Maps = (props) => {
           writeInfoCustomOverlay.setMap(null);
         });
 
-        //마커에서 좌클릭하면 커스텀오버레이가 사라지게한다.
+        //마커에서 우클릭하면 커스텀오버레이가 사라지게한다.
         kakao.maps.event.addListener(writeMarker, "rightclick", function () {
           writeInfoCustomOverlay.setMap(null);
         });
@@ -2203,7 +2196,7 @@ const Maps = (props) => {
 
     // 4. 산카테고리 : 산마커 + 커스텀 오버레이
     if (is_mountain) {
-      mountainData.map((mountain, idx) => {
+      mountainData.map((mountain) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
         var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
@@ -2320,7 +2313,7 @@ const Maps = (props) => {
 
     // 6. 나홀로카테고리 : 나홀로마커 + 커스텀 오버레이
     if (is_alone) {
-      aloneData.map((alone, idx) => {
+      aloneData.map((alone) => {
         // 서버와 연결해서 받은 데이터로 맵함수를 돌린다.
         var imageSize = new kakao.maps.Size(42, 63);
         var markerImage = new kakao.maps.MarkerImage(
@@ -2753,23 +2746,23 @@ const Maps = (props) => {
 
   // 업로드모달에 props로 전달되는 데이터
   if (latitude && longitude && spotName) {
-    // console.log(
-    //   "위도: " +
-    //     latitude +
-    //     " " +
-    //     ", 경도: " +
-    //     longitude +
-    //     " " +
-    //     ", 장소: " +
-    //     spotName
-    // );
+    console.log(
+      "위도: " +
+        latitude +
+        " " +
+        ", 경도: " +
+        longitude +
+        " " +
+        ", 장소: " +
+        spotName
+    );
   }
 
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다
   var ps = new kakao.maps.services.Places();
   // 키워드로 장소를 검색합니다
-  if (search) {  
+  if (search) {
     //search가 빈 string일때 검색이 되어서 오류가 뜨는 경우를 없애기 위해 if문으로 분기한다.
     ps.keywordSearch(search, (data, status, pagination) => {
       if (status === kakao.maps.services.Status.OK) {
@@ -2822,7 +2815,7 @@ const Maps = (props) => {
         />
 
         <SearchIcon>
-          <BiIcons.BiSearch size="43" color="#ffb719" />
+          <BiIcons.BiSearch size="40" color="#ffb719" />
         </SearchIcon>
       </SearchBox>
 
@@ -2845,7 +2838,6 @@ const Maps = (props) => {
   );
 };
 
-
 export default Maps;
 
 const SearchBox = styled.div`
@@ -2856,7 +2848,7 @@ const SearchBox = styled.div`
   border-radius: 10px;
   top: 30px;
   left: 50%;
-  height: 72px;
+  height: 60px;
   transform: translate(-50%, -70%);
   z-index: 3;
   @media (min-width: 1400px) {
@@ -2870,7 +2862,7 @@ const SearchBox = styled.div`
     margin: auto;
   }
   @media (max-width: 600px) {
-    top: 9vh;
+    top: 7vh;
     width: 50%;
     left: 25%;
     margin: auto 25vw;
@@ -2894,8 +2886,8 @@ const SearchInput = styled.input`
 
 const SearchIcon = styled.div`
   position: fixed;
-  top: 14.5px;
-  right: 14.5px;
+  top: 10px;
+  right: 10px;
   background-size: cover;
   object-fit: cover;
 `;

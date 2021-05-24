@@ -15,13 +15,19 @@ import Swal from "sweetalert2";
 import Spinner from "../shared/Spinner";
 import { actionCreators as sideActions } from "../redux/modules/side";
 
+// import { actionCreators as imageActions } from "../redux/modules/image2";
+// import { actionCreators as CommnetActions } from "../redux/modules/comment";
+// import { actionCreators as likeActions } from "../redux/modules/like";
+// import { forEach } from "lodash";
+// import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {}, []);
 
   // console.log("eeee", props);
-  const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
+  // const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
   const modalData = useSelector((state) => state.mapmodal.post);
 
   const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
@@ -38,14 +44,6 @@ const ModalDetail = (props) => {
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
 
-  // console.log("닉네임", nickname);
-  // const is_like = props.like 라이크가 있냐 확인?
-
-  const openEditModal = () => {
-    // props.closeDetail();
-    setEditModal(true);
-  };
-
   const closeDetailModal = () => {
     setEditModal(false);
   };
@@ -59,7 +57,7 @@ const ModalDetail = (props) => {
     slidesToScroll: 1,
   };
 
-  const is_comment = commentData ? true : false;
+  // const is_comment = commentData ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
@@ -123,11 +121,11 @@ const ModalDetail = (props) => {
   //새로운 데이터가 들어올땐 어떻게 해야할까...?
   return (
     <React.Fragment>
-    {modalData ? (
-      commentData && ( //모달데이터가 들어와야 실행!
-        <React.Fragment>
-          <Component onClick={closeModal} />
-          <ModalComponent>
+      {modalData ? (
+        commentData && ( //모달데이터가 들어와야 실행!
+          <React.Fragment>
+            <Component onClick={closeModal} />
+            <ModalComponent>
               <ModalTopContainer>
                 <ProfileContainer>
                   <ProCircle
@@ -142,7 +140,7 @@ const ModalDetail = (props) => {
                     }}
                   />
                   <ModalAuthor
-                     onClick={() => {
+                    onClick={() => {
                       dispatch(sideActions.getPage());
                       history.replace(`/story/${modalData.writerId}`); // 댓글 작성자의 프로필부분들 클릭하면 해당유저의 마이페이지로 이동
                     }}
@@ -220,7 +218,7 @@ const ModalDetail = (props) => {
                     {modalData.writerId == user_id ? (
                       <ModalEdit>
                         <React.Fragment onClick={props.close}>
-                          <EditBtn onClick={openEditModal}>수정</EditBtn>
+                          <EditBtn onClick={setEditModal(true)}>수정</EditBtn>
                         </React.Fragment>
                         /
                         <DeleteBtn
@@ -239,11 +237,11 @@ const ModalDetail = (props) => {
                                 e.stopPropagation();
                                 dispatch(
                                   postActions.deletePostAPI(modalData.id)
-                                ); 
+                                );
                                 dispatch(
                                   postActions.deleteMarker(modalData.id)
                                 );
-                                props.close(); 
+                                props.close();
                               }
                             });
                           }}
@@ -300,10 +298,7 @@ const ModalDetail = (props) => {
                                 </ReplyWriter>
                               </>
                               <ReplyContent>{c.content}</ReplyContent>
-                              <ReplyDate>
-                                {" "}
-                                {timeForToday(c.modified)}
-                              </ReplyDate>
+                              <ReplyDate> {timeForToday(c.modified)}</ReplyDate>
                             </ReplyLeft>
 
                             {nickname == c.writerName ? (
@@ -325,13 +320,12 @@ const ModalDetail = (props) => {
                               >
                                 <RiDeleteBinLine size="18" />
                               </Icon>
-                            ) : 
-                            null}
+                            ) : null}
                           </ReplyUnit>
                         </ReplyBox>
                       );
                     })}
-                     <ModalCmtInputBox>
+                  <ModalCmtInputBox>
                     <CommentInput
                       type="text"
                       placeholder="댓글달기..."
@@ -344,74 +338,73 @@ const ModalDetail = (props) => {
                       <UploadBtn style={{ opacity: "0.3" }}>게시</UploadBtn>
                     )}
 
-{is_Editmodal ? (
-                <UploadModal
-                  close={closeDetailModal}
-                  {...modalData}
-                  modal={"modal"}
-                />
+                    {is_Editmodal ? (
+                      <UploadModal
+                        close={closeDetailModal}
+                        {...modalData}
+                        modal={"modal"}
+                      />
                     ) : null}
                   </ModalCmtInputBox>
                 </ModalCmtBox>
-
               </ModalBottomContainer>
-          </ModalComponent>
-        </React.Fragment>
-      )
-    ) : (
-      <Spinner />
-    )}
-  </React.Fragment>
-);
+            </ModalComponent>
+          </React.Fragment>
+        )
+      ) : (
+        <Spinner />
+      )}
+    </React.Fragment>
+  );
 };
 
 const ModalImg = styled.img`
-all: unset;
-background-image: url("${(props) => props.src}");
-background-size: cover;
-object-fit: cover;
-border: none;
-box-sizing: border-box;
-width: 100%;
-aspect-ratio: 4/3;
-background-position: center;
+  all: unset;
+  background-image: url("${(props) => props.src}");
+  background-size: cover;
+  object-fit: cover;
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-position: center;
 `;
 
 const Component = styled.div`
-position: fixed;
-opacity: 0.8;
-height: 100%;
-width: 100%;
-background-color: black;
-z-index: 999;
-top: 0;
-left: 0;
-bottom: 0;
-right: 0;
+  position: fixed;
+  opacity: 0.8;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 `;
 
 const ModalComponent = styled.div`
-border-radius: 0.5vw;
-position: fixed;
-width: 700px;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-background-color: #fafafc;
-z-index: 1000;
-display: flex;
-flex-direction: column;
-border: none;
-box-sizing: border-box;
-min-width: 380px;
-margin: auto;
-height: 90%;
-overflow-y: auto;
+  border-radius: 0.5vw;
+  position: fixed;
+  width: 700px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fafafc;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  box-sizing: border-box;
+  min-width: 380px;
+  margin: auto;
+  height: 90%;
+  overflow-y: auto;
   @media (max-width: 1280px) {
     width: 768px;
   }
   @media (max-width: 768px) {
-    width:97%
+    width: 97%;
   }
   @media (max-width: 480px) {
     width: 100vw;
@@ -419,294 +412,266 @@ overflow-y: auto;
     border-radius: none;
   }
 `;
-const Wrapper = styled.div`
 
-}
-`;
 // 모둘 상단부(프로필)-------------------------------------
 const ModalTopContainer = styled.div`
-padding: 10px 0px;
-width: 100%;
-display: flex;
-align-items: center;
+  padding: 10px 0px;
+  width: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 const ProfileContainer = styled.div`
-margin: auto;
-display: flex;
-align-items: center;
+  margin: auto;
+  display: flex;
+  align-items: center;
 `;
 
 const ProCircle = styled.div`
-height: 55px;
-aspect-ratio: 1/1;
-border-radius: 100%;
-background-size: cover;
-background-position: center;
-background-image: url("${(props) => props.src}");
-cursor: pointer;
+  height: 55px;
+  aspect-ratio: 1/1;
+  border-radius: 100%;
+  background-size: cover;
+  background-position: center;
+  background-image: url("${(props) => props.src}");
+  cursor: pointer;
 `;
 
 const ModalAuthor = styled.div`
-font-size: 1.2rem;
-font-weight: 600;
-padding-left: 10px;
-cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding-left: 10px;
+  cursor: pointer;
 `;
 
 const CloseButton = styled.div`
-position: absolute;
-top: 25px;
-right: 25px;
-border-radius: 50%;
-z-index: 100;
-color: lightgrey;
-align-items: center;
-&:hover {
-  cursor: pointer;
-  color: grey;
-}
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  border-radius: 50%;
+  z-index: 100;
+  color: lightgrey;
+  align-items: center;
+  &:hover {
+    cursor: pointer;
+    color: grey;
+  }
 `;
 
 // 상세-------------------------------------
 const ModalBottomContainer = styled.div`
-text-align: left;
-width: 93%;
-display: flex;
-margin: 10px auto;
-flex-direction: column;
+  text-align: left;
+  width: 93%;
+  display: flex;
+  margin: 10px auto;
+  flex-direction: column;
 `;
 
 const InfoBox = styled.div`
-width: 100%;
-text-align: left;
-margin: 0px auto;
-padding-top: 5px;
-border-bottom: 1px solid #efefef;
+  width: 100%;
+  text-align: left;
+  margin: 0px auto;
+  padding-top: 5px;
+  border-bottom: 1px solid #efefef;
 `;
 
 // 좋아요 + 수정/삭제  or 카테고리 -------------------------------------
 
 const InfoBox_1 = styled.div`
-display: flex;
-justify-content: space-between;
-/* background-color: green; */
-align-items: center;
+  display: flex;
+  justify-content: space-between;
+  /* background-color: green; */
+  align-items: center;
 `;
 
 const LikeBox = styled.div`
-align-items: center;
-display: flex;
+  align-items: center;
+  display: flex;
 `;
 
 const LikeCntBox = styled.div`
-position: absolute;
-display: inline-flex;
-font-size: 1.3rem;
-opacity: 0.7;
-margin-left: 5px;
-top: -10;
+  position: absolute;
+  display: inline-flex;
+  font-size: 1.3rem;
+  opacity: 0.7;
+  margin-left: 5px;
+  top: -10;
 `;
 
 const ModalEdit = styled.div`
-opacity: 0.5;
-font-size: 1.1rem;
+  opacity: 0.5;
+  font-size: 1.1rem;
 `;
 
 const EditBtn = styled.span`
-cursor: pointer;
+  cursor: pointer;
 `;
 
 const DeleteBtn = styled.span`
-margin-left: 1px;
-cursor: pointer;
+  margin-left: 1px;
+  cursor: pointer;
 `;
 
 const ModalCate = styled.div`
-background-color: white;
-width: 80px;
-height: 24px;
-color: rgba(0, 0, 0, 0.5);
-text-align: center;
-font-size: 1.1rem;
-padding: 8px 10px;
-display: inline-block;
-border-radius: 5px;
-box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.2);
+  background-color: white;
+  width: 80px;
+  height: 24px;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 8px 10px;
+  display: inline-block;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.2);
 `;
 
 // 제목, 내용, 시간, 주소-------------------------------------
 
 const InfoBox_2 = styled.div`
-width: 100%;
-margin-top: 5px;
-/* background-color: purple; */
+  width: 100%;
+  margin-top: 5px;
 `;
 
 const PostTilte = styled.div`
-font-size: 1.2rem;
-font-weight: 600;
-width: 100%;
-margin-bottom: 1vh;
-overflow-y: scroll;
-::-webkit-scrollbar {
-  display: none;
-}
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 100%;
+  margin-bottom: 1vh;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const PostDate = styled.span`
-font-size: 0.9rem;
-opacity: 0.5;
-padding-top: 0.35vh;
+  font-size: 0.9rem;
+  opacity: 0.5;
+  padding-top: 0.35vh;
 `;
 
 const PostContents = styled.div`
-font-size: 1.2rem;
-opacity: 0.6;
-width: 100%;
-margin-top: 3px;
-/* background-color: red; */
-/* max-height: 200px;
-overflow-y: scroll;
-::-webkit-scrollbar {
-  display: none;
-} */
+  font-size: 1.2rem;
+  opacity: 0.6;
+  width: 100%;
+  margin-top: 3px;
 `;
 
 const PostTime = styled.div`
-font-size: 1rem;
-opacity: 0.5;
-margin: 15px 0px;
+  font-size: 1rem;
+  opacity: 0.5;
+  margin: 15px 0px;
 `;
 
 // 댓글--------------------------------------------
 
 const ModalCmtBox = styled.div`
-justify-content: space-between;
-height: 100%;
-margin-top: 5px;
-display: flex;
-flex-direction: column;
-/* 아래 태그는 댓글이 많으면 
+  justify-content: space-between;
+  height: 100%;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  /* 아래 태그는 댓글이 많으면 
 스크롤로 아래 부분이 위로 올라가게 해서 
 댓글이 보여지게 함 */
-overflow-y: scroll;
-min-height: 30px;
-::-webkit-scrollbar {
-  display: none;
-}
-@media (max-width: 1440px) {
+  overflow-y: scroll;
+  min-height: 30px;
   ::-webkit-scrollbar {
     display: none;
   }
-}
+  @media (max-width: 1440px) {
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `;
 
 const ReplyBox = styled.div`
-align-items: center;
-width: 100%;
+  align-items: center;
+  width: 100%;
 `;
 
 const ReplyUnit = styled.div`
-display: flex;
-align-items: center;
-justify-content: space-between;
-/* height: 3vh; */
-width: 100%;
-padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
 `;
 
 const ReplyLeft = styled.div`
-align-items: center;
-display: flex;
+  align-items: center;
+  display: flex;
 `;
 
 const ReplyImg = styled.div`
-height: 50px;
-width: 50px;
-border-radius: 50%;
-background-size: cover;
-background-image: url("${(props) => props.src}");
-cursor: pointer;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-size: cover;
+  background-image: url("${(props) => props.src}");
+  cursor: pointer;
 `;
 
 const ReplyWriter = styled.div`
-font-size: 1.1rem;
-font-weight: bold;
-padding: 0vh 1vh;
-cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 0vh 1vh;
+  cursor: pointer;
 `;
 
 const ReplyContent = styled.div`
-font-size: 1.1rem;
+  font-size: 1.1rem;
 `;
 
 const ReplyDate = styled.div`
-opacity: 0.5;
-font-size: 1rem;
-padding: 0vh 1vh;
-`;
-
-const CmtDeleteBtn = styled.button`
-height: 2px;
-width: 2p;
-cursor: pointer;
-background-color: transparent;
-border: none;
-outline: none;
-opacity: 0.2;
-margin-right: 1.3vw;
-margin-bottom: 2.3vh;
-&:hover {
-  opacity: 1;
-}
-background-color: red;
+  opacity: 0.5;
+  font-size: 1rem;
+  padding: 0vh 1vh;
 `;
 
 const Icon = styled.div`
-margin-left: 0px;
-padding: 5px 9px;
-color: grey;
-&:hover {
-  color: lightgrey;
-  cursor: pointer;
-  transition: all 0.5s ease-in-out;
-}
-/* background-color: green; */
+  margin-left: 0px;
+  padding: 5px 9px;
+  color: grey;
+  &:hover {
+    color: lightgrey;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+  }
 `;
 
 const ModalCmtInputBox = styled.div`
-position: relative;
-bottom:0;
-margin: 20px 0px;
-width: 100%;
-align-items: center;
-display: flex;
-box-sizing: border-box;
-border: 2px solid #efefef;
-box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.1);
+  position: relative;
+  bottom: 0;
+  margin: 20px 0px;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  box-sizing: border-box;
+  border: 2px solid #efefef;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
 
 const CommentInput = styled.input`
-background: white;
-font-size: 1.1rem;
-padding: 12px;
-border: none;
-outline: none;
-width: 100%;
+  background: white;
+  font-size: 1.1rem;
+  padding: 12px;
+  border: none;
+  outline: none;
+  width: 100%;
 
-@media (max-width: 600px) {
-}
+  @media (max-width: 600px) {
+  }
 `;
 
 const UploadBtn = styled.div`
-font-size: 1.1rem;
-color: ${(props) => props.theme.main_color};
-background-color: #ffffff;
-cursor: pointer;
-padding: 0px 20px;
-font-weight: 400;
-word-break: keep-all;
+  font-size: 1.1rem;
+  color: ${(props) => props.theme.main_color};
+  background-color: #ffffff;
+  cursor: pointer;
+  padding: 0px 20px;
+  font-weight: 400;
+  word-break: keep-all;
 `;
 
 export default ModalDetail;

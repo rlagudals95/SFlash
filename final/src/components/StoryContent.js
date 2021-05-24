@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import Swal from "sweetalert2";
 import { Grid, Text } from "../elements/index";
-import { history } from "../redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as storyPostActions } from "../redux/modules/storypost";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -16,6 +14,10 @@ import Spinner from "../shared/Spinner";
 const StoryContent = (props) => {
   const dispatch = useDispatch();
   const { post_list, marker_icon, userPostMode, userId } = props;
+  // console.log(post_list);
+  // const user_id = props.match.params.id;
+  // console.log(userId);
+  // const paging = useSelector((state) => state.storypost.paging);
   const is_loading = useSelector((state) => state.storypost.is_loading);
 
   // gridMode 가 true 면 그리드 형태로, false면 맵형태로 보여준다.

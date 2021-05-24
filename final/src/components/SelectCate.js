@@ -103,73 +103,73 @@ const SelectCate = () => {
         ref={scrollRef}
       >
         {/*  */}
-        {category == "카페" ? (
+        {category === "카페" ? (
           <SelectBtn>카페</SelectBtn>
         ) : (
           <Btn onClick={cafe}>카페</Btn>
         )}
         {/*  */}
-        {category == "야경" ? (
+        {category === "야경" ? (
           <SelectBtn>야경</SelectBtn>
         ) : (
           <Btn onClick={night}>야경</Btn>
         )}
         {/*  */}
-        {category == "바다" ? (
+        {category === "바다" ? (
           <SelectBtn>바다</SelectBtn>
         ) : (
           <Btn onClick={ocean}>바다</Btn>
         )}
         {/*  */}
-        {category == "산" ? (
+        {category === "산" ? (
           <SelectBtn>산</SelectBtn>
         ) : (
           <Btn onClick={mountain}>산</Btn>
         )}
         {/*  */}
-        {category == "도심" ? (
+        {category === "도심" ? (
           <SelectBtn>도심</SelectBtn>
         ) : (
           <Btn onClick={city}>도심</Btn>
         )}
         {/*  */}
-        {category == "전시" ? (
+        {category === "전시" ? (
           <SelectBtn>전시</SelectBtn>
         ) : (
           <Btn onClick={exhibition}>전시</Btn>
         )}
         {/*  */}
-        {category == "공원" ? (
+        {category === "공원" ? (
           <SelectBtn>공원</SelectBtn>
         ) : (
           <Btn onClick={park}>공원</Btn>
         )}
         {/*  */}
-        {category == "꽃" ? (
+        {category === "꽃" ? (
           <SelectBtn>꽃</SelectBtn>
         ) : (
           <Btn onClick={flower}>꽃</Btn>
         )}
         {/*  */}
-        {category == "나홀로" ? (
+        {category === "나홀로" ? (
           <SelectBtn>나홀로</SelectBtn>
         ) : (
           <Btn onClick={alone}>나홀로</Btn>
         )}
         {/*  */}
-        {category == "연인" ? (
+        {category === "연인" ? (
           <SelectBtn>연인</SelectBtn>
         ) : (
           <Btn onClick={couple}>연인</Btn>
         )}
         {/*  */}
-        {category == "친구" ? (
+        {category === "친구" ? (
           <SelectBtn>친구</SelectBtn>
         ) : (
           <Btn onClick={freind}>친구</Btn>
         )}
         {/*  */}
-        {category == "반려동물" ? (
+        {category === "반려동물" ? (
           <SelectBtn>반려동물</SelectBtn>
         ) : (
           <Btn onClick={pet}>반려동물</Btn>
@@ -188,7 +188,7 @@ const HoriznalBtn = styled.div`
   /* align-items: center;
   text-align: center; */
   width: 100%;
-
+  margin-top: -10px;
   overflow-x: scroll;
   /* overflow-y: scroll; */
   ::-webkit-scrollbar {
@@ -205,19 +205,18 @@ const Btn = styled.button`
   all: unset;
   display: inline-block;
   margin: 5px;
-  margin-top: 15px;
-  padding: 5px 23px;
+  margin-top: 18px;
+  padding: 0px 15px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   border: none;
-
   cursor: pointer;
   word-break: keep-all; // 특수문자 띄워쓰기x 띄워쓰기 기준으로 break 줄바꿈 제어
   width: 200px;
-  height: 38px;
+  height: 30px;
   color: rgba(0, 0, 0, 0.5);
-  /* font-size: 0.8rem; */
+  font-size: 14px;
   /* overflow-y: visible; */
   /* width: 400000000000px; */
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);

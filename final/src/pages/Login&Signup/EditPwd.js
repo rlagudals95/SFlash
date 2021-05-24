@@ -1,3 +1,4 @@
+// import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
@@ -10,6 +11,7 @@ import {
   InfoLi,
 } from "../../Css/loginSignupCss";
 import { GiCheckMark } from "react-icons/gi";
+// import RegCheck from "../../Css/RegCheck.css";
 import { history } from "../../redux/configStore";
 import { useSelector } from "react-redux";
 
@@ -18,6 +20,8 @@ import axios from "axios";
 import { config } from "../../shared/config";
 
 const EditPwd = () => {
+  // console.log(email);
+  // const dispatch = useDispatch();
   const email = useSelector((state) => state.email.email);
 
   const [pwd, setPwd] = React.useState("");

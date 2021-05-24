@@ -45,7 +45,6 @@ const ModalDetail = (props) => {
     slidesToScroll: 1,
   };
 
-  const is_comment = commentData ? true : false;
   const [comments, setComments] = useState();
   const ok_submit = comments ? true : false;
 
@@ -203,7 +202,6 @@ const ModalDetail = (props) => {
                         <LikeBox>
                           <div style={{ cursor: "pointer" }}>
                             <FavoriteBorderIcon
-                              style={{ color: "rgb(255, 183, 25)" }}
                               style={{
                                 fontSize: 32,
                                 color: "rgb(255, 183, 25)",
@@ -217,7 +215,7 @@ const ModalDetail = (props) => {
                       {/*--------------------------------------------------------------------- */}
 
                       {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
-                      {modalData.writerId == user_id ? (
+                      {modalData.writerId === user_id ? (
                         <ModalEdit>
                           <React.Fragment onClick={props.close}>
                             <EditBtn onClick={openEditModal}>수정</EditBtn>
@@ -513,7 +511,6 @@ const InfoBox = styled.div`
 const InfoBox_1 = styled.div`
   display: flex;
   justify-content: space-between;
-  /* background-color: green; */
   align-items: center;
 `;
 
@@ -563,7 +560,6 @@ const ModalCate = styled.div`
 const InfoBox_2 = styled.div`
   width: 100%;
   margin-top: 5px;
-  /* background-color: purple; */
 `;
 
 const PostTilte = styled.div`
@@ -588,12 +584,6 @@ const PostContents = styled.div`
   opacity: 0.6;
   width: 100%;
   margin-top: 3px;
-  /* background-color: red; */
-  /* max-height: 200px;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    display: none;
-  } */
 `;
 
 const PostTime = styled.div`
@@ -634,7 +624,6 @@ const ReplyUnit = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* height: 3vh; */
   width: 100%;
   padding: 10px;
 `;
@@ -670,22 +659,6 @@ const ReplyDate = styled.div`
   padding: 0vh 1vh;
 `;
 
-const CmtDeleteBtn = styled.button`
-  height: 2px;
-  width: 2p;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  opacity: 0.2;
-  margin-right: 1.3vw;
-  margin-bottom: 2.3vh;
-  &:hover {
-    opacity: 1;
-  }
-  background-color: red;
-`;
-
 const Icon = styled.div`
   margin-left: 0px;
   padding: 5px 9px;
@@ -695,7 +668,6 @@ const Icon = styled.div`
     cursor: pointer;
     transition: all 0.5s ease-in-out;
   }
-  /* background-color: green; */
 `;
 
 const ModalCmtInputBox = styled.div`
@@ -717,9 +689,6 @@ const CommentInput = styled.input`
   border: none;
   outline: none;
   width: 100%;
-
-  @media (max-width: 600px) {
-  }
 `;
 
 const UploadBtn = styled.div`

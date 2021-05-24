@@ -4,7 +4,7 @@ import { Grid } from "../../elements/index";
 import Modal from "react-modal";
 
 const AboutDetail = (props) => {
-  console.log(props);
+  // console.log(props);
 
   const [modal, setModal] = React.useState(false);
   const openModal = () => {
@@ -39,21 +39,31 @@ const AboutDetail = (props) => {
               <Content>{props.content}</Content>
               <Skill>{props.skill}</Skill>
               <Grid flex>
-              {props.github !== null ? (
-                <RefLink onClick={()=> window.open(props.github)}>Github</RefLink>
-              ) : null}
-              {props.portfolio !== null ? (
-                <RefLink onClick={()=> window.open(props.portfolio)}>Portfolio</RefLink>
-              ) : null}
-              {props.resume !== null ? (
-                <RefLink onClick={()=> window.open(props.resume)}>Resume</RefLink>
-              ) : null}
-              {props.etc_1 !== null ? (
-                <RefLink onClick={()=> window.open(props.etc_1)}>Blog</RefLink>
-              ) : null}
-              {props.etc_2 !== null ? (
-                <RefLink onClick={()=> window.open(props.etc_2)}>Blog</RefLink>
-              ) : null}
+                {props.github !== null ? (
+                  <RefLink onClick={() => window.open(props.github)}>
+                    Github
+                  </RefLink>
+                ) : null}
+                {props.portfolio !== null ? (
+                  <RefLink onClick={() => window.open(props.portfolio)}>
+                    Portfolio
+                  </RefLink>
+                ) : null}
+                {props.resume !== null ? (
+                  <RefLink onClick={() => window.open(props.resume)}>
+                    Resume
+                  </RefLink>
+                ) : null}
+                {props.etc_1 !== null ? (
+                  <RefLink onClick={() => window.open(props.etc_1)}>
+                    Blog
+                  </RefLink>
+                ) : null}
+                {props.etc_2 !== null ? (
+                  <RefLink onClick={() => window.open(props.etc_2)}>
+                    Blog
+                  </RefLink>
+                ) : null}
               </Grid>
               <Grid height="20px"></Grid>
             </ModalProfileContainer>
