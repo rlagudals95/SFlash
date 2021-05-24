@@ -26,6 +26,9 @@ import MobileNav from "../components/mobile/MobileNav";
 import Spinner from "../shared/Spinner";
 import { actionCreators as PostActions } from "../redux/modules/post";
 import { actionCreators as likeActions } from "../redux/modules/like";
+import gridFloatingBtn from "../shared/floatingBtn";
+import { set } from "lodash";
+
 // import PopUp from "../components/PopUp";
 
 const PostList = (props) => {
@@ -59,6 +62,7 @@ const PostList = (props) => {
   // console.log("잘 가지고 왔나~", board_list);
 
   const [search, setSearch] = React.useState("");
+  const [gridC, setGridC] = React.useState(true);
 
   React.useEffect(() => {
     dispatch(PostActions.getPostAPI());
@@ -89,8 +93,23 @@ const PostList = (props) => {
     }
   });
 
+  const gridColumn = gridC ? "1fr 1fr 1fr" : " 1fr 1fr 1fr 1fr 1fr";
+
+  const changeGrid5 = () => {
+    setGridC(false);
+  };
+
+  const changeGrid3 = () => {
+    setGridC(true);
+  };
   return (
     <React.Fragment>
+      {gridC ? (
+        <GridBtn onClick={changeGrid5}>5줄씩 보기</GridBtn>
+      ) : (
+        <GridBtn2 onClick={changeGrid3}>3줄씩 보기</GridBtn2>
+      )}
+
       <TopBox>
         <SearchBox>
           {/* 검색기능  모바일용으로 만들어 놓은 검색창이다! 넓이가 600px 밑으로 가면 기존의 검색창이 사라지고 나타남*/}
@@ -121,7 +140,7 @@ const PostList = (props) => {
         loader={loading ? <Spinner /> : null} //상태값이 loading 중 일땐 스피너가 보여서 뒤에 게시물이 더 있을음 알려준다
       >
         {/* {loading && <Spinner />} */}
-        <Container>
+        <Container grid={gridColumn}>
           {/* 전체보기 선택 */}
           {searchPost.map((p) => {
             if (is_category.length === 0) {
@@ -232,7 +251,6 @@ const PostList = (props) => {
       <Navbar />
       <MobileNav />
       <Web>
-        {" "}
         <Category />
       </Web>
       <MobileCate></MobileCate>
@@ -243,7 +261,10 @@ const PostList = (props) => {
 
 export default PostList;
 
+//상태에 따라서
+
 //그리드 속성을 이렇게 줘야 모달창이 잘만들어진다!
+
 const Container = styled.div`
   ${(prop) => prop.theme.responsiveContainer};
   display: grid;
@@ -256,22 +277,22 @@ const Container = styled.div`
   flex-wrap: wrap;
 
   @media (min-width: 1440px) {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 20px;
+    grid-template-columns: ${(props) => props.grid};
+    grid-gap: 5px;
   }
   @media (max-width: 1440px) {
     /* 1440밑으로 넓이가 내려가면 */
     margin-top: 4vh;
   }
   @media (max-width: 1280px) {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: ${(props) => props.grid};
     grid-gap: 10px;
     margin: auto;
     margin-top: 4vh;
     padding-top: 0px;
   }
   @media (max-width: 960px) {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: ${(props) => props.grid};
     grid-gap: 5px;
     margin: auto;
     margin-top: 4vh;
@@ -283,16 +304,6 @@ const Container = styled.div`
     grid-gap: 2px;
   }
 `;
-
-// const Wrapper = styled.div`
-//   ${(props) => props.theme.responsiveContainer};
-// `;
-
-// const OutBox = styled.div`
-//   width: 100vw;
-//   height: 100vh;
-//   background-color: lightgray;
-// `;
 
 const Box = styled.div`
   height: 200px;
@@ -379,4 +390,94 @@ const SearchIcon = styled.div`
 //   /* margin-top: 5px; */
 //   margin: auto 0px;
 //   margin-right: 3px;
+// `;
+
+const GridBtn = styled.div`
+  all: unset;
+  font-size: 20px;
+  border: 2px solid ${(props) => props.theme.main_color};
+  /* margin-left: 2vw; */
+  z-index: 7001;
+  /* width: 150px;
+  height: 40px; */
+  padding: 12px 40px;
+  position: fixed;
+  right: 100px;
+  bottom: 100px;
+  cursor: pointer;
+  border-radius: 45px;
+  font-weight: bold;
+  color: ${(props) => props.theme.main_color};
+  background-color: white;
+  text-align: center;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+  :hover {
+    background-color: ${(props) => props.theme.main_color};
+    color: white;
+  }
+`;
+
+const GridBtn2 = styled.div`
+  all: unset;
+  font-size: 20px;
+  border: 2px solid ${(props) => props.theme.main_color};
+  /* margin-left: 2vw; */
+  z-index: 7001;
+  /* width: 150px;
+  height: 40px; */
+  padding: 12px 40px;
+  position: fixed;
+  right: 100px;
+  bottom: 100px;
+  cursor: pointer;
+  border-radius: 45px;
+  font-weight: bold;
+  color: ${(props) => props.theme.main_color};
+  background-color: white;
+  text-align: center;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+  :hover {
+    background-color: ${(props) => props.theme.main_color};
+    color: white;
+  }
+`;
+
+// const Container = styled.div`
+//   ${(prop) => prop.theme.responsiveContainer};
+//   display: grid;
+//   grid-template-columns: 1fr 1fr 1fr;
+//   grid-template-rows: auto;
+//   grid-gap: 20px;
+//   margin: auto;
+//   width: 100%;
+//   padding: 70px 0px;
+//   flex-wrap: wrap;
+
+//   @media (min-width: 1440px) {
+//     grid-template-columns: 1fr 1fr 1fr;
+//     grid-gap: 20px;
+//   }
+//   @media (max-width: 1440px) {
+//     /* 1440밑으로 넓이가 내려가면 */
+//     margin-top: 4vh;
+//   }
+//   @media (max-width: 1280px) {
+//     grid-template-columns: 1fr 1fr 1fr;
+//     grid-gap: 10px;
+//     margin: auto;
+//     margin-top: 4vh;
+//     padding-top: 0px;
+//   }
+//   @media (max-width: 960px) {
+//     grid-template-columns: 1fr 1fr 1fr;
+//     grid-gap: 5px;
+//     margin: auto;
+//     margin-top: 4vh;
+//     padding-top: 0px;
+//   }
+//   @media (max-width: 600px) {
+//     margin-top: 19vh;
+//     grid-template-columns: 1fr 1fr 1fr;
+//     grid-gap: 2px;
+//   }
 // `;
