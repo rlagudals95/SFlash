@@ -135,7 +135,7 @@ const addPostAPI = (post) => {
       // console.log(_file[i]);
     }
 
-    const _category = getState().category.select_category;
+    const _category = getState().category.select_category; //요기 오타가 있었네요!
     formData.append("category", _category);
     // console.log(formData);
     // console.log("폼데이터 형식", Array.from(formData));
@@ -171,7 +171,7 @@ const addPostAPI = (post) => {
           let one_post = res.data.data;
           let one_marker_data = {
             id: one_post.boardId,
-            like: one_post.liked,
+            // like: one_post.liked,
             writerName: one_post.writerName,
             category: one_post.category,
             spotName1: one_post.spotName.split(" ").splice(0, 2).join(" "),
@@ -185,7 +185,8 @@ const addPostAPI = (post) => {
           //커뮤니티 리덕스에 데이터 추가
           let CommunityPost = {
             id: one_post.boardId,
-            writer: one_post.writer,
+            like: one_post.liked,
+            writerName: one_post.writerName,
             spotName: one_post.spotName,
             img_url: one_post.boardImgReponseDtoList[0].imgUrl, //고치자 딕셔너리 말고
             likeCnt: 0,
@@ -212,17 +213,17 @@ const getPostAPI = () => {
     // console.log("잘가지고 왔겠지", board_list);
 
     let end_board = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
-      board_list.length == 0
+      board_list.length === 0
         ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
         : //그러므로 Number.MAX_SAFE_INTEGER(약 9000조)를 써줘서 가장가까운 수의 id를 먼저받고
-          board_list[board_list.length - 1].id; //여기에 -15를 계속 해주자.. >> -15,-30,-45
-
+          board_list[0].id - pCnt; //여기에 -15를 계속 해주자.. >> -15,-30,-45
+    console.log("마지막 포스트 아이디", end_board);
     ////
     // console.log("처음에 보내주는 토큰", config.jwt);
     if (board_list.length !== 0) {
       dispatch(pagingCntUp());
     }
-
+    // console.log("페이징 카운트", pCnt);
     let size = 15;
     axios({
       method: "GET",
@@ -236,7 +237,6 @@ const getPostAPI = () => {
     })
       .then((res) => {
         // 토큰이 만료 되었다면 재로그인 권유
-
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
@@ -252,9 +252,16 @@ const getPostAPI = () => {
             }
           });
         } else {
+          // console.log("스피너 지우자~!", res.data.data); //이것의
+
+          console.log("데이터 길이!", res.data.data);
           if (res.data.data.length === 15) {
+            // console.log("로딩멈춰!");
             dispatch(loading(false));
           }
+
+          // console.log("스크롤 요청");
+          // console.log("!!!!!!!!!", res.data.data);
 
           // 라이크 값이 자꾸 false로 오니까 리스트를 뽑아보자!
           let like_list = [];
@@ -267,7 +274,7 @@ const getPostAPI = () => {
 
           let result = res.data.data; // 서버에서 받아오는 게시물들을 start와 size를 정해서 나눠준다
           // console.log("페이징 갯수", result.length);
-          if (result.length == 0) {
+          if (result.length === 0) {
             // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
             dispatch(loading(false));
             return;
@@ -317,7 +324,6 @@ const getMapPostAPI = () => {
       },
     })
       .then((res) => {
-        console.log("마커", res);
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
@@ -333,17 +339,19 @@ const getMapPostAPI = () => {
             }
           });
         } else {
+          // console.log("서버 응답값", res);
           let map_post_list = [];
-
+          // console.log("서버 응답값", res.data.data);
+          // console.log(res.data.data[0].boardImgReponseDtoList);
           res.data.data.forEach((_post) => {
             let post = {
-              id: _post.boardId,
+              id: _post.boardId, // 포스트 id
               like: _post.liked,
               writerName: _post.writerName,
               latitude: _post.latitude,
               longitude: _post.longitude,
-              spotName1: _post.name.split(" ").splice(0, 2).join(" "),
-              spotName2: _post.name.split(" ").splice(2).join(" "),
+              spotName1: _post.spotName.split(" ").splice(0, 2).join(" "),
+              spotName2: _post.spotName.split(" ").splice(2).join(" "),
               category: _post.category,
               imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
             };
@@ -401,8 +409,8 @@ const editPostAPI = (board_id, _edit) => {
     const markerData = getState().post.map_post_list;
     const postData = getState().post.list;
 
-    // console.log("현재 마커데이터", markerData);
-    // console.log("현재 포스트 데이터", postData);
+    console.log("현재 마커데이터", markerData);
+    console.log("현재 포스트 데이터", postData);
     //여기서
     // for (let i = 0; i < addFile.length; i++) {
     //   console.log(addFile[i].imgUrl);
@@ -428,7 +436,7 @@ const editPostAPI = (board_id, _edit) => {
     }
     //파일 리스트 중에 기존에 있던 imgUrl이 있는 이미지들을 제외하고 새로추가한 파일형식의 요소만 폼데이터로 수정(추가)요청
 
-    // console.log("최종추가될 이미지", _addFile);
+    console.log("최종추가될 이미지", _addFile);
 
     for (let i = 0; i < _addFile.length; i++) {
       formData.append("file", _addFile[i]);
@@ -475,7 +483,6 @@ const editPostAPI = (board_id, _edit) => {
           comment: _post.boardDetailCommentDtoList,
           creatAt: _post.modified,
           spotName: _post.spotName,
-          writerId: _post.userId,
         };
 
         let markerImg = post.img_url[0].imgUrl; //썸네일
@@ -532,7 +539,7 @@ const searchPostAPI = (search, start = null, size = null) => {
           // console.log("검색결과", res.data.data);
           let result = res.data.data.slice(start, size);
           // console.log("슬라이스한 데이터", result);
-          if (result.length == 0) {
+          if (result.length === 0) {
             // result의 수가 0이라는 것은 더이상 받아올 데이터가 없다는 뜻
             dispatch(loading(false));
             return;
@@ -707,7 +714,7 @@ export default handleActions(
 
     [DELETE_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = draft.list.filter((r, idx) => {
+        draft.list = draft.list.filter((r) => {
           if (r.id !== action.payload.id) {
             //서버에선 이미 지워져서 오지만 한번 더 중복검사
             // 현재 리스트에서 받은 포스트 id와 같은게 없다면?
@@ -737,7 +744,7 @@ export default handleActions(
 
     [DELETE_MARKER]: (state, action) =>
       produce(state, (draft) => {
-        draft.map_post_list = draft.map_post_list.filter((r, idx) => {
+        draft.map_post_list = draft.map_post_list.filter((r) => {
           if (r.id !== action.payload.id) {
             //서버에선 이미 지워져서 오지만 한번 더 중복검사
             // 현재 리스트에서 받은 포스트 id와 같은게 없다면?
@@ -764,6 +771,7 @@ export default handleActions(
 
     [PAGING_CNT]: (state, action) =>
       produce(state, (draft) => {
+        console.log("카운트업!");
         draft.pagingCnt = draft.pagingCnt + 15;
       }),
     [POST_IMG_EDIT]: (state, action) =>
