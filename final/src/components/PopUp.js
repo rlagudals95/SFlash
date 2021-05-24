@@ -15,12 +15,6 @@ const PopUp = (props) => {
     slidesToScroll: 1,
   };
 
-  // const images = [
-  //   "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/popup-01.jpg?alt=media&token=85b4fa77-235d-453b-849a-32543c890738",
-  //   "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/popup-02.jpg?alt=media&token=1193f358-702f-4c17-99bb-0683ad3633d3",
-  //   "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/popup-03.jpg?alt=media&token=2094a5ba-92e9-43cb-af6f-c79ccce99e4a",
-  // ];
-
   const dayExpires = () => {
     props.close();
     //창을 닫고 만료일이 24시간인 토큰이 생긴다 토큰이 있으면 팝업창이 안뜨게 설정
@@ -34,9 +28,6 @@ const PopUp = (props) => {
     props.close();
   };
 
-  // 원래 팝업이미지
-  // "https://firebasestorage.googleapis.com/v0/b/diction-f1678.appspot.com/o/popup01%402x.png?alt=media&token=24097870-9e08-40ff-bb8e-31fda31e4f58";
-
   return (
     //  <CloseIcon fontSize="small" />
     <React.Fragment>
@@ -46,7 +37,7 @@ const PopUp = (props) => {
           <div>
             <PopUpImg
               src={
-                "https://firebasestorage.googleapis.com/v0/b/diction-f1678.appspot.com/o/%EC%A0%90%EA%B2%80%20%ED%8C%9D%EC%97%85.png?alt=media&token=6ee36b03-58d0-4f59-983e-4f4175f27cd7"
+                "https://firebasestorage.googleapis.com/v0/b/diction-f1678.appspot.com/o/popup01%402x.png?alt=media&token=24097870-9e08-40ff-bb8e-31fda31e4f58"
               }
             >
               <ExitBtn onClick={props.close}>
@@ -58,7 +49,7 @@ const PopUp = (props) => {
                 </DayIcom>
                 오늘 하루 보지 않기
               </DayBtn>
-              {/* <NoThank onClick={props.close} /> */}
+              <NoThank onClick={props.close} />
             </PopUpImg>
           </div>
           <div>

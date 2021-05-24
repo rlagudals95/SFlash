@@ -212,7 +212,6 @@ const getPostAPI = () => {
     const pCnt = getState().post.pagingCnt;
     // console.log("잘가지고 왔겠지", board_list);
 
-    // board_list[board_list.length - 1].id;
     let end_board = // 마지막 포스트의 id를 서버에 넘겨줘서 그 아이디 부터 15개를 받아오는 페이징처리 방법
       board_list.length === 0
         ? 999 // 그러나 처음 화면이 켜졌을땐 마직막 포스트의 id를 받을 수 없다
@@ -344,8 +343,8 @@ const getMapPostAPI = () => {
               writerName: _post.writerName,
               latitude: _post.latitude,
               longitude: _post.longitude,
-              spotName1: _post.spotName.split(" ").splice(0, 2).join(" "),
-              spotName2: _post.spotName.split(" ").splice(2).join(" "),
+              spotName1: _post.name.split(" ").splice(0, 2).join(" "),
+              spotName2: _post.name.split(" ").splice(2).join(" "),
               category: _post.category,
               imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
             };
