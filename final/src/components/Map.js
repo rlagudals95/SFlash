@@ -2806,7 +2806,8 @@ const Maps = (props) => {
     setUpLoadModal(false);
   };
 
-  // const [mapType, setMapType] = React.useState(true);
+  const [roadmap, setRoadmap] = useState(true);
+  const [hybridmap, setHybridmap] = useState(true);
 
   const setMapROADMAP = () => {
     _map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
@@ -2862,6 +2863,18 @@ const Maps = (props) => {
         </SearchIcon>
       </SearchBox>
 
+      {/* {roadmap ? (
+        <MapTypeControlContainer>
+          <RoadMapSelected/>
+          <HybridMap/>
+        </MapTypeControlContainer>
+      ) : (
+        <MapTypeControlContainer>
+          <RoadMap/>
+          <HybridMapSeleted/>
+        </MapTypeControlContainer>
+      )}   */}
+
       {/* <MoveSizeControlContainer>
         <ZoomControlBox>
           <ZoomControl onClick={zoomIn}><IoMdAdd size="30" color="#ffb719" /></ZoomControl>
@@ -2894,6 +2907,28 @@ const Maps = (props) => {
 };
 
 export default Maps;
+
+const MapTypeControlContainer = styled.div`
+  width: 100px;
+  height: 50px;
+  top: 20px;
+  right: 100px;
+  border: 2pt solid #ffb719;
+  background-color: #F2F3F7;
+`;
+
+const RoadMapSelected = styled.div`
+
+`;
+
+const RoadMap = styled.div`
+`;
+
+const HybridMapSeleted = styled.div`
+`;
+
+const HybridMap = styled.div`
+`;
 
 // const MoveSizeControlContainer = styled.div`
 //   position: absolute;

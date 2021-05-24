@@ -343,8 +343,8 @@ const getMapPostAPI = () => {
               writerName: _post.writerName,
               latitude: _post.latitude,
               longitude: _post.longitude,
-              spotName1: _post.spotName.split(" ").splice(0, 2).join(" "),
-              spotName2: _post.spotName.split(" ").splice(2).join(" "),
+              spotName1: _post.name.split(" ").splice(0, 2).join(" "),
+              spotName2: _post.name.split(" ").splice(2).join(" "),
               category: _post.category,
               imgForOverlay: _post.boardImgReponseDtoList[0].imgUrl,
             };
