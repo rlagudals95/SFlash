@@ -44,14 +44,6 @@ const ModalDetail = (props) => {
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
 
-  // console.log("닉네임", nickname);
-  // const is_like = props.like 라이크가 있냐 확인?
-
-  // const openEditModal = () => {
-  //   // props.closeDetail();
-  //   setEditModal(true);
-  // };
-
   const closeDetailModal = () => {
     setEditModal(false);
   };
@@ -228,7 +220,7 @@ const ModalDetail = (props) => {
                         </LikeBox>
                       )}
                       {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
-                      {modalData.writerId === user_id ? (
+                      {modalData.writerId == user_id ? (
                         <ModalEdit>
                           <React.Fragment onClick={props.close}>
                             <EditBtn

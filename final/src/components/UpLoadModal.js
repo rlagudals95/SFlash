@@ -43,7 +43,6 @@ const UploadModal = (props) => {
     dispatch(profileActions.getUserInfoAPI(userId));
   }, []);
 
-  console.log("렌더?", props);
   const loading = useSelector((state) => state.image2.is_loading);
   // console.log("프리뷰로딩!", loading);
   const dispatch = useDispatch();
