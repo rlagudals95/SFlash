@@ -278,6 +278,14 @@ const Maps = (props) => {
       setMap(map);
     }
 
+    // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성하기.
+    var mapTypeControl = new kakao.maps.MapTypeControl();
+    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성하기.
+    var zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.Right);
+
     // geolocation으로 얻은 접속좌표에다가 현재위치를 표시하는 마커 또는 표식 올리기
     const currentMarkerSize = new kakao.maps.Size(30, 30);
     const currentMarkerImage = new kakao.maps.MarkerImage(
@@ -2760,7 +2768,19 @@ const Maps = (props) => {
 
   // 지도 줌인아웃기능 - 대한민국 전체 보기 
   const zoomOutKorea = () => {
-    _map.setLevel(_map.getLevel() - 1);
+    // _map.setLevel(12, {anchor: new kakao.maps.LatLng(startLat, startLng,)});
+    // _map.setLevel(12, {
+    //   animate: {
+    //     duration: 500
+    //   }
+    // });
+    _map.setLevel(13);
+  }
+
+  // 현접속위치 주변으로 이동해서 보기
+  const moveCurrentPosition = () => {
+    const moveToCurrentPosition = new kakao.maps.LatLng(startLat, startLng);
+    _map.panTo(moveToCurrentPosition)
   }
 
   // 키워드로 검색하기!!!!!!
@@ -2824,6 +2844,11 @@ const Maps = (props) => {
         </SearchIcon>
       </SearchBox>
 
+      {/* <MapTypeControllerContainer>
+        <MapTypeBtn></MapTypeBtn>
+        <MapTypeBtn></MapTypeBtn>
+      </MapTypeControllerContainer> */}
+        
       <CategoryInMap />
 
       <MapBox>
@@ -2905,3 +2930,25 @@ const MapBox = styled.div`
   bottom: 0;
   position: absolute;
 `;
+
+// const MapTypeControllerContainer = styled.div`
+//   width: 200px;
+//   height: 30px;
+//   top: 10px;
+//   right: 10px;
+//   display: flex;
+//   justify-content: flex-start;
+// `;
+
+// const MapTypeBtn = styled.div`
+//   width: 100px;
+//   height: 100%;
+//   background-color: white;
+//   cursor: pointer;
+//   &:hover {
+//     color: #fff;
+//     background-color: #425470;
+//     background-color:linear-gradient(#425470, #5b6d8a);
+//     cursor: pointer;
+//   } 
+// `;
