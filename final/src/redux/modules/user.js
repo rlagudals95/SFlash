@@ -65,6 +65,13 @@ const loginAPI = (email, pwd) => {
       })
       .then((res) => {
         console.log(res);
+        // let expires = new Date();
+        // expires = expires.setHours(expires.getHours() + 0.05);
+        let expires = new Date();
+        const tokenExpires = expires.setHours(expires.getHour + 5); 
+        console.log(tokenExpires);
+        console.log(expires);
+        localStorage.setItem("toeknExpires", tokenExpires);
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("jwt", res.data.token);
