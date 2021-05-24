@@ -44,14 +44,6 @@ const ModalDetail = (props) => {
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
 
-  // console.log("닉네임", nickname);
-  // const is_like = props.like 라이크가 있냐 확인?
-
-  // const openEditModal = () => {
-  //   // props.closeDetail();
-  //   setEditModal(true);
-  // };
-
   const closeDetailModal = () => {
     setEditModal(false);
   };

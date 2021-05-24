@@ -36,6 +36,8 @@ function Navbar() {
 
   const pageLocation = history.location.pathname;
 
+  // console.log("현재 페이지는?", pageLocation);
+
   const is_story = pageLocation.includes("story"); // 스토리 페이지의 pathname은 stroy/id 이기 때문에 story를 포함하는지 여부에 따라 조건을 줌
 
   // console.log("스토리 상태야?", is_story);
@@ -44,13 +46,12 @@ function Navbar() {
   const is_loading = useSelector((state) => state.user.is_loading);
 
   // page 리덕스 상태값에 의한 사이드바 아이콘 active 효과 구현
-  // 이방법에서 한계를 느끼고 history의 pathname으로 조건을줘서 해결했다
   const page = useSelector((state) => state.side.page);
 
   // console.log("현재 페이지는", page);
 
   React.useEffect(() => {
-    console.log(is_login);
+    // console.log(is_login);
   }, [is_login]);
 
   const onLogout = () => {

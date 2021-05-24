@@ -135,7 +135,7 @@ const addPostAPI = (post) => {
       // console.log(_file[i]);
     }
 
-    const _category = getState().category.select_category; //요기 오타가 있었네요!
+    const _category = getState().category.select_category;
     formData.append("category", _category);
     // console.log(formData);
     // console.log("폼데이터 형식", Array.from(formData));
@@ -223,8 +223,7 @@ const getPostAPI = () => {
     if (board_list.length !== 0) {
       dispatch(pagingCntUp());
     }
-    console.log("마지막 포스트 아이디", end_board);
-    console.log("페이징 카운트", pCnt);
+
     let size = 15;
     axios({
       method: "GET",
@@ -238,6 +237,7 @@ const getPostAPI = () => {
     })
       .then((res) => {
         // 토큰이 만료 되었다면 재로그인 권유
+
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
@@ -254,12 +254,8 @@ const getPostAPI = () => {
           });
         } else {
           if (res.data.data.length === 15) {
-            // console.log("로딩멈춰!");
             dispatch(loading(false));
           }
-
-          // console.log("스크롤 요청");
-          console.log("!!!!!!!!!", res.data.data);
 
           // 라이크 값이 자꾸 false로 오니까 리스트를 뽑아보자!
           let like_list = [];
@@ -322,6 +318,7 @@ const getMapPostAPI = () => {
       },
     })
       .then((res) => {
+        console.log("마커", res);
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
@@ -337,13 +334,11 @@ const getMapPostAPI = () => {
             }
           });
         } else {
-          console.log("서버 응답값", res);
           let map_post_list = [];
-          console.log("서버 응답값", res.data.data);
-          // console.log(res.data.data[0].boardImgReponseDtoList);
+
           res.data.data.forEach((_post) => {
             let post = {
-              id: _post.boardId, // 포스트 id
+              id: _post.boardId,
               like: _post.liked,
               writerName: _post.writerName,
               latitude: _post.latitude,
@@ -434,7 +429,7 @@ const editPostAPI = (board_id, _edit) => {
     }
     //파일 리스트 중에 기존에 있던 imgUrl이 있는 이미지들을 제외하고 새로추가한 파일형식의 요소만 폼데이터로 수정(추가)요청
 
-    console.log("최종추가될 이미지", _addFile);
+    // console.log("최종추가될 이미지", _addFile);
 
     for (let i = 0; i < _addFile.length; i++) {
       formData.append("file", _addFile[i]);
@@ -466,7 +461,7 @@ const editPostAPI = (board_id, _edit) => {
         });
       } else {
         //응답이 오기전까지 무슨 스피너 조건을 줘야하는데.,..흠..
-        // console.log("수정반응값!", res);
+        console.log("수정반응값!", res);
         let _post = res.data.data;
         let post = {
           id: _post.boardId, // 포스트 id
@@ -481,6 +476,7 @@ const editPostAPI = (board_id, _edit) => {
           comment: _post.boardDetailCommentDtoList,
           creatAt: _post.modified,
           spotName: _post.spotName,
+          writerId: _post.userId,
         };
 
         let markerImg = post.img_url[0].imgUrl; //썸네일
@@ -769,7 +765,6 @@ export default handleActions(
 
     [PAGING_CNT]: (state, action) =>
       produce(state, (draft) => {
-        console.log("카운트업!");
         draft.pagingCnt = draft.pagingCnt + 15;
       }),
     [POST_IMG_EDIT]: (state, action) =>
