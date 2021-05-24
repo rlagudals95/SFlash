@@ -25,6 +25,8 @@ const ModalDetail = (props) => {
   const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
 
+  console.log(modalData);
+
   if (commentData) {
   }
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
@@ -215,7 +217,7 @@ const ModalDetail = (props) => {
                       {/*--------------------------------------------------------------------- */}
 
                       {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
-                      {modalData.writerId === user_id ? (
+                      {modalData.writerId == user_id ? (
                         <ModalEdit>
                           <React.Fragment onClick={props.close}>
                             <EditBtn onClick={openEditModal}>수정</EditBtn>
@@ -348,7 +350,7 @@ const ModalDetail = (props) => {
                                     });
                                   }}
                                 >
-                                  <RiDeleteBinLine size="18" />
+                                  <RiDeleteBinLine size="20" />
                                 </Icon>
                               ) : 
                               null}
@@ -661,7 +663,7 @@ const ReplyDate = styled.div`
 
 const Icon = styled.div`
   margin-left: 0px;
-  padding: 5px 9px;
+  padding: 0px 9px;
   color: grey;
   &:hover {
     color: lightgrey;

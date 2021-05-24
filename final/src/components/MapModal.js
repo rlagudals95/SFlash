@@ -318,7 +318,7 @@ const ModalDetail = (props) => {
                                   });
                                 }}
                               >
-                                <RiDeleteBinLine size="18" />
+                                <RiDeleteBinLine size="20" />
                               </Icon>
                             ) : null}
                           </ReplyUnit>
