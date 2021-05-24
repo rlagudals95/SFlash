@@ -184,7 +184,7 @@ const modalAddLikeAPI = (board_id, board) => {
       },
     })
       .then((res) => {
-        console.log("좋아요 완료!", res);
+        // console.log("좋아요 완료!", res);
         dispatch(editLikeP(board)); // 리덕스
       })
       .catch((error) => {

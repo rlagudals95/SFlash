@@ -89,7 +89,7 @@ const getModalPostAPI = (boardId) => {
       },
     })
       .then((res) => {
-        console.log("모달정보 가져오자!!!!", res);
+        // console.log("모달정보 가져오자!!!!", res);
 
         let result = res.data.data;
         // console.log("정리된거 맞지?", result, boardId);
@@ -109,8 +109,8 @@ const getModalPostAPI = (boardId) => {
           spotName: result.spotName,
         };
         let comment_list = post.comment;
-        console.log("게시물 요거", post);
-        console.log("댓글요거", comment_list);
+        // console.log("게시물 요거", post);
+        // console.log("댓글요거", comment_list);
 
         dispatch(getModal(post)); // 모달 정보는 > post 에 저장 > 수정시 post 에 있는거 바꿔주면된다
         dispatch(getModalComment(comment_list)); //댓글 > comment에 따로 저장
