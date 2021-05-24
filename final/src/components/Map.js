@@ -2711,7 +2711,7 @@ const Maps = (props) => {
 
         kakao.maps.event.addListener(exhibitionMarkers, "click", function () {
           // 서버로 해당 마커의 id를 보내고 모달창 오픈
-          dispatch(ModalActions.getModalPost(exhibition.id));
+          dispatch(ModalActions.getModalPostAPI(exhibition.id));
           // dispatch(ModalActions.getModalPostAPI(park.id));
           openModal();
         });

@@ -32,21 +32,8 @@ const StoryContent = (props) => {
     }
   };
 
-  // 게시물 갯수가 0 일때 게시물을 등록해달라는 문구가 뜹니다.
-  if (post_list.length === 0) {
-    return (
-      <React.Fragment>
-        <Warning>
-          <SflashLogo />
-          <Text size="1.1rem" color="grey">
-            게시물을 등록해 주세요!
-          </Text>
-        </Warning>
-      </React.Fragment>
-    );
-  }
   // 게시물이 있을 때는 게시물을 보여줍니다.
-  else {
+  if(post_list.length > 0){
     return (
       <React.Fragment>
         {/* 우측 아이콘 버튼 : gridMode를 제어 합니다.*/}
@@ -110,6 +97,19 @@ const StoryContent = (props) => {
       </React.Fragment>
     );
   }
+    // 게시물 갯수가 0 일때 게시물을 등록해달라는 문구가 뜹니다.
+    if (post_list.length === 0) {
+      return (
+        <React.Fragment>
+          <Warning>
+            <SflashLogo />
+            <Text size="1.1rem" color="grey">
+              게시물을 등록해 주세요!
+            </Text>
+          </Warning>
+        </React.Fragment>
+      );
+    }
 };
 
 const Warning = styled.div`
@@ -191,7 +191,7 @@ const GridList = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto;
-  grid-gap: 20px;
+  grid-gap: 5px;
   margin: auto;
   width: 100%;
   padding: 20px 0px;
