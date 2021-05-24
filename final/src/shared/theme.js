@@ -12,10 +12,10 @@ const theme = {
     @media (max-width: 1280px) {
       width: 960px;
     }
-    @media (max-width: 960px) {
+    @media (max-width: 768px) {
       width: calc(100% - 2rem);
     }
-    @media (max-width: 400px) {
+    @media (max-width: 480px) {
       width: calc(100% - 1px);
     }
     margin: auto;

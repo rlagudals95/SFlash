@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 
 import Signup from "../pages/Login&Signup/Signup";
@@ -24,12 +24,33 @@ import Faq from "../pages/Faq";
 import QnaList from "../pages/QnaList";
 import QnaDetail from "../pages/QnaDetail";
 import QnaWrite from "../pages/QnaWrite";
+import Swal from "sweetalert2";
 
 function App() {
   const dispatch = useDispatch();
+  const is_login = useSelector((state) => state.user.is_login);
   const jwt = localStorage.getItem("jwt") ? true : false; // 로컬스토리지에 저장되어있는 jwt 토큰 유무판단
+  const tokenExpires = localStorage.getItem("tokenExpires");
 
   React.useEffect(() => {
+    console.log(tokenExpires);
+    if (is_login){
+     if (tokenExpires < new Date()){
+      dispatch(userActions.logOut());
+      Swal.fire({
+        text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+        confirmButtonText: "로그인 하러가기",
+        confirmButtonColor: "#ffb719",
+        showCancelButton: true,
+        cancelButtonText: "취소",
+        cancelButtonColor: "#eee",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          history.push("/login");
+        }
+      })
+    }
+  }
     if (jwt) {
       dispatch(userActions.loginCheck(jwt));
     } //렌더링 마다 로그인체크
@@ -79,19 +100,18 @@ const SurveyButton = styled.div`
   margin: 10px auto;
   padding: 15px 20px;
   font-size: 1.2rem;
-  font-weight: 400;
-  background-color: #ffffff;
-    color: ${(props) => props.theme.main_color};
+  color: #ffffff;
+    font-weight: 400;
+  background-color: ${(props) => props.theme.main_color};
     border: 2pt solid ${(props) => props.theme.main_color};
-  
   z-index: 500;
   :focus {
     outline: none;
   }
   &:hover {
-    color: #ffffff;
     font-weight: 400;
-  background-color: ${(props) => props.theme.main_color};
+  background-color: #ffffff;
+    color: ${(props) => props.theme.main_color};
     border: 2pt solid ${(props) => props.theme.main_color};
     cursor: pointer;
     transition: ease-in-out, width 0.35s ease-in-out;
@@ -107,7 +127,7 @@ const SurveyButton = styled.div`
 
   @-webkit-keyframes blink {
     0% {
-      opacity: 0;
+      opacity: 0.6;
     }
     100% {
       opacity: 1;
@@ -115,7 +135,7 @@ const SurveyButton = styled.div`
   }
   @-moz-keyframes blink {
     0% {
-      opacity: 0;
+      opacity: 0.6;
     }
     100% {
       opacity: 1;
@@ -123,7 +143,7 @@ const SurveyButton = styled.div`
   }
   @keyframes blink {
     0% {
-      opacity: 0;
+      opacity: 0.6;
     }
     100% {
       opacity: 1;
