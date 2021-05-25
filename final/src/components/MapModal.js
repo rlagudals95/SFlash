@@ -44,7 +44,7 @@ const ModalDetail = (props) => {
   };
 
   const closeDetailModal = () => {
-    setEditModal(true);
+    setEditModal(false);
   };
 
   //캐러셀 모듈 코드
