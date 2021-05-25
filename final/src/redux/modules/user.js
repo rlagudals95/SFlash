@@ -63,8 +63,7 @@ const loginAPI = (email, pwd) => {
       })
       .then((res) => {
         console.log(res);
-        // let expires = new Date();
-        // expires = expires.setHours(expires.getHours() + 0.05);
+        console.log(res.data.toeken);
         let expires = new Date();
         expires = expires.setHours(expires.getHours() + 24);
         localStorage.setItem("toeknExpires", expires);
