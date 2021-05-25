@@ -2900,10 +2900,10 @@ const Maps = (props) => {
       <ZoomControlBox>
         {/* <ZoomControl onClick={zoomIn} style={{borderRight: "2pt solid #ffb719"}}> */}
         <ZoomControl onClick={zoomIn}>
-          <IoMdAdd size="30" color="#ffb719" />
+          <IoMdRemove size="30" color="#ffb719" />
         </ZoomControl>
         <ZoomControl onClick={zoomOut}>
-          <IoMdRemove size="30" color="#ffb719" />
+          <IoMdAdd size="30" color="#ffb719"/>
         </ZoomControl>
       </ZoomControlBox>
 
@@ -2928,11 +2928,63 @@ const Maps = (props) => {
 
 export default Maps;
 
+const PanControlContainer = styled.div`
+  position: fixed;
+  width: 280px;
+  height: 50px;
+  top: 515px;
+  right: 50px;
+  display: flex;
+  flex-direction: row;
+  background-color: #F2F3F7;
+  border: none;
+  border-radius: 10px;
+  box-sizing: border-box;
+  z-index: 100;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+`;
+
+const PanEntireControl = styled.div`
+  cursor: pointer;
+  width: 50%;
+  padding-top: 13px;
+  padding-bottom: 21px;
+  padding-left: 7px;
+  border: none;
+  font-size: 1rem;
+  text-align: center;
+  color: #343a40;
+  font-size: 16px;
+  font-weight: bold;
+  box-sizing: border-box;
+  &:hover {
+    color: #ffb719;
+  } 
+`;
+
+const PanMyCurrentControl = styled.div`
+  cursor: pointer;
+  width: 50%;
+  padding-top: 13px;
+  padding-bottom: 21px;
+  padding-right: 7px;
+  border: none;
+  font-size: 1rem;
+  text-align: center;
+  color: #343a40;
+  font-size: 16px;
+  font-weight: bold;
+  box-sizing: border-box;
+  &:hover {
+    color: #ffb719;
+  } 
+`;
+
 const MapTypeChangeContainer = styled.div`
   position: fixed;
   width: 130px;
   height: 50px;
-  top: 600px;
+  top: 575px;
   right: 200px;
   display: flex;
   flex-direction: row;
@@ -2941,6 +2993,7 @@ const MapTypeChangeContainer = styled.div`
   border-radius: 10px;
   box-sizing: border-box;
   z-index: 100;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
 
 const RoadMapSelected = styled.div`
@@ -2992,7 +3045,7 @@ const HybridMapSelected = styled.div`
   display: table-cell;
   vertical-align: middle;
   line-height: 42px;
-  padding-left: 5px;
+  padding-left: 2px;
 `;
 
 const HybridMap = styled.div`
@@ -3011,62 +3064,11 @@ const HybridMap = styled.div`
   padding-left: 5px;
 `;
 
-const PanControlContainer = styled.div`
-  position: fixed;
-  width: 280px;
-  height: 50px;
-  top: 530px;
-  right: 50px;
-  display: flex;
-  flex-direction: row;
-  background-color: #f2f3f7;
-  border: none;
-  border-radius: 10px;
-  box-sizing: border-box;
-  z-index: 100;
-`;
-
-const PanEntireControl = styled.div`
-  cursor: pointer;
-  width: 50%;
-  padding-top: 13px;
-  padding-bottom: 21px;
-  padding-left: 7px;
-  border: none;
-  font-size: 1rem;
-  text-align: center;
-  color: #343a40;
-  font-size: 16px;
-  font-weight: bold;
-  box-sizing: border-box;
-  &:hover {
-    color: #ffb719;
-  }
-`;
-
-const PanMyCurrentControl = styled.div`
-  cursor: pointer;
-  width: 50%;
-  padding-top: 13px;
-  padding-bottom: 21px;
-  padding-right: 7px;
-  border: none;
-  font-size: 1rem;
-  text-align: center;
-  color: #343a40;
-  font-size: 16px;
-  font-weight: bold;
-  box-sizing: border-box;
-  &:hover {
-    color: #ffb719;
-  }
-`;
-
 const ZoomControlBox = styled.div`
   position: fixed;
   width: 130px;
   height: 50px;
-  top: 600px;
+  top: 575px;
   right: 50px;
   display: flex;
   flex-direction: row;
@@ -3075,6 +3077,7 @@ const ZoomControlBox = styled.div`
   border-radius: 10px;
   box-sizing: border-box;
   z-index: 100;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 `;
 
 const ZoomControl = styled.div`

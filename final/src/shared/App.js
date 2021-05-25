@@ -50,7 +50,7 @@ function App() {
   const tokenExpires = localStorage.getItem("tokenExpires");
 
   React.useEffect(() => {
-    console.log(tokenExpires);
+    // console.log(tokenExpires);
     if (is_login) {
       if (tokenExpires < new Date()) {
         dispatch(userActions.logOut());
