@@ -140,7 +140,7 @@ const PostList = (props) => {
         dataLength={searchPost.length}
         next={next}
         hasMore={true}
-        loader={loading ? <Spinner /> : null} //상태값이 loading 중 일땐 스피너가 보여서 뒤에 게시물이 더 있을음 알려준다
+        loader={loading && <Spinner />} //상태값이 loading 중 일땐 스피너가 보여서 뒤에 게시물이 더 있을음 알려준다
       >
         {/* {loading && <Spinner />} */}
         <Container grid={gridColumn}>
@@ -287,18 +287,25 @@ const Container = styled.div`
     /* 1440밑으로 넓이가 내려가면 */
     margin-top: 4vh;
   }
-  @media (max-width: 1280px) {
+  /* @media (max-width: 1280px) {
     grid-template-columns: ${(props) => props.grid};
     grid-gap: 10px;
     margin: auto;
     margin-top: 4vh;
+    padding-top: 0px;
+  } */
+  @media (max-width: 1025px) {
+    grid-template-columns: ${(props) => props.grid};
+    grid-gap: 5px;
+    margin: auto;
+    margin-top: 250px;
     padding-top: 0px;
   }
   @media (max-width: 960px) {
     grid-template-columns: ${(props) => props.grid};
     grid-gap: 5px;
     margin: auto;
-    margin-top: 4vh;
+    margin-top: 250px;
     padding-top: 0px;
   }
   @media (max-width: 600px) {
@@ -345,19 +352,26 @@ const SearchBox = styled.div`
   border: none;
   box-sizing: border-box;
   border-radius: 10px;
-  top: 30px;
+  top: 120px;
   left: 50%;
+  width: 700px;
   height: 60px;
   transform: translate(-50%, -70%);
   z-index: 5;
-  @media (min-width: 1400px) {
+  /* @media (min-width: 1400px) {
     width: 700px;
-    top: 100px;
-  }
+    top: 180px;
+  } */
   @media (max-width: 1400px) {
     position: absolute;
+    width: 700px;
+    top: 180px;
+    margin: auto;
+  }
+  @media (max-width: 1025px) {
+    position: absolute;
     width: 55%;
-    top: 140px;
+    top: 250px;
     margin: auto;
   }
   @media (max-width: 600px) {
