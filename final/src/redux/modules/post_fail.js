@@ -339,7 +339,7 @@ const getMapPostAPI = () => {
             }
           });
         } else {
-          // console.log("서버 응답값", res);
+          console.log("서버 응답값", res);
           let map_post_list = [];
           // console.log("서버 응답값", res.data.data);
           // console.log(res.data.data[0].boardImgReponseDtoList);
