@@ -457,9 +457,9 @@ const DeleteImg = styled.div`
   text-align: center;
   position: relative;
   /* background-color: red; */
-  width: 50px;
+  width: 75px;
   top: 15px;
-  right: -15px;
+  right: -25px;
   padding: 3px 8px;
   background-color: white;
   color: rgba(0, 0, 0, 0, 0.1);
