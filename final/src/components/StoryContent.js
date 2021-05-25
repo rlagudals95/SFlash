@@ -21,21 +21,21 @@ const StoryContent = (props) => {
   }, []);
 
  
-  setTimeout(function() {
-    if (post_list.length === 0) {
-      return (
-        <React.Fragment>
-          <Warning>
-            <SflashLogo />
-            <Text size="1.1rem" color="grey">
-              게시물을 등록해 주세요!
-            </Text>
-          </Warning>
-        </React.Fragment>
-      );
-    }
+  // setTimeout(function() {
+  //   if (post_list.length === 0) {
+  //     return (
+  //       <React.Fragment>
+  //         <Warning>
+  //           <SflashLogo />
+  //           <Text size="1.1rem" color="grey">
+  //             게시물을 등록해 주세요!
+  //           </Text>
+  //         </Warning>
+  //       </React.Fragment>
+  //     );
+  //   }
     
-  }, 3000);
+  // }, 3000);
 
   // gridMode 가 true 면 그리드 형태로, false면 맵형태로 보여준다.
   const [gridMode, setGridMode] = React.useState(true);
