@@ -1035,7 +1035,7 @@ const CategoryBox = styled.div`
   position: fixed;
   z-index: 300;
   right: 50px;
-  top: 19vh;
+  top: 170px;
   background-color: #f2f3f7;
   /* background-color: red; */
   padding: 20px;
