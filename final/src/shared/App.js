@@ -130,7 +130,7 @@ function App() {
 const SurveyButton = styled.div`
   position: fixed;
   right: 70px;
-  top: 55px;
+  top: 49px;
   border: none;
   border-radius: 10px;
   box-sizing: border-box;
