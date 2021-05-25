@@ -3,6 +3,7 @@ import { produce } from "immer";
 import axios from "axios";
 import { config } from "../../shared/config";
 import Swal from "sweetalert2";
+import jwt_decode from 'jwt-decode';
 
 // actions
 const SET_USER = "SET_USER";
@@ -63,10 +64,12 @@ const loginAPI = (email, pwd) => {
       })
       .then((res) => {
         console.log(res);
-        console.log(res.data.toeken);
-        // let expires = new Date();
-        // expires = expires.setHours(expires.getHours() + 24);
-        // localStorage.setItem("toeknExpires", expires);
+        console.log(res.data.token);
+        let decoded = jwt_decode(res.data.token);
+        console.log(decoded);
+        const tokenExpires = decoded.exp * 1000;
+        console.log(tokenExpires);
+        localStorage.setItem("toeknExpires", tokenExpires);
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("jwt", res.data.token);
