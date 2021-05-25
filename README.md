@@ -64,7 +64,8 @@ http://sflash.ppt.s3-website.ap-northeast-2.amazonaws.com/
 ### 5. 게시물 클릭시 보여지는 상세보기  
 ![image](https://user-images.githubusercontent.com/76252074/119500656-fce2b680-bda2-11eb-8779-e2f960cc6e71.png)
 
-### 6. 이미지가 먼저 보여지는 커뮤니티 페이지 
+### 6. 이미지가 먼저 보여지는 커뮤니티 페이지
+- 사용자의 피드백을 반영해 3줄과 4줄로 보여줄 수 있는 버튼을 추가
 ![image](https://user-images.githubusercontent.com/76252074/119500748-1a178500-bda3-11eb-9263-8ad4e6c5294d.png)
 
 ### 7. 내가 올린 & 좋아요한 게시물을 이미지와 지도로 확인할 수 있는 마이페이지
