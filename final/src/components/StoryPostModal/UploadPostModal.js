@@ -449,7 +449,7 @@ const Component = styled.div`
   height: 100%;
   width: 100%;
   background-color: black;
-  z-index: 2000;
+  z-index: 2006;
   top: 0;
   left: 0;
   bottom: 0;

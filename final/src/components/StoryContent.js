@@ -13,7 +13,12 @@ import Spinner from "../shared/Spinner";
 
 const StoryContent = (props) => {
   const dispatch = useDispatch();
-  const { post_list, marker_icon, userPostMode, userId } = props;
+  // const { post_list, marker_icon, userPostMode, userId } = props;
+  const { post_list, userPostMode, userId } = props;
+  // console.log("post_list 몇번이나??:", post_list);
+  // const user_id = props.match.params.id;
+  // console.log(userId);
+  // const paging = useSelector((state) => state.storypost.paging);
   const is_loading = useSelector((state) => state.storypost.is_loading);
 
   React.useEffect(() => {}, []);
@@ -47,18 +52,18 @@ const StoryContent = (props) => {
     }
   };
 
-  if (post_list.length === 0) {
-    return (
-      <React.Fragment>
-        <Warning>
-          <SflashLogo />
-          <Text size="1.1rem" color="grey">
-            게시물을 등록해 주세요!
-          </Text>
-        </Warning>
-      </React.Fragment>
-    );
-  }
+  // if (post_list.length === 0) {
+  //   return (
+  //     <React.Fragment>
+  //       <Warning>
+  //         <SflashLogo />
+  //         <Text size="1.1rem" color="grey">
+  //           게시물을 등록해 주세요!
+  //         </Text>
+  //       </Warning>
+  //     </React.Fragment>
+  //   );
+  // }
 
   // 게시물 갯수가 0 일때 게시물을 등록해달라는 문구가 뜹니다.
 
@@ -116,7 +121,7 @@ const StoryContent = (props) => {
             <>
               <StoryMap
                 post_list={post_list}
-                marker_icon={marker_icon}
+                // marker_icon={marker_icon}
                 userPostMode={userPostMode}
               />
               <Grid height="50px" />
