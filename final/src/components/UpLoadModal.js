@@ -11,7 +11,7 @@ import { actionCreators as imageActions } from "../redux/modules/image2";
 import { actionCreators as profileActions } from "../redux/modules/profile";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Slider from "react-slick";
-
+import _ from "lodash"; // throttle, debounce 사용
 import { useDispatch, useSelector } from "react-redux";
 import PublishIcon from "@material-ui/icons/Publish";
 import TextField from "@material-ui/core/TextField";
@@ -28,7 +28,6 @@ const UploadModal = (props) => {
   const { latitude, longitude, spotName, spotNameForCustomOverlay } = props;
   const userId = localStorage.getItem("userId");
 
-  // console.log("비교!", props);
   React.useEffect(() => {
     if (is_madal) {
       dispatch(imageActions.getModalPost(props));
@@ -65,7 +64,7 @@ const UploadModal = (props) => {
 
   const [image_list, setImageList] = React.useState();
   const is_file = useSelector((state) => state.image2.file);
-  console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
+  // console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
   // const post_id = props.match.params.id;
   const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
   const is_madal = props.modal ? true : false;
@@ -73,12 +72,10 @@ const UploadModal = (props) => {
   // console.log("수정 화면 이미지들", images);
   const nickname = localStorage.getItem("nickname");
   const editImgList = useSelector((state) => state.image2.edit); // 요걸 가져와야해
-  // const editImage = useSelector((state) => state.image2.image);
 
   const previewSet = useSelector((state) => state.image2.preview);
-  console.log("프리뷰를 알자!", previewSet);
+
   const file = useSelector((state) => state.image2.file);
-  console.log("업로드 파일들을 알자!", file);
 
   const is_category = useSelector((state) => state.category.select_category);
 
@@ -178,6 +175,15 @@ const UploadModal = (props) => {
     setTitle(e.target.value);
   };
 
+  // 재렌더링을 최소화 하기 위해 input값을 가져오는데 디바운스 처리를 해줌
+  const titleDedounce = _.debounce((e) => {
+    setTitle(e.target.value);
+  }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
+
+  const contentsDedounce = _.debounce((e) => {
+    setContents(e.target.value);
+  }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
+
   if (images.length == 0) {
     images.push(
       "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
@@ -261,10 +267,10 @@ const UploadModal = (props) => {
                               );
                               //미리 등록해둔 이미지가 있는 경우엔 imgUrlId값이 있어 그것으로 삭제가능
                               if (onlyImg[idx].imgUrlId) {
-                                console.log(
-                                  "삭제한 이미지 id",
-                                  onlyImg[idx].imgUrlId
-                                );
+                                // console.log(
+                                //   "삭제한 이미지 id",
+                                //   onlyImg[idx].imgUrlId
+                                // );
                                 dispatch(
                                   imageActions.deleteImage(
                                     onlyImg[idx].imgUrlId
@@ -295,7 +301,7 @@ const UploadModal = (props) => {
                 // 이미지를 모두 삭제하면 기본 설정 화면이 보인다
                 <ModalImg
                   onClick={() => {
-                    console.log("몇번 이미지인가?");
+                    // console.log("몇번 이미지인가?");
                   }}
                   src={
                     "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
@@ -361,7 +367,7 @@ const UploadModal = (props) => {
             ) : (
               <React.Fragment>
                 <Title>
-                  <Input2
+                  <TitleInput
                     id="outlined-multiline-static"
                     // label="📝제목 작성"
                     placeholder={
@@ -369,22 +375,22 @@ const UploadModal = (props) => {
                     }
                     rows={1}
                     variant="outlined"
-                    value={title}
+                    // value={title}
                     width={"100%"}
-                    _onChange={changeTitle}
-                  ></Input2>
+                    onChange={titleDedounce}
+                  ></TitleInput>
                 </Title>
-                <Input
+                <ContentsInput
                   id="outlined-multiline-static"
                   // label="📝제목 작성"
                   placeholder={"내용작성..."}
                   rows={10}
                   multiLine
                   variant="outlined"
-                  value={contents}
+                  // value={contents}
                   width={"100%"}
-                  _onChange={changeContents}
-                ></Input>
+                  onChange={contentsDedounce}
+                ></ContentsInput>
               </React.Fragment>
             )}
           </MiddleBox>
@@ -400,6 +406,34 @@ const UploadModal = (props) => {
     </React.Fragment>
   );
 };
+
+const TitleInput = styled.input`
+  margin-top: 20px;
+  border: none;
+  width: 100%;
+  padding: 12px 4px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+  :focus {
+    outline: none;
+  }
+`;
+
+const ContentsInput = styled.textarea`
+  border: none;
+  width: ${(props) => props.width};
+  padding: 12px 4px;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+  @media (max-width: 600px) {
+    height: 17vh;
+  }
+  :focus {
+    outline: none;
+  }
+`;
 
 const BottomEdit = styled.div`
   color: ${(props) => props.theme.main_color};

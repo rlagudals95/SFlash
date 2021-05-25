@@ -318,7 +318,7 @@ const getMapPostAPI = () => {
       },
     })
       .then((res) => {
-        console.log("마커", res);
+        // console.log("마커", res);
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
@@ -609,7 +609,6 @@ const editLikeD = (post_id, post) => {
 
     let _like = post.like;
     let _likeCnt = post.likeCnt;
-    console.log(_like, _likeCnt);
 
     let board = {
       category: post.category,
@@ -690,8 +689,7 @@ export default handleActions(
     ) =>
       produce(state, (draft) => {
         //그냥 게시물 정보들 하나 가져와서 갈아준다!
-        console.log("ㅁㅇ", action.payload.post_id);
-        console.log("ㄹㅇ", action.payload.board);
+
         // action.payload.post.like = true;
         let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
         // 수정한 게시물을 찾기 위해서 findindex
