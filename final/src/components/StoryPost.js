@@ -25,7 +25,7 @@ const StoryPost = (props) => {
     setDetailModal(false);
   };
 
-  // 좋아요 
+  // 좋아요
   const addLike = (e) => {
     e.preventDefault();
     e.stopPropagation();

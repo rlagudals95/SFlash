@@ -66,7 +66,7 @@ const loginAPI = (email, pwd) => {
         // let expires = new Date();
         // expires = expires.setHours(expires.getHours() + 0.05);
         let expires = new Date();
-        expires = expires.setHours(expires.getHours() + 24); 
+        expires = expires.setHours(expires.getHours() + 24);
         localStorage.setItem("toeknExpires", expires);
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("userId", res.data.userId);
