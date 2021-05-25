@@ -33,7 +33,7 @@ const Input = (props) => {
       <Grid>
         {label && <Text margin="0px">{label}</Text>}
         <ElTextarea
-          rows={4}
+          rows={5}
           value={value}
           placeholder={placeholder}
           onChange={_onChange}
@@ -73,6 +73,10 @@ const ElTextarea = styled.textarea`
   width: ${(props) => props.width};
   padding: 12px 4px;
   box-sizing: border-box;
+  font-size: 1.1rem;
+  word-spacing: -4px;
+  line-height: 1.5rem;
+  padding: 10px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
   @media (max-width: 600px) {
     height: 17vh;

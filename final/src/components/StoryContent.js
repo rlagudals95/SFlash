@@ -13,7 +13,12 @@ import Spinner from "../shared/Spinner";
 
 const StoryContent = (props) => {
   const dispatch = useDispatch();
-  const { post_list, marker_icon, userPostMode, userId } = props;
+  // const { post_list, marker_icon, userPostMode, userId } = props;
+  const { post_list, userPostMode, userId } = props;
+  // console.log("post_list 몇번이나??:", post_list);
+  // const user_id = props.match.params.id;
+  // console.log(userId);
+  // const paging = useSelector((state) => state.storypost.paging);
   const is_loading = useSelector((state) => state.storypost.is_loading);
 
   React.useEffect(() => {}, []);
@@ -36,7 +41,7 @@ const StoryContent = (props) => {
 
   // gridMode 가 true 면 그리드 형태로, false면 맵형태로 보여준다.
   const [gridMode, setGridMode] = React.useState(true);
-  const [story, setStory] = React.useState(false);
+
 
   const next = () => {
     //스크롤이 바닥에 닿을때 마다 포스트를 정해진 paging 사이즈만큼 가져오는 함수
@@ -47,18 +52,18 @@ const StoryContent = (props) => {
     }
   };
 
-  if (post_list.length === 0) {
-    return (
-      <React.Fragment>
-        <Warning>
-          <SflashLogo />
-          <Text size="1.1rem" color="grey">
-            게시물을 등록해 주세요!
-          </Text>
-        </Warning>
-      </React.Fragment>
-    );
-  }
+  // if (post_list.length === 0) {
+  //   return (
+  //     <React.Fragment>
+  //       <Warning>
+  //         <SflashLogo />
+  //         <Text size="1.1rem" color="grey">
+  //           게시물을 등록해 주세요!
+  //         </Text>
+  //       </Warning>
+  //     </React.Fragment>
+  //   );
+  // }
 
   // 게시물 갯수가 0 일때 게시물을 등록해달라는 문구가 뜹니다.
 
@@ -114,7 +119,7 @@ const StoryContent = (props) => {
             <>
               <StoryMap
                 post_list={post_list}
-                marker_icon={marker_icon}
+                // marker_icon={marker_icon}
                 userPostMode={userPostMode}
               />
               <Grid height="50px" />

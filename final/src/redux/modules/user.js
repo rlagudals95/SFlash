@@ -45,7 +45,7 @@ const signupAPI = (nickname, email, pwd, rePwd) => {
       })
       .catch((err) => {
         Swal.fire({
-          text: "회원가입 실패 ㅠㅠ",
+          text: "회원가입 실패 ㅠ.ㅠ",
           confirmButtonColor: "#ffb719",
         });
         console.log("회원가입 실패:", err);
@@ -63,12 +63,10 @@ const loginAPI = (email, pwd) => {
       })
       .then((res) => {
         console.log(res);
+        console.log(res.data.toeken);
         // let expires = new Date();
-        // expires = expires.setHours(expires.getHours() + 0.05);
-        let expires = new Date();
-        expires = expires.setHours(expires.getHours() + 24);
-        console.log("토큰 만료기간은?", expires);
-        localStorage.setItem("toeknExpires", expires);
+        // expires = expires.setHours(expires.getHours() + 24);
+        // localStorage.setItem("toeknExpires", expires);
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("jwt", res.data.token);
