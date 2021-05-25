@@ -42,7 +42,6 @@ const StoryContent = (props) => {
   // gridMode 가 true 면 그리드 형태로, false면 맵형태로 보여준다.
   const [gridMode, setGridMode] = React.useState(true);
 
-
   const next = () => {
     //스크롤이 바닥에 닿을때 마다 포스트를 정해진 paging 사이즈만큼 가져오는 함수
     if (userPostMode) {
