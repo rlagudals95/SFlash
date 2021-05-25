@@ -7,7 +7,7 @@ import styled from "styled-components";
 import _ from "lodash"; // throttle, debounce 사용
 import * as BiIcons from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
-import { IoMdRemove } from "react-icons/io"
+import { IoMdRemove } from "react-icons/io";
 import Swal from "sweetalert2";
 // component, element 파일들 가져오기
 import "../Css/Map.css";
@@ -68,8 +68,6 @@ const Maps = (props) => {
   const map_post_list = useSelector((state) => {
     return state.post.map_post_list; // 비동기 문제 해결
   });
-
-  console.log();
 
   // 디테일 모달 관련 상태값
   const [is_detailModal, setDetailModal] = useState();
@@ -2724,9 +2722,9 @@ const Maps = (props) => {
     // var mapTypeControl = new kakao.maps.MapTypeControl();
     // map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
-  // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성하기.
-  // var zoomControl = new kakao.maps.ZoomControl();
-  // map.addControl(zoomControl, kakao.maps.ControlPosition.Right);
+    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성하기.
+    // var zoomControl = new kakao.maps.ZoomControl();
+    // map.addControl(zoomControl, kakao.maps.ControlPosition.Right);
 
     // 지도 api 설정은 여기서 끝
     // 지도 api 추가/수정/삭제하면서 함수 범위를 꼬이지 않게 주의할 것.
@@ -2756,17 +2754,17 @@ const Maps = (props) => {
 
   // 업로드모달에 props로 전달되는 데이터
   if (latitude && longitude && spotName) {
-    console.log(
-      "위도: " +
-        latitude +
-        " " +
-        ", 경도: " +
-        longitude +
-        " " +
-        ", 장소: " +
-        spotName
-    );
-  };
+    // console.log(
+    //   "위도: " +
+    //     latitude +
+    //     " " +
+    //     ", 경도: " +
+    //     longitude +
+    //     " " +
+    //     ", 장소: " +
+    //     spotName
+    // );
+  }
 
   // 키워드로 검색하기!!!!!!
   // 장소 검색 객체를 생성합니다
@@ -2806,28 +2804,29 @@ const Maps = (props) => {
     setUpLoadModal(false);
   };
 
-  // 지도 줌인아웃기능 - 대한민국 전체 보기 
+  // 지도 줌인아웃기능 - 대한민국 전체 보기
   const zoomOutKorea = () => {
     // _map.setLevel(13, {anchor: new kakao.maps.LatLng(startLat, startLng,)});
-    _map.setLevel(12, 
-      {animate: {duration: 500}},
-      {anchor: new kakao.maps.LatLng(36.23122278638665, 127.55065523494979)},
+    _map.setLevel(
+      12,
+      { animate: { duration: 500 } },
+      { anchor: new kakao.maps.LatLng(36.23122278638665, 127.55065523494979) }
     );
   };
 
   // 현접속위치 주변으로 이동해서 보기
   const moveToCurrentPosition = () => {
     const moveToCurrentPosition = new kakao.maps.LatLng(startLat, startLng);
-    _map.panTo(moveToCurrentPosition)
+    _map.panTo(moveToCurrentPosition);
   };
 
   // 지도 줌인아웃 기능
-  const zoomIn = () => { 
+  const zoomIn = () => {
     _map.setLevel(_map.getLevel() - 1);
   };
 
   const zoomOut = () => {
-    _map.setLevel(_map.getLevel() + 1)
+    _map.setLevel(_map.getLevel() + 1);
   };
 
   const [roadmap, setRoadmap] = useState(true);
@@ -2835,10 +2834,10 @@ const Maps = (props) => {
 
   const setMapROADMAP = () => {
     _map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
-  }
+  };
   const setMapHYBRID = () => {
     _map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
-  }
+  };
 
   return (
     <React.Fragment>
@@ -2866,22 +2865,24 @@ const Maps = (props) => {
       {roadmap ? (
         <MapTypeChangeContainer>
           <RoadMapSelected>지도</RoadMapSelected>
-          <HybridMap 
+          <HybridMap
             onClick={() => {
               setMapHYBRID();
               setRoadmap(false);
             }}
-          >스카이뷰
+          >
+            스카이뷰
           </HybridMap>
         </MapTypeChangeContainer>
       ) : (
         <MapTypeChangeContainer>
-          <RoadMap 
+          <RoadMap
             onClick={() => {
               setMapROADMAP();
               setRoadmap(true);
             }}
-          >지도
+          >
+            지도
           </RoadMap>
           <HybridMapSelected>스카이뷰</HybridMapSelected>
         </MapTypeChangeContainer>
@@ -2899,12 +2900,12 @@ const Maps = (props) => {
       <ZoomControlBox>
         {/* <ZoomControl onClick={zoomIn} style={{borderRight: "2pt solid #ffb719"}}> */}
         <ZoomControl onClick={zoomIn}>
-          <IoMdAdd size="30" color="#ffb719"/>
+          <IoMdAdd size="30" color="#ffb719" />
         </ZoomControl>
         <ZoomControl onClick={zoomOut}>
           <IoMdRemove size="30" color="#ffb719" />
         </ZoomControl>
-      </ZoomControlBox>  
+      </ZoomControlBox>
 
       <CategoryInMap />
 
@@ -2935,7 +2936,7 @@ const MapTypeChangeContainer = styled.div`
   right: 200px;
   display: flex;
   flex-direction: row;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   border: 2pt solid #ffb719;
   border-radius: 10px;
   box-sizing: border-box;
@@ -2943,15 +2944,15 @@ const MapTypeChangeContainer = styled.div`
 `;
 
 const RoadMapSelected = styled.div`
-  cursor: pointer;  
+  cursor: pointer;
   width: 50%;
   height: 100%;
-  background-color: #343a40; 
+  background-color: #343a40;
   align-items: center;
   border: none;
   font-size: 0.95rem;
   text-align: center;
-  color: #F2F3F7;
+  color: #f2f3f7;
   font-weight: bold;
   border-radius: 10px;
   display: table-cell;
@@ -2960,10 +2961,10 @@ const RoadMapSelected = styled.div`
 `;
 
 const RoadMap = styled.div`
-  cursor: pointer;  
+  cursor: pointer;
   width: 50%;
   height: 100%;
-  background-color: #F2F3F7; 
+  background-color: #f2f3f7;
   align-items: center;
   border: none;
   font-size: 0.95rem;
@@ -2977,15 +2978,15 @@ const RoadMap = styled.div`
 `;
 
 const HybridMapSelected = styled.div`
-  cursor: pointer;  
+  cursor: pointer;
   width: 50%;
   height: 100%;
-  background-color: #343a40; 
+  background-color: #343a40;
   align-items: center;
   border: none;
   font-size: 0.95rem;
   text-align: center;
-  color: #F2F3F7;
+  color: #f2f3f7;
   font-weight: bold;
   border-radius: 10px;
   display: table-cell;
@@ -2995,10 +2996,10 @@ const HybridMapSelected = styled.div`
 `;
 
 const HybridMap = styled.div`
-  cursor: pointer;  
+  cursor: pointer;
   width: 50%;
   height: 100%;
-  background-color: #F2F3F7; 
+  background-color: #f2f3f7;
   display: flex;
   align-items: center;
   border: none;
@@ -3018,7 +3019,7 @@ const PanControlContainer = styled.div`
   right: 50px;
   display: flex;
   flex-direction: row;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   border: none;
   border-radius: 10px;
   box-sizing: border-box;
@@ -3040,7 +3041,7 @@ const PanEntireControl = styled.div`
   box-sizing: border-box;
   &:hover {
     color: #ffb719;
-  } 
+  }
 `;
 
 const PanMyCurrentControl = styled.div`
@@ -3058,7 +3059,7 @@ const PanMyCurrentControl = styled.div`
   box-sizing: border-box;
   &:hover {
     color: #ffb719;
-  } 
+  }
 `;
 
 const ZoomControlBox = styled.div`
@@ -3069,7 +3070,7 @@ const ZoomControlBox = styled.div`
   right: 50px;
   display: flex;
   flex-direction: row;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   border: 2pt solid #ffb719;
   border-radius: 10px;
   box-sizing: border-box;
@@ -3090,8 +3091,8 @@ const ZoomControl = styled.div`
     color: white;
     background-color: #343a40;
     border-radius: 10px;
-    border: 2pt solid #ffb719
-  } 
+    border: 2pt solid #ffb719;
+  }
 `;
 
 const SearchBox = styled.div`
