@@ -352,8 +352,9 @@ const SearchBox = styled.div`
   border: none;
   box-sizing: border-box;
   border-radius: 10px;
-  top: 30px;
+  top: 120px;
   left: 50%;
+  width: 700px;
   height: 60px;
   transform: translate(-50%, -70%);
   z-index: 5;
@@ -363,7 +364,7 @@ const SearchBox = styled.div`
   } */
   @media (max-width: 1400px) {
     position: absolute;
-    width: 55%;
+    width: 700px;
     top: 180px;
     margin: auto;
   }
