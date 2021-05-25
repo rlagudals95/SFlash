@@ -74,28 +74,7 @@ function App() {
   }, []);
 
   //모바일로 접속시 페이지 이동
-  // var mobileKeyWords = new Array(
-  //   "iPhone",
-  //   "iPod",
-  //   "BlackBerry",
-  //   "Android",
-  //   "Windows CE",
-  //   "LG",
-  //   "MOT",
-  //   "SAMSUNG",
-  //   "SonyEricsson"
-  // );
-  // for (var word in mobileKeyWords) {
-  //   if (navigator.userAgent.match(mobileKeyWords[word]) != null) {
-  //     // window.location.href = "모바일 홈페이지 주소/실행화일";
-  //     history.push("/mobilenot");
-  //     break;
-  //   }
-  // }
 
-  /**
-   * 모바일 페이지 강제 이동
-   */
   //Mobile여부를 구분하기 위함
   var uAgent = navigator.userAgent.toLowerCase();
   // 아래는 모바일 장치들의 모바일 페이지 접속을위한 스크립트
@@ -126,12 +105,12 @@ function App() {
     <React.Fragment>
       <ConnectedRouter history={history}>
         <SideNav></SideNav>
-        <SurveyButton
+        {/* <SurveyButton
           className="blinking"
           onClick={() => window.open("https://forms.gle/SuRWZC7xw5qsBZtf6")}
         >
           기프티콘 이벤트 참여하기
-        </SurveyButton>
+        </SurveyButton> */}
         <ScrollToTop>
           <Switch>
             <Route path="/" exact component={Main} />
@@ -158,65 +137,65 @@ function App() {
   );
 }
 
-const SurveyButton = styled.div`
-  position: fixed;
-  right: 70px;
-  top: 49px;
-  border: none;
-  border-radius: 10px;
-  box-sizing: border-box;
-  margin: 10px auto;
-  padding: 15px 20px;
-  font-size: 1.2rem;
-  color: #ffffff;
-  font-weight: 400;
-  background-color: ${(props) => props.theme.main_color};
-  border: 2pt solid ${(props) => props.theme.main_color};
-  z-index: 500;
-  :focus {
-    outline: none;
-  }
-  &:hover {
-    font-weight: 400;
-    background-color: #ffffff;
-    color: ${(props) => props.theme.main_color};
-    border: 2pt solid ${(props) => props.theme.main_color};
-    cursor: pointer;
-    transition: ease-in-out, width 0.35s ease-in-out;
-    transform: translateY(-8px);
-    transition: all 200ms ease;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px 0px;
-    animation: none;
-  }
+// const SurveyButton = styled.div`
+//   position: fixed;
+//   right: 70px;
+//   top: 49px;
+//   border: none;
+//   border-radius: 10px;
+//   box-sizing: border-box;
+//   margin: 10px auto;
+//   padding: 15px 20px;
+//   font-size: 1.2rem;
+//   color: #ffffff;
+//   font-weight: 400;
+//   background-color: ${(props) => props.theme.main_color};
+//   border: 2pt solid ${(props) => props.theme.main_color};
+//   z-index: 500;
+//   :focus {
+//     outline: none;
+//   }
+//   &:hover {
+//     font-weight: 400;
+//     background-color: #ffffff;
+//     color: ${(props) => props.theme.main_color};
+//     border: 2pt solid ${(props) => props.theme.main_color};
+//     cursor: pointer;
+//     transition: ease-in-out, width 0.35s ease-in-out;
+//     transform: translateY(-8px);
+//     transition: all 200ms ease;
+//     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px 0px;
+//     animation: none;
+//   }
 
-  -webkit-animation: blink 1s ease-in-out infinite alternate;
-  /* -moz-animation: blink 1s ease-in-out infinite alternate; */
-  animation: blink 1s ease-in-out infinite alternate;
+//   -webkit-animation: blink 1s ease-in-out infinite alternate;
+//   /* -moz-animation: blink 1s ease-in-out infinite alternate; */
+//   animation: blink 1s ease-in-out infinite alternate;
 
-  @-webkit-keyframes blink {
-    0% {
-      opacity: 0.6;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  @-moz-keyframes blink {
-    0% {
-      opacity: 0.6;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  @keyframes blink {
-    0% {
-      opacity: 0.6;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-`;
+//   @-webkit-keyframes blink {
+//     0% {
+//       opacity: 0.6;
+//     }
+//     100% {
+//       opacity: 1;
+//     }
+//   }
+//   @-moz-keyframes blink {
+//     0% {
+//       opacity: 0.6;
+//     }
+//     100% {
+//       opacity: 1;
+//     }
+//   }
+//   @keyframes blink {
+//     0% {
+//       opacity: 0.6;
+//     }
+//     100% {
+//       opacity: 1;
+//     }
+//   }
+// `;
 
 export default App;

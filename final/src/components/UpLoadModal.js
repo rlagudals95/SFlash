@@ -31,13 +31,11 @@ const UploadModal = (props) => {
   console.log("비교!", props);
   React.useEffect(() => {
     if (is_madal) {
-      console.log("실행실행!!!!!!!!!!");
       dispatch(imageActions.getModalPost(props));
       dispatch(profileActions.getUserInfoAPI(userId));
       return;
     }
     if (is_edit) {
-      console.log("실행ㄴㄴㄴㄴㄴㄴㄴ", props);
       // dispatch(imageActions.resetEdit([])); //
       dispatch(imageActions.getPost(props.id));
 
@@ -516,12 +514,14 @@ const ModalComponent = styled.div`
   min-width: 380px;
   margin: auto;
   max-height: 100%;
-  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background-color: transparent;
+    display: none;
+    /* background-color: transparent; */
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 3px;
