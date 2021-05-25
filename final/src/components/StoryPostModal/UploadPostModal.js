@@ -436,7 +436,7 @@ const Component = styled.div`
   height: 100%;
   width: 100%;
   background-color: black;
-  z-index: 2000;
+  z-index: 2006;
   top: 0;
   left: 0;
   bottom: 0;
@@ -446,7 +446,7 @@ const Component = styled.div`
 const ModalComponent = styled.div`
   border-radius: 0.5vw;
   position: fixed;
-  width: 720px;
+  width: 730px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
