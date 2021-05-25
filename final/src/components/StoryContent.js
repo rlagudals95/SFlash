@@ -14,7 +14,7 @@ import Spinner from "../shared/Spinner";
 const StoryContent = (props) => {
   const dispatch = useDispatch();
   const { post_list, marker_icon, userPostMode, userId } = props;
-  // console.log(post_list);
+  console.log("post_list 몇번이나??:", post_list);
   // const user_id = props.match.params.id;
   // console.log(userId);
   // const paging = useSelector((state) => state.storypost.paging);

@@ -217,7 +217,7 @@ const ModalDetail = (props) => {
                     {modalData.writerId == user_id ? (
                       <ModalEdit>
                         <React.Fragment onClick={() => props.close}>
-                          <EditBtn onClick={() => setEditModal(true)}>
+                          <EditBtn onClick={() => openEditModal()}>
                             수정
                           </EditBtn>
                         </React.Fragment>
