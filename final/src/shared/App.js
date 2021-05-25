@@ -63,7 +63,7 @@ function App() {
           cancelButtonColor: "#eee",
         }).then((result) => {
           if (result.isConfirmed) {
-            history.push("/mobilenot");
+            history.push("/login");
           }
         });
       }
@@ -88,7 +88,7 @@ function App() {
   for (var word in mobileKeyWords) {
     if (navigator.userAgent.match(mobileKeyWords[word]) != null) {
       // window.location.href = "모바일 홈페이지 주소/실행화일";
-      history.push("/login");
+      history.push("/mobilenot");
       break;
     }
   }
