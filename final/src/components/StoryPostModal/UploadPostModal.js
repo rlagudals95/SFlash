@@ -157,9 +157,7 @@ const UploadModal = (props) => {
 
   return (
     <React.Fragment>
-      <Component
-        onClick={resetPreview}
-      />
+      <Component onClick={resetPreview} />
       <ModalComponent>
         <ModalHeader>
           <HeaderInner>
@@ -402,9 +400,9 @@ const DeleteImg = styled.div`
   text-align: center;
   position: relative;
   /* background-color: red; */
-  width: 50px;
+  width: 75px;
   top: 15px;
-  right: -15px;
+  right: -25px;
   padding: 3px 8px;
   background-color: white;
   color: rgba(0, 0, 0, 0, 0.1);
@@ -416,73 +414,20 @@ const DeleteImg = styled.div`
   cursor: pointer;
 `;
 
-// const ImgOutter = styled.div`
-//   text-align: center;
-//   display: table;
-// `;
+const ImgOutter = styled.div`
+  text-align: center;
+  display: table;
+`;
 
 const ModalImg = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   object-fit: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   border: none;
   box-sizing: border-box;
   width: 100%;
-  height: 410px;
-  max-height: 350px;
-  border-top: 2px solid darkgray;
-  border-bottom: 2px solid darkgray;
-  /* display: table-cell; */
-  /* background-color: red; */
-  @media (max-width: 1440px) {
-    background-image: url("${(props) => props.src}");
-    background-size: cover;
-    object-fit: cover;
-    background-position: 0px;
-    background-repeat: no-repeat;
-    border: none;
-    box-sizing: border-box;
-    width: 100%;
-    height: 630px;
-    max-height: 330px;
-    margin-bottom: -20px;
-    border-top: 2px solid darkgray;
-    border-bottom: 2px solid darkgray;
-  }
-  @media (max-width: 1155px) {
-    background-image: url("${(props) => props.src}");
-    background-size: cover;
-    object-fit: cover;
-    background-position: 0px;
-    background-repeat: no-repeat;
-    border: none;
-    box-sizing: border-box;
-    width: 100%;
-    height: 320px;
-    max-height: 320px;
-    /* height: 465px;
-    max-height: 465px; */
-    margin-bottom: -20px;
-    border-top: 2px solid darkgray;
-    border-bottom: 2px solid darkgray;
-  }
-  @media (max-width: 600px) {
-    background-image: url("${(props) => props.src}");
-    background-size: cover;
-    object-fit: cover;
-    background-position: 0px;
-    background-repeat: no-repeat;
-    border: none;
-    box-sizing: border-box;
-    width: 100%;
-    height: 800px;
-    max-height: 40vh;
-    margin-bottom: 1vh;
-    border-top: 2px solid darkgray;
-    border-bottom: 2px solid darkgray;
-  }
+  aspect-ratio: 4/3;
+  background-position: center;
 `;
 
 const Component = styled.div`
@@ -491,91 +436,53 @@ const Component = styled.div`
   height: 100%;
   width: 100%;
   background-color: black;
-  z-index: 1000;
+  z-index: 2000;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  @media (max-width: 600px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
-    z-index: 6999;
-  }
 `;
 
 const ModalComponent = styled.div`
   border-radius: 0.5vw;
-  position: fixed !important;
-  /* width: 590px; */
-  width: 500px;
-  height: 820px;
-  max-height: 820px;
-  /* overflow: hidden; */
+  position: fixed;
+  width: 720px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: green;
   background-color: #fafafc;
-  z-index: 1001;
+  z-index: 2007;
   display: flex;
   flex-direction: column;
   border: none;
   box-sizing: border-box;
   min-width: 380px;
-  /* overflow-x: hidden; */
-  @media (max-width: 1440px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
-    position: fixed;
-    /* width: 35vw; */
-    width: 470px;
-    height: 780px;
-    /* overflow: hidden; */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    /* background-color: white; */
-    z-index: 1000;
-    border: none;
-    box-sizing: border-box;
+  margin: auto;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 6px;
   }
-  @media (max-width: 1155px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
-    position: fixed;
-    /* width: 35vw; */
-    width: 470px;
-    height: 780px;
-    /* overflow: hidden; */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    /* background-color: white; */
-    z-index: 1000;
-    border: none;
-    box-sizing: border-box;
+  ::-webkit-scrollbar-track {
+    display: none;
+    /* background-color: transparent; */
   }
-  @media (max-width: 600px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    /* overflow: hidden; */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    /* background-color: white; */
-    border: none;
-    box-sizing: border-box;
-    z-index: 7000;
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: lightgray;
   }
-  /* @media (max-width: 950px) {
-    width: 350px;
+  @media (max-width: 1280px) {
+    width: 768px;
   }
-  @media (max-width: 350px) {
-    width: 100%;
-  /* } */ /////////////// */
+  @media (max-width: 768px) {
+    width: 97%;
+  }
+  @media (max-width: 480px) {
+    width: 100vw;
+    height: 100vh;
+    border-radius: none;
+  }
 `;
 
 const ModalHeader = styled.div`
@@ -601,13 +508,13 @@ const HeaderInner = styled.div`
   width: 95%;
 `;
 
-// const HeaderEdit = styled.div`
-//   color: ${(props) => props.theme.main_color};
-//   font-weight: bold;
-//   background-color: transparent;
-//   font-size: 14px;
-//   cursor: pointer;
-// `;
+const HeaderEdit = styled.div`
+  color: ${(props) => props.theme.main_color};
+  font-weight: bold;
+  background-color: transparent;
+  font-size: 14px;
+  cursor: pointer;
+`;
 
 const ExitContainer = styled.div`
   z-index: 30;
@@ -629,56 +536,11 @@ const ExitBtn = styled.button`
 `;
 
 const ModalBottomContainer = styled.div`
-  /* background-color: red; */
-  margin: 0px auto;
-  margin-top: 30px;
   text-align: left;
-  width: 450px;
-  height: 380px;
+  width: 93%;
   display: flex;
+  margin: 10px auto;
   flex-direction: column;
-  padding: 0px 12px;
-  @media (max-width: 1440px) {
-    // 1450밑으로 넓이가 내려가면
-    text-align: left;
-    width: 450px;
-    // 이거 올려주니까 댓글창이보인다..!
-    height: 600px;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    margin: 0px auto;
-    margin-top: 5vh;
-    /* background-color: red; */
-  }
-  @media (max-width: 1155px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
-    // 1450밑으로 넓이가 내려가면
-    text-align: left;
-    width: 450px;
-    // 이거 올려주니까 댓글창이보인다..!
-    height: 370px;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    margin: 0px auto;
-    margin-top: 5vh;
-  }
-  @media (max-width: 600px) {
-    // 1450밑으로 넓이가 내려가면
-    /* all: unset; */
-    text-align: left;
-    width: 93vw;
-    height: 45vh; // 이거 올려주니까 댓글창이보인다..!
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    margin: 0px auto;
-    margin-top: 2vh;
-  }
-  /* justify-content: space-between; */
-  /* border-left: 1px solid #efefef; */
 `;
 
 const EditCommentBox = styled.div``;
@@ -702,7 +564,7 @@ const ModalAuthor = styled.span`
 const MiddleBox = styled.div`
   display: flex;
   flex-direction: column;
-  height: 255px;
+  /* height: 300px; */
   width: 100%;
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
@@ -710,26 +572,27 @@ const MiddleBox = styled.div`
     /* background-color: red; */
   }
   /* justify-content: space-between; */
+
   @media (max-width: 600px) {
     // 1450밑으로 넓이가 내려가면
     height: 220px;
   }
 `;
-// const InputOutter = styled.div`
-//   margin: 0px auto;
-//   width: 100%;
-// `;
+const InputOutter = styled.div`
+  margin: 0px auto;
+  width: 100%;
+`;
 
 const Title = styled.div`
   margin-bottom: 1vh;
 `;
 
-// const CateBtn = styled.div`
-//   font-size: bold;
-//   width: 6.5vw;
-//   /* border: 1px solid lightgray; */
-//   height: 3.5vh;
-//   border-radius: 10px;
-// `;
+const CateBtn = styled.div`
+  font-size: bold;
+  width: 6.5vw;
+  /* border: 1px solid lightgray; */
+  height: 3.5vh;
+  border-radius: 10px;
+`;
 
 export default UploadModal;
