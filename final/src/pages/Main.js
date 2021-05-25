@@ -37,6 +37,7 @@ const Main = (props) => {
 
   const handleClose = () => setShowModal(false);
   const loading = useSelector((state) => state.post.spinner_loading);
+  
 
   useEffect(() => {
     dispatch(postActions.getMapPostAPI());

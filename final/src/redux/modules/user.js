@@ -63,17 +63,17 @@ const loginAPI = (email, pwd) => {
         password: pwd,
       })
       .then((res) => {
-        console.log(res);
-        console.log(res.data.token);
+        // console.log(res);
         let decoded = jwt_decode(res.data.token);
-        console.log(decoded);
-        const tokenExpires = decoded.exp * 1000;
-        console.log(tokenExpires);
-        localStorage.setItem("toeknExpires", tokenExpires);
+        const tokenExpires = decoded.exp*1000;
+        // console.log("decoded.exp", decoded.exp*1000);
+        // console.log("현재", new Date().getTime());
+        localStorage.setItem("tokenExpires", tokenExpires);
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("jwt", res.data.token);
         localStorage.setItem("role", res.data.role);
+        
         dispatch(setUser());
         history.replace("/");
       })
