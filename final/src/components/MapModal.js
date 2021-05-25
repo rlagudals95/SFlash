@@ -124,7 +124,7 @@ const ModalDetail = (props) => {
       {modalData ? (
         commentData && ( //모달데이터가 들어와야 실행!
           <React.Fragment>
-            <Component onClick={closeModal} />
+            <Component onClick={() => closeModal} />
             <ModalComponent>
               <ModalTopContainer>
                 <ProfileContainer>
@@ -217,8 +217,8 @@ const ModalDetail = (props) => {
                     {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
                     {modalData.writerId == user_id ? (
                       <ModalEdit>
-                        <React.Fragment onClick={props.close}>
-                          <EditBtn onClick={setEditModal(true)}>수정</EditBtn>
+                        <React.Fragment onClick={() => props.close}>
+                          <EditBtn onClick={() => setEditModal(true)}>수정</EditBtn>
                         </React.Fragment>
                         /
                         <DeleteBtn
