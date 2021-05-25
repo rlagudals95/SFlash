@@ -1,6 +1,6 @@
 import React from "react";
-
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import CloseIcon from "@material-ui/icons/Close";
 
 import { actionCreators as postActions } from "../../redux/modules/post";
@@ -121,7 +121,20 @@ const UploadModal = (props) => {
       title: title,
       contents: contents,
     };
-    dispatch(storyPostModalActions.editStoryPostAPI(props.id, edit));
+    Swal.fire({
+      text: "게시물을 수정 하시겠습니까?",
+      confirmButtonText: "예",
+      confirmButtonColor: "#ffb719",
+      showCancelButton: true,
+      cancelButtonText: "아니오",
+      cancelButtonColor: "#eee",
+    }).then((result) => {
+      if (result.isConfirmed) {
+       
+        dispatch(storyPostModalActions.editStoryPostAPI(props.id, edit));
+      }
+    });
+   
     props.close();
     dispatch(imageActions.resetEdit([])); //업로드 후 리덕스에 남은 수정 정보 모두 리셋
     //에딧파일 초기화...
