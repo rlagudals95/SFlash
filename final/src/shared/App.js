@@ -74,28 +74,7 @@ function App() {
   }, []);
 
   //모바일로 접속시 페이지 이동
-  // var mobileKeyWords = new Array(
-  //   "iPhone",
-  //   "iPod",
-  //   "BlackBerry",
-  //   "Android",
-  //   "Windows CE",
-  //   "LG",
-  //   "MOT",
-  //   "SAMSUNG",
-  //   "SonyEricsson"
-  // );
-  // for (var word in mobileKeyWords) {
-  //   if (navigator.userAgent.match(mobileKeyWords[word]) != null) {
-  //     // window.location.href = "모바일 홈페이지 주소/실행화일";
-  //     history.push("/mobilenot");
-  //     break;
-  //   }
-  // }
 
-  /**
-   * 모바일 페이지 강제 이동
-   */
   //Mobile여부를 구분하기 위함
   var uAgent = navigator.userAgent.toLowerCase();
   // 아래는 모바일 장치들의 모바일 페이지 접속을위한 스크립트
