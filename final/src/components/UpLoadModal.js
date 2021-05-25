@@ -61,6 +61,8 @@ const UploadModal = (props) => {
 
   const [contents, setContents] = React.useState(props.content);
   const [title, setTitle] = React.useState(props.title);
+  // const [contents, setContents] = React.useState();
+  // const [title, setTitle] = React.useState();
   const [images, setImages] = React.useState(false);
 
   const [image_list, setImageList] = React.useState();
