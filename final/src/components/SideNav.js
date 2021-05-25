@@ -206,7 +206,7 @@ function Navbar() {
               )}
             </IconOutter>
             {/* Faq */}
-            <IconOutter>
+            {/* <IconOutter>
               {pageLocation == "/faq" ? (
                 <SelectedIcon
                   onClick={() => {
@@ -225,7 +225,7 @@ function Navbar() {
                   FAQ
                 </IconInfo>
               )}
-            </IconOutter>
+            </IconOutter> */}
             {/* Qna */}
             <IconOutter>
               {pageLocation == "/qna" ? (
