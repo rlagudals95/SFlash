@@ -28,6 +28,7 @@ const PopUp = (props) => {
     props.close();
   };
 
+  // 점검팝업 https://firebasestorage.googleapis.com/v0/b/diction-f1678.appspot.com/o/%EC%A0%90%EA%B2%80%20%ED%8C%9D%EC%97%85.png?alt=media&token=6ee36b03-58d0-4f59-983e-4f4175f27cd7
   return (
     //  <CloseIcon fontSize="small" />
     <React.Fragment>
@@ -37,7 +38,7 @@ const PopUp = (props) => {
           <div>
             <PopUpImg
               src={
-                "https://firebasestorage.googleapis.com/v0/b/diction-f1678.appspot.com/o/popup01%402x.png?alt=media&token=24097870-9e08-40ff-bb8e-31fda31e4f58"
+                "https://firebasestorage.googleapis.com/v0/b/diction-f1678.appspot.com/o/%EC%A0%90%EA%B2%80%20%ED%8C%9D%EC%97%85.png?alt=media&token=6ee36b03-58d0-4f59-983e-4f4175f27cd7"
               }
             >
               <ExitBtn onClick={props.close}>
@@ -49,7 +50,7 @@ const PopUp = (props) => {
                 </DayIcom>
                 오늘 하루 보지 않기
               </DayBtn>
-              <NoThank onClick={props.close} />
+              {/* <NoThank onClick={props.close} /> */}
             </PopUpImg>
           </div>
           <div>
