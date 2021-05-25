@@ -62,12 +62,12 @@ const ModalDetail = (props) => {
 
   const addLike = () => {
     dispatch(ModalActions.modalAddLikeAPI(modalData.id, modalData));
-    dispatch(postActions.getMapPostAPI());
+    // dispatch(postActions.getMapPostAPI());
   };
 
   const disLike = () => {
     dispatch(ModalActions.modalDisLikeAPI(modalData.id, modalData));
-    dispatch(postActions.getMapPostAPI());
+    // dispatch(postActions.getMapPostAPI());
   };
 
   const addComment = () => {
@@ -217,9 +217,7 @@ const ModalDetail = (props) => {
                     {modalData.writerId == user_id ? (
                       <ModalEdit>
                         <React.Fragment onClick={() => props.close}>
-                          <EditBtn onClick={() => openEditModal()}>
-                            수정
-                          </EditBtn>
+                          <EditBtn onClick={openEditModal}>수정</EditBtn>
                         </React.Fragment>
                         /
                         <DeleteBtn

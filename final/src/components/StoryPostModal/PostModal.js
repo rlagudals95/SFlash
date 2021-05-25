@@ -220,7 +220,7 @@ const ModalDetail = (props) => {
                     {modalData.writerId == user_id ? (
                       <ModalEdit>
                         <React.Fragment onClick={props.close}>
-                          <EditBtn onClick={()=>openEditModal()}>수정</EditBtn>
+                          <EditBtn onClick={openEditModal}>수정</EditBtn>
                         </React.Fragment>
                         /
                         <DeleteBtn
@@ -421,6 +421,17 @@ const ModalComponent = styled.div`
   margin: auto;
   max-height: 90%;
   overflow-y: auto;
+  overflow-x: hidden;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: lightgray;
+  }
   @media (max-width: 1280px) {
     width: 768px;
   }

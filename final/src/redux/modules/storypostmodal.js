@@ -328,7 +328,6 @@ const editLikeP = (post) => {
 
 const editLikeD = (post) => {
   return function (dispatch, getState) {
-
     let board = {
       category: post.category,
       comment: post.comment,
@@ -412,6 +411,7 @@ const editStoryPostAPI = (board_id, _edit) => {
           }
         });
       } else {
+        console.log("수정반응값!", res);
         let _post = res.data.data;
         let post = {
           id: _post.boardId, // 포스트 id
