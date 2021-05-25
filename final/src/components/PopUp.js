@@ -38,8 +38,8 @@ const PopUp = (props) => {
           <div>
             <PopUpImg
               src={ // 첫줄은 점검중, 둘째줄은 정식 서비스중에.
-                "https://firebasestorage.googleapis.com/v0/b/diction-f1678.appspot.com/o/%EC%A0%90%EA%B2%80%2[…]?alt=media&token=6ee36b03-58d0-4f59-983e-4f4175f27cd7"
-                // "https://firebasestorage.googleapis.com/v0/b/diction-f1678.appspot.com/o/popup01%402x.png?alt=media&token=24097870-9e08-40ff-bb8e-31fda31e4f58"
+                // "https://firebasestorage.googleapis.com/v0/b/diction-f1678.appspot.com/o/%EC%A0%90%EA%B2%80%20%ED%8C%9D%EC%97%85.png?alt=media&token=6ee36b03-58d0-4f59-983e-4f4175f27cd7"
+                "https://firebasestorage.googleapis.com/v0/b/diction-f1678.appspot.com/o/popup01%402x.png?alt=media&token=24097870-9e08-40ff-bb8e-31fda31e4f58"
               }
             >
               <ExitBtn onClick={props.close}>

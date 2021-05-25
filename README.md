@@ -41,7 +41,7 @@ http://sflash.ppt.s3-website.ap-northeast-2.amazonaws.com/
   + 임아현
     + 와이어프레임 그리기, 로고 제작, 색상 선택, 마커 제작
   + 송은정
-    + 와이어프레임 그리기, 로고 제작, 색상 선택,
+    + 와이어프레임 그리기, 로고 제작, 색상 선택, 선택 버튼 제작
 
 ## 구동사진
 ### 지도 API : 카카오 지도 API 사용
@@ -64,11 +64,14 @@ http://sflash.ppt.s3-website.ap-northeast-2.amazonaws.com/
 ### 5. 게시물 클릭시 보여지는 상세보기  
 ![image](https://user-images.githubusercontent.com/76252074/119500656-fce2b680-bda2-11eb-8779-e2f960cc6e71.png)
 
-### 6. 이미지가 먼저 보여지는 커뮤니티 페이지 
+### 6. 이미지가 먼저 보여지는 커뮤니티 페이지
+- 사용자의 피드백을 반영해 3줄과 4줄로 보여줄 수 있는 버튼을 추가
 ![image](https://user-images.githubusercontent.com/76252074/119500748-1a178500-bda3-11eb-9263-8ad4e6c5294d.png)
 
 ### 7. 내가 올린 & 좋아요한 게시물을 이미지와 지도로 확인할 수 있는 마이페이지
+- 커뮤니티페이지와 비슷하게 게시물들 모아서 보여주기
 ![image](https://user-images.githubusercontent.com/76252074/119500932-50ed9b00-bda3-11eb-9425-5644a6b4775e.png)
+- 지도페이지에서처럼 지도에 내가 작성한 마커, 내가 좋아요한 마커를 모아서 보여주기
 ![마이페이지 지도](https://user-images.githubusercontent.com/76252074/118970520-4a2ce580-b9a9-11eb-8b78-aa9488f36c25.jpg)
 
 
