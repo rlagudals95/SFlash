@@ -84,9 +84,13 @@ const ElTextarea = styled.textarea`
   border-radius: 5px;
   background-color: white;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+  :focus {
+    outline: none;
+  }
 `;
 
 const ElInput = styled.input`
+  margin-top: 20px;
   border: none;
   width: 100%;
   padding: 12px 4px;
@@ -94,6 +98,9 @@ const ElInput = styled.input`
   background-color: transparent;
   border-radius: 5px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+  :focus {
+    outline: none;
+  }
 `;
 
 export default Input2;

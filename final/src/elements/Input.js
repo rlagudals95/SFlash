@@ -77,6 +77,9 @@ const ElTextarea = styled.textarea`
   @media (max-width: 600px) {
     height: 17vh;
   }
+  :focus {
+    outline: none;
+  }
 `;
 
 const ElInput = styled.input`
@@ -87,6 +90,9 @@ const ElInput = styled.input`
   box-sizing: border-box;
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+  :focus {
+    outline: none;
+  }
 `;
 
 export default Input;

@@ -514,12 +514,14 @@ const ModalComponent = styled.div`
   min-width: 380px;
   margin: auto;
   max-height: 100%;
-  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background-color: transparent;
+    display: none;
+    /* background-color: transparent; */
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 3px;
