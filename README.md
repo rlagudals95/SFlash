@@ -58,9 +58,19 @@ https://apis.map.kakao.com/web/sample/
   
 ### 4. 메인화면 
 ![image](https://user-images.githubusercontent.com/76252074/119500403-ba20de80-bda2-11eb-8896-e01d03c73877.png)
-![5](https://user-images.githubusercontent.com/76252074/118970190-ea363f00-b9a8-11eb-9869-e7d170c2b7d2.jpg)
-![3](https://user-images.githubusercontent.com/76252074/118970219-f3bfa700-b9a8-11eb-97fd-3f45feac3361.jpg)
-![4](https://user-images.githubusercontent.com/76252074/118970245-f9b58800-b9a8-11eb-8aad-2b241cad9092.jpg)
+ 
+### 5. 게시물 클릭시 보여지는 상세보기  
+![image](https://user-images.githubusercontent.com/76252074/119500656-fce2b680-bda2-11eb-8779-e2f960cc6e71.png)
+
+### 6. 이미지가 먼저 보여지는 커뮤니티 페이지 
+![image](https://user-images.githubusercontent.com/76252074/119500748-1a178500-bda3-11eb-9263-8ad4e6c5294d.png)
+
+### 7. 내가 올린 & 좋아요한 게시물을 이미지와 지도로 확인할 수 있는 마이페이지
+![image](https://user-images.githubusercontent.com/76252074/119500932-50ed9b00-bda3-11eb-9425-5644a6b4775e.png)
+![Uploading image.png…]()
+
+
+### 
 ![마이페이지 지도](https://user-images.githubusercontent.com/76252074/118970520-4a2ce580-b9a9-11eb-8b78-aa9488f36c25.jpg)
 ![마이페이지 좋아요지도](https://user-images.githubusercontent.com/76252074/118970875-b3acf400-b9a9-11eb-8d61-805149adbd7b.jpg)
 ![마이페이지 좋아요 그리드](https://user-images.githubusercontent.com/76252074/118971267-2cac4b80-b9aa-11eb-954d-299b726568a7.jpg)
