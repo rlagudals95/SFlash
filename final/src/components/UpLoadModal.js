@@ -31,13 +31,11 @@ const UploadModal = (props) => {
   console.log("비교!", props);
   React.useEffect(() => {
     if (is_madal) {
-      console.log("실행실행!!!!!!!!!!");
       dispatch(imageActions.getModalPost(props));
       dispatch(profileActions.getUserInfoAPI(userId));
       return;
     }
     if (is_edit) {
-      console.log("실행ㄴㄴㄴㄴㄴㄴㄴ", props);
       // dispatch(imageActions.resetEdit([])); //
       dispatch(imageActions.getPost(props.id));
 

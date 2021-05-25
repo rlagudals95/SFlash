@@ -14,11 +14,28 @@ import Spinner from "../shared/Spinner";
 const StoryContent = (props) => {
   const dispatch = useDispatch();
   const { post_list, marker_icon, userPostMode, userId } = props;
-  // console.log(post_list);
-  // const user_id = props.match.params.id;
-  // console.log(userId);
-  // const paging = useSelector((state) => state.storypost.paging);
   const is_loading = useSelector((state) => state.storypost.is_loading);
+
+  React.useEffect(() => {
+
+  }, []);
+
+ 
+  setTimeout(function() {
+    if (post_list.length === 0) {
+      return (
+        <React.Fragment>
+          <Warning>
+            <SflashLogo />
+            <Text size="1.1rem" color="grey">
+              게시물을 등록해 주세요!
+            </Text>
+          </Warning>
+        </React.Fragment>
+      );
+    }
+    
+  }, 3000);
 
   // gridMode 가 true 면 그리드 형태로, false면 맵형태로 보여준다.
   const [gridMode, setGridMode] = React.useState(true);
@@ -31,6 +48,22 @@ const StoryContent = (props) => {
       dispatch(storyPostActions.getUserLikeAPI(userId));
     }
   };
+
+    if (post_list.length === 0) {
+      return (
+        <React.Fragment>
+          <Warning>
+            <SflashLogo />
+            <Text size="1.1rem" color="grey">
+              게시물을 등록해 주세요!
+            </Text>
+          </Warning>
+        </React.Fragment>
+      );
+      }
+  
+   // 게시물 갯수가 0 일때 게시물을 등록해달라는 문구가 뜹니다.
+   
 
   // 게시물이 있을 때는 게시물을 보여줍니다.
   if(post_list.length > 0){
@@ -97,19 +130,6 @@ const StoryContent = (props) => {
       </React.Fragment>
     );
   }
-    // 게시물 갯수가 0 일때 게시물을 등록해달라는 문구가 뜹니다.
-    if (post_list.length === 0) {
-      return (
-        <React.Fragment>
-          <Warning>
-            <SflashLogo />
-            <Text size="1.1rem" color="grey">
-              게시물을 등록해 주세요!
-            </Text>
-          </Warning>
-        </React.Fragment>
-      );
-    }
 };
 
 const Warning = styled.div`
