@@ -26,6 +26,7 @@ import { CgLogOut } from "react-icons/cg";
 
 const UploadModal = (props) => {
   const { latitude, longitude, spotName, spotNameForCustomOverlay } = props;
+  console.log("프롭스반복충?: ", props)
   const userId = localStorage.getItem("userId");
 
   // console.log("비교!", props);
