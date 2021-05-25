@@ -427,19 +427,7 @@ const editStoryPostAPI = (board_id, _edit) => {
           creatAt: _post.modified,
           spotName: _post.spotName,
         };
-        Swal.fire({
-          text: "게시물을 수정 하시겠습니까?",
-          confirmButtonText: "예",
-          confirmButtonColor: "#ffb719",
-          showCancelButton: true,
-          cancelButtonText: "아니오",
-          cancelButtonColor: "#eee",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            dispatch(getModal(post));
-            dispatch(storyPostActions.editStoryPost(board_id, post));
-          }
-        });
+        dispatch(getModal(post));
       }
       /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌
     });

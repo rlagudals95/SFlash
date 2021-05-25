@@ -83,6 +83,7 @@ const ElTextarea = styled.textarea`
   box-sizing: border-box;
   border-radius: 5px;
   background-color: white;
+  
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
   :focus {
     outline: none;
@@ -97,6 +98,10 @@ const ElInput = styled.input`
   box-sizing: border-box;
   background-color: transparent;
   border-radius: 5px;
+  font-size: 1.1rem;
+  word-spacing: -4px;
+  line-height: 1.5rem;
+  padding: 10px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
   :focus {
     outline: none;
