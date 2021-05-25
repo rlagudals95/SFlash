@@ -5,6 +5,7 @@
   background-color: white;
   display: flex;
   align-items: center;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 }
 
 .picbox {
@@ -18,6 +19,7 @@
   cursor: pointer;
   object-fit: cover;
   background-size: cover;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
 }
 
 .head {
@@ -35,6 +37,7 @@
   color: white;
   font-size: 1.1rem;
   padding-left: 5px;
+  text-shadow: 2px 2px 2px gray;
 }
 
 .spotname2 {
@@ -45,6 +48,7 @@
   color: white;
   font-size: 1.1rem;
   padding-left: 5px;
+  text-shadow: 2px 2px 2px gray;
 }
 /* 커스텀오버레이 */
 
@@ -92,12 +96,12 @@
   color: white;
   font-size: 24px;
   object-fit: cover;
-  background-size : cover;
-  background: url('https://i.postimg.cc/sXBKhhbJ/overlay-close.png');
+  background-size: cover;
+  background: url("https://i.postimg.cc/sXBKhhbJ/overlay-close.png");
 }
 
 .center {
-  height: 120px
+  height: 120px;
 }
 
 .bottomiconbox {
@@ -118,8 +122,7 @@
   font-size: 24px;
   border: none;
   object-fit: cover;
-  background-size : cover;
+  background-size: cover;
   background-color: transparent;
-  background: url('https://i.postimg.cc/nhPDQPx6/heart-pink.png');
+  background: url("https://i.postimg.cc/nhPDQPx6/heart-pink.png");
 }
-

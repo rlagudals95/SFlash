@@ -76,7 +76,7 @@ const InputBtn = styled.div`
   border: none;
   margin-left: 2vw;
   z-index: 7001;
-  width: 50px;
+  width: 70px;
   position: fixed;
   right: 35px;
   top: 55vh;
@@ -97,9 +97,12 @@ const InputBtn = styled.div`
 
 const LabelIcon = styled.div`
   background-image: url("https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/%EA%B2%8C%EC%8B%9C%EA%B8%80%EC%9E%91%EC%84%B1%20%EC%82%AC%EC%A7%84%EC%B6%94%EA%B0%80%402x.png?alt=media&token=94c42450-dbf5-4998-854f-8c193084507d");
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   background-size: cover;
+  :hover {
+    opacity: 0.7;
+  }
 `;
 
 const Label = styled.label`
