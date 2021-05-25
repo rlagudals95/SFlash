@@ -139,14 +139,14 @@ function App() {
 
 // const SurveyButton = styled.div`
 //   position: fixed;
-//   right: 70px;
+//   right: 60px;
 //   top: 49px;
 //   border: none;
 //   border-radius: 10px;
 //   box-sizing: border-box;
 //   margin: 10px auto;
 //   padding: 15px 20px;
-//   font-size: 1.2rem;
+//   font-size: 1.3rem;
 //   color: #ffffff;
 //   font-weight: 400;
 //   background-color: ${(props) => props.theme.main_color};

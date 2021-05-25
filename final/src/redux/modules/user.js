@@ -46,7 +46,7 @@ const signupAPI = (nickname, email, pwd, rePwd) => {
       })
       .catch((err) => {
         Swal.fire({
-          text: "회원가입 실패 ㅠㅠ",
+          text: "회원가입 실패 ㅠ.ㅠ",
           confirmButtonColor: "#ffb719",
         });
         console.log("회원가입 실패:", err);

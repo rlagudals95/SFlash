@@ -67,7 +67,6 @@ const getUserInfoAPI = (userId) => {
             profileImgUrl: _user.imgUrl,
             introduction: _user.introduceMsg,
           };
-          console.log(user.introduction);
           dispatch(getUserInfo(user));
         }
       })
