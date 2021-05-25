@@ -459,7 +459,7 @@ const Component = styled.div`
 const ModalComponent = styled.div`
   border-radius: 10px;
   position: fixed;
-  width: 720px;
+  width: 700px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
