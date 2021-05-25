@@ -52,18 +52,18 @@ const StoryContent = (props) => {
     }
   };
 
-  // if (post_list.length === 0) {
-  //   return (
-  //     <React.Fragment>
-  //       <Warning>
-  //         <SflashLogo />
-  //         <Text size="1.1rem" color="grey">
-  //           게시물을 등록해 주세요!
-  //         </Text>
-  //       </Warning>
-  //     </React.Fragment>
-  //   );
-  // }
+  if (post_list.length === 0) {
+    return (
+      <React.Fragment>
+        <Warning>
+          <SflashLogo />
+          <Text size="1.1rem" color="grey">
+            게시물을 등록해 주세요!
+          </Text>
+        </Warning>
+      </React.Fragment>
+    );
+  }
 
   // 게시물 갯수가 0 일때 게시물을 등록해달라는 문구가 뜹니다.
 
