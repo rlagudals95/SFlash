@@ -400,7 +400,8 @@ const ModalComponent = styled.div`
   min-width: 380px;
   margin: auto;
   max-height: 90%;
-  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 6px;
   }
