@@ -157,9 +157,7 @@ const UploadModal = (props) => {
 
   return (
     <React.Fragment>
-      <Component
-        onClick={resetPreview}
-      />
+      <Component onClick={resetPreview} />
       <ModalComponent>
         <ModalHeader>
           <HeaderInner>
@@ -349,6 +347,143 @@ const UploadModal = (props) => {
     </React.Fragment>
   );
 };
+
+const BottomEdit = styled.div`
+  color: ${(props) => props.theme.main_color};
+  font-weight: bold;
+  /* background-color: ${(props) => props.theme.main_color}; */
+  border: 2px solid ${(props) => props.theme.main_color};
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  padding: 12px 0px;
+  border-radius: 7px;
+  margin: 15px 0px;
+  box-sizing: border-box;
+  :hover {
+    background-color: ${(props) => props.theme.main_color};
+    color: white;
+  }
+  @media (max-width: 1440px) {
+  }
+  @media (max-width: 600px) {
+    margin-bottom: 10vh;
+  }
+`;
+const BottomEdit2 = styled.div`
+  color: ${(props) => props.theme.main_color};
+  font-weight: bold;
+  /* background-color: ${(props) => props.theme.main_color}; */
+  border: 2px solid ${(props) => props.theme.main_color};
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  padding: 12px 0px;
+  border-radius: 7px;
+  margin: 15px 0px;
+  box-sizing: border-box;
+  :hover {
+    background-color: ${(props) => props.theme.main_color};
+    color: white;
+  }
+  @media (max-width: 1440px) {
+    margin: 15px 0px;
+  }
+  @media (max-width: 600px) {
+  }
+`;
+
+const DeleteImg = styled.div`
+  z-index: 4700;
+  text-align: center;
+  position: relative;
+  /* background-color: red; */
+  width: 75px;
+  top: 15px;
+  right: -25px;
+  padding: 3px 8px;
+  background-color: white;
+  color: rgba(0, 0, 0, 0, 0.1);
+  opacity: 0.5;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 13px;
+  /* border: 1px solid rgba(0, 0, 0, 0, 0.08); */
+  cursor: pointer;
+`;
+
+const ImgOutter = styled.div`
+  text-align: center;
+  display: table;
+`;
+
+const ModalImg = styled.div`
+  background-image: url("${(props) => props.src}");
+  background-size: cover;
+  object-fit: cover;
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-position: center;
+`;
+
+const Component = styled.div`
+  position: fixed;
+  opacity: 0.8;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+`;
+
+const ModalComponent = styled.div`
+  border-radius: 0.5vw;
+  position: fixed;
+  width: 720px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fafafc;
+  z-index: 2007;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  box-sizing: border-box;
+  min-width: 380px;
+  margin: auto;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    display: none;
+    /* background-color: transparent; */
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: lightgray;
+  }
+  @media (max-width: 1280px) {
+    width: 768px;
+  }
+  @media (max-width: 768px) {
+    width: 97%;
+  }
+  @media (max-width: 480px) {
+    width: 100vw;
+    height: 100vh;
+    border-radius: none;
+  }
+`;
 
 const ModalHeader = styled.div`
   /* background-color: red; */
