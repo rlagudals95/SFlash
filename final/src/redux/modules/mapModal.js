@@ -1,10 +1,12 @@
-import { createAction, createActions, handleActions } from "redux-actions";
+import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 import { history } from "../configStore";
 import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
+import Swal from "sweetalert2";
+import { actionCreators as userActions } from "./user";
 
 //마커를 누르면 상세모달창이 뜨는 것을 효율적으로 구현하기 위해서 만든 모듈
 const GET_MODAL = "GET_MODAL";
@@ -80,8 +82,22 @@ const getModalPostAPI = (boardId) => {
     })
       .then((res) => {
         // console.log("모달정보 가져오자!!!!", res);
-
-        let result = res.data.data;
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          let result = res.data.data;
         // console.log("정리된거 맞지?", result, boardId);
         let post = {
           id: result.boardId, // 포스트 id
@@ -102,6 +118,8 @@ const getModalPostAPI = (boardId) => {
 
         dispatch(getModal(post)); // 모달 정보는 > post 에 저장 > 수정시 post 에 있는거 바꿔주면된다
         dispatch(getModalComment(comment_list)); //댓글 > comment에 따로 저장
+        }
+        
       })
       .catch((err) => {
         console.log(err);
@@ -127,19 +145,33 @@ const modalAddCommentAPI = (comment, board_id) => {
       },
     })
       .then((res) => {
-        const comment_data = res.data.data;
-        // console.log("댓글정보", comment_data);
-        let comment_list = {
-          commentId: comment_data.commentId,
-          content: comment_data.content,
-          modified: comment_data.modified, //이거좀 고치자! 현준님이 id랑 날짜주면 !
-          userId: comment_data.userId,
-          writerImgUrl: comment_data.userImgUrl,
-          writerName: comment_data.nickName,
-        };
-
-        // console.log("댓글추가반응", res);
-        dispatch(modalAddComment(comment_list));
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          const comment_data = res.data.data;
+          // console.log("댓글정보", comment_data);
+          let comment_list = {
+            commentId: comment_data.commentId,
+            content: comment_data.content,
+            modified: comment_data.modified, //이거좀 고치자! 현준님이 id랑 날짜주면 !
+            userId: comment_data.userId,
+            writerImgUrl: comment_data.userImgUrl,
+            writerName: comment_data.nickName,
+          };
+          dispatch(modalAddComment(comment_list));
+        }    
       })
       .catch((err) => {
         console.log(err);
@@ -160,8 +192,25 @@ const modalDeleteCommentAPI = (id) => {
       },
     })
       .then((res) => {
-        // dispatch(deleteComment(id, board_id)); //바로 렌더링 시켜줘야 삭제 눌렀을때 반영된다
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+           // dispatch(deleteComment(id, board_id)); //바로 렌더링 시켜줘야 삭제 눌렀을때 반영된다
         dispatch(modalDeleteComment(id));
+        }
+
       })
       .catch((err) => {
         window.alert("댓글 삭제에 문제가 있어요!");
@@ -182,8 +231,24 @@ const modalAddLikeAPI = (board_id, board) => {
       },
     })
       .then((res) => {
-        // console.log("좋아요 완료!", res);
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+           // console.log("좋아요 완료!", res);
         dispatch(editLikeP(board)); // 리덕스
+        }
       })
       .catch((error) => {
         window.alert("로그인을 하면 좋아요를 할 수 있어요!");
@@ -201,8 +266,24 @@ const modalDisLikeAPI = (board_id, board) => {
       },
     })
       .then((res) => {
-        console.log("좋아요 취소!", res);
-        dispatch(editLikeD(board));
+        if (res.data.message === "tokenExpired") {
+          dispatch(userActions.logOut());
+          Swal.fire({
+            text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+            confirmButtonText: "로그인 하러가기",
+            confirmButtonColor: "#ffb719",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+            cancelButtonColor: "#eee",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              history.push("/login");
+            }
+          })
+        }else{
+          console.log("좋아요 취소!", res);
+          dispatch(editLikeD(board));
+        }   
       })
       .catch((error) => {
         // window.alert("좋아요를 할 수 없습니다.");
