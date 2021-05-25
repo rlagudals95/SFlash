@@ -4,6 +4,10 @@
 # 🔖 항해99 실전프로젝트
 
 ## SFlash(Spot + Flash) | 나만의 사진 명소 저장하기 서비스
+
+### 프로젝트 소개
+http://sflash.ppt.s3-website.ap-northeast-2.amazonaws.com/
+
 <h4><a href="https://www.sflash.net/" target="_blank">사이트 바로가기</a> <a href="" target="_blank"> / Youtube 시연영상</a><h4>
 
 ## 소개 유튜브 영상
@@ -11,7 +15,11 @@
 
 ## 개발 기간
 + 2021년 4월 23일(금) ~ 2021년 5월 27일(목)
-
+## 개발 목표
++ 원하는 장소를 “쉽게” 찾 을수 있도록 사용자 측면에서 고민을 거듭했습니다.
++ 카테고리별로 장소를 검색할 수 있도록 하여 사용자 편의를 높이고, 유저가 업로드한 게시물, 좋아요한 게시물을 모아볼 수 있도록 하여 나만의 지도와 사진첩를 만드는 재미를 부여했습니다.
++ 사용자들이 기존에 인지하고 있는 지도 인터페이스를 활용해 직관적이고 쉬운 인터페이스를 구현하고자 노력했습니다.  
+  
 ### 👨‍👨‍👦‍👦 개발 구성원들
 [팀 소개 페이지로 이동하기](https://www.sflash.net/about) <br/>
 + Frontend - React
@@ -23,6 +31,7 @@
   + 김형민 ([Github Repo](https://github.com/rlagudals95/SFlash)) 
     + 커뮤니티 페이지제작
     + 게시물 CRUD 구현
+ 
 + Backend - Spring boot 
   + 장현준 ([Github Repo](https://github.com/JangHyeonJun2))
   + 김승욱 ([Github Repo](https://github.com/rlatmd0829))
@@ -34,15 +43,8 @@
   + 송은정
     + 와이어프레임 그리기, 로고 제작, 색상 선택,
 
-## 개발목표
-
-## 지도 API : 카카오 지도 API 사용
-https://apis.map.kakao.com/web/sample/
-<br>
-위 사이트에서 제공하는 카카오 지도 API를 이용해 사진과 장소를 연결시키는 서비스를 개발했습니다. 
-
-
 ## 구동사진
+### 지도 API : 카카오 지도 API 사용
 
 ### 1. 회원가입
 ![회원가입 페이지](https://user-images.githubusercontent.com/76252074/118971855-db508c00-b9aa-11eb-8847-57dc7bbaa381.jpg)
@@ -56,14 +58,25 @@ https://apis.map.kakao.com/web/sample/
   
 ![1](https://user-images.githubusercontent.com/76252074/118969984-b1966580-b9a8-11eb-8dde-9efb47a9b162.jpg)
   
-  
-![2](https://user-images.githubusercontent.com/76252074/118970005-b6f3b000-b9a8-11eb-9986-e1d24867f5fa.jpg)
-![5](https://user-images.githubusercontent.com/76252074/118970190-ea363f00-b9a8-11eb-9869-e7d170c2b7d2.jpg)
-![3](https://user-images.githubusercontent.com/76252074/118970219-f3bfa700-b9a8-11eb-97fd-3f45feac3361.jpg)
-![4](https://user-images.githubusercontent.com/76252074/118970245-f9b58800-b9a8-11eb-8aad-2b241cad9092.jpg)
+### 4. 메인화면 
+![image](https://user-images.githubusercontent.com/76252074/119500403-ba20de80-bda2-11eb-8896-e01d03c73877.png)
+ 
+### 5. 게시물 클릭시 보여지는 상세보기  
+![image](https://user-images.githubusercontent.com/76252074/119500656-fce2b680-bda2-11eb-8779-e2f960cc6e71.png)
+
+### 6. 이미지가 먼저 보여지는 커뮤니티 페이지 
+![image](https://user-images.githubusercontent.com/76252074/119500748-1a178500-bda3-11eb-9263-8ad4e6c5294d.png)
+
+### 7. 내가 올린 & 좋아요한 게시물을 이미지와 지도로 확인할 수 있는 마이페이지
+![image](https://user-images.githubusercontent.com/76252074/119500932-50ed9b00-bda3-11eb-9425-5644a6b4775e.png)
 ![마이페이지 지도](https://user-images.githubusercontent.com/76252074/118970520-4a2ce580-b9a9-11eb-8b78-aa9488f36c25.jpg)
-![마이페이지 좋아요지도](https://user-images.githubusercontent.com/76252074/118970875-b3acf400-b9a9-11eb-8d61-805149adbd7b.jpg)
-![마이페이지 좋아요 그리드](https://user-images.githubusercontent.com/76252074/118971267-2cac4b80-b9aa-11eb-954d-299b726568a7.jpg)
+
+
+## 🐱‍🏍Difficulties and overcoming  
+
++ CRUD 부분
+  https://velog.io/@dbfudgudals/%ED%95%AD%ED%95%B499-%ED%8C%8C%EC%9D%B4%EB%84%90-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-SFLASH-%EC%96%B4%EB%A0%A4%EC%9B%A0%EB%8D%98-%EC%A0%90%EA%B3%BC-%EA%B7%B9%EB%B3%B5%ED%95%9C-%EC%A0%90%EB%8B%A4%EC%88%98%EC%9D%98-%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC-%EC%84%A0%ED%83%9D
+  
 
 ## 🧠사용 패키지
 
