@@ -124,7 +124,7 @@ const ModalDetail = (props) => {
       {modalData ? (
         commentData && ( //모달데이터가 들어와야 실행!
           <React.Fragment>
-            <Component onClick={closeModal} />
+            <Component onClick={() => closeModal} />
             <ModalComponent>
               <ModalTopContainer>
                 <ProfileContainer>
@@ -218,7 +218,7 @@ const ModalDetail = (props) => {
                     {modalData.writerId == user_id ? (
                       <ModalEdit>
                         <React.Fragment onClick={() => props.close}>
-                          <EditBtn onClick={closeDetailModal}>수정</EditBtn>
+                          <EditBtn onClick={() => setEditModal(true)}>수정</EditBtn>
                         </React.Fragment>
                         /
                         <DeleteBtn
