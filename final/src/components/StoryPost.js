@@ -51,7 +51,6 @@ const StoryPost = (props) => {
     <React.Fragment>
       <Card>
         {/* src={props.post_image_url[0]} */}
-
         <PostBox onClick={openModal} src={props.img_url[0].imgUrl}>
           {/* 이거자체가 지금 투명 0 */}
           <div className={"hoverDark"}>
