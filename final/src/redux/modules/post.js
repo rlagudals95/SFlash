@@ -385,6 +385,7 @@ const deletePostAPI = (board_id) => {
           });
         } else {
           dispatch(deletePost(board_id));
+          window.alert("게시물 삭제 완료!");
         }
       })
       .catch((err) => {
