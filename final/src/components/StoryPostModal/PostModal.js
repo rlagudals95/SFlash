@@ -405,7 +405,7 @@ const Component = styled.div`
 `;
 
 const ModalComponent = styled.div`
-  border-radius: 0.5vw;
+  border-radius: 10px;
   position: fixed;
   width: 700px;
   top: 50%;

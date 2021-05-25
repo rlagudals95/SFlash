@@ -130,7 +130,6 @@ const UploadModal = (props) => {
       cancelButtonColor: "#eee",
     }).then((result) => {
       if (result.isConfirmed) {
-       
         dispatch(storyPostModalActions.editStoryPostAPI(props.id, edit));
       }
     });
@@ -174,11 +173,11 @@ const UploadModal = (props) => {
       <ModalComponent>
         <ModalHeader>
           <HeaderInner>
-            <ExitContainer>
+            {/* <ExitContainer>
               <ExitBtn onClick={resetPreview}>
                 <CloseIcon fontSize="large" />
               </ExitBtn>
-            </ExitContainer>
+            </ExitContainer> */}
             <ModalLeftHeader>
               <ProCircle
                 src={
@@ -193,6 +192,9 @@ const UploadModal = (props) => {
               />
               <ModalAuthor>{nickname}</ModalAuthor>
             </ModalLeftHeader>
+            <CloseButton onClick={props.close}>
+                  <CloseIcon size="1.5vh" />
+                </CloseButton>
             {/* 업로드와 수정시 파일선택 버튼이 다르게 설정 */}
           </HeaderInner>
         </ModalHeader>
@@ -386,10 +388,8 @@ const BottomEdit = styled.div`
 `;
 const BottomEdit2 = styled.div`
   color: ${(props) => props.theme.main_color};
-  font-weight: bold;
-  /* background-color: ${(props) => props.theme.main_color}; */
   border: 2px solid ${(props) => props.theme.main_color};
-  font-size: 14px;
+  font-size: 1.2rem;
   cursor: pointer;
   width: 100%;
   text-align: center;
@@ -457,7 +457,7 @@ const Component = styled.div`
 `;
 
 const ModalComponent = styled.div`
-  border-radius: 0.5vw;
+  border-radius: 10px;
   position: fixed;
   width: 720px;
   top: 50%;
@@ -472,7 +472,7 @@ const ModalComponent = styled.div`
   min-width: 380px;
   margin: auto;
   max-height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   ::-webkit-scrollbar {
     width: 6px;
@@ -516,7 +516,7 @@ const HeaderInner = styled.div`
   justify-content: space-between;
   margin: auto auto;
   align-items: center;
-  padding: 1.3vh 0px;
+  padding:10px;
   width: 95%;
 `;
 
@@ -526,6 +526,20 @@ const HeaderEdit = styled.div`
   background-color: transparent;
   font-size: 14px;
   cursor: pointer;
+`;
+
+const CloseButton = styled.div`
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  border-radius: 50%;
+  z-index: 100;
+  color: lightgrey;
+  align-items: center;
+  &:hover {
+    cursor: pointer;
+    color: grey;
+  }
 `;
 
 const ExitContainer = styled.div`
@@ -558,19 +572,18 @@ const ModalBottomContainer = styled.div`
 const EditCommentBox = styled.div``;
 
 const ProCircle = styled.img`
-  margin-left: 0.1vw;
-  height: 1.7rem;
-  width: 1.7rem;
-  border-radius: 20px;
+  height: 55px;
+  aspect-ratio: 1/1;
+  border-radius: 100%;
   background-size: cover;
+  background-position: center;
   background-image: url("${(props) => props.src}");
-  background-size: cover;
   cursor: pointer;
 `;
 const ModalAuthor = styled.span`
-  font-size: 1rem;
+font-size: 1.2rem;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 `;
 
 const MiddleBox = styled.div`
