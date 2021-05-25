@@ -2897,7 +2897,8 @@ const Maps = (props) => {
       </PanControlContainer>
 
       <ZoomControlBox>
-        <ZoomControl onClick={zoomIn} style={{borderBottom: "2pt solid #ffb719"}}>
+        {/* <ZoomControl onClick={zoomIn} style={{borderRight: "2pt solid #ffb719"}}> */}
+        <ZoomControl onClick={zoomIn}>
           <IoMdAdd size="30" color="#ffb719"/>
         </ZoomControl>
         <ZoomControl onClick={zoomOut}>
@@ -3061,13 +3062,13 @@ const PanMyCurrentControl = styled.div`
 `;
 
 const ZoomControlBox = styled.div`
-  position: absolute;
-  width: 50px;
-  height: 100px;
-  top: 4px;
-  right: 6px;
+  position: fixed;
+  width: 130px;
+  height: 50px;
+  top: 600px;
+  right: 50px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   background-color: #F2F3F7;
   border: 2pt solid #ffb719;
   border-radius: 10px;
@@ -3077,17 +3078,19 @@ const ZoomControlBox = styled.div`
 
 const ZoomControl = styled.div`
   cursor: pointer;
-  width: 100%;
-  height: 50%;
+  width: 50%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
   box-sizing: border-box;
+  padding: 10px 10px;
   &:hover {
     color: white;
     background-color: #343a40;
     border-radius: 10px;
+    border: 2pt solid #ffb719
   } 
 `;
 
