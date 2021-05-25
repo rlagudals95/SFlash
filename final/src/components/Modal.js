@@ -20,7 +20,7 @@ const ModalDetail = (props) => {
   React.useEffect(() => {
     // console.log("시작");
     dispatch(CommnetActions.getComment(props.id));
-  // }, [dispatch, props.id]);
+    // }, [dispatch, props.id]);
   }, []);
 
   // const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
@@ -99,8 +99,6 @@ const ModalDetail = (props) => {
     dispatch(CommnetActions.deleteCommentAPI(id, props.id));
   };
 
-  // console.log("댓글 내용", comments);
-  console.log("어떤정보가!??!", props);
   const selectComment = (e) => {
     setComments(e.target.value);
   };
