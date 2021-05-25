@@ -1,10 +1,8 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-// import { history } from "../configStore";
 import axios from "axios";
 import { config } from "../../shared/config";
 import Swal from "sweetalert2";
-// import jwt_decode from 'jwt-decode';
 
 // actions
 const SET_USER = "SET_USER";
@@ -68,7 +66,7 @@ const loginAPI = (email, pwd) => {
         // let expires = new Date();
         // expires = expires.setHours(expires.getHours() + 0.05);
         let expires = new Date();
-        const tokenExpires = expires.setHours(expires.getHour + 0.02); 
+        const tokenExpires = expires.setHours(expires.getHour + 5); 
         console.log(tokenExpires);
         console.log(expires);
         localStorage.setItem("toeknExpires", tokenExpires);

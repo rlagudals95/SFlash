@@ -27,7 +27,7 @@ const ModalDetail = (props) => {
   React.useEffect(() => {}, []);
 
   // console.log("eeee", props);
-  // const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
+  const userId = localStorage.getItem("userId"); // 세션스토리지 토큰에 저장되어있는 유저 아이디 가져옴
   const modalData = useSelector((state) => state.mapmodal.post);
 
   const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
@@ -43,6 +43,11 @@ const ModalDetail = (props) => {
 
   const nickname = localStorage.getItem("nickname");
   const user_id = localStorage.getItem("userId");
+
+  const openEditModal = () => {
+    // props.closeDetail();
+    setEditModal(true);
+  };
 
   const closeDetailModal = () => {
     setEditModal(false);

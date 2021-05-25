@@ -41,7 +41,6 @@ const Post2 = (props) => {
     }
   }
   const [is_modal, setDetailModal] = useState();
-
   const openModal = () => {
     dispatch(ModalActions.getModalPostAPI(props.id));
     setDetailModal(true);
@@ -101,6 +100,7 @@ const Post2 = (props) => {
       {is_modal ? (
         <MapModal
           close={closeDetailModal}
+          boardId={props.id}
           // {...props} //여기서 모달에 모든 정보를 넘겨주는 구나!
         />
       ) : null}
