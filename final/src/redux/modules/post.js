@@ -195,6 +195,7 @@ const addPostAPI = (post) => {
           };
           dispatch(addPost(CommunityPost));
           dispatch(spinner(false));
+          window.alert("게시글 작성완료!😀");
         }
       })
       .catch((err) => {

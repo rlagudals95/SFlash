@@ -67,6 +67,7 @@ const loginAPI = (email, pwd) => {
         // expires = expires.setHours(expires.getHours() + 0.05);
         let expires = new Date();
         expires = expires.setHours(expires.getHours() + 24);
+        console.log("토큰 만료기간은?", expires);
         localStorage.setItem("toeknExpires", expires);
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("userId", res.data.userId);
