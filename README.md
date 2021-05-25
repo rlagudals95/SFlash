@@ -70,7 +70,7 @@
 
 ## 🐱‍🏍Difficulties and overcoming  
 
-# CRUD 부분
++ CRUD 부분
   https://velog.io/@dbfudgudals/%ED%95%AD%ED%95%B499-%ED%8C%8C%EC%9D%B4%EB%84%90-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-SFLASH-%EC%96%B4%EB%A0%A4%EC%9B%A0%EB%8D%98-%EC%A0%90%EA%B3%BC-%EA%B7%B9%EB%B3%B5%ED%95%9C-%EC%A0%90%EB%8B%A4%EC%88%98%EC%9D%98-%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC-%EC%84%A0%ED%83%9D
   
 
