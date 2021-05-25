@@ -32,7 +32,6 @@ const ModalDetail = (props) => {
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
   const openEditModal = () => {
-    dispatch(ModalActions.getModalPostAPI(props.id));
     setEditModal(true);
   };
   const closeDetailModal = () => {
