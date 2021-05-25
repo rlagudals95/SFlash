@@ -15,12 +15,6 @@ import Swal from "sweetalert2";
 import Spinner from "../shared/Spinner";
 import { actionCreators as sideActions } from "../redux/modules/side";
 
-// import { actionCreators as imageActions } from "../redux/modules/image2";
-// import { actionCreators as CommnetActions } from "../redux/modules/comment";
-// import { actionCreators as likeActions } from "../redux/modules/like";
-// import { forEach } from "lodash";
-// import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
 
@@ -124,7 +118,7 @@ const ModalDetail = (props) => {
       {modalData ? (
         commentData && ( //모달데이터가 들어와야 실행!
           <React.Fragment>
-            <Component onClick={() => closeModal} />
+            <Component onClick={closeModal} />
             <ModalComponent>
               <ModalTopContainer>
                 <ProfileContainer>
@@ -218,7 +212,9 @@ const ModalDetail = (props) => {
                     {modalData.writerId == user_id ? (
                       <ModalEdit>
                         <React.Fragment onClick={() => props.close}>
-                          <EditBtn onClick={() => setEditModal(true)}>수정</EditBtn>
+                          <EditBtn onClick={() => setEditModal(true)}>
+                            수정
+                          </EditBtn>
                         </React.Fragment>
                         /
                         <DeleteBtn
