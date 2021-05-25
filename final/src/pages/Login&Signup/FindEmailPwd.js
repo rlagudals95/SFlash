@@ -7,12 +7,10 @@ import {
   Title,
   InputStyle,
   SolidBtn,
-  // BorderBtn,
   CheckBtn,
   TextBtn,
 } from "../../Css/loginSignupCss";
 import { Grid } from "../../elements/index";
-// import { actionCreators as userActions } from "../../redux/modules/user";
 
 import { history } from "../../redux/configStore";
 import { useDispatch } from "react-redux";

@@ -7,7 +7,6 @@ import { history } from "../redux/configStore";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as sideAction } from "../redux/modules/side";
-
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -50,9 +49,9 @@ const StoryUserProfile = (props) => {
   };
   // 비밀번호 변경 모달창 제어
   const [editPwdModal, setEditPwdModal] = React.useState(false);
-  // const openEditPwdModal = () => {
-  //   setEditPwdModal(true);
-  // };
+  const openEditPwdModal = () => {
+    setEditPwdModal(true);
+  };
   const closeEditPwdModal = () => {
     setEditPwdModal(false);
   };
@@ -100,14 +99,14 @@ const StoryUserProfile = (props) => {
               >
                 프로필 편집
               </MenuItem>
-              {/* <MenuItem
+              <MenuItem
                 onClick={() => {
                   openEditPwdModal();
                   handleClose();
                 }}
               >
                 비밀번호 변경
-              </MenuItem> */}
+              </MenuItem>
               <MenuItem
                 onClick={() => {
                   Swal.fire({
