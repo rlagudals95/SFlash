@@ -4,16 +4,14 @@ import Swal from "sweetalert2";
 
 import { Container, Title, InfoUl, InfoLi } from "../Css/loginSignupCss";
 import { GiCheckMark } from "react-icons/gi";
-// import RegCheck from "../Css/RegCheck.css";
-// import { history } from "../redux/configStore";
-// import { useDispatch, useSelector } from "react-redux";
+import RegCheck from "../Css/RegCheck.css";
 
 import { pwdRegCheck, pwdRegContinuousCheck } from "../shared/common";
 import axios from "axios";
 import { config } from "../shared/config";
-// import { getCookie } from "../shared/Cookie";
 
-const StoryEditPwd = () => {
+const StoryEditPwd = (props) => {
+  const userId = localStorage.getItem("userId");
 
   const [originalPwd, setOriginalPwd] = React.useState("");
   const [newPwd, setNewPwd] = React.useState("");
@@ -81,7 +79,7 @@ const StoryEditPwd = () => {
     } else {
       axios
         .put(
-          `${config.api}/editpwd`,
+          `${config.api}/editpwd/${userId}`,
           {
             pwd: originalPwd,
             newPwd: newPwd,

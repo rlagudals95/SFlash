@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 
 import axios from "axios";
 import { config } from "../../shared/config";
-
 import { Grid } from "../../elements/index";
 import {
   Container,
@@ -16,7 +15,7 @@ import {
   InfoUl,
   InfoLi,
 } from "../../Css/loginSignupCss";
-// import RegCheck from "../../Css/RegCheck.css";
+import RegCheck from "../../Css/RegCheck.css";
 import { GiCheckMark } from "react-icons/gi";
 
 import { actionCreators as userActions } from "../../redux/modules/user";

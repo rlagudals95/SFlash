@@ -11,7 +11,7 @@ import {
   InfoLi,
 } from "../../Css/loginSignupCss";
 import { GiCheckMark } from "react-icons/gi";
-// import RegCheck from "../../Css/RegCheck.css";
+import RegCheck from "../../Css/RegCheck.css";
 import { history } from "../../redux/configStore";
 import { useSelector } from "react-redux";
 
