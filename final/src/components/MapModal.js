@@ -45,7 +45,7 @@ const ModalDetail = (props) => {
   const user_id = localStorage.getItem("userId");
 
   const closeDetailModal = () => {
-    setEditModal(false);
+    setEditModal(true);
   };
 
   //캐러셀 모듈 코드
@@ -400,6 +400,16 @@ const ModalComponent = styled.div`
   margin: auto;
   max-height: 90%;
   overflow-y: auto;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: lightgray;
+  }
   @media (max-width: 1280px) {
     width: 768px;
   }

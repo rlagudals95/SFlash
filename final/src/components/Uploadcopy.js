@@ -1,20 +1,18 @@
-import React, { useState } from "react";
-import { history } from "../redux/configStore";
+import React from "react";
+// import { history } from "../redux/configStore";
 
 import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as imageActions } from "../redux/modules/image2";
 import { actionCreators as profileActions } from "../redux/modules/profile";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Slider from "react-slick";
+import _ from "lodash";
 
 import { useDispatch, useSelector } from "react-redux";
-import PublishIcon from "@material-ui/icons/Publish";
-import TextField from "@material-ui/core/TextField";
+// import PublishIcon from "@material-ui/icons/Publish";
+// import TextField from "@material-ui/core/TextField";
 // 업로드용 파일선택 버튼
 import Upload2 from "../shared/Upload2";
 // 수정용 파일선택 버튼
@@ -22,79 +20,70 @@ import UploadEdit from "../shared/UploadEdit";
 import SelectCate from "./SelectCate";
 import Input from "../elements/Input";
 import Input2 from "../elements/Input2";
+import Input3 from "../elements/Input3 ";
 import { CgLogOut } from "react-icons/cg";
+import Spinner2 from "../shared/Spinner2.js";
+//스피너2 임포트
 
 const UploadModal = (props) => {
-  const { latitude, longitude, spotName, spotNameForCustomOverlay } = props;
+  // const { latitude, longitude, spotName, spotNameForCustomOverlay } = props;
   const userId = localStorage.getItem("userId");
 
-  console.log("비교!", props);
+  // console.log("비교!", props);
   React.useEffect(() => {
     if (is_madal) {
-      console.log("실행실행!!!!!!!!!!");
       dispatch(imageActions.getModalPost(props));
       dispatch(profileActions.getUserInfoAPI(userId));
       return;
     }
     if (is_edit) {
-      console.log("실행ㄴㄴㄴㄴㄴㄴㄴ", props);
       // dispatch(imageActions.resetEdit([])); //
       dispatch(imageActions.getPost(props.id));
-
-      console.log("hi");
     }
     dispatch(profileActions.getUserInfoAPI(userId));
   }, []);
 
+  const loading = useSelector((state) => state.image2.is_loading);
+  // console.log("프리뷰로딩!", loading);
   const dispatch = useDispatch();
-  const is_login = useSelector((state) => state.user.is_login);
+  // const is_login = useSelector((state) => state.user.is_login);
+  // 업로드 프리뷰 이미지
   const preview = useSelector((state) => state.image2.preview);
+
+  // console.log("프리뷰", preview);
   // 수정 페이지 이미지
   const onlyImg = useSelector((state) => state.image2.image);
   // console.log("수정페이지 이미지는?", onlyImg);
   // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
-  const editFile = useSelector((state) => state.image2.edit_file);
-
-  const post_list = useSelector((state) => state.post.list);
-  const user_info = useSelector((state) => state.user.user);
+  // const editFile = useSelector((state) => state.image2.edit_file);
+  // const post_list = useSelector((state) => state.post.list);
+  // const user_info = useSelector((state) => state.user.user);
   const profile = useSelector((state) => state.profile.user);
-  // console.log("유저아이디", userId);
-  // console.log("포스트리스트", post_list);
-  // console.log("유저정보", user_info);
-  // console.log("유저프로필", profile);
-
   const [contents, setContents] = React.useState(props.content);
   const [title, setTitle] = React.useState(props.title);
   const [images, setImages] = React.useState(false);
 
-  const [image_list, setImageList] = React.useState();
+  // const [image_list, setImageList] = React.useState();
   const is_file = useSelector((state) => state.image2.file);
-  console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
+  // console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
   // const post_id = props.match.params.id;
   const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
   const is_madal = props.modal ? true : false;
   // console.log("수정 게시물 정보", props);
   // console.log("수정 화면 이미지들", images);
   const nickname = localStorage.getItem("nickname");
-  const editImgList = useSelector((state) => state.image2.edit); // 요걸 가져와야해
+  // const editImgList = useSelector((state) => state.image2.edit); // 요걸 가져와야해
   // const editImage = useSelector((state) => state.image2.image);
 
-  const previewSet = useSelector((state) => state.image2.preview);
-  console.log("프리뷰를 알자!", previewSet);
-  const file = useSelector((state) => state.image2.file);
-  console.log("업로드 파일들을 알자!", file);
+  // const previewSet = useSelector((state) => state.image2.preview);
+  // console.log("프리뷰를 알자!", previewSet);
+  // const file = useSelector((state) => state.image2.file);
+  // console.log("업로드 파일들을 알자!", file);
 
   const is_category = useSelector((state) => state.category.select_category);
 
-  // console.log("카테고리 선택했니?", is_category);
-  // console.log("삭제된 id", deleteId);
-  // console.log("서버로 보내줄 수정파일(에딧 파일)", editFile); // 수정중 다시 맘에 안들어서 삭제하고 싶다면 여길 수정
-  // console.log("온리이미지~!~!~!!", onlyImg); //
-  // console.log("고치자 ㅜㅜ", editImgList); // 수정하는 포스트리스트가 온다 map으로 이미지 돌리자
-  // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
   const ok_submit = contents ? true : false;
 
-  // console.log("??????", localStorage.getItem("jwt"));
   const resetPreview = () => {
     const basicPreview =
       "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36";
@@ -156,7 +145,7 @@ const UploadModal = (props) => {
       window.alert("😗빈칸을 채워주세요...ㅎㅎ");
       return;
     }
-    if (onlyImg.length == 0) {
+    if (onlyImg.length === 0) {
       window.alert("😗사진을 최소 1장 이상 업로드 해주세요!");
       return;
     }
@@ -174,24 +163,33 @@ const UploadModal = (props) => {
     //에딧파일 초기화...
   };
 
+  //인풋창 입력값이 바뀔 때 마다 재렌더링 횟수를 줄여주기 위해서 디바운스 처리를 해주었다
+  const contentsDebounce = _.debounce((e) => {
+    setContents(e.target.value);
+  }, 500);
+
+  const titleDebounce = _.debounce((e) => {
+    setTitle(e.target.value);
+  }, 500);
+
   const changeContents = (e) => {
     setContents(e.target.value);
   };
-
+  // setTimeout(changeContents(), 3000);
   const changeTitle = (e) => {
     setTitle(e.target.value);
   };
 
-  if (images.length == 0) {
+  if (images.length === 0) {
     images.push(
       "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
     );
   }
 
-  const _post = {
-    title: title,
-    content: contents,
-  };
+  // const _post = {
+  //   title: title,
+  //   content: contents,
+  // };
 
   //캐러셀 모듈 코드
   var settings = {
@@ -202,12 +200,14 @@ const UploadModal = (props) => {
     slidesToScroll: 1,
   };
 
+  // console.log("프리뷰업로드로딩", loading);
   return (
     <React.Fragment>
+      {/* 프리뷰가 생길때 까지 스피너를 보여준다 */}
+      {loading ? <Spinner2></Spinner2> : null}
       <Component
-        onClick={resetPreview}
-
-        // onClick={props.close}
+      // onClick={resetPreview}
+      // onClick={props.close}
       />
       <ModalComponent>
         <ModalHeader>
@@ -265,10 +265,10 @@ const UploadModal = (props) => {
                               );
                               //미리 등록해둔 이미지가 있는 경우엔 imgUrlId값이 있어 그것으로 삭제가능
                               if (onlyImg[idx].imgUrlId) {
-                                console.log(
-                                  "삭제한 이미지 id",
-                                  onlyImg[idx].imgUrlId
-                                );
+                                // console.log(
+                                //   "삭제한 이미지 id",
+                                //   onlyImg[idx].imgUrlId
+                                // );
                                 dispatch(
                                   imageActions.deleteImage(
                                     onlyImg[idx].imgUrlId
@@ -279,7 +279,7 @@ const UploadModal = (props) => {
                                 // 그러나 수정시 추가한 이미지엔 서버에서 준 이미지id가 따로 없다
                                 dispatch(
                                   //그래서 이미지 idx 기준으로 삭제해준다!
-                                  imageActions.deleteImageIdx(onlyImg[idx]) //asdjuifhuiawefhuiewbhfiubawefbiuewabiuf
+                                  imageActions.deleteImageIdx(onlyImg[idx])
                                 );
                               }
                               // 이미지와 파일이 둘다 삭제되어야 서버에 보내줄때 차질이 없으름로
@@ -349,7 +349,7 @@ const UploadModal = (props) => {
                       _onChange={changeTitle}
                     ></Input2>
                   </Title>
-                  <Input
+                  <Input3
                     id="outlined-multiline-static"
                     // label="📝제목 작성"
                     placeholder={props.content}
@@ -359,43 +359,40 @@ const UploadModal = (props) => {
                     variant="outlined"
                     value={contents}
                     _onChange={changeContents}
-                  ></Input>
+                  ></Input3>
                 </React.Fragment>
               </EditCommentBox>
             ) : (
               <React.Fragment>
                 <Title>
-                  <Input2
+                  <TitleInput
                     id="outlined-multiline-static"
                     // label="📝제목 작성"
-                    placeholder={
-                      "정확한 장소명을 적어주시면 다른 사람들에게 도움이 되요😗 "
-                    }
-                    rows={1}
-                    variant="outlined"
-                    value={title}
+                    placeholder={"장소명을 적어주시면 좋아요😗 "}
                     width={"100%"}
-                    _onChange={changeTitle}
-                  ></Input2>
+                    onChange={titleDebounce}
+                  ></TitleInput>
                 </Title>
-                <Input
+                <ContentsInput
                   id="outlined-multiline-static"
                   // label="📝제목 작성"
-                  placeholder={"내용작성..."}
-                  rows={10}
+                  placeholder={"내용을 적어주세요😗"}
+                  rows={5}
                   multiLine
                   variant="outlined"
-                  value={contents}
+                  // value={contents}
                   width={"100%"}
-                  _onChange={changeContents}
-                ></Input>
+                  onChange={contentsDebounce}
+                ></ContentsInput>
               </React.Fragment>
             )}
           </MiddleBox>
           {/* 카테고리는 수정할 수 없기때문에 게시글 수정 모달에선 가려준다 */}
           {is_edit ? null : <SelectCate></SelectCate>}
           {is_edit ? (
-            <BottomEdit2 onClick={editPost}>수정하기</BottomEdit2>
+            <Edit2Out>
+              <BottomEdit2 onClick={editPost}>수정하기</BottomEdit2>
+            </Edit2Out>
           ) : (
             <BottomEdit onClick={addPost}>게시하기</BottomEdit>
           )}
@@ -404,6 +401,30 @@ const UploadModal = (props) => {
     </React.Fragment>
   );
 };
+
+// const InputOut = styled.div`
+//   height: 10px;
+// `;
+
+const TitleInput = styled.input`
+  border: none;
+  width: 100%;
+  padding: 12px 4px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+`;
+
+const ContentsInput = styled.textarea`
+  border: none;
+  width: 100%;
+  padding: 12px 4px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
+`;
 
 const BottomEdit = styled.div`
   color: ${(props) => props.theme.main_color};
@@ -416,7 +437,8 @@ const BottomEdit = styled.div`
   text-align: center;
   padding: 12px 0px;
   border-radius: 7px;
-  margin: 15px 0px;
+  /* margin: 15px 0px; */
+  margin-top: 10px;
   box-sizing: border-box;
   :hover {
     background-color: ${(props) => props.theme.main_color};
@@ -428,6 +450,11 @@ const BottomEdit = styled.div`
     margin-bottom: 10vh;
   }
 `;
+
+const Edit2Out = styled.div`
+  padding-top: 53px;
+`;
+
 const BottomEdit2 = styled.div`
   color: ${(props) => props.theme.main_color};
   font-weight: bold;
@@ -441,13 +468,12 @@ const BottomEdit2 = styled.div`
   border-radius: 7px;
   margin: 15px 0px;
   box-sizing: border-box;
+  margin-top: -21px;
   :hover {
     background-color: ${(props) => props.theme.main_color};
     color: white;
   }
-  @media (max-width: 1440px) {
-    margin: 15px 0px;
-  }
+
   @media (max-width: 600px) {
   }
 `;
@@ -471,20 +497,73 @@ const DeleteImg = styled.div`
   cursor: pointer;
 `;
 
-const ImgOutter = styled.div`
-  text-align: center;
-  display: table;
-`;
+// const ImgOutter = styled.div`
+//   text-align: center;
+//   display: table;
+// `;
 
 const ModalImg = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
-  object-fit: cover;
+  /* object-fit: cover; */
+  background-position: 0px;
+  background-repeat: no-repeat;
   border: none;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   width: 100%;
-  aspect-ratio: 4/3;
-  background-position: center;
+  height: 320px;
+  max-height: 320px;
+  margin-bottom: -10px;
+  border-top: 2px solid darkgray;
+  border-bottom: 2px solid darkgray;
+  /* background-color: red; */
+  /* @media (max-width: 1440px) {
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
+    object-fit: cover;
+    background-position: 0px;
+    background-repeat: no-repeat;
+    border: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 320px;
+    max-height: 320px;
+
+    margin-bottom: -20px;
+    border-top: 2px solid darkgray;
+    border-bottom: 2px solid darkgray;
+  }
+  @media (max-width: 1155px) {
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
+    object-fit: cover;
+    background-position: 0px;
+    background-repeat: no-repeat;
+    border: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 320px;
+    max-height: 320px;
+
+    margin-bottom: -20px;
+    border-top: 2px solid darkgray;
+    border-bottom: 2px solid darkgray;
+  } */
+  @media (max-width: 600px) {
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
+    object-fit: cover;
+    background-position: 0px;
+    background-repeat: no-repeat;
+    border: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 800px;
+    max-height: 40vh;
+    margin-bottom: 1vh;
+    border-top: 2px solid darkgray;
+    border-bottom: 2px solid darkgray;
+  }
 `;
 
 const Component = styled.div`
@@ -493,51 +572,89 @@ const Component = styled.div`
   height: 100%;
   width: 100%;
   background-color: black;
-  z-index: 2000;
+  z-index: 1000;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
+  @media (max-width: 600px) {
+    // 1450밑으로 넓이가 내려가면
+    /* all: unset; */
+
+    z-index: 6999;
+  }
 `;
 
 const ModalComponent = styled.div`
   border-radius: 0.5vw;
-  position: fixed;
-  width: 720px;
+  position: fixed !important;
+  /* width: 590px; */
+  width: 420px;
+  height: 660px;
+  max-height: 820px;
+  /* overflow: hidden; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: green;
   background-color: #fafafc;
-  z-index: 2007;
+  z-index: 1001;
   display: flex;
   flex-direction: column;
   border: none;
   box-sizing: border-box;
   min-width: 380px;
-  margin: auto;
-  max-height: 100%;
-  overflow-y: auto;
-  ::-webkit-scrollbar {
-    width: 6px;
+  /* overflow-x: hidden; */
+  /* @media (max-width: 1440px) {
+
+    position: fixed;
+ 
+    width: 470px;
+    height: 780px;
+ 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 1000;
+    border: none;
+    box-sizing: border-box;
   }
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
+  @media (max-width: 1155px) {
+  
+   
+    height: 780px;
+  
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    z-index: 1000;
+    border: none;
+    box-sizing: border-box;
+  } */
+
+  @media (max-width: 600px) {
+    // 1450밑으로 넓이가 내려가면
+    /* all: unset; */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* overflow: hidden; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* background-color: white; */
+    border: none;
+    box-sizing: border-box;
+    z-index: 7000;
   }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 3px;
-    background-color: lightgray;
+  /* @media (max-width: 950px) {
+    width: 350px;
   }
-  @media (max-width: 1280px) {
-    width: 768px;
-  }
-  @media (max-width: 768px) {
-    width: 97%;
-  }
-  @media (max-width: 480px) {
-    width: 100vw;
-    height: 100vh;
-    border-radius: none;
-  }
+  @media (max-width: 350px) {
+    width: 100%;
+  /* } */ /////////////// */
 `;
 
 const ModalHeader = styled.div`
@@ -563,13 +680,13 @@ const HeaderInner = styled.div`
   width: 95%;
 `;
 
-const HeaderEdit = styled.div`
-  color: ${(props) => props.theme.main_color};
-  font-weight: bold;
-  background-color: transparent;
-  font-size: 14px;
-  cursor: pointer;
-`;
+// const HeaderEdit = styled.div`
+//   color: ${(props) => props.theme.main_color};
+//   font-weight: bold;
+//   background-color: transparent;
+//   font-size: 14px;
+//   cursor: pointer;
+// `;
 
 const ExitContainer = styled.div`
   z-index: 30;
@@ -591,11 +708,55 @@ const ExitBtn = styled.button`
 `;
 
 const ModalBottomContainer = styled.div`
+  /* background-color: red; */
+  margin: 0px auto;
+  margin-top: 30px;
   text-align: left;
-  width: 93%;
+  width: 397px;
+  height: 290px;
   display: flex;
-  margin: 10px auto;
   flex-direction: column;
+  padding: 0px 12px;
+  /* background-color: red; */
+
+  /* @media (max-width: 1440px) {
+    text-align: left;
+    width: 450px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0px auto;
+    margin-top: 5vh;
+  }
+  @media (max-width: 1155px) {
+    text-align: left;
+    width: 450px;
+    height: 370px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0px auto;
+    margin-top: 5vh;
+  } */
+
+  @media (max-width: 600px) {
+    // 1450밑으로 넓이가 내려가면
+    /* all: unset; */
+    text-align: left;
+    width: 100%;
+    height: 45vh; // 이거 올려주니까 댓글창이보인다..!
+    display: flex;
+    flex-direction: column;
+    /* background-color: red; */
+    padding: 0;
+    margin: 0px auto;
+    margin-top: 2vh;
+    /* margin-right: 10px; */
+  }
+  /* justify-content: space-between; */
+
+  /* border-left: 1px solid #efefef; */
 `;
 
 const EditCommentBox = styled.div``;
@@ -619,11 +780,13 @@ const ModalAuthor = styled.span`
 const MiddleBox = styled.div`
   display: flex;
   flex-direction: column;
-  /* height: 300px; */
+
+  /* height: 10px; */
+  /* background-color: blue; */
+
   width: 100%;
   @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면
-    height: 235px;
     /* background-color: red; */
   }
   /* justify-content: space-between; */
@@ -633,21 +796,21 @@ const MiddleBox = styled.div`
     height: 220px;
   }
 `;
-const InputOutter = styled.div`
-  margin: 0px auto;
-  width: 100%;
-`;
+// const InputOutter = styled.div`
+//   margin: 0px auto;
+//   width: 100%;
+// `;
 
 const Title = styled.div`
   margin-bottom: 1vh;
 `;
 
-const CateBtn = styled.div`
-  font-size: bold;
-  width: 6.5vw;
-  /* border: 1px solid lightgray; */
-  height: 3.5vh;
-  border-radius: 10px;
-`;
+// const CateBtn = styled.div`
+//   font-size: bold;
+//   width: 6.5vw;
+//   /* border: 1px solid lightgray; */
+//   height: 3.5vh;
+//   border-radius: 10px;
+// `;
 
-export default UploadModal;
+export default React.memo(UploadModal);
