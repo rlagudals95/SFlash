@@ -23,6 +23,7 @@ export default handleActions(
     [OPEN_MODAL]: (state, action) =>
       produce(state, (draft) => {
         draft.is_open = true;
+        Z;
       }),
     [CLOSE_MODAL]: (state, action) =>
       produce(state, (draft) => {
