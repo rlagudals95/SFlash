@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { actionCreators as userActions } from "../redux/modules/user";
+import jwt_decode from 'jwt-decode';
 
 const OAuth2RedirectHandler = (props) => {
   const dispatch = useDispatch();
@@ -22,10 +23,16 @@ const OAuth2RedirectHandler = (props) => {
   const userId = getUrlParameter("userId");
   const error = getUrlParameter("error");
 
+  let decoded = jwt_decode(jwt);
+        console.log(decoded);
+  const tokenExpires = decoded.exp * 1000;
+        console.log(tokenExpires);
+
   if (jwt) {
     localStorage.setItem("jwt", jwt);
     localStorage.setItem("nickname", nickname);
     localStorage.setItem("userId", userId);
+    localStorage.setItem("toeknExpires", tokenExpires);
     dispatch(userActions.setUser());
     return <Redirect to="/" />;
   } else if (error) {
