@@ -319,22 +319,6 @@ const Box = styled.div`
   height: 200px;
 `;
 
-// const TextBox = styled.div`
-//   position: absolute;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   text-align: center;
-//   top: 15%;
-//   z-index: 200;
-// `;
-
-// const Mobile = styled.div`
-//   display: none;
-//   @media (max-width: 600px) {
-//     display: flex;
-//   }
-// `;
-
 const Web = styled.div`
   @media (max-width: 600px) {
     display: none;
@@ -414,13 +398,13 @@ const GridBtn = styled.div`
   font-size: 20px;
   border: 2px solid ${(props) => props.theme.main_color};
   /* margin-left: 2vw; */
-  z-index: 7001;
+  z-index: 500;
   /* width: 150px;
   height: 40px; */
   padding: 12px 40px;
   position: fixed;
-  right: 100px;
-  bottom: 100px;
+  right: 80px;
+  bottom: 80px;
   cursor: pointer;
   border-radius: 45px;
   font-weight: bold;
@@ -458,43 +442,3 @@ const GridBtn2 = styled.div`
     color: white;
   }
 `;
-
-// const Container = styled.div`
-//   ${(prop) => prop.theme.responsiveContainer};
-//   display: grid;
-//   grid-template-columns: 1fr 1fr 1fr;
-//   grid-template-rows: auto;
-//   grid-gap: 20px;
-//   margin: auto;
-//   width: 100%;
-//   padding: 70px 0px;
-//   flex-wrap: wrap;
-
-//   @media (min-width: 1440px) {
-//     grid-template-columns: 1fr 1fr 1fr;
-//     grid-gap: 20px;
-//   }
-//   @media (max-width: 1440px) {
-//     /* 1440밑으로 넓이가 내려가면 */
-//     margin-top: 4vh;
-//   }
-//   @media (max-width: 1280px) {
-//     grid-template-columns: 1fr 1fr 1fr;
-//     grid-gap: 10px;
-//     margin: auto;
-//     margin-top: 4vh;
-//     padding-top: 0px;
-//   }
-//   @media (max-width: 960px) {
-//     grid-template-columns: 1fr 1fr 1fr;
-//     grid-gap: 5px;
-//     margin: auto;
-//     margin-top: 4vh;
-//     padding-top: 0px;
-//   }
-//   @media (max-width: 600px) {
-//     margin-top: 19vh;
-//     grid-template-columns: 1fr 1fr 1fr;
-//     grid-gap: 2px;
-//   }
-// `;

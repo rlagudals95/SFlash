@@ -72,7 +72,6 @@ const StoryContent = (props) => {
   if (post_list.length > 0) {
     return (
       <React.Fragment>
-        {/* 우측 아이콘 버튼 : gridMode를 제어 합니다.*/}
         <Icons>
           {gridMode ? (
             <>
@@ -94,7 +93,6 @@ const StoryContent = (props) => {
             </>
           )}
         </Icons>
-
         <>
           {gridMode ? (
             <>
