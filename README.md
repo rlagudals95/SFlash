@@ -56,8 +56,8 @@ https://apis.map.kakao.com/web/sample/
   
 ![1](https://user-images.githubusercontent.com/76252074/118969984-b1966580-b9a8-11eb-8dde-9efb47a9b162.jpg)
   
-  
-![2](https://user-images.githubusercontent.com/76252074/118970005-b6f3b000-b9a8-11eb-9986-e1d24867f5fa.jpg)
+### 4. 메인화면 
+![image](https://user-images.githubusercontent.com/76252074/119500403-ba20de80-bda2-11eb-8896-e01d03c73877.png)
 ![5](https://user-images.githubusercontent.com/76252074/118970190-ea363f00-b9a8-11eb-9869-e7d170c2b7d2.jpg)
 ![3](https://user-images.githubusercontent.com/76252074/118970219-f3bfa700-b9a8-11eb-97fd-3f45feac3361.jpg)
 ![4](https://user-images.githubusercontent.com/76252074/118970245-f9b58800-b9a8-11eb-8aad-2b241cad9092.jpg)
