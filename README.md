@@ -68,7 +68,9 @@ http://sflash.ppt.s3-website.ap-northeast-2.amazonaws.com/
 ![image](https://user-images.githubusercontent.com/76252074/119500748-1a178500-bda3-11eb-9263-8ad4e6c5294d.png)
 
 ### 7. 내가 올린 & 좋아요한 게시물을 이미지와 지도로 확인할 수 있는 마이페이지
+- 커뮤니티페이지와 비슷하게 게시물들 모아서 보여주기
 ![image](https://user-images.githubusercontent.com/76252074/119500932-50ed9b00-bda3-11eb-9425-5644a6b4775e.png)
+- 지도페이지에서처럼 지도에 내가 작성한 마커, 내가 좋아요한 마커를 모아서 보여주기
 ![마이페이지 지도](https://user-images.githubusercontent.com/76252074/118970520-4a2ce580-b9a9-11eb-8b78-aa9488f36c25.jpg)
 
 
