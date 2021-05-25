@@ -110,279 +110,266 @@ const ModalDetail = (props) => {
           <React.Fragment>
             <Component onClick={closeModal} />
             <ModalComponent>
-                <ModalTopContainer>
-                  <ProfileContainer>
-                    <ProCircle
-                      src={
-                        modalData.profileImg
-                          ? modalData.profileImg
-                          : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                      }
-                      onClick={() => {
-                        history.push(`/story/${modalData.writerId}`);
-                        dispatch(storyPostActions.resetStory([]));
-                        dispatch(profileActions.resetProfile([]));
-                        dispatch(
-                          profileActions.getUserInfoAPI(modalData.writerId)
-                        );
-                        dispatch(
-                          storyPostActions.getUserPostAPI(modalData.writerId)
-                        );
-                        dispatch(
-                          storyPostActions.getUserLikeAPI(modalData.writerId)
-                        );
-                      }}
-                    />
-                    <ModalAuthor
-                      onClick={() => {
-                        history.push(`/story/${modalData.writerId}`);
-                        dispatch(storyPostActions.resetStory([]));
-                        dispatch(profileActions.resetProfile([]));
-                        dispatch(
-                          profileActions.getUserInfoAPI(modalData.writerId)
-                        );
-                        dispatch(
-                          storyPostActions.getUserPostAPI(modalData.writerId)
-                        );
-                        dispatch(
-                          storyPostActions.getUserLikeAPI(modalData.writerId)
-                        );
-                      }}
-                    >
-                      {modalData.writerName}
-                    </ModalAuthor>
-                  </ProfileContainer>
-
-                  <CloseButton onClick={closeModal}>
-                    <CloseIcon size="1.5vh" />
-                  </CloseButton>
-                </ModalTopContainer>
-
-                {/* 이미지 슬라이드 구현 props로 받는 이미지의 개수가 1개를 초과할때  */}
-                {/* 그 수만큼 map함수로 출력해준다 */}
-                {modalData.img_url[0].imgUrl && modalData.img_url.length > 1 ? ( // 이미지가 없을때 에러뜨는 것을 방지
-                  <Slider {...settings}>
-                    {modalData.img_url.map((p, idx) => {
-                      return (
-                        <div>
-                          <ModalImg
-                            src={
-                              modalData.img_url[0].imgUrl &&
-                              modalData.img_url[idx].imgUrl
-                            }
-                          />
-                        </div>
-                      );
-                    })}
-                  </Slider>
-                ) : (
-                  <ModalImg
+              <ModalTopContainer>
+                <ProfileContainer>
+                  <ProCircle
                     src={
-                      modalData.img_url[0].imgUrl && modalData.img_url[0].imgUrl
+                      modalData.profileImg
+                        ? modalData.profileImg
+                        : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                     }
+                    onClick={() => {
+                      history.push(`/story/${modalData.writerId}`);
+                      dispatch(storyPostActions.resetStory([]));
+                      dispatch(profileActions.resetProfile([]));
+                      dispatch(
+                        profileActions.getUserInfoAPI(modalData.writerId)
+                      );
+                      dispatch(
+                        storyPostActions.getUserPostAPI(modalData.writerId)
+                      );
+                      dispatch(
+                        storyPostActions.getUserLikeAPI(modalData.writerId)
+                      );
+                    }}
                   />
-                )}
+                  <ModalAuthor
+                    onClick={() => {
+                      history.push(`/story/${modalData.writerId}`);
+                      dispatch(storyPostActions.resetStory([]));
+                      dispatch(profileActions.resetProfile([]));
+                      dispatch(
+                        profileActions.getUserInfoAPI(modalData.writerId)
+                      );
+                      dispatch(
+                        storyPostActions.getUserPostAPI(modalData.writerId)
+                      );
+                      dispatch(
+                        storyPostActions.getUserLikeAPI(modalData.writerId)
+                      );
+                    }}
+                  >
+                    {modalData.writerName}
+                  </ModalAuthor>
+                </ProfileContainer>
 
-                <ModalBottomContainer>
-                  <InfoBox>
-                    <InfoBox_1>
-                      {/*is_like 여부로 하트모양 변경  */}
-                      {modalData.like ? (
-                        <LikeBox>
-                          <div style={{ cursor: "pointer" }}>
-                            {/* 좋아요 상태에 따라서 하트 모양의 조건부 렌더 */}
-                            <FavoriteIcon
-                              onClick={disLike}
-                              style={{
-                                color: "rgb(255, 183, 25)",
-                                fontSize: 32,
-                              }}
-                            />
-                            <LikeCntBox> {modalData.likeCnt}</LikeCntBox>
-                          </div>
-                        </LikeBox>
-                      ) : (
-                        <LikeBox>
-                          <div style={{ cursor: "pointer" }}>
-                            <FavoriteBorderIcon
-                              style={{
-                                fontSize: 32,
-                                color: "rgb(255, 183, 25)",
-                              }}
-                              onClick={addLike}
-                            />
-                            <LikeCntBox> {modalData.likeCnt}</LikeCntBox>
-                          </div>
-                        </LikeBox>
-                      )}
-                      {/*--------------------------------------------------------------------- */}
+                <CloseButton onClick={closeModal}>
+                  <CloseIcon size="1.5vh" />
+                </CloseButton>
+              </ModalTopContainer>
 
-                      {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
-                      {modalData.writerId == user_id ? (
-                        <ModalEdit>
-                          <React.Fragment onClick={props.close}>
-                            <EditBtn onClick={openEditModal}>수정</EditBtn>
-                          </React.Fragment>
-                          /
-                          <DeleteBtn
-                            onClick={(e) => {
-                              Swal.fire({
-                                text: "게시물을 삭제 하시겠습니까?",
-                                icon: "question",
-                                confirmButtonText: "예",
-                                confirmButtonColor: "#ffb719",
-                                showCancelButton: true,
-                                cancelButtonText: "아니오",
-                                cancelButtonColor: "#eee",
-                              }).then((result) => {
-                                if (result.isConfirmed) {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  dispatch(
-                                    storyPostModalActions.deleteStoryPostAPI(
-                                      modalData.id
-                                    )
-                                  );
-                                  props.close(); 
-                                }
-                              });
+              {/* 이미지 슬라이드 구현 props로 받는 이미지의 개수가 1개를 초과할때  */}
+              {/* 그 수만큼 map함수로 출력해준다 */}
+              {modalData.img_url[0].imgUrl && modalData.img_url.length > 1 ? ( // 이미지가 없을때 에러뜨는 것을 방지
+                <Slider {...settings}>
+                  {modalData.img_url.map((p, idx) => {
+                    return (
+                      <div>
+                        <ModalImg
+                          src={
+                            modalData.img_url[0].imgUrl &&
+                            modalData.img_url[idx].imgUrl
+                          }
+                        />
+                      </div>
+                    );
+                  })}
+                </Slider>
+              ) : (
+                <ModalImg
+                  src={
+                    modalData.img_url[0].imgUrl && modalData.img_url[0].imgUrl
+                  }
+                />
+              )}
+
+              <ModalBottomContainer>
+                <InfoBox>
+                  <InfoBox_1>
+                    {/*is_like 여부로 하트모양 변경  */}
+                    {modalData.like ? (
+                      <LikeBox>
+                        <div style={{ cursor: "pointer" }}>
+                          {/* 좋아요 상태에 따라서 하트 모양의 조건부 렌더 */}
+                          <FavoriteIcon
+                            onClick={disLike}
+                            style={{
+                              color: "rgb(255, 183, 25)",
+                              fontSize: 32,
                             }}
-                          >
-                            삭제
-                          </DeleteBtn>
-                        </ModalEdit>
-                      ) : (
-                        <ModalCate>#{modalData.category}</ModalCate>
-                      )}
-                    </InfoBox_1>
-
+                          />
+                          <LikeCntBox> {modalData.likeCnt}</LikeCntBox>
+                        </div>
+                      </LikeBox>
+                    ) : (
+                      <LikeBox>
+                        <div style={{ cursor: "pointer" }}>
+                          <FavoriteBorderIcon
+                            style={{
+                              fontSize: 32,
+                              color: "rgb(255, 183, 25)",
+                            }}
+                            onClick={addLike}
+                          />
+                          <LikeCntBox> {modalData.likeCnt}</LikeCntBox>
+                        </div>
+                      </LikeBox>
+                    )}
                     {/*--------------------------------------------------------------------- */}
-                    <InfoBox_2>
-                      <PostTilte>
-                        {modalData.title}{" "}
-                        <PostDate>{timeForToday(modalData.creatAt)}</PostDate>
-                      </PostTilte>
-                      <PostContents>{modalData.content}</PostContents>
-                      <PostTime>{modalData.spotName}</PostTime>
-                    </InfoBox_2>
-                  </InfoBox>
+
+                    {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
+                    {modalData.writerId == user_id ? (
+                      <ModalEdit>
+                        <React.Fragment onClick={props.close}>
+                          <EditBtn onClick={openEditModal}>수정</EditBtn>
+                        </React.Fragment>
+                        /
+                        <DeleteBtn
+                          onClick={(e) => {
+                            Swal.fire({
+                              text: "게시물을 삭제 하시겠습니까?",
+                              icon: "question",
+                              confirmButtonText: "예",
+                              confirmButtonColor: "#ffb719",
+                              showCancelButton: true,
+                              cancelButtonText: "아니오",
+                              cancelButtonColor: "#eee",
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                dispatch(
+                                  storyPostModalActions.deleteStoryPostAPI(
+                                    modalData.id
+                                  )
+                                );
+                                props.close();
+                              }
+                            });
+                          }}
+                        >
+                          삭제
+                        </DeleteBtn>
+                      </ModalEdit>
+                    ) : (
+                      <ModalCate>#{modalData.category}</ModalCate>
+                    )}
+                  </InfoBox_1>
 
                   {/*--------------------------------------------------------------------- */}
-                  <ModalCmtBox>
-                    {commentData &&
-                      commentData.map((c, idx) => {
-                        //여기서 댓글을 입력하고 map으로 props 값을 돌려서 화면을 띄우게 해줌
-                        //댓글이 2개보다 작다면? 1개라면?
-                        return (
-                          <ReplyBox>
-                            <ReplyUnit>
-                              <ReplyLeft>
-                                <>
-                                  <ReplyImg
-                                    src={
-                                      //댓글 작성자가 아직 프로필 이미지를 등록 안했을 경우엔 기본이미지를 보여주도록 설정
-                                      c.writerImgUrl
-                                        ? c.writerImgUrl
-                                        : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                    }
-                                    onClick={() => {
-                                      history.push(`/story/${c.userId}`);
-                                      dispatch(storyPostActions.resetStory([]));
-                                      dispatch(profileActions.resetProfile([]));
-                                      dispatch(
-                                        profileActions.getUserInfoAPI(c.userId)
-                                      );
-                                      dispatch(
-                                        storyPostActions.getUserPostAPI(
-                                          c.userId
-                                        )
-                                      );
-                                      dispatch(
-                                        storyPostActions.getUserLikeAPI(
-                                          c.userId
-                                        )
-                                      );
-                                    }}
-                                  ></ReplyImg>
-                                  <ReplyWriter
-                                    onClick={() => {
-                                      history.push(`/story/${c.userId}`);
-                                      dispatch(storyPostActions.resetStory([]));
-                                      dispatch(profileActions.resetProfile([]));
-                                      dispatch(
-                                        profileActions.getUserInfoAPI(c.userId)
-                                      );
-                                      dispatch(
-                                        storyPostActions.getUserPostAPI(
-                                          c.userId
-                                        )
-                                      );
-                                      dispatch(
-                                        storyPostActions.getUserLikeAPI(
-                                          c.userId
-                                        )
-                                      );
-                                    }}
-                                  >
-                                    {c.writerName}
-                                  </ReplyWriter>
-                                </>
-                                <ReplyContent>{c.content}</ReplyContent>
-                                <ReplyDate>
-                                  {" "}
-                                  {timeForToday(c.modified)}
-                                </ReplyDate>
-                              </ReplyLeft>
+                  <InfoBox_2>
+                    <PostTilte>
+                      {modalData.title}{" "}
+                      <PostDate>{timeForToday(modalData.creatAt)}</PostDate>
+                    </PostTilte>
+                    <PostContents>{modalData.content}</PostContents>
+                    <PostTime>{modalData.spotName}</PostTime>
+                  </InfoBox_2>
+                </InfoBox>
 
-                              {nickname == c.writerName ? (
-                                <Icon
+                {/*--------------------------------------------------------------------- */}
+                <ModalCmtBox>
+                  {commentData &&
+                    commentData.map((c, idx) => {
+                      //여기서 댓글을 입력하고 map으로 props 값을 돌려서 화면을 띄우게 해줌
+                      //댓글이 2개보다 작다면? 1개라면?
+                      return (
+                        <ReplyBox>
+                          <ReplyUnit>
+                            <ReplyLeft>
+                              <>
+                                <ReplyImg
+                                  src={
+                                    //댓글 작성자가 아직 프로필 이미지를 등록 안했을 경우엔 기본이미지를 보여주도록 설정
+                                    c.writerImgUrl
+                                      ? c.writerImgUrl
+                                      : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                  }
                                   onClick={() => {
-                                    Swal.fire({
-                                      text: "댓글을 삭제 하시겠습니까?",
-                                      confirmButtonText: "예",
-                                      confirmButtonColor: "#ffb719",
-                                      showCancelButton: true,
-                                      cancelButtonText: "아니오",
-                                      cancelButtonColor: "#eee",
-                                    }).then((result) => {
-                                      if (result.isConfirmed) {
-                                        deleteComment(c.commentId);
-                                      }
-                                    });
+                                    history.push(`/story/${c.userId}`);
+                                    dispatch(storyPostActions.resetStory([]));
+                                    dispatch(profileActions.resetProfile([]));
+                                    dispatch(
+                                      profileActions.getUserInfoAPI(c.userId)
+                                    );
+                                    dispatch(
+                                      storyPostActions.getUserPostAPI(c.userId)
+                                    );
+                                    dispatch(
+                                      storyPostActions.getUserLikeAPI(c.userId)
+                                    );
+                                  }}
+                                ></ReplyImg>
+                                <ReplyWriter
+                                  onClick={() => {
+                                    history.push(`/story/${c.userId}`);
+                                    dispatch(storyPostActions.resetStory([]));
+                                    dispatch(profileActions.resetProfile([]));
+                                    dispatch(
+                                      profileActions.getUserInfoAPI(c.userId)
+                                    );
+                                    dispatch(
+                                      storyPostActions.getUserPostAPI(c.userId)
+                                    );
+                                    dispatch(
+                                      storyPostActions.getUserLikeAPI(c.userId)
+                                    );
                                   }}
                                 >
-                                  <RiDeleteBinLine size="20" />
-                                </Icon>
-                              ) : 
-                              null}
-                            </ReplyUnit>
-                          </ReplyBox>
-                        );
-                      })}
-                       <ModalCmtInputBox>
-                      <CommentInput
-                        type="text"
-                        placeholder="댓글달기..."
-                        onChange={selectComment}
-                        value={comments}
+                                  {c.writerName}
+                                </ReplyWriter>
+                              </>
+                              <ReplyContent>{c.content}</ReplyContent>
+                              <ReplyDate> {timeForToday(c.modified)}</ReplyDate>
+                            </ReplyLeft>
+
+                            {nickname == c.writerName ? (
+                              <Icon
+                                onClick={() => {
+                                  Swal.fire({
+                                    text: "댓글을 삭제 하시겠습니까?",
+                                    confirmButtonText: "예",
+                                    confirmButtonColor: "#ffb719",
+                                    showCancelButton: true,
+                                    cancelButtonText: "아니오",
+                                    cancelButtonColor: "#eee",
+                                  }).then((result) => {
+                                    if (result.isConfirmed) {
+                                      deleteComment(c.commentId);
+                                    }
+                                  });
+                                }}
+                              >
+                                <RiDeleteBinLine size="20" />
+                              </Icon>
+                            ) : null}
+                          </ReplyUnit>
+                        </ReplyBox>
+                      );
+                    })}
+                  <ModalCmtInputBox>
+                    <CommentInput
+                      type="text"
+                      placeholder="댓글달기..."
+                      onChange={selectComment}
+                      value={comments}
+                    />
+                    {ok_submit ? (
+                      <UploadBtn onClick={addComment}>게시</UploadBtn>
+                    ) : (
+                      <UploadBtn style={{ opacity: "0.3" }}>게시</UploadBtn>
+                    )}
+
+                    {is_Editmodal ? (
+                      <UploadPostModal
+                        close={closeDetailModal}
+                        {...modalData}
+                        modal={"modal"}
                       />
-                      {ok_submit ? (
-                        <UploadBtn onClick={addComment}>게시</UploadBtn>
-                      ) : (
-                        <UploadBtn style={{ opacity: "0.3" }}>게시</UploadBtn>
-                      )}
-
-                      {is_Editmodal ? (
-                        <UploadPostModal
-                          close={closeDetailModal}
-                          {...modalData}
-                          modal={"modal"}
-                        />
-                      ) : null}
-                    </ModalCmtInputBox>
-                  </ModalCmtBox>
-
-                </ModalBottomContainer>
+                    ) : null}
+                  </ModalCmtInputBox>
+                </ModalCmtBox>
+              </ModalBottomContainer>
             </ModalComponent>
           </React.Fragment>
         )
@@ -435,17 +422,17 @@ const ModalComponent = styled.div`
   margin: auto;
   max-height: 90%;
   overflow-y: auto;
-    @media (max-width: 1280px) {
-      width: 768px;
-    }
-    @media (max-width: 768px) {
-      width:97%
-    }
-    @media (max-width: 480px) {
-      width: 100vw;
-      height: 100vh;
-      border-radius: none;
-    }
+  @media (max-width: 1280px) {
+    width: 768px;
+  }
+  @media (max-width: 768px) {
+    width: 97%;
+  }
+  @media (max-width: 480px) {
+    width: 100vw;
+    height: 100vh;
+    border-radius: none;
+  }
 `;
 // 모둘 상단부(프로필)-------------------------------------
 const ModalTopContainer = styled.div`
@@ -675,7 +662,7 @@ const Icon = styled.div`
 
 const ModalCmtInputBox = styled.div`
   position: relative;
-  bottom:0;
+  bottom: 0;
   margin: 20px 0px;
   width: 100%;
   align-items: center;

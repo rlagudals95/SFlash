@@ -96,7 +96,7 @@ const PostList = (props) => {
   });
 
   // 커뮤니티 페이지 그리드 행 갯수를 조절하는 상태값
-  const gridColumn = gridC ? "1fr 1fr 1fr" : " 1fr 1fr 1fr 1fr 1fr";
+  const gridColumn = gridC ? "1fr 1fr 1fr" : " 1fr 1fr 1fr 1fr";
 
   const changeGrid5 = () => {
     setGridC(false);
@@ -108,7 +108,7 @@ const PostList = (props) => {
   return (
     <React.Fragment>
       {gridC ? (
-        <GridBtn onClick={changeGrid5}>5줄씩 보기</GridBtn>
+        <GridBtn onClick={changeGrid5}>4줄씩 보기</GridBtn>
       ) : (
         <GridBtn2 onClick={changeGrid3}>3줄씩 보기</GridBtn2>
       )}

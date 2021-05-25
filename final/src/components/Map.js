@@ -2721,8 +2721,8 @@ const Maps = (props) => {
     }
 
     // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성하기.
-    var mapTypeControl = new kakao.maps.MapTypeControl();
-    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+    // var mapTypeControl = new kakao.maps.MapTypeControl();
+    // map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
   // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성하기.
   // var zoomControl = new kakao.maps.ZoomControl();
@@ -2806,16 +2806,6 @@ const Maps = (props) => {
     setUpLoadModal(false);
   };
 
-  const [roadmap, setRoadmap] = useState(true);
-  const [hybridmap, setHybridmap] = useState(true);
-
-  const setMapROADMAP = () => {
-    _map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
-  }
-  const setMapHYBRID = () => {
-    _map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
-  }
-
   // 지도 줌인아웃기능 - 대한민국 전체 보기 
   const zoomOutKorea = () => {
     // _map.setLevel(13, {anchor: new kakao.maps.LatLng(startLat, startLng,)});
@@ -2826,7 +2816,7 @@ const Maps = (props) => {
   };
 
   // 현접속위치 주변으로 이동해서 보기
-  const moveCurrentPosition = () => {
+  const moveToCurrentPosition = () => {
     const moveToCurrentPosition = new kakao.maps.LatLng(startLat, startLng);
     _map.panTo(moveToCurrentPosition)
   };
@@ -2839,6 +2829,16 @@ const Maps = (props) => {
   const zoomOut = () => {
     _map.setLevel(_map.getLevel() + 1)
   };
+
+  const [roadmap, setRoadmap] = useState(true);
+  // const [hybridmap, setHybridmap] = useState(false);
+
+  const setMapROADMAP = () => {
+    _map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
+  }
+  const setMapHYBRID = () => {
+    _map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
+  }
 
   return (
     <React.Fragment>
@@ -2863,30 +2863,42 @@ const Maps = (props) => {
         </SearchIcon>
       </SearchBox>
 
+      {roadmap ? (
+        <MapTypeChangeContainer>
+          <RoadMapSelected>지도</RoadMapSelected>
+          <HybridMap 
+            onClick={() => {
+              setMapHYBRID();
+              setRoadmap(false);
+            }}
+          >스카이뷰
+          </HybridMap>
+        </MapTypeChangeContainer>
+      ) : (
+        <MapTypeChangeContainer>
+          <RoadMap 
+            onClick={() => {
+              setMapROADMAP();
+              setRoadmap(true);
+            }}
+          >지도
+          </RoadMap>
+          <HybridMapSelected>스카이뷰</HybridMapSelected>
+        </MapTypeChangeContainer>
+      )}
+
       <PanControlContainer>
-        <PanControl onClick={zoomOutKorea} style={{borderRight: "2pt solid #ffb719"}}>
-          대한민국<br/>전체보기
-        </PanControl>
-        <PanControl onClick={moveCurrentPosition}>
-          접속위치<br/>주변보기
-        </PanControl>
+        <PanEntireControl onClick={zoomOutKorea}>
+          지도 전체보기
+        </PanEntireControl>
+        <PanMyCurrentControl onClick={moveToCurrentPosition}>
+          내 주변보기
+        </PanMyCurrentControl>
       </PanControlContainer>
 
-      {/* {roadmap ? (
-        <MapTypeControlContainer>
-          <RoadMapSelected/>
-          <HybridMap/>
-        </MapTypeControlContainer>
-      ) : (
-        <MapTypeControlContainer>
-          <RoadMap/>
-          <HybridMapS
-          eleted/>
-        </MapTypeControlContainer>
-      )} */}
-
       <ZoomControlBox>
-        <ZoomControl onClick={zoomIn} style={{borderBottom: "2pt solid #ffb719"}}>
+        {/* <ZoomControl onClick={zoomIn} style={{borderRight: "2pt solid #ffb719"}}> */}
+        <ZoomControl onClick={zoomIn}>
           <IoMdAdd size="30" color="#ffb719"/>
         </ZoomControl>
         <ZoomControl onClick={zoomOut}>
@@ -2915,12 +2927,12 @@ const Maps = (props) => {
 
 export default Maps;
 
-const PanControlContainer = styled.div`
-  position: absolute;
-  width: 120px;
+const MapTypeChangeContainer = styled.div`
+  position: fixed;
+  width: 130px;
   height: 50px;
-  top: 4px;
-  right: 64px;
+  top: 600px;
+  right: 200px;
   display: flex;
   flex-direction: row;
   background-color: #F2F3F7;
@@ -2930,42 +2942,133 @@ const PanControlContainer = styled.div`
   z-index: 100;
 `;
 
-const PanControl = styled.div`
-  cursor: pointer;
+const RoadMapSelected = styled.div`
+  cursor: pointer;  
   width: 50%;
   height: 100%;
+  background-color: #343a40; 
+  align-items: center;
+  border: none;
+  font-size: 0.95rem;
+  text-align: center;
+  color: #F2F3F7;
+  font-weight: bold;
+  border-radius: 10px;
+  display: table-cell;
+  vertical-align: middle;
+  line-height: 42px;
+`;
+
+const RoadMap = styled.div`
+  cursor: pointer;  
+  width: 50%;
+  height: 100%;
+  background-color: #F2F3F7; 
+  align-items: center;
+  border: none;
+  font-size: 0.95rem;
+  text-align: center;
+  color: #343a40;
+  font-weight: bold;
+  border-radius: 10px;
+  display: table-cell;
+  vertical-align: middle;
+  line-height: 42px;
+`;
+
+const HybridMapSelected = styled.div`
+  cursor: pointer;  
+  width: 50%;
+  height: 100%;
+  background-color: #343a40; 
+  align-items: center;
+  border: none;
+  font-size: 0.95rem;
+  text-align: center;
+  color: #F2F3F7;
+  font-weight: bold;
+  border-radius: 10px;
+  display: table-cell;
+  vertical-align: middle;
+  line-height: 42px;
+  padding-left: 5px;
+`;
+
+const HybridMap = styled.div`
+  cursor: pointer;  
+  width: 50%;
+  height: 100%;
+  background-color: #F2F3F7; 
   display: flex;
   align-items: center;
   border: none;
-  font-size: 0.3rem;
+  font-size: 0.95rem;
   text-align: center;
   color: #343a40;
-  font-weight: bold;   
+  font-weight: bold;
+  border-radius: 10px;
+  padding-left: 5px;
 `;
 
-// const PanControl = styled.div`
-//   display: flex;
-//   flex-direction: row; 
-//   justify-content: center;
-//   align-items: center;
-//   text-align: center;
-//   cursor: pointer;
-//   font-size: 0.3rem;
-//   text-align: center;
-//   color: #343a40;
-//   padding: 5px 5px 5px 5px;
-//   font-weight: bold;
-//   border: none;
-// `;
+const PanControlContainer = styled.div`
+  position: fixed;
+  width: 280px;
+  height: 50px;
+  top: 530px;
+  right: 50px;
+  display: flex;
+  flex-direction: row;
+  background-color: #F2F3F7;
+  border: none;
+  border-radius: 10px;
+  box-sizing: border-box;
+  z-index: 100;
+`;
+
+const PanEntireControl = styled.div`
+  cursor: pointer;
+  width: 50%;
+  padding-top: 13px;
+  padding-bottom: 21px;
+  padding-left: 7px;
+  border: none;
+  font-size: 1rem;
+  text-align: center;
+  color: #343a40;
+  font-size: 16px;
+  font-weight: bold;
+  box-sizing: border-box;
+  &:hover {
+    color: #ffb719;
+  } 
+`;
+
+const PanMyCurrentControl = styled.div`
+  cursor: pointer;
+  width: 50%;
+  padding-top: 13px;
+  padding-bottom: 21px;
+  padding-right: 7px;
+  border: none;
+  font-size: 1rem;
+  text-align: center;
+  color: #343a40;
+  font-size: 16px;
+  font-weight: bold;
+  box-sizing: border-box;
+  &:hover {
+    color: #ffb719;
+  } 
+`;
 
 const ZoomControlBox = styled.div`
-  position: absolute;
-  width: 50px;
-  height: 100px;
-  top: 4px;
-  right: 4px;
+  position: fixed;
+  width: 130px;
+  height: 50px;
+  top: 600px;
+  right: 50px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   background-color: #F2F3F7;
   border: 2pt solid #ffb719;
   border-radius: 10px;
@@ -2975,35 +3078,20 @@ const ZoomControlBox = styled.div`
 
 const ZoomControl = styled.div`
   cursor: pointer;
-  width: 100%;
-  height: 50%;
+  width: 50%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
-  /* box-sizing: border-box; */
-`;
-
-const MapTypeControlContainer = styled.div`
-  width: 100px;
-  height: 50px;
-  top: 20px;
-  right: 100px;
-  border: 2pt solid #ffb719;
-  background-color: #F2F3F7;
-`;
-
-const RoadMapSelected = styled.div`
-
-`;
-
-const RoadMap = styled.div`
-`;
-
-const HybridMapSeleted = styled.div`
-`;
-
-const HybridMap = styled.div`
+  box-sizing: border-box;
+  padding: 10px 10px;
+  &:hover {
+    color: white;
+    background-color: #343a40;
+    border-radius: 10px;
+    border: 2pt solid #ffb719
+  } 
 `;
 
 const SearchBox = styled.div`

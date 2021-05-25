@@ -16,6 +16,7 @@ import PostList from "../pages/PostList";
 import Main from "../pages/Main";
 import Story from "../pages/Story";
 import NotFound from "../pages/NotFound";
+import MobileNot from "../pages/MobileNot";
 import SideNav from "../components/SideNav";
 import ScrollToTop from "./ScrollToTop"; //페이지 넘길때 스크롤 맨위로 초기화(무한 스크롤 때문에 필요함)
 
@@ -50,23 +51,23 @@ function App() {
 
   React.useEffect(() => {
     console.log(tokenExpires);
-    if (is_login){
-     if (tokenExpires < new Date()){
-      dispatch(userActions.logOut());
-      Swal.fire({
-        text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
-        confirmButtonText: "로그인 하러가기",
-        confirmButtonColor: "#ffb719",
-        showCancelButton: true,
-        cancelButtonText: "취소",
-        cancelButtonColor: "#eee",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          history.push("/login");
-        }
-      })
+    if (is_login) {
+      if (tokenExpires < new Date()) {
+        dispatch(userActions.logOut());
+        Swal.fire({
+          text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+          confirmButtonText: "로그인 하러가기",
+          confirmButtonColor: "#ffb719",
+          showCancelButton: true,
+          cancelButtonText: "취소",
+          cancelButtonColor: "#eee",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            history.push("/login");
+          }
+        });
+      }
     }
-  }
     if (jwt) {
       dispatch(userActions.loginCheck(jwt));
     } //렌더링 마다 로그인체크
@@ -87,7 +88,7 @@ function App() {
   for (var word in mobileKeyWords) {
     if (navigator.userAgent.match(mobileKeyWords[word]) != null) {
       // window.location.href = "모바일 홈페이지 주소/실행화일";
-      history.push("/login");
+      history.push("/mobilenot");
       break;
     }
   }
@@ -118,6 +119,7 @@ function App() {
             <Route path="/qnadetail/:id" exact component={QnaDetail} />
             <Route path="/qnawrite" exact component={QnaWrite} />
             <Route path="/qnawrite/:id" exact component={QnaWrite} />
+            <Route path="/mobilenot" exact component={MobileNot} />
             <Route component={NotFound} />
             {/* 밑에서 부턴 카테고리별 페이지 */}
           </Switch>
@@ -130,7 +132,7 @@ function App() {
 const SurveyButton = styled.div`
   position: fixed;
   right: 70px;
-  top: 55px;
+  top: 49px;
   border: none;
   border-radius: 10px;
   box-sizing: border-box;
@@ -138,16 +140,16 @@ const SurveyButton = styled.div`
   padding: 15px 20px;
   font-size: 1.2rem;
   color: #ffffff;
-    font-weight: 400;
+  font-weight: 400;
   background-color: ${(props) => props.theme.main_color};
-    border: 2pt solid ${(props) => props.theme.main_color};
+  border: 2pt solid ${(props) => props.theme.main_color};
   z-index: 500;
   :focus {
     outline: none;
   }
   &:hover {
     font-weight: 400;
-  background-color: #ffffff;
+    background-color: #ffffff;
     color: ${(props) => props.theme.main_color};
     border: 2pt solid ${(props) => props.theme.main_color};
     cursor: pointer;
