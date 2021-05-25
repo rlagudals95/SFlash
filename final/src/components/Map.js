@@ -2991,7 +2991,7 @@ const HybridMapSelected = styled.div`
   display: table-cell;
   vertical-align: middle;
   line-height: 42px;
-  padding-left: 5px;
+  padding-left: 2px;
 `;
 
 const HybridMap = styled.div`
