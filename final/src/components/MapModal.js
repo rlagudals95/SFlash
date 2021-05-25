@@ -375,7 +375,7 @@ const Component = styled.div`
   height: 100%;
   width: 100%;
   background-color: black;
-  z-index: 999;
+  z-index: 997;
   top: 0;
   left: 0;
   bottom: 0;
@@ -390,7 +390,7 @@ const ModalComponent = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fafafc;
-  z-index: 1000;
+  z-index: 998;
   display: flex;
   flex-direction: column;
   border: none;

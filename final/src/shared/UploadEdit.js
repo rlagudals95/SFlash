@@ -75,19 +75,19 @@ const InputBtn = styled.div`
   z-index: 7001;
   width: 50px;
   position: fixed;
-  right: 40px;
-  top: 500px;
+  right: 35px;
+  top: 490px;
   cursor: pointer;
-  @media (max-width: 1440px) {
+  /* @media (max-width: 1440px) {
     right: 5px;
     top: 285px;
   }
   @media (max-width: 1155px) {
     right: 10px;
     top: 320px;
-  }
+  } */
   @media (max-width: 600px) {
-    top: 250px;
+    top: 300px;
     right: 20px;
   }
 `;
