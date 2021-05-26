@@ -380,8 +380,11 @@ const ModalImg = styled.img`
   border: none;
   box-sizing: border-box;
   width: 100%;
-
+  height: 600px;
   background-position: center;
+  background-color: white;
+  background-position: center;
+  outline: none;
 `;
 
 const Component = styled.div`

@@ -62,6 +62,10 @@ const UploadModal = (props) => {
     dispatch(imageActions.resetPreview([basicPreview], [])); // preview는 map함수를 쓰기 때문에 기본이미지를 배열안에 넣어주자
   };
 
+  // const close_reset = () => {
+  //   props.close();
+  //   resetPreview();
+  // };
   //게시물 작성시 조건을 걸어두었다
   const addPost = (e) => {
     if (!is_file) {
@@ -133,7 +137,7 @@ const UploadModal = (props) => {
         dispatch(storyPostModalActions.editStoryPostAPI(props.id, edit));
       }
     });
-   
+
     props.close();
     dispatch(imageActions.resetEdit([])); //업로드 후 리덕스에 남은 수정 정보 모두 리셋
     //에딧파일 초기화...
@@ -192,9 +196,9 @@ const UploadModal = (props) => {
               />
               <ModalAuthor>{nickname}</ModalAuthor>
             </ModalLeftHeader>
-            <CloseButton onClick={props.close}>
-                  <CloseIcon size="1.5vh" />
-                </CloseButton>
+            <CloseButton onClick={resetPreview}>
+              <CloseIcon size="1.5vh" />
+            </CloseButton>
             {/* 업로드와 수정시 파일선택 버튼이 다르게 설정 */}
           </HeaderInner>
         </ModalHeader>
@@ -516,7 +520,7 @@ const HeaderInner = styled.div`
   justify-content: space-between;
   margin: auto auto;
   align-items: center;
-  padding:10px;
+  padding: 10px;
   width: 95%;
 `;
 
@@ -581,7 +585,7 @@ const ProCircle = styled.img`
   cursor: pointer;
 `;
 const ModalAuthor = styled.span`
-font-size: 1.2rem;
+  font-size: 1.2rem;
   font-weight: 600;
   cursor: pointer;
 `;
