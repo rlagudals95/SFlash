@@ -5,6 +5,7 @@ import { config } from "../../shared/config";
 import Swal from "sweetalert2";
 import jwt_decode from "jwt-decode";
 
+
 // actions
 const SET_USER = "SET_USER";
 const LOG_OUT = "LOG_OUT";
@@ -75,7 +76,7 @@ const loginAPI = (email, pwd) => {
         localStorage.setItem("role", res.data.role);
 
         dispatch(setUser());
-        history.replace("/");
+        window.location.replace("/");
       })
       .catch((err) => {
         Swal.fire({
