@@ -6,8 +6,7 @@
 ## SFlash(Spot + Flash) | 나만의 사진 명소 저장하기 서비스
 
 ### 프로젝트 소개
-[프로젝트 소개 페이지](http://sflash.ppt.s3-website.ap-northeast-2.amazonaws.com/)
-
+<h4><a href="http://sflash.ppt.s3-website.ap-northeast-2.amazonaws.com" target="_blank">프로젝트 소개 페이지</a>
 
 <h4><a href="https://www.sflash.net/" target="_blank">사이트 바로가기</a> <a href="" target="_blank"> / Youtube 시연영상</a><h4>
 
