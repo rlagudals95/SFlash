@@ -32,7 +32,7 @@ const OAuth2RedirectHandler = (props) => {
     localStorage.setItem("jwt", jwt);
     localStorage.setItem("nickname", nickname);
     localStorage.setItem("userId", userId);
-    localStorage.setItem("toeknExpires", tokenExpires);
+    localStorage.setItem("tokenExpires", tokenExpires);
     dispatch(userActions.setUser());
     return <Redirect to="/" />;
   } else if (error) {
