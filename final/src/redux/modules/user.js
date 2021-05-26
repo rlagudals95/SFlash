@@ -109,7 +109,11 @@ export default handleActions(
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        localStorage.clear();
+        localStorage.removeItem("tokenExpires");
+        localStorage.removeItem("nickname");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("jwt");
+        localStorage.removeItem("role");
         draft.user = null;
         draft.is_login = false;
       }),
