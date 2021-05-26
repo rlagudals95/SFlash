@@ -439,7 +439,7 @@ const Maps = (props) => {
           position: writePosition, // 커스텀 오버레이의 좌표
           content: writeInfoContent, // 엘리먼트 또는 HTML 문자열 형태의 내용
           xAnchor: 0.5, // 컨텐츠의 x축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
-          yAnchor: 1.8, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
+          yAnchor: 1.52, // 컨텐츠의 y축 위치. 0_1 사이의 값을 가진다. 기본값은 0.5
           zIndex: 100, //  커스텀 오버레이의 z-index
           altitude: 10,
         });
