@@ -110,7 +110,7 @@ const Label = styled.label`
   width: 50px;
   height: 50px;
   cursor: pointer;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.3);
+  /* box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.3); */
 `;
 
 const FileInput = styled.input`

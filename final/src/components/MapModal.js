@@ -382,8 +382,8 @@ const ModalImg = styled.img`
   width: 100%;
   height: 600px;
   background-position: center;
-  background-color: white;
-  background-position: center;
+  background-color: #fafafc;
+
   outline: none;
 `;
 

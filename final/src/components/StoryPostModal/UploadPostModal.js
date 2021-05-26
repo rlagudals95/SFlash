@@ -224,37 +224,34 @@ const UploadModal = (props) => {
                               ? onlyImg[idx].imgUrl
                               : onlyImg[idx] // 파일리더로 읽은값 그대로 src에 삽입
                           }
-                        >
-                          <DeleteImg
-                            onClick={() => {
+                        />
+                        <DeleteImg
+                          onClick={() => {
+                            dispatch(
+                              // 서버로 삭제한 이미지 id 보내주기 위해 작성
+                              imageActions.getDeleteId(onlyImg[idx].imgUrlId)
+                            );
+                            //미리 등록해둔 이미지가 있는 경우엔 imgUrlId값이 있어 그것으로 삭제가능
+                            if (onlyImg[idx].imgUrlId) {
                               dispatch(
-                                // 서버로 삭제한 이미지 id 보내주기 위해 작성
-                                imageActions.getDeleteId(onlyImg[idx].imgUrlId)
+                                imageActions.deleteImage(onlyImg[idx].imgUrlId)
                               );
-                              //미리 등록해둔 이미지가 있는 경우엔 imgUrlId값이 있어 그것으로 삭제가능
-                              if (onlyImg[idx].imgUrlId) {
-                                dispatch(
-                                  imageActions.deleteImage(
-                                    onlyImg[idx].imgUrlId
-                                  )
-                                );
-                              } else {
-                                // 만약 수정시 이미지를 추가하고 다시 올린이미지가 맘에 안들어 삭제하고 싶다
-                                // 그러나 수정시 추가한 이미지엔 서버에서 준 이미지id가 따로 없다
-                                dispatch(
-                                  //그래서 이미지 idx 기준으로 삭제해준다!
-                                  imageActions.deleteImageIdx(onlyImg[idx]) //asdjuifhuiawefhuiewbhfiubawefbiuewabiuf
-                                );
-                              }
-                              // 이미지와 파일이 둘다 삭제되어야 서버에 보내줄때 차질이 없으름로
-                              // 파일또한 idx 값을 이용해서 삭제해준다
-                              dispatch(imageActions.deleteFileIdx(idx));
-                              // 수정시 등록하는 사진에는 id값이 없어서 직접 값을 비교해서 삭제해줌
-                            }}
-                          >
-                            삭제
-                          </DeleteImg>
-                        </ModalImg>
+                            } else {
+                              // 만약 수정시 이미지를 추가하고 다시 올린이미지가 맘에 안들어 삭제하고 싶다
+                              // 그러나 수정시 추가한 이미지엔 서버에서 준 이미지id가 따로 없다
+                              dispatch(
+                                //그래서 이미지 idx 기준으로 삭제해준다!
+                                imageActions.deleteImageIdx(onlyImg[idx]) //asdjuifhuiawefhuiewbhfiubawefbiuewabiuf
+                              );
+                            }
+                            // 이미지와 파일이 둘다 삭제되어야 서버에 보내줄때 차질이 없으름로
+                            // 파일또한 idx 값을 이용해서 삭제해준다
+                            dispatch(imageActions.deleteFileIdx(idx));
+                            // 수정시 등록하는 사진에는 id값이 없어서 직접 값을 비교해서 삭제해줌
+                          }}
+                        >
+                          삭제
+                        </DeleteImg>
                       </div>
                     );
                   })}
@@ -417,8 +414,8 @@ const DeleteImg = styled.div`
   text-align: center;
   position: relative;
   /* background-color: red; */
-  width: 75px;
-  top: 15px;
+  width: 80px;
+  top: -585px;
   right: -25px;
   padding: 3px 8px;
   background-color: white;
@@ -427,7 +424,7 @@ const DeleteImg = styled.div`
   border-radius: 5px;
   font-weight: bold;
   font-size: 13px;
-  /* border: 1px solid rgba(0, 0, 0, 0, 0.08); */
+  box-shadow: 2px 2px 5px 1px rgba(0, 0.2, 0.2, 0.4);
   cursor: pointer;
 `;
 
@@ -435,16 +432,28 @@ const ImgOutter = styled.div`
   text-align: center;
   display: table;
 `;
-
-const ModalImg = styled.div`
-  background-image: url("${(props) => props.src}");
+const ModalImg = styled.img`
+  /* background-image: url("${(props) => props.src}");
   background-size: cover;
   object-fit: cover;
   border: none;
   box-sizing: border-box;
   width: 100%;
   aspect-ratio: 4/3;
+  background-position: center; */
+  all: unset;
+  background-image: url("${(props) => props.src}");
+  background-size: contain;
+  background-repeat: no-repeat;
+  object-fit: contain;
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+  height: 600px;
   background-position: center;
+  background-color: #fafafc;
+  background-position: center;
+  outline: none;
 `;
 
 const Component = styled.div`
