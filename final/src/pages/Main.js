@@ -30,6 +30,8 @@ const Main = (props) => {
         // 토큰이 없어야 팝업이 뜬다 >> 만료일이 24시간인 토큰을 로컬에 저장
         // 오늘안보기 누르면 토큰이 생기게 하기!
         setShowModal(true);
+      } else {
+        localStorage.removeItem("hasVisitedBefore");
       }
     };
     window.setTimeout(handleShowModal, 100);
@@ -37,7 +39,6 @@ const Main = (props) => {
 
   const handleClose = () => setShowModal(false);
   const loading = useSelector((state) => state.post.spinner_loading);
-  
 
   useEffect(() => {
     dispatch(postActions.getMapPostAPI());

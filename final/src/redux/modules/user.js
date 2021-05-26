@@ -18,7 +18,7 @@ const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 // initial State
 const initialState = {
   user: "", //null
-  is_login: localStorage.getItem("jwt")? true : false,
+  is_login: localStorage.getItem("jwt") ? true : false,
   profileImg: "",
   is_loading: false,
 };
@@ -92,9 +92,9 @@ const loginCheck = (jwt) => {
   return function (dispatch, getState, { history }) {
     const is_login = getState().user.is_login;
     console.log(is_login);
-    if(is_login){
+    if (is_login) {
       return;
-    }else{
+    } else {
       dispatch(logOut());
     }
   };
@@ -109,12 +109,11 @@ export default handleActions(
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        localStorage.clear();
-        // localStorage.removeItem("tokenExpires");
-        // localStorage.removeItem("nickname");
-        // localStorage.removeItem("userId");
-        // localStorage.removeItem("jwt");
-        // localStorage.removeItem("role");
+        localStorage.removeItem("tokenExpires");
+        localStorage.removeItem("nickname");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("jwt");
+        localStorage.removeItem("role");
         draft.user = null;
         draft.is_login = false;
       }),
