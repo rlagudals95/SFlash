@@ -89,7 +89,7 @@ const Maps = (props) => {
   const myPostData = map_post_list.filter(
     (map_post_list) => map_post_list.writerName == nickname
   );
-  console.log("내 작성 게시물 왔나??: " + myPostData);
+  // console.log("내 작성 게시물 왔나??: " + myPostData);
   // 1. 내가 작성한한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!!
   const myPostCafe = myPostData.filter(
     (myPostData) => myPostData.category === "카페" // 1. 카페
@@ -133,7 +133,7 @@ const Maps = (props) => {
   const myLikeData = map_post_list.filter(
     (map_post_list) => map_post_list.like == true
   );
-  console.log("내좋아요 데이터있나??: " + myLikeData);
+  // console.log("내좋아요 데이터있나??: " + myLikeData);
   // 2. 내가 좋아요한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!!
   const myLikeCafe = myLikeData.filter(
     (myLikeData) => myLikeData.category === "카페" // 1. 카페
