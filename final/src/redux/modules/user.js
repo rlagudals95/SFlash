@@ -5,6 +5,7 @@ import { config } from "../../shared/config";
 import Swal from "sweetalert2";
 import jwt_decode from "jwt-decode";
 
+
 // actions
 const SET_USER = "SET_USER";
 const LOG_OUT = "LOG_OUT";
@@ -75,7 +76,7 @@ const loginAPI = (email, pwd) => {
         localStorage.setItem("role", res.data.role);
 
         dispatch(setUser());
-        history.replace("/");
+        window.location.replace("/");
       })
       .catch((err) => {
         Swal.fire({
@@ -90,7 +91,7 @@ const loginAPI = (email, pwd) => {
 // 로그인 상태 확인 (페이지가 바뀔 때마다)
 const loginCheck = (jwt) => {
   return function (dispatch, getState, { history }) {
-   const is_login = getState(is_login);
+   const is_login = getState().user.is_login;
    console.log(is_login);
    if(is_login){
      return;
