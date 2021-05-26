@@ -18,7 +18,7 @@ const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 // initial State
 const initialState = {
   user: "", //null
-  is_login: localStorage.getItem("jwt") ? true : false,
+  is_login: localStorage.getItem("jwt")? true : false,
   profileImg: "",
   is_loading: false,
 };
@@ -89,10 +89,12 @@ const loginAPI = (email, pwd) => {
 
 // 로그인 상태 확인 (페이지가 바뀔 때마다)
 const loginCheck = (jwt) => {
-  return function (dispatch, getstate, { history }) {
-    if (jwt) {
-      dispatch(setUser());
-    } else {
+  return function (dispatch, getState, { history }) {
+   const is_login = getState(is_login);
+   console.log(is_login);
+   if(is_login){
+     return;
+   }else{
       dispatch(logOut());
     }
   };

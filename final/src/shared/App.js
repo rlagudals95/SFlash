@@ -48,30 +48,32 @@ function App() {
   const is_login = useSelector((state) => state.user.is_login);
   const jwt = localStorage.getItem("jwt") ? true : false; // 로컬스토리지에 저장되어있는 jwt 토큰 유무판단
   const tokenExpires = localStorage.getItem("tokenExpires");
-  // console.log("현재", new Date().getTime());
 
   React.useEffect(() => {
-    if (new Date().getTime() < tokenExpires) {
-      return;
-    } else if (jwt) {
-      Swal.fire({
-        text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
-        confirmButtonText: "로그인 하러가기",
-        confirmButtonColor: "#ffb719",
-        showCancelButton: true,
-        cancelButtonText: "취소",
-        cancelButtonColor: "#eee",
-      }).then((result) => {
-        dispatch(userActions.logOut());
-        if (result.isConfirmed) {
-          history.push("/login");
-        }
-      });
-    }
+    // console.log(is_login);
+    // console.log("만료", tokenExpires);
+    // console.log("현재", new Date().getTime());
 
-    if (jwt) {
-      dispatch(userActions.loginCheck(jwt));
-    } //렌더링 마다 로그인체크
+    if(new Date().getTime() < tokenExpires ) {
+      return;}
+      else if (jwt){
+        Swal.fire({
+          text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+          confirmButtonText: "로그인 하러가기",
+          confirmButtonColor: "#ffb719", 
+          showCancelButton: true,
+          cancelButtonText: "취소",
+          cancelButtonColor: "#eee",
+        }).then((result) => {
+          dispatch(userActions.logOut());
+          if (result.isConfirmed) {
+            history.push("/login");
+          }
+        });
+      }else{
+        dispatch(userActions.loginCheck());
+        console.log(is_login);
+      }
   }, []);
 
   //모바일로 접속시 페이지 이동
