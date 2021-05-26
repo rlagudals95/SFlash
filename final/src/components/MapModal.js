@@ -357,15 +357,30 @@ const ModalDetail = (props) => {
   );
 };
 
+// const ModalImg = styled.img`
+//   all: unset;
+//   background-image: url("${(props) => props.src}");
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   object-fit: cover;
+//   border: none;
+//   box-sizing: border-box;
+//   width: 100%;
+//   aspect-ratio: 4/3;
+//   background-position: center;
+// `;
+
 const ModalImg = styled.img`
+  //비율에 맞게 늘어나는 이미지크기
   all: unset;
   background-image: url("${(props) => props.src}");
-  background-size: cover;
-  object-fit: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
+  object-fit: contain;
   border: none;
   box-sizing: border-box;
   width: 100%;
-  aspect-ratio: 4/3;
+
   background-position: center;
 `;
 

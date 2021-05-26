@@ -225,6 +225,7 @@ const getPostAPI = () => {
     }
 
     let size = 15;
+    // localStorage.getItem("jwt") &&
     axios({
       method: "GET",
       // url: `${config.api}/board`,
@@ -314,7 +315,7 @@ const getMapPostAPI = () => {
       method: "GET",
       url: `${config.api}/map`,
       headers: {
-        "X-AUTH-TOKEN": `${config.jwt}`,
+        "X-AUTH-TOKEN": localStorage.getItem("jwt"),
       },
     })
       .then((res) => {
