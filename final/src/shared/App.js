@@ -48,9 +48,11 @@ function App() {
   const is_login = useSelector((state) => state.user.is_login);
   const jwt = localStorage.getItem("jwt") ? true : false; // 로컬스토리지에 저장되어있는 jwt 토큰 유무판단
   const tokenExpires = localStorage.getItem("tokenExpires");
-  // console.log("현재", new Date().getTime());
 
   React.useEffect(() => {
+    // console.log(is_login);
+    // console.log("만료", tokenExpires);
+    // console.log("현재", new Date().getTime());
 
     if(new Date().getTime() < tokenExpires ) {
       return;}
@@ -68,11 +70,10 @@ function App() {
             history.push("/login");
           }
         });
+      }else{
+        dispatch(userActions.loginCheck());
+        console.log(is_login);
       }
-
-    if (jwt) {
-      dispatch(userActions.loginCheck(jwt));
-    } //렌더링 마다 로그인체크
   }, []);
 
   //모바일로 접속시 페이지 이동
