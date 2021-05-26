@@ -18,7 +18,7 @@ const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 // initial State
 const initialState = {
   user: "", //null
-  is_login: false,
+  is_login: localStorage.getItem('jwt') ? true : false,
   profileImg: "",
   is_loading: false,
 };
