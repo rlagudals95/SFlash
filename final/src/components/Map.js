@@ -2903,7 +2903,7 @@ const Maps = (props) => {
           <IoMdRemove size="30" color="#ffb719" />
         </ZoomControl>
         <ZoomControl onClick={zoomIn}>
-          <IoMdAdd size="30" color="#ffb719"/>
+          <IoMdAdd size="30" color="#ffb719" />
         </ZoomControl>
       </ZoomControlBox>
 
@@ -2936,7 +2936,7 @@ const PanControlContainer = styled.div`
   right: 50px;
   display: flex;
   flex-direction: row;
-  background-color: #F2F3F7;
+  background-color: #f2f3f7;
   border: none;
   border-radius: 10px;
   box-sizing: border-box;
@@ -2959,7 +2959,7 @@ const PanEntireControl = styled.div`
   box-sizing: border-box;
   &:hover {
     color: #ffb719;
-  } 
+  }
 `;
 
 const PanMyCurrentControl = styled.div`
@@ -2977,7 +2977,7 @@ const PanMyCurrentControl = styled.div`
   box-sizing: border-box;
   &:hover {
     color: #ffb719;
-  } 
+  }
 `;
 
 const MapTypeChangeContainer = styled.div`

@@ -51,24 +51,23 @@ function App() {
   // console.log("현재", new Date().getTime());
 
   React.useEffect(() => {
-
-    if(new Date().getTime() < tokenExpires ) {
-      return;}
-      else if (jwt){
-        Swal.fire({
-          text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
-          confirmButtonText: "로그인 하러가기",
-          confirmButtonColor: "#ffb719", 
-          showCancelButton: true,
-          cancelButtonText: "취소",
-          cancelButtonColor: "#eee",
-        }).then((result) => {
-          dispatch(userActions.logOut());
-          if (result.isConfirmed) {
-            history.push("/login");
-          }
-        });
-      }
+    if (new Date().getTime() < tokenExpires) {
+      return;
+    } else if (jwt) {
+      Swal.fire({
+        text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+        confirmButtonText: "로그인 하러가기",
+        confirmButtonColor: "#ffb719",
+        showCancelButton: true,
+        cancelButtonText: "취소",
+        cancelButtonColor: "#eee",
+      }).then((result) => {
+        dispatch(userActions.logOut());
+        if (result.isConfirmed) {
+          history.push("/login");
+        }
+      });
+    }
 
     if (jwt) {
       dispatch(userActions.loginCheck(jwt));
