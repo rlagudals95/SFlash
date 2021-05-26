@@ -319,7 +319,7 @@ const getMapPostAPI = () => {
       },
     })
       .then((res) => {
-        // console.log("마커", res);
+        console.log("마커", res);
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
