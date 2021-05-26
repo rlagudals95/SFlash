@@ -2862,6 +2862,15 @@ const Maps = (props) => {
         </SearchIcon>
       </SearchBox>
 
+      <PanControlContainer>
+        <PanEntireControl onClick={zoomOutKorea}>
+          지도 전체보기
+        </PanEntireControl>
+        <PanMyCurrentControl onClick={moveToCurrentPosition}>
+          내 주변보기
+        </PanMyCurrentControl>
+      </PanControlContainer>
+
       {roadmap ? (
         <MapTypeChangeContainer>
           <RoadMapSelected>지도</RoadMapSelected>
@@ -2887,15 +2896,6 @@ const Maps = (props) => {
           <HybridMapSelected>스카이뷰</HybridMapSelected>
         </MapTypeChangeContainer>
       )}
-
-      <PanControlContainer>
-        <PanEntireControl onClick={zoomOutKorea}>
-          지도 전체보기
-        </PanEntireControl>
-        <PanMyCurrentControl onClick={moveToCurrentPosition}>
-          내 주변보기
-        </PanMyCurrentControl>
-      </PanControlContainer>
 
       <ZoomControlBox>
         {/* <ZoomControl onClick={zoomIn} style={{borderRight: "2pt solid #ffb719"}}> */}
@@ -2997,10 +2997,9 @@ const MapTypeChangeContainer = styled.div`
 `;
 
 const RoadMapSelected = styled.div`
-  cursor: pointer;
+  /* cursor: pointer; */
   width: 50%;
   height: 100%;
-  background-color: #343a40;
   align-items: center;
   border: none;
   font-size: 0.95rem;
@@ -3011,6 +3010,7 @@ const RoadMapSelected = styled.div`
   display: table-cell;
   vertical-align: middle;
   line-height: 42px;
+  background-color: #343a40;
 `;
 
 const RoadMap = styled.div`
@@ -3028,13 +3028,17 @@ const RoadMap = styled.div`
   display: table-cell;
   vertical-align: middle;
   line-height: 42px;
+  /* transition: background-color 0.5s ease-in-out; */
+  /* :hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.gray};
+  } */
 `;
 
 const HybridMapSelected = styled.div`
-  cursor: pointer;
+  /* cursor: pointer; */
   width: 50%;
   height: 100%;
-  background-color: #343a40;
   align-items: center;
   border: none;
   font-size: 0.95rem;
@@ -3045,7 +3049,7 @@ const HybridMapSelected = styled.div`
   display: table-cell;
   vertical-align: middle;
   line-height: 42px;
-  padding-left: 2px;
+  background-color: #343a40;
 `;
 
 const HybridMap = styled.div`
@@ -3053,7 +3057,6 @@ const HybridMap = styled.div`
   width: 50%;
   height: 100%;
   background-color: #f2f3f7;
-  display: flex;
   align-items: center;
   border: none;
   font-size: 0.95rem;
@@ -3061,7 +3064,14 @@ const HybridMap = styled.div`
   color: #343a40;
   font-weight: bold;
   border-radius: 10px;
-  padding-left: 5px;
+  display: table-cell;
+  vertical-align: middle;
+  line-height: 42px;
+  /* transition: background-color 0.5s ease-in-out; */
+  /* :hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.gray};
+  } */
 `;
 
 const ZoomControlBox = styled.div`
@@ -3090,11 +3100,12 @@ const ZoomControl = styled.div`
   border: none;
   box-sizing: border-box;
   padding: 10px 10px;
+  background-color: #f2f3f7;
   &:hover {
     color: white;
-    background-color: #343a40;
+    /* background-color: #343a40; */
     border-radius: 10px;
-    border: 2pt solid #ffb719;
+    /* border: 2pt solid #ffb719; */
   }
 `;
 
