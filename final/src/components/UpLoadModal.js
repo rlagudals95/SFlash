@@ -236,7 +236,7 @@ const UploadModal = (props) => {
               />
               <ModalAuthor>{nickname}</ModalAuthor>
             </ModalLeftHeader>
-            <CloseButton onClick={props.close}>
+            <CloseButton onClick={resetPreview}>
               <CloseIcon size="1.5vh" />
             </CloseButton>
             {/* 업로드와 수정시 파일선택 버튼이 다르게 설정 */}
@@ -510,16 +510,45 @@ const ImgOutter = styled.div`
   display: table;
 `;
 
-const ModalImg = styled.div`
-  background-image: url("${(props) => props.src}");
+const ModalImg = styled.img`
+  /* background-image: url("${(props) => props.src}");
   background-size: cover;
   object-fit: cover;
   border: none;
   box-sizing: border-box;
   width: 100%;
   aspect-ratio: 4/3;
+  background-position: center; */
+  all: unset;
+  background-image: url("${(props) => props.src}");
+  background-size: contain;
+  background-repeat: no-repeat;
+  object-fit: contain;
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+  height: 600px;
   background-position: center;
+  background-color: white;
+  background-position: center;
+  outline: none;
 `;
+
+// const ModalImg = styled.img`
+//   //비율에 맞게 늘어나는 이미지크기
+//   all: unset;
+//   background-image: url("${(props) => props.src}");
+//   background-size: contain;
+//   background-repeat: no-repeat;
+//   object-fit: contain;
+//   border: none;
+//   box-sizing: border-box;
+//   width: 100%;
+//   height: 700px;
+//   background-position: center;
+//   background-color: white;
+//   background-position: center;
+// `;
 
 const Component = styled.div`
   position: fixed;
