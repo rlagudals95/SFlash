@@ -61,7 +61,8 @@ http://sflash.ppt.s3-website.ap-northeast-2.amazonaws.com/
 ### 4. 메인화면 
 ![image](https://user-images.githubusercontent.com/76252074/119500403-ba20de80-bda2-11eb-8896-e01d03c73877.png)
  
-### 5. 게시물 클릭시 보여지는 상세보기  
+### 5. 게시물 클릭시 보여지는 상세보기
+- 상세모달창을 크게 만들어서 
 ![image](https://user-images.githubusercontent.com/76252074/119500656-fce2b680-bda2-11eb-8779-e2f960cc6e71.png)
 
 ### 6. 이미지가 먼저 보여지는 커뮤니티 페이지
@@ -79,6 +80,7 @@ http://sflash.ppt.s3-website.ap-northeast-2.amazonaws.com/
 
 + [CRUD 부분](https://velog.io/@dbfudgudals/%ED%95%AD%ED%95%B499-%ED%8C%8C%EC%9D%B4%EB%84%90-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-SFLASH-%EC%96%B4%EB%A0%A4%EC%9B%A0%EB%8D%98-%EC%A0%90%EA%B3%BC-%EA%B7%B9%EB%B3%B5%ED%95%9C-%EC%A0%90%EB%8B%A4%EC%88%98%EC%9D%98-%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC-%EC%84%A0%ED%83%9D)
 + [지도가 로드될 때 서버에서 마커데이터가 오지만 마커가 바로 뜨지 않는 문제 해결법](https://heo-dev-0229.tistory.com/30)
++ [https 도메인 연결을 15분컷으로 끝내기](https://heo-dev-0229.tistory.com/32)
 
 ## 🧠사용 패키지
 
