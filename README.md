@@ -47,6 +47,7 @@
 ### 지도 API : 카카오 지도 API 사용
 
 ### 1. 회원가입
+  - 일반 로그인 기능을 구현
 ![회원가입 페이지](https://user-images.githubusercontent.com/76252074/118971855-db508c00-b9aa-11eb-8847-57dc7bbaa381.jpg)
   
 ### 2. 소셜로그인
