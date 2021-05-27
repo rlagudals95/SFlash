@@ -25,7 +25,7 @@ const ModalDetail = (props) => {
   const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
 
-  console.log(modalData);
+  // console.log(modalData);
 
   if (commentData) {
   }

@@ -1,5 +1,6 @@
 const config = {
-  api: "https://janghyeonjun.shop",
+  // api: "https://janghyeonjun.shop",
+  api: process.env.REACT_APP_API_URL,
   jwt: localStorage.getItem("jwt"),
 };
 
