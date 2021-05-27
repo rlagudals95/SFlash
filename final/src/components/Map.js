@@ -459,7 +459,7 @@ const Maps = (props) => {
           writeInfoCustomOverlay.setMap(null);
         });
 
-        // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
+        // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기
         // 이거 이용해서 디테일 모달 띄우는 것도 구현 가능하지 않을까?
         kakao.maps.event.addListener(writeMarker, "click", function () {
           setUpLoadModal(true);

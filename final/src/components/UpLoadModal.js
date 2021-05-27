@@ -26,7 +26,7 @@ import { CgLogOut } from "react-icons/cg";
 
 const UploadModal = (props) => {
   const { latitude, longitude, spotName, spotNameForCustomOverlay } = props;
-  console.log("재렌더링: ", props);
+  // console.log("재렌더링: ", props);
   const userId = localStorage.getItem("userId");
 
   React.useEffect(() => {
