@@ -760,9 +760,9 @@ const ModalCmtInputBox = styled.div`
   padding: 4px;
   display: flex;
   box-sizing: border-box;
-  border: 2px solid #efefef;
+  border: 1px solid #efefef;
   background-color: white;
-  box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.1);
+  /* box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.1); */
   /* background-color: red; */
   /* @media (max-width: 1440px) {
     // 1450밑으로 넓이가 내려가면

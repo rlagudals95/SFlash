@@ -29,6 +29,7 @@ const theme = {
   gray: "#adb5bd",
   post_bg: "#f1f3f5",
   black: "#343a40",
+  category_gray: "#f2f3f7",
   mobile: `(max-width: ${size.mobile})`,
   tablet: `(max-width: ${size.tablet})`,
   desktop: `(min-width: ${size.desktop})`,

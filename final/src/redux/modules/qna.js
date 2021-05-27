@@ -31,14 +31,14 @@ const initialState = {
 };
 
 const getQnaAPI = (page, size) => {
-  console.log("getQnaAPI");
+  // console.log("getQnaAPI");
   return function (dispatch, getState, { history }) {
     axios({
       method: "GET",
       url: `${config.api}/qna?page=${page}&size=${size}`,
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         let qna_list = [];
         res.data.data.forEach((_qna) => {
           let qna = {
