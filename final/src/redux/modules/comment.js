@@ -5,15 +5,8 @@ import { history } from "../configStore";
 import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
-// import { getCookie } from "../../shared/Cookie";
-// import { actionCreators as postActions } from "./post";
 import { actionCreators as userActions } from "./user";
 import Swal from "sweetalert2";
-
-// 댓글 작성 /board/{boardId}/comment
-// 댓글 수정 board/{boardId}/comment/{commentId}
-// 댓글 삭제 /board/{boardId}/comment/{commentId}
-// 모두 다 comment와 토큰만 보내면 된다
 
 const SET_COMMENT = "SET_COMMENT";
 const ADD_COMMENT = "ADD_COMMENT";
@@ -58,11 +51,7 @@ const getComment = (board_id) => {
 
     const getCommentPost = post_list[idx];
 
-    // console.log("이거 가져와", getCommentPost);
-
     const comment_list = getCommentPost.comment;
-
-    // const comment_list =
 
     console.log(comment_list); // 여기까진 잘된다./.
     dispatch(getCommentList(comment_list));
@@ -95,10 +84,6 @@ const getCommentAPI = (board_id) => {
 const addCommentAPI = (comment, board_id) => {
   // 댓글 id를 받으면 되겠다!
   return function (dispatch) {
-    // console.log("댓글와유?", comment);
-    // console.log("아이디와유?", board_id);
-    // console.log(config.jwt);
-
     axios({
       url: `${config.api}/board/${board_id}/comment`,
       method: "POST",
@@ -136,11 +121,7 @@ const addCommentAPI = (comment, board_id) => {
             writerName: comment_data.nickName,
           };
 
-          // console.log("댓글추가반응", res);
           dispatch(addComment(comment_list));
-          // dispatch(getComment(board_id)); //이래 해줘도 되나?
-          // dispatch(postActions.addComment(comment, board_id));
-          // dispatch(postActions.setPost());
         }
       })
       .catch((err) => {
@@ -151,7 +132,6 @@ const addCommentAPI = (comment, board_id) => {
 };
 
 const deleteCommentAPI = (id) => {
-  //이 아이디는 코멘트 id
   // console.log("댓글 id", id);
   return function (dispatch) {
     axios({
@@ -218,22 +198,6 @@ export default handleActions(
             return [draft.list, c];
           }
         });
-
-        // draft.list = draft.list.filter((c) => {
-
-        //   if
-
-        // })
-
-        // let idx = draft.list[action.payload.board_id].findIndex(
-        //   (p) => p.id === action.payload.id
-        // ); //음 어떤 포스트에서 썼고 어떤 유저가 쓴거야?? 를 id를 받아서 찾는다
-        // //현재 이니셜 스테이트의 list안의 댓글들 중에서 찾는다 받은 댓글의 id와 같은 친구를
-        // if (idx !== -1) {
-        //   // 만약 그런 댓글이 있다면?? // 지금 댓글 배열에서
-        //   draft.list[action.payload.board_id].splice(idx, 1); //idx위치의 항목 1개를 삭제한다
-        //   // 받은 포스트 아이디 순번의 리스트(댓글 배열에서) 받은 id 를 삭제해준다!
-        // }
       }),
     [GET_COMMENT_LIST]: (state, action) =>
       produce(state, (draft) => {
