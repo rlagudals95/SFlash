@@ -26,7 +26,7 @@ import { CgLogOut } from "react-icons/cg";
 
 const UploadModal = (props) => {
   const { latitude, longitude, spotName, spotNameForCustomOverlay } = props;
-  console.log("재렌더링: ", props);
+
   const userId = localStorage.getItem("userId");
 
   React.useEffect(() => {
@@ -185,7 +185,9 @@ const UploadModal = (props) => {
 
   const contentsDedounce = _.debounce((e) => {
     setContents(e.target.value);
-  }, 300); //키보드 떼면 입력한게 0.3초 뒤에 나타난다.
+  }, 300);
+
+  console.log("렌더링");
 
   if (images.length == 0) {
     images.push(

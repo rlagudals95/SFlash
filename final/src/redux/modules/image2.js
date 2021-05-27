@@ -1,7 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
-// import { actionCreators as PostActions } from "./post";
-// import { conforms, result } from "lodash";
 
 const SET_PREVIEW = "SET_PREVIEW";
 const GET_PREVIEW = "GET_PREVIEW";
@@ -11,14 +9,12 @@ const GET_PREVIEW = "GET_PREVIEW";
 const RESET_PREVIEW = "RESET_PREVIEW";
 
 const GET_FILE = "GET_FILE";
+// 수정시 이미지 프리뷰 삭제하는 액션
 const DELETE_PREVIEW = "DELETE_PREVIEW";
-const DELETE_FILE = "DELETE_FILE";
 // 사진 수정 액션들
 const GET_EDIT_POST = "GET_EDIT_POST";
 const EDIT_POST = "EDIT_POST";
 
-const CHANGE_IMG = "CHANGE_IMG";
-/////////
 const GET_IMAGE = "GET_IMAGE";
 const DELETE_IMAGE = "DELETE_IMAGE";
 // 수정할때 삭제된 이미지 ID들을 관리하는 액션
@@ -165,14 +161,12 @@ export default handleActions(
       }),
     [GET_FILE]: (state, action) =>
       produce(state, (draft) => {
-        // draft.file = action.payload.file;
         draft.file.push(action.payload.file);
       }),
     [DELETE_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
         draft.list = draft.list.filter((r, idx) => {
           if (r.id !== action.payload.id) {
-            // console.log(r.id);
             return [...draft.list, r];
           }
         });
@@ -193,11 +187,6 @@ export default handleActions(
         draft.image = action.payload.image;
       }),
 
-    [CHANGE_IMG]: (state, action) => {
-      produce(state, (draft) => {
-        // draft.edit.img_url = action.payload.editImage;
-      });
-    },
     [DELETE_IMAGE]: (state, action) =>
       produce(state, (draft) => {
         console.log("삭제한 이미지!!!!!!!!", action.payload.imgUrlId);
@@ -261,8 +250,6 @@ export default handleActions(
 
     [RESET_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
-        // console.log("프리뷰 초기화!", action.payload.preview);
-        // console.log("파일 초기화!", action.payload.file);
         draft.preview = action.payload.preview;
         draft.file = action.payload.file;
       }),
