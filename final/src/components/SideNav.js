@@ -51,7 +51,7 @@ function Navbar() {
   // console.log("현재 페이지는", page);
 
   React.useEffect(() => {
-    console.log(is_login);
+    // console.log(is_login);
   }, [is_login]);
 
   const onLogout = () => {

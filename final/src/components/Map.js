@@ -3097,6 +3097,7 @@ const ZoomControl = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 10px;
   border: none;
   box-sizing: border-box;
   padding: 10px 10px;
