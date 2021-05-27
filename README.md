@@ -67,7 +67,7 @@ SFlash(Spot + Flash)는 전국의 명소들을 사진과 지도로 한눈에 볼
 ![회원가입 페이지](https://user-images.githubusercontent.com/76252074/118971855-db508c00-b9aa-11eb-8847-57dc7bbaa381.jpg)
   
 ### 2. 소셜로그인
-  
+- 번거로운 회원가입 절차를 거치지 않고 소셜 계정으로 로그인 할 수 있게 유도
 - 구글, 네이버, 카카오 계정을 활용한 소셜 로그인 방식 적용
 ![로그인 페이지](https://user-images.githubusercontent.com/76252074/118971660-a8a69380-b9aa-11eb-9cf4-58ea58e834cf.jpg)
   
@@ -100,7 +100,9 @@ SFlash(Spot + Flash)는 전국의 명소들을 사진과 지도로 한눈에 볼
 ![image](https://user-images.githubusercontent.com/76252074/119500748-1a178500-bda3-11eb-9263-8ad4e6c5294d.png)
 
 ### 8. 내가 올린 & 좋아요한 게시물을 이미지와 지도로 확인할 수 있는 마이페이지
+- 자신만의 게시물들을 두가지 버전으로 볼 수 있게 하는 페이지
 - 커뮤니티페이지와 비슷하게 게시물들 모아서 보여주기
+- 지도페이지에서 내가 올리거나 좋아요한 게시물만 보아서 보여주기.
 ![image](https://user-images.githubusercontent.com/76252074/119500932-50ed9b00-bda3-11eb-9425-5644a6b4775e.png)
 - 지도페이지에서처럼 지도에 내가 작성한 마커, 내가 좋아요한 마커를 모아서 보여주기
 ![마이페이지 지도](https://user-images.githubusercontent.com/76252074/118970520-4a2ce580-b9a9-11eb-8b78-aa9488f36c25.jpg)
