@@ -121,7 +121,7 @@ About.defaultProps = {
       skill: null,
       github: "https://github.com/dayoung0601",
       portfolio: null,
-      resume: null,
+      resume: "https://www.notion.so/Kim-Dayoung-7c27b43d10a84bbab64ecb5e5c9efe2f",
       etc_1: null,
       etc_2: null,
     },
