@@ -26,7 +26,8 @@ SFlash(Spot + Flash)는 전국의 명소들을 사진과 지도로 한눈에 볼
  
 
 ## 소개 유튜브 영상
-https://www.youtube.com/watch?v=UdnDlwT31Xk
+<h4><a href="https://www.youtube.com/watch?v=UdnDlwT31Xk" target="_blank">SFlash 시연 영상</a>
+
 
 ## 개발 기간
 + 2021년 4월 23일(금) ~ 2021년 5월 27일(목)
