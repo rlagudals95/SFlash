@@ -74,7 +74,7 @@ const ElTextarea = styled.textarea`
   padding: 12px 4px;
   box-sizing: border-box;
   font-size: 1.1rem;
-  word-spacing: -4px;
+  word-spacing: 0px;
   line-height: 1.5rem;
   padding: 10px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.1);
