@@ -8,7 +8,7 @@
 ### 프로젝트 소개
 <h4><a href="http://sflash.ppt.s3-website.ap-northeast-2.amazonaws.com" target="_blank">프로젝트 소개 페이지</a>
 
-<h4><a href="https://www.sflash.net/" target="_blank">사이트 바로가기</a> <a href="" target="_blank"> / Youtube 시연영상</a><h4>
+<h4><a href="https://www.sflash.net/" target="_blank">사이트 바로가기</a> <a href="" target="_blank">
   
 ### “사진은 내가 찍을게, 스팟은 누가 찾을래?”
 사람들은 알고 나만 모르는 스팟들… </br>
@@ -27,7 +27,7 @@ SFlash(Spot + Flash)는 전국의 명소들을 사진과 지도로 한눈에 볼
  
 
 ## 소개 유튜브 영상
-*(개발 완료 이후 유튜브 링크 여기다 적기)
+https://www.sflash.net/
 
 ## 개발 기간
 + 2021년 4월 23일(금) ~ 2021년 5월 27일(목)
