@@ -95,31 +95,30 @@ const getModalPostAPI = (boardId) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           let result = res.data.data;
-        // console.log("정리된거 맞지?", result, boardId);
-        let post = {
-          id: result.boardId, // 포스트 id
-          title: result.title, // 포스트 title
-          content: result.content, // 포스트 내용
-          writerName: result.writerName,
-          img_url: result.boardImgReponseDtoList,
-          category: result.category,
-          profileImg: result.writerImgUrl,
-          like: result.liked,
-          likeCnt: result.likeCount,
-          comment: result.boardDetailCommentDtoList,
-          creatAt: result.modified,
-          spotName: result.spotName,
-          writerId: result.userId,
-        };
-        let comment_list = post.comment;
+          // console.log("정리된거 맞지?", result, boardId);
+          let post = {
+            id: result.boardId, // 포스트 id
+            title: result.title, // 포스트 title
+            content: result.content, // 포스트 내용
+            writerName: result.writerName,
+            img_url: result.boardImgReponseDtoList,
+            category: result.category,
+            profileImg: result.writerImgUrl,
+            like: result.liked,
+            likeCnt: result.likeCount,
+            comment: result.boardDetailCommentDtoList,
+            creatAt: result.modified,
+            spotName: result.spotName,
+            writerId: result.userId,
+          };
+          let comment_list = post.comment;
 
-        dispatch(getModal(post)); // 모달 정보는 > post 에 저장 > 수정시 post 에 있는거 바꿔주면된다
-        dispatch(getModalComment(comment_list)); //댓글 > comment에 따로 저장
+          dispatch(getModal(post)); // 모달 정보는 > post 에 저장 > 수정시 post 에 있는거 바꿔주면된다
+          dispatch(getModalComment(comment_list)); //댓글 > comment에 따로 저장
         }
-        
       })
       .catch((err) => {
         console.log(err);
@@ -158,8 +157,8 @@ const modalAddCommentAPI = (comment, board_id) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           const comment_data = res.data.data;
           // console.log("댓글정보", comment_data);
           let comment_list = {
@@ -171,7 +170,7 @@ const modalAddCommentAPI = (comment, board_id) => {
             writerName: comment_data.nickName,
           };
           dispatch(modalAddComment(comment_list));
-        }    
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -205,12 +204,11 @@ const modalDeleteCommentAPI = (id) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
-           // dispatch(deleteComment(id, board_id)); //바로 렌더링 시켜줘야 삭제 눌렀을때 반영된다
-        dispatch(modalDeleteComment(id));
+          });
+        } else {
+          // dispatch(deleteComment(id, board_id)); //바로 렌더링 시켜줘야 삭제 눌렀을때 반영된다
+          dispatch(modalDeleteComment(id));
         }
-
       })
       .catch((err) => {
         window.alert("댓글 삭제에 문제가 있어요!");
@@ -244,10 +242,10 @@ const modalAddLikeAPI = (board_id, board) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
-           // console.log("좋아요 완료!", res);
-        dispatch(editLikeP(board)); // 리덕스
+          });
+        } else {
+          // console.log("좋아요 완료!", res);
+          dispatch(editLikeP(board)); // 리덕스
         }
       })
       .catch((error) => {
@@ -279,11 +277,11 @@ const modalDisLikeAPI = (board_id, board) => {
             if (result.isConfirmed) {
               history.push("/login");
             }
-          })
-        }else{
+          });
+        } else {
           console.log("좋아요 취소!", res);
           dispatch(editLikeD(board));
-        }   
+        }
       })
       .catch((error) => {
         // window.alert("좋아요를 할 수 없습니다.");

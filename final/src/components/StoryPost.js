@@ -58,13 +58,15 @@ const StoryPost = (props) => {
             <div className={"PostFont"}>
               {props.like ? (
                 <FavoriteIcon
-                  fontSize="24px"
+                  // fontSize="24px"
+                  // fontSize="large"
                   onClick={disLike}
                   style={{ fontSize: 40 }}
                 />
               ) : (
                 <FavoriteBorderIcon
-                  fontSize="24px"
+                  // fontSize="24px"
+                  // fontSize="large"
                   onClick={addLike}
                   style={{ fontSize: 40 }}
                 />

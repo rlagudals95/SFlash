@@ -1,8 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-// import axios from "axios";
-// import { history } from "../configStore";
-// import { config } from "../../shared/config";
 
 const SET_FAQ = "SET_FAQ";
 const ADD_FAQ = "ADD_FAQ";
@@ -40,7 +37,7 @@ export default handleActions(
 const actionCreators = {
   setFaq,
   addFaq,
-  deleteFaq
+  deleteFaq,
 };
 
 export { actionCreators };

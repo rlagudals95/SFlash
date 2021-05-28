@@ -152,7 +152,7 @@ const addPostAPI = (post) => {
       .then((res) => {
         // 토큰이 만료 되었을때 띄워주는 alert
 
-        console.log("게시물 추가정보", res);
+        // console.log("게시물 추가정보", res);
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
@@ -201,6 +201,7 @@ const addPostAPI = (post) => {
       .catch((err) => {
         console.log(err);
         window.alert("게시물을 저장하지 못했습니다.");
+        dispatch(spinner(false));
       });
   };
 };
@@ -319,7 +320,7 @@ const getMapPostAPI = () => {
       },
     })
       .then((res) => {
-        console.log("마커", res);
+        // console.log("마커", res);
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
@@ -641,7 +642,7 @@ export default handleActions(
     [ADD_MAP_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.map_post_list.unshift(action.payload.map_post);
-        console.log(draft.map_post_list);
+        // console.log(draft.map_post_list);
       }),
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {

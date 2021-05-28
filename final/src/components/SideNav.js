@@ -51,7 +51,7 @@ function Navbar() {
   // console.log("현재 페이지는", page);
 
   React.useEffect(() => {
-    console.log(is_login);
+    // console.log(is_login);
   }, [is_login]);
 
   const onLogout = () => {
@@ -82,7 +82,7 @@ function Navbar() {
               onClick={() => {
                 history.replace("/");
                 dispatch(sideActions.getPage("home"));
-                history.replace("/");
+                // history.replace("/");
               }}
             ></TabletLogo>
             {/* 홈 지도보기 */}

@@ -1,4 +1,3 @@
-
 # SFlash
 항해99 실전 프로젝트 SFlash 입니다!
 # 🔖 항해99 실전프로젝트x
@@ -8,7 +7,7 @@
 ### 프로젝트 소개
 <h4><a href="http://sflash.ppt.s3-website.ap-northeast-2.amazonaws.com" target="_blank">프로젝트 소개 페이지</a>
 
-<h4><a href="https://www.sflash.net/" target="_blank">사이트 바로가기</a> <a href="" target="_blank"> / Youtube 시연영상</a><h4>
+<h4><a href="https://www.sflash.net/" target="_blank">사이트 바로가기</a> <a href="" target="_blank">
   
 ### “사진은 내가 찍을게, 스팟은 누가 찾을래?”
 사람들은 알고 나만 모르는 스팟들… </br>
@@ -27,7 +26,7 @@ SFlash(Spot + Flash)는 전국의 명소들을 사진과 지도로 한눈에 볼
  
 
 ## 소개 유튜브 영상
-*(개발 완료 이후 유튜브 링크 여기다 적기)
+https://www.youtube.com/watch?v=UdnDlwT31Xk
 
 ## 개발 기간
 + 2021년 4월 23일(금) ~ 2021년 5월 27일(목)
@@ -69,12 +68,14 @@ SFlash(Spot + Flash)는 전국의 명소들을 사진과 지도로 한눈에 볼
 ![회원가입 페이지](https://user-images.githubusercontent.com/76252074/118971855-db508c00-b9aa-11eb-8847-57dc7bbaa381.jpg)
   
 ### 2. 소셜로그인
-  
+- 번거로운 회원가입 절차를 거치지 않고 소셜 계정으로 로그인 할 수 있게 유도
 - 구글, 네이버, 카카오 계정을 활용한 소셜 로그인 방식 적용
 ![로그인 페이지](https://user-images.githubusercontent.com/76252074/118971660-a8a69380-b9aa-11eb-9cf4-58ea58e834cf.jpg)
   
 ### 3. 접속시 처음 뜨는 팝업창
-  
+- 처음 사용하는 사람을 위한 환영, 안내, 사용방법을 안내하는 팝업창이 접속시 뜨게 했다.
+- 사용방법을 아는 사람이거나 둘러보고 갈 사람들을 위해서 1일 동안 보지 않을 수 있는 버튼을 만들었다.
+- 서비스 점검시에는 점검중이라는 페이지가 뜰 수 있게 한다.   
 ![1](https://user-images.githubusercontent.com/76252074/118969984-b1966580-b9a8-11eb-8dde-9efb47a9b162.jpg)
   
 ### 4. 메인화면
@@ -99,7 +100,8 @@ SFlash(Spot + Flash)는 전국의 명소들을 사진과 지도로 한눈에 볼
 - 사용자의 피드백을 반영해 3줄과 4줄로 보여줄 수 있는 버튼을 추가
 ![image](https://user-images.githubusercontent.com/76252074/119500748-1a178500-bda3-11eb-9263-8ad4e6c5294d.png)
 
-### 8. 내가 올린 & 좋아요한 게시물을 이미지와 지도로 확인할 수 있는 마이페이지
+### 8. 내가 올린 & 좋아요한 게시물을 이미지와 지도로 확인할 수 있는 스토리페이지
+- 자신만의 게시물들을 두가지 버전으로 볼 수 있게 하는 페이지
 - 이미지로 모아보기
 ![image](https://user-images.githubusercontent.com/76252074/119500932-50ed9b00-bda3-11eb-9425-5644a6b4775e.png)
 - 지도로 모아보기
@@ -111,6 +113,7 @@ SFlash(Spot + Flash)는 전국의 명소들을 사진과 지도로 한눈에 볼
 + [CRUD 부분](https://velog.io/@dbfudgudals/%ED%95%AD%ED%95%B499-%ED%8C%8C%EC%9D%B4%EB%84%90-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-SFLASH-%EC%96%B4%EB%A0%A4%EC%9B%A0%EB%8D%98-%EC%A0%90%EA%B3%BC-%EA%B7%B9%EB%B3%B5%ED%95%9C-%EC%A0%90%EB%8B%A4%EC%88%98%EC%9D%98-%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC-%EC%84%A0%ED%83%9D)
 + [지도가 로드될 때 서버에서 마커데이터가 오지만 마커가 바로 뜨지 않는 문제 해결법](https://heo-dev-0229.tistory.com/30)
 + [https 도메인 연결을 15분컷으로 끝내기](https://heo-dev-0229.tistory.com/32)
++ [지도검색시 query 에러 문제 해결하기](https://heo-dev-0229.tistory.com/28)
 
 ## 🧠사용 패키지
 

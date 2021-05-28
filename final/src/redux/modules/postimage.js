@@ -8,9 +8,7 @@ const SET_PREVIEW = "SET_PREVIEW";
 const GET_PREVIEW = "GET_PREVIEW";
 
 //게시글 작성중 업로드 모닫을 닫을 시 초기화하는 액션
-
 const RESET_PREVIEW = "RESET_PREVIEW";
-
 const GET_FILE = "GET_FILE";
 const DELETE_PREVIEW = "DELETE_PREVIEW";
 const DELETE_FILE = "DELETE_FILE";
@@ -19,7 +17,7 @@ const GET_EDIT_POST = "GET_EDIT_POST";
 const EDIT_POST = "EDIT_POST";
 
 const CHANGE_IMG = "CHANGE_IMG";
-/////////
+
 const GET_IMAGE = "GET_IMAGE";
 const DELETE_IMAGE = "DELETE_IMAGE";
 // 수정할때 삭제된 이미지 ID들을 관리하는 액션

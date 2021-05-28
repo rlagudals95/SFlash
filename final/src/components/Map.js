@@ -89,7 +89,6 @@ const Maps = (props) => {
   const myPostData = map_post_list.filter(
     (map_post_list) => map_post_list.writerName == nickname
   );
-  console.log("내 작성 게시물 왔나??: " + myPostData);
   // 1. 내가 작성한한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!!
   const myPostCafe = myPostData.filter(
     (myPostData) => myPostData.category === "카페" // 1. 카페
@@ -133,7 +132,6 @@ const Maps = (props) => {
   const myLikeData = map_post_list.filter(
     (map_post_list) => map_post_list.like == true
   );
-  console.log("내좋아요 데이터있나??: " + myLikeData);
   // 2. 내가 좋아요한 게시물 데이터를 다시 카테고리별로 데이터분류 시작!!!
   const myLikeCafe = myLikeData.filter(
     (myLikeData) => myLikeData.category === "카페" // 1. 카페
@@ -459,7 +457,7 @@ const Maps = (props) => {
           writeInfoCustomOverlay.setMap(null);
         });
 
-        // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기 : 개발중에는 로그인 없이도 되게 하기
+        // 작성용마커를 클릭하면 게시물 작성모달창이 뜨게 하기
         // 이거 이용해서 디테일 모달 띄우는 것도 구현 가능하지 않을까?
         kakao.maps.event.addListener(writeMarker, "click", function () {
           setUpLoadModal(true);
@@ -2862,6 +2860,15 @@ const Maps = (props) => {
         </SearchIcon>
       </SearchBox>
 
+      <PanControlContainer>
+        <PanEntireControl onClick={zoomOutKorea}>
+          지도 전체보기
+        </PanEntireControl>
+        <PanMyCurrentControl onClick={moveToCurrentPosition}>
+          내 주변보기
+        </PanMyCurrentControl>
+      </PanControlContainer>
+
       {roadmap ? (
         <MapTypeChangeContainer>
           <RoadMapSelected>지도</RoadMapSelected>
@@ -2887,15 +2894,6 @@ const Maps = (props) => {
           <HybridMapSelected>스카이뷰</HybridMapSelected>
         </MapTypeChangeContainer>
       )}
-
-      <PanControlContainer>
-        <PanEntireControl onClick={zoomOutKorea}>
-          지도 전체보기
-        </PanEntireControl>
-        <PanMyCurrentControl onClick={moveToCurrentPosition}>
-          내 주변보기
-        </PanMyCurrentControl>
-      </PanControlContainer>
 
       <ZoomControlBox>
         {/* <ZoomControl onClick={zoomIn} style={{borderRight: "2pt solid #ffb719"}}> */}
@@ -2997,10 +2995,9 @@ const MapTypeChangeContainer = styled.div`
 `;
 
 const RoadMapSelected = styled.div`
-  cursor: pointer;
+  /* cursor: pointer; */
   width: 50%;
   height: 100%;
-  background-color: #343a40;
   align-items: center;
   border: none;
   font-size: 0.95rem;
@@ -3011,6 +3008,7 @@ const RoadMapSelected = styled.div`
   display: table-cell;
   vertical-align: middle;
   line-height: 42px;
+  background-color: #343a40;
 `;
 
 const RoadMap = styled.div`
@@ -3028,13 +3026,17 @@ const RoadMap = styled.div`
   display: table-cell;
   vertical-align: middle;
   line-height: 42px;
+  /* transition: background-color 0.5s ease-in-out; */
+  /* :hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.gray};
+  } */
 `;
 
 const HybridMapSelected = styled.div`
-  cursor: pointer;
+  /* cursor: pointer; */
   width: 50%;
   height: 100%;
-  background-color: #343a40;
   align-items: center;
   border: none;
   font-size: 0.95rem;
@@ -3045,7 +3047,7 @@ const HybridMapSelected = styled.div`
   display: table-cell;
   vertical-align: middle;
   line-height: 42px;
-  padding-left: 2px;
+  background-color: #343a40;
 `;
 
 const HybridMap = styled.div`
@@ -3053,7 +3055,6 @@ const HybridMap = styled.div`
   width: 50%;
   height: 100%;
   background-color: #f2f3f7;
-  display: flex;
   align-items: center;
   border: none;
   font-size: 0.95rem;
@@ -3061,7 +3062,14 @@ const HybridMap = styled.div`
   color: #343a40;
   font-weight: bold;
   border-radius: 10px;
-  padding-left: 5px;
+  display: table-cell;
+  vertical-align: middle;
+  line-height: 42px;
+  /* transition: background-color 0.5s ease-in-out; */
+  /* :hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.gray};
+  } */
 `;
 
 const ZoomControlBox = styled.div`
@@ -3087,14 +3095,16 @@ const ZoomControl = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 10px;
   border: none;
   box-sizing: border-box;
   padding: 10px 10px;
+  background-color: #f2f3f7;
   &:hover {
     color: white;
-    background-color: #343a40;
+    /* background-color: #343a40; */
     border-radius: 10px;
-    border: 2pt solid #ffb719;
+    /* border: 2pt solid #ffb719; */
   }
 `;
 

@@ -2,24 +2,18 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as imageActions } from "../redux/modules/image2";
 import styled from "styled-components";
-// import * as MdIcons from "react-icons/md";
 
 const Upload = (props) => {
   const dispatch = useDispatch();
-  //   const uploading = useSelector((state) => state.image.uploading);
+
   const fileInput = React.useRef();
-  // const files = useSelector((state) => state.image2.file);
-  // console.log("파일들", files);
   const preview = useSelector((state) => state.image2.preview);
-  // console.log("프리뷰", preview);
   const selectFile = async (e) => {
     const file = fileInput.current.files[0];
-    // files의 length 만큼 for문 돌리자
-
     const files = fileInput.current.files;
 
     let images = []; // 이미지 파일들이 들어간 배열
-    // console.log("이미지들", images);
+
     for (let i = 0; i < files.length; i++) {
       images.push(fileInput.current.files[i]);
     }
@@ -110,7 +104,7 @@ const Label = styled.label`
   width: 50px;
   height: 50px;
   cursor: pointer;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.3);
+  /* box-shadow: 2px 2px 5px 1px rgba(0, 0.1, 0.1, 0.3); */
 `;
 
 const FileInput = styled.input`
