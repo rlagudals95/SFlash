@@ -199,9 +199,9 @@ const addPostAPI = (post) => {
         }
       })
       .catch((err) => {
+        dispatch(spinner(false));
         console.log(err);
         window.alert("게시물을 저장하지 못했습니다.");
-        dispatch(spinner(false));
       });
   };
 };
