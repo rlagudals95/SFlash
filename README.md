@@ -115,7 +115,7 @@ SFlash(Spot + Flash)는 전국의 명소들을 사진과 지도로 한눈에 볼
 + [지도가 로드될 때 서버에서 마커데이터가 오지만 마커가 바로 뜨지 않는 문제 해결법](https://heo-dev-0229.tistory.com/30)
 + [https 도메인 연결을 15분컷으로 끝내기](https://heo-dev-0229.tistory.com/32)
 + [지도검색시 query 에러 문제 해결하기](https://heo-dev-0229.tistory.com/28)
-
++ [useSelecotr 최적화](https://velog.io/@dbfudgudals/useSelector-%EC%B5%9C%EC%A0%81%ED%99%94) 
 ## 🧠사용 패키지
 
 - react-redux, redux (redux-actions, immer, logger), redux-thunk, react-router-redux
