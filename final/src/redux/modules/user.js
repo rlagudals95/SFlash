@@ -92,7 +92,7 @@ const loginAPI = (email, pwd) => {
 const loginCheck = (jwt) => {
   return function (dispatch, getState, { history }) {
     const is_login = getState().user.is_login;
-    console.log(is_login);
+    // console.log(is_login);
     if (is_login) {
       return;
     } else {

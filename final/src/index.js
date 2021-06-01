@@ -6,7 +6,6 @@ import { ThemeProvider } from "styled-components";
 import theme from "./shared/theme";
 import { Provider } from "react-redux";
 import store from "./redux/configStore";
-
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>

@@ -25,7 +25,7 @@ const ModalDetail = (props) => {
   const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
 
-  console.log(modalData);
+  // console.log(modalData);
 
   if (commentData) {
   }
@@ -219,9 +219,9 @@ const ModalDetail = (props) => {
                     {/* 게시물 수정과 삭제 버튼은 작성자 에게만 보이게 설정  */}
                     {modalData.writerId == user_id ? (
                       <ModalEdit>
-                        <React.Fragment onClick={props.close}>
-                          <EditBtn onClick={openEditModal}>수정</EditBtn>
-                        </React.Fragment>
+                        {/* <React.Fragment onClick={props.close}> */}
+                        <EditBtn onClick={openEditModal}>수정</EditBtn>
+                        {/* </React.Fragment> */}
                         /
                         <DeleteBtn
                           onClick={(e) => {
@@ -696,7 +696,7 @@ const ModalCmtInputBox = styled.div`
   display: flex;
   box-sizing: border-box;
   border: 2px solid #efefef;
-  box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.1);
+  /* box-shadow: 1px 1px 3px 1px rgba(0, 0.1, 0.1, 0.1); */
 `;
 
 const CommentInput = styled.input`
@@ -711,9 +711,9 @@ const CommentInput = styled.input`
 const UploadBtn = styled.div`
   font-size: 1.1rem;
   color: ${(props) => props.theme.main_color};
-  background-color: #ffffff;
+  background-color: #fafafc;
   cursor: pointer;
-  padding: 0px 20px;
+  padding: 12px 20px;
   font-weight: 400;
   word-break: keep-all;
 `;

@@ -10,7 +10,7 @@ const NotFound = () => {
           <SflashLogo src={SFlash_logo} />
           <Grid height="20px"></Grid>
           <Title>올바른 주소가 아닙니다.</Title>
-       
+
       
     </React.Fragment>
   );
