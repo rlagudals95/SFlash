@@ -32,15 +32,6 @@ const Story = (props) => {
   //   initializeApp();
   // }, []);
 
-  React.useEffect(() => {
-    dispatch(profileActions.getUserInfoAPI(userId));
-    dispatch(storyPostActions.getUserPostAPI(userId));
-    dispatch(storyPostActions.getUserLikeAPI(userId));
-    // return () =>{
-    //   console.log("cleanup");
-    // }
-  }, []);
-
   // 스토리 페이지는 크게 3가지로 나뉩니다.
   // (1) 유저 정보: user_info (2) 유저가 올린 게시물: user_post_list (3)유저가 좋아요한 게시물: user_like_list
   const user_info = useSelector((state) => {

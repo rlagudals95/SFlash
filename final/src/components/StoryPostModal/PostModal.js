@@ -119,33 +119,33 @@ const ModalDetail = (props) => {
                     }
                     onClick={() => {
                       history.push(`/story/${modalData.writerId}`);
-                      // dispatch(storyPostActions.resetStory([]));
-                      // dispatch(profileActions.resetProfile([]));
-                      // dispatch(
-                      //   profileActions.getUserInfoAPI(modalData.writerId)
-                      // );
-                      // dispatch(
-                      //   storyPostActions.getUserPostAPI(modalData.writerId)
-                      // );
-                      // dispatch(
-                      //   storyPostActions.getUserLikeAPI(modalData.writerId)
-                      // );
+                      dispatch(storyPostActions.resetStory([]));
+                      dispatch(profileActions.resetProfile([]));
+                      dispatch(
+                        profileActions.getUserInfoAPI(modalData.writerId)
+                      );
+                      dispatch(
+                        storyPostActions.getUserPostAPI(modalData.writerId)
+                      );
+                      dispatch(
+                        storyPostActions.getUserLikeAPI(modalData.writerId)
+                      );
                     }}
                   />
                   <ModalAuthor
                     onClick={() => {
                       history.push(`/story/${modalData.writerId}`);
-                      // dispatch(storyPostActions.resetStory([]));
-                      // dispatch(profileActions.resetProfile([]));
-                      // dispatch(
-                      //   profileActions.getUserInfoAPI(modalData.writerId)
-                      // );
-                      // dispatch(
-                      //   storyPostActions.getUserPostAPI(modalData.writerId)
-                      // );
-                      // dispatch(
-                      //   storyPostActions.getUserLikeAPI(modalData.writerId)
-                      // );
+                      dispatch(storyPostActions.resetStory([]));
+                      dispatch(profileActions.resetProfile([]));
+                      dispatch(
+                        profileActions.getUserInfoAPI(modalData.writerId)
+                      );
+                      dispatch(
+                        storyPostActions.getUserPostAPI(modalData.writerId)
+                      );
+                      dispatch(
+                        storyPostActions.getUserLikeAPI(modalData.writerId)
+                      );
                     }}
                   >
                     {modalData.writerName}
