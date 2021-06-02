@@ -81,7 +81,7 @@ const loginAPI = (email, pwd) => {
           text: "로그인 정보를 다시 확인해 주세요.",
           confirmButtonColor: "#ffb719",
         });
-        console.log("로그인 실패", err);
+        // console.log("로그인 실패", err);
       });
   };
 };

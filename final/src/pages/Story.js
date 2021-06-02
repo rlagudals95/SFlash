@@ -18,19 +18,26 @@ const Story = (props) => {
   //  url에서 userId 불러오기
   const userId = props.match.params.id;
 
+  // async, await 만
+  // const initializeApp = async () => {
+  //   await dispatch(profileActions.resetProfile([]));
+  //   await dispatch(storyPostActions.resetStory([]));
+  //   dispatch(profileActions.getUserInfoAPI(userId));
+  //   dispatch(storyPostActions.getUserPostAPI(userId));
+  //   dispatch(storyPostActions.getUserLikeAPI(userId));
+  // };
+
+  // Promise로 처리
   const initializeApp = async () => {
     Promise.all([
       dispatch(profileActions.resetProfile([])),
-      dispatch(storyPostActions.resetStory([])),
+      dispatch(storyPostActions.resetStory([]))
     ]);
-<<<<<<< HEAD
-=======
-
->>>>>>> upstream/master
     dispatch(profileActions.getUserInfoAPI(userId));
     dispatch(storyPostActions.getUserPostAPI(userId));
     dispatch(storyPostActions.getUserLikeAPI(userId));
   };
+
 
   React.useEffect(() => {
     initializeApp();
