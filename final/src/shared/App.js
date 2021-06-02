@@ -54,26 +54,26 @@ function App() {
     // console.log("만료", tokenExpires);
     // console.log("현재", new Date().getTime());
 
-    if(new Date().getTime() < tokenExpires ) {
-      return;}
-      else if (jwt){
-        Swal.fire({
-          text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
-          confirmButtonText: "로그인 하러가기",
-          confirmButtonColor: "#ffb719", 
-          showCancelButton: true,
-          cancelButtonText: "취소",
-          cancelButtonColor: "#eee",
-        }).then((result) => {
-          dispatch(userActions.logOut());
-          if (result.isConfirmed) {
-            history.push("/login");
-          }
-        });
-      }else{
-        dispatch(userActions.loginCheck());
-        console.log(is_login);
-      }
+    if (new Date().getTime() < tokenExpires) {
+      return;
+    } else if (jwt) {
+      Swal.fire({
+        text: "로그인 기간이 만료되어 재로그인이 필요합니다 :)",
+        confirmButtonText: "로그인 하러가기",
+        confirmButtonColor: "#ffb719",
+        showCancelButton: true,
+        cancelButtonText: "취소",
+        cancelButtonColor: "#eee",
+      }).then((result) => {
+        dispatch(userActions.logOut());
+        if (result.isConfirmed) {
+          history.push("/login");
+        }
+      });
+    } else {
+      dispatch(userActions.loginCheck());
+      console.log(is_login);
+    }
   }, []);
 
   //모바일로 접속시 페이지 이동

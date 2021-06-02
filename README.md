@@ -1,14 +1,19 @@
+
 # SFlash
 항해99 실전 프로젝트 SFlash 입니다!
 # 🔖 항해99 실전프로젝트x
 
 ## SFlash(Spot + Flash) | 나만의 사진 명소 저장하기 서비스
 
+
 ### 프로젝트 소개
+![스플래쉬 기획과 제공가치](https://user-images.githubusercontent.com/76252074/120421333-0e2e5300-c3a1-11eb-85d2-6045956003b2.jpg)
+
+
 <h4><a href="http://sflash.ppt.s3-website.ap-northeast-2.amazonaws.com" target="_blank">프로젝트 소개 페이지</a>
 
 <h4><a href="https://www.sflash.net/" target="_blank">사이트 바로가기</a> <a href="" target="_blank">
-  
+
 ### “사진은 내가 찍을게, 스팟은 누가 찾을래?”
 사람들은 알고 나만 모르는 스팟들… </br>
   대체 거기가 어디야? 블로그, 인스타 검색 이제 그만!!
@@ -26,7 +31,8 @@ SFlash(Spot + Flash)는 전국의 명소들을 사진과 지도로 한눈에 볼
  
 
 ## 소개 유튜브 영상
-https://www.youtube.com/watch?v=UdnDlwT31Xk
+<h4><a href="https://www.youtube.com/watch?v=UdnDlwT31Xk" target="_blank">SFlash 시연 영상</a>
+
 
 ## 개발 기간
 + 2021년 4월 23일(금) ~ 2021년 5월 27일(목)
@@ -114,7 +120,7 @@ https://www.youtube.com/watch?v=UdnDlwT31Xk
 + [지도가 로드될 때 서버에서 마커데이터가 오지만 마커가 바로 뜨지 않는 문제 해결법](https://heo-dev-0229.tistory.com/30)
 + [https 도메인 연결을 15분컷으로 끝내기](https://heo-dev-0229.tistory.com/32)
 + [지도검색시 query 에러 문제 해결하기](https://heo-dev-0229.tistory.com/28)
-
++ [useSelectr 최적화](https://velog.io/@dbfudgudals/useSelector-%EC%B5%9C%EC%A0%81%ED%99%94) 
 ## 🧠사용 패키지
 
 - react-redux, redux (redux-actions, immer, logger), redux-thunk, react-router-redux

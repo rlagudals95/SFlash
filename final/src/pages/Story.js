@@ -23,6 +23,10 @@ const Story = (props) => {
       dispatch(profileActions.resetProfile([])),
       dispatch(storyPostActions.resetStory([])),
     ]);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
     dispatch(profileActions.getUserInfoAPI(userId));
     dispatch(storyPostActions.getUserPostAPI(userId));
     dispatch(storyPostActions.getUserLikeAPI(userId));

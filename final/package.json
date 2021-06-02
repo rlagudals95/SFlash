@@ -43,6 +43,7 @@
     "redux-actions": "^2.6.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.2.3",
     "styled-media-query": "^2.1.2",
