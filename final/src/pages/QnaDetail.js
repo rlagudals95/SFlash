@@ -61,7 +61,6 @@ const QnaDetail = (props) => {
         </TitleContainer>
 
         <ContentContainer>
-       {/* {content.map((c) => { return <Text size="1.1rem">{c}</Text> })}  */}
        <Content size="1.1rem">{qna.content}</Content>
         </ContentContainer>
 

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { history } from "../redux/configStore";
+import { createSelector } from "reselect";
 
 import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
@@ -23,10 +24,13 @@ import SelectCate from "./SelectCate";
 import Input from "../elements/Input";
 import Input2 from "../elements/Input2";
 import { CgLogOut } from "react-icons/cg";
+import { shallowEqual } from "react-redux";
 
 const UploadModal = (props) => {
   const { latitude, longitude, spotName, spotNameForCustomOverlay } = props;
-  // console.log("재렌더링: ", props);
+
+  const [contents, setContents] = React.useState(props.content);
+  const [title, setTitle] = React.useState(props.title);
   const userId = localStorage.getItem("userId");
 
   React.useEffect(() => {
@@ -41,56 +45,38 @@ const UploadModal = (props) => {
     }
     dispatch(profileActions.getUserInfoAPI(userId));
   }, []);
-
+  console.log("렌더");
   const dispatch = useDispatch();
-  const is_login = useSelector((state) => state.user.is_login);
-  const preview = useSelector((state) => state.image2.preview);
-  // 수정 페이지 이미지
-  const onlyImg = useSelector((state) => state.image2.image);
-  // console.log("수정페이지 이미지는?", onlyImg);
-  // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
-  const editFile = useSelector((state) => state.image2.edit_file);
+  //업로드 페이지 이미지
 
-  const post_list = useSelector((state) => state.post.list);
-  const user_info = useSelector((state) => state.user.user);
-  const profile = useSelector((state) => state.profile.user);
-  // console.log("유저아이디", userId);
-  // console.log("포스트리스트", post_list);
-  // console.log("유저정보", user_info);
-  // console.log("유저프로필", profile);
+  // const preview = useSelector((state) => state.image2.preview, shallowEqual);
+  // const is_file = useSelector((state) => state.image2.file);
+  // const profile = useSelector((state) => state.profile.user);
+  // const onlyImg = useSelector((state) => state.image2.image);
+  // const is_category = useSelector((state) => state.category.select_category);
 
-  const [contents, setContents] = React.useState(props.content);
-  const [title, setTitle] = React.useState(props.title);
-  // const [contents, setContents] = React.useState();
-  // const [title, setTitle] = React.useState();
+  //shallowEqual을 써줘서 렌더링 될때마다 useSelector로 가져온 값을 비교하고 같으면
+  const [preview, is_file, profile, onlyImg, is_category] = useSelector(
+    (state) => [
+      state.image2.preview,
+      state.image2.file,
+      state.profile.user,
+      state.image2.image,
+      state.category.select_category,
+    ],
+    shallowEqual
+  );
+
   const [images, setImages] = React.useState(false);
-
   const [image_list, setImageList] = React.useState();
-  const is_file = useSelector((state) => state.image2.file);
-  // console.log("이미지는 최소한장!", is_file); //업로드 모달 닫을시 초기화
-  // const post_id = props.match.params.id;
+
   const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
   const is_madal = props.modal ? true : false;
-  // console.log("수정 게시물 정보", props);
-  // console.log("수정 화면 이미지들", images);
+
   const nickname = localStorage.getItem("nickname");
-  const editImgList = useSelector((state) => state.image2.edit); // 요걸 가져와야해
 
-  const previewSet = useSelector((state) => state.image2.preview);
-
-  const file = useSelector((state) => state.image2.file);
-
-  const is_category = useSelector((state) => state.category.select_category);
-
-  // console.log("카테고리 선택했니?", is_category);
-  // console.log("삭제된 id", deleteId);
-  // console.log("서버로 보내줄 수정파일(에딧 파일)", editFile); // 수정중 다시 맘에 안들어서 삭제하고 싶다면 여길 수정
-  // console.log("온리이미지~!~!~!!", onlyImg); //
-  // console.log("고치자 ㅜㅜ", editImgList); // 수정하는 포스트리스트가 온다 map으로 이미지 돌리자
-  // console.log(editImgList.img_url); // 수정해야하는 이미지 리스트
   const ok_submit = contents ? true : false;
 
-  // console.log("??????", localStorage.getItem("jwt"));
   const resetPreview = () => {
     const basicPreview =
       "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36";
@@ -285,7 +271,7 @@ const UploadModal = (props) => {
                               // 그러나 수정시 추가한 이미지엔 서버에서 준 이미지id가 따로 없다
                               dispatch(
                                 //그래서 이미지 idx 기준으로 삭제해준다!
-                                imageActions.deleteImageIdx(onlyImg[idx]) //asdjuifhuiawefhuiewbhfiubawefbiuewabiuf
+                                imageActions.deleteImageIdx(onlyImg[idx])
                               );
                             }
                             // 이미지와 파일이 둘다 삭제되어야 서버에 보내줄때 차질이 없으름로
@@ -303,9 +289,6 @@ const UploadModal = (props) => {
               ) : (
                 // 이미지를 모두 삭제하면 기본 설정 화면이 보인다
                 <ModalImg
-                  onClick={() => {
-                    // console.log("몇번 이미지인가?");
-                  }}
                   src={
                     "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
                   }
@@ -502,20 +485,7 @@ const DeleteImg = styled.div`
   cursor: pointer;
 `;
 
-const ImgOutter = styled.div`
-  text-align: center;
-  display: table;
-`;
-
 const ModalImg = styled.img`
-  /* background-image: url("${(props) => props.src}");
-  background-size: cover;
-  object-fit: cover;
-  border: none;
-  box-sizing: border-box;
-  width: 100%;
-  aspect-ratio: 4/3;
-  background-position: center; */
   all: unset;
   background-image: url("${(props) => props.src}");
   background-size: contain;
@@ -530,22 +500,6 @@ const ModalImg = styled.img`
   background-position: center;
   outline: none;
 `;
-
-// const ModalImg = styled.img`
-//   //비율에 맞게 늘어나는 이미지크기
-//   all: unset;
-//   background-image: url("${(props) => props.src}");
-//   background-size: contain;
-//   background-repeat: no-repeat;
-//   object-fit: contain;
-//   border: none;
-//   box-sizing: border-box;
-//   width: 100%;
-//   height: 700px;
-//   background-position: center;
-//   background-color: white;
-//   background-position: center;
-// `;
 
 const Component = styled.div`
   position: fixed;
@@ -602,11 +556,7 @@ const ModalComponent = styled.div`
 `;
 
 const ModalHeader = styled.div`
-  /* background-color: red; */
-  /* padding: 10px 30px; */
-  /* border-bottom: 1px solid #efefef; */
   display: flex;
-  /* align-items: center; */
   justify-content: space-between;
 `;
 const ModalLeftHeader = styled.div`
@@ -624,13 +574,6 @@ const HeaderInner = styled.div`
   width: 95%;
 `;
 
-const HeaderEdit = styled.div`
-  color: ${(props) => props.theme.main_color};
-  font-weight: bold;
-  background-color: transparent;
-  font-size: 14px;
-  cursor: pointer;
-`;
 const CloseButton = styled.div`
   position: absolute;
   top: 25px;
@@ -643,25 +586,6 @@ const CloseButton = styled.div`
     cursor: pointer;
     color: grey;
   }
-`;
-
-const ExitContainer = styled.div`
-  z-index: 30;
-  position: fixed;
-  top: 0;
-  right: 0;
-  padding: 5px;
-  opacity: 0.5;
-`;
-
-// color: ${(props) => (props.active ? props.theme.main_color : "grey")};
-const ExitBtn = styled.button`
-  cursor: pointer;
-  color: ${(props) => props.theme.main_color};
-  background-color: transparent;
-  border: none;
-  outline: none;
-  font-size: 14px;
 `;
 
 const ModalBottomContainer = styled.div`

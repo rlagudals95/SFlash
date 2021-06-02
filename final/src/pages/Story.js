@@ -32,7 +32,7 @@ const Story = (props) => {
     Promise.all([
       dispatch(profileActions.resetProfile([])),
       dispatch(storyPostActions.resetStory([]))
-    ])
+    ]);
     dispatch(profileActions.getUserInfoAPI(userId));
     dispatch(storyPostActions.getUserPostAPI(userId));
     dispatch(storyPostActions.getUserLikeAPI(userId));
@@ -55,9 +55,6 @@ const Story = (props) => {
     return state.storypost.user_like_list;
   });
 
-  // Map Marker Icon
-  const userPostMarkerImgUrl = "https://i.postimg.cc/zDHr74DL/2x.png";
-  const userLikeMarkerImgUrl = "https://i.postimg.cc/3rZTf11s/2x.png";
 
   const [userPostMode, setUserPostMode] = React.useState(true);
 
@@ -105,14 +102,12 @@ const Story = (props) => {
           {userPostMode ? (
             <StoryContent
               post_list={user_post_list}
-              // marker_icon={userPostMarkerImgUrl}
               userPostMode={userPostMode}
               userId={userId}
             />
           ) : (
             <StoryContent
               post_list={user_like_list}
-              // marker_icon={userLikeMarkerImgUrl}
               userPostMode={userPostMode}
               userId={userId}
             />
