@@ -17,7 +17,6 @@ import UploadEdit from "../../shared/UploadEdit";
 import SelectCate from "../SelectCate";
 import Input from "../../elements/Input";
 import Input2 from "../../elements/Input2";
-// import { CgLogOut } from "react-icons/cg";
 
 const UploadModal = (props) => {
   const userId = localStorage.getItem("userId");
@@ -41,7 +40,6 @@ const UploadModal = (props) => {
   const onlyImg = useSelector((state) => state.image2.image);
 
   // 수정 페이지에서 추가한 이미지 파일 (서버로 보내주기 위해 저장)
-  // const editFile = useSelector((state) => state.image2.edit_file);
   const profile = useSelector((state) => state.profile.user);
 
   const [contents, setContents] = React.useState(props.content);
@@ -62,10 +60,6 @@ const UploadModal = (props) => {
     dispatch(imageActions.resetPreview([basicPreview], [])); // preview는 map함수를 쓰기 때문에 기본이미지를 배열안에 넣어주자
   };
 
-  // const close_reset = () => {
-  //   props.close();
-  //   resetPreview();
-  // };
   //게시물 작성시 조건을 걸어두었다
   const addPost = (e) => {
     if (!is_file) {
@@ -157,11 +151,6 @@ const UploadModal = (props) => {
     );
   }
 
-  // const _post = {
-  //   title: title,
-  //   content: contents,
-  // };
-
   //캐러셀 모듈 코드
   var settings = {
     dots: true, // 이미지 밑의 점을 출력할 건지 입력
@@ -177,11 +166,6 @@ const UploadModal = (props) => {
       <ModalComponent>
         <ModalHeader>
           <HeaderInner>
-            {/* <ExitContainer>
-              <ExitBtn onClick={resetPreview}>
-                <CloseIcon fontSize="large" />
-              </ExitBtn>
-            </ExitContainer> */}
             <ModalLeftHeader>
               <ProCircle
                 src={
@@ -241,13 +225,13 @@ const UploadModal = (props) => {
                               // 그러나 수정시 추가한 이미지엔 서버에서 준 이미지id가 따로 없다
                               dispatch(
                                 //그래서 이미지 idx 기준으로 삭제해준다!
-                                imageActions.deleteImageIdx(onlyImg[idx]) //asdjuifhuiawefhuiewbhfiubawefbiuewabiuf
+                                imageActions.deleteImageIdx(onlyImg[idx]) 
                               );
                             }
                             // 이미지와 파일이 둘다 삭제되어야 서버에 보내줄때 차질이 없으름로
                             // 파일또한 idx 값을 이용해서 삭제해준다
                             dispatch(imageActions.deleteFileIdx(idx));
-                            // 수정시 등록하는 사진에는 id값이 없어서 직접 값을 비교해서 삭제해줌
+                            // 수정시 등록하는 사진에는 id값이 없어서 직접 값을 비교해서 삭제
                           }}
                         >
                           삭제
@@ -291,7 +275,6 @@ const UploadModal = (props) => {
         )}
 
         {/* 수정할때  */}
-
         <ModalBottomContainer>
           <MiddleBox>
             {/* 이미지 이외의 제목, 내용작성 */}
@@ -301,7 +284,6 @@ const UploadModal = (props) => {
                   <Title>
                     <Input2
                       id="outlined-multiline-static"
-                      // label="📝제목 작성"
                       placeholder={props.title}
                       rows={1}
                       variant="outlined"
@@ -312,7 +294,6 @@ const UploadModal = (props) => {
                   </Title>
                   <Input
                     id="outlined-multiline-static"
-                    // label="📝제목 작성"
                     placeholder={props.content}
                     rows={6}
                     multiLine
@@ -328,7 +309,6 @@ const UploadModal = (props) => {
                 <Title>
                   <Input2
                     id="outlined-multiline-static"
-                    // label="📝제목 작성"
                     placeholder={"제목작성..."}
                     rows={1}
                     variant="outlined"
@@ -339,7 +319,6 @@ const UploadModal = (props) => {
                 </Title>
                 <Input
                   id="outlined-multiline-static"
-                  // label="📝제목 작성"
                   placeholder={"내용작성..."}
                   rows={6}
                   multiLine
@@ -367,7 +346,6 @@ const UploadModal = (props) => {
 const BottomEdit = styled.div`
   color: ${(props) => props.theme.main_color};
   font-weight: bold;
-  /* background-color: ${(props) => props.theme.main_color}; */
   border: 2px solid ${(props) => props.theme.main_color};
   font-size: 14px;
   cursor: pointer;
@@ -413,7 +391,6 @@ const DeleteImg = styled.div`
   z-index: 4700;
   text-align: center;
   position: relative;
-  /* background-color: red; */
   width: 80px;
   top: -585px;
   right: -25px;
@@ -433,14 +410,6 @@ const ImgOutter = styled.div`
   display: table;
 `;
 const ModalImg = styled.img`
-  /* background-image: url("${(props) => props.src}");
-  background-size: cover;
-  object-fit: cover;
-  border: none;
-  box-sizing: border-box;
-  width: 100%;
-  aspect-ratio: 4/3;
-  background-position: center; */
   all: unset;
   background-image: url("${(props) => props.src}");
   background-size: contain;
@@ -511,11 +480,7 @@ const ModalComponent = styled.div`
 `;
 
 const ModalHeader = styled.div`
-  /* background-color: red; */
-  /* padding: 10px 30px; */
-  /* border-bottom: 1px solid #efefef; */
   display: flex;
-  /* align-items: center; */
   justify-content: space-between;
 `;
 const ModalLeftHeader = styled.div`
@@ -533,14 +498,6 @@ const HeaderInner = styled.div`
   width: 95%;
 `;
 
-const HeaderEdit = styled.div`
-  color: ${(props) => props.theme.main_color};
-  font-weight: bold;
-  background-color: transparent;
-  font-size: 14px;
-  cursor: pointer;
-`;
-
 const CloseButton = styled.div`
   position: absolute;
   top: 25px;
@@ -555,25 +512,6 @@ const CloseButton = styled.div`
   }
 `;
 
-const ExitContainer = styled.div`
-  z-index: 30;
-  position: fixed;
-  top: 0;
-  right: 0;
-  padding: 5px;
-  opacity: 0.5;
-`;
-
-// color: ${(props) => (props.active ? props.theme.main_color : "grey")};
-const ExitBtn = styled.button`
-  cursor: pointer;
-  color: ${(props) => props.theme.main_color};
-  background-color: transparent;
-  border: none;
-  outline: none;
-  font-size: 14px;
-`;
-
 const ModalBottomContainer = styled.div`
   text-align: left;
   width: 93%;
@@ -581,8 +519,6 @@ const ModalBottomContainer = styled.div`
   margin: 10px auto;
   flex-direction: column;
 `;
-
-const EditCommentBox = styled.div``;
 
 const ProCircle = styled.img`
   height: 55px;
@@ -602,35 +538,20 @@ const ModalAuthor = styled.span`
 const MiddleBox = styled.div`
   display: flex;
   flex-direction: column;
-  /* height: 300px; */
   width: 100%;
   @media (max-width: 1440px) {
-    // 1450밑으로 넓이가 내려가면
     height: 235px;
-    /* background-color: red; */
   }
-  /* justify-content: space-between; */
-
   @media (max-width: 600px) {
-    // 1450밑으로 넓이가 내려가면
     height: 220px;
   }
-`;
-const InputOutter = styled.div`
-  margin: 0px auto;
-  width: 100%;
 `;
 
 const Title = styled.div`
   margin-bottom: 1vh;
 `;
 
-const CateBtn = styled.div`
-  font-size: bold;
-  width: 6.5vw;
-  /* border: 1px solid lightgray; */
-  height: 3.5vh;
-  border-radius: 10px;
-`;
+const EditCommentBox = styled.div``;
+
 
 export default UploadModal;

@@ -23,12 +23,8 @@ const ModalDetail = (props) => {
 
   const modalData = useSelector((state) => state.mapmodal.post);
   const commentData = useSelector((state) => state.mapmodal.comment); //코멘트를 가져온다
-  //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
 
-  console.log(modalData);
 
-  if (commentData) {
-  }
   //수정 버튼 누르면 수정 모달이 뜨는 효과 구현
   const [is_Editmodal, setEditModal] = useState();
   const openEditModal = () => {

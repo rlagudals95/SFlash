@@ -11,8 +11,6 @@ import Swal from "sweetalert2";
 //마커를 누르면 상세모달창이 뜨는 것을 효율적으로 구현하기 위해서 만든 모듈
 const GET_MODAL = "GET_MODAL";
 const GET_MODAL_ID = "GET_MODAL_ID";
-//혹시 모르니 만들어두자..
-const SET_MADAL = "SET_MODAL";
 //마커 클릭시 모달 데이터에서 코멘트만 따로 빼오자
 const GET_MODAL_COMMENT = "GET_MODAL_COMMENT";
 //
@@ -21,7 +19,6 @@ const MODAL_ADD_COMMENT = "MODAL_ADD_COMMENT";
 const MODAL_DELETE_COMMENT = "MODAL_DELETE_COMMENT";
 // 모달 라이크 구현
 const MODAL_ADD_LIKE = "MODAL_ADD_LIKE";
-
 const MODAL_DIS_LIKE = "MODAL_DIS_LIKE";
 //
 const MODAL_EDIT = "MODAL_EDIT";
@@ -62,22 +59,15 @@ const getModalPost = (id) => {
     });
 
     const ModalPost = post_list[idx];
-    // console.log("찾았다!", ModalPost);
-    //////////////////
     const ModalComment = ModalPost.comment;
-
-    // console.log("코멘트!", ModalComment);
-
     dispatch(getModal(ModalPost));
     dispatch(getModalComment(ModalComment));
   };
 };
 
 //모달 데이터를 다 가지고 와서 initialState의 post 에저장
-
 const getModalPostAPI = (boardId) => {
   return function (dispatch) {
-    // console.log("실행되나요 모달 데이터 겟");
 
     axios({
       method: "GET",
@@ -85,14 +75,12 @@ const getModalPostAPI = (boardId) => {
 
       headers: {
         "X-AUTH-TOKEN": localStorage.getItem("jwt"),
-        // "X-AUTH-TOKEN": `${config.jwt}`,
       },
     })
       .then((res) => {
         // console.log("모달정보 가져오자!!!!", res);
 
         let result = res.data.data;
-        // console.log("정리된거 맞지?", result, boardId);
         let post = {
           id: result.boardId, // 포스트 id
           title: result.title, // 포스트 title
@@ -109,8 +97,6 @@ const getModalPostAPI = (boardId) => {
           spotName: result.spotName,
         };
         let comment_list = post.comment;
-        // console.log("게시물 요거", post);
-        // console.log("댓글요거", comment_list);
 
         dispatch(getModal(post)); // 모달 정보는 > post 에 저장 > 수정시 post 에 있는거 바꿔주면된다
         dispatch(getModalComment(comment_list)); //댓글 > comment에 따로 저장
@@ -125,11 +111,7 @@ const getModalPostAPI = (boardId) => {
 ////////////////////////////////////////////////// 댓글
 
 const modalAddCommentAPI = (comment, board_id) => {
-  // 댓글 id를 받으면 되겠다!
   return function (dispatch) {
-    // console.log("댓글와유?", comment);
-    // console.log("아이디와유?", board_id);
-
     axios({
       url: `${config.api}/board/${board_id}/comment`,
       method: "POST",
@@ -157,11 +139,10 @@ const modalAddCommentAPI = (comment, board_id) => {
           });
         } else {
           const comment_data = res.data.data;
-          // console.log("댓글정보", comment_data);
           let comment_list = {
             commentId: comment_data.commentId,
             content: comment_data.content,
-            modified: comment_data.modified, //이거좀 고치자! 현준님이 id랑 날짜주면 !
+            modified: comment_data.modified,
             userId: comment_data.userId,
             writerImgUrl: comment_data.userImgUrl,
             writerName: comment_data.nickName,
@@ -180,12 +161,10 @@ const modalAddCommentAPI = (comment, board_id) => {
 };
 
 const modalDeleteCommentAPI = (id) => {
-  //이 아이디는 코멘트 id
-  // console.log("댓글 id", id);
   return function (dispatch) {
     axios({
       method: "DELETE",
-      url: `${config.api}/board/comment/${id}`, //서버에서 지우고
+      url: `${config.api}/board/comment/${id}`,
       headers: {
         "X-AUTH-TOKEN": `${config.jwt}`,
       },
@@ -221,10 +200,6 @@ const modalDeleteCommentAPI = (id) => {
 /////////////////////////// 좋아요
 const modalAddLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
-    const paging = getState().post.paging;
-    // console.log("보드아이디", board_id);
-    // console.log("보드", board);
-
     axios({
       method: "POST",
       url: `${config.api}/board/${board_id}/like`,
@@ -264,8 +239,6 @@ const modalAddLikeAPI = (board_id, board) => {
 
 const modalDisLikeAPI = (board_id, board) => {
   return function (dispatch, getState, { history }) {
-    // console.log("보드아이디", board_id);
-    // console.log("보드", board);
 
     axios({
       method: "DELETE",
@@ -275,8 +248,6 @@ const modalDisLikeAPI = (board_id, board) => {
       },
     })
       .then((res) => {
-        // console.log("좋아요 취소!", res);
-
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
@@ -380,7 +351,6 @@ const editStoryPostAPI = (board_id, _edit) => {
       }
     }
     //파일 리스트 중에 기존에 있던 imgUrl이 있는 이미지들을 제외하고 새로추가한 파일형식의 요소만 폼데이터로 수정(추가)요청
-    // console.log("최종추가될 이미지", _addFile);
 
     for (let i = 0; i < _addFile.length; i++) {
       formData.append("file", _addFile[i]);
@@ -429,7 +399,6 @@ const editStoryPostAPI = (board_id, _edit) => {
         };
         dispatch(getModal(post));
       }
-      /// 여기서 게시물수정 정보 초기화를 해줘야 모달창을 다시눌러 수정해도 이상한 현상?을 방지해줌
     });
   };
 };
@@ -444,8 +413,6 @@ const deleteStoryPostAPI = (board_id) => {
       },
     })
       .then((res) => {
-        // console.log(res);
-
         if (res.data.message === "tokenExpired") {
           dispatch(userActions.logOut());
           Swal.fire({
@@ -470,16 +437,14 @@ const deleteStoryPostAPI = (board_id) => {
           text: "게시물 삭제에 문제가 있어요 :(",
           confirmButtonColor: "#ffb719",
         });
-        // console.log("게시글 삭제 에러", err);
       });
   };
 };
 
 const initialState = {
   post: null,
-  id: null, // Map에서 props로 id를 넘기기 어려워 id값을 따로 모듈에 저장 //id 기준으로 comment를 따로 부르기위해 작성
-  //음... 아니면 get요청 해서 받은 모달정보중 id로 comment를 불러 올 수도 있겠다...
-  comment: [], //코멘트 어레이
+  id: null,
+  comment: [], 
   like: false,
 };
 
@@ -493,6 +458,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.id = action.payload.id;
       }),
+
     /// 댓글 부분 모듈
     [GET_MODAL_COMMENT]: (state, action) =>
       produce(state, (draft) => {
@@ -505,15 +471,14 @@ export default handleActions(
 
     [MODAL_DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        //비교해서 제외
-        // console.log("삭제댓글 아이디", action.payload.id);
         draft.comment = draft.comment.filter((c) => {
           if (c.commentId !== action.payload.id) {
             return [draft.comment, c];
           }
         });
       }),
-    //////////////////////// 좋아요 구현
+
+    // 좋아요
     [MODAL_ADD_LIKE]: (state, action) =>
       produce(state, (draft) => {
         draft.post = action.payload.post;
