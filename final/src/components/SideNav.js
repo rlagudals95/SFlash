@@ -137,11 +137,11 @@ function Navbar() {
                     onClick={() => {
                       dispatch(sideActions.getPage("story"));
                       history.push(`/story/${userId}`);
-                      dispatch(storyPostActions.resetStory([]));
-                      dispatch(profileActions.resetProfile([]));
-                      dispatch(profileActions.getUserInfoAPI(userId));
-                      dispatch(storyPostActions.getUserPostAPI(userId));
-                      dispatch(storyPostActions.getUserLikeAPI(userId));
+                      // dispatch(storyPostActions.resetStory([]));
+                      // dispatch(profileActions.resetProfile([]));
+                      // dispatch(profileActions.getUserInfoAPI(userId));
+                      // dispatch(storyPostActions.getUserPostAPI(userId));
+                      // dispatch(storyPostActions.getUserLikeAPI(userId));
                     }}
                   >
                     MY STORY
@@ -151,11 +151,11 @@ function Navbar() {
                     onClick={() => {
                       dispatch(sideActions.getPage("story"));
                       history.push(`/story/${userId}`);
-                      dispatch(storyPostActions.resetStory([]));
-                      dispatch(profileActions.resetProfile([]));
-                      dispatch(profileActions.getUserInfoAPI(userId));
-                      dispatch(storyPostActions.getUserPostAPI(userId));
-                      dispatch(storyPostActions.getUserLikeAPI(userId));
+                      // dispatch(storyPostActions.resetStory([]));
+                      // dispatch(profileActions.resetProfile([]));
+                      // dispatch(profileActions.getUserInfoAPI(userId));
+                      // dispatch(storyPostActions.getUserPostAPI(userId));
+                      // dispatch(storyPostActions.getUserLikeAPI(userId));
                     }}
                   >
                     MY STORY

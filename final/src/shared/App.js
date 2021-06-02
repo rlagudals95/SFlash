@@ -108,12 +108,6 @@ function App() {
     <React.Fragment>
       <ConnectedRouter history={history}>
         <SideNav></SideNav>
-        {/* <SurveyButton
-          className="blinking"
-          onClick={() => window.open("https://forms.gle/SuRWZC7xw5qsBZtf6")}
-        >
-          기프티콘 이벤트 참여하기
-        </SurveyButton> */}
         <ScrollToTop>
           <Switch>
             <Route path="/" exact component={Main} />

@@ -18,16 +18,27 @@ const Story = (props) => {
   //  url에서 userId 불러오기
   const userId = props.match.params.id;
 
-  const initializeApp = async () => {
-    await dispatch(profileActions.resetProfile([]));
-    await dispatch(storyPostActions.resetStory([]));
+  // const initializeApp = async () => {
+  //   Promise.all([
+  //     dispatch(profileActions.resetProfile([])),
+  //     dispatch(storyPostActions.resetStory([])),
+  //   ]);
+  //   dispatch(profileActions.getUserInfoAPI(userId));
+  //   dispatch(storyPostActions.getUserPostAPI(userId));
+  //   dispatch(storyPostActions.getUserLikeAPI(userId));
+  // };
+
+  // React.useEffect(() => {
+  //   initializeApp();
+  // }, []);
+
+  React.useEffect(() => {
     dispatch(profileActions.getUserInfoAPI(userId));
     dispatch(storyPostActions.getUserPostAPI(userId));
     dispatch(storyPostActions.getUserLikeAPI(userId));
-  };
-
-  React.useEffect(() => {
-    initializeApp();
+    // return () =>{
+    //   console.log("cleanup");
+    // }
   }, []);
 
   // 스토리 페이지는 크게 3가지로 나뉩니다.
