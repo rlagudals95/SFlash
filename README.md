@@ -1,3 +1,4 @@
+
 # SFlash
 항해99 실전 프로젝트 SFlash 입니다!
 # 🔖 항해99 실전프로젝트x
@@ -8,7 +9,7 @@
 <h4><a href="http://sflash.ppt.s3-website.ap-northeast-2.amazonaws.com" target="_blank">프로젝트 소개 페이지</a>
 
 <h4><a href="https://www.sflash.net/" target="_blank">사이트 바로가기</a> <a href="" target="_blank">
-  
+ [SFlash_발표자료_low.pdf](https://github.com/rlagudals95/SFlash/files/6581861/SFlash_._low.pdf)
 ### “사진은 내가 찍을게, 스팟은 누가 찾을래?”
 사람들은 알고 나만 모르는 스팟들… </br>
   대체 거기가 어디야? 블로그, 인스타 검색 이제 그만!!
