@@ -44,30 +44,6 @@ const QnaWrite = (props) => {
     setContent(e.target.value);
   };
 
-  // // 이미지 업로드하기
-  // const fileInput = React.useRef();
-  // const selectFile = (e) => {
-  //   // changed 된 event (e.target은 input)
-  //   // console.log(e.target.files); // input 이 가진 files 객체
-  //   // console.log(e.target.files[0]); //선택한 파일이 어떻게 저장되어 있나 확인
-  //   // console.log(fileInput.current.files[0]); //ref로도 확인;
-
-  //   // 이미지 미리보기
-  //   const reader = new FileReader();
-  //   var image = fileInput.current.files[0];
-  //   reader.readAsDataURL(image); // readAsDataURL(읽고 싶은 파일) 메서드를 이용한다.
-  //   reader.onloadend = () => {
-  //     // onloadend: reader가 끝나자마자 다음 것을 수행한다.
-  //     // console.log(reader.result);
-  //     dispatch(imageActions.setPreview(reader.result));
-  //   };
-  // };
-
-  // // 이미지 에러
-  // const ImageError = () => {
-  //   window.alert("잘못된 이미지 주소 입니다. :(");
-  // };
-
   const onAddQna = () => {
     if(!is_login){
       Swal.fire({

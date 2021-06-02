@@ -24,9 +24,9 @@ const OAuth2RedirectHandler = (props) => {
   const error = getUrlParameter("error");
 
   let decoded = jwt_decode(jwt);
-        console.log(decoded);
+        // console.log(decoded);
   const tokenExpires = decoded.exp * 1000;
-        console.log(tokenExpires);
+        // console.log(tokenExpires);
 
   if (jwt) {
     localStorage.setItem("jwt", jwt);

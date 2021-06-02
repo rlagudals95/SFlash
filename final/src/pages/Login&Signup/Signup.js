@@ -9,7 +9,6 @@ import {
   Container,
   InputStyle,
   SolidBtn,
-  // BorderBtn,
   CheckBtn,
   TextBtn,
   InfoUl,
@@ -44,18 +43,6 @@ const Signup = (props) => {
   const [nicknameDup, setNicknameDup] = React.useState(false);
   const [emailAuth, setEmailAuth] = React.useState(false);
   const [activeAuthInput, setActiveAuthInput] = React.useState(false);
-
-  // 인증번호 전송 로딩 지연 모달
-  // const [loadingModal, setLoadingModal] = React.useState(false);
-  // const openLoadingModal = () => {
-  //   setLoadingModal(true);
-  // };
-  // const closeLoadingModal = () => {
-  //   setLoadingModal(false);
-  // };
-  // 조건 충족 여부에 따라  info를 다르게
-  // querySelector를 이용하면 ''안에 해당되는 태그가 여러개 일 경우 그 첫번째 것만 선택한다.
-  // 따라서 선택하고자 하는 것이 명확하다면 ''안에 몇번째 child 인지까지 정확하게 입력하거나 className 사용하기
 
   // 닉네임 입력
   const changeNickname = (e) => {

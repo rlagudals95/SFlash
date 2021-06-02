@@ -289,9 +289,6 @@ const UploadModal = (props) => {
               ) : (
                 // 이미지를 모두 삭제하면 기본 설정 화면이 보인다
                 <ModalImg
-                  onClick={() => {
-                    // console.log("몇번 이미지인가?");
-                  }}
                   src={
                     "https://firebasestorage.googleapis.com/v0/b/calender-ed216.appspot.com/o/back_01.PNG?alt=media&token=e39ad399-6ef6-4e68-b046-e4a7c2072e36"
                   }
@@ -488,20 +485,7 @@ const DeleteImg = styled.div`
   cursor: pointer;
 `;
 
-const ImgOutter = styled.div`
-  text-align: center;
-  display: table;
-`;
-
 const ModalImg = styled.img`
-  /* background-image: url("${(props) => props.src}");
-  background-size: cover;
-  object-fit: cover;
-  border: none;
-  box-sizing: border-box;
-  width: 100%;
-  aspect-ratio: 4/3;
-  background-position: center; */
   all: unset;
   background-image: url("${(props) => props.src}");
   background-size: contain;
@@ -516,22 +500,6 @@ const ModalImg = styled.img`
   background-position: center;
   outline: none;
 `;
-
-// const ModalImg = styled.img`
-//   //비율에 맞게 늘어나는 이미지크기
-//   all: unset;
-//   background-image: url("${(props) => props.src}");
-//   background-size: contain;
-//   background-repeat: no-repeat;
-//   object-fit: contain;
-//   border: none;
-//   box-sizing: border-box;
-//   width: 100%;
-//   height: 700px;
-//   background-position: center;
-//   background-color: white;
-//   background-position: center;
-// `;
 
 const Component = styled.div`
   position: fixed;
@@ -588,11 +556,7 @@ const ModalComponent = styled.div`
 `;
 
 const ModalHeader = styled.div`
-  /* background-color: red; */
-  /* padding: 10px 30px; */
-  /* border-bottom: 1px solid #efefef; */
   display: flex;
-  /* align-items: center; */
   justify-content: space-between;
 `;
 const ModalLeftHeader = styled.div`
@@ -610,13 +574,6 @@ const HeaderInner = styled.div`
   width: 95%;
 `;
 
-const HeaderEdit = styled.div`
-  color: ${(props) => props.theme.main_color};
-  font-weight: bold;
-  background-color: transparent;
-  font-size: 14px;
-  cursor: pointer;
-`;
 const CloseButton = styled.div`
   position: absolute;
   top: 25px;
@@ -629,25 +586,6 @@ const CloseButton = styled.div`
     cursor: pointer;
     color: grey;
   }
-`;
-
-const ExitContainer = styled.div`
-  z-index: 30;
-  position: fixed;
-  top: 0;
-  right: 0;
-  padding: 5px;
-  opacity: 0.5;
-`;
-
-// color: ${(props) => (props.active ? props.theme.main_color : "grey")};
-const ExitBtn = styled.button`
-  cursor: pointer;
-  color: ${(props) => props.theme.main_color};
-  background-color: transparent;
-  border: none;
-  outline: none;
-  font-size: 14px;
 `;
 
 const ModalBottomContainer = styled.div`

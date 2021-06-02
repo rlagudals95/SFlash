@@ -1,5 +1,4 @@
 // GridList에서 보여지는 1개의 Post
-// Post2의 사본
 import React, { useState } from "react";
 import styled from "styled-components";
 
@@ -52,21 +51,16 @@ const StoryPost = (props) => {
       <Card>
         {/* src={props.post_image_url[0]} */}
         <PostBox onClick={openModal} src={props.img_url[0].imgUrl}>
-          {/* 이거자체가 지금 투명 0 */}
           <div className={"hoverDark"}>
             {props.like}
             <div className={"PostFont"}>
               {props.like ? (
                 <FavoriteIcon
-                  // fontSize="24px"
-                  // fontSize="large"
                   onClick={disLike}
                   style={{ fontSize: 40 }}
                 />
               ) : (
                 <FavoriteBorderIcon
-                  // fontSize="24px"
-                  // fontSize="large"
                   onClick={addLike}
                   style={{ fontSize: 40 }}
                 />
@@ -81,7 +75,7 @@ const StoryPost = (props) => {
       {is_modal ? (
         <PostModal
           close={closeDetailModal}
-          boardId={props.id} //모달에 모든 정보를 넘겨준다.
+          boardId={props.id}
         />
       ) : null}
     </React.Fragment>
