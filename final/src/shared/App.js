@@ -72,7 +72,7 @@ function App() {
       });
     } else {
       dispatch(userActions.loginCheck());
-      console.log(is_login);
+      // console.log(is_login);
     }
   }, []);
 
