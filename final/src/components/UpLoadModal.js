@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemom, useCallback } from "react";
 import { history } from "../redux/configStore";
 import { createSelector } from "reselect";
 
@@ -27,12 +27,14 @@ import { CgLogOut } from "react-icons/cg";
 import { shallowEqual } from "react-redux";
 
 const UploadModal = (props) => {
+  const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
+  const is_madal = props.modal ? true : false;
   const { latitude, longitude, spotName, spotNameForCustomOverlay } = props;
-
   const [contents, setContents] = React.useState(props.content);
   const [title, setTitle] = React.useState(props.title);
   const userId = localStorage.getItem("userId");
 
+  console.log("내용확인", props.content, "제목확인", props.title);
   React.useEffect(() => {
     if (is_madal) {
       dispatch(imageActions.getModalPost(props));
@@ -49,12 +51,6 @@ const UploadModal = (props) => {
   const dispatch = useDispatch();
   //업로드 페이지 이미지
 
-  // const preview = useSelector((state) => state.image2.preview, shallowEqual);
-  // const is_file = useSelector((state) => state.image2.file);
-  // const profile = useSelector((state) => state.profile.user);
-  // const onlyImg = useSelector((state) => state.image2.image);
-  // const is_category = useSelector((state) => state.category.select_category);
-
   //shallowEqual을 써줘서 렌더링 될때마다 useSelector로 가져온 값을 비교하고 같으면
   const [preview, is_file, profile, onlyImg, is_category] = useSelector(
     (state) => [
@@ -70,9 +66,6 @@ const UploadModal = (props) => {
   const [images, setImages] = React.useState(false);
   const [image_list, setImageList] = React.useState();
 
-  const is_edit = props.id ? true : false; //게시글 작성시 props로 id를 받냐 안받냐 차이
-  const is_madal = props.modal ? true : false;
-
   const nickname = localStorage.getItem("nickname");
 
   const ok_submit = contents ? true : false;
@@ -84,19 +77,18 @@ const UploadModal = (props) => {
     props.close();
     dispatch(imageActions.resetPreview([basicPreview], [])); // preview는 map함수를 쓰기 때문에 기본이미지를 배열안에 넣어주자
   };
-
-  //게시물 작성시 조건을 걸어두었다
-  const addPost = (e) => {
+  /////////////
+  const _addPost = useCallback(() => {
     if (!is_file) {
       window.alert("😗사진은 최소 1장 이상 업로드 해주세요!");
       return;
     }
     if (!contents) {
-      window.alert("😗빈칸을 채워주세요...ㅎㅎ");
+      window.alert("😗내용을 채워주세요...ㅎㅎ");
       return;
     }
     if (!title) {
-      window.alert("😗빈칸을 채워주세요...ㅎㅎ");
+      window.alert("😗제목을 채워주세요...ㅎㅎ");
       return;
     }
     if (!is_category) {
@@ -125,11 +117,9 @@ const UploadModal = (props) => {
     props.close();
 
     resetPreview();
-    // history.replace("/");
-  };
+  }, [title, contents, is_category, is_file]);
 
-  //게시물 수정 시 조건을 걸어 두었다
-  const editPost = () => {
+  const _editPost = useCallback(() => {
     if (!contents) {
       window.alert("😗빈칸을 채워주세요...ㅎㅎ");
       return;
@@ -154,7 +144,7 @@ const UploadModal = (props) => {
     props.close();
     dispatch(imageActions.resetEdit([])); //업로드 후 리덕스에 남은 수정 정보 모두 리셋
     //에딧파일 초기화...
-  };
+  }, [title, contents, is_category, onlyImg]);
 
   const changeContents = (e) => {
     setContents(e.target.value);
@@ -329,7 +319,7 @@ const UploadModal = (props) => {
               <EditCommentBox>
                 <React.Fragment>
                   <Title>
-                    <Input2
+                    <TitleInput
                       id="outlined-multiline-static"
                       // label="📝제목 작성"
                       placeholder={props.title}
@@ -337,10 +327,10 @@ const UploadModal = (props) => {
                       variant="outlined"
                       width={"100%"}
                       value={title}
-                      _onChange={changeTitle}
-                    ></Input2>
+                      onChange={changeTitle}
+                    ></TitleInput>
                   </Title>
-                  <Input
+                  <ContentsInput
                     id="outlined-multiline-static"
                     // label="📝제목 작성"
                     placeholder={props.content}
@@ -349,8 +339,8 @@ const UploadModal = (props) => {
                     width={"100%"}
                     variant="outlined"
                     value={contents}
-                    _onChange={changeContents}
-                  ></Input>
+                    onChange={changeContents}
+                  ></ContentsInput>
                 </React.Fragment>
               </EditCommentBox>
             ) : (
@@ -386,9 +376,9 @@ const UploadModal = (props) => {
           {/* 카테고리는 수정할 수 없기때문에 게시글 수정 모달에선 가려준다 */}
           {is_edit ? null : <SelectCate></SelectCate>}
           {is_edit ? (
-            <BottomEdit2 onClick={editPost}>수정하기</BottomEdit2>
+            <BottomEdit2 onClick={_editPost}>수정하기</BottomEdit2>
           ) : (
-            <BottomEdit onClick={addPost}>게시하기</BottomEdit>
+            <BottomEdit onClick={_addPost}>게시하기</BottomEdit>
           )}
         </ModalBottomContainer>
       </ModalComponent>
