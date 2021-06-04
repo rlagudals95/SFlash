@@ -3,18 +3,13 @@ import styled from "styled-components";
 import Swal from "sweetalert2";
 
 import { history } from "../redux/configStore";
-// import { Grid } from "../elements/index";
 import { useDispatch, useSelector } from "react-redux";
-// import InfiniteScroll from "react-infinite-scroll-component";
 import { actionCreators as qnaActions } from "../redux/modules/qna";
 
 import { BsFillLockFill } from "react-icons/bs";
 import { RiEditFill } from "react-icons/ri";
-// import Pagination from '@material-ui/lab/Pagination';
-
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
-// import { RotateLeftTwoTone } from "@material-ui/icons";
 
 const QnaList = (props) => {
   const dispatch = useDispatch();
@@ -27,7 +22,6 @@ const QnaList = (props) => {
   const [size, setSize] = React.useState(7); //페이지당 post갯수 = 7개씩(고정값) (사실 setSize 안써도 됨)
 
   //pageNumber = [1,2,3,4,5,...]
-
   const pageNumber = [];
   for (let i = 1; i <= Math.ceil(total_length / size); i++) {
     pageNumber.push(i);
@@ -39,7 +33,6 @@ const QnaList = (props) => {
     dispatch(qnaActions.getQnaAPI(page, size));
   }, [page]);
 
-  //페이지네이션 화살표 함수
   // 오른쪽 화살표 함수
   const forward = () => {
     if (page < pageNumber.length) {
@@ -103,9 +96,6 @@ const QnaList = (props) => {
             글쓰기
           </WriteBtn>
           <Content>
-            {/* <Text width="4%">
-          <b>NO.</b>
-        </Text> */}
             <Text width="70%">
               <b>제목</b>
             </Text>
@@ -119,7 +109,6 @@ const QnaList = (props) => {
           {qna_list.map((q, idx) => {
             return (
               <ContentUnit key={q.id} {...q}>
-                {/* <Text width="4%">{props.help.id}</Text> */}
                 <TextBtn
                   width="70%"
                   onClick={() => {
@@ -172,29 +161,6 @@ const QnaList = (props) => {
   }
 };
 
-QnaList.defaultProps = {
-  qna: [
-    {
-      // id: 11,
-      title: "문의 제목입니다",
-      writer: "nickname",
-      modifiedDate: "2021-05-08",
-    },
-    {
-      // id: 11,
-      title: "문의 제목입니다",
-      writer: "nickname",
-      modifiedDate: "2021-05-08",
-    },
-    {
-      // id: 11,
-      title: "문의 제목입니다",
-      writer: "nickname",
-      modifiedDate: "2021-05-08",
-    },
-  ],
-};
-
 const Container = styled.div`
   margin: auto;
   height: 100%;
@@ -213,7 +179,6 @@ const Container = styled.div`
   @media (max-width: 400px) {
     width: calc(100% - 2rem);
   }
-  /* background-color: red; */
 `;
 
 const Title = styled.div`
@@ -229,7 +194,6 @@ const Content = styled.div`
   align-items: center;
   width: 100%;
   color: ${(props) => props.theme.main_grey};
-  /* background-color: green; */
 `;
 
 const ContentUnit = styled.div`
@@ -238,7 +202,6 @@ const ContentUnit = styled.div`
   align-items: center;
   width: 100%;
   height: 60px;
-  /* background-color: green; */
 `;
 
 const Text = styled.div`
@@ -248,7 +211,6 @@ const Text = styled.div`
   border: white;
   padding: 10px 12px;
   color: ${(props) => props.theme.main_grey};
-  /* background-color: yellow; */
 `;
 
 const TextBtn = styled.div`
@@ -263,13 +225,11 @@ const TextBtn = styled.div`
     text-decoration: underline;
     cursor: pointer;
   }
-  /* background-color: yellow; */
 `;
 
 const Icon = styled.div`
   border-radius: 50px;
   padding: 5px 10px 5px 20px;
-  /* background-color: green; */
 `;
 
 const WriteBtn = styled.button`
@@ -285,8 +245,6 @@ const WriteBtn = styled.button`
   font-weight: 500;
   color: ${(props) => props.theme.main_grey};
   background-color: #ffffff;
-
-  /* color: #ffffff; */
   border: 1.5pt solid ${(props) => props.theme.main_color};
   outline: none;
   &:hover {

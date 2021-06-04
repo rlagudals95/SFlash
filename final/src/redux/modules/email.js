@@ -1,7 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import "moment";
-import moment from "moment";
 
 const GET_EMAIL = "GET_EMAIL";
 

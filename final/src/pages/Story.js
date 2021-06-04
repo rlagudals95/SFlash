@@ -18,16 +18,26 @@ const Story = (props) => {
   //  url에서 userId 불러오기
   const userId = props.match.params.id;
 
+  // async, await 만
+  // const initializeApp = async () => {
+  //   await dispatch(profileActions.resetProfile([]));
+  //   await dispatch(storyPostActions.resetStory([]));
+  //   dispatch(profileActions.getUserInfoAPI(userId));
+  //   dispatch(storyPostActions.getUserPostAPI(userId));
+  //   dispatch(storyPostActions.getUserLikeAPI(userId));
+  // };
+
+  // Promise로 처리
   const initializeApp = async () => {
     Promise.all([
       dispatch(profileActions.resetProfile([])),
-      dispatch(storyPostActions.resetStory([])),
+      dispatch(storyPostActions.resetStory([]))
     ]);
-
     dispatch(profileActions.getUserInfoAPI(userId));
     dispatch(storyPostActions.getUserPostAPI(userId));
     dispatch(storyPostActions.getUserLikeAPI(userId));
   };
+
 
   React.useEffect(() => {
     initializeApp();
@@ -45,9 +55,6 @@ const Story = (props) => {
     return state.storypost.user_like_list;
   });
 
-  // Map Marker Icon
-  const userPostMarkerImgUrl = "https://i.postimg.cc/zDHr74DL/2x.png";
-  const userLikeMarkerImgUrl = "https://i.postimg.cc/3rZTf11s/2x.png";
 
   const [userPostMode, setUserPostMode] = React.useState(true);
 
@@ -95,14 +102,12 @@ const Story = (props) => {
           {userPostMode ? (
             <StoryContent
               post_list={user_post_list}
-              // marker_icon={userPostMarkerImgUrl}
               userPostMode={userPostMode}
               userId={userId}
             />
           ) : (
             <StoryContent
               post_list={user_like_list}
-              // marker_icon={userLikeMarkerImgUrl}
               userPostMode={userPostMode}
               userId={userId}
             />

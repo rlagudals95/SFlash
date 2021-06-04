@@ -16,7 +16,7 @@ const setUser = createAction(SET_USER, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
-// initial State
+// initialState
 const initialState = {
   user: "", //null
   is_login: localStorage.getItem("jwt") ? true : false,
@@ -25,7 +25,6 @@ const initialState = {
 };
 
 //API요청(middleware actions)
-
 // 회원가입
 const signupAPI = (nickname, email, pwd, rePwd) => {
   return function (dispatch, getState, { history }) {
@@ -64,7 +63,6 @@ const loginAPI = (email, pwd) => {
         password: pwd,
       })
       .then((res) => {
-        // console.log(res);
         let decoded = jwt_decode(res.data.token);
         const tokenExpires = decoded.exp * 1000;
         // console.log("decoded.exp", decoded.exp*1000);
@@ -83,7 +81,7 @@ const loginAPI = (email, pwd) => {
           text: "로그인 정보를 다시 확인해 주세요.",
           confirmButtonColor: "#ffb719",
         });
-        console.log("로그인 실패", err);
+        // console.log("로그인 실패", err);
       });
   };
 };
